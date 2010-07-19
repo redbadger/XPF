@@ -1,0 +1,333 @@
+<html>
+<head>
+  <title>Machine.Specifications Report</title>
+  <style type="text/css">body {
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: .9em;
+}
+
+.count {
+  color: lightgrey;
+}
+
+.failure {
+  color: red;
+  font-weight: bold;
+  display: inline;
+}
+
+.notimplemented {
+  color: orange;
+  font-weight: bold;
+  display: inline;
+}
+
+p.exception_type {
+  color: black;
+  font-weight: bold;
+  display: inline;
+}
+
+pre.exception_message {
+  border-style: dashed;
+  border-color: #FF828D;
+  border-width: thin;
+  background-color: #FFD2CF;
+  white-space: pre-wrap; /* CSS2.1 compliant */
+  white-space: -moz-pre-wrap; /* Mozilla-based browsers */
+  white-space: o-pre-wrap; /* Opera 7+ */
+  padding: 1em;
+}
+
+hr {
+  color: lightgrey;
+  border: 1px solid lightgrey;
+  height: 1px;
+}
+
+ul.prev-next {
+  padding: 0;
+  margin: 0;
+  font-size: 2em;
+  }
+  
+.spec ul.prev-next {
+  float: right;
+  right: 30%;
+  position: absolute;
+  margin-top: -1em;
+  }
+
+ul.prev-next li {
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+
+ul.prev-next li a {
+  color: lightgrey;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0 .3em;
+  border: 1px solid lightgrey;
+}
+
+ul.prev-next li.notimplemented a {
+  border-color: orange;
+}
+
+ul.prev-next li.failure a {
+  border-color: red;
+}
+
+ul.prev-next li.notimplemented a:hover {
+  background-color: orange;
+  color: #000;
+}
+
+ul.prev-next li.failure a:hover {
+  background-color: red;
+  color: #fff;
+}
+
+ul.prev-next li.back a:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+div.supplement {
+  display: none;
+}
+  
+@media print {
+  ul.prev-next {
+    display: none;
+  }
+}
+  </style>
+</head>
+<body>
+  <ul class="prev-next">
+  </ul>
+<h1>
+    GreenLight.Specs
+</h1>
+<h2 class="count">
+  4 concerns,
+  11 contexts,
+  15 specifications
+</h2>
+<em>Generated on 19 April 2010 at 12:47:29.</em>
+  <hr/>
+  <hr/>
+<h2 class="concern">
+  ContentControl specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when used as a top level container
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="14">should allow an explicit draw position to be specified</a>
+
+
+
+
+<script type="text/javascript">
+  function toggleVisibility(id, description)
+  {
+    var section = document.getElementById(id);
+    var link = document.getElementById(id + "_link");
+
+    if (section.style.display == "block")
+    {
+      section.style.display = "none";
+      link.innerHTML = "Show " + description;
+    } else
+    {
+      section.style.display = "block";
+      link.innerHTML = "Hide " + description;
+    }
+  };
+</script> 
+
+          </li><li class="spec"><a name="15">should cascade the Draw call down to its child</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Rect specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when initialised
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="12">should have the expected Position</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="13">should have the expected Size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Size specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  requesting an empty size
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="11">should return an instance with zeroed values</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a size is added to another size using a addition operator
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="10">should result in a sum of the 2 sizes</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  UIElement Measuring specifications
+</h2>
+<h3 class="count">
+  7 contexts, 9 specifications
+</h3><h3 class="context">
+  when an implementing control returns a height of positive infinity
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="9">should throw an exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when an implementing control returns a negative size
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="7">should return a zero value instead</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when an implementing control returns a size greater than the available size
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="6">should reduce the size returned to keep it within the available size passed to Measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when an implementing control returns a width of positive infinity
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="8">should throw an exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when measuring
+</h3>
+<h4 class="count">
+  3 specifications
+</h4><ul><li class="spec"><a name="3">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="4">should be marked as having a valid Measure</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="5">should have a desired size set</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the supplied available size Height is not a number
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="2">should throw a Exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the supplied available size Width is not a number
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="1">should throw a Exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul>
+    <hr/>
+</body>
+</html>

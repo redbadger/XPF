@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RedBadger.PocketMechanic.Phone.Specs")]
+[assembly: AssemblyTitle("RedBadger.Xpf.Specs")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RedBadger.PocketMechanic.Phone.Specs")]
+[assembly: AssemblyProduct("RedBadger.Xpf.Specs")]
 [assembly: AssemblyCopyright("Copyright ©  2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("37b4a80a-5329-42ed-8188-de605ef514dd")]
+[assembly: Guid("6dd02176-8e83-444f-95d8-7b044d97a007")]
 
 // Version information for an assembly consists of the following four values:
 //

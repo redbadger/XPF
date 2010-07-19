@@ -7,7 +7,7 @@
     <Platform Condition=" '$(Platform)' == '' ">Windows Phone</Platform>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RedBadger.Xpf.Phone</RootNamespace>
+    <RootNamespace>RedBadger.Xpf</RootNamespace>
     <AssemblyName>RedBadger.Xpf.Phone</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -72,9 +72,54 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="..\RedBadger.Xpf\Graphics\ISpriteBatch.cs">
+      <Link>Graphics\ISpriteBatch.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\ISpriteFont.cs">
+      <Link>Graphics\ISpriteFont.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\ITexture2D.cs">
+      <Link>Graphics\ITexture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\SpriteBatchAdapter.cs">
+      <Link>Graphics\SpriteBatchAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\SpriteFontAdapter.cs">
+      <Link>Graphics\SpriteFontAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\Texture2DAdapter.cs">
+      <Link>Graphics\Texture2DAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ContentControl.cs">
+      <Link>Presentation\Controls\ContentControl.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\HorizontalAlignment.cs">
+      <Link>Presentation\HorizontalAlignment.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\IElement.cs">
+      <Link>Presentation\IElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Orientation.cs">
+      <Link>Presentation\Orientation.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Rect.cs">
+      <Link>Presentation\Rect.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Size.cs">
+      <Link>Presentation\Size.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Thickness.cs">
+      <Link>Presentation\Thickness.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\UIElement.cs">
+      <Link>Presentation\UIElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\VerticalAlignment.cs">
+      <Link>Presentation\VerticalAlignment.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

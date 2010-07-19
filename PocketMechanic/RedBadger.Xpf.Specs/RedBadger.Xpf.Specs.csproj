@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0A56FD4B-DA4D-4367-BBFE-7F39162AE702}</ProjectGuid>
+    <ProjectGuid>{B43239E7-0131-4DC9-9BAB-8904293BD869}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RedBadger.Xpf.Phone.Specs</RootNamespace>
-    <AssemblyName>RedBadger.Xpf.Phone.Specs</AssemblyName>
+    <RootNamespace>RedBadger.Xpf.Specs</RootNamespace>
+    <AssemblyName>RedBadger.Xpf.Specs</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,6 +34,11 @@
     <Reference Include="Machine.Specifications">
       <HintPath>..\..\Lib\MSpec\Machine.Specifications.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\Lib\RhinoMocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,14 +48,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="With_a_wp7_xna_class_library.cs" />
+    <Compile Include="Presentation\Controls\ContentControlSpecs.cs" />
+    <Compile Include="Presentation\RectSpecs.cs" />
+    <Compile Include="Presentation\SizeSpecs.cs" />
+    <Compile Include="Presentation\UIElementSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RedBadger.Xpf.Phone\RedBadger.Xpf.Phone.csproj">
-      <Project>{545640ED-7CE0-4DBE-A060-251C61F3AEF6}</Project>
-      <Name>RedBadger.Xpf.Phone</Name>
+    <ProjectReference Include="..\RedBadger.Xpf\RedBadger.Xpf.csproj">
+      <Project>{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}</Project>
+      <Name>RedBadger.Xpf</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\MSpec.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

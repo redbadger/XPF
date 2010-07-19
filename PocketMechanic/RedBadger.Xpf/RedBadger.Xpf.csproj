@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{023AEA18-3EFB-4A00-B926-E449AB008EFE}</ProjectGuid>
+    <ProjectGuid>{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RedBadger.PocketMechanic.Phone.Specs</RootNamespace>
-    <AssemblyName>RedBadger.PocketMechanic.Phone.Specs</AssemblyName>
+    <RootNamespace>RedBadger.Xpf</RootNamespace>
+    <AssemblyName>RedBadger.Xpf</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,13 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications">
-      <HintPath>..\..\Lib\MSpec\Machine.Specifications.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone\Microsoft.Xna.Framework.Game.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,14 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics\ISpriteBatch.cs" />
+    <Compile Include="Graphics\ISpriteFont.cs" />
+    <Compile Include="Graphics\ITexture2D.cs" />
+    <Compile Include="Graphics\SpriteBatchAdapter.cs" />
+    <Compile Include="Graphics\SpriteFontAdapter.cs" />
+    <Compile Include="Graphics\Texture2DAdapter.cs" />
+    <Compile Include="Presentation\Controls\ContentControl.cs" />
+    <Compile Include="Presentation\HorizontalAlignment.cs" />
+    <Compile Include="Presentation\IElement.cs" />
+    <Compile Include="Presentation\Orientation.cs" />
+    <Compile Include="Presentation\Rect.cs" />
+    <Compile Include="Presentation\Size.cs" />
+    <Compile Include="Presentation\Thickness.cs" />
+    <Compile Include="Presentation\UIElement.cs" />
+    <Compile Include="Presentation\VerticalAlignment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="With_a_wp7_xna_application.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RedBadger.PocketMechanic.Phone\RedBadger.PocketMechanic.Phone\RedBadger.PocketMechanic.Phone.csproj">
-      <Project>{871FFD48-507B-4784-9501-F56599CB8075}</Project>
-      <Name>RedBadger.PocketMechanic.Phone</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
