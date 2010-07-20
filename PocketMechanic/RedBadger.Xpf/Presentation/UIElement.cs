@@ -20,6 +20,11 @@
 
         public bool IsMeasureValue { get; private set; }
 
+        public Thickness Margin
+        {
+            get; set;
+        }
+
         public void Draw()
         {
         }
@@ -57,6 +62,11 @@
                 throw new InvalidOperationException("The implementing element returned a PositiveInfinity");
             }
 
+            if (float.IsNaN(size.Width) || float.IsNaN(size.Height))
+            {
+                throw new InvalidOperationException("The implementing element returned NaN");
+            }
+
             this.IsMeasureValue = true;
             this.DesiredSize = size;
         }
@@ -92,15 +102,21 @@
         /// <remarks>
         /// In WPF this method is definded on UIElement as protected virtual and returns an empty Size.
         /// FrameworkElement (which derrives from UIElement) then creates a sealed implementation similar to the below.
-        /// In GreenLight UIElement and FrameworkElement have been collapsed into a single class.
+        /// In XPF UIElement and FrameworkElement have been collapsed into a single class.
         /// </remarks>
         /// <param name="availableSize">The available size that the parent element can give to the child elements.</param>
         /// <returns>The desired size of this element in layout.</returns>
         private Size MeasureCore(Size availableSize)
         {
-            var size = this.MeasureOverride(availableSize);
-            var width = size.Width;
-            var height = size.Height;
+            Thickness margin = this.Margin;
+            float horizontalMargin = margin.Left + margin.Right;
+            float verticalMargin = margin.Top + margin.Bottom;
+
+            Size availableSizeWithoutMargins = new Size((float)Math.Max((availableSize.Width - horizontalMargin), 0f), (float)Math.Max((availableSize.Height - verticalMargin), 0f));
+
+            var size = this.MeasureOverride(availableSizeWithoutMargins);
+            var width = size.Width + horizontalMargin;
+            var height = size.Height + verticalMargin;
 
             if (width > availableSize.Width)
             {

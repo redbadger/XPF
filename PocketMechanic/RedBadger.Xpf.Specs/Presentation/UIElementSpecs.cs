@@ -12,7 +12,7 @@ namespace RedBadger.Xpf.Specs.Presentation
 {
     using System;
 
-    using RedBadger.Xpf.Presentation;
+    using Xpf.Presentation;
 
     using Machine.Specifications;
 
@@ -84,6 +84,24 @@ namespace RedBadger.Xpf.Specs.Presentation
     }
 
     [Subject(typeof(UIElement), "Measuring")]
+    public class when_the_implementing_controls_requested_size_combined_with_the_margin_exceeds_the_available_size : a_UIElement
+    {
+        private static readonly Size availableSize = new Size(10, 10);
+
+        private Establish context =
+            () =>
+                {
+                    uiElement.Margin = new Thickness(10, 20, 30, 40);
+                    uiElement.Expect(element => element.MeasureOverride(availableSize)).IgnoreArguments().Return(new Size(5, 5));
+                };
+
+        private Because of = () => uiElement.Measure(availableSize);
+
+        private It should_reduce_the_size_returned_to_keep_it_within_the_available_size_passed_to_Measure =
+            () => uiElement.DesiredSize.ShouldEqual(availableSize);
+    }
+
+    [Subject(typeof(UIElement), "Measuring")]
     public class when_an_implementing_control_returns_a_negative_size : a_UIElement
     {
         private static readonly Size availableSize = new Size(10, 10);
@@ -128,6 +146,71 @@ namespace RedBadger.Xpf.Specs.Presentation
         private Because of = () => exception = Catch.Exception(() => uiElement.Measure(availableSize));
 
         private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
+    }
+
+    [Subject(typeof(UIElement), "Measuring")]
+    public class when_an_implementing_control_returns_a_width_that_is_not_a_number : a_UIElement
+    {
+        private static Exception exception;
+
+        private static readonly Size availableSize = new Size(float.PositiveInfinity, float.PositiveInfinity);
+
+        private Establish context =
+            () =>
+            uiElement.Expect(element => element.MeasureOverride(availableSize)).Return(
+                new Size(float.NaN, 0));
+
+        private Because of = () => exception = Catch.Exception(() => uiElement.Measure(availableSize));
+
+        private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
+    }
+
+    [Subject(typeof(UIElement), "Measuring")]
+    public class when_an_implementing_control_returns_a_height_that_is_not_a_number : a_UIElement
+    {
+        private static Exception exception;
+
+        private static readonly Size availableSize = new Size(float.PositiveInfinity, float.PositiveInfinity);
+
+        private Establish context =
+            () =>
+            uiElement.Expect(element => element.MeasureOverride(availableSize)).Return(
+                new Size(0, float.NaN));
+
+        private Because of = () => exception = Catch.Exception(() => uiElement.Measure(availableSize));
+
+        private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
+    }
+
+    [Subject(typeof(UIElement), "Measuring")]
+    public class when_an_implementing_control_is_asked_to_measure_itself : a_UIElement
+    {
+        private static Size availableSize = new Size(400, 300);
+
+        private static readonly Thickness margin = new Thickness(10, 20, 30, 40);
+
+        private Establish context = () => uiElement.Margin = margin;
+
+        private Because of = () => uiElement.Measure(availableSize);
+
+        private It should_be_given_an_available_size_that_does_not_include_margins = () =>
+                                                                                         {
+                                                                                             var expectedAvailableSize =
+                                                                                                 new Size(
+                                                                                                     availableSize.Width -
+                                                                                                     (margin.Left +
+                                                                                                      margin.Right),
+                                                                                                     availableSize.
+                                                                                                         Height -
+                                                                                                     (margin.Top +
+                                                                                                      margin.Bottom));
+
+                                                                                             uiElement.AssertWasCalled(
+                                                                                                 element =>
+                                                                                                 element.
+                                                                                                     MeasureOverride(
+                                                                                                         expectedAvailableSize));
+                                                                                         };
     }
 
     internal static class UIElementMockingExtensions

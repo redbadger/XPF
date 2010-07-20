@@ -110,14 +110,14 @@ div.supplement {
   <ul class="prev-next">
   </ul>
 <h1>
-    GreenLight.Specs
+    RedBadger.Xpf.Specs
 </h1>
 <h2 class="count">
   4 concerns,
-  11 contexts,
-  15 specifications
+  15 contexts,
+  19 specifications
 </h2>
-<em>Generated on 19 April 2010 at 12:47:29.</em>
+
   <hr/>
   <hr/>
 <h2 class="concern">
@@ -130,7 +130,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   2 specifications
-</h4><ul><li class="spec"><a name="14">should allow an explicit draw position to be specified</a>
+</h4><ul><li class="spec"><a name="18">should allow an explicit draw position to be specified</a>
 
 
 
@@ -153,7 +153,7 @@ div.supplement {
   };
 </script> 
 
-          </li><li class="spec"><a name="15">should cascade the Draw call down to its child</a>
+          </li><li class="spec"><a name="19">should cascade the Draw call down to its child</a>
 
 
 
@@ -171,14 +171,14 @@ div.supplement {
 </h3>
 <h4 class="count">
   2 specifications
-</h4><ul><li class="spec"><a name="12">should have the expected Position</a>
+</h4><ul><li class="spec"><a name="3">should have the expected Position</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="13">should have the expected Size</a>
+          </li><li class="spec"><a name="4">should have the expected Size</a>
 
 
 
@@ -196,7 +196,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="11">should return an instance with zeroed values</a>
+</h4><ul><li class="spec"><a name="2">should return an instance with zeroed values</a>
 
 
 
@@ -209,7 +209,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="10">should result in a sum of the 2 sizes</a>
+</h4><ul><li class="spec"><a name="1">should result in a sum of the 2 sizes</a>
 
 
 
@@ -221,13 +221,39 @@ div.supplement {
   UIElement Measuring specifications
 </h2>
 <h3 class="count">
-  7 contexts, 9 specifications
+  11 contexts, 13 specifications
 </h3><h3 class="context">
+  when an implementing control is asked to measure itself
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="17">should be given an available size that does not include margins</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
   when an implementing control returns a height of positive infinity
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="9">should throw an exception</a>
+</h4><ul><li class="spec"><a name="14">should throw an exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when an implementing control returns a height that is not a number
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="16">should throw an exception</a>
 
 
 
@@ -240,7 +266,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="7">should return a zero value instead</a>
+</h4><ul><li class="spec"><a name="12">should return a zero value instead</a>
 
 
 
@@ -253,7 +279,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="6">should reduce the size returned to keep it within the available size passed to Measure</a>
+</h4><ul><li class="spec"><a name="10">should reduce the size returned to keep it within the available size passed to Measure</a>
 
 
 
@@ -266,7 +292,20 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="8">should throw an exception</a>
+</h4><ul><li class="spec"><a name="13">should throw an exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when an implementing control returns a width that is not a number
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="15">should throw an exception</a>
 
 
 
@@ -279,21 +318,34 @@ div.supplement {
 </h3>
 <h4 class="count">
   3 specifications
-</h4><ul><li class="spec"><a name="3">should invalidate arrange</a>
+</h4><ul><li class="spec"><a name="7">should invalidate arrange</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="4">should be marked as having a valid Measure</a>
+          </li><li class="spec"><a name="8">should be marked as having a valid Measure</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="5">should have a desired size set</a>
+          </li><li class="spec"><a name="9">should have a desired size set</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the implementing controls requested size combined with the margin exceeds the available size
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="11">should reduce the size returned to keep it within the available size passed to Measure</a>
 
 
 
@@ -306,7 +358,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="2">should throw a Exception</a>
+</h4><ul><li class="spec"><a name="6">should throw a Exception</a>
 
 
 
@@ -319,7 +371,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="1">should throw a Exception</a>
+</h4><ul><li class="spec"><a name="5">should throw a Exception</a>
 
 
 

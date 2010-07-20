@@ -12,11 +12,6 @@ protected sealed override Size MeasureCore(Size availableSize)
 
     MinMax max = new MinMax(this);
 
-    if (measureData != null)
-    {
-        measureData.AvailableSize = transformSpaceBounds;
-    }
-
     Size size2 = this.MeasureOverride(transformSpaceBounds);
 
     if (measureData != null)
