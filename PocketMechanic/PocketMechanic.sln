@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedBadger.Xpf", "RedBadger.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedBadger.Xpf.Specs", "RedBadger.Xpf.Specs\RedBadger.Xpf.Specs.csproj", "{B43239E7-0131-4DC9-9BAB-8904293BD869}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5A75E103-97AF-47C8-ACE7-7F4134825463}"
+	ProjectSection(SolutionItems) = preProject
+		Settings.StyleCop = Settings.StyleCop
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,8 +70,8 @@ Global
 		{545640ED-7CE0-4DBE-A060-251C61F3AEF6}.Release|x86.Build.0 = Release|Windows Phone
 		{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}.Debug|Windows Phone.ActiveCfg = Debug|Any CPU
 		{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,8 +82,8 @@ Global
 		{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}.Release|x86.ActiveCfg = Release|Any CPU
 		{B43239E7-0131-4DC9-9BAB-8904293BD869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B43239E7-0131-4DC9-9BAB-8904293BD869}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B43239E7-0131-4DC9-9BAB-8904293BD869}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{B43239E7-0131-4DC9-9BAB-8904293BD869}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B43239E7-0131-4DC9-9BAB-8904293BD869}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{B43239E7-0131-4DC9-9BAB-8904293BD869}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{B43239E7-0131-4DC9-9BAB-8904293BD869}.Debug|Windows Phone.ActiveCfg = Debug|Any CPU
 		{B43239E7-0131-4DC9-9BAB-8904293BD869}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{B43239E7-0131-4DC9-9BAB-8904293BD869}.Release|Any CPU.ActiveCfg = Release|Any CPU
