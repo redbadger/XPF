@@ -34,6 +34,50 @@ public void Measure(Size availableSize)
     }
 }
 
+public void Arrange(Rect finalRect)
+{
+    if ((double.IsPositiveInfinity(finalRect.Width) || double.IsPositiveInfinity(finalRect.Height)) || (DoubleUtil.IsNaN(finalRect.Width) || DoubleUtil.IsNaN(finalRect.Height)))
+    {
+        DependencyObject uIParent = this.GetUIParent() as UIElement;
+        throw new InvalidOperationException(SR.Get("UIElement_Layout_InfinityArrange", new object[] { (uIParent == null) ? "" : uIParent.GetType().FullName, base.GetType().FullName }));
+    }
+
+    // Collapsed Logic Here
+    else
+    {
+        if (!this.IsArrangeValid)
+        {
+            Size renderSize = this.RenderSize;
+            bool flag3 = false;
+
+            this.ArrangeCore(finalRect);
+            this.ensureClip(finalRect.Size);
+            flag3 = this.markForSizeChangedIfNeeded(renderSize, this.RenderSize);
+
+            this._finalRect = finalRect;
+            this.ArrangeDirty = false;
+
+            if (((flag3 || this.RenderingInvalidated) || neverArranged) && this.IsRenderable())
+            {
+                DrawingContext drawingContext = this.RenderOpen();
+                try
+                {
+                    this.OnRender(drawingContext);
+                }
+                finally
+                {
+                    drawingContext.Close();
+                    this.RenderingInvalidated = false;
+                }
+                this.updatePixelSnappingGuidelines();
+            }
+            if (neverArranged)
+            {
+                base.EndPropertyInitialization();
+            }
+        }
+    }
+}
  
 
  

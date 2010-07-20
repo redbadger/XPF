@@ -68,6 +68,128 @@ protected sealed override Size MeasureCore(Size availableSize)
     return new Size(Math.Max(0.0, width), Math.Max(0.0, height));
 }
 
- 
+protected sealed override void ArrangeCore(Rect finalRect)
+{
+    Size empty = Size.Empty;
+    
+    Size untransformedDS;
+    this.NeedsClipBounds = false;
+    Size size = finalRect.Size;
+    Thickness margin = this.Margin;
+    double num = margin.Left + margin.Right;
+    double num2 = margin.Top + margin.Bottom;
+    size.Width = Math.Max((double) 0.0, (double) (size.Width - num));
+    size.Height = Math.Max((double) 0.0, (double) (size.Height - num2));
 
- 
+    SizeBox box = UnclippedDesiredSizeField.GetValue(this);
+    if (box == null)
+    {
+        untransformedDS = new Size(Math.Max((double) 0.0, (double) (base.DesiredSize.Width - num)), Math.Max((double) 0.0, (double) (base.DesiredSize.Height - num2)));
+        if (empty != Size.Empty)
+        {
+            untransformedDS.Width = Math.Max(empty.Width, untransformedDS.Width);
+            untransformedDS.Height = Math.Max(empty.Height, untransformedDS.Height);
+        }
+    }
+    else
+    {
+        untransformedDS = new Size(box.Width, box.Height);
+    }
+
+    if (DoubleUtil.LessThan(size.Width, untransformedDS.Width))
+    {
+        this.NeedsClipBounds = true;
+        size.Width = untransformedDS.Width;
+    }
+    if (DoubleUtil.LessThan(size.Height, untransformedDS.Height))
+    {
+        this.NeedsClipBounds = true;
+        size.Height = untransformedDS.Height;
+    }
+    if (this.HorizontalAlignment != HorizontalAlignment.Stretch)
+    {
+        size.Width = untransformedDS.Width;
+    }
+    if (this.VerticalAlignment != VerticalAlignment.Stretch)
+    {
+        size.Height = untransformedDS.Height;
+    }
+
+    MinMax max = new MinMax(this);
+    double num3 = Math.Max(untransformedDS.Width, max.maxWidth);
+    if (DoubleUtil.LessThan(num3, size.Width))
+    {
+        this.NeedsClipBounds = true;
+        size.Width = num3;
+    }
+    double num4 = Math.Max(untransformedDS.Height, max.maxHeight);
+    if (DoubleUtil.LessThan(num4, size.Height))
+    {
+        this.NeedsClipBounds = true;
+        size.Height = num4;
+    }
+
+    Size size8 = this.ArrangeOverride(size);
+    base.RenderSize = size8;
+
+    Size size9 = new Size(Math.Min(size8.Width, max.maxWidth), Math.Min(size8.Height, max.maxHeight));
+
+    this.NeedsClipBounds |= DoubleUtil.LessThan(size9.Width, size8.Width) || DoubleUtil.LessThan(size9.Height, size8.Height);
+
+    Size size10 = new Size(Math.Max((double) 0.0, (double) (finalRect.Width - num)), Math.Max((double) 0.0, (double) (finalRect.Height - num2)));
+
+    this.NeedsClipBounds |= DoubleUtil.LessThan(size10.Width, size9.Width) || DoubleUtil.LessThan(size10.Height, size9.Height);
+
+    Vector offset = this.ComputeAlignmentOffset(size10, size9);
+    offset.X += finalRect.X + margin.Left;
+    offset.Y += finalRect.Y + margin.Top;
+
+    base.VisualOffset = offset;
+}
+
+private Vector ComputeAlignmentOffset(Size clientSize, Size inkSize)
+{
+    Vector vector = new Vector();
+    HorizontalAlignment horizontalAlignment = this.HorizontalAlignment;
+    VerticalAlignment verticalAlignment = this.VerticalAlignment;
+
+    if ((horizontalAlignment == HorizontalAlignment.Stretch) && (inkSize.Width > clientSize.Width))
+    {
+        horizontalAlignment = HorizontalAlignment.Left;
+    }
+    if ((verticalAlignment == VerticalAlignment.Stretch) && (inkSize.Height > clientSize.Height))
+    {
+        verticalAlignment = VerticalAlignment.Top;
+    }
+    switch (horizontalAlignment)
+    {
+        case HorizontalAlignment.Center:
+        case HorizontalAlignment.Stretch:
+            vector.X = (clientSize.Width - inkSize.Width) * 0.5;
+            break;
+
+        default:
+            if (horizontalAlignment == HorizontalAlignment.Right)
+            {
+                vector.X = clientSize.Width - inkSize.Width;
+            }
+            else
+            {
+                vector.X = 0.0;
+            }
+            break;
+    }
+    switch (verticalAlignment)
+    {
+        case VerticalAlignment.Center:
+        case VerticalAlignment.Stretch:
+            vector.Y = (clientSize.Height - inkSize.Height) * 0.5;
+            return vector;
+
+        case VerticalAlignment.Bottom:
+            vector.Y = clientSize.Height - inkSize.Height;
+            return vector;
+    }
+    vector.Y = 0.0;
+    return vector;
+}
