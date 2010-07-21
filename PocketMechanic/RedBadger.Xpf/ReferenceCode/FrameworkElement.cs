@@ -69,12 +69,11 @@ protected sealed override Size MeasureCore(Size availableSize)
 }
 
 protected sealed override void ArrangeCore(Rect finalRect)
-{
-    Size empty = Size.Empty;
-    
+{    
     Size untransformedDS;
     this.NeedsClipBounds = false;
     Size size = finalRect.Size;
+
     Thickness margin = this.Margin;
     double num = margin.Left + margin.Right;
     double num2 = margin.Top + margin.Bottom;
@@ -85,11 +84,6 @@ protected sealed override void ArrangeCore(Rect finalRect)
     if (box == null)
     {
         untransformedDS = new Size(Math.Max((double) 0.0, (double) (base.DesiredSize.Width - num)), Math.Max((double) 0.0, (double) (base.DesiredSize.Height - num2)));
-        if (empty != Size.Empty)
-        {
-            untransformedDS.Width = Math.Max(empty.Width, untransformedDS.Width);
-            untransformedDS.Height = Math.Max(empty.Height, untransformedDS.Height);
-        }
     }
     else
     {

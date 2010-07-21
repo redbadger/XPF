@@ -1,10 +1,12 @@
 namespace RedBadger.Xpf.Presentation
 {
-    public struct Size
-    {
-        public float Width;
+    using System;
 
+    public struct Size : IEquatable<Size>
+    {
         public float Height;
+
+        public float Width;
 
         public Size(float width, float height)
         {
@@ -29,9 +31,47 @@ namespace RedBadger.Xpf.Presentation
             return newSize;
         }
 
+        public static bool operator ==(Size left, Size right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Size left, Size right)
+        {
+            return !left.Equals(right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (obj.GetType() != typeof(Size))
+            {
+                return false;
+            }
+
+            return this.Equals((Size)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (this.Width.GetHashCode() * 397) ^ this.Height.GetHashCode();
+            }
+        }
+
         public override string ToString()
         {
             return string.Format("Width: {0}, Height: {1}", this.Width, this.Height);
+        }
+
+        public bool Equals(Size other)
+        {
+            return other.Width.Equals(this.Width) && other.Height.Equals(this.Height);
         }
     }
 }

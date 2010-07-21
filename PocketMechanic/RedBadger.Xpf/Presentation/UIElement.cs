@@ -4,25 +4,55 @@
 
     using Microsoft.Xna.Framework;
 
+    using RedBadger.Xpf.Internal;
+
     public abstract class UIElement : IElement
     {
         public Size DesiredSize { get; private set; }
 
         public Vector2 DrawPosition { get; set; }
 
+        public HorizontalAlignment HorizontalAlignment { get; set; }
+
         /// <summary>
-        /// Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
+        ///   Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
         /// </summary>
         /// <value>
-        ///     <c>true</c> if the size and position of layout are valid; otherwise, <c>false</c>.
+        ///   <c>true</c> if the size and position of layout are valid; otherwise, <c>false</c>.
         /// </value>
         public bool IsArrangeValid { get; private set; }
 
         public bool IsMeasureValid { get; private set; }
 
-        public Thickness Margin
+        public Thickness Margin { get; set; }
+
+        public VerticalAlignment VerticalAlignment { get; set; }
+
+        public Size RenderSize { get; set; }
+
+        /// <summary>
+        ///   Positions child elements and determines a size for a UIElement.
+        ///   Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
+        ///   This method constitutes the second pass of a layout update.
+        /// </summary>
+        /// <param name = "finalRect">The final size that the parent computes for the child element, provided as a Rect instance.</param>
+        public void Arrange(Rect finalRect)
         {
-            get; set;
+            if (float.IsNaN(finalRect.Width) || float.IsNaN(finalRect.Height))
+            {
+                throw new InvalidOperationException("Width and Height must be numbers");
+            }
+
+            if (float.IsPositiveInfinity(finalRect.Width) || float.IsPositiveInfinity(finalRect.Height))
+            {
+                throw new InvalidOperationException("Width and Height must be less than infinity");
+            }
+
+            if (!this.IsArrangeValid)
+            {
+                this.ArrangeCore(finalRect);
+                this.IsArrangeValid = true;
+            }
         }
 
         public void Draw()
@@ -30,23 +60,13 @@
         }
 
         /// <summary>
-        /// Positions child elements and determines a size for a UIElement.
-        /// Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
-        /// This method constitutes the second pass of a layout update.
+        ///   Updates the DesiredSize of a UIElement.
+        ///   Derrived elements call this method from their own MeasureOverride implementations to form a recursive layout update.
+        ///   Calling this method constitutes the first pass (the "Measure" pass) of a layout update.
         /// </summary>
-        /// <param name="finalRect">The final size that the parent computes for the child element, provided as a Rect instance.</param>
-        public void Arrange(Rect finalRect)
-        {
-        }
-
-        /// <summary>
-        /// Updates the DesiredSize of a UIElement.
-        /// Derrived elements call this method from their own MeasureOverride implementations to form a recursive layout update.
-        /// Calling this method constitutes the first pass (the "Measure" pass) of a layout update.
-        /// </summary>
-        /// <param name="availableSize">
-        /// The available space that a parent element can allocate a child element.
-        /// A child element can request a larger space than what is available; the provided size might be accommodated.
+        /// <param name = "availableSize">
+        ///   The available space that a parent element can allocate a child element.
+        ///   A child element can request a larger space than what is available; the provided size might be accommodated.
         /// </param>
         public void Measure(Size availableSize)
         {
@@ -74,12 +94,12 @@
             }
         }
 
-        protected abstract void DrawImplementation();
-
         protected virtual Size ArrangeOverride(Size finalSize)
         {
             return finalSize;
         }
+
+        protected abstract void DrawImplementation();
 
         protected virtual Size MeasureOverride(Size availableSize)
         {
@@ -87,27 +107,62 @@
         }
 
         /// <summary>
-        /// Defines the template for core-level arrange layout definition.
+        ///   Defines the template for core-level arrange layout definition.
         /// </summary>
         /// <remarks>
-        /// In WPF this method is defined on UIElement as protected virtual and has a base implementation.
-        /// FrameworkElement (which derrives from UIElement) creates a sealed implemention, similar to the below,
-        /// which discards UIElement's base implementation.
+        ///   In WPF this method is defined on UIElement as protected virtual and has a base implementation.
+        ///   FrameworkElement (which derrives from UIElement) creates a sealed implemention, similar to the below,
+        ///   which discards UIElement's base implementation.
         /// </remarks>
-        /// <param name="finalRect">The final area within the parent that element should use to arrange itself and its child elements.</param>
+        /// <param name = "finalRect">The final area within the parent that element should use to arrange itself and its child elements.</param>
         private void ArrangeCore(Rect finalRect)
         {
+            Size size = finalRect.Size;
+
+            Thickness margin = this.Margin;
+            float horizontalMargin = margin.Left + margin.Right;
+            float verticalMargin = margin.Top + margin.Bottom;
+
+            size.Width = Math.Max(0f, size.Width - horizontalMargin);
+            size.Height = Math.Max(0f, size.Height - verticalMargin);
+
+            var desiredSizeWithoutMargins = new Size(
+                Math.Max(0f, this.DesiredSize.Width - horizontalMargin),
+                Math.Max(0f, this.DesiredSize.Height - verticalMargin));
+
+            if (FloatUtil.LessThan(size.Width, desiredSizeWithoutMargins.Width))
+            {
+                size.Width = desiredSizeWithoutMargins.Width;
+            }
+
+            if (FloatUtil.LessThan(size.Height, desiredSizeWithoutMargins.Height))
+            {
+                size.Height = desiredSizeWithoutMargins.Height;
+            }
+
+            if (this.HorizontalAlignment != HorizontalAlignment.Stretch)
+            {
+                size.Width = desiredSizeWithoutMargins.Width;
+            }
+
+            if (this.VerticalAlignment != VerticalAlignment.Stretch)
+            {
+                size.Height = desiredSizeWithoutMargins.Height;
+            }
+
+            Size renderSize = this.ArrangeOverride(size);
+            this.RenderSize = renderSize;
         }
 
         /// <summary>
-        /// Implements basic measure-pass layout system behavior.
+        ///   Implements basic measure-pass layout system behavior.
         /// </summary>
         /// <remarks>
-        /// In WPF this method is definded on UIElement as protected virtual and returns an empty Size.
-        /// FrameworkElement (which derrives from UIElement) then creates a sealed implementation similar to the below.
-        /// In XPF UIElement and FrameworkElement have been collapsed into a single class.
+        ///   In WPF this method is definded on UIElement as protected virtual and returns an empty Size.
+        ///   FrameworkElement (which derrives from UIElement) then creates a sealed implementation similar to the below.
+        ///   In XPF UIElement and FrameworkElement have been collapsed into a single class.
         /// </remarks>
-        /// <param name="availableSize">The available size that the parent element can give to the child elements.</param>
+        /// <param name = "availableSize">The available size that the parent element can give to the child elements.</param>
         /// <returns>The desired size of this element in layout.</returns>
         private Size MeasureCore(Size availableSize)
         {
@@ -115,7 +170,9 @@
             float horizontalMargin = margin.Left + margin.Right;
             float verticalMargin = margin.Top + margin.Bottom;
 
-            Size availableSizeWithoutMargins = new Size((float)Math.Max((availableSize.Width - horizontalMargin), 0f), (float)Math.Max((availableSize.Height - verticalMargin), 0f));
+            var availableSizeWithoutMargins = new Size(
+                Math.Max((availableSize.Width - horizontalMargin), 0f),
+                Math.Max((availableSize.Height - verticalMargin), 0f));
 
             var size = this.MeasureOverride(availableSizeWithoutMargins);
             var width = size.Width + horizontalMargin;

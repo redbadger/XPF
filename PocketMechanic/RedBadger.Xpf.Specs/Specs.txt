@@ -1,0 +1,32 @@
+when arranging a ui Element
+	It should throw an exception when the 
+		width
+		or heigh of the rect is 
+		PosInfin or 
+		NaN
+
+when arrange has been called
+	it should be valid
+	it shouldn't be called again
+	
+when_arrange_gets_called
+It should pass the desired size to arrange override
+
+when its got margins
+It should pass the desired size minus the margins to arrange override
+
+when the desired size is greater than the available size
+it should make the finalSize equal to the desired size
+
+
+	
+	
+desired size
+if the available < desired
+	available = desired
+
+max = Max(desired, max width)
+
+if the max < available
+	available = max
+

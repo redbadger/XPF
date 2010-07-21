@@ -113,9 +113,9 @@ div.supplement {
     RedBadger.Xpf.Specs
 </h1>
 <h2 class="count">
-  4 concerns,
-  15 contexts,
-  19 specifications
+  6 concerns,
+  27 contexts,
+  34 specifications
 </h2>
 
   <hr/>
@@ -130,7 +130,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   2 specifications
-</h4><ul><li class="spec"><a name="18">should allow an explicit draw position to be specified</a>
+</h4><ul><li class="spec"><a name="20">should allow an explicit draw position to be specified</a>
 
 
 
@@ -153,7 +153,7 @@ div.supplement {
   };
 </script> 
 
-          </li><li class="spec"><a name="19">should cascade the Draw call down to its child</a>
+          </li><li class="spec"><a name="21">should cascade the Draw call down to its child</a>
 
 
 
@@ -218,11 +218,193 @@ div.supplement {
 
           </li>
         </ul><h2 class="concern">
-  UIElement Measuring specifications
+  UIElement Arrange specifications
 </h2>
 <h3 class="count">
-  11 contexts, 13 specifications
+  10 contexts, 11 specifications
 </h3><h3 class="context">
+  after arrange
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="29">should be considered valid</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="30">should have set a render size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when arrange is valid
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="28">should not arrange again</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the desired size is greater than the final size
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="31">should layout its children within the desired size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the desired size is greater than the final size with margins
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="32">should layout its children within the desired size minus the margins</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the desired size is less than the final size and alignment is not stretch
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="34">should layout its children within the desired size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the desired size is less than the final size and alignment is stretch
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="33">should layout its children within the final size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the height of the supplied available space is not a number
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="25">should throw a Exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the height of the supplied available space is positive infinity
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="27">should throw a Exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the width of the supplied available space is not a number
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="24">should throw a Exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the width of the supplied available space is positive infinity
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="26">should throw a Exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  UIElement Measure specifications
+</h2>
+<h3 class="count">
+  10 contexts, 14 specifications
+</h3><h3 class="context">
+  after measure is called
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="18">should be considered valid</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="19">should not measure again</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  after measure is called
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="22">should be considered valid</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="23">should not measure again</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
   when an implementing control is asked to measure itself
 </h3>
 <h4 class="count">
@@ -254,19 +436,6 @@ div.supplement {
 <h4 class="count">
   1 specification
 </h4><ul><li class="spec"><a name="16">should throw an exception</a>
-
-
-
-
- 
-
-          </li>
-        </ul><h3 class="context">
-  when an implementing control returns a negative size
-</h3>
-<h4 class="count">
-  1 specification
-</h4><ul><li class="spec"><a name="12">should return a zero value instead</a>
 
 
 
@@ -346,6 +515,24 @@ div.supplement {
 <h4 class="count">
   1 specification
 </h4><ul><li class="spec"><a name="11">should reduce the size returned to keep it within the available size passed to Measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  UIElement Measuring specifications
+</h2>
+<h3 class="count">
+  3 contexts, 3 specifications
+</h3><h3 class="context">
+  when an implementing control returns a negative size
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="12">should return a zero value instead</a>
 
 
 

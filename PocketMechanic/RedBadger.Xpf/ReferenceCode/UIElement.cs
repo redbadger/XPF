@@ -51,11 +51,9 @@ public void Arrange(Rect finalRect)
             bool flag3 = false;
 
             this.ArrangeCore(finalRect);
+            
             this.ensureClip(finalRect.Size);
             flag3 = this.markForSizeChangedIfNeeded(renderSize, this.RenderSize);
-
-            this._finalRect = finalRect;
-            this.ArrangeDirty = false;
 
             if (((flag3 || this.RenderingInvalidated) || neverArranged) && this.IsRenderable())
             {
