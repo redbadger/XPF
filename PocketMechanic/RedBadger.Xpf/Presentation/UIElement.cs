@@ -1,12 +1,13 @@
 ﻿namespace RedBadger.Xpf.Presentation
 {
     using System;
+    using System.Windows;
 
     using Microsoft.Xna.Framework;
 
     using RedBadger.Xpf.Internal;
 
-    public abstract class UIElement : IElement
+    public abstract class UIElement : DependencyObject, IElement
     {
         public Size DesiredSize { get; private set; }
 
