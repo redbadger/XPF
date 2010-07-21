@@ -26,9 +26,15 @@
 
         public Thickness Margin { get; set; }
 
+        public Size RenderSize { get; set; }
+
         public VerticalAlignment VerticalAlignment { get; set; }
 
-        public Size RenderSize { get; set; }
+        /// <remarks>
+        ///   In WPF this is protected internal.  For the purposes of unit testing we've not made this protected.
+        ///   TODO: implement a reflection based mechanism (for Moq?) to get back values from protected properties
+        /// </remarks>
+        internal Vector2 VisualOffset { get; set; }
 
         /// <summary>
         ///   Positions child elements and determines a size for a UIElement.
@@ -152,6 +158,61 @@
 
             Size renderSize = this.ArrangeOverride(size);
             this.RenderSize = renderSize;
+
+            var clientSize = new Size(Math.Max(0f, finalRect.Width - horizontalMargin), Math.Max(0f, finalRect.Height - verticalMargin));
+
+            Vector2 offset = this.ComputeAlignmentOffset(clientSize, renderSize);
+            offset.X += finalRect.X + margin.Left;
+            offset.Y += finalRect.Y + margin.Top;
+
+            this.VisualOffset = offset;
+        }
+
+        private Vector2 ComputeAlignmentOffset(Size clientSize, Size inkSize)
+        {
+            var vector = new Vector2();
+            HorizontalAlignment horizontalAlignment = this.HorizontalAlignment;
+            VerticalAlignment verticalAlignment = this.VerticalAlignment;
+
+            if (horizontalAlignment == HorizontalAlignment.Stretch && inkSize.Width > clientSize.Width)
+            {
+                horizontalAlignment = HorizontalAlignment.Left;
+            }
+
+            if (verticalAlignment == VerticalAlignment.Stretch && inkSize.Height > clientSize.Height)
+            {
+                verticalAlignment = VerticalAlignment.Top;
+            }
+
+            switch (horizontalAlignment)
+            {
+                case HorizontalAlignment.Center:
+                case HorizontalAlignment.Stretch:
+                    vector.X = (clientSize.Width - inkSize.Width) * 0.5f;
+                    break;
+                case HorizontalAlignment.Left:
+                    vector.X = 0f;
+                    break;
+                case HorizontalAlignment.Right:
+                    vector.X = clientSize.Width - inkSize.Width;
+                    break;
+            }
+
+            switch (verticalAlignment)
+            {
+                case VerticalAlignment.Center:
+                case VerticalAlignment.Stretch:
+                    vector.Y = (clientSize.Height - inkSize.Height) * 0.5f;
+                    return vector;
+                case VerticalAlignment.Bottom:
+                    vector.Y = clientSize.Height - inkSize.Height;
+                    return vector;
+                case VerticalAlignment.Top:
+                    vector.Y = 0f;
+                    break;
+            }
+
+            return vector;
         }
 
         /// <summary>

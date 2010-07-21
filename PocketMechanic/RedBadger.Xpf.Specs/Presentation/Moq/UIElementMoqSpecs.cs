@@ -40,6 +40,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Moq
 
         protected const string MeasureOverride = "MeasureOverride";
 
+        protected const string VisualOffset = "VisualOffset";
+
         protected static Size availableSize;
 
         protected static Size desiredSize;
@@ -208,5 +210,216 @@ namespace RedBadger.Xpf.Specs.Presentation.Moq
             () =>
             uiElement.Protected().Verify(
                 ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
+    }
+
+    [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
+    public class when_ink_size_is_less_than_client_size_and_alignment_is_stretch : a_Measured_UIElement
+    {
+        private static readonly Size clientSize = new Size(100, 100);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(25, 25);
+
+        private static readonly Size inkSize = new Size(50, 50);
+
+        private Establish context =
+            () => uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+
+        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+
+        private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+    }
+
+    [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
+    public class when_ink_size_is_less_than_client_size_and_alignment_is_left_and_top : a_Measured_UIElement
+    {
+        private static readonly Size clientSize = new Size(100, 100);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(0, 0);
+
+        private static readonly Size inkSize = new Size(50, 50);
+
+        private Establish context = () =>
+            {
+                uiElement.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                uiElement.Object.VerticalAlignment = VerticalAlignment.Top;
+
+                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+            };
+
+        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+
+        private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+    }
+
+    [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
+    public class when_ink_size_is_less_than_client_size_and_alignment_is_center : a_Measured_UIElement
+    {
+        private static readonly Size clientSize = new Size(100, 100);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(25, 25);
+
+        private static readonly Size inkSize = new Size(50, 50);
+
+        private Establish context = () =>
+            {
+                uiElement.Object.HorizontalAlignment = HorizontalAlignment.Center;
+                uiElement.Object.VerticalAlignment = VerticalAlignment.Center;
+
+                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+            };
+
+        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+
+        private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+    }
+
+    [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
+    public class when_ink_size_is_less_than_client_size_and_alignment_is_right_and_bottom : a_Measured_UIElement
+    {
+        private static readonly Size clientSize = new Size(100, 100);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(50, 50);
+
+        private static readonly Size inkSize = new Size(50, 50);
+
+        private Establish context = () =>
+            {
+                uiElement.Object.HorizontalAlignment = HorizontalAlignment.Right;
+                uiElement.Object.VerticalAlignment = VerticalAlignment.Bottom;
+
+                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+            };
+
+        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+
+        private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+    }
+
+    [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
+    public class when_ink_size_is_greater_than_client_size_and_alignment_is_stretch : a_Measured_UIElement
+    {
+        private static readonly Size clientSize = new Size(50, 50);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(0, 0);
+
+        private static readonly Size inkSize = new Size(100, 100);
+
+        private Establish context =
+            () => uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+
+        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+
+        private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+    }
+
+    [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
+    public class when_ink_size_is_greater_than_client_size_and_alignment_is_left_and_top : a_Measured_UIElement
+    {
+        private static readonly Size clientSize = new Size(50, 50);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(0, 0);
+
+        private static readonly Size inkSize = new Size(100, 100);
+
+        private Establish context = () =>
+            {
+                uiElement.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                uiElement.Object.VerticalAlignment = VerticalAlignment.Top;
+
+                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+            };
+
+        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+
+        private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+    }
+
+    [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
+    public class when_ink_size_is_greater_than_client_size_and_alignment_is_center : a_Measured_UIElement
+    {
+        private static readonly Size clientSize = new Size(50, 50);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(-25, -25);
+
+        private static readonly Size inkSize = new Size(100, 100);
+
+        private Establish context = () =>
+            {
+                uiElement.Object.HorizontalAlignment = HorizontalAlignment.Center;
+                uiElement.Object.VerticalAlignment = VerticalAlignment.Center;
+
+                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+            };
+
+        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+
+        private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+    }
+
+    [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
+    public class when_ink_size_is_greater_than_client_size_and_alignment_is_right_and_bottom : a_Measured_UIElement
+    {
+        private static readonly Size clientSize = new Size(50, 50);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(-50, -50);
+
+        private static readonly Size inkSize = new Size(100, 100);
+
+        private Establish context = () =>
+            {
+                uiElement.Object.HorizontalAlignment = HorizontalAlignment.Right;
+                uiElement.Object.VerticalAlignment = VerticalAlignment.Bottom;
+
+                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+            };
+
+        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+
+        private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+    }
+
+    [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
+    public class when_ink_size_is_less_than_client_size_and_alignment_is_left_and_top_with_margins : a_Measured_UIElement
+    {
+        private static readonly Size clientSize = new Size(100, 100);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(10, 20);
+
+        private static readonly Size inkSize = new Size(50, 50);
+
+        private Establish context = () =>
+            {
+                uiElement.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                uiElement.Object.VerticalAlignment = VerticalAlignment.Top;
+                uiElement.Object.Margin = new Thickness(10, 20, 30, 40);
+
+                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+            };
+
+        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+
+        private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+    }
+
+    [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
+    public class when_ink_size_is_less_than_client_size_and_alignment_is_left_and_top_with_non_zero_position : a_Measured_UIElement
+    {
+        private static readonly Size clientSize = new Size(100, 100);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(200, 300);
+
+        private static readonly Size inkSize = new Size(50, 50);
+
+        private Establish context = () =>
+            {
+                uiElement.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                uiElement.Object.VerticalAlignment = VerticalAlignment.Top;
+
+                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+            };
+
+        private Because of = () => uiElement.Object.Arrange(new Rect(new Vector2(200, 300), clientSize));
+
+        private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 }
