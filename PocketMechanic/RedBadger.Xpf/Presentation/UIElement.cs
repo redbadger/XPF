@@ -11,14 +11,14 @@
         public Vector2 DrawPosition { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether the computed size and position of child elements in this element's layout are valid. 
+        /// Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
         /// </summary>
         /// <value>
         ///     <c>true</c> if the size and position of layout are valid; otherwise, <c>false</c>.
         /// </value>
         public bool IsArrangeValid { get; private set; }
 
-        public bool IsMeasureValue { get; private set; }
+        public bool IsMeasureValid { get; private set; }
 
         public Thickness Margin
         {
@@ -55,20 +55,23 @@
                 throw new InvalidOperationException("AvailableSize Width or Height cannot be NaN");
             }
 
-            var size = this.MeasureCore(availableSize);
-
-            if (float.IsPositiveInfinity(size.Width) || float.IsPositiveInfinity(size.Height))
+            if (!this.IsMeasureValid)
             {
-                throw new InvalidOperationException("The implementing element returned a PositiveInfinity");
-            }
+                var size = this.MeasureCore(availableSize);
 
-            if (float.IsNaN(size.Width) || float.IsNaN(size.Height))
-            {
-                throw new InvalidOperationException("The implementing element returned NaN");
-            }
+                if (float.IsPositiveInfinity(size.Width) || float.IsPositiveInfinity(size.Height))
+                {
+                    throw new InvalidOperationException("The implementing element returned a PositiveInfinity");
+                }
 
-            this.IsMeasureValue = true;
-            this.DesiredSize = size;
+                if (float.IsNaN(size.Width) || float.IsNaN(size.Height))
+                {
+                    throw new InvalidOperationException("The implementing element returned NaN");
+                }
+
+                this.IsMeasureValid = true;
+                this.DesiredSize = size;
+            }
         }
 
         protected abstract void DrawImplementation();

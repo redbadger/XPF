@@ -47,7 +47,7 @@ namespace RedBadger.Xpf.Specs.Presentation
             () => exception.ShouldBeOfType<InvalidOperationException>();
     }
 
-    [Subject(typeof(UIElement), "Measuring")]
+    [Subject(typeof(UIElement), "Measure")]
     public class when_measuring : a_UIElement
     {
         private static readonly Size availableSize = new Size(10, 10);
@@ -64,12 +64,12 @@ namespace RedBadger.Xpf.Specs.Presentation
 
         private It should_invalidate_arrange = () => uiElement.IsArrangeValid.ShouldBeFalse();
 
-        private It should_be_marked_as_having_a_valid_Measure = () => uiElement.IsMeasureValue.ShouldBeTrue();
+        private It should_be_marked_as_having_a_valid_Measure = () => uiElement.IsMeasureValid.ShouldBeTrue();
 
         private It should_have_a_desired_size_set = () => uiElement.DesiredSize.ShouldNotEqual(originalDesiredSize);
     }
 
-    [Subject(typeof(UIElement), "Measuring")]
+    [Subject(typeof(UIElement), "Measure")]
     public class when_an_implementing_control_returns_a_size_greater_than_the_available_size : a_UIElement
     {
         private static readonly Size availableSize = new Size(10, 10);
@@ -83,7 +83,7 @@ namespace RedBadger.Xpf.Specs.Presentation
             () => uiElement.DesiredSize.ShouldEqual(availableSize);
     }
 
-    [Subject(typeof(UIElement), "Measuring")]
+    [Subject(typeof(UIElement), "Measure")]
     public class when_the_implementing_controls_requested_size_combined_with_the_margin_exceeds_the_available_size : a_UIElement
     {
         private static readonly Size availableSize = new Size(10, 10);
@@ -114,7 +114,7 @@ namespace RedBadger.Xpf.Specs.Presentation
         private It should_return_a_zero_value_instead = () => uiElement.DesiredSize.ShouldEqual(Size.Empty);
     }
 
-    [Subject(typeof(UIElement), "Measuring")]
+    [Subject(typeof(UIElement), "Measure")]
     public class when_an_implementing_control_returns_a_width_of_positive_infinity : a_UIElement
     {
         private static Exception exception;
@@ -131,7 +131,7 @@ namespace RedBadger.Xpf.Specs.Presentation
         private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
 
-    [Subject(typeof(UIElement), "Measuring")]
+    [Subject(typeof(UIElement), "Measure")]
     public class when_an_implementing_control_returns_a_height_of_positive_infinity : a_UIElement
     {
         private static Exception exception;
@@ -148,7 +148,7 @@ namespace RedBadger.Xpf.Specs.Presentation
         private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
 
-    [Subject(typeof(UIElement), "Measuring")]
+    [Subject(typeof(UIElement), "Measure")]
     public class when_an_implementing_control_returns_a_width_that_is_not_a_number : a_UIElement
     {
         private static Exception exception;
@@ -165,7 +165,7 @@ namespace RedBadger.Xpf.Specs.Presentation
         private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
 
-    [Subject(typeof(UIElement), "Measuring")]
+    [Subject(typeof(UIElement), "Measure")]
     public class when_an_implementing_control_returns_a_height_that_is_not_a_number : a_UIElement
     {
         private static Exception exception;
@@ -182,7 +182,7 @@ namespace RedBadger.Xpf.Specs.Presentation
         private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
 
-    [Subject(typeof(UIElement), "Measuring")]
+    [Subject(typeof(UIElement), "Measure")]
     public class when_an_implementing_control_is_asked_to_measure_itself : a_UIElement
     {
         private static Size availableSize = new Size(400, 300);
@@ -211,6 +211,19 @@ namespace RedBadger.Xpf.Specs.Presentation
                                                                                                      MeasureOverride(
                                                                                                          expectedAvailableSize));
                                                                                          };
+    }
+
+    [Subject(typeof(UIElement), "Measure")]
+    public class after_measure_is_called : a_UIElement
+    {
+        private Establish context = () => uiElement.Measure(Size.Empty);
+
+        private Because of = () => uiElement.Measure(Size.Empty);
+
+        private It should_be_considered_valid = () => uiElement.IsMeasureValid.ShouldBeTrue();
+
+        private It should_not_measure_again =
+            () => uiElement.AssertWasCalled(element => element.MeasureOverride(Size.Empty), element => element.Repeat.Once());
     }
 
     internal static class UIElementMockingExtensions
