@@ -30,7 +30,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     }
 
     [Subject(typeof(RootElement))]
-    public class when_initialising : a_RootElement
+    public class after_update : a_RootElement
     {
         private Because of = () => RootElement.Update();
 

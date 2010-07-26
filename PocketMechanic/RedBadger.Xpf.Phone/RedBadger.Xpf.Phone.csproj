@@ -87,6 +87,9 @@
     <Compile Include="..\RedBadger.Xpf\Internal\FloatUtil.cs">
       <Link>Internal\FloatUtil.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\MinMax.cs">
+      <Link>Internal\MinMax.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ContentControl.cs">
       <Link>Presentation\Controls\ContentControl.cs</Link>
     </Compile>

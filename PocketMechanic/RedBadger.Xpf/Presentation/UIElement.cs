@@ -10,7 +10,28 @@
 
     public abstract class UIElement : DependencyObject, IElement
     {
+        private float height = float.NaN;
+
+        private float maxHeight = float.PositiveInfinity;
+
+        private float maxWidth = float.PositiveInfinity;
+
+        private float width = float.NaN;
+
         public Size DesiredSize { get; private set; }
+
+        public float Height
+        {
+            get
+            {
+                return this.height;
+            }
+
+            set
+            {
+                this.height = value;
+            }
+        }
 
         public HorizontalAlignment HorizontalAlignment { get; set; }
 
@@ -26,9 +47,52 @@
 
         public Thickness Margin { get; set; }
 
+        public float MaxHeight
+        {
+            get
+            {
+                return this.maxHeight;
+            }
+
+            set
+            {
+                this.maxHeight = value;
+            }
+        }
+
+        public float MaxWidth
+        {
+            get
+            {
+                return this.maxWidth;
+            }
+
+            set
+            {
+                this.maxWidth = value;
+            }
+        }
+
+        public float MinHeight { get; set; }
+
+        public float MinWidth { get; set; }
+
         public Size RenderSize { get; set; }
 
         public VerticalAlignment VerticalAlignment { get; set; }
+
+        public float Width
+        {
+            get
+            {
+                return this.width;
+            }
+
+            set
+            {
+                this.width = value;
+            }
+        }
 
         /// <remarks>
         ///   In WPF this is protected internal.  For the purposes of unit testing we've not made this protected.
@@ -245,21 +309,36 @@
                 Math.Max(availableSize.Width - horizontalMargin, 0f), 
                 Math.Max(availableSize.Height - verticalMargin, 0f));
 
+            var minMax = new MinMax(this);
+
             var size = this.MeasureOverride(availableSizeWithoutMargins);
-            var width = size.Width + horizontalMargin;
-            var height = size.Height + verticalMargin;
 
-            if (width > availableSize.Width)
+            size = new Size(Math.Max(size.Width, minMax.MinWidth), Math.Max(size.Height, minMax.MinHeight));
+
+            if (size.Width > minMax.MaxWidth)
             {
-                width = availableSize.Width;
+                size.Width = minMax.MaxWidth;
             }
 
-            if (height > availableSize.Height)
+            if (size.Height > minMax.MaxHeight)
             {
-                height = availableSize.Height;
+                size.Height = minMax.MaxHeight;
             }
 
-            return new Size(Math.Max(0.0f, width), Math.Max(0.0f, height));
+            var desiredWidth = size.Width + horizontalMargin;
+            var desiredHeight = size.Height + verticalMargin;
+
+            if (desiredWidth > availableSize.Width)
+            {
+                desiredWidth = availableSize.Width;
+            }
+
+            if (desiredHeight > availableSize.Height)
+            {
+                desiredHeight = availableSize.Height;
+            }
+
+            return new Size(Math.Max(0.0f, desiredWidth), Math.Max(0.0f, desiredHeight));
         }
     }
 }
