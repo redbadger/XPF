@@ -1,6 +1,5 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
-    using System;
     using System.Windows;
 
     using Microsoft.Xna.Framework;
