@@ -5,6 +5,7 @@
 
     using Microsoft.Xna.Framework;
 
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Internal;
 
     public abstract class UIElement : DependencyObject, IElement
@@ -95,6 +96,8 @@
             }
         }
 
+        public abstract void Render(ISpriteBatch spriteBatch);
+
         /// <summary>
         ///   When overridden in a derived class, positions child elements and determines a size for a UIElement derived class.
         /// </summary>
@@ -139,7 +142,7 @@
             size.Height = Math.Max(0f, size.Height - verticalMargin);
 
             var desiredSizeWithoutMargins = new Size(
-                Math.Max(0f, this.DesiredSize.Width - horizontalMargin),
+                Math.Max(0f, this.DesiredSize.Width - horizontalMargin), 
                 Math.Max(0f, this.DesiredSize.Height - verticalMargin));
 
             if (FloatUtil.LessThan(size.Width, desiredSizeWithoutMargins.Width))
@@ -239,8 +242,8 @@
             float verticalMargin = margin.Top + margin.Bottom;
 
             var availableSizeWithoutMargins = new Size(
-                Math.Max((availableSize.Width - horizontalMargin), 0f),
-                Math.Max((availableSize.Height - verticalMargin), 0f));
+                Math.Max(availableSize.Width - horizontalMargin, 0f), 
+                Math.Max(availableSize.Height - verticalMargin, 0f));
 
             var size = this.MeasureOverride(availableSizeWithoutMargins);
             var width = size.Width + horizontalMargin;

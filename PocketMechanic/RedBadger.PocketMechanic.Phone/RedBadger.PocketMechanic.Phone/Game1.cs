@@ -20,6 +20,8 @@ namespace RedBadger.PocketMechanic.Phone
             // Pre-autoscale settings.
             this.graphics.PreferredBackBufferWidth = 480;
             this.graphics.PreferredBackBufferHeight = 800;
+
+            this.Components.Add(new XpfTest(this));
         }
 
         protected override void Draw(GameTime gameTime)

@@ -1,5 +1,7 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
+    using RedBadger.Xpf.Graphics;
+
     public class RootElement : ContentControl
     {
         private readonly Rect viewPort;
@@ -7,6 +9,11 @@ namespace RedBadger.Xpf.Presentation.Controls
         public RootElement(Rect viewPort)
         {
             this.viewPort = viewPort;
+        }
+
+        public void Draw(ISpriteBatch spriteBatch)
+        {
+            this.Render(spriteBatch);
         }
 
         public void Update()

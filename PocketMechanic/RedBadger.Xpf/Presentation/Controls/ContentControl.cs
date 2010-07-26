@@ -1,7 +1,14 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
+    using System;
     using System.Windows;
 
+    using Microsoft.Xna.Framework;
+
+    using RedBadger.Xpf.Graphics;
+
+    using Rect = RedBadger.Xpf.Presentation.Rect;
+    using Size = RedBadger.Xpf.Presentation.Size;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     /// <summary>
@@ -22,6 +29,23 @@ namespace RedBadger.Xpf.Presentation.Controls
             {
                 this.SetValue(ContentProperty, value);
             }
+        }
+
+        public override void Render(ISpriteBatch spriteBatch)
+        {
+            this.Content.Render(spriteBatch);
+        }
+
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            this.Content.Arrange(new Rect(Vector2.Zero, finalSize));
+            return finalSize;
+        }
+
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            this.Content.Measure(availableSize);
+            return this.Content.DesiredSize;
         }
     }
 }

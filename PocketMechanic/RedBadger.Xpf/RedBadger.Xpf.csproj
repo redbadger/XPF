@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisLogFile>bin\Debug\RedBadger.Xpf.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
@@ -80,6 +80,7 @@
     <Compile Include="Internal\FloatUtil.cs" />
     <Compile Include="Presentation\Controls\ContentControl.cs" />
     <Compile Include="Presentation\Controls\RootElement.cs" />
+    <Compile Include="Presentation\Controls\TextBlock.cs" />
     <Compile Include="Presentation\HorizontalAlignment.cs" />
     <Compile Include="Presentation\IElement.cs" />
     <Compile Include="Presentation\Orientation.cs" />
