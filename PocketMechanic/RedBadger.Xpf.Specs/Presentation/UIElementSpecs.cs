@@ -52,13 +52,9 @@ namespace RedBadger.Xpf.Specs.Presentation
     {
         private static readonly Size availableSize = new Size(10, 10);
 
-        private static Size originalDesiredSize;
+        private static readonly Size expectedDesiredSize = new Size(5, 5);
 
-        private Establish context = () =>
-            {
-                originalDesiredSize = uiElement.DesiredSize;
-                uiElement.Expect(element => element.MeasureOverride(availableSize)).Return(new Size(5, 5));
-            };
+        private Establish context = () => uiElement.Expect(element => element.MeasureOverride(availableSize)).Return(new Size(5, 5));
 
         private Because of = () => uiElement.Measure(availableSize);
 
@@ -66,7 +62,7 @@ namespace RedBadger.Xpf.Specs.Presentation
 
         private It should_be_marked_as_having_a_valid_Measure = () => uiElement.IsMeasureValid.ShouldBeTrue();
 
-        private It should_have_a_desired_size_set = () => uiElement.DesiredSize.ShouldNotEqual(originalDesiredSize);
+        private It should_have_a_desired_size_set = () => uiElement.DesiredSize.ShouldEqual(expectedDesiredSize);
     }
 
     [Subject(typeof(UIElement), "Measure")]

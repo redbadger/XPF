@@ -11,8 +11,6 @@
     {
         public Size DesiredSize { get; private set; }
 
-        public Vector2 DrawPosition { get; set; }
-
         public HorizontalAlignment HorizontalAlignment { get; set; }
 
         /// <summary>
@@ -62,10 +60,6 @@
             }
         }
 
-        public void Draw()
-        {
-        }
-
         /// <summary>
         ///   Updates the DesiredSize of a UIElement.
         ///   Derrived elements call this method from their own MeasureOverride implementations to form a recursive layout update.
@@ -101,13 +95,24 @@
             }
         }
 
+        /// <summary>
+        ///   When overridden in a derived class, positions child elements and determines a size for a UIElement derived class.
+        /// </summary>
+        /// <param name = "finalSize">The final area within the parent that this element should use to arrange itself and its children.</param>
+        /// <returns>The actual size used.</returns>
         protected virtual Size ArrangeOverride(Size finalSize)
         {
             return finalSize;
         }
 
-        protected abstract void DrawImplementation();
-
+        /// <summary>
+        ///   When overridden in a derived class, measures the size in layout required for child elements and determines a size for the UIElement-derived class.
+        /// </summary>
+        /// <param name = "availableSize">
+        ///   The available size that this element can give to child elements.
+        ///   Infinity can be specified as a value to indicate that the element will size to whatever content is available.
+        /// </param>
+        /// <returns>The size that this element determines it needs during layout, based on its calculations of child element sizes.</returns>
         protected virtual Size MeasureOverride(Size availableSize)
         {
             return Size.Empty;
@@ -160,7 +165,8 @@
             Size renderSize = this.ArrangeOverride(size);
             this.RenderSize = renderSize;
 
-            var clientSize = new Size(Math.Max(0f, finalRect.Width - horizontalMargin), Math.Max(0f, finalRect.Height - verticalMargin));
+            var clientSize = new Size(
+                Math.Max(0f, finalRect.Width - horizontalMargin), Math.Max(0f, finalRect.Height - verticalMargin));
 
             Vector2 offset = this.ComputeAlignmentOffset(clientSize, renderSize);
             offset.X += finalRect.X + margin.Left;

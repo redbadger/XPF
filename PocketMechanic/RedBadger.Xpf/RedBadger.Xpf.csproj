@@ -79,6 +79,7 @@
     <Compile Include="Graphics\Texture2DAdapter.cs" />
     <Compile Include="Internal\FloatUtil.cs" />
     <Compile Include="Presentation\Controls\ContentControl.cs" />
+    <Compile Include="Presentation\Controls\RootElement.cs" />
     <Compile Include="Presentation\HorizontalAlignment.cs" />
     <Compile Include="Presentation\IElement.cs" />
     <Compile Include="Presentation\Orientation.cs" />

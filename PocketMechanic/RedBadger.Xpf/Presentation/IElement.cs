@@ -4,8 +4,6 @@
     {
         Size DesiredSize { get; }
 
-        void Draw();
-
         void Measure(Size availableSize);
     }
 }

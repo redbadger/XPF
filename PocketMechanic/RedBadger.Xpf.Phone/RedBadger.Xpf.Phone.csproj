@@ -97,6 +97,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ContentControl.cs">
       <Link>Presentation\Controls\ContentControl.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\RootElement.cs">
+      <Link>Presentation\Controls\RootElement.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\HorizontalAlignment.cs">
       <Link>Presentation\HorizontalAlignment.cs</Link>
     </Compile>

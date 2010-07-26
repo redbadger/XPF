@@ -10,12 +10,12 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Presentation.Moq
+namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
 {
     using System;
 
-    using global::Moq;
-    using global::Moq.Protected;
+    using Moq;
+    using Moq.Protected;
 
     using Machine.Specifications;
 
