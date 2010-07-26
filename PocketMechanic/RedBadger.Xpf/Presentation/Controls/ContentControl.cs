@@ -24,6 +24,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             {
                 return (IElement)this.GetValue(ContentProperty);
             }
+
             set
             {
                 this.SetValue(ContentProperty, value);
@@ -32,19 +33,34 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         public override void Render(ISpriteBatch spriteBatch)
         {
-            this.Content.Render(spriteBatch);
+            IElement content = this.Content;
+            if (content != null)
+            {
+                content.Render(spriteBatch);
+            }
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            this.Content.Arrange(new Rect(Vector2.Zero, finalSize));
+            IElement content = this.Content;
+            if (content != null)
+            {
+                content.Arrange(new Rect(Vector2.Zero, finalSize));
+            }
+
             return finalSize;
         }
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            this.Content.Measure(availableSize);
-            return this.Content.DesiredSize;
+            IElement content = this.Content;
+            if (content == null)
+            {
+                return Size.Empty;
+            }
+
+            content.Measure(availableSize);
+            return content.DesiredSize;
         }
     }
 }
