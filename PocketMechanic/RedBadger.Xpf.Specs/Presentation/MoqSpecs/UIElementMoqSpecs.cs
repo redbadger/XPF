@@ -419,90 +419,151 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
         private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
-    [Subject(typeof(UIElement), "Measure - explicit sizes")]
+    [Subject(typeof(UIElement), "Layout - explicit sizes")]
     public class when_an_explicit_size_is_set_and_the_children_want_less_space : a_UIElement
     {
         private static readonly Size availableSize = new Size(300, 300);
 
-        private static readonly Size explicitSize = new Size(100, 100);
-
         private static readonly Size desiredSize = new Size(50, 50);
 
-        private Establish context =
-            () => uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+        private static readonly Vector2 expectedVisualOffset = new Vector2(125, 125);
+
+        private static readonly Size explicitSize = new Size(100, 100);
+
+        private Establish context = () =>
+            {
+                uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+            };
 
         private Because of = () =>
             {
                 uiElement.Object.Width = explicitSize.Width;
                 uiElement.Object.Height = explicitSize.Height;
                 uiElement.Object.Measure(availableSize);
+                uiElement.Object.Arrange(new Rect(Vector2.Zero, availableSize));
             };
 
-        private It should_have_a_desired_size_equal_to_the_size_that_was_specified =
-            () => uiElement.Object.DesiredSize.ShouldEqual(explicitSize);
-/*
-
-        private It should_arrange_its_children_within_the_desired_size =
+        private It should_arrange_its_children_within_the_explicit_size =
             () =>
             uiElement.Protected().Verify(
                 ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(explicitSize)));
-*/
-    }
-
-    [Subject(typeof(UIElement), "Measure - explicit sizes")]
-    public class when_an_explicit_width_is_set_and_the_children_want_more_space : a_UIElement
-    {
-        private static readonly Size expectedSize = new Size(100, 100);
-
-        private Establish context =
-            () => uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(new Size(200, 200));
-
-        private Because of = () =>
-        {
-            uiElement.Object.Width = expectedSize.Width;
-            uiElement.Object.Height = expectedSize.Height;
-            uiElement.Object.Measure(new Size(300, 300));
-        };
 
         private It should_have_a_desired_size_equal_to_the_size_that_was_specified =
-            () => uiElement.Object.DesiredSize.ShouldEqual(expectedSize);
+            () => uiElement.Object.DesiredSize.ShouldEqual(explicitSize);
+
+        private It should_have_the_correct_visual_offset =
+            () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
-    [Subject(typeof(UIElement), "Measure - explicit sizes")]
-    public class when_a_minimum_size_is_set_and_the_children_want_less_space : a_UIElement
+    [Subject(typeof(UIElement), "Layout - explicit sizes")]
+    public class when_an_explicit_width_is_set_and_the_children_want_more_space : a_UIElement
     {
-        private static readonly Size expectedSize = new Size(100, 100);
+        private static readonly Size availableSize = new Size(300, 300);
 
-        private Establish context =
-            () => uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(new Size(50, 50));
+        private static readonly Size desiredSize = new Size(200, 200);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(100, 100);
+
+        private static readonly Size explicitSize = new Size(100, 100);
+
+        private Establish context = () =>
+            {
+                uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+            };
 
         private Because of = () =>
             {
-                uiElement.Object.MinWidth = expectedSize.Width;
-                uiElement.Object.MinHeight = expectedSize.Height;
-                uiElement.Object.Measure(new Size(300, 300));
+                uiElement.Object.Width = explicitSize.Width;
+                uiElement.Object.Height = explicitSize.Height;
+                uiElement.Object.Measure(availableSize);
+                uiElement.Object.Arrange(new Rect(Vector2.Zero, availableSize));
             };
 
+        private It should_arrange_its_children_within_the_explicit_size =
+            () =>
+            uiElement.Protected().Verify(
+                ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(explicitSize)));
+
         private It should_have_a_desired_size_equal_to_the_size_that_was_specified =
-            () => uiElement.Object.DesiredSize.ShouldEqual(expectedSize);
+            () => uiElement.Object.DesiredSize.ShouldEqual(explicitSize);
+
+        private It should_have_the_correct_visual_offset =
+            () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
-    [Subject(typeof(UIElement), "Measure - explicit sizes")]
-    public class when_a_maximum_size_is_set_and_the_children_want_more_space : a_UIElement
+    [Subject(typeof(UIElement), "Layout - explicit sizes")]
+    public class when_a_minimum_size_is_set_and_the_children_want_less_space : a_UIElement
     {
-        private static readonly Size expectedSize = new Size(100, 100);
+        private static readonly Size availableSize = new Size(300, 300);
 
-        private Establish context =
-            () => uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(new Size(200, 200));
+        private static readonly Size desiredSize = new Size(50, 50);
+
+        private static readonly Size minimumSize = new Size(100, 100);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(125, 125);
+
+        private Establish context = () =>
+            {
+                uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+            };
 
         private Because of = () =>
-        {
-            uiElement.Object.MaxWidth = expectedSize.Width;
-            uiElement.Object.MaxHeight = expectedSize.Height;
-            uiElement.Object.Measure(new Size(300, 300));
-        };
+            {
+                uiElement.Object.MinWidth = minimumSize.Width;
+                uiElement.Object.MinHeight = minimumSize.Height;
+                uiElement.Object.Measure(availableSize);
+                uiElement.Object.Arrange(new Rect(Vector2.Zero, availableSize));
+            };
 
-        private It should_have_a_desired_size_equal_to_the_size_that_was_specified =
-            () => uiElement.Object.DesiredSize.ShouldEqual(expectedSize);
+        private It should_arrange_its_children_within_the_available_size =
+            () =>
+            uiElement.Protected().Verify(
+                ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(availableSize)));
+
+        private It should_have_a_desired_size_equal_to_the_minimum_size_that_was_specified =
+            () => uiElement.Object.DesiredSize.ShouldEqual(minimumSize);
+
+        private It should_have_the_correct_visual_offset =
+            () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+    }
+
+    [Subject(typeof(UIElement), "Layout - explicit sizes")]
+    public class when_a_maximum_size_is_set_and_the_children_want_more_space : a_UIElement
+    {
+        private static readonly Size availableSize = new Size(300, 300);
+
+        private static readonly Size desiredSize = new Size(200, 200);
+
+        private static readonly Size maximumSize = new Size(100, 100);
+
+        private static readonly Vector2 expectedVisualOffset = new Vector2(100, 100);
+
+        private Establish context = () =>
+            {
+                uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+            };
+
+        private Because of = () =>
+            {
+                uiElement.Object.MaxWidth = maximumSize.Width;
+                uiElement.Object.MaxHeight = maximumSize.Height;
+                uiElement.Object.Measure(availableSize);
+                uiElement.Object.Arrange(new Rect(Vector2.Zero, availableSize));
+            };
+
+        private It should_arrange_its_children_within_the_maximum_size =
+            () =>
+            uiElement.Protected().Verify(
+                ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(maximumSize)));
+
+        private It should_have_a_desired_size_equal_to_the_maximum_size_that_was_specified =
+            () => uiElement.Object.DesiredSize.ShouldEqual(maximumSize);
+
+        private It should_have_the_correct_visual_offset =
+            () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 }

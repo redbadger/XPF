@@ -196,46 +196,61 @@
         /// <param name = "finalRect">The final area within the parent that element should use to arrange itself and its child elements.</param>
         private void ArrangeCore(Rect finalRect)
         {
-            Size size = finalRect.Size;
+            Size finalSize = finalRect.Size;
 
             Thickness margin = this.Margin;
             float horizontalMargin = margin.Left + margin.Right;
             float verticalMargin = margin.Top + margin.Bottom;
 
-            size.Width = Math.Max(0f, size.Width - horizontalMargin);
-            size.Height = Math.Max(0f, size.Height - verticalMargin);
+            finalSize.Width = Math.Max(0f, finalSize.Width - horizontalMargin);
+            finalSize.Height = Math.Max(0f, finalSize.Height - verticalMargin);
 
             var desiredSizeWithoutMargins = new Size(
                 Math.Max(0f, this.DesiredSize.Width - horizontalMargin), 
                 Math.Max(0f, this.DesiredSize.Height - verticalMargin));
 
-            if (FloatUtil.LessThan(size.Width, desiredSizeWithoutMargins.Width))
+            if (FloatUtil.LessThan(finalSize.Width, desiredSizeWithoutMargins.Width))
             {
-                size.Width = desiredSizeWithoutMargins.Width;
+                finalSize.Width = desiredSizeWithoutMargins.Width;
             }
 
-            if (FloatUtil.LessThan(size.Height, desiredSizeWithoutMargins.Height))
+            if (FloatUtil.LessThan(finalSize.Height, desiredSizeWithoutMargins.Height))
             {
-                size.Height = desiredSizeWithoutMargins.Height;
+                finalSize.Height = desiredSizeWithoutMargins.Height;
             }
 
             if (this.HorizontalAlignment != HorizontalAlignment.Stretch)
             {
-                size.Width = desiredSizeWithoutMargins.Width;
+                finalSize.Width = desiredSizeWithoutMargins.Width;
             }
 
             if (this.VerticalAlignment != VerticalAlignment.Stretch)
             {
-                size.Height = desiredSizeWithoutMargins.Height;
+                finalSize.Height = desiredSizeWithoutMargins.Height;
             }
 
-            Size renderSize = this.ArrangeOverride(size);
+            var minMax = new MinMax(this);
+
+            float largestWidth = Math.Max(desiredSizeWithoutMargins.Width, minMax.MaxWidth);
+            if (FloatUtil.LessThan(largestWidth, finalSize.Width))
+            {
+                finalSize.Width = largestWidth;
+            }
+
+            float largestHeight = Math.Max(desiredSizeWithoutMargins.Height, minMax.MaxHeight);
+            if (FloatUtil.LessThan(largestHeight, finalSize.Height))
+            {
+                finalSize.Height = largestHeight;
+            }
+
+            Size renderSize = this.ArrangeOverride(finalSize);
             this.RenderSize = renderSize;
 
+            var inkSize = new Size(Math.Min(renderSize.Width, minMax.MaxWidth), Math.Min(renderSize.Height, minMax.MaxHeight));
             var clientSize = new Size(
                 Math.Max(0f, finalRect.Width - horizontalMargin), Math.Max(0f, finalRect.Height - verticalMargin));
 
-            Vector2 offset = this.ComputeAlignmentOffset(clientSize, renderSize);
+            Vector2 offset = this.ComputeAlignmentOffset(clientSize, inkSize);
             offset.X += finalRect.X + margin.Left;
             offset.Y += finalRect.Y + margin.Top;
 
