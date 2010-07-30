@@ -178,3 +178,130 @@ protected sealed override Size ArrangeOverride(Size arrangeSize)
     base.InvalidateVisual();
     return arrangeSize;
 }
+
+protected sealed override void OnRender(DrawingContext ctx)
+{
+    this.VerifyReentrancy();
+    if (ctx == null)
+    {
+        throw new ArgumentNullException("ctx");
+    }
+    if (this.IsLayoutDataValid)
+    {
+        Brush background = this.Background;
+        if (background != null)
+        {
+            ctx.DrawRectangle(background, null, new Rect(0.0, 0.0, base.RenderSize.Width, base.RenderSize.Height));
+        }
+        this.SetFlags(false, Flags.RequiresAlignment);
+        this.SetFlags(true, Flags.TreeInReadOnlyMode);
+        try
+        {
+            this.EnsureTextBlockCache();
+            LineProperties lineProperties = this._textBlockCache._lineProperties;
+            double wrappingWidth = this.CalcWrappingWidth(base.RenderSize.Width);
+            Vector vector = this.CalcContentOffset(base.RenderSize, wrappingWidth);
+            Point lineOffset = new Point(vector.X, vector.Y);
+            Line line = this.CreateLine(lineProperties);
+            int dcp = 0;
+            bool showParagraphEllipsis = false;
+            this.SetFlags(this.CheckFlags(Flags.HasParagraphEllipses), Flags.RequiresAlignment);
+            int lineCount = this.LineCount;
+            for (int i = 0; i < lineCount; i++)
+            {
+                LineMetrics metrics = this.GetLine(i);
+                double num5 = Math.Max((double) 0.0, (double) (base.RenderSize.Height - this.Padding.Bottom));
+                if (this.CheckFlags(Flags.HasParagraphEllipses) && ((i + 1) < lineCount))
+                {
+                    double num6 = (this.GetLine(i + 1).Height + metrics.Height) + lineOffset.Y;
+                    showParagraphEllipsis = DoubleUtil.GreaterThan(num6, num5) && !DoubleUtil.AreClose(num6, num5);
+                }
+                if ((!this.CheckFlags(Flags.HasParagraphEllipses) || DoubleUtil.LessThanOrClose(metrics.Height + lineOffset.Y, num5)) || (i == 0))
+                {
+                    using (line)
+                    {
+                        line.Format(dcp, wrappingWidth, this.GetLineProperties(dcp == 0, showParagraphEllipsis, lineProperties), metrics.TextLineBreak, this._textBlockCache._textRunCache, showParagraphEllipsis);
+                        if (!this.CheckFlags(Flags.HasParagraphEllipses))
+                        {
+                            metrics = this.UpdateLine(i, metrics, line.Start, line.Width);
+                        }
+                        line.Render(ctx, lineOffset);
+                        lineOffset.Y += metrics.Height;
+                        dcp += metrics.Length;
+                    }
+                }
+            }
+        }
+        finally
+        {
+            this.SetFlags(false, Flags.TreeInReadOnlyMode);
+            this._textBlockCache = null;
+        }
+    }
+}
+
+private int get_LineCount()
+{
+    if (!this.CheckFlags(Flags.HasFirstLine))
+    {
+        return 0;
+    }
+    if (this._subsequentLines != null)
+    {
+        return (this._subsequentLines.Count + 1);
+    }
+    return 1;
+}
+
+private double CalcWrappingWidth(double width)
+{
+    if (width < this._previousDesiredSize.Width)
+    {
+        width = this._previousDesiredSize.Width;
+    }
+    if (width > this._referenceSize.Width)
+    {
+        width = this._referenceSize.Width;
+    }
+    width = Math.Max((double) 0.0, (double) (width - (this.Padding.Left + this.Padding.Right)));
+    TextDpi.EnsureValidLineWidth(ref width);
+    return width;
+}
+
+private Vector CalcContentOffset(Size computedSize, double wrappingWidth)
+{
+    Vector vector = new Vector();
+    Thickness padding = this.Padding;
+    Size size = new Size(Math.Max((double) 0.0, (double) (computedSize.Width - (padding.Left + padding.Right))), Math.Max((double) 0.0, (double) (computedSize.Height - (padding.Top + padding.Bottom))));
+    switch (this.TextAlignment)
+    {
+        case TextAlignment.Right:
+            vector.X = size.Width - wrappingWidth;
+            break;
+
+        case TextAlignment.Center:
+            vector.X = (size.Width - wrappingWidth) / 2.0;
+            break;
+    }
+    vector.X += padding.Left;
+    vector.Y += padding.Top;
+    return vector;
+}
+
+private Line CreateLine(LineProperties lineProperties)
+{
+    if (this._complexContent == null)
+    {
+        return new SimpleLine(this, this.Text, lineProperties.DefaultTextRunProperties);
+    }
+    return new ComplexLine(this);
+}
+
+private LineMetrics GetLine(int index)
+{
+    if (index != 0)
+    {
+        return this._subsequentLines[index - 1];
+    }
+    return this._firstLine;
+}

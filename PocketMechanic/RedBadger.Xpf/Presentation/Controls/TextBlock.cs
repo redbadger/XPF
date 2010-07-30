@@ -1,5 +1,6 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
+    using System;
     using System.Windows;
 
     using Microsoft.Xna.Framework;
@@ -19,9 +20,24 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         private readonly ISpriteFont spriteFont;
 
+        private Color foreground = Color.Black;
+
         public TextBlock(ISpriteFont spriteFont)
         {
             this.spriteFont = spriteFont;
+        }
+
+        public Color Foreground
+        {
+            get
+            {
+                return this.foreground;
+            }
+
+            set
+            {
+                this.foreground = value;
+            }
         }
 
         public string Text
@@ -37,9 +53,12 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
+        public Thickness Padding { get; set; }
+
         public override void Render(ISpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(this.spriteFont, this.Text, this.VisualOffset, Color.White);
+            Vector2 drawPosition = this.VisualOffset + new Vector2(this.Padding.Left, this.Padding.Top);
+            spriteBatch.DrawString(this.spriteFont, this.Text, drawPosition, this.foreground);
         }
 
         protected override Size ArrangeOverride(Size finalSize)
@@ -50,7 +69,8 @@ namespace RedBadger.Xpf.Presentation.Controls
         protected override Size MeasureOverride(Size availableSize)
         {
             Vector2 measureString = this.spriteFont.MeasureString(this.Text);
-            return new Size(measureString.X, measureString.Y);
+
+            return new Size(measureString.X + this.Padding.Left + this.Padding.Right, measureString.Y + this.Padding.Top + this.Padding.Bottom);
         }
     }
 }
