@@ -43,7 +43,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             };
     }
 
-    [Subject(typeof(TextBlock), "Formatting")]
+    [Subject(typeof(TextBlock), "Foreground")]
     public class when_foreground_is_not_specified : a_TextBlock
     {
         private Because of = () =>
@@ -59,7 +59,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
                 batch.DrawString(SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Vector2>(), Color.Black));
     }
 
-    [Subject(typeof(TextBlock), "Formatting")]
+    [Subject(typeof(TextBlock), "Foreground")]
     public class when_foreground_is_specified : a_TextBlock
     {
         private static Color expectedForeground;
@@ -79,7 +79,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
                 batch.DrawString(SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Vector2>(), expectedForeground));
     }
 
-    [Subject(typeof(TextBlock), "Formatting")]
+    [Subject(typeof(TextBlock), "Padding")]
     public class when_padding_is_specified : a_TextBlock
     {
         private static readonly Size expectedDesiredSize = new Size(50, 70);
@@ -111,5 +111,63 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             SpriteBatch.Verify(
                 batch =>
                 batch.DrawString(SpriteFont.Object, Moq.It.IsAny<string>(), expectedDrawPosition, Moq.It.IsAny<Color>()));
+    }
+
+    public abstract class a_TextBlock_With_Content : a_TextBlock
+    {
+        protected const string Word = "word";
+        protected const string Space = " ";
+
+        protected static readonly Vector2 SentenceSize = new Vector2(310, 10);
+
+        private const string Sentence = Word + Space + Word + Space + Word + Space + Word + Space + Word + Space + Word + Space + Word;
+
+        private Establish context = () =>
+            {
+                SpriteFont.Setup(font => font.MeasureString(Sentence)).Returns(SentenceSize);
+                SpriteFont.Setup(font => font.MeasureString(Word)).Returns(new Vector2(40, 10));
+                SpriteFont.Setup(font => font.MeasureString(Space)).Returns(new Vector2(5, 10));
+
+                TextBlock.Text = Sentence;
+            };
+    }
+
+    [Subject(typeof(TextBlock), "Wrapping")]
+    public class when_wrapping_is_not_required : a_TextBlock_With_Content
+    {
+        private Because of = () =>
+            {
+                RootElement.Update();
+                RootElement.Draw(SpriteBatch.Object);
+            };
+
+        private It should_not_wrap = () => TextBlock.DesiredSize.Height.ShouldEqual(SentenceSize.Y);
+    }
+
+    [Subject(typeof(TextBlock), "Wrapping")]
+    public class when_wrapping_is_required : a_TextBlock_With_Content
+    {
+        private const string NewLine = "\n";
+
+        private const string WrappedSentence = Word + Space + Word + NewLine + Word + Space + Word + NewLine + Word + Space + Word + NewLine + Word;
+
+        private static readonly Vector2 wrappedSentenceSize = new Vector2(85, 30);
+
+        private Establish context = () => SpriteFont.Setup(font => font.MeasureString(WrappedSentence)).Returns(wrappedSentenceSize);
+
+        private Because of = () =>
+            {
+                TextBlock.Wrapping = TextWrapping.Wrap;
+                RootElement.Update();
+                RootElement.Draw(SpriteBatch.Object);
+            };
+
+        private It should_wrap = () => TextBlock.DesiredSize.Height.ShouldEqual(wrappedSentenceSize.Y);
+    }
+
+    [Subject(typeof(TextBlock), "Wrapping")]
+    public class when_changing_text : a_TextBlock_With_Content
+    {
+        
     }
 }

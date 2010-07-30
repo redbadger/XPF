@@ -76,8 +76,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Presentation\Controls\ContentControlSpecs.cs" />
     <Compile Include="Presentation\Controls\RootElementSpecs.cs" />
-    <Compile Include="Presentation\Controls\TextBlockSpec.cs" />
+    <Compile Include="Presentation\Controls\TextBlockSpecs.cs" />
     <Compile Include="Presentation\RectSpecs.cs" />
     <Compile Include="Presentation\SizeSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs.cs" />

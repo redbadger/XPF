@@ -114,6 +114,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Size.cs">
       <Link>Presentation\Size.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\TextWrapping.cs">
+      <Link>Presentation\TextWrapping.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Thickness.cs">
       <Link>Presentation\Thickness.cs</Link>
     </Compile>

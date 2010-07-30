@@ -53,6 +53,18 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
             };
     }
 
+    public abstract class a_Measured_and_Arranged_UIElement : a_Measured_UIElement
+    {
+        private static readonly Size finalSize = new Size(100, 100);
+
+        private Establish context =
+            () =>
+                {
+                    uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(finalSize);
+                    uiElement.Object.Arrange(new Rect(Vector2.Zero, finalSize));
+                };
+    }
+
     [Subject(typeof(UIElement), "Measure")]
     public class after_measure_is_called : a_UIElement
     {
@@ -565,5 +577,51 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
 
         private It should_have_the_correct_visual_offset =
             () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+    }
+
+    [Subject(typeof(UIElement), "Layout - Invalidate")]
+    public class when_measure_is_invalidated : a_Measured_and_Arranged_UIElement
+    {
+        private Establish context = () =>
+            {
+                var parentUiElement = new Mock<UIElement>();
+                parentUiElement.Object.Measure(Size.Empty);
+                parentUiElement.Object.Arrange(new Rect(Vector2.Zero, Size.Empty));
+
+                uiElement.Object.VisualParent = parentUiElement.Object;
+            };
+
+        private Because of = () => uiElement.Object.InvalidateMeasure();
+
+        private It should_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeFalse();
+
+        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+
+        private It should_invalidate_its_parents_measure = () => uiElement.Object.VisualParent.IsMeasureValid.ShouldBeFalse();
+
+        private It should_invalidate_its_parents_arrange = () => uiElement.Object.VisualParent.IsArrangeValid.ShouldBeFalse();
+    }
+
+    [Subject(typeof(UIElement), "Layout - Invalidate")]
+    public class when_arrange_is_invalidated : a_Measured_and_Arranged_UIElement
+    {
+        private Establish context = () =>
+        {
+            var parentUiElement = new Mock<UIElement>();
+            parentUiElement.Object.Measure(Size.Empty);
+            parentUiElement.Object.Arrange(new Rect(Vector2.Zero, Size.Empty));
+
+            uiElement.Object.VisualParent = parentUiElement.Object;
+        };
+
+        private Because of = () => uiElement.Object.InvalidateArrange();
+
+        private It should_not_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeTrue();
+
+        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+
+        private It should_not_invalidate_its_parents_measure = () => uiElement.Object.VisualParent.IsMeasureValid.ShouldBeTrue();
+
+        private It should_invalidate_its_parents_arrange = () => uiElement.Object.VisualParent.IsArrangeValid.ShouldBeFalse();
     }
 }

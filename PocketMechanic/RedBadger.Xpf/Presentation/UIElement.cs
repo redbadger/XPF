@@ -81,6 +81,8 @@
 
         public VerticalAlignment VerticalAlignment { get; set; }
 
+        public IElement VisualParent { get; set; }
+
         public float Width
         {
             get
@@ -99,6 +101,28 @@
         ///   TODO: implement a reflection based mechanism (for Moq?) to get back values from protected properties
         /// </remarks>
         internal Vector2 VisualOffset { get; set; }
+
+        public void InvalidateArrange()
+        {
+            this.IsArrangeValid = false;
+
+            if (this.VisualParent != null)
+            {
+                this.VisualParent.InvalidateArrange();
+            }
+        }
+
+        public void InvalidateMeasure()
+        {
+            this.IsMeasureValid = false;
+
+            if (this.VisualParent != null)
+            {
+                this.VisualParent.InvalidateMeasure();
+            }
+
+            this.InvalidateArrange();
+        }
 
         /// <summary>
         ///   Positions child elements and determines a size for a UIElement.
@@ -246,7 +270,8 @@
             Size renderSize = this.ArrangeOverride(finalSize);
             this.RenderSize = renderSize;
 
-            var inkSize = new Size(Math.Min(renderSize.Width, minMax.MaxWidth), Math.Min(renderSize.Height, minMax.MaxHeight));
+            var inkSize = new Size(
+                Math.Min(renderSize.Width, minMax.MaxWidth), Math.Min(renderSize.Height, minMax.MaxHeight));
             var clientSize = new Size(
                 Math.Max(0f, finalRect.Width - horizontalMargin), Math.Max(0f, finalRect.Height - verticalMargin));
 

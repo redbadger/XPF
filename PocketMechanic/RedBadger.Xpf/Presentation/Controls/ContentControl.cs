@@ -8,7 +8,10 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     using Rect = RedBadger.Xpf.Presentation.Rect;
     using Size = RedBadger.Xpf.Presentation.Size;
+
+#if WINDOWS_PHONE
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
+#endif
 
     /// <summary>
     ///   Represents a control with a single piece of content.
@@ -16,7 +19,10 @@ namespace RedBadger.Xpf.Presentation.Controls
     public class ContentControl : UIElement
     {
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
-            "Content", typeof(IElement), typeof(ContentControl), new PropertyMetadata(null));
+            "Content", 
+            typeof(IElement), 
+            typeof(ContentControl), 
+            new PropertyMetadata(null, ContentPropertyChangedCallback));
 
         public IElement Content
         {
@@ -61,6 +67,17 @@ namespace RedBadger.Xpf.Presentation.Controls
 
             content.Measure(availableSize);
             return content.DesiredSize;
+        }
+
+        private static void ContentPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var child = args.NewValue as IElement;
+            var parent = (IElement)dependencyObject;
+
+            if (child != null)
+            {
+                child.VisualParent = parent;
+            }
         }
     }
 }

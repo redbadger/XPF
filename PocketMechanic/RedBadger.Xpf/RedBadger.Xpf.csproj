@@ -87,6 +87,7 @@
     <Compile Include="Presentation\Orientation.cs" />
     <Compile Include="Presentation\Rect.cs" />
     <Compile Include="Presentation\Size.cs" />
+    <Compile Include="Presentation\TextWrapping.cs" />
     <Compile Include="Presentation\Thickness.cs" />
     <Compile Include="Presentation\UIElement.cs" />
     <Compile Include="Presentation\VerticalAlignment.cs" />
