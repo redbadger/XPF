@@ -90,6 +90,7 @@
     <Compile Include="Presentation\TextWrapping.cs" />
     <Compile Include="Presentation\Thickness.cs" />
     <Compile Include="Presentation\UIElement.cs" />
+    <Compile Include="Presentation\UIElementCollection.cs" />
     <Compile Include="Presentation\VerticalAlignment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -79,8 +79,10 @@
     <Compile Include="Presentation\Controls\ContentControlSpecs.cs" />
     <Compile Include="Presentation\Controls\RootElementSpecs.cs" />
     <Compile Include="Presentation\Controls\TextBlockSpecs.cs" />
+    <Compile Include="Presentation\PanelSpecs.cs" />
     <Compile Include="Presentation\RectSpecs.cs" />
     <Compile Include="Presentation\SizeSpecs.cs" />
+    <Compile Include="Presentation\UIElementCollectionSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Presentation\MoqSpecs\UIElementMoqSpecs.cs" />

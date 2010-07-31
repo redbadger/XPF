@@ -123,6 +123,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\UIElement.cs">
       <Link>Presentation\UIElement.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\UIElementCollection.cs">
+      <Link>Presentation\UIElementCollection.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\VerticalAlignment.cs">
       <Link>Presentation\VerticalAlignment.cs</Link>
     </Compile>
