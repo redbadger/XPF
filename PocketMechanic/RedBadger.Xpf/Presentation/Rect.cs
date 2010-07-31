@@ -28,11 +28,19 @@ namespace RedBadger.Xpf.Presentation
             this.Height = height;
         }
 
+        public static Rect Empty
+        {
+            get
+            {
+                return new Rect();
+            }
+        }
+
         public bool IsEmpty
         {
             get
             {
-                return this.Width == 0f && this.Height == 0f;
+                return this.X == 0f && this.Y == 0f && this.Width == 0f && this.Height == 0f;
             }
         }
 

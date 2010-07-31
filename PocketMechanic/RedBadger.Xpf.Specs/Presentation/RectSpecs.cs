@@ -18,17 +18,24 @@ namespace RedBadger.Xpf.Specs.Presentation
 
     public abstract class a_Rect
     {
-        protected const float X = 5;
+        protected const float X = 5f;
 
-        protected const float Y = 15;
+        protected const float Y = 15f;
 
-        protected const float Height = 10;
+        protected const float Height = 10f;
 
-        protected const float Width = 20;
+        protected const float Width = 20f;
 
         protected static Rect rect;
 
         private Establish context = () => rect = new Rect(X, Y, Width, Height);
+    }
+
+    public abstract class an_Empty_Rect
+    {
+        protected static Rect rect;
+
+        private Establish context = () => rect = new Rect(0f, 0f, 0f, 0f);
     }
 
     [Subject(typeof(Rect))]
@@ -37,5 +44,17 @@ namespace RedBadger.Xpf.Specs.Presentation
         private It should_have_the_expected_Position = () => rect.Position.ShouldEqual(new Vector2(X, Y));
 
         private It should_have_the_expected_Size = () => rect.Size.ShouldEqual(new Size(Width, Height));
+    }
+
+    [Subject(typeof(Rect))]
+    public class when_an_empty_rect_is_initialised : an_Empty_Rect
+    {
+        private It should_have_a_position_at_zero_zero = () => rect.Position.ShouldEqual(new Vector2(0f, 0f));
+
+        private It should_have_a_size_of_zero_zero = () => rect.Size.ShouldEqual(new Size(0f, 0f));
+
+        private It should_be_equal_to_an_empty_rect = () => rect.ShouldEqual(Rect.Empty);
+
+        private It should_say_it_is_empty = () => rect.IsEmpty.ShouldBeTrue();
     }
 }

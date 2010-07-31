@@ -99,8 +99,14 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ContentControl.cs">
       <Link>Presentation\Controls\ContentControl.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Panel.cs">
+      <Link>Presentation\Controls\Panel.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\RootElement.cs">
       <Link>Presentation\Controls\RootElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\StackPanel.cs">
+      <Link>Presentation\Controls\StackPanel.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\TextBlock.cs">
       <Link>Presentation\Controls\TextBlock.cs</Link>

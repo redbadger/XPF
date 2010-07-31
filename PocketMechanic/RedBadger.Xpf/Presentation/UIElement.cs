@@ -16,11 +16,27 @@
 
         private float maxWidth = float.PositiveInfinity;
 
-        private float width = float.NaN;
-
         private Size previousAvailableSize;
 
         private Rect previousFinalRect;
+
+        private float width = float.NaN;
+
+        public float ActualHeight
+        {
+            get
+            {
+                return this.RenderSize.Height;
+            }
+        }
+
+        public float ActualWidth
+        {
+            get
+            {
+                return this.RenderSize.Width;
+            }
+        }
 
         public Size DesiredSize { get; private set; }
 
@@ -106,30 +122,6 @@
         /// </remarks>
         internal Vector2 VisualOffset { get; set; }
 
-        public void InvalidateArrange()
-        {
-            this.IsArrangeValid = false;
-
-            var visualParent = this.VisualParent;
-            if (visualParent != null)
-            {
-                visualParent.InvalidateArrange();
-            }
-        }
-
-        public void InvalidateMeasure()
-        {
-            this.IsMeasureValid = false;
-
-            var visualParent = this.VisualParent;
-            if (visualParent != null)
-            {
-                visualParent.InvalidateMeasure();
-            }
-
-            this.InvalidateArrange();
-        }
-
         /// <summary>
         ///   Positions child elements and determines a size for a UIElement.
         ///   Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
@@ -157,6 +149,30 @@
             }
         }
 
+        public void InvalidateArrange()
+        {
+            this.IsArrangeValid = false;
+
+            IElement visualParent = this.VisualParent;
+            if (visualParent != null)
+            {
+                visualParent.InvalidateArrange();
+            }
+        }
+
+        public void InvalidateMeasure()
+        {
+            this.IsMeasureValid = false;
+
+            IElement visualParent = this.VisualParent;
+            if (visualParent != null)
+            {
+                visualParent.InvalidateMeasure();
+            }
+
+            this.InvalidateArrange();
+        }
+
         /// <summary>
         ///   Updates the DesiredSize of a UIElement.
         ///   Derrived elements call this method from their own MeasureOverride implementations to form a recursive layout update.
@@ -175,7 +191,7 @@
 
             if (!this.IsMeasureValid || availableSize.IsDifferentFrom(this.previousAvailableSize))
             {
-                var size = this.MeasureCore(availableSize);
+                Size size = this.MeasureCore(availableSize);
 
                 if (float.IsPositiveInfinity(size.Width) || float.IsPositiveInfinity(size.Height))
                 {
@@ -360,7 +376,7 @@
 
             var minMax = new MinMax(this);
 
-            var size = this.MeasureOverride(availableSizeWithoutMargins);
+            Size size = this.MeasureOverride(availableSizeWithoutMargins);
 
             size = new Size(Math.Max(size.Width, minMax.MinWidth), Math.Max(size.Height, minMax.MinHeight));
 
@@ -374,8 +390,8 @@
                 size.Height = minMax.MaxHeight;
             }
 
-            var desiredWidth = size.Width + horizontalMargin;
-            var desiredHeight = size.Height + verticalMargin;
+            float desiredWidth = size.Width + horizontalMargin;
+            float desiredHeight = size.Height + verticalMargin;
 
             if (desiredWidth > availableSize.Width)
             {

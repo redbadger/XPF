@@ -9,13 +9,11 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Presentation
+namespace RedBadger.Xpf.Specs.Presentation.Controls
 {
-    using Moq;
-
     using Machine.Specifications;
 
-    using It = Machine.Specifications.It;
+    using RedBadger.Xpf.Presentation.Controls;
 
     public abstract class a_Panel
     {
@@ -28,9 +26,5 @@ namespace RedBadger.Xpf.Specs.Presentation
     public class Spec : a_Panel
     {
         
-    }
-
-    public class Panel
-    {
     }
 }

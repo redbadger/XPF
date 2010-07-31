@@ -151,6 +151,12 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
         private It should_be_considered_valid = () => uiElement.Object.IsArrangeValid.ShouldBeTrue();
 
         private It should_have_set_a_render_size = () => uiElement.Object.RenderSize.ShouldEqual(expectedRenderSize);
+
+        private It should_have_set_an_actual_height =
+            () => uiElement.Object.ActualHeight.ShouldEqual(expectedRenderSize.Height);
+
+        private It should_have_set_an_actual_width =
+            () => uiElement.Object.ActualWidth.ShouldEqual(expectedRenderSize.Width);
     }
 
     [Subject(typeof(UIElement), "Arrange")]
