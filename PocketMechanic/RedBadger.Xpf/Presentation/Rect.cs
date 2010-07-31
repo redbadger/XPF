@@ -1,7 +1,10 @@
 namespace RedBadger.Xpf.Presentation
 {
+    using System.Diagnostics;
+
     using Microsoft.Xna.Framework;
 
+    [DebuggerDisplay("{Width} x {Height} @ {X}, {Y}")]
     public struct Rect
     {
         public float Height;
@@ -12,7 +15,8 @@ namespace RedBadger.Xpf.Presentation
 
         public float Y;
 
-        public Rect(Vector2 position, Size size) : this(position.X, position.Y, size.Width, size.Height)
+        public Rect(Vector2 position, Size size)
+            : this(position.X, position.Y, size.Width, size.Height)
         {
         }
 
@@ -22,6 +26,14 @@ namespace RedBadger.Xpf.Presentation
             this.Y = y;
             this.Width = width;
             this.Height = height;
+        }
+
+        public bool IsEmpty
+        {
+            get
+            {
+                return this.Width == 0f && this.Height == 0f;
+            }
         }
 
         public Vector2 Position

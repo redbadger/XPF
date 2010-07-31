@@ -18,6 +18,10 @@
 
         private float width = float.NaN;
 
+        private Size previousAvailableSize;
+
+        private Rect previousFinalRect;
+
         public Size DesiredSize { get; private set; }
 
         public float Height
@@ -106,9 +110,10 @@
         {
             this.IsArrangeValid = false;
 
-            if (this.VisualParent != null)
+            var visualParent = this.VisualParent;
+            if (visualParent != null)
             {
-                this.VisualParent.InvalidateArrange();
+                visualParent.InvalidateArrange();
             }
         }
 
@@ -116,9 +121,10 @@
         {
             this.IsMeasureValid = false;
 
-            if (this.VisualParent != null)
+            var visualParent = this.VisualParent;
+            if (visualParent != null)
             {
-                this.VisualParent.InvalidateMeasure();
+                visualParent.InvalidateMeasure();
             }
 
             this.InvalidateArrange();
@@ -142,9 +148,11 @@
                 throw new InvalidOperationException("Width and Height must be less than infinity");
             }
 
-            if (!this.IsArrangeValid)
+            if (!this.IsArrangeValid || finalRect.IsDifferentFrom(this.previousFinalRect))
             {
                 this.ArrangeCore(finalRect);
+
+                this.previousFinalRect = finalRect;
                 this.IsArrangeValid = true;
             }
         }
@@ -165,7 +173,7 @@
                 throw new InvalidOperationException("AvailableSize Width or Height cannot be NaN");
             }
 
-            if (!this.IsMeasureValid)
+            if (!this.IsMeasureValid || availableSize.IsDifferentFrom(this.previousAvailableSize))
             {
                 var size = this.MeasureCore(availableSize);
 
@@ -179,6 +187,7 @@
                     throw new InvalidOperationException("The implementing element returned NaN");
                 }
 
+                this.previousAvailableSize = availableSize;
                 this.IsMeasureValid = true;
                 this.DesiredSize = size;
             }
@@ -233,12 +242,12 @@
                 Math.Max(0f, this.DesiredSize.Width - horizontalMargin), 
                 Math.Max(0f, this.DesiredSize.Height - verticalMargin));
 
-            if (FloatUtil.LessThan(finalSize.Width, desiredSizeWithoutMargins.Width))
+            if (finalSize.Width.IsLessThan(desiredSizeWithoutMargins.Width))
             {
                 finalSize.Width = desiredSizeWithoutMargins.Width;
             }
 
-            if (FloatUtil.LessThan(finalSize.Height, desiredSizeWithoutMargins.Height))
+            if (finalSize.Height.IsLessThan(desiredSizeWithoutMargins.Height))
             {
                 finalSize.Height = desiredSizeWithoutMargins.Height;
             }
@@ -256,13 +265,13 @@
             var minMax = new MinMax(this);
 
             float largestWidth = Math.Max(desiredSizeWithoutMargins.Width, minMax.MaxWidth);
-            if (FloatUtil.LessThan(largestWidth, finalSize.Width))
+            if (largestWidth.IsLessThan(finalSize.Width))
             {
                 finalSize.Width = largestWidth;
             }
 
             float largestHeight = Math.Max(desiredSizeWithoutMargins.Height, minMax.MaxHeight);
-            if (FloatUtil.LessThan(largestHeight, finalSize.Height))
+            if (largestHeight.IsLessThan(finalSize.Height))
             {
                 finalSize.Height = largestHeight;
             }

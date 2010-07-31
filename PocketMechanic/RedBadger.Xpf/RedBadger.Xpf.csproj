@@ -77,8 +77,10 @@
     <Compile Include="Graphics\SpriteBatchAdapter.cs" />
     <Compile Include="Graphics\SpriteFontAdapter.cs" />
     <Compile Include="Graphics\Texture2DAdapter.cs" />
-    <Compile Include="Internal\FloatUtil.cs" />
+    <Compile Include="Internal\FloatExtensions.cs" />
     <Compile Include="Internal\MinMax.cs" />
+    <Compile Include="Internal\RectExtensions.cs" />
+    <Compile Include="Internal\SizeExtensions.cs" />
     <Compile Include="Presentation\Controls\ContentControl.cs" />
     <Compile Include="Presentation\Controls\RootElement.cs" />
     <Compile Include="Presentation\Controls\TextBlock.cs" />

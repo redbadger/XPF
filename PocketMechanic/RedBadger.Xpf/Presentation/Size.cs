@@ -1,7 +1,9 @@
 namespace RedBadger.Xpf.Presentation
 {
     using System;
+    using System.Diagnostics;
 
+    [DebuggerDisplay("{Width} x {Height}")]
     public struct Size : IEquatable<Size>
     {
         public float Height;
