@@ -14,7 +14,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     using Machine.Specifications;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
     using Moq;
 
@@ -42,8 +41,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             };
     }
 
-    [Subject(typeof(TextBlock), "Background")]
-    public class when_background_is_not_specified : a_Panel
+    [Subject(typeof(Panel), "Background")]
+    public class when_panel_background_is_not_specified : a_Panel
     {
         private Because of = () =>
             {
@@ -54,10 +53,26 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
         private It should_default_to_white =
             () =>
             SpriteBatch.Verify(batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), Color.White));
+
+        private It should_render_the_background_in_the_right_place = () =>
+            {
+                var area = new Rectangle(
+                    (int)Panel.VisualOffset.X, 
+                    (int)Panel.VisualOffset.Y, 
+                    (int)Panel.ActualWidth, 
+                    (int)Panel.ActualHeight);
+
+                SpriteBatch.Verify(
+                    batch =>
+                    batch.Draw(
+                        Moq.It.IsAny<ITexture2D>(), 
+                        Moq.It.Is<Rectangle>(rectangle => rectangle.Equals(area)), 
+                        Moq.It.IsAny<Color>()));
+            };
     }
 
-    [Subject(typeof(Panel))]
-    public class when_background_is_specified : a_Panel
+    [Subject(typeof(Panel), "Background")]
+    public class when_panel_background_is_specified : a_Panel
     {
         private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Color.Blue);
 
@@ -66,6 +81,22 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
                 Panel.Background = expectedBackground;
                 RootElement.Update();
                 RootElement.Draw(SpriteBatch.Object);
+            };
+
+        private It should_render_the_background_in_the_right_place = () =>
+            {
+                var area = new Rectangle(
+                    (int)Panel.VisualOffset.X, 
+                    (int)Panel.VisualOffset.Y, 
+                    (int)Panel.ActualWidth, 
+                    (int)Panel.ActualHeight);
+
+                SpriteBatch.Verify(
+                    batch =>
+                    batch.Draw(
+                        Moq.It.IsAny<ITexture2D>(), 
+                        Moq.It.Is<Rectangle>(rectangle => rectangle.Equals(area)), 
+                        Moq.It.IsAny<Color>()));
             };
 
         private It should_render_with_the_specified_background_color =

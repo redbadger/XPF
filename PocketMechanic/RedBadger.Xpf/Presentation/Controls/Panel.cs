@@ -3,7 +3,6 @@
     using System.Windows;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Media;
@@ -11,7 +10,7 @@
 #if WINDOWS_PHONE
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 #endif
-    
+
     public class Panel : UIElement
     {
         public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
@@ -56,13 +55,12 @@
         /// <param name = "spriteBatch"></param>
         private void RenderBackground(ISpriteBatch spriteBatch)
         {
+            var area = new Rectangle(
+                (int)this.VisualOffset.X, (int)this.VisualOffset.Y, (int)this.ActualWidth, (int)this.ActualHeight);
             var brush = this.Background as SolidColorBrush;
 
             // need one pixel white texture here
-            spriteBatch.Draw(
-                (ITexture2D)null, 
-                new Rectangle(0, 0, (int)this.ActualWidth, (int)this.ActualHeight),
-                brush != null ? brush.Color : Color.White);
+            spriteBatch.Draw((ITexture2D)null, area, brush != null ? brush.Color : Color.White);
         }
     }
 }

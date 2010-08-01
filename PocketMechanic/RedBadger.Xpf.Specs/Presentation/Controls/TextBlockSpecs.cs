@@ -76,7 +76,72 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             () =>
             SpriteBatch.Verify(
                 batch =>
-                batch.DrawString(SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Vector2>(), expectedForeground.Color));
+                batch.DrawString(
+                    SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Vector2>(), expectedForeground.Color));
+    }
+
+    [Subject(typeof(TextBlock), "Background")]
+    public class when_textblock_background_is_not_specified : a_TextBlock
+    {
+        private Because of = () =>
+            {
+                RootElement.Update();
+                RootElement.Draw(SpriteBatch.Object);
+            };
+
+        private It should_default_to_white =
+            () =>
+            SpriteBatch.Verify(batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), Color.White));
+
+        private It should_render_the_background_in_the_right_place = () =>
+            {
+                var area = new Rectangle(
+                    (int)TextBlock.VisualOffset.X, 
+                    (int)TextBlock.VisualOffset.Y, 
+                    (int)TextBlock.ActualWidth, 
+                    (int)TextBlock.ActualHeight);
+
+                SpriteBatch.Verify(
+                    batch =>
+                    batch.Draw(
+                        Moq.It.IsAny<ITexture2D>(), 
+                        Moq.It.Is<Rectangle>(rectangle => rectangle.Equals(area)), 
+                        Moq.It.IsAny<Color>()));
+            };
+    }
+
+    [Subject(typeof(TextBlock), "Background")]
+    public class when_textblock_background_is_specified : a_TextBlock
+    {
+        private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Color.Blue);
+
+        private Because of = () =>
+            {
+                TextBlock.Background = expectedBackground;
+                RootElement.Update();
+                RootElement.Draw(SpriteBatch.Object);
+            };
+
+        private It should_render_with_the_specified_background_color =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), expectedBackground.Color));
+
+        private It should_render_the_background_in_the_right_place = () =>
+            {
+                var area = new Rectangle(
+                    (int)TextBlock.VisualOffset.X, 
+                    (int)TextBlock.VisualOffset.Y, 
+                    (int)TextBlock.ActualWidth, 
+                    (int)TextBlock.ActualHeight);
+
+                SpriteBatch.Verify(
+                    batch =>
+                    batch.Draw(
+                        Moq.It.IsAny<ITexture2D>(), 
+                        Moq.It.Is<Rectangle>(rectangle => rectangle.Equals(area)), 
+                        Moq.It.IsAny<Color>()));
+            };
     }
 
     [Subject(typeof(TextBlock), "Padding")]
@@ -115,12 +180,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
     public abstract class a_TextBlock_With_Content : a_TextBlock
     {
-        protected const string Word = "word";
         protected const string Space = " ";
+
+        protected const string Word = "word";
 
         protected static readonly Vector2 SentenceSize = new Vector2(310, 10);
 
-        private const string Sentence = Word + Space + Word + Space + Word + Space + Word + Space + Word + Space + Word + Space + Word;
+        private const string Sentence =
+            Word + Space + Word + Space + Word + Space + Word + Space + Word + Space + Word + Space + Word;
 
         private Establish context = () =>
             {
@@ -149,11 +216,13 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     {
         private const string NewLine = "\n";
 
-        private const string WrappedSentence = Word + Space + Word + NewLine + Word + Space + Word + NewLine + Word + Space + Word + NewLine + Word;
+        private const string WrappedSentence =
+            Word + Space + Word + NewLine + Word + Space + Word + NewLine + Word + Space + Word + NewLine + Word;
 
         private static readonly Vector2 wrappedSentenceSize = new Vector2(85, 30);
 
-        private Establish context = () => SpriteFont.Setup(font => font.MeasureString(WrappedSentence)).Returns(wrappedSentenceSize);
+        private Establish context =
+            () => SpriteFont.Setup(font => font.MeasureString(WrappedSentence)).Returns(wrappedSentenceSize);
 
         private Because of = () =>
             {
@@ -168,6 +237,5 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     [Subject(typeof(TextBlock), "Wrapping")]
     public class when_changing_text : a_TextBlock_With_Content
     {
-        
     }
 }

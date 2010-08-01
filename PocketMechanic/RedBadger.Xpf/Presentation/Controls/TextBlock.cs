@@ -18,6 +18,9 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class TextBlock : UIElement
     {
+        public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
+            "Background", typeof(Brush), typeof(TextBlock), new PropertyMetadata(null));
+
         public static readonly DependencyProperty ForegroundProperty = DependencyProperty.Register(
             "Foreground", typeof(Brush), typeof(TextBlock), new PropertyMetadata(null));
 
@@ -33,6 +36,19 @@ namespace RedBadger.Xpf.Presentation.Controls
         public TextBlock(ISpriteFont spriteFont)
         {
             this.spriteFont = spriteFont;
+        }
+
+        public Brush Background
+        {
+            get
+            {
+                return (Brush)this.GetValue(BackgroundProperty);
+            }
+
+            set
+            {
+                this.SetValue(BackgroundProperty, value);
+            }
         }
 
         public Brush Foreground
@@ -67,10 +83,8 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         public override void Render(ISpriteBatch spriteBatch)
         {
-            Vector2 drawPosition = this.VisualOffset + new Vector2(this.Padding.Left, this.Padding.Top);
-            var brush = this.Foreground as SolidColorBrush;
-            spriteBatch.DrawString(
-                this.spriteFont, this.formattedText, drawPosition, brush != null ? brush.Color : Color.Black);
+            this.RenderBackground(spriteBatch);
+            this.RenderForeground(spriteBatch);
         }
 
         protected override Size ArrangeOverride(Size finalSize)
@@ -120,6 +134,28 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
 
             return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        ///   TODO: this is not fully implemented (Texture and Rectangle)
+        /// </summary>
+        /// <param name = "spriteBatch"></param>
+        private void RenderBackground(ISpriteBatch spriteBatch)
+        {
+            var area = new Rectangle(
+                (int)this.VisualOffset.X, (int)this.VisualOffset.Y, (int)this.ActualWidth, (int)this.ActualHeight);
+            var brush = this.Background as SolidColorBrush;
+
+            // need one pixel white texture here
+            spriteBatch.Draw((ITexture2D)null, area, brush != null ? brush.Color : Color.White);
+        }
+
+        private void RenderForeground(ISpriteBatch spriteBatch)
+        {
+            Vector2 drawPosition = this.VisualOffset + new Vector2(this.Padding.Left, this.Padding.Top);
+            var brush = this.Foreground as SolidColorBrush;
+            spriteBatch.DrawString(
+                this.spriteFont, this.formattedText, drawPosition, brush != null ? brush.Color : Color.Black);
         }
     }
 }
