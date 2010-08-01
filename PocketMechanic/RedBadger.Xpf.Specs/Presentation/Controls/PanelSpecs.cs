@@ -13,18 +13,64 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 {
     using Machine.Specifications;
 
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+
+    using Moq;
+
+    using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Media;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+
+    using It = Machine.Specifications.It;
 
     public abstract class a_Panel
     {
-        protected static Panel panel;
+        protected static Panel Panel;
 
-        private Establish context = () => panel = new Panel();
+        protected static RootElement RootElement;
+
+        protected static Mock<ISpriteBatch> SpriteBatch;
+
+        private Establish context = () =>
+            {
+                SpriteBatch = new Mock<ISpriteBatch>();
+                RootElement = new RootElement(new Rect(new Size(100, 100)));
+                Panel = new Panel();
+                RootElement.Content = Panel;
+            };
+    }
+
+    [Subject(typeof(TextBlock), "Background")]
+    public class when_background_is_not_specified : a_Panel
+    {
+        private Because of = () =>
+            {
+                RootElement.Update();
+                RootElement.Draw(SpriteBatch.Object);
+            };
+
+        private It should_default_to_white =
+            () =>
+            SpriteBatch.Verify(batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), Color.White));
     }
 
     [Subject(typeof(Panel))]
-    public class Spec : a_Panel
+    public class when_background_is_specified : a_Panel
     {
-        
+        private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Color.Blue);
+
+        private Because of = () =>
+            {
+                Panel.Background = expectedBackground;
+                RootElement.Update();
+                RootElement.Draw(SpriteBatch.Object);
+            };
+
+        private It should_render_with_the_specified_background_color =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), expectedBackground.Color));
     }
 }

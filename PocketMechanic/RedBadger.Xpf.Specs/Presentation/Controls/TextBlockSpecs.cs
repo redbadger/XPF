@@ -18,6 +18,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     using Moq;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Media;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
@@ -62,11 +63,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     [Subject(typeof(TextBlock), "Foreground")]
     public class when_foreground_is_specified : a_TextBlock
     {
-        private static Color expectedForeground;
+        private static readonly SolidColorBrush expectedForeground = new SolidColorBrush(Color.White);
 
         private Because of = () =>
             {
-                expectedForeground = Color.White;
                 TextBlock.Foreground = expectedForeground;
                 RootElement.Update();
                 RootElement.Draw(SpriteBatch.Object);
@@ -76,7 +76,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             () =>
             SpriteBatch.Verify(
                 batch =>
-                batch.DrawString(SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Vector2>(), expectedForeground));
+                batch.DrawString(SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Vector2>(), expectedForeground.Color));
     }
 
     [Subject(typeof(TextBlock), "Padding")]

@@ -23,5 +23,10 @@
         {
             this.Draw(texture2D.Value, position, color);
         }
+
+        public void Draw(ITexture2D texture2D, Rectangle area, Color color)
+        {
+            this.Draw(texture2D.Value, area, color);
+        }
     }
 }

@@ -1,5 +1,8 @@
 ﻿namespace RedBadger.Xpf.Presentation
 {
+    using System.Diagnostics;
+
+    [DebuggerDisplay("{Left}, {Top}, {Right}, {Bottom}")]
     public struct Thickness
     {
         public float Bottom;

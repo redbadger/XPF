@@ -5,11 +5,13 @@ namespace RedBadger.Xpf.Graphics
 
     public interface ISpriteBatch
     {
-        void Draw(ITexture2D texture2D, Vector2 position, Color color);
-
         void Draw(Texture2D texture, Vector2 position, Color color);
 
         void Draw(Texture2D texture, Rectangle area, Color color);
+
+        void Draw(ITexture2D texture2D, Vector2 position, Color color);
+
+        void Draw(ITexture2D texture2D, Rectangle area, Color color);
 
         void Draw(
             Texture2D texture, 

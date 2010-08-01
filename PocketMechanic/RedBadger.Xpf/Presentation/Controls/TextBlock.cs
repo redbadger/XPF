@@ -7,6 +7,7 @@ namespace RedBadger.Xpf.Presentation.Controls
     using Microsoft.Xna.Framework;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Media;
 
     using Size = RedBadger.Xpf.Presentation.Size;
 
@@ -17,14 +18,15 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class TextBlock : UIElement
     {
+        public static readonly DependencyProperty ForegroundProperty = DependencyProperty.Register(
+            "Foreground", typeof(Brush), typeof(TextBlock), new PropertyMetadata(null));
+
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text", typeof(string), typeof(TextBlock), new PropertyMetadata(string.Empty));
 
         private static readonly Regex WhiteSpaceRegEx = new Regex(@"\s+", RegexOptions.Compiled);
 
         private readonly ISpriteFont spriteFont;
-
-        private Color foreground = Color.Black;
 
         private string formattedText;
 
@@ -33,18 +35,20 @@ namespace RedBadger.Xpf.Presentation.Controls
             this.spriteFont = spriteFont;
         }
 
-        public Color Foreground
+        public Brush Foreground
         {
             get
             {
-                return this.foreground;
+                return (Brush)this.GetValue(ForegroundProperty);
             }
 
             set
             {
-                this.foreground = value;
+                this.SetValue(ForegroundProperty, value);
             }
         }
+
+        public Thickness Padding { get; set; }
 
         public string Text
         {
@@ -59,14 +63,14 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        public Thickness Padding { get; set; }
-
         public TextWrapping Wrapping { get; set; }
 
         public override void Render(ISpriteBatch spriteBatch)
         {
             Vector2 drawPosition = this.VisualOffset + new Vector2(this.Padding.Left, this.Padding.Top);
-            spriteBatch.DrawString(this.spriteFont, this.formattedText, drawPosition, this.foreground);
+            var brush = this.Foreground as SolidColorBrush;
+            spriteBatch.DrawString(
+                this.spriteFont, this.formattedText, drawPosition, brush != null ? brush.Color : Color.Black);
         }
 
         protected override Size ArrangeOverride(Size finalSize)
@@ -85,7 +89,9 @@ namespace RedBadger.Xpf.Presentation.Controls
                 measureString = this.spriteFont.MeasureString(this.formattedText);
             }
 
-            return new Size(measureString.X + this.Padding.Left + this.Padding.Right, measureString.Y + this.Padding.Top + this.Padding.Bottom);
+            return new Size(
+                measureString.X + this.Padding.Left + this.Padding.Right, 
+                measureString.Y + this.Padding.Top + this.Padding.Bottom);
         }
 
         private static string WrapText(ISpriteFont font, string text, float maxLineWidth)
