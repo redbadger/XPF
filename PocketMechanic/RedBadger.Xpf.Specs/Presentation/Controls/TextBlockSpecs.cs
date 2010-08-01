@@ -37,7 +37,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             {
                 SpriteBatch = new Mock<ISpriteBatch>();
                 SpriteFont = new Mock<ISpriteFont>();
-                RootElement = new RootElement(new Rect(Vector2.Zero, new Size(100, 100)));
+                RootElement = new RootElement(new Rect(new Size(100, 100)));
                 TextBlock = new TextBlock(SpriteFont.Object);
                 RootElement.Content = TextBlock;
             };

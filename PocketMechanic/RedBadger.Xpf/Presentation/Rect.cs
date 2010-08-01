@@ -15,6 +15,11 @@ namespace RedBadger.Xpf.Presentation
 
         public float Y;
 
+        public Rect(Size size)
+            : this(Vector2.Zero, size)
+        {
+        }
+
         public Rect(Vector2 position, Size size)
             : this(position.X, position.Y, size.Width, size.Height)
         {

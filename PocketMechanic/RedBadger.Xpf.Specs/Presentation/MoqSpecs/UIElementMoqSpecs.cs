@@ -58,7 +58,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
         private Establish context = () =>
             {
                 uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(finalSize);
-                uiElement.Object.Arrange(new Rect(Vector2.Zero, finalSize));
+                uiElement.Object.Arrange(new Rect(finalSize));
             };
     }
 
@@ -82,7 +82,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
 
         private Because of =
             () =>
-            exception = Catch.Exception(() => uiElement.Object.Arrange(new Rect(Vector2.Zero, new Size(float.NaN, 0))));
+            exception = Catch.Exception(() => uiElement.Object.Arrange(new Rect(new Size(float.NaN, 0))));
 
         private It should_throw_a_Exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -94,7 +94,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
 
         private Because of =
             () =>
-            exception = Catch.Exception(() => uiElement.Object.Arrange(new Rect(Vector2.Zero, new Size(0, float.NaN))));
+            exception = Catch.Exception(() => uiElement.Object.Arrange(new Rect(new Size(0, float.NaN))));
 
         private It should_throw_a_Exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -107,7 +107,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
         private Because of =
             () =>
             exception =
-            Catch.Exception(() => uiElement.Object.Arrange(new Rect(Vector2.Zero, new Size(float.PositiveInfinity, 0))));
+            Catch.Exception(() => uiElement.Object.Arrange(new Rect(new Size(float.PositiveInfinity, 0))));
 
         private It should_throw_a_Exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -120,7 +120,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
         private Because of =
             () =>
             exception =
-            Catch.Exception(() => uiElement.Object.Arrange(new Rect(Vector2.Zero, new Size(0, float.PositiveInfinity))));
+            Catch.Exception(() => uiElement.Object.Arrange(new Rect(new Size(0, float.PositiveInfinity))));
 
         private It should_throw_a_Exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -128,7 +128,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
     [Subject(typeof(UIElement), "Arrange")]
     public class when_arrange_is_valid : a_Measured_UIElement
     {
-        private static readonly Rect finalRect = new Rect(Vector2.Zero, Size.Empty);
+        private static readonly Rect finalRect = Rect.Empty;
 
         private Establish context = () => uiElement.Object.Arrange(finalRect);
 
@@ -146,7 +146,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
         private Establish context =
             () => uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(expectedRenderSize);
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, Size.Empty));
+        private Because of = () => uiElement.Object.Arrange(Rect.Empty);
 
         private It should_be_considered_valid = () => uiElement.Object.IsArrangeValid.ShouldBeTrue();
 
@@ -164,7 +164,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
     {
         private static readonly Size finalSize = new Size(50, 50);
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, finalSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(finalSize));
 
         private It should_layout_its_children_within_the_desired_size =
             () =>
@@ -179,7 +179,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
 
         private Establish context = () => uiElement.Object.Margin = margin;
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, Size.Empty));
+        private Because of = () => uiElement.Object.Arrange(Rect.Empty);
 
         private It should_layout_its_children_within_the_desired_size_minus_the_margins = () =>
             {
@@ -197,7 +197,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
     {
         private static readonly Size finalSize = new Size(150, 150);
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, finalSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(finalSize));
 
         private It should_layout_its_children_within_the_final_size =
             () =>
@@ -215,7 +215,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
                 uiElement.Object.VerticalAlignment = VerticalAlignment.Top;
             };
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, finalSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(finalSize));
 
         private It should_layout_its_children_within_the_desired_size =
             () =>
@@ -235,7 +235,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
         private Establish context =
             () => uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(clientSize));
 
         private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
@@ -257,7 +257,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
                 uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(clientSize));
 
         private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
@@ -279,7 +279,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
                 uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(clientSize));
 
         private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
@@ -301,7 +301,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
                 uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(clientSize));
 
         private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
@@ -318,7 +318,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
         private Establish context =
             () => uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(clientSize));
 
         private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
@@ -340,7 +340,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
                 uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(clientSize));
 
         private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
@@ -362,7 +362,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
                 uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(clientSize));
 
         private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
@@ -384,7 +384,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
                 uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(clientSize));
 
         private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
@@ -408,7 +408,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
                 uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, clientSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(clientSize));
 
         private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
@@ -458,7 +458,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
                 uiElement.Object.Width = explicitSize.Width;
                 uiElement.Object.Height = explicitSize.Height;
                 uiElement.Object.Measure(availableSize);
-                uiElement.Object.Arrange(new Rect(Vector2.Zero, availableSize));
+                uiElement.Object.Arrange(new Rect(availableSize));
             };
 
         private It should_arrange_its_children_within_the_explicit_size =
@@ -495,7 +495,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
                 uiElement.Object.Width = explicitSize.Width;
                 uiElement.Object.Height = explicitSize.Height;
                 uiElement.Object.Measure(availableSize);
-                uiElement.Object.Arrange(new Rect(Vector2.Zero, availableSize));
+                uiElement.Object.Arrange(new Rect(availableSize));
             };
 
         private It should_arrange_its_children_within_the_explicit_size =
@@ -532,7 +532,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
                 uiElement.Object.MinWidth = minimumSize.Width;
                 uiElement.Object.MinHeight = minimumSize.Height;
                 uiElement.Object.Measure(availableSize);
-                uiElement.Object.Arrange(new Rect(Vector2.Zero, availableSize));
+                uiElement.Object.Arrange(new Rect(availableSize));
             };
 
         private It should_arrange_its_children_within_the_available_size =
@@ -569,7 +569,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
                 uiElement.Object.MaxWidth = maximumSize.Width;
                 uiElement.Object.MaxHeight = maximumSize.Height;
                 uiElement.Object.Measure(availableSize);
-                uiElement.Object.Arrange(new Rect(Vector2.Zero, availableSize));
+                uiElement.Object.Arrange(new Rect(availableSize));
             };
 
         private It should_arrange_its_children_within_the_maximum_size =
@@ -591,7 +591,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
             {
                 var parentUiElement = new Mock<UIElement>();
                 parentUiElement.Object.Measure(Size.Empty);
-                parentUiElement.Object.Arrange(new Rect(Vector2.Zero, Size.Empty));
+                parentUiElement.Object.Arrange(Rect.Empty);
 
                 uiElement.Object.VisualParent = parentUiElement.Object;
             };
@@ -616,7 +616,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
             {
                 var parentUiElement = new Mock<UIElement>();
                 parentUiElement.Object.Measure(Size.Empty);
-                parentUiElement.Object.Arrange(new Rect(Vector2.Zero, Size.Empty));
+                parentUiElement.Object.Arrange(Rect.Empty);
 
                 uiElement.Object.VisualParent = parentUiElement.Object;
             };
@@ -655,7 +655,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
     [Subject(typeof(UIElement), "Layout - Size Change")]
     public class when_the_final_size_changes : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, new Size(200, 200)));
+        private Because of = () => uiElement.Object.Arrange(new Rect(new Size(200, 200)));
 
         private It should_arrange_again =
             () => uiElement.Protected().Verify(ArrangeOverride, Times.Exactly(2), ItExpr.IsAny<Size>());
@@ -664,7 +664,7 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
     [Subject(typeof(UIElement), "Layout - Size Change")]
     public class when_the_final_size_doesnt_change_enough : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.Arrange(new Rect(Vector2.Zero, new Size(100.000001f, 100.000001f)));
+        private Because of = () => uiElement.Object.Arrange(new Rect(new Size(100.000001f, 100.000001f)));
 
         private It should_not_arrange_again =
             () => uiElement.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.IsAny<Size>());

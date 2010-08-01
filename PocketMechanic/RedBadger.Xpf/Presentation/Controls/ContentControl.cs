@@ -51,7 +51,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             IElement content = this.Content;
             if (content != null)
             {
-                content.Arrange(new Rect(Vector2.Zero, finalSize));
+                content.Arrange(new Rect(finalSize));
             }
 
             return finalSize;
