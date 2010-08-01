@@ -23,6 +23,8 @@ namespace RedBadger.Xpf.Specs.Presentation
     {
         protected static Mock<UIElement> child1;
 
+        protected static Mock<UIElement> child2;
+
         protected static Mock<UIElement> parent;
 
         protected static UIElementCollection uIElementCollection;
@@ -34,8 +36,6 @@ namespace RedBadger.Xpf.Specs.Presentation
                 parent = new Mock<UIElement>();
                 uIElementCollection = new UIElementCollection(parent.Object);
             };
-
-        protected static Mock<UIElement> child2;
     }
 
     [Subject(typeof(UIElementCollection), "Visual Parent")]

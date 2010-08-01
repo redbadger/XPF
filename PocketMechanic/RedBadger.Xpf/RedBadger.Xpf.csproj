@@ -81,6 +81,7 @@
     <Compile Include="Internal\MinMax.cs" />
     <Compile Include="Internal\RectExtensions.cs" />
     <Compile Include="Internal\SizeExtensions.cs" />
+    <Compile Include="Internal\Vector2Extensions.cs" />
     <Compile Include="Presentation\Controls\ContentControl.cs" />
     <Compile Include="Presentation\Controls\Panel.cs" />
     <Compile Include="Presentation\Controls\RootElement.cs" />

@@ -96,6 +96,9 @@
     <Compile Include="..\RedBadger.Xpf\Internal\SizeExtensions.cs">
       <Link>Internal\SizeExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\Vector2Extensions.cs">
+      <Link>Internal\Vector2Extensions.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ContentControl.cs">
       <Link>Presentation\Controls\ContentControl.cs</Link>
     </Compile>
