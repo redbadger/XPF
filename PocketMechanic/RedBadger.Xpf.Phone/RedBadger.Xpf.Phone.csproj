@@ -108,6 +108,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ContentControl.cs">
       <Link>Presentation\Controls\ContentControl.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Grid.cs">
+      <Link>Presentation\Controls\Grid.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Panel.cs">
       <Link>Presentation\Controls\Panel.cs</Link>
     </Compile>
