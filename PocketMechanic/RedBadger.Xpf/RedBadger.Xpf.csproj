@@ -84,10 +84,14 @@
     <Compile Include="Internal\Vector2Extensions.cs" />
     <Compile Include="Media\Brush.cs" />
     <Compile Include="Media\SolidColorBrush.cs" />
+    <Compile Include="Presentation\Controls\ColumnDefinition.cs" />
     <Compile Include="Presentation\Controls\ContentControl.cs" />
+    <Compile Include="Presentation\Controls\DefinitionBase.cs" />
     <Compile Include="Presentation\Controls\Grid.cs" />
+    <Compile Include="Presentation\Controls\Reference\Grid.cs" />
     <Compile Include="Presentation\Controls\Panel.cs" />
     <Compile Include="Presentation\Controls\RootElement.cs" />
+    <Compile Include="Presentation\Controls\RowDefinition.cs" />
     <Compile Include="Presentation\Controls\StackPanel.cs" />
     <Compile Include="Presentation\Controls\TextBlock.cs" />
     <Compile Include="Presentation\HorizontalAlignment.cs" />

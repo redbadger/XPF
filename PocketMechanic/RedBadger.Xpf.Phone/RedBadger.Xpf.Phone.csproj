@@ -105,8 +105,14 @@
     <Compile Include="..\RedBadger.Xpf\Media\SolidColorBrush.cs">
       <Link>Media\SolidColorBrush.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ColumnDefinition.cs">
+      <Link>Presentation\Controls\ColumnDefinition.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ContentControl.cs">
       <Link>Presentation\Controls\ContentControl.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\DefinitionBase.cs">
+      <Link>Presentation\Controls\DefinitionBase.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Grid.cs">
       <Link>Presentation\Controls\Grid.cs</Link>
@@ -116,6 +122,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\RootElement.cs">
       <Link>Presentation\Controls\RootElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\RowDefinition.cs">
+      <Link>Presentation\Controls\RowDefinition.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\StackPanel.cs">
       <Link>Presentation\Controls\StackPanel.cs</Link>
