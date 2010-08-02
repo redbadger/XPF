@@ -96,6 +96,9 @@
     <Compile Include="..\RedBadger.Xpf\Internal\SizeExtensions.cs">
       <Link>Internal\SizeExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\ThicknessExtensions.cs">
+      <Link>Internal\ThicknessExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\Vector2Extensions.cs">
       <Link>Internal\Vector2Extensions.cs</Link>
     </Compile>
@@ -104,6 +107,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Media\SolidColorBrush.cs">
       <Link>Media\SolidColorBrush.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Border.cs">
+      <Link>Presentation\Controls\Border.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ContentControl.cs">
       <Link>Presentation\Controls\ContentControl.cs</Link>

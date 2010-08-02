@@ -11,17 +11,58 @@
     public abstract class UIElement : DependencyObject, IElement
     {
         public static readonly DependencyProperty HeightProperty = DependencyProperty.Register(
-            "Height", typeof(float), typeof(UIElement), new PropertyMetadata(float.NaN, HeightPropertyChangedCallback));
+            "Height", 
+            typeof(float), 
+            typeof(UIElement), 
+            new PropertyMetadata(float.NaN, PropertyOfTypeFloatChangedCallback));
 
-        private float maxHeight = float.PositiveInfinity;
+        public static readonly DependencyProperty HorizontalAlignmentProperty =
+            DependencyProperty.Register(
+                "HorizontalAlignment", 
+                typeof(HorizontalAlignment), 
+                typeof(UIElement), 
+                new PropertyMetadata(HorizontalAlignment.Stretch, HorizontalAlignmentPropertyChangedCallback));
 
-        private float maxWidth = float.PositiveInfinity;
+        public static readonly DependencyProperty MarginProperty = DependencyProperty.Register(
+            "Margin", 
+            typeof(Thickness), 
+            typeof(UIElement), 
+            new PropertyMetadata(Thickness.Empty, MarginPropertyChangedCallback));
+
+        public static readonly DependencyProperty MaxHeightProperty = DependencyProperty.Register(
+            "MaxHeight", 
+            typeof(float), 
+            typeof(UIElement), 
+            new PropertyMetadata(float.PositiveInfinity, PropertyOfTypeFloatChangedCallback));
+
+        public static readonly DependencyProperty MaxWidthProperty = DependencyProperty.Register(
+            "MaxWidth", 
+            typeof(float), 
+            typeof(UIElement), 
+            new PropertyMetadata(float.PositiveInfinity, PropertyOfTypeFloatChangedCallback));
+
+        public static readonly DependencyProperty MinHeightProperty = DependencyProperty.Register(
+            "MinHeight", typeof(float), typeof(UIElement), new PropertyMetadata(0f, PropertyOfTypeFloatChangedCallback));
+
+        public static readonly DependencyProperty MinWidthProperty = DependencyProperty.Register(
+            "MinWidth", typeof(float), typeof(UIElement), new PropertyMetadata(0f, PropertyOfTypeFloatChangedCallback));
+
+        public static readonly DependencyProperty VerticalAlignmentProperty =
+            DependencyProperty.Register(
+                "VerticalAlignment", 
+                typeof(VerticalAlignment), 
+                typeof(UIElement), 
+                new PropertyMetadata(VerticalAlignment.Stretch, VerticalAlignmentPropertyChangedCallback));
+
+        public static readonly DependencyProperty WidthProperty = DependencyProperty.Register(
+            "Width", 
+            typeof(float), 
+            typeof(UIElement), 
+            new PropertyMetadata(float.NaN, PropertyOfTypeFloatChangedCallback));
 
         private Size previousAvailableSize;
 
         private Rect previousFinalRect;
-
-        private float width = float.NaN;
 
         public float ActualHeight
         {
@@ -54,7 +95,18 @@
             }
         }
 
-        public HorizontalAlignment HorizontalAlignment { get; set; }
+        public HorizontalAlignment HorizontalAlignment
+        {
+            get
+            {
+                return (HorizontalAlignment)this.GetValue(HorizontalAlignmentProperty);
+            }
+
+            set
+            {
+                this.SetValue(HorizontalAlignmentProperty, value);
+            }
+        }
 
         /// <summary>
         ///   Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
@@ -66,18 +118,29 @@
 
         public bool IsMeasureValid { get; private set; }
 
-        public Thickness Margin { get; set; }
+        public Thickness Margin
+        {
+            get
+            {
+                return (Thickness)this.GetValue(MarginProperty);
+            }
+
+            set
+            {
+                this.SetValue(MarginProperty, value);
+            }
+        }
 
         public float MaxHeight
         {
             get
             {
-                return this.maxHeight;
+                return (float)this.GetValue(MaxHeightProperty);
             }
 
             set
             {
-                this.maxHeight = value;
+                this.SetValue(MaxHeightProperty, value);
             }
         }
 
@@ -85,22 +148,55 @@
         {
             get
             {
-                return this.maxWidth;
+                return (float)this.GetValue(MaxWidthProperty);
             }
 
             set
             {
-                this.maxWidth = value;
+                this.SetValue(MaxWidthProperty, value);
             }
         }
 
-        public float MinHeight { get; set; }
+        public float MinHeight
+        {
+            get
+            {
+                return (float)this.GetValue(MinHeightProperty);
+            }
 
-        public float MinWidth { get; set; }
+            set
+            {
+                this.SetValue(MinHeightProperty, value);
+            }
+        }
 
-        public Size RenderSize { get; set; }
+        public float MinWidth
+        {
+            get
+            {
+                return (float)this.GetValue(MinWidthProperty);
+            }
 
-        public VerticalAlignment VerticalAlignment { get; set; }
+            set
+            {
+                this.SetValue(MinWidthProperty, value);
+            }
+        }
+
+        public Size RenderSize { get; private set; }
+
+        public VerticalAlignment VerticalAlignment
+        {
+            get
+            {
+                return (VerticalAlignment)this.GetValue(VerticalAlignmentProperty);
+            }
+
+            set
+            {
+                this.SetValue(VerticalAlignmentProperty, value);
+            }
+        }
 
         public IElement VisualParent { get; set; }
 
@@ -108,12 +204,12 @@
         {
             get
             {
-                return this.width;
+                return (float)this.GetValue(WidthProperty);
             }
 
             set
             {
-                this.width = value;
+                this.SetValue(WidthProperty, value);
             }
         }
 
@@ -235,18 +331,66 @@
             return Size.Empty;
         }
 
-        private static void HeightPropertyChangedCallback(
+        private static void HorizontalAlignmentPropertyChangedCallback(
             DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            var newValue = (float)args.NewValue;
-            var oldValue = (float)args.OldValue;
+            var newValue = (HorizontalAlignment)args.NewValue;
+            var oldValue = (HorizontalAlignment)args.OldValue;
 
             if (newValue != oldValue)
             {
                 var uiElement = dependencyObject as UIElement;
                 if (uiElement != null)
                 {
+                    uiElement.InvalidateArrange();
+                }
+            }
+        }
+
+        private static void MarginPropertyChangedCallback(
+            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var newValue = (Thickness)args.NewValue;
+            var oldValue = (Thickness)args.OldValue;
+
+            if (newValue.IsDifferentFrom(oldValue))
+            {
+                var uiElement = dependencyObject as UIElement;
+                if (uiElement != null)
+                {
                     uiElement.InvalidateMeasure();
+                }
+            }
+        }
+
+        private static void PropertyOfTypeFloatChangedCallback(
+            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var newValue = (float)args.NewValue;
+            var oldValue = (float)args.OldValue;
+
+            if (newValue.IsDifferentFrom(oldValue))
+            {
+                var uiElement = dependencyObject as UIElement;
+                if (uiElement != null)
+                {
+                    uiElement.InvalidateMeasure();
+                }
+            }
+        }
+
+        private static void VerticalAlignmentPropertyChangedCallback(
+            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var newValue = (VerticalAlignment)args.NewValue;
+            var oldValue = (VerticalAlignment)args.OldValue;
+
+            if (newValue != oldValue)
+            {
+                var uiElement = dependencyObject as UIElement;
+                if (uiElement != null)
+                {
+                    uiElement.InvalidateArrange();
                 }
             }
         }

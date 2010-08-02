@@ -1,5 +1,6 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls
 {
+    using System.Collections.Generic;
     using System.Windows;
 
     using Microsoft.Xna.Framework;
@@ -16,7 +17,7 @@
         public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
             "Background", typeof(Brush), typeof(Panel), new PropertyMetadata(null));
 
-        private readonly UIElementCollection children;
+        private readonly IList<UIElement> children;
 
         public Panel()
         {
@@ -36,7 +37,7 @@
             }
         }
 
-        public UIElementCollection Children
+        public IList<UIElement> Children
         {
             get
             {

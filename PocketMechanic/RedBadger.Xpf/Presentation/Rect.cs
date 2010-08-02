@@ -4,6 +4,8 @@ namespace RedBadger.Xpf.Presentation
 
     using Microsoft.Xna.Framework;
 
+    using RedBadger.Xpf.Internal;
+
     [DebuggerDisplay("{Width} x {Height} @ {X}, {Y}")]
     public struct Rect
     {
@@ -45,7 +47,7 @@ namespace RedBadger.Xpf.Presentation
         {
             get
             {
-                return this.X == 0f && this.Y == 0f && this.Width == 0f && this.Height == 0f;
+                return this.X.IsCloseTo(0f) && this.Y.IsCloseTo(0f) && this.Width.IsCloseTo(0f) && this.Height.IsCloseTo(0f);
             }
         }
 

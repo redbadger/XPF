@@ -1,10 +1,35 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
+    using System.Windows;
+
+    using Rect = RedBadger.Xpf.Presentation.Rect;
+    using Size = RedBadger.Xpf.Presentation.Size;
+
+#if WINDOWS_PHONE
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
+#endif
 
     public class StackPanel : Panel
     {
-        public Orientation Orientation { get; set; }
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
+            "Orientation", 
+            typeof(Orientation), 
+            typeof(StackPanel), 
+            new PropertyMetadata(Orientation.Vertical, OrientationPropertyChangedCallback));
+
+        public Orientation Orientation
+        {
+            get
+            {
+                return (Orientation)this.GetValue(OrientationProperty);
+            }
+
+            set
+            {
+                this.SetValue(OrientationProperty, value);
+            }
+        }
 
         protected override Size ArrangeOverride(Size arrangeSize)
         {
@@ -71,6 +96,22 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
 
             return size;
+        }
+
+        private static void OrientationPropertyChangedCallback(
+            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var newValue = (Orientation)args.NewValue;
+            var oldValue = (Orientation)args.OldValue;
+
+            if (newValue != oldValue)
+            {
+                var uiElement = dependencyObject as UIElement;
+                if (uiElement != null)
+                {
+                    uiElement.InvalidateMeasure();
+                }
+            }
         }
     }
 }

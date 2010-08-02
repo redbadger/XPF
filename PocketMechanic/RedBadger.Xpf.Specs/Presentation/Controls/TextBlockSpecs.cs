@@ -44,6 +44,15 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             };
     }
 
+    public abstract class a_Measured_and_Arranged_TextBlock : a_TextBlock
+    {
+        private Establish context = () =>
+            {
+                RootElement.Update();
+                RootElement.Draw(SpriteBatch.Object);
+            };
+    }
+
     [Subject(typeof(TextBlock), "Foreground")]
     public class when_foreground_is_not_specified : a_TextBlock
     {
@@ -122,11 +131,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
                 RootElement.Draw(SpriteBatch.Object);
             };
 
-        private It should_render_with_the_specified_background_color =
-            () =>
-            SpriteBatch.Verify(
-                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), expectedBackground.Color));
-
         private It should_render_the_background_in_the_right_place = () =>
             {
                 var area = new Rectangle(
@@ -142,6 +146,11 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
                         Moq.It.Is<Rectangle>(rectangle => rectangle.Equals(area)), 
                         Moq.It.IsAny<Color>()));
             };
+
+        private It should_render_with_the_specified_background_color =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), expectedBackground.Color));
     }
 
     [Subject(typeof(TextBlock), "Padding")]
@@ -197,6 +206,36 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
                 TextBlock.Text = Sentence;
             };
+    }
+
+    [Subject(typeof(TextBlock), "Padding")]
+    public class when_padding_is_changed : a_Measured_and_Arranged_TextBlock
+    {
+        private Because of = () => TextBlock.Padding = new Thickness(10, 20, 30, 40);
+
+        private It should_invalidate_arrange = () => TextBlock.IsArrangeValid.ShouldBeFalse();
+
+        private It should_invalidate_measure = () => TextBlock.IsMeasureValid.ShouldBeFalse();
+    }
+
+    [Subject(typeof(TextBlock))]
+    public class when_text_is_changed : a_Measured_and_Arranged_TextBlock
+    {
+        private Because of = () => TextBlock.Text = "new value";
+
+        private It should_invalidate_arrange = () => TextBlock.IsArrangeValid.ShouldBeFalse();
+
+        private It should_invalidate_measure = () => TextBlock.IsMeasureValid.ShouldBeFalse();
+    }
+
+    [Subject(typeof(TextBlock), "Wrapping")]
+    public class when_text_wrapping_is_changed : a_Measured_and_Arranged_TextBlock
+    {
+        private Because of = () => TextBlock.Wrapping = TextWrapping.Wrap;
+
+        private It should_invalidate_arrange = () => TextBlock.IsArrangeValid.ShouldBeFalse();
+
+        private It should_invalidate_measure = () => TextBlock.IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(TextBlock), "Wrapping")]

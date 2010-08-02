@@ -15,6 +15,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
     using Moq;
 
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
@@ -22,9 +23,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
     public abstract class a_StackPanel
     {
-        protected static StackPanel stackPanel;
+        protected static StackPanel StackPanel;
 
-        private Establish context = () => stackPanel = new StackPanel();
+        private Establish context = () => StackPanel = new StackPanel();
     }
 
     public abstract class a_StackPanel_with_2_children : a_StackPanel
@@ -33,28 +34,47 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
         protected const float ElementWidth = 200f;
 
-        protected static readonly Size availableSize = new Size(500, 500);
+        protected static readonly Size AvailableSize = new Size(500, 500);
 
-        protected static Mock<UIElement> child1;
+        protected static Mock<UIElement> Child1;
 
-        protected static Mock<UIElement> child2;
+        protected static Mock<UIElement> Child2;
 
         private Establish context = () =>
             {
-                child1 = new Mock<UIElement> { CallBase = true };
-                child2 = new Mock<UIElement> { CallBase = true };
+                Child1 = new Mock<UIElement> { CallBase = true };
+                Child2 = new Mock<UIElement> { CallBase = true };
 
-                child1.Object.Width = child2.Object.Width = ElementWidth;
-                child1.Object.Height = child2.Object.Height = ElementHeight;
+                Child1.Object.Width = Child2.Object.Width = ElementWidth;
+                Child1.Object.Height = Child2.Object.Height = ElementHeight;
 
-                stackPanel.Children.Add(child1.Object);
-                stackPanel.Children.Add(child2.Object);
+                StackPanel.Children.Add(Child1.Object);
+                StackPanel.Children.Add(Child2.Object);
             };
     }
 
     public abstract class a_measured_StackPanel_with_2_children : a_StackPanel_with_2_children
     {
-        private Establish context = () => stackPanel.Measure(availableSize);
+        private Establish context = () => StackPanel.Measure(AvailableSize);
+    }
+
+    public abstract class a_Measured_and_Arranged_StackPanel : a_StackPanel
+    {
+        protected static RootElement RootElement;
+
+        protected static Mock<ISpriteBatch> SpriteBatch;
+
+        protected static Mock<ISpriteFont> SpriteFont;
+
+        private Establish context = () =>
+            {
+                SpriteBatch = new Mock<ISpriteBatch>();
+                SpriteFont = new Mock<ISpriteFont>();
+                RootElement = new RootElement(new Rect(new Size(100, 100))) { Content = StackPanel };
+
+                RootElement.Update();
+                RootElement.Draw(SpriteBatch.Object);
+            };
     }
 
     [Subject(typeof(StackPanel), "Layout")]
@@ -62,14 +82,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     {
         private Because of = () =>
             {
-                stackPanel.Orientation = Orientation.Vertical;
-                stackPanel.Measure(availableSize);
+                StackPanel.Orientation = Orientation.Vertical;
+                StackPanel.Measure(AvailableSize);
             };
 
         private It should_have_a_bigger_desired_height =
-            () => stackPanel.DesiredSize.Height.ShouldEqual(ElementHeight * 2);
+            () => StackPanel.DesiredSize.Height.ShouldEqual(ElementHeight * 2);
 
-        private It should_have_the_same_desired_width = () => stackPanel.DesiredSize.Width.ShouldEqual(ElementWidth);
+        private It should_have_the_same_desired_width = () => StackPanel.DesiredSize.Width.ShouldEqual(ElementWidth);
     }
 
     [Subject(typeof(StackPanel), "Layout")]
@@ -77,13 +97,13 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     {
         private Because of = () =>
             {
-                stackPanel.Orientation = Orientation.Horizontal;
-                stackPanel.Measure(availableSize);
+                StackPanel.Orientation = Orientation.Horizontal;
+                StackPanel.Measure(AvailableSize);
             };
 
-        private It should_have_a_bigger_desired_width = () => stackPanel.DesiredSize.Width.ShouldEqual(ElementWidth * 2);
+        private It should_have_a_bigger_desired_width = () => StackPanel.DesiredSize.Width.ShouldEqual(ElementWidth * 2);
 
-        private It should_have_the_same_desired_height = () => stackPanel.DesiredSize.Height.ShouldEqual(ElementHeight);
+        private It should_have_the_same_desired_height = () => StackPanel.DesiredSize.Height.ShouldEqual(ElementHeight);
     }
 
     [Subject(typeof(StackPanel), "Layout")]
@@ -91,15 +111,15 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     {
         private Because of = () =>
             {
-                stackPanel.Orientation = Orientation.Vertical;
-                stackPanel.Arrange(new Rect(availableSize));
+                StackPanel.Orientation = Orientation.Vertical;
+                StackPanel.Arrange(new Rect(AvailableSize));
             };
 
         private It should_layout_the_2nd_child_at_the_same_horizontal_position =
-            () => child2.Object.VisualOffset.X.ShouldEqual(child1.Object.VisualOffset.X);
+            () => Child2.Object.VisualOffset.X.ShouldEqual(Child1.Object.VisualOffset.X);
 
         private It should_layout_the_2nd_child_below_the_first =
-            () => child2.Object.VisualOffset.Y.ShouldEqual(child1.Object.VisualOffset.Y + ElementHeight);
+            () => Child2.Object.VisualOffset.Y.ShouldEqual(Child1.Object.VisualOffset.Y + ElementHeight);
     }
 
     [Subject(typeof(StackPanel), "Layout")]
@@ -107,14 +127,24 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     {
         private Because of = () =>
             {
-                stackPanel.Orientation = Orientation.Horizontal;
-                stackPanel.Arrange(new Rect(availableSize));
+                StackPanel.Orientation = Orientation.Horizontal;
+                StackPanel.Arrange(new Rect(AvailableSize));
             };
 
-        private It should_layout_the_2nd_child_to_the_right_of_the_first =
-            () => child2.Object.VisualOffset.X.ShouldEqual(child1.Object.VisualOffset.X + ElementWidth);
-
         private It should_layout_the_2nd_child_at_the_same_vertical_position =
-            () => child2.Object.VisualOffset.Y.ShouldEqual(child1.Object.VisualOffset.Y);
+            () => Child2.Object.VisualOffset.Y.ShouldEqual(Child1.Object.VisualOffset.Y);
+
+        private It should_layout_the_2nd_child_to_the_right_of_the_first =
+            () => Child2.Object.VisualOffset.X.ShouldEqual(Child1.Object.VisualOffset.X + ElementWidth);
+    }
+
+    [Subject(typeof(StackPanel))]
+    public class when_orientation_is_changed : a_Measured_and_Arranged_StackPanel
+    {
+        private Because of = () => StackPanel.Orientation = Orientation.Horizontal;
+
+        private It should_invalidate_arrange = () => StackPanel.IsArrangeValid.ShouldBeFalse();
+
+        private It should_invalidate_measure = () => StackPanel.IsMeasureValid.ShouldBeFalse();
     }
 }

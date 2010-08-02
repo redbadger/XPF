@@ -11,9 +11,9 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls
 {
-    using Moq;
-
     using Machine.Specifications;
+
+    using Moq;
 
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
@@ -22,9 +22,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
     public abstract class a_ContentControl
     {
-        protected static ContentControl contentControl;
+        protected static ContentControl ContentControl;
 
-        private Establish context = () => contentControl = new ContentControl();
+        private Establish context = () => ContentControl = new ContentControl();
     }
 
     [Subject(typeof(ContentControl))]
@@ -32,11 +32,17 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     {
         private static Mock<IElement> childContent;
 
-        private Establish context = () => childContent = new Mock<IElement>();
+        private Establish context = () =>
+            {
+                ContentControl.Measure(Size.Empty);
+                childContent = new Mock<IElement>();
+            };
 
-        private Because of = () => contentControl.Content = childContent.Object;
+        private Because of = () => ContentControl.Content = childContent.Object;
+
+        private It should_invalidate_measure = () => ContentControl.IsMeasureValid.ShouldBeFalse();
 
         private It should_mark_itself_as_the_visual_parent =
-            () => childContent.VerifySet(element => element.VisualParent = contentControl);
+            () => childContent.VerifySet(element => element.VisualParent = ContentControl);
     }
 }

@@ -43,6 +43,7 @@
                 UIElement newItem = value;
 
                 this.children[index] = newItem;
+                this.owner.InvalidateMeasure();
                 this.SetParents(oldItem, newItem);
             }
         }
@@ -50,6 +51,7 @@
         public void Add(UIElement item)
         {
             this.children.Add(item);
+            this.owner.InvalidateMeasure();
             this.SetParents(null, item);
         }
 
@@ -73,6 +75,7 @@
             bool wasRemoved = this.children.Remove(item);
             if (wasRemoved)
             {
+                this.owner.InvalidateMeasure();
                 this.SetParents(item, null);
             }
 
@@ -97,6 +100,7 @@
         public void Insert(int index, UIElement item)
         {
             this.children.Insert(index, item);
+            this.owner.InvalidateMeasure();
             this.SetParents(null, item);
         }
 
@@ -104,6 +108,7 @@
         {
             var oldItem = this.children[index];
             this.children.RemoveAt(index);
+            this.owner.InvalidateMeasure();
             this.SetParents(oldItem, null);
         }
 

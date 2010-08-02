@@ -2,8 +2,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 {
     using System.Windows;
 
-    using Microsoft.Xna.Framework;
-
     using RedBadger.Xpf.Graphics;
 
     using Rect = RedBadger.Xpf.Presentation.Rect;
@@ -71,12 +69,13 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         private static void ContentPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            var child = args.NewValue as IElement;
-            var parent = (IElement)dependencyObject;
+            var content = args.NewValue as IElement;
+            var contentControl = (IElement)dependencyObject;
 
-            if (child != null)
+            contentControl.InvalidateMeasure();
+            if (content != null)
             {
-                child.VisualParent = parent;
+                content.VisualParent = contentControl;
             }
         }
     }

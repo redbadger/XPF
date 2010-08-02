@@ -21,72 +21,101 @@ namespace RedBadger.Xpf.Specs.Presentation
 
     public abstract class a_UIElementCollection
     {
-        protected static Mock<UIElement> child1;
+        protected static Mock<UIElement> Child1;
 
-        protected static Mock<UIElement> child2;
+        protected static Mock<UIElement> Child2;
 
-        protected static Mock<UIElement> parent;
+        protected static Mock<UIElement> Owner;
 
-        protected static UIElementCollection uIElementCollection;
+        protected static UIElementCollection UIElementCollection;
 
         private Establish context = () =>
             {
-                child1 = new Mock<UIElement>();
-                child2 = new Mock<UIElement>();
-                parent = new Mock<UIElement>();
-                uIElementCollection = new UIElementCollection(parent.Object);
+                Child1 = new Mock<UIElement> { CallBase = true };
+                Child2 = new Mock<UIElement> { CallBase = true };
+                Owner = new Mock<UIElement> { CallBase = true };
+
+                UIElementCollection = new UIElementCollection(Owner.Object);
             };
     }
 
     [Subject(typeof(UIElementCollection), "Visual Parent")]
     public class when_adding_an_element_to : a_UIElementCollection
     {
-        private Because of = () => uIElementCollection.Add(child1.Object);
+        private Establish context = () => Owner.Object.Measure(Size.Empty);
+
+        private Because of = () => UIElementCollection.Add(Child1.Object);
+
+        private It should_invalidate_its_owners_measure = () => Owner.Object.IsMeasureValid.ShouldBeFalse();
 
         private It should_set_the_elements_visual_parent =
-            () => child1.Object.VisualParent.ShouldBeTheSameAs(parent.Object);
+            () => Child1.Object.VisualParent.ShouldBeTheSameAs(Owner.Object);
     }
 
     [Subject(typeof(UIElementCollection), "Visual Parent")]
     public class when_setting_an_element_in : a_UIElementCollection
     {
-        private Establish context = () => uIElementCollection.Add(child1.Object);
+        private Establish context = () =>
+            {
+                UIElementCollection.Add(Child1.Object);
 
-        private Because of = () => uIElementCollection[0] = child2.Object;
+                Owner.Object.Measure(Size.Empty);
+            };
+
+        private Because of = () => UIElementCollection[0] = Child2.Object;
+
+        private It should_invalidate_its_owners_measure = () => Owner.Object.IsMeasureValid.ShouldBeFalse();
 
         private It should_set_the_elements_visual_parent =
-            () => child2.Object.VisualParent.ShouldBeTheSameAs(parent.Object);
+            () => Child2.Object.VisualParent.ShouldBeTheSameAs(Owner.Object);
 
-        private It should_unset_the_old_elements_visual_parent =
-            () => child1.Object.VisualParent.ShouldBeNull();
+        private It should_unset_the_old_elements_visual_parent = () => Child1.Object.VisualParent.ShouldBeNull();
     }
 
     [Subject(typeof(UIElementCollection), "Visual Parent")]
     public class when_removing_an_element_from : a_UIElementCollection
     {
-        private Establish context = () => uIElementCollection.Add(child1.Object);
+        private Establish context = () =>
+            {
+                UIElementCollection.Add(Child1.Object);
 
-        private Because of = () => uIElementCollection.Remove(child1.Object);
+                Owner.Object.Measure(Size.Empty);
+            };
 
-        private It should_unset_the_elements_visual_parent = () => child1.Object.VisualParent.ShouldBeNull();
+        private Because of = () => UIElementCollection.Remove(Child1.Object);
+
+        private It should_invalidate_its_owners_measure = () => Owner.Object.IsMeasureValid.ShouldBeFalse();
+
+        private It should_unset_the_elements_visual_parent = () => Child1.Object.VisualParent.ShouldBeNull();
     }
 
     [Subject(typeof(UIElementCollection), "Visual Parent")]
     public class when_removing_an_element_at_a_certain_position_from : a_UIElementCollection
     {
-        private Establish context = () => uIElementCollection.Add(child1.Object);
+        private Establish context = () =>
+            {
+                UIElementCollection.Add(Child1.Object);
 
-        private Because of = () => uIElementCollection.RemoveAt(0);
+                Owner.Object.Measure(Size.Empty);
+            };
 
-        private It should_unset_the_elements_visual_parent = () => child1.Object.VisualParent.ShouldBeNull();
+        private Because of = () => UIElementCollection.RemoveAt(0);
+
+        private It should_invalidate_its_owners_measure = () => Owner.Object.IsMeasureValid.ShouldBeFalse();
+
+        private It should_unset_the_elements_visual_parent = () => Child1.Object.VisualParent.ShouldBeNull();
     }
 
     [Subject(typeof(UIElementCollection), "Visual Parent")]
     public class when_inserting_an_element_into : a_UIElementCollection
     {
-        private Because of = () => uIElementCollection.Insert(0, child1.Object);
+        private Establish context = () => Owner.Object.Measure(Size.Empty);
+
+        private Because of = () => UIElementCollection.Insert(0, Child1.Object);
+
+        private It should_invalidate_its_owners_measure = () => Owner.Object.IsMeasureValid.ShouldBeFalse();
 
         private It should_set_the_elements_visual_parent =
-            () => child1.Object.VisualParent.ShouldBeTheSameAs(parent.Object);
+            () => Child1.Object.VisualParent.ShouldBeTheSameAs(Owner.Object);
     }
 }
