@@ -10,7 +10,8 @@
 
     public abstract class UIElement : DependencyObject, IElement
     {
-        private float height = float.NaN;
+        public static readonly DependencyProperty HeightProperty = DependencyProperty.Register(
+            "Height", typeof(float), typeof(UIElement), new PropertyMetadata(float.NaN, HeightPropertyChangedCallback));
 
         private float maxHeight = float.PositiveInfinity;
 
@@ -44,12 +45,12 @@
         {
             get
             {
-                return this.height;
+                return (float)this.GetValue(HeightProperty);
             }
 
             set
             {
-                this.height = value;
+                this.SetValue(HeightProperty, value);
             }
         }
 
@@ -232,6 +233,22 @@
         protected virtual Size MeasureOverride(Size availableSize)
         {
             return Size.Empty;
+        }
+
+        private static void HeightPropertyChangedCallback(
+            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var newValue = (float)args.NewValue;
+            var oldValue = (float)args.OldValue;
+
+            if (newValue != oldValue)
+            {
+                var uiElement = dependencyObject as UIElement;
+                if (uiElement != null)
+                {
+                    uiElement.InvalidateMeasure();
+                }
+            }
         }
 
         /// <summary>

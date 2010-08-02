@@ -634,6 +634,16 @@ namespace RedBadger.Xpf.Specs.Presentation.MoqSpecs
         private It should_not_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeTrue();
     }
 
+    [Subject(typeof(UIElement), "Layout - Invalidate")]
+    public class when_height_is_changed : a_Measured_and_Arranged_UIElement
+    {
+        private Because of = () => uiElement.Object.Height = 100;
+
+        private It should_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeFalse();
+
+        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+    }
+
     [Subject(typeof(UIElement), "Layout - Size Change")]
     public class when_the_available_size_changes : a_Measured_UIElement
     {
