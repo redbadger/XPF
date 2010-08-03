@@ -21,13 +21,29 @@ namespace RedBadger.Xpf.Specs.Presentation
     {
         private const GridUnitType ExpectedGridUnitType = GridUnitType.Pixel;
 
+        private const float ExpectedMaxWidth = 100f;
+
+        private const float ExpectedMinWidth = 10f;
+
         private const float ExpectedWidth = 10f;
 
         private static ColumnDefinition columnDefinition;
 
         private Because of =
             () =>
-            columnDefinition = new ColumnDefinition { Width = new GridLength(ExpectedWidth, ExpectedGridUnitType) };
+            columnDefinition =
+            new ColumnDefinition
+                {
+                    Width = new GridLength(ExpectedWidth, ExpectedGridUnitType), 
+                    MinWidth = ExpectedMinWidth, 
+                    MaxWidth = ExpectedMaxWidth
+                };
+
+        private It should_return_column_max_width_when_user_max_length_is_requested =
+            () => columnDefinition.UserMaxLength.ShouldEqual(ExpectedMaxWidth);
+
+        private It should_return_column_min_width_when_user_min_length_is_requested =
+            () => columnDefinition.UserMinLength.ShouldEqual(ExpectedMinWidth);
 
         private It should_return_column_width_when_user_length_is_requested =
             () => columnDefinition.UserLength.Value.ShouldEqual(ExpectedWidth);
@@ -43,10 +59,27 @@ namespace RedBadger.Xpf.Specs.Presentation
 
         private const float ExpectedHeight = 10f;
 
+        private const float ExpectedMaxHeight = 100f;
+
+        private const float ExpectedMinHeight = 10f;
+
         private static RowDefinition rowDefinition;
 
         private Because of =
-            () => rowDefinition = new RowDefinition { Height = new GridLength(ExpectedHeight, ExpectedGridUnitType) };
+            () =>
+            rowDefinition =
+            new RowDefinition
+                {
+                    Height = new GridLength(ExpectedHeight, ExpectedGridUnitType), 
+                    MinHeight = ExpectedMinHeight, 
+                    MaxHeight = ExpectedMaxHeight
+                };
+
+        private It should_return_row_max_height_when_user_max_length_is_requested =
+            () => rowDefinition.UserMaxLength.ShouldEqual(ExpectedMaxHeight);
+
+        private It should_return_row_min_height_when_user_min_length_is_requested =
+            () => rowDefinition.UserMinLength.ShouldEqual(ExpectedMinHeight);
 
         private It should_return_row_height_when_user_length_is_requested =
             () => rowDefinition.UserLength.Value.ShouldEqual(ExpectedHeight);

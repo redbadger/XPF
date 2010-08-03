@@ -357,6 +357,130 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             () => grid.DesiredSize.Width.ShouldEqual(ExpectedWidth1 + ExpectedWidth2);
     }
 
+    [Subject(typeof(Grid), "Measure - Min and Max")]
+    public class when_there_is_a_column_with_min_width_and_the_child_is_smaller : a_Grid
+    {
+        private const float ColumnMinWidth = 10f;
+
+        private static readonly Size availableSize = new Size(100, 100);
+
+        private static Mock<UIElement> child;
+
+        private Establish context = () =>
+        {
+            grid.ColumnDefinitions.Add(new ColumnDefinition { MinWidth = ColumnMinWidth});
+
+            child = new Mock<UIElement> { CallBase = true };
+            child.Object.Width = 5;
+            child.Object.Height = 60;
+        };
+
+        private Because of = () =>
+        {
+            grid.Children.Add(child.Object);
+            grid.Measure(availableSize);
+        };
+
+        private It should_have_a_desired_width_equal_to_the_min_width =
+            () => grid.DesiredSize.Width.ShouldEqual(ColumnMinWidth);
+
+        private It should_have_a_desired_height_equal_to_that_of_the_child =
+            () => grid.DesiredSize.Height.ShouldEqual(child.Object.DesiredSize.Height);
+    }
+
+    [Subject(typeof(Grid), "Measure - Min and Max")]
+    public class when_there_is_a_column_with_max_width_and_the_child_is_larger : a_Grid
+    {
+        private const float ColumnMaxWidth = 50f;
+
+        private static readonly Size availableSize = new Size(100, 100);
+
+        private static Mock<UIElement> child;
+
+        private Establish context = () =>
+        {
+            grid.ColumnDefinitions.Add(new ColumnDefinition { MaxWidth = ColumnMaxWidth});
+
+            child = new Mock<UIElement> { CallBase = true };
+            child.Object.Width = 500;
+            child.Object.Height = 60;
+        };
+
+        private Because of = () =>
+        {
+            grid.Children.Add(child.Object);
+            grid.Measure(availableSize);
+        };
+
+        private It should_have_a_desired_width_equal_to_the_max_width =
+            () => grid.DesiredSize.Width.ShouldEqual(ColumnMaxWidth);
+
+        private It should_have_a_desired_height_equal_to_that_of_the_child =
+            () => grid.DesiredSize.Height.ShouldEqual(child.Object.DesiredSize.Height);
+    }
+
+    [Subject(typeof(Grid), "Measure - Min and Max")]
+    public class when_there_is_a_row_with_min_height_and_the_child_is_smaller : a_Grid
+    {
+        private const float RowMinHeight = 10f;
+
+        private static readonly Size availableSize = new Size(100, 100);
+
+        private static Mock<UIElement> child;
+
+        private Establish context = () =>
+        {
+            grid.RowDefinitions.Add(new RowDefinition { MinHeight = RowMinHeight});
+
+            child = new Mock<UIElement> { CallBase = true };
+            child.Object.Width = 60;
+            child.Object.Height = 5;
+        };
+
+        private Because of = () =>
+        {
+            grid.Children.Add(child.Object);
+            grid.Measure(availableSize);
+        };
+
+        private It should_have_a_desired_height_equal_to_the_min_height =
+            () => grid.DesiredSize.Height.ShouldEqual(RowMinHeight);
+
+        private It should_have_a_desired_width_equal_to_that_of_the_child =
+            () => grid.DesiredSize.Width.ShouldEqual(child.Object.DesiredSize.Width);
+    }
+
+    [Subject(typeof(Grid), "Measure - Min and Max")]
+    public class when_there_is_a_row_with_max_height_and_the_child_is_larger : a_Grid
+    {
+        private const float RowMaxHeight = 50f;
+
+        private static readonly Size availableSize = new Size(100, 100);
+
+        private static Mock<UIElement> child;
+
+        private Establish context = () =>
+        {
+            grid.RowDefinitions.Add(new RowDefinition { MaxHeight = RowMaxHeight});
+
+            child = new Mock<UIElement> { CallBase = true };
+            child.Object.Width = 60;
+            child.Object.Height = 500;
+        };
+
+        private Because of = () =>
+        {
+            grid.Children.Add(child.Object);
+            grid.Measure(availableSize);
+        };
+
+        private It should_have_a_desired_height_equal_to_the_max_height =
+            () => grid.DesiredSize.Height.ShouldEqual(RowMaxHeight);
+
+        private It should_have_a_desired_width_equal_to_that_of_the_child =
+            () => grid.DesiredSize.Width.ShouldEqual(child.Object.DesiredSize.Width);
+    }
+    
     [Subject(typeof(Grid), "Measure")]
     public class when_a_column_index_is_specified_greater_than_the_number_of_columns_available : a_Grid
     {

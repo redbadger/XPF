@@ -118,8 +118,9 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             foreach (DefinitionBase definition in definitions)
             {
-                float minSize = 0f;
                 var availableLength = 0f;
+                float userMinLength = definition.UserMinLength;
+                float userMaxLength = definition.UserMaxLength;
 
                 switch (definition.UserLength.GridUnitType)
                 {
@@ -130,12 +131,12 @@ namespace RedBadger.Xpf.Presentation.Controls
                     case GridUnitType.Pixel:
                         definition.LengthType = GridUnitType.Pixel;
                         availableLength = definition.UserLength.Value;
-                        minSize = availableLength;
+                        userMinLength = Math.Max(userMinLength, Math.Min(availableLength, userMaxLength));
                         break;
                 }
 
-                definition.UpdateMinLength(minSize);
-                definition.AvailableLength = availableLength;
+                definition.UpdateMinLength(userMinLength);
+                definition.AvailableLength = Math.Max(userMinLength, Math.Min(availableLength, userMaxLength));
             }
         }
 
@@ -221,13 +222,16 @@ namespace RedBadger.Xpf.Presentation.Controls
                 {
                     this.MeasureCell(currentCellIndex);
 
-                    this.widthDefinitions[this.cells[currentCellIndex].ColumnIndex].UpdateMinLength(
-                        this.Children[currentCellIndex].DesiredSize.Width);
+                    var cell = this.cells[currentCellIndex];
+                    var child = this.Children[currentCellIndex];
 
-                    this.heightDefinitions[this.cells[currentCellIndex].RowIndex].UpdateMinLength(
-                        this.Children[currentCellIndex].DesiredSize.Height);
+                    var widthDefinition = this.widthDefinitions[cell.ColumnIndex];
+                    widthDefinition.UpdateMinLength(Math.Min(child.DesiredSize.Width, widthDefinition.UserMaxLength));
 
-                    currentCellIndex = this.cells[currentCellIndex].Next;
+                    var heightDefinition = this.heightDefinitions[cell.RowIndex];
+                    heightDefinition.UpdateMinLength(Math.Min(child.DesiredSize.Height, heightDefinition.UserMaxLength));
+
+                    currentCellIndex = cell.Next;
                 }
                 while (currentCellIndex < this.cells.Length);
             }

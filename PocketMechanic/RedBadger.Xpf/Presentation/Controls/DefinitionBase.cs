@@ -42,6 +42,32 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
+        internal float UserMinLength
+        {
+            get
+            {
+                return
+                    (float)
+                    this.GetValue(
+                        this.definitionType == DefinitionType.Column
+                            ? ColumnDefinition.MinWidthProperty
+                            : RowDefinition.MinHeightProperty);
+            }
+        }
+
+        internal float UserMaxLength
+        {
+            get
+            {
+                return
+                    (float)
+                    this.GetValue(
+                        this.definitionType == DefinitionType.Column
+                            ? ColumnDefinition.MaxWidthProperty
+                            : RowDefinition.MaxHeightProperty);
+            }
+        }
+
         internal void UpdateMinLength(float minLength)
         {
             this.MinLength = Math.Max(this.MinLength, minLength);
