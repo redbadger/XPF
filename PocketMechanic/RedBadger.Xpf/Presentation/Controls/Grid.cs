@@ -1,7 +1,6 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
@@ -27,6 +26,10 @@ namespace RedBadger.Xpf.Presentation.Controls
         private Cell[] cells;
 
         private int cellsWithoutStarsHeadIndex;
+
+        private DefinitionBase[] heightDefinitions;
+
+        private DefinitionBase[] widthDefinitions;
 
         public IList<ColumnDefinition> ColumnDefinitions
         {
@@ -54,6 +57,16 @@ namespace RedBadger.Xpf.Presentation.Controls
             return (int)element.GetValue(ColumnProperty);
         }
 
+        public static int GetRow(UIElement element)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+
+            return (int)element.GetValue(RowProperty);
+        }
+
         public static void SetColumn(UIElement element, int value)
         {
             if (element == null)
@@ -78,7 +91,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             Size size = Size.Empty;
 
-            bool isSingleCell = this.columnDefinitions.Count == 0;
+            bool isSingleCell = this.columnDefinitions.Count == 0 && this.rowDefinitions.Count == 0;
             if (isSingleCell)
             {
                 foreach (UIElement child in this.Children)
@@ -94,21 +107,27 @@ namespace RedBadger.Xpf.Presentation.Controls
                 return size;
             }
 
-            InitializeMeasureData(this.columnDefinitions);
-            InitializeMeasureData(this.rowDefinitions);
+            this.widthDefinitions = this.columnDefinitions.Count == 0
+                                        ? new DefinitionBase[] { new ColumnDefinition() }
+                                        : this.columnDefinitions.ToArray();
+
+            this.heightDefinitions = this.rowDefinitions.Count == 0
+                                         ? new DefinitionBase[] { new RowDefinition() }
+                                         : this.rowDefinitions.ToArray();
+
+            InitializeMeasureData(this.widthDefinitions);
+            InitializeMeasureData(this.heightDefinitions);
             this.CreateCells();
             this.MeasureCellGroup(this.cellsWithoutStarsHeadIndex);
 
-            size = new Size(this.columnDefinitions.Sum(definition => definition.MinSize), availableSize.Height);
+            size = new Size(
+                this.widthDefinitions.Sum(definition => definition.MinSize),
+                this.heightDefinitions.Sum(definition => definition.MinSize));
 
             return size;
         }
 
-#if WINDOWS_PHONE
-    private static void InitializeMeasureData(IEnumerable definitions)
-#else
-    private static void InitializeMeasureData(IEnumerable<DefinitionBase> definitions)
-#endif
+        private static void InitializeMeasureData(IEnumerable<DefinitionBase> definitions)
         {
             foreach (DefinitionBase definition in definitions)
             {
@@ -126,7 +145,12 @@ namespace RedBadger.Xpf.Presentation.Controls
                 UIElement element = this.Children[i];
                 if (element != null)
                 {
-                    var cell = new Cell { ColumnIndex = GetColumn(element), Next = this.cellsWithoutStarsHeadIndex };
+                    var cell = new Cell
+                        {
+                            ColumnIndex = GetColumn(element), 
+                            RowIndex = GetRow(element), 
+                            Next = this.cellsWithoutStarsHeadIndex
+                        };
 
                     this.cellsWithoutStarsHeadIndex = i;
 
@@ -154,8 +178,11 @@ namespace RedBadger.Xpf.Presentation.Controls
                 {
                     this.MeasureCell(currentCellIndex);
 
-                    this.columnDefinitions[this.cells[currentCellIndex].ColumnIndex].UpdateMinSize(
+                    this.widthDefinitions[this.cells[currentCellIndex].ColumnIndex].UpdateMinSize(
                         this.Children[currentCellIndex].DesiredSize.Width);
+
+                    this.heightDefinitions[this.cells[currentCellIndex].RowIndex].UpdateMinSize(
+                        this.Children[currentCellIndex].DesiredSize.Height);
 
                     currentCellIndex = this.cells[currentCellIndex].Next;
                 }
@@ -168,6 +195,8 @@ namespace RedBadger.Xpf.Presentation.Controls
             public int ColumnIndex { get; set; }
 
             public int Next { get; set; }
+
+            public int RowIndex { get; set; }
         }
     }
 }

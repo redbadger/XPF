@@ -573,6 +573,9 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
             }
         }
 
+        /// <summary>
+        /// CreateCells
+        /// </summary>
         private void ValidateCellsCore()
         {
             UIElementCollection children = this.Children;
@@ -633,6 +636,9 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
             this.hasGroup3CellsInAutoRows = hasGroup3CellsInAutoRows;
         }
 
+        /// <summary>
+        /// InitializeMeasureData
+        /// </summary>
         private void ValidateDefinitionsLayout(IEnumerable<DefinitionBase> definitions, bool treatStarAsAuto)
         {
             foreach (DefinitionBase definition in definitions)
