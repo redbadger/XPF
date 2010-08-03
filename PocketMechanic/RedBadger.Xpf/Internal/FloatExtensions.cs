@@ -36,6 +36,11 @@
             return value1 < value2 && value1.IsDifferentFrom(value2);
         }
 
+        public static bool IsGreaterThan(this float value1, float value2)
+        {
+            return value1 > value2 && value1.IsDifferentFrom(value2);
+        }
+
         public static bool IsLessThanOrCloseTo(this float value1, float value2)
         {
             if (value1 >= value2)

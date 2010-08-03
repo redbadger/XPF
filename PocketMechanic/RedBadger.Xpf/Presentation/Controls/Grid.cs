@@ -1,6 +1,7 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
@@ -93,8 +94,8 @@ namespace RedBadger.Xpf.Presentation.Controls
                 return size;
             }
 
-            InitializeMeasureData((IEnumerable<DefinitionBase>)this.columnDefinitions);
-            InitializeMeasureData((IEnumerable<DefinitionBase>)this.rowDefinitions);
+            InitializeMeasureData(this.columnDefinitions);
+            InitializeMeasureData(this.rowDefinitions);
             this.CreateCells();
             this.MeasureCellGroup(this.cellsWithoutStarsHeadIndex);
 
@@ -103,7 +104,11 @@ namespace RedBadger.Xpf.Presentation.Controls
             return size;
         }
 
-        private static void InitializeMeasureData(IEnumerable<DefinitionBase> definitions)
+#if WINDOWS_PHONE
+    private static void InitializeMeasureData(IEnumerable definitions)
+#else
+    private static void InitializeMeasureData(IEnumerable<DefinitionBase> definitions)
+#endif
         {
             foreach (DefinitionBase definition in definitions)
             {

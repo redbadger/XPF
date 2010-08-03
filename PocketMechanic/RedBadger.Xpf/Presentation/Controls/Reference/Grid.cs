@@ -7,6 +7,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
     using RedBadger.Xpf.Internal;
 
+    using Rect = RedBadger.Xpf.Presentation.Rect;
     using Size = RedBadger.Xpf.Presentation.Size;
 
     public enum GridUnitType
@@ -66,30 +67,6 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
             }
         }
 
-        public bool IsAbsolute
-        {
-            get
-            {
-                return this.unitType == GridUnitType.Pixel;
-            }
-        }
-
-        public bool IsAuto
-        {
-            get
-            {
-                return this.unitType == GridUnitType.Auto;
-            }
-        }
-
-        public bool IsStar
-        {
-            get
-            {
-                return this.unitType == GridUnitType.Star;
-            }
-        }
-
         public float Value
         {
             get
@@ -110,7 +87,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
         private static readonly StarDistributionComparerBySizeCache compareDefinitionBySizeCache =
             new StarDistributionComparerBySizeCache();
 
-        private CellCache[] cellCachesCollection;
+        private CellCache[] cellCaches;
 
         private int cellGroup1;
 
@@ -202,6 +179,63 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
             element.SetValue(RowProperty, value);
         }
 
+        internal static bool CompareNullRefs(object x, object y, out int result)
+        {
+            result = 2;
+            if (x == null)
+            {
+                if (y == null)
+                {
+                    result = 0;
+                }
+                else
+                {
+                    result = -1;
+                }
+            }
+            else if (y == null)
+            {
+                result = 1;
+            }
+
+            return result != 2;
+        }
+
+        protected override Size ArrangeOverride(Size arrangeSize)
+        {
+            bool isSingleCell = this.columnDefinitions != null && this.rowDefinitions != null;
+            if (isSingleCell)
+            {
+                foreach (UIElement child in this.Children)
+                {
+                    child.Arrange(new Rect(arrangeSize));
+                }
+
+                return arrangeSize;
+            }
+
+            this.SetFinalSize(this.definitionsU, arrangeSize.Width);
+            this.SetFinalSize(this.definitionsV, arrangeSize.Height);
+
+            for (int i = 0; i < this.cellCaches.Length; i++)
+            {
+                UIElement child = this.Children[i];
+                if (child != null)
+                {
+                    int columnIndex = this.cellCaches[i].ColumnIndex;
+                    int rowIndex = this.cellCaches[i].RowIndex;
+                    var finalRect = new Rect(
+                        (columnIndex == 0) ? 0.0f : this.definitionsU[columnIndex].FinalOffset, 
+                        (rowIndex == 0) ? 0.0f : this.definitionsV[rowIndex].FinalOffset, 
+                        this.definitionsU[columnIndex].SizeCache, 
+                        this.definitionsV[rowIndex].SizeCache);
+                    child.Arrange(finalRect);
+                }
+            }
+
+            return arrangeSize;
+        }
+
         protected override Size MeasureOverride(Size availableSize)
         {
             Size size;
@@ -266,7 +300,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
                 this.MeasureCellsGroup(this.cellGroup3, false, false);
             }
-            else if (this.cellGroup2 > this.cellCachesCollection.Length)
+            else if (this.cellGroup2 > this.cellCaches.Length)
             {
                 if (this.hasStarCellsU)
                 {
@@ -303,28 +337,6 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
             size = new Size(this.definitionsU.Sum(t => t.MinSize), this.definitionsV.Sum(t => t.MinSize));
 
             return size;
-        }
-
-        private static bool CompareNullRefs(object x, object y, out int result)
-        {
-            result = 2;
-            if (x == null)
-            {
-                if (y == null)
-                {
-                    result = 0;
-                }
-                else
-                {
-                    result = -1;
-                }
-            }
-            else if (y == null)
-            {
-                result = 1;
-            }
-
-            return result != 2;
         }
 
         private static void ResolveStar(IEnumerable<DefinitionBase> definitions, float availableSize)
@@ -399,7 +411,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
             UIElement child = this.Children[cellIndex];
             if (child != null)
             {
-                CellCache cell = this.cellCachesCollection[cellIndex];
+                CellCache cell = this.cellCaches[cellIndex];
 
                 float x = cell.SizeTypeU == GridUnitType.Auto
                               ? float.PositiveInfinity
@@ -415,7 +427,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
         private void MeasureCellsGroup(int headCellIndex, bool ignoreDesiredSizeWidth, bool forceInfinityHeight)
         {
-            if (headCellIndex < this.cellCachesCollection.Length)
+            if (headCellIndex < this.cellCaches.Length)
             {
                 int currentCellIndex = headCellIndex;
 
@@ -425,23 +437,130 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
                     if (!ignoreDesiredSizeWidth)
                     {
-                        this.definitionsU[this.cellCachesCollection[currentCellIndex].ColumnIndex].UpdateMinSize(
+                        this.definitionsU[this.cellCaches[currentCellIndex].ColumnIndex].UpdateMinSize(
                             Math.Min(
                                 this.Children[currentCellIndex].DesiredSize.Width, 
-                                this.definitionsU[this.cellCachesCollection[currentCellIndex].ColumnIndex].UserMaxSize));
+                                this.definitionsU[this.cellCaches[currentCellIndex].ColumnIndex].UserMaxSize));
                     }
 
                     if (!forceInfinityHeight)
                     {
-                        this.definitionsV[this.cellCachesCollection[currentCellIndex].RowIndex].UpdateMinSize(
+                        this.definitionsV[this.cellCaches[currentCellIndex].RowIndex].UpdateMinSize(
                             Math.Min(
                                 this.Children[currentCellIndex].DesiredSize.Height, 
-                                this.definitionsV[this.cellCachesCollection[currentCellIndex].RowIndex].UserMaxSize));
+                                this.definitionsV[this.cellCaches[currentCellIndex].RowIndex].UserMaxSize));
                     }
 
-                    currentCellIndex = this.cellCachesCollection[currentCellIndex].Next;
+                    currentCellIndex = this.cellCaches[currentCellIndex].Next;
                 }
-                while (currentCellIndex < this.cellCachesCollection.Length);
+                while (currentCellIndex < this.cellCaches.Length);
+            }
+        }
+
+        private void SetFinalSize(DefinitionBase[] definitions, float finalSize)
+        {
+            int length = 0;
+            int num2 = definitions.Length;
+            float num3 = 0.0f;
+
+            for (int i = 0; i < definitions.Length; i++)
+            {
+                if (definitions[i].UserSize.GridUnitType == GridUnitType.Star)
+                {
+                    float divisor = definitions[i].UserSize.Value;
+                    if (divisor.IsCloseTo(0f))
+                    {
+                        definitions[i].MeasureSize = 0.0f;
+                        definitions[i].SizeCache = 0.0f;
+                    }
+                    else
+                    {
+                        definitions[i].MeasureSize = divisor;
+                        definitions[i].SizeCache =
+                            Math.Max(definitions[i].MinSizeForArrange, definitions[i].UserMaxSize) / divisor;
+                    }
+
+                    this.definitionIndices[length++] = i;
+                    continue;
+                }
+
+                float minSizeForArrange = 0.0f;
+                switch (definitions[i].UserSize.GridUnitType)
+                {
+                    case GridUnitType.Auto:
+                        minSizeForArrange = definitions[i].MinSizeForArrange;
+                        break;
+
+                    case GridUnitType.Pixel:
+                        minSizeForArrange = definitions[i].UserSize.Value;
+                        break;
+                }
+
+                float userMaxSize = definitions[i].IsShared ? minSizeForArrange : definitions[i].UserMaxSize;
+
+                definitions[i].SizeCache = Math.Max(
+                    definitions[i].MinSizeForArrange, Math.Min(minSizeForArrange, userMaxSize));
+
+                num3 += definitions[i].SizeCache;
+                this.definitionIndices[--num2] = i;
+            }
+
+            if (length > 0)
+            {
+                Array.Sort(this.definitionIndices, 0, length, new StarDistributionOrderIndexComparer(definitions));
+                float num10 = 0.0f;
+                int index = length - 1;
+                do
+                {
+                    num10 += definitions[this.definitionIndices[index]].MeasureSize;
+                    definitions[this.definitionIndices[index]].SizeCache = num10;
+                }
+                while (--index >= 0);
+                index = 0;
+                do
+                {
+                    float num12;
+                    float measureSize = definitions[this.definitionIndices[index]].MeasureSize;
+                    if (measureSize.IsCloseTo(0f))
+                    {
+                        num12 = definitions[this.definitionIndices[index]].MinSizeForArrange;
+                    }
+                    else
+                    {
+                        float num14 = Math.Max(finalSize - num3, 0.0f) *
+                                      (measureSize / definitions[this.definitionIndices[index]].SizeCache);
+                        num12 = Math.Min(num14, definitions[this.definitionIndices[index]].UserMaxSize);
+                        num12 = Math.Max(definitions[this.definitionIndices[index]].MinSizeForArrange, num12);
+                    }
+
+                    definitions[this.definitionIndices[index]].SizeCache = num12;
+
+                    num3 += definitions[this.definitionIndices[index]].SizeCache;
+                }
+                while (++index < length);
+            }
+
+            if (num3.IsGreaterThan(finalSize))
+            {
+                Array.Sort(this.definitionIndices, 0, definitions.Length, new DistributionOrderIndexComparer(definitions));
+                float num15 = finalSize - num3;
+                for (int k = 0; k < definitions.Length; k++)
+                {
+                    int num17 = this.definitionIndices[k];
+                    float num18 = definitions[num17].SizeCache + (num15 / (definitions.Length - k));
+                    num18 = Math.Min(
+                        Math.Max(num18, definitions[num17].MinSizeForArrange), definitions[num17].SizeCache);
+
+                    num15 -= num18 - definitions[num17].SizeCache;
+                    definitions[num17].SizeCache = num18;
+                }
+            }
+
+            definitions[0].FinalOffset = 0.0f;
+            for (int j = 0; j < definitions.Length; j++)
+            {
+                definitions[(j + 1) % definitions.Length].FinalOffset = definitions[j].FinalOffset +
+                                                                        definitions[j].SizeCache;
             }
         }
 
@@ -457,7 +576,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
         private void ValidateCellsCore()
         {
             UIElementCollection children = this.Children;
-            this.cellCachesCollection = new CellCache[children.Count];
+            this.cellCaches = new CellCache[children.Count];
             this.cellGroup1 = int.MaxValue;
             this.cellGroup2 = int.MaxValue;
             this.cellGroup3 = int.MaxValue;
@@ -465,7 +584,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
             bool hasStarCellsU = false;
             bool hasStarCellsV = false;
             bool hasGroup3CellsInAutoRows = false;
-            for (int i = this.cellCachesCollection.Length - 1; i >= 0; i--)
+            for (int i = this.cellCaches.Length - 1; i >= 0; i--)
             {
                 UIElement element = children[i];
                 if (element != null)
@@ -505,7 +624,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
                         this.cellGroup4 = i;
                     }
 
-                    this.cellCachesCollection[i] = cache;
+                    this.cellCaches[i] = cache;
                 }
             }
 
@@ -621,6 +740,65 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
         }
     }
 
+    internal class StarDistributionOrderIndexComparer : IComparer<int>
+    {
+        private readonly DefinitionBase[] definitions;
+
+        internal StarDistributionOrderIndexComparer(DefinitionBase[] definitions)
+        {
+            if (definitions == null)
+            {
+                throw new ArgumentNullException("definitions");
+            }
+
+            this.definitions = definitions;
+        }
+
+        public int Compare(int x, int y)
+        {
+            int num;
+            DefinitionBase left = this.definitions[x];
+            DefinitionBase right = this.definitions[y];
+
+            if (!Grid.CompareNullRefs(left, right, out num))
+            {
+                num = left.SizeCache.CompareTo(right.SizeCache);
+            }
+
+            return num;
+        }
+    }
+
+    internal class DistributionOrderIndexComparer : IComparer<int>
+    {
+        private readonly DefinitionBase[] definitions;
+
+        internal DistributionOrderIndexComparer(DefinitionBase[] definitions)
+        {
+            if (definitions == null)
+            {
+                throw new ArgumentNullException("definitions");
+            }
+
+            this.definitions = definitions;
+        }
+
+        public int Compare(int x, int y)
+        {
+            int num;
+            DefinitionBase left = this.definitions[x];
+            DefinitionBase right = this.definitions[y];
+            if (!Grid.CompareNullRefs(left, right, out num))
+            {
+                double num2 = left.SizeCache - left.MinSizeForArrange;
+                double num3 = right.SizeCache - right.MinSizeForArrange;
+                num = num2.CompareTo(num3);
+            }
+
+            return num;
+        }
+    }
+
     internal class RowDefinition : DefinitionBase
     {
     }
@@ -661,6 +839,10 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
     public class DefinitionBase
     {
+        public float FinalOffset { get; set; }
+
+        public bool IsShared { get; set; }
+
         public float MeasureSize { get; set; }
 
         public float MinSize { get; set; }
@@ -674,6 +856,23 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
         public float UserMinSize { get; set; }
 
         public GridLength UserSize { get; set; }
+
+        internal float MinSizeForArrange
+        {
+            get
+            {
+                /*
+                float minSize = this._minSize;
+                if (((this._sharedState != null) && (this.UseSharedMinimum || !this.LayoutWasUpdated)) && (minSize < this._sharedState.MinSize))
+                {
+                    minSize = this._sharedState.MinSize;
+                }
+
+                return minSize;
+*/
+                return this.MinSize;
+            }
+        }
 
         public void OnBeforeLayout(Grid grid)
         {
