@@ -48,6 +48,11 @@
         public override void Render(ISpriteBatch spriteBatch)
         {
             this.RenderBackground(spriteBatch);
+
+            foreach (var child in this.children)
+            {
+                child.Render(spriteBatch);
+            }
         }
 
         /// <summary>
@@ -61,7 +66,7 @@
             var brush = this.Background as SolidColorBrush;
 
             // need one pixel white texture here
-            spriteBatch.Draw((ITexture2D)null, area, brush != null ? brush.Color : Color.White);
+            // spriteBatch.Draw((ITexture2D)null, area, brush != null ? brush.Color : Color.White);
         }
     }
 }

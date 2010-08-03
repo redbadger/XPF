@@ -9,7 +9,7 @@
     public class RowDefinition : DefinitionBase
     {
         public static readonly DependencyProperty HeightProperty = DependencyProperty.Register(
-            "Height", typeof(GridLength), typeof(ColumnDefinition), new PropertyMetadata(new GridLength()));
+            "Height", typeof(GridLength), typeof(RowDefinition), new PropertyMetadata(new GridLength()));
 
         public static readonly DependencyProperty MaxHeightProperty = DependencyProperty.Register(
             "MaxHeight", typeof(float), typeof(RowDefinition), new PropertyMetadata(float.PositiveInfinity));
