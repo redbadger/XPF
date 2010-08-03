@@ -111,8 +111,17 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Border.cs">
       <Link>Presentation\Controls\Border.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ColumnDefinition.cs">
+      <Link>Presentation\Controls\ColumnDefinition.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ContentControl.cs">
       <Link>Presentation\Controls\ContentControl.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\DefinitionBase.cs">
+      <Link>Presentation\Controls\DefinitionBase.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Grid.cs">
+      <Link>Presentation\Controls\Grid.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Panel.cs">
       <Link>Presentation\Controls\Panel.cs</Link>
@@ -120,11 +129,20 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\RootElement.cs">
       <Link>Presentation\Controls\RootElement.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\RowDefinition.cs">
+      <Link>Presentation\Controls\RowDefinition.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\StackPanel.cs">
       <Link>Presentation\Controls\StackPanel.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\TextBlock.cs">
       <Link>Presentation\Controls\TextBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\GridLength.cs">
+      <Link>Presentation\GridLength.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\GridUnitType.cs">
+      <Link>Presentation\GridUnitType.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\HorizontalAlignment.cs">
       <Link>Presentation\HorizontalAlignment.cs</Link>
