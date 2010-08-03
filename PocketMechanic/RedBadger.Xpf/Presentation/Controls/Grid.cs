@@ -9,6 +9,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
 #if WINDOWS_PHONE
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
+    using GridUnitType = RedBadger.Xpf.Presentation.GridUnitType;
 #endif
 
     public class Grid : Panel
@@ -25,11 +26,17 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         private Cell[] cells;
 
-        private int cellsWithoutStarsHeadIndex;
+        private int cellsWithoutAnyStarsHeadIndex;
 
         private DefinitionBase[] heightDefinitions;
 
         private DefinitionBase[] widthDefinitions;
+
+        private int cellsWithoutHeightStarsHeadIndex;
+
+        private int cellsWithoutWidthStarsHeadIndex;
+
+        private int cellsWithAllStarsHeadIndex;
 
         public IList<ColumnDefinition> ColumnDefinitions
         {
@@ -100,25 +107,42 @@ namespace RedBadger.Xpf.Presentation.Controls
             InitializeMeasureData(this.widthDefinitions);
             InitializeMeasureData(this.heightDefinitions);
             this.CreateCells();
-            this.MeasureCellGroup(this.cellsWithoutStarsHeadIndex);
+            this.MeasureCellGroup(this.cellsWithoutAnyStarsHeadIndex);
 
             return new Size(
-                this.widthDefinitions.Sum(definition => definition.MinSize),
-                this.heightDefinitions.Sum(definition => definition.MinSize));
+                this.widthDefinitions.Sum(definition => definition.MinLength),
+                this.heightDefinitions.Sum(definition => definition.MinLength));
         }
 
         private static void InitializeMeasureData(IEnumerable<DefinitionBase> definitions)
         {
             foreach (DefinitionBase definition in definitions)
             {
-                definition.AvailableSize = float.PositiveInfinity;
+                var availableLength = 0f;
+
+                switch (definition.UserLength.GridUnitType)
+                {
+                    case GridUnitType.Auto:
+                        definition.LengthType = GridUnitType.Auto;
+                        availableLength = float.PositiveInfinity;
+                        break;
+                    case GridUnitType.Pixel:
+                        definition.LengthType = GridUnitType.Pixel;
+                        availableLength = definition.UserLength.Value;
+                        break;
+                }
+
+                definition.AvailableLength = availableLength;
             }
         }
 
         private void CreateCells()
         {
             this.cells = new Cell[this.Children.Count];
-            this.cellsWithoutStarsHeadIndex = int.MaxValue;
+            this.cellsWithoutAnyStarsHeadIndex = int.MaxValue;
+            this.cellsWithoutHeightStarsHeadIndex = int.MaxValue;
+            this.cellsWithoutWidthStarsHeadIndex = int.MaxValue;
+            this.cellsWithAllStarsHeadIndex = int.MaxValue;
 
             for (int i = this.cells.Length - 1; i >= 0; i--)
             {
@@ -129,10 +153,36 @@ namespace RedBadger.Xpf.Presentation.Controls
                         {
                             ColumnIndex = GetColumn(element), 
                             RowIndex = GetRow(element), 
-                            Next = this.cellsWithoutStarsHeadIndex
+                            Next = this.cellsWithoutAnyStarsHeadIndex
                         };
+                    cell.WidthType = this.widthDefinitions[cell.ColumnIndex].LengthType;
+                    cell.HeightType = this.heightDefinitions[cell.RowIndex].LengthType;
 
-                    this.cellsWithoutStarsHeadIndex = i;
+                    if (cell.HeightType != GridUnitType.Star)
+                    {
+                        if (cell.WidthType != GridUnitType.Star)
+                        {
+                            cell.Next = this.cellsWithoutAnyStarsHeadIndex;
+                            this.cellsWithoutAnyStarsHeadIndex = i;
+                        }
+                        else
+                        {
+                            cell.Next = this.cellsWithoutHeightStarsHeadIndex;
+                            this.cellsWithoutHeightStarsHeadIndex = i;
+                            
+                            // hasGroup3CellsInAutoRows |= cell.SizeTypeV == GridUnitType.Auto;
+                        }
+                    }
+                    else if (cell.WidthType != GridUnitType.Star)
+                    {
+                        cell.Next = this.cellsWithoutWidthStarsHeadIndex;
+                        this.cellsWithoutWidthStarsHeadIndex = i;
+                    }
+                    else
+                    {
+                        cell.Next = this.cellsWithAllStarsHeadIndex;
+                        this.cellsWithAllStarsHeadIndex = i;
+                    }
 
                     this.cells[i] = cell;
                 }
@@ -144,7 +194,17 @@ namespace RedBadger.Xpf.Presentation.Controls
             UIElement child = this.Children[cellIndex];
             if (child != null)
             {
-                child.Measure(new Size(float.PositiveInfinity, float.PositiveInfinity));
+                Cell cell = this.cells[cellIndex];
+
+                float x = cell.WidthType == GridUnitType.Auto
+                              ? float.PositiveInfinity
+                              : this.widthDefinitions[cell.ColumnIndex].AvailableLength;
+
+                float y = cell.HeightType == GridUnitType.Auto
+                              ? float.PositiveInfinity
+                              : this.heightDefinitions[cell.RowIndex].AvailableLength;
+
+                child.Measure(new Size(x, y));
             }
         }
 
@@ -158,10 +218,10 @@ namespace RedBadger.Xpf.Presentation.Controls
                 {
                     this.MeasureCell(currentCellIndex);
 
-                    this.widthDefinitions[this.cells[currentCellIndex].ColumnIndex].UpdateMinSize(
+                    this.widthDefinitions[this.cells[currentCellIndex].ColumnIndex].UpdateMinLength(
                         this.Children[currentCellIndex].DesiredSize.Width);
 
-                    this.heightDefinitions[this.cells[currentCellIndex].RowIndex].UpdateMinSize(
+                    this.heightDefinitions[this.cells[currentCellIndex].RowIndex].UpdateMinLength(
                         this.Children[currentCellIndex].DesiredSize.Height);
 
                     currentCellIndex = this.cells[currentCellIndex].Next;
@@ -170,13 +230,17 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private class Cell
+        private struct Cell
         {
-            public int ColumnIndex { get; set; }
+            public int ColumnIndex;
 
-            public int Next { get; set; }
+            public int Next;
 
-            public int RowIndex { get; set; }
+            public int RowIndex;
+
+            public GridUnitType WidthType;
+
+            public GridUnitType HeightType;
         }
     }
 }

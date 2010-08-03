@@ -229,6 +229,131 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
                 topLeftChild.Object.DesiredSize.Width + topRightChild.Object.DesiredSize.Width);
     }
 
+    [Subject(typeof(Grid), "Measure - Pixel")]
+    public class when_there_is_a_column_with_pixel_width : a_Grid
+    {
+        private const float ColumnWidth = 10f;
+
+        private static readonly Size availableSize = new Size(100, 100);
+
+        private static Mock<UIElement> child;
+
+        private Establish context = () =>
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ColumnWidth) });
+
+                child = new Mock<UIElement> { CallBase = true };
+                child.Object.Width = 50;
+                child.Object.Height = 60;
+            };
+
+        private Because of = () =>
+            {
+                grid.Children.Add(child.Object);
+                grid.Measure(availableSize);
+            };
+
+        private It should_have_a_desired_height_equal_to_that_of_the_child =
+            () => grid.DesiredSize.Height.ShouldEqual(child.Object.DesiredSize.Height);
+
+        private It should_have_a_desired_width_equal_to_that_of_the_column_width =
+            () => grid.DesiredSize.Width.ShouldEqual(ColumnWidth);
+    }
+
+    [Subject(typeof(Grid), "Measure - Pixel")]
+    public class when_there_is_a_row_with_pixel_height : a_Grid
+    {
+        private const float RowHeight = 10f;
+
+        private static readonly Size availableSize = new Size(100, 100);
+
+        private static Mock<UIElement> child;
+
+        private Establish context = () =>
+            {
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(RowHeight) });
+
+                child = new Mock<UIElement> { CallBase = true };
+                child.Object.Width = 50;
+                child.Object.Height = 60;
+            };
+
+        private Because of = () =>
+            {
+                grid.Children.Add(child.Object);
+                grid.Measure(availableSize);
+            };
+
+        private It should_have_a_desired_height_equal_to_that_of_the_row_height =
+            () => grid.DesiredSize.Height.ShouldEqual(RowHeight);
+
+        private It should_have_a_desired_width_equal_to_that_of_the_child =
+            () => grid.DesiredSize.Width.ShouldEqual(child.Object.DesiredSize.Width);
+    }
+
+    [Subject(typeof(Grid), "Measure - Auto")]
+    public class when_there_are_two_rows_and_two_columns_both_of_pixel_values : a_Grid
+    {
+        private const float ExpectedWidthHeight = 18f;
+
+        private static readonly Size availableSize = new Size(200, 200);
+
+        private static Mock<UIElement> bottomLeftChild;
+
+        private static Mock<UIElement> bottomRightChild;
+
+        private static Mock<UIElement> topLeftChild;
+
+        private static Mock<UIElement> topRightChild;
+
+        private Establish context = () =>
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ExpectedWidthHeight) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ExpectedWidthHeight) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(ExpectedWidthHeight) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(ExpectedWidthHeight) });
+
+                topLeftChild = new Mock<UIElement> { CallBase = true };
+                topLeftChild.Object.Width = 50;
+                topLeftChild.Object.Height = 60;
+                Grid.SetColumn(topLeftChild.Object, 0);
+                Grid.SetRow(topLeftChild.Object, 0);
+
+                topRightChild = new Mock<UIElement> { CallBase = true };
+                topRightChild.Object.Width = 70;
+                topRightChild.Object.Height = 80;
+                Grid.SetColumn(topRightChild.Object, 1);
+                Grid.SetRow(topRightChild.Object, 0);
+
+                bottomLeftChild = new Mock<UIElement> { CallBase = true };
+                bottomLeftChild.Object.Width = 10;
+                bottomLeftChild.Object.Height = 20;
+                Grid.SetColumn(bottomLeftChild.Object, 0);
+                Grid.SetRow(bottomLeftChild.Object, 1);
+
+                bottomRightChild = new Mock<UIElement> { CallBase = true };
+                bottomRightChild.Object.Width = 30;
+                bottomRightChild.Object.Height = 40;
+                Grid.SetColumn(bottomRightChild.Object, 1);
+                Grid.SetRow(bottomRightChild.Object, 1);
+            };
+
+        private Because of = () =>
+            {
+                grid.Children.Add(topLeftChild.Object);
+                grid.Children.Add(topRightChild.Object);
+                grid.Children.Add(bottomLeftChild.Object);
+                grid.Children.Add(bottomRightChild.Object);
+                grid.Measure(availableSize);
+            };
+
+        private It should_have_a_desired_height_equal_to_the_sum_of_row_heights =
+            () => grid.DesiredSize.Height.ShouldEqual(ExpectedWidthHeight * 2);
+
+        private It should_have_a_desired_width_equal_to_the_sum_of_the_column_widths =
+            () => grid.DesiredSize.Width.ShouldEqual(ExpectedWidthHeight * 2);
+    }
+
     [Subject(typeof(Grid), "Measure")]
     public class when_a_column_index_is_specified_greater_than_the_number_of_columns_available : a_Grid
     {

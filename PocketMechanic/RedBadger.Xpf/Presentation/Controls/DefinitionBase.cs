@@ -1,16 +1,50 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
+    using System.Windows;
 
-    public abstract class DefinitionBase
+#if WINDOWS_PHONE
+    using GridLength = RedBadger.Xpf.Presentation.GridLength;
+    using GridUnitType = RedBadger.Xpf.Presentation.GridUnitType;
+#endif
+
+    public abstract class DefinitionBase : DependencyObject
     {
-        internal float AvailableSize { get; set; }
+        private readonly DefinitionType definitionType;
 
-        internal float MinSize { get; private set; }
-
-        internal void UpdateMinSize(float minSize)
+        protected DefinitionBase(DefinitionType definitionType)
         {
-            this.MinSize = Math.Max(this.MinSize, minSize);
+            this.definitionType = definitionType;
+        }
+
+        protected enum DefinitionType
+        {
+            Column, 
+            Row
+        }
+
+        public GridUnitType LengthType { get; set; }
+
+        internal float AvailableLength { get; set; }
+
+        internal float MinLength { get; private set; }
+
+        internal GridLength UserLength
+        {
+            get
+            {
+                return
+                    (GridLength)
+                    this.GetValue(
+                        this.definitionType == DefinitionType.Column
+                            ? ColumnDefinition.WidthProperty
+                            : RowDefinition.HeightProperty);
+            }
+        }
+
+        internal void UpdateMinLength(float minLength)
+        {
+            this.MinLength = Math.Max(this.MinLength, minLength);
         }
     }
 }
