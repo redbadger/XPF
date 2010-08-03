@@ -89,24 +89,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            Size size = Size.Empty;
-
-            bool isSingleCell = this.columnDefinitions.Count == 0 && this.rowDefinitions.Count == 0;
-            if (isSingleCell)
-            {
-                foreach (UIElement child in this.Children)
-                {
-                    if (child != null)
-                    {
-                        child.Measure(availableSize);
-                        size.Width = Math.Max(size.Width, child.DesiredSize.Width);
-                        size.Height = Math.Max(size.Height, child.DesiredSize.Height);
-                    }
-                }
-
-                return size;
-            }
-
             this.widthDefinitions = this.columnDefinitions.Count == 0
                                         ? new DefinitionBase[] { new ColumnDefinition() }
                                         : this.columnDefinitions.ToArray();
@@ -120,11 +102,9 @@ namespace RedBadger.Xpf.Presentation.Controls
             this.CreateCells();
             this.MeasureCellGroup(this.cellsWithoutStarsHeadIndex);
 
-            size = new Size(
+            return new Size(
                 this.widthDefinitions.Sum(definition => definition.MinSize),
                 this.heightDefinitions.Sum(definition => definition.MinSize));
-
-            return size;
         }
 
         private static void InitializeMeasureData(IEnumerable<DefinitionBase> definitions)

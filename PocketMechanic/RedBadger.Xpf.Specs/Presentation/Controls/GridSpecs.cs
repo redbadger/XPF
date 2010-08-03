@@ -51,7 +51,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             () => grid.DesiredSize.ShouldEqual(child.Object.DesiredSize);
     }
 
-    [Subject(typeof(Grid), "Measure")]
+    [Subject(typeof(Grid), "Measure - Auto")]
     public class when_two_elements_are_added : a_Grid
     {
         private static readonly Size availableSize = new Size(100, 100);
@@ -82,7 +82,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             () => grid.DesiredSize.ShouldEqual(largeChild.Object.DesiredSize);
     }
 
-    [Subject(typeof(Grid), "Measure")]
+    [Subject(typeof(Grid), "Measure - Auto")]
     public class when_there_are_two_columns : a_Grid
     {
         private static readonly Size availableSize = new Size(100, 100);
@@ -123,7 +123,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
                 largeChild.Object.DesiredSize.Width + smallChild.Object.DesiredSize.Width);
     }
 
-    [Subject(typeof(Grid), "Measure")]
+    [Subject(typeof(Grid), "Measure - Auto")]
     public class when_there_are_two_rows : a_Grid
     {
         private static readonly Size availableSize = new Size(100, 100);
@@ -161,6 +161,68 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
         private It should_have_a_desired_width_equal_to_that_of_the_widest_child =
             () =>
             grid.DesiredSize.Width.ShouldEqual(largeChild.Object.DesiredSize.Width);
+    }
+
+    [Subject(typeof(Grid), "Measure - Auto")]
+    public class when_there_are_two_rows_and_two_columns : a_Grid
+    {
+        private static readonly Size availableSize = new Size(200, 200);
+
+        private static Mock<UIElement> topLeftChild;
+
+        private static Mock<UIElement> topRightChild;
+
+        private static Mock<UIElement> bottomLeftChild;
+
+        private static Mock<UIElement> bottomRightChild;
+
+        private Establish context = () =>
+        {
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.RowDefinitions.Add(new RowDefinition());
+            grid.RowDefinitions.Add(new RowDefinition());
+
+            topLeftChild = new Mock<UIElement> { CallBase = true };
+            topLeftChild.Object.Width = 50;
+            topLeftChild.Object.Height = 60;
+            Grid.SetColumn(topLeftChild.Object, 0);
+            Grid.SetRow(topLeftChild.Object, 0);
+
+            topRightChild = new Mock<UIElement> { CallBase = true };
+            topRightChild.Object.Width = 70;
+            topRightChild.Object.Height = 80;
+            Grid.SetColumn(topRightChild.Object, 1);
+            Grid.SetRow(topRightChild.Object, 0);
+
+            bottomLeftChild = new Mock<UIElement> { CallBase = true };
+            bottomLeftChild.Object.Width = 10;
+            bottomLeftChild.Object.Height = 20;
+            Grid.SetColumn(bottomLeftChild.Object, 0);
+            Grid.SetRow(bottomLeftChild.Object, 1);
+
+            bottomRightChild = new Mock<UIElement> { CallBase = true };
+            bottomRightChild.Object.Width = 30;
+            bottomRightChild.Object.Height = 40;
+            Grid.SetColumn(bottomRightChild.Object, 1);
+            Grid.SetRow(bottomRightChild.Object, 1);
+        };
+
+        private Because of = () =>
+        {
+            grid.Children.Add(topLeftChild.Object);
+            grid.Children.Add(topRightChild.Object);
+            grid.Children.Add(bottomLeftChild.Object);
+            grid.Children.Add(bottomRightChild.Object);
+            grid.Measure(availableSize);
+        };
+
+        private It should_have_a_desired_height_equal_to_the_sum_of_the_tallest_children_in_each_row =
+            () => grid.DesiredSize.Height.ShouldEqual(topRightChild.Object.DesiredSize.Height + bottomRightChild.Object.DesiredSize.Height);
+
+        private It should_have_a_desired_width_equal_to_the_sum_of_the_widest_children_in_each_column =
+            () =>
+            grid.DesiredSize.Width.ShouldEqual(topLeftChild.Object.DesiredSize.Width + topRightChild.Object.DesiredSize.Width);
     }
 
     [Subject(typeof(Grid), "Measure")]
