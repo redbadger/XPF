@@ -118,6 +118,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             foreach (DefinitionBase definition in definitions)
             {
+                float minSize = 0f;
                 var availableLength = 0f;
 
                 switch (definition.UserLength.GridUnitType)
@@ -129,9 +130,11 @@ namespace RedBadger.Xpf.Presentation.Controls
                     case GridUnitType.Pixel:
                         definition.LengthType = GridUnitType.Pixel;
                         availableLength = definition.UserLength.Value;
+                        minSize = availableLength;
                         break;
                 }
 
+                definition.UpdateMinLength(minSize);
                 definition.AvailableLength = availableLength;
             }
         }

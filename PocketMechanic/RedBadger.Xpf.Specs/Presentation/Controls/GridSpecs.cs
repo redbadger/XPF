@@ -294,7 +294,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     [Subject(typeof(Grid), "Measure - Auto")]
     public class when_there_are_two_rows_and_two_columns_both_of_pixel_values : a_Grid
     {
-        private const float ExpectedWidthHeight = 18f;
+        private const float ExpectedWidth1 = 45f;
+        private const float ExpectedWidth2 = 54f;
+        private const float ExpectedHeight1 = 66f;
+        private const float ExpectedHeight2 = 80f;
 
         private static readonly Size availableSize = new Size(200, 200);
 
@@ -308,10 +311,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
         private Establish context = () =>
             {
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ExpectedWidthHeight) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ExpectedWidthHeight) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(ExpectedWidthHeight) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(ExpectedWidthHeight) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ExpectedWidth1) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ExpectedWidth2) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(ExpectedHeight1) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(ExpectedHeight2) });
 
                 topLeftChild = new Mock<UIElement> { CallBase = true };
                 topLeftChild.Object.Width = 50;
@@ -348,10 +351,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             };
 
         private It should_have_a_desired_height_equal_to_the_sum_of_row_heights =
-            () => grid.DesiredSize.Height.ShouldEqual(ExpectedWidthHeight * 2);
+            () => grid.DesiredSize.Height.ShouldEqual(ExpectedHeight1 + ExpectedHeight2);
 
         private It should_have_a_desired_width_equal_to_the_sum_of_the_column_widths =
-            () => grid.DesiredSize.Width.ShouldEqual(ExpectedWidthHeight * 2);
+            () => grid.DesiredSize.Width.ShouldEqual(ExpectedWidth1 + ExpectedWidth2);
     }
 
     [Subject(typeof(Grid), "Measure")]
