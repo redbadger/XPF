@@ -94,6 +94,8 @@
     <Compile Include="Presentation\Controls\RowDefinition.cs" />
     <Compile Include="Presentation\Controls\StackPanel.cs" />
     <Compile Include="Presentation\Controls\TextBlock.cs" />
+    <Compile Include="Presentation\GridLength.cs" />
+    <Compile Include="Presentation\GridUnitType.cs" />
     <Compile Include="Presentation\HorizontalAlignment.cs" />
     <Compile Include="Presentation\IElement.cs" />
     <Compile Include="Presentation\Orientation.cs" />

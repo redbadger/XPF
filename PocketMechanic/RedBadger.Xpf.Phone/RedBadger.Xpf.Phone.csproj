@@ -132,6 +132,12 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\TextBlock.cs">
       <Link>Presentation\Controls\TextBlock.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\GridLength.cs">
+      <Link>Presentation\GridLength.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\GridUnitType.cs">
+      <Link>Presentation\GridUnitType.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\HorizontalAlignment.cs">
       <Link>Presentation\HorizontalAlignment.cs</Link>
     </Compile>

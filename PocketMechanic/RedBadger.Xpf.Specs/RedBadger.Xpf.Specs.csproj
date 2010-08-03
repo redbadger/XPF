@@ -82,6 +82,7 @@
     <Compile Include="Presentation\Controls\StackPanelSpecs.cs" />
     <Compile Include="Presentation\Controls\TextBlockSpecs.cs" />
     <Compile Include="Presentation\Controls\PanelSpecs.cs" />
+    <Compile Include="Presentation\GridLengthSpecs.cs" />
     <Compile Include="Presentation\RectSpecs.cs" />
     <Compile Include="Presentation\SizeSpecs.cs" />
     <Compile Include="Presentation\UIElementCollectionSpecs.cs" />
