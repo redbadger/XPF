@@ -77,7 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Presentation\Controls\ContentControlSpecs.cs" />
-    <Compile Include="Presentation\Controls\GridSpecs.cs" />
+    <Compile Include="Presentation\GridSpecs\ArrangeSpecs.cs" />
+    <Compile Include="Presentation\GridSpecs\Contexts.cs" />
+    <Compile Include="Presentation\GridSpecs\MeasureSpecs.cs" />
     <Compile Include="Presentation\Controls\RootElementSpecs.cs" />
     <Compile Include="Presentation\Controls\StackPanelSpecs.cs" />
     <Compile Include="Presentation\Controls\TextBlockSpecs.cs" />

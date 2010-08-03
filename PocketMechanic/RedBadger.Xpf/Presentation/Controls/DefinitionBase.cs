@@ -27,6 +27,10 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         internal float AvailableLength { get; set; }
 
+        internal float FinalLength { get; set; }
+
+        internal float FinalOffset { get; set; }
+
         internal float MinLength { get; private set; }
 
         internal GridLength UserLength
@@ -42,19 +46,6 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        internal float UserMinLength
-        {
-            get
-            {
-                return
-                    (float)
-                    this.GetValue(
-                        this.definitionType == DefinitionType.Column
-                            ? ColumnDefinition.MinWidthProperty
-                            : RowDefinition.MinHeightProperty);
-            }
-        }
-
         internal float UserMaxLength
         {
             get
@@ -65,6 +56,19 @@ namespace RedBadger.Xpf.Presentation.Controls
                         this.definitionType == DefinitionType.Column
                             ? ColumnDefinition.MaxWidthProperty
                             : RowDefinition.MaxHeightProperty);
+            }
+        }
+
+        internal float UserMinLength
+        {
+            get
+            {
+                return
+                    (float)
+                    this.GetValue(
+                        this.definitionType == DefinitionType.Column
+                            ? ColumnDefinition.MinWidthProperty
+                            : RowDefinition.MinHeightProperty);
             }
         }
 

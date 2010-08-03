@@ -5,6 +5,9 @@ namespace RedBadger.Xpf.Presentation.Controls
     using System.Linq;
     using System.Windows;
 
+    using RedBadger.Xpf.Internal;
+
+    using Rect = RedBadger.Xpf.Presentation.Rect;
     using Size = RedBadger.Xpf.Presentation.Size;
 
 #if WINDOWS_PHONE
@@ -26,17 +29,17 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         private Cell[] cells;
 
+        private int cellsWithAllStarsHeadIndex;
+
         private int cellsWithoutAnyStarsHeadIndex;
-
-        private DefinitionBase[] heightDefinitions;
-
-        private DefinitionBase[] widthDefinitions;
 
         private int cellsWithoutHeightStarsHeadIndex;
 
         private int cellsWithoutWidthStarsHeadIndex;
 
-        private int cellsWithAllStarsHeadIndex;
+        private DefinitionBase[] heightDefinitions;
+
+        private DefinitionBase[] widthDefinitions;
 
         public IList<ColumnDefinition> ColumnDefinitions
         {
@@ -94,6 +97,32 @@ namespace RedBadger.Xpf.Presentation.Controls
             element.SetValue(RowProperty, value);
         }
 
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            SetFinalSize(this.widthDefinitions, finalSize.Width);
+            SetFinalSize(this.heightDefinitions, finalSize.Height);
+
+            for (int i = 0; i < this.cells.Length; i++)
+            {
+                UIElement child = this.Children[i];
+                if (child != null)
+                {
+                    int columnIndex = this.cells[i].ColumnIndex;
+                    int rowIndex = this.cells[i].RowIndex;
+
+                    var finalRect = new Rect(
+                        this.widthDefinitions[columnIndex].FinalOffset,
+                        this.heightDefinitions[rowIndex].FinalOffset,
+                        this.widthDefinitions[columnIndex].FinalLength,
+                        this.heightDefinitions[rowIndex].FinalLength);
+
+                    child.Arrange(finalRect);
+                }
+            }
+
+            return finalSize;
+        }
+
         protected override Size MeasureOverride(Size availableSize)
         {
             this.widthDefinitions = this.columnDefinitions.Count == 0
@@ -110,7 +139,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             this.MeasureCellGroup(this.cellsWithoutAnyStarsHeadIndex);
 
             return new Size(
-                this.widthDefinitions.Sum(definition => definition.MinLength),
+                this.widthDefinitions.Sum(definition => definition.MinLength), 
                 this.heightDefinitions.Sum(definition => definition.MinLength));
         }
 
@@ -118,7 +147,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             foreach (DefinitionBase definition in definitions)
             {
-                var availableLength = 0f;
+                float availableLength = 0f;
                 float userMinLength = definition.UserMinLength;
                 float userMaxLength = definition.UserMaxLength;
 
@@ -137,6 +166,42 @@ namespace RedBadger.Xpf.Presentation.Controls
 
                 definition.UpdateMinLength(userMinLength);
                 definition.AvailableLength = Math.Max(userMinLength, Math.Min(availableLength, userMaxLength));
+            }
+        }
+
+        private static void SetFinalSize(DefinitionBase[] definitions, float finalLength)
+        {
+            float cumulativeLength = 0.0f;
+
+            foreach (DefinitionBase definition in definitions)
+            {
+                float minLength = 0.0f;
+                switch (definition.UserLength.GridUnitType)
+                {
+                    case GridUnitType.Auto:
+                        minLength = definition.MinLength;
+                        break;
+
+                    case GridUnitType.Pixel:
+                        minLength = definition.UserLength.Value;
+                        break;
+                }
+
+                definition.FinalLength = Math.Max(definition.MinLength, Math.Min(minLength, definition.UserMaxLength));
+                cumulativeLength += definition.FinalLength;
+            }
+
+            if (cumulativeLength.IsGreaterThan(finalLength))
+            {
+                throw new NotImplementedException(
+                    "Calculated length is greater than final length and needs redistributing.");
+            }
+
+            definitions[0].FinalOffset = 0.0f;
+            for (int i = 1; i < definitions.Length; i++)
+            {
+                var previousDefinition = definitions[i - 1];
+                definitions[i].FinalOffset = previousDefinition.FinalOffset + previousDefinition.FinalLength;
             }
         }
 
@@ -173,7 +238,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                         {
                             cell.Next = this.cellsWithoutHeightStarsHeadIndex;
                             this.cellsWithoutHeightStarsHeadIndex = i;
-                            
+
                             // hasGroup3CellsInAutoRows |= cell.SizeTypeV == GridUnitType.Auto;
                         }
                     }
@@ -222,13 +287,13 @@ namespace RedBadger.Xpf.Presentation.Controls
                 {
                     this.MeasureCell(currentCellIndex);
 
-                    var cell = this.cells[currentCellIndex];
-                    var child = this.Children[currentCellIndex];
+                    Cell cell = this.cells[currentCellIndex];
+                    UIElement child = this.Children[currentCellIndex];
 
-                    var widthDefinition = this.widthDefinitions[cell.ColumnIndex];
+                    DefinitionBase widthDefinition = this.widthDefinitions[cell.ColumnIndex];
                     widthDefinition.UpdateMinLength(Math.Min(child.DesiredSize.Width, widthDefinition.UserMaxLength));
 
-                    var heightDefinition = this.heightDefinitions[cell.RowIndex];
+                    DefinitionBase heightDefinition = this.heightDefinitions[cell.RowIndex];
                     heightDefinition.UpdateMinLength(Math.Min(child.DesiredSize.Height, heightDefinition.UserMaxLength));
 
                     currentCellIndex = cell.Next;
@@ -241,13 +306,13 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             public int ColumnIndex;
 
+            public GridUnitType HeightType;
+
             public int Next;
 
             public int RowIndex;
 
             public GridUnitType WidthType;
-
-            public GridUnitType HeightType;
         }
     }
 }
