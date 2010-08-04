@@ -13,21 +13,36 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 {
     using Machine.Specifications;
 
+    using Microsoft.Xna.Framework.Graphics;
+
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media.Imaging;
+    using RedBadger.Xpf.Specs.Services;
 
-    public abstract class a_Image
+    using StructureMap;
+
+    public abstract class an_Image : a_spec_dependent_on_services
     {
-        #region Constants and Fields
+        protected static Texture2D Texture;
 
-        protected static Image image;
+        protected static Image Image;
 
-        private Establish context = () => image = new Image();
-
-        #endregion
+        private Establish context = () =>
+            {
+                Texture = ObjectFactory.GetInstance<Texture2DService>().Badger;
+                Image = new Image { Source = new XnaImage(Texture) };
+            };
     }
 
     [Subject(typeof(Image))]
-    public class Spec : a_Image
+    public class when_an_xna_image_is_measured : an_Image
     {
+        private static readonly Size availableSize = new Size(1000, 1000);
+
+        private Because of = () => Image.Measure(availableSize);
+
+        private It should_have_a_desired_size_equal_to_that_of_the_image_source =
+            () => Image.DesiredSize.ShouldEqual(new Size(Texture.Width, Texture.Height));
     }
 }

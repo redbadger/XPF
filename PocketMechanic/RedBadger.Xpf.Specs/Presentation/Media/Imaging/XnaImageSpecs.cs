@@ -20,23 +20,26 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.Imaging
 
     using StructureMap;
 
-    [Subject(typeof(XnaImage))]
-    public class when_an_Xna_image_is_instantiated : a_spec_dependent_on_services
+    public class a_context_for_an_xna_image : a_spec_dependent_on_services
     {
-        private static XnaImage XnaImage;
+        protected static XnaImage Image;
 
-        private static Texture2D texture;
+        protected static Texture2D Texture;
 
-        private Establish context = () => { texture = ObjectFactory.GetInstance<Texture2DService>().Badger; };
+        private Establish context = () => { Texture = ObjectFactory.GetInstance<Texture2DService>().Badger; };
+    }
 
-        private Because of = () => { XnaImage = new XnaImage(texture); };
+    [Subject(typeof(XnaImage))]
+    public class when_an_Xna_image_is_instantiated : a_context_for_an_xna_image
+    {
+        private Because of = () => Image = new XnaImage(Texture);
 
-        private It should_have_a_Height_set = () => XnaImage.Height.ShouldEqual(texture.Height);
+        private It should_have_a_Height_set = () => Image.Height.ShouldEqual(Texture.Height);
 
-        private It should_have_a_Pixel_Height_set = () => XnaImage.PixelHeight.ShouldEqual(texture.Height);
+        private It should_have_a_Pixel_Height_set = () => Image.PixelHeight.ShouldEqual(Texture.Height);
 
-        private It should_have_a_Pixel_Width_set = () => XnaImage.PixelWidth.ShouldEqual(texture.Width);
+        private It should_have_a_Pixel_Width_set = () => Image.PixelWidth.ShouldEqual(Texture.Width);
 
-        private It should_have_a_Width_set = () => XnaImage.Width.ShouldEqual(texture.Width);
+        private It should_have_a_Width_set = () => Image.Width.ShouldEqual(Texture.Width);
     }
 }
