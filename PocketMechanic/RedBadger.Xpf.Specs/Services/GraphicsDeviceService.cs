@@ -1,15 +1,13 @@
-namespace RedBadger.Xpf.Specs
+namespace RedBadger.Xpf.Specs.Services
 {
     using System;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class GraphicsDeviceService : IGraphicsDeviceService
+    internal class GraphicsDeviceService : IGraphicsDeviceService
     {
-        private static GraphicsDeviceService singletonInstance;
-
-        private GraphicsDeviceService()
+        public GraphicsDeviceService()
         {
             GraphicsAdapter.UseNullDevice = true;
             GraphicsAdapter.UseReferenceDevice = true;
@@ -26,14 +24,6 @@ namespace RedBadger.Xpf.Specs
         public event EventHandler<EventArgs> DeviceReset;
 
         public event EventHandler<EventArgs> DeviceResetting;
-
-        public static GraphicsDeviceService Instance
-        {
-            get
-            {
-                return singletonInstance ?? (singletonInstance = new GraphicsDeviceService());
-            }
-        }
 
         public GraphicsDevice GraphicsDevice { get; private set; }
     }

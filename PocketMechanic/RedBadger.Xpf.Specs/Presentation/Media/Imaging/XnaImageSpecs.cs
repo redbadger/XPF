@@ -11,53 +11,32 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Media.Imaging
 {
-    using System.IO;
-
     using Machine.Specifications;
 
-    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf.Presentation.Media.Imaging;
+    using RedBadger.Xpf.Specs.Services;
 
-    using BitmapImage = System.Windows.Media.Imaging.BitmapImage;
+    using StructureMap;
 
-    public abstract class an_XnaImage
+    [Subject(typeof(XnaImage))]
+    public class when_an_Xna_image_is_instantiated : a_spec_dependent_on_services
     {
-        protected static BitmapImage BitmapImage;
+        private static XnaImage XnaImage;
 
-        protected static Texture2D Texture;
+        private static Texture2D texture;
 
-        private static Game game;
+        private Establish context = () => { texture = ObjectFactory.GetInstance<Texture2DService>().Badger; };
 
-        private Establish context = () =>
-            {
-                BitmapImage = new BitmapImage();
-                BitmapImage.BeginInit();
-                BitmapImage.StreamSource = File.OpenRead("badger.jpg");
-                BitmapImage.EndInit();
-                var bytes = new byte[BitmapImage.PixelWidth * BitmapImage.PixelHeight * 4];
-                BitmapImage.CopyPixels(bytes, BitmapImage.PixelWidth * 4, 0);
+        private Because of = () => { XnaImage = new XnaImage(texture); };
 
-                Texture = new Texture2D(
-                    GraphicsDeviceService.Instance.GraphicsDevice, BitmapImage.PixelWidth, BitmapImage.PixelHeight);
-                Texture.SetData(bytes);
-            };
+        private It should_have_a_Height_set = () => XnaImage.Height.ShouldEqual(texture.Height);
 
-        [Subject(typeof(XnaImage))]
-        public class when_an_Xna_image_is_instantiated : an_XnaImage
-        {
-            private static XnaImage XnaImage;
+        private It should_have_a_Pixel_Height_set = () => XnaImage.PixelHeight.ShouldEqual(texture.Height);
 
-            private Because of = () => { XnaImage = new XnaImage(Texture); };
+        private It should_have_a_Pixel_Width_set = () => XnaImage.PixelWidth.ShouldEqual(texture.Width);
 
-            private It should_have_a_Height_set = () => XnaImage.Height.ShouldEqual(BitmapImage.PixelHeight);
-
-            private It should_have_a_Pixel_Height_set = () => XnaImage.PixelHeight.ShouldEqual(BitmapImage.PixelHeight);
-
-            private It should_have_a_Pixel_Width_set = () => XnaImage.PixelWidth.ShouldEqual(BitmapImage.PixelWidth);
-
-            private It should_have_a_Width_set = () => XnaImage.Width.ShouldEqual(BitmapImage.PixelWidth);
-        }
+        private It should_have_a_Width_set = () => XnaImage.Width.ShouldEqual(texture.Width);
     }
 }
