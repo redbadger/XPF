@@ -129,8 +129,14 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\StackPanel.cs">
       <Link>Presentation\Controls\StackPanel.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\StretchDirection.cs">
+      <Link>Presentation\Controls\StretchDirection.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\TextBlock.cs">
       <Link>Presentation\Controls\TextBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Viewbox.cs">
+      <Link>Presentation\Controls\Viewbox.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\GridLength.cs">
       <Link>Presentation\GridLength.cs</Link>
@@ -161,6 +167,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\SolidColorBrush.cs">
       <Link>Presentation\Media\SolidColorBrush.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Stretch.cs">
+      <Link>Presentation\Media\Stretch.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Orientation.cs">
       <Link>Presentation\Orientation.cs</Link>

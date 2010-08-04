@@ -83,7 +83,10 @@
     <Compile Include="Internal\SizeExtensions.cs" />
     <Compile Include="Internal\ThicknessExtensions.cs" />
     <Compile Include="Internal\Vector2Extensions.cs" />
+    <Compile Include="Presentation\Controls\StretchDirection.cs" />
+    <Compile Include="Presentation\Controls\Viewbox.cs" />
     <Compile Include="Presentation\Media\Brush.cs" />
+    <Compile Include="Presentation\Media\Stretch.cs" />
     <Compile Include="Presentation\Media\ImageSource.cs" />
     <Compile Include="Presentation\Media\Imaging\BitmapImage.cs" />
     <Compile Include="Presentation\Media\Imaging\BitmapSource.cs" />

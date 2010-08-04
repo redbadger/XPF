@@ -18,46 +18,334 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
     using It = Machine.Specifications.It;
 
-    public abstract class an_Image
+    public abstract class a_smaller_Image
     {
-        protected static readonly Size AvailableSize = new Size(1000, 1000);
-
-        protected static int ExpectedHeight = 120;
-
-        protected static int ExpectedWidth = 80;
+        protected static readonly Size AvailableSize = new Size(9, 20);
 
         protected static Image Image;
+
+        protected static readonly Size ImageSize = new Size(3, 4);
 
         protected static Mock<ITexture2D> Texture;
 
         private Establish context = () =>
             {
                 Texture = new Mock<ITexture2D>();
-                Texture.Setup(d => d.Height).Returns(ExpectedHeight);
-                Texture.Setup(d => d.Width).Returns(ExpectedWidth);
+                Texture.Setup(d => d.Width).Returns((int)ImageSize.Width);
+                Texture.Setup(d => d.Height).Returns((int)ImageSize.Height);
+                Image = new Image { Source = new XnaImage(Texture.Object) };
+            };
+    }
+
+    public abstract class a_larger_Image
+    {
+        protected static readonly Size AvailableSize = new Size(6, 10);
+
+        protected static Image Image;
+
+        protected static readonly Size ImageSize = new Size(8, 20);
+
+        protected static Mock<ITexture2D> Texture;
+
+        private Establish context = () =>
+            {
+                Texture = new Mock<ITexture2D>();
+                Texture.Setup(d => d.Width).Returns((int)ImageSize.Width);
+                Texture.Setup(d => d.Height).Returns((int)ImageSize.Height);
                 Image = new Image { Source = new XnaImage(Texture.Object) };
             };
     }
 
     [Subject(typeof(Image))]
-    public class when_an_image_is_measured : an_Image
+    public class when_a_smaller_image_is_set_to_not_stretch : a_smaller_Image
     {
-        private Because of = () => Image.Measure(AvailableSize);
+        private Establish context = () => Image.Stretch = Stretch.None;
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
 
         private It should_have_a_desired_size_equal_to_that_of_the_image_source =
-            () => Image.DesiredSize.ShouldEqual(new Size(ExpectedWidth, ExpectedHeight));
+            () => Image.DesiredSize.ShouldEqual(ImageSize);
+
+        private It should_have_a_render_size_equal_to_that_of_the_image_source =
+            () => Image.RenderSize.ShouldEqual(ImageSize);
     }
 
     [Subject(typeof(Image))]
-    public class when_an_image_is_arranged : an_Image
+    public class when_a_smaller_image_is_set_to_stretch_value_of_Uniform : a_smaller_Image
     {
-        private Because of = () => Image.Arrange(new Rect(AvailableSize));
+        private static readonly Size ExpectedSize = new Size(
+            AvailableSize.Width, ImageSize.Height * (AvailableSize.Width / ImageSize.Width));
+
+        private Establish context = () => Image.Stretch = Stretch.Uniform;
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_the_correct_desired_size =
+            () => Image.DesiredSize.ShouldEqual(ExpectedSize);
+
+        private It should_have_the_correct_render_size =
+            () => Image.RenderSize.ShouldEqual(ExpectedSize);
+    }
+
+    [Subject(typeof(Image))]
+    public class when_a_smaller_image_is_set_to_stretch_value_of_Uniform_but_not_allowed_to_expand : a_smaller_Image
+    {
+        private Establish context = () =>
+        {
+            Image.Stretch = Stretch.Uniform;
+            Image.StretchDirection = StretchDirection.DownOnly;
+        };
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_a_desired_size_equal_to_the_image_size =
+            () => Image.DesiredSize.ShouldEqual(ImageSize);
+
+        private It should_have_a_render_size_equal_to_the_image_size =
+            () => Image.RenderSize.ShouldEqual(ImageSize);
+    }
+
+    [Subject(typeof(Image))]
+    public class when_a_smaller_image_is_set_to_a_stretch_value_of_Fill : a_smaller_Image
+    {
+        private Establish context = () => Image.Stretch = Stretch.Fill;
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_a_desired_size_equal_to_the_available_size =
+            () => Image.DesiredSize.ShouldEqual(AvailableSize);
+
+        private It should_have_a_render_size_equal_to_the_available_size =
+            () => Image.RenderSize.ShouldEqual(AvailableSize);
+    }
+
+    [Subject(typeof(Image))]
+    public class when_a_smaller_image_is_set_to_a_stretch_value_of_Fill_but_not_allowed_to_expand : a_smaller_Image
+    {
+        private Establish context = () =>
+            {
+                Image.Stretch = Stretch.Fill;
+                Image.StretchDirection = StretchDirection.DownOnly;
+            };
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_a_desired_size_equal_to_the_image_size =
+            () => Image.DesiredSize.ShouldEqual(ImageSize);
+
+        private It should_have_a_render_size_equal_to_the_image_size =
+            () => Image.RenderSize.ShouldEqual(ImageSize);
+    }
+
+    [Subject(typeof(Image))]
+    public class when_a_smaller_image_is_set_to_a_stretch_value_of_UniformToFill : a_smaller_Image
+    {
+        private static readonly Size ExpectedRenderSize = new Size(
+            ImageSize.Width * (AvailableSize.Height / ImageSize.Height), AvailableSize.Height);
+
+        private Establish context = () => Image.Stretch = Stretch.UniformToFill;
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_a_desired_size_equal_to_the_available_size =
+            () => Image.DesiredSize.ShouldEqual(AvailableSize);
+
+        private It should_have_the_correct_render_size =
+            () => Image.RenderSize.ShouldEqual(ExpectedRenderSize);
+    }
+
+    [Subject(typeof(Image))]
+    public class when_a_smaller_image_is_set_to_a_stretch_value_of_UniformToFill_but_not_allowed_to_expand : a_smaller_Image
+    {
+        private Establish context = () =>
+        {
+            Image.Stretch = Stretch.UniformToFill;
+            Image.StretchDirection = StretchDirection.DownOnly;
+        };
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_a_desired_size_equal_to_the_image_size =
+            () => Image.DesiredSize.ShouldEqual(ImageSize);
+
+        private It should_have_a_render_size_equal_to_the_image_size =
+            () => Image.RenderSize.ShouldEqual(ImageSize);
+    }
+    
+    [Subject(typeof(Image))]
+    public class when_a_larger_image_is_set_to_not_stretch : a_larger_Image
+    {
+        private Establish context = () => Image.Stretch = Stretch.None;
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_a_desired_size_equal_to_the_available_size =
+            () => Image.DesiredSize.ShouldEqual(AvailableSize);
 
         private It should_have_a_render_size_equal_to_that_of_the_image_source =
-            () => Image.RenderSize.ShouldEqual(new Size(ExpectedWidth, ExpectedHeight));
+            () => Image.RenderSize.ShouldEqual(ImageSize);
+    }
+
+    [Subject(typeof(Image))]
+    public class when_a_larger_image_is_set_to_stretch_value_of_Uniform : a_larger_Image
+    {
+        private static readonly Size ExpectedSize = new Size(
+            ImageSize.Width / (ImageSize.Height / AvailableSize.Height), AvailableSize.Height);
+
+        private Establish context = () => Image.Stretch = Stretch.Uniform;
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_the_correct_desired_size =
+            () => Image.DesiredSize.ShouldEqual(ExpectedSize);
+
+        private It should_have_the_correct_render_size =
+            () => Image.RenderSize.ShouldEqual(ExpectedSize);
+    }
+
+    [Subject(typeof(Image))]
+    public class when_a_larger_image_is_set_to_stretch_value_of_Uniform_but_not_allowed_to_shrink : a_larger_Image
+    {
+        private Establish context = () =>
+        {
+            Image.Stretch = Stretch.Uniform;
+            Image.StretchDirection = StretchDirection.UpOnly;
+        };
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_a_desired_size_equal_to_the_available_size =
+            () => Image.DesiredSize.ShouldEqual(AvailableSize);
+
+        private It should_have_a_render_size_equal_to_the_image_size =
+            () => Image.RenderSize.ShouldEqual(ImageSize);
+    }
+
+    [Subject(typeof(Image))]
+    public class when_a_larger_image_is_set_to_a_stretch_value_of_Fill : a_larger_Image
+    {
+        private Establish context = () => Image.Stretch = Stretch.Fill;
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_a_desired_size_equal_to_the_available_size =
+            () => Image.DesiredSize.ShouldEqual(AvailableSize);
+
+        private It should_have_a_render_size_equal_to_the_available_size =
+            () => Image.RenderSize.ShouldEqual(AvailableSize);
+    }
+
+    [Subject(typeof(Image))]
+    public class when_a_larger_image_is_set_to_a_stretch_value_of_Fill_but_not_allowed_to_shrink : a_larger_Image
+    {
+        private Establish context = () =>
+            {
+                Image.Stretch = Stretch.Fill;
+                Image.StretchDirection = StretchDirection.UpOnly;
+            };
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_a_desired_size_equal_to_the_available_size =
+            () => Image.DesiredSize.ShouldEqual(AvailableSize);
+
+        private It should_have_a_render_size_equal_to_the_image_size =
+            () => Image.RenderSize.ShouldEqual(ImageSize);
+    }
+
+    [Subject(typeof(Image))]
+    public class when_a_larger_image_is_set_to_a_stretch_value_of_UniformToFill : a_larger_Image
+    {
+        private static readonly Size ExpectedRenderSize = new Size(
+            AvailableSize.Width, ImageSize.Height * (AvailableSize.Width / ImageSize.Width));
+
+        private Establish context = () => Image.Stretch = Stretch.UniformToFill;
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_a_desired_size_equal_to_the_available_size =
+            () => Image.DesiredSize.ShouldEqual(AvailableSize);
+
+        private It should_have_the_correct_render_size =
+            () => Image.RenderSize.ShouldEqual(ExpectedRenderSize);
+    }
+
+    [Subject(typeof(Image))]
+    public class when_a_larger_image_is_set_to_a_stretch_value_of_UniformToFill_but_not_allowed_to_shrink : a_larger_Image
+    {
+        private Establish context = () =>
+        {
+            Image.Stretch = Stretch.UniformToFill;
+            Image.StretchDirection = StretchDirection.UpOnly;
+        };
+
+        private Because of = () =>
+            {
+                Image.Measure(AvailableSize);
+                Image.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_have_a_desired_size_equal_to_the_available_size =
+            () => Image.DesiredSize.ShouldEqual(AvailableSize);
+
+        private It should_have_a_render_size_equal_to_the_image_size =
+            () => Image.RenderSize.ShouldEqual(ImageSize);
     }
 }
