@@ -13,25 +13,31 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 {
     using Machine.Specifications;
 
-    using Microsoft.Xna.Framework.Graphics;
+    using Moq;
 
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media.Imaging;
-    using RedBadger.Xpf.Specs.Services;
 
-    using StructureMap;
+    using It = Machine.Specifications.It;
 
-    public abstract class an_Image : a_spec_dependent_on_services
+    public abstract class an_Image
     {
-        protected static Texture2D Texture;
+        protected static int ExpectedHeight = 120;
+
+        protected static int ExpectedWidth = 80;
 
         protected static Image Image;
 
+        protected static Mock<ITexture2D> Texture;
+
         private Establish context = () =>
             {
-                Texture = ObjectFactory.GetInstance<Texture2DService>().Badger;
-                Image = new Image { Source = new XnaImage(Texture) };
+                Texture = new Mock<ITexture2D>();
+                Texture.Setup(d => d.Height).Returns(ExpectedHeight);
+                Texture.Setup(d => d.Width).Returns(ExpectedWidth);
+                Image = new Image { Source = new XnaImage(Texture.Object) };
             };
     }
 
@@ -43,6 +49,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
         private Because of = () => Image.Measure(availableSize);
 
         private It should_have_a_desired_size_equal_to_that_of_the_image_source =
-            () => Image.DesiredSize.ShouldEqual(new Size(Texture.Width, Texture.Height));
+            () => Image.DesiredSize.ShouldEqual(new Size(ExpectedWidth, ExpectedHeight));
     }
 }

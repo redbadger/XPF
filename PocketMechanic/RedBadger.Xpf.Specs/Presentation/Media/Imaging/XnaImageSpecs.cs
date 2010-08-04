@@ -13,33 +13,42 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.Imaging
 {
     using Machine.Specifications;
 
-    using Microsoft.Xna.Framework.Graphics;
+    using Moq;
 
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Media.Imaging;
-    using RedBadger.Xpf.Specs.Services;
 
-    using StructureMap;
+    using It = Machine.Specifications.It;
 
-    public class a_context_for_an_xna_image : a_spec_dependent_on_services
+    public class a_context_for_an_xna_image
     {
+        protected static int ExpectedHeight = 120;
+
+        protected static int ExpectedWidth = 80;
+
         protected static XnaImage Image;
 
-        protected static Texture2D Texture;
+        protected static Mock<ITexture2D> Texture;
 
-        private Establish context = () => { Texture = ObjectFactory.GetInstance<Texture2DService>().Badger; };
+        private Establish context = () =>
+            {
+                Texture = new Mock<ITexture2D>();
+                Texture.Setup(d => d.Height).Returns(ExpectedHeight);
+                Texture.Setup(d => d.Width).Returns(ExpectedWidth);
+            };
     }
 
     [Subject(typeof(XnaImage))]
     public class when_an_Xna_image_is_instantiated : a_context_for_an_xna_image
     {
-        private Because of = () => Image = new XnaImage(Texture);
+        private Because of = () => Image = new XnaImage(Texture.Object);
 
-        private It should_have_a_Height_set = () => Image.Height.ShouldEqual(Texture.Height);
+        private It should_have_a_Height_set = () => Image.Height.ShouldEqual(ExpectedHeight);
 
-        private It should_have_a_Pixel_Height_set = () => Image.PixelHeight.ShouldEqual(Texture.Height);
+        private It should_have_a_Pixel_Height_set = () => Image.PixelHeight.ShouldEqual(ExpectedHeight);
 
-        private It should_have_a_Pixel_Width_set = () => Image.PixelWidth.ShouldEqual(Texture.Width);
+        private It should_have_a_Pixel_Width_set = () => Image.PixelWidth.ShouldEqual(ExpectedWidth);
 
-        private It should_have_a_Width_set = () => Image.Width.ShouldEqual(Texture.Width);
+        private It should_have_a_Width_set = () => Image.Width.ShouldEqual(ExpectedWidth);
     }
 }

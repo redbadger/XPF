@@ -1,6 +1,5 @@
 namespace RedBadger.Xpf.Presentation.Media.Imaging
 {
-    using System;
     using System.IO;
     using System.Windows;
 
@@ -24,12 +23,10 @@ namespace RedBadger.Xpf.Presentation.Media.Imaging
 
         public void BeginInit()
         {
-            
         }
 
         public void EndInit()
         {
-            
         }
     }
 }

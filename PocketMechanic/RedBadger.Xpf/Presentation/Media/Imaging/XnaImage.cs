@@ -2,13 +2,13 @@ namespace RedBadger.Xpf.Presentation.Media.Imaging
 {
     using System;
 
-    using Microsoft.Xna.Framework.Graphics;
+    using RedBadger.Xpf.Graphics;
 
     public class XnaImage : BitmapImage
     {
-        private readonly Texture2D texture;
+        private readonly ITexture2D texture;
 
-        public XnaImage(Texture2D texture)
+        public XnaImage(ITexture2D texture)
         {
             if (texture == null)
             {

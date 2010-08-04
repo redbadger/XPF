@@ -5,6 +5,8 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Media;
 
+    using Size = RedBadger.Xpf.Presentation.Size;
+
     public class Image : UIElement
     {
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
@@ -25,6 +27,17 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         public override void Render(ISpriteBatch spriteBatch)
         {
+        }
+
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            ImageSource source = this.Source;
+            if (source == null)
+            {
+                return Size.Empty;
+            }
+
+            return source.Size;
         }
     }
 }

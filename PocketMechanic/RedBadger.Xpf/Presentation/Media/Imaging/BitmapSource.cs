@@ -2,7 +2,7 @@ namespace RedBadger.Xpf.Presentation.Media.Imaging
 {
     public abstract class BitmapSource : ImageSource
     {
-        public float Height
+        public override float Height
         {
             get
             {
@@ -14,7 +14,7 @@ namespace RedBadger.Xpf.Presentation.Media.Imaging
 
         public int PixelWidth { get; protected set; }
 
-        public float Width
+        public override float Width
         {
             get
             {
