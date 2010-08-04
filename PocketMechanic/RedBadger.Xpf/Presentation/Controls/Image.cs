@@ -12,14 +12,20 @@ namespace RedBadger.Xpf.Presentation.Controls
     public class Image : UIElement
     {
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
-            "Source", typeof(ImageSource), typeof(Image), new PropertyMetadata(null));
+            "Source", typeof(ImageSource), typeof(Image), new PropertyMetadata(null, SourcePropertyChangedCallback));
 
         public static readonly DependencyProperty StretchDirectionProperty =
             DependencyProperty.Register(
-                "StretchDirection", typeof(StretchDirection), typeof(Image), new PropertyMetadata(StretchDirection.Both));
+                "StretchDirection", 
+                typeof(StretchDirection), 
+                typeof(Image), 
+                new PropertyMetadata(StretchDirection.Both, StretchDirectionPropertyChangedCallback));
 
         public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(
-            "Stretch", typeof(Stretch), typeof(Image), new PropertyMetadata(Stretch.Uniform));
+            "Stretch", 
+            typeof(Stretch), 
+            typeof(Image), 
+            new PropertyMetadata(Stretch.Uniform, StretchPropertyChangedCallback));
 
         public ImageSource Source
         {
@@ -72,6 +78,54 @@ namespace RedBadger.Xpf.Presentation.Controls
         protected override Size MeasureOverride(Size availableSize)
         {
             return this.GetScaledImageSize(availableSize);
+        }
+
+        private static void SourcePropertyChangedCallback(
+            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var newValue = (ImageSource)args.NewValue;
+            var oldValue = (ImageSource)args.OldValue;
+
+            if (newValue != oldValue)
+            {
+                var uiElement = dependencyObject as UIElement;
+                if (uiElement != null)
+                {
+                    uiElement.InvalidateMeasure();
+                }
+            }
+        }
+
+        private static void StretchDirectionPropertyChangedCallback(
+            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var newValue = (StretchDirection)args.NewValue;
+            var oldValue = (StretchDirection)args.OldValue;
+
+            if (newValue != oldValue)
+            {
+                var uiElement = dependencyObject as UIElement;
+                if (uiElement != null)
+                {
+                    uiElement.InvalidateMeasure();
+                }
+            }
+        }
+
+        private static void StretchPropertyChangedCallback(
+            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var newValue = (Stretch)args.NewValue;
+            var oldValue = (Stretch)args.OldValue;
+
+            if (newValue != oldValue)
+            {
+                var uiElement = dependencyObject as UIElement;
+                if (uiElement != null)
+                {
+                    uiElement.InvalidateMeasure();
+                }
+            }
         }
 
         private Size GetScaledImageSize(Size givenSize)
