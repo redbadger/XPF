@@ -29,15 +29,20 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
         }
 
+        protected override Size ArrangeOverride(Size availableSize)
+        {
+            return this.GetSize();
+        }
+
         protected override Size MeasureOverride(Size availableSize)
         {
-            ImageSource source = this.Source;
-            if (source == null)
-            {
-                return Size.Empty;
-            }
+            return this.GetSize();
+        }
 
-            return source.Size;
+        private Size GetSize()
+        {
+            ImageSource source = this.Source;
+            return source == null ? Size.Empty : source.Size;
         }
     }
 }

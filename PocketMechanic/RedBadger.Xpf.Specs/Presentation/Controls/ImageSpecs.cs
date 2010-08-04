@@ -24,6 +24,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
     public abstract class an_Image
     {
+        protected static readonly Size AvailableSize = new Size(1000, 1000);
+
         protected static int ExpectedHeight = 120;
 
         protected static int ExpectedWidth = 80;
@@ -42,13 +44,20 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     }
 
     [Subject(typeof(Image))]
-    public class when_an_xna_image_is_measured : an_Image
+    public class when_an_image_is_measured : an_Image
     {
-        private static readonly Size availableSize = new Size(1000, 1000);
-
-        private Because of = () => Image.Measure(availableSize);
+        private Because of = () => Image.Measure(AvailableSize);
 
         private It should_have_a_desired_size_equal_to_that_of_the_image_source =
             () => Image.DesiredSize.ShouldEqual(new Size(ExpectedWidth, ExpectedHeight));
+    }
+
+    [Subject(typeof(Image))]
+    public class when_an_image_is_arranged : an_Image
+    {
+        private Because of = () => Image.Arrange(new Rect(AvailableSize));
+
+        private It should_have_a_render_size_equal_to_that_of_the_image_source =
+            () => Image.RenderSize.ShouldEqual(new Size(ExpectedWidth, ExpectedHeight));
     }
 }
