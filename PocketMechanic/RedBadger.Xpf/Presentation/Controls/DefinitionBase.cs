@@ -3,10 +3,8 @@ namespace RedBadger.Xpf.Presentation.Controls
     using System;
     using System.Windows;
 
-#if WINDOWS_PHONE
     using GridLength = RedBadger.Xpf.Presentation.GridLength;
     using GridUnitType = RedBadger.Xpf.Presentation.GridUnitType;
-#endif
 
     public abstract class DefinitionBase : DependencyObject
     {

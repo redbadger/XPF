@@ -7,13 +7,10 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     using RedBadger.Xpf.Internal;
 
+    using GridUnitType = RedBadger.Xpf.Presentation.GridUnitType;
     using Rect = RedBadger.Xpf.Presentation.Rect;
     using Size = RedBadger.Xpf.Presentation.Size;
-
-#if WINDOWS_PHONE
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
-    using GridUnitType = RedBadger.Xpf.Presentation.GridUnitType;
-#endif
 
     public class Grid : Panel
     {

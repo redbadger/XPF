@@ -1,11 +1,18 @@
 namespace RedBadger.PocketMechanic.Phone
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Media.Animation;
+
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+
+    using GridLength = RedBadger.Xpf.Presentation.GridLength;
+    using Rect = RedBadger.Xpf.Presentation.Rect;
 
     public class XpfTest : DrawableGameComponent
     {
@@ -42,14 +49,34 @@ namespace RedBadger.PocketMechanic.Phone
             var spriteFontAdapter = new SpriteFontAdapter(this.spriteFont);
 
             var grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(200) });
+            var column1 = new ColumnDefinition { Width = new GridLength(200) };
+            grid.ColumnDefinitions.Add(column1);
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(200) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(200) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(200) });
 
-            var textBlock1 = new TextBlock(spriteFontAdapter) { Text = "TextBlock 1" };
+/*
+            var sb = new Storyboard();
+            var doubleAnimation = new DoubleAnimation()
+                {
+                    Duration = new Duration(TimeSpan.FromSeconds(4)),
+                    From = 10,
+                    To = 200,
+                    RepeatBehavior = RepeatBehavior.Forever
+                };
+            Storyboard.SetTarget(doubleAnimation, column1);
+            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("MaxWidth"));
+            sb.Children.Add(doubleAnimation);
+            sb.Begin();
+*/
+
+            var textBlock1 = new TextBlock(spriteFontAdapter);
             Grid.SetColumn(textBlock1, 0);
             grid.Children.Add(textBlock1);
+
+            var binding = new Binding("Time") { Source = new Clock() };
+
+            textBlock1.BindingFor(TextBlock.TextProperty).Is(binding);
 
             var textBlock2 = new TextBlock(spriteFontAdapter) { Text = "TextBlock 2" };
             Grid.SetColumn(textBlock2, 1);
@@ -59,17 +86,19 @@ namespace RedBadger.PocketMechanic.Phone
             Grid.SetColumn(textBlock3, 0);
             Grid.SetRow(textBlock3, 1);
             grid.Children.Add(textBlock3);
+            textBlock3.BindingFor(TextBlock.TextProperty).Is(binding);
 
             var textBlock4 = new TextBlock(spriteFontAdapter) { Text = "TextBlock 4" };
             Grid.SetColumn(textBlock4, 1);
             Grid.SetRow(textBlock4, 1);
             grid.Children.Add(textBlock4);
 
+            /*
             var textBlock5 = new TextBlock(spriteFontAdapter) { Text = "TextBlock 5!" };
             Grid.SetColumn(textBlock5, 0);
             Grid.SetRow(textBlock5, 0);
             grid.Children.Add(textBlock5);
-
+*/
             var viewPort = new Rect(
                 this.GraphicsDevice.Viewport.X, 
                 this.GraphicsDevice.Viewport.Y, 

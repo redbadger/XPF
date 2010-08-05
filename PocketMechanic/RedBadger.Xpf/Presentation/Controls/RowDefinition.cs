@@ -2,9 +2,7 @@
 {
     using System.Windows;
 
-#if WINDOWS_PHONE
     using GridLength = RedBadger.Xpf.Presentation.GridLength;
-#endif
 
     public class RowDefinition : DefinitionBase
     {

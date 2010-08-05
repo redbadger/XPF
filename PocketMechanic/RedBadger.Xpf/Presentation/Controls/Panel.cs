@@ -7,10 +7,7 @@
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Media;
-
-#if WINDOWS_PHONE
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
-#endif
 
     public class Panel : UIElement
     {

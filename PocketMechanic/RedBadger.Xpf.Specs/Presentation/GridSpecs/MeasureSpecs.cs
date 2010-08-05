@@ -19,6 +19,7 @@ namespace RedBadger.Xpf.Specs.Presentation.GridSpecs
     using RedBadger.Xpf.Presentation.Controls;
 
     using It = Machine.Specifications.It;
+    using GridLength = RedBadger.Xpf.Presentation.GridLength;
 
     [Subject(typeof(Grid), "Measure")]
     public class when_an_element_is_added : a_Grid

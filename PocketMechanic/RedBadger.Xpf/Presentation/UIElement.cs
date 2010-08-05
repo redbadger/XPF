@@ -246,6 +246,11 @@
             }
         }
 
+        public BindingService BindingFor(DependencyProperty dependencyProperty)
+        {
+            return new BindingService(this, dependencyProperty);
+        }
+
         public void InvalidateArrange()
         {
             this.IsArrangeValid = false;

@@ -6,10 +6,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     using Rect = RedBadger.Xpf.Presentation.Rect;
     using Size = RedBadger.Xpf.Presentation.Size;
-
-#if WINDOWS_PHONE
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
-#endif
 
     /// <summary>
     ///   Represents a control with a single piece of content.

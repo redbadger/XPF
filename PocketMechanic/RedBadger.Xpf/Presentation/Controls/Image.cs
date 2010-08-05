@@ -8,6 +8,7 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Presentation.Media;
 
     using Size = RedBadger.Xpf.Presentation.Size;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public class Image : UIElement
     {

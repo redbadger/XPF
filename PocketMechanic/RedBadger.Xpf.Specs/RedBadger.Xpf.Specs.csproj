@@ -68,6 +68,7 @@
       <HintPath>..\..\Lib\Moq\Moq.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="Rhino.Mocks">
       <HintPath>..\..\Lib\RhinoMocks\Rhino.Mocks.dll</HintPath>
     </Reference>
@@ -78,6 +79,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Presentation\BindingServiceSpecs.cs" />
     <Compile Include="Presentation\Controls\ContentControlSpecs.cs" />
     <Compile Include="Presentation\Controls\ImageSpecs.cs" />
     <Compile Include="Presentation\GridSpecs\ArrangeSpecs.cs" />

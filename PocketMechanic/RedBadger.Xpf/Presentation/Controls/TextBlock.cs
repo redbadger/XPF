@@ -11,11 +11,9 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Presentation.Media;
 
     using Size = RedBadger.Xpf.Presentation.Size;
-
-#if WINDOWS_PHONE
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
+    using TextWrapping = RedBadger.Xpf.Presentation.TextWrapping;
     using Thickness = RedBadger.Xpf.Presentation.Thickness;
-#endif
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public class TextBlock : UIElement
     {
