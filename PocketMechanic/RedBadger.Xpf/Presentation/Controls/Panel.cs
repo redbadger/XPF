@@ -66,7 +66,7 @@
             var brush = this.Background as SolidColorBrush;
 
             // need one pixel white texture here
-            // spriteBatch.Draw((ITexture2D)null, area, brush != null ? brush.Color : Color.White);
+            spriteBatch.Draw((ITexture2D)null, area, brush != null ? brush.Color : Color.White);
         }
     }
 }

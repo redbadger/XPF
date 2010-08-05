@@ -42,10 +42,10 @@ namespace RedBadger.PocketMechanic.Phone
             var spriteFontAdapter = new SpriteFontAdapter(this.spriteFont);
 
             var grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(200) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(200) });
-            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(200) });
-            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(200) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(200) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(200) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(200) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(200) });
 
             var textBlock1 = new TextBlock(spriteFontAdapter) { Text = "TextBlock 1" };
             Grid.SetColumn(textBlock1, 0);

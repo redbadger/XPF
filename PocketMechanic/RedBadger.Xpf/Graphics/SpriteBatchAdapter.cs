@@ -21,12 +21,18 @@
 
         public void Draw(ITexture2D texture2D, Vector2 position, Color color)
         {
-            this.Draw(texture2D.Value, position, color);
+            if (texture2D != null)
+            {
+                this.Draw(texture2D.Value, position, color);
+            }
         }
 
         public void Draw(ITexture2D texture2D, Rectangle area, Color color)
         {
-            this.Draw(texture2D.Value, area, color);
+            if (texture2D != null)
+            {
+                this.Draw(texture2D.Value, area, color);
+            }
         }
     }
 }
