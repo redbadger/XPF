@@ -63,20 +63,25 @@
       <HintPath>..\..\Lib\MSpec\Machine.Specifications.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Moq">
       <HintPath>..\..\Lib\Moq\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="Rhino.Mocks">
       <HintPath>..\..\Lib\RhinoMocks\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GraphicsDeviceService.cs" />
     <Compile Include="Presentation\Controls\ContentControlSpecs.cs" />
+    <Compile Include="Presentation\Controls\ImageSpecs.cs" />
     <Compile Include="Presentation\GridSpecs\ArrangeSpecs.cs" />
     <Compile Include="Presentation\GridSpecs\Contexts.cs" />
     <Compile Include="Presentation\GridSpecs\MeasureSpecs.cs" />
@@ -86,6 +91,7 @@
     <Compile Include="Presentation\Controls\PanelSpecs.cs" />
     <Compile Include="Presentation\DefinitionBaseSpecs.cs" />
     <Compile Include="Presentation\GridLengthSpecs.cs" />
+    <Compile Include="Presentation\Media\Imaging\XnaImageSpecs.cs" />
     <Compile Include="Presentation\RectSpecs.cs" />
     <Compile Include="Presentation\SizeSpecs.cs" />
     <Compile Include="Presentation\UIElementCollectionSpecs.cs" />
@@ -103,6 +109,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="badger.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\MSpec.html" />
   </ItemGroup>
   <ItemGroup />

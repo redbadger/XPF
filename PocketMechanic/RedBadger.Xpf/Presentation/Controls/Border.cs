@@ -3,7 +3,7 @@ namespace RedBadger.Xpf.Presentation.Controls
     using System.Windows;
 
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Media;
+    using RedBadger.Xpf.Presentation.Media;
 
 #if WINDOWS_PHONE
     using UIElement = RedBadger.Xpf.Presentation.UIElement;

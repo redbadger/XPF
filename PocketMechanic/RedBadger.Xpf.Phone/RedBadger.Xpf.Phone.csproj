@@ -102,12 +102,6 @@
     <Compile Include="..\RedBadger.Xpf\Internal\Vector2Extensions.cs">
       <Link>Internal\Vector2Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Media\Brush.cs">
-      <Link>Media\Brush.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Media\SolidColorBrush.cs">
-      <Link>Media\SolidColorBrush.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Border.cs">
       <Link>Presentation\Controls\Border.cs</Link>
     </Compile>
@@ -150,6 +144,24 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\IElement.cs">
       <Link>Presentation\IElement.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Brush.cs">
+      <Link>Presentation\Media\Brush.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\ImageSource.cs">
+      <Link>Presentation\Media\ImageSource.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Imaging\BitmapImage.cs">
+      <Link>Presentation\Media\Imaging\BitmapImage.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Imaging\BitmapSource.cs">
+      <Link>Presentation\Media\Imaging\BitmapSource.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Imaging\XnaImage.cs">
+      <Link>Presentation\Media\Imaging\XnaImage.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\SolidColorBrush.cs">
+      <Link>Presentation\Media\SolidColorBrush.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Orientation.cs">
       <Link>Presentation\Orientation.cs</Link>
     </Compile>
@@ -176,6 +188,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

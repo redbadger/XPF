@@ -8,7 +8,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Internal;
-    using RedBadger.Xpf.Media;
+    using RedBadger.Xpf.Presentation.Media;
 
     using Size = RedBadger.Xpf.Presentation.Size;
 

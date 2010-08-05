@@ -1,4 +1,4 @@
-namespace RedBadger.Xpf.Media
+namespace RedBadger.Xpf.Presentation.Media
 {
     using System.Windows;
 

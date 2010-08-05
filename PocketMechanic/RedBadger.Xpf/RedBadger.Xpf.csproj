@@ -83,13 +83,18 @@
     <Compile Include="Internal\SizeExtensions.cs" />
     <Compile Include="Internal\ThicknessExtensions.cs" />
     <Compile Include="Internal\Vector2Extensions.cs" />
-    <Compile Include="Media\Brush.cs" />
-    <Compile Include="Media\SolidColorBrush.cs" />
+    <Compile Include="Presentation\Media\Brush.cs" />
+    <Compile Include="Presentation\Media\ImageSource.cs" />
+    <Compile Include="Presentation\Media\Imaging\BitmapImage.cs" />
+    <Compile Include="Presentation\Media\Imaging\BitmapSource.cs" />
+    <Compile Include="Presentation\Media\Imaging\XnaImage.cs" />
+    <Compile Include="Presentation\Media\SolidColorBrush.cs" />
     <Compile Include="Presentation\Controls\ColumnDefinition.cs" />
     <Compile Include="Presentation\Controls\Border.cs" />
     <Compile Include="Presentation\Controls\ContentControl.cs" />
     <Compile Include="Presentation\Controls\DefinitionBase.cs" />
     <Compile Include="Presentation\Controls\Grid.cs" />
+    <Compile Include="Presentation\Controls\Image.cs" />
     <Compile Include="Presentation\Controls\Reference\ReferenceGrid.cs" />
     <Compile Include="Presentation\Controls\Panel.cs" />
     <Compile Include="Presentation\Controls\RootElement.cs" />
@@ -110,6 +115,7 @@
     <Compile Include="Presentation\VerticalAlignment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
