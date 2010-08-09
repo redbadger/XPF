@@ -68,6 +68,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\RedBadger.Xpf\Graphics\IPrimitivesService.cs">
+      <Link>Graphics\IPrimitivesService.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Graphics\ISpriteBatch.cs">
       <Link>Graphics\ISpriteBatch.cs</Link>
     </Compile>
@@ -76,6 +79,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Graphics\ITexture2D.cs">
       <Link>Graphics\ITexture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\PrimitivesService.cs">
+      <Link>Graphics\PrimitivesService.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Graphics\SpriteBatchAdapter.cs">
       <Link>Graphics\SpriteBatchAdapter.cs</Link>

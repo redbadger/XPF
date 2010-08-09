@@ -10,9 +10,12 @@ namespace RedBadger.PocketMechanic.Phone
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media;
 
     using GridLength = RedBadger.Xpf.Presentation.GridLength;
     using Rect = RedBadger.Xpf.Presentation.Rect;
+    using Thickness = RedBadger.Xpf.Presentation.Thickness;
+    using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     public class XpfTest : DrawableGameComponent
     {
@@ -55,7 +58,7 @@ namespace RedBadger.PocketMechanic.Phone
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(200) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(200) });
 
-/*
+            /*
             var sb = new Storyboard();
             var doubleAnimation = new DoubleAnimation()
                 {
@@ -70,15 +73,20 @@ namespace RedBadger.PocketMechanic.Phone
             sb.Begin();
 */
 
-            var textBlock1 = new TextBlock(spriteFontAdapter);
-            Grid.SetColumn(textBlock1, 0);
-            grid.Children.Add(textBlock1);
+            var textBlock1 = new TextBlock(spriteFontAdapter) { Text = "Textblock 1" };
+            var border = new Border(new PrimitivesService(GraphicsDevice))
+                {
+                    Child = textBlock1,
+                    BorderBrush = new SolidColorBrush(Color.Red),
+                    BorderThickness = new Thickness(20)
+                };
 
+            Grid.SetColumn(border, 0);
+            grid.Children.Add(border);
+
+            var textBlock2 = new TextBlock(spriteFontAdapter);
             var binding = new Binding("Time") { Source = new Clock() };
-
-            textBlock1.BindingFor(TextBlock.TextProperty).Is(binding);
-
-            var textBlock2 = new TextBlock(spriteFontAdapter) { Text = "TextBlock 2" };
+            textBlock2.BindingFor(TextBlock.TextProperty).Is(binding);
             Grid.SetColumn(textBlock2, 1);
             grid.Children.Add(textBlock2);
 
@@ -100,9 +108,9 @@ namespace RedBadger.PocketMechanic.Phone
             grid.Children.Add(textBlock5);
 */
             var viewPort = new Rect(
-                this.GraphicsDevice.Viewport.X, 
-                this.GraphicsDevice.Viewport.Y, 
-                this.GraphicsDevice.Viewport.Width, 
+                this.GraphicsDevice.Viewport.X,
+                this.GraphicsDevice.Viewport.Y,
+                this.GraphicsDevice.Viewport.Width,
                 this.GraphicsDevice.Viewport.Height);
 
             this.rootElement = new RootElement(viewPort) { Content = grid };

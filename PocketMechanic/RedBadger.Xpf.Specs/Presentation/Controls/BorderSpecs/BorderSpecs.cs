@@ -20,6 +20,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
 
@@ -27,7 +28,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     {
         protected static Border Border;
 
-        private Establish context = () => Border = new Border();
+        private Establish context = () => { Border = new Border(new Mock<IPrimitivesService>().Object); };
     }
 
     public abstract class a_Border_with_child : a_Border
@@ -38,8 +39,12 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
         protected static Size ChildSize;
 
+        protected static Mock<ISpriteBatch> SpriteBatch;
+
         private Establish context = () =>
             {
+                SpriteBatch = new Mock<ISpriteBatch>();
+
                 ChildSize = new Size(15, 35);
                 Child = new Mock<UIElement> { CallBase = true };
                 Child.Object.HorizontalAlignment = HorizontalAlignment.Left;
@@ -70,12 +75,15 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
             {
                 Border.Measure(AvailableSize);
                 Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
-                Border.Render(new Mock<ISpriteBatch>().Object);
+                Border.Render(SpriteBatch.Object);
             };
 
         private It should_have_no_effect_on_its_child = () => Child.Object.VisualOffset.ShouldEqual(Vector2.Zero);
 
         private It should_render_its_child = () => Child.Verify(element => element.Render(Moq.It.IsAny<ISpriteBatch>()));
+
+        private It should_set_itself_as_the_visual_parent_on_the_child =
+            () => Child.Object.VisualParent.ShouldEqual(Border);
     }
 
     [Subject(typeof(Border), "Padding/Thickness")]
@@ -104,10 +112,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     public class when_padding_is_changed : a_Border_with_child
     {
         private Establish context = () =>
-        {
-            Border.Measure(AvailableSize);
-            Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
-        };
+            {
+                Border.Measure(AvailableSize);
+                Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
+            };
 
         private Because of = () => Border.Padding = new Thickness(10, 20, 30, 40);
 
@@ -120,11 +128,11 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
         private static readonly Thickness thickness = new Thickness(1, 2, 3, 4);
 
         private Because of = () =>
-        {
-            Border.BorderThickness = thickness;
-            Border.Measure(AvailableSize);
-            Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
-        };
+            {
+                Border.BorderThickness = thickness;
+                Border.Measure(AvailableSize);
+                Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
+            };
 
         private It should_increase_the_desired_size =
             () =>
@@ -140,10 +148,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     public class when_thickness_is_changed : a_Border_with_child
     {
         private Establish context = () =>
-        {
-            Border.Measure(AvailableSize);
-            Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
-        };
+            {
+                Border.Measure(AvailableSize);
+                Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
+            };
 
         private Because of = () => Border.BorderThickness = new Thickness(1, 2, 3, 4);
 
@@ -160,19 +168,108 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
         private Because of = () =>
             {
                 Border.Padding = padding;
-            Border.BorderThickness = thickness;
-            Border.Measure(AvailableSize);
-            Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
-        };
+                Border.BorderThickness = thickness;
+                Border.Measure(AvailableSize);
+                Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
+            };
 
         private It should_increase_the_desired_size =
             () =>
             Border.DesiredSize.ShouldEqual(
                 new Size(
-                ChildSize.Width + padding.Left + padding.Right + thickness.Left + thickness.Right,
+                ChildSize.Width + padding.Left + padding.Right + thickness.Left + thickness.Right, 
                 ChildSize.Height + padding.Top + padding.Bottom + thickness.Top + thickness.Bottom));
 
         private It should_take_padding_into_account_when_drawing =
-            () => Child.Object.VisualOffset.ShouldEqual(new Vector2(padding.Left + thickness.Left, padding.Top + thickness.Top));
+            () =>
+            Child.Object.VisualOffset.ShouldEqual(
+                new Vector2(padding.Left + thickness.Left, padding.Top + thickness.Top));
+    }
+
+    [Subject(typeof(Border), "Rendering")]
+    public class when_a_border_thickness_and_brush_have_been_specified : a_Border_with_child
+    {
+        private static readonly Rectangle expectedBottomBorderRectangle = new Rectangle(1, 37, 15, 4);
+
+        private static readonly Color expectedColor = Color.Red;
+
+        private static readonly Rectangle expectedLeftBorderRectangle = new Rectangle(0, 0, 1, 41);
+
+        private static readonly Rectangle expectedRightBorderRectangle = new Rectangle(16, 2, 3, 39);
+
+        private static readonly Rectangle expectedTopBorderRectangle = new Rectangle(1, 0, 18, 2);
+
+        private static readonly Thickness thickness = new Thickness(1, 2, 3, 4);
+
+        private Establish context = () =>
+            {
+                Border.HorizontalAlignment = HorizontalAlignment.Left;
+                Border.VerticalAlignment = VerticalAlignment.Top;
+            };
+
+        private Because of = () =>
+            {
+                Border.BorderBrush = new SolidColorBrush(expectedColor);
+                Border.BorderThickness = thickness;
+                Border.Measure(AvailableSize);
+                Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
+                Border.Render(SpriteBatch.Object);
+            };
+
+        private It should_draw_the_bottom_border =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), expectedBottomBorderRectangle, expectedColor));
+
+        private It should_draw_the_left_border =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), expectedLeftBorderRectangle, expectedColor));
+
+        private It should_draw_the_right_border =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), expectedRightBorderRectangle, expectedColor));
+
+        private It should_draw_the_top_border =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), expectedTopBorderRectangle, expectedColor));
+    }
+
+    [Subject(typeof(Border), "Rendering")]
+    public class when_no_border_brush_has_been_specified : a_Border_with_child
+    {
+        private Because of = () =>
+            {
+                Border.BorderThickness = new Thickness(1, 2, 3, 4);
+                Border.Measure(AvailableSize);
+                Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
+                Border.Render(SpriteBatch.Object);
+            };
+
+        private It should_not_render_a_border =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), Moq.It.IsAny<Color>()), 
+                Times.Never());
+    }
+
+    [Subject(typeof(Border), "Rendering")]
+    public class when_no_thickness_has_been_specified : a_Border_with_child
+    {
+        private Because of = () =>
+            {
+                Border.BorderBrush = new SolidColorBrush(Color.Black);
+                Border.Measure(AvailableSize);
+                Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
+                Border.Render(SpriteBatch.Object);
+            };
+
+        private It should_not_render_a_border =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), Moq.It.IsAny<Color>()), 
+                Times.Never());
     }
 }

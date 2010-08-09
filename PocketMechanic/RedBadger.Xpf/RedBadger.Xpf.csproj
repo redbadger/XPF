@@ -76,9 +76,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics\IPrimitivesService.cs" />
     <Compile Include="Graphics\ISpriteBatch.cs" />
     <Compile Include="Graphics\ISpriteFont.cs" />
     <Compile Include="Graphics\ITexture2D.cs" />
+    <Compile Include="Graphics\PrimitivesService.cs" />
     <Compile Include="Graphics\SpriteBatchAdapter.cs" />
     <Compile Include="Graphics\SpriteFontAdapter.cs" />
     <Compile Include="Graphics\Texture2DAdapter.cs" />

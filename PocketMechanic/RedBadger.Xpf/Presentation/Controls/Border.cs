@@ -1,7 +1,10 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
+    using System.Collections.Generic;
     using System.Windows;
+
+    using Microsoft.Xna.Framework;
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Internal;
@@ -28,13 +31,24 @@ namespace RedBadger.Xpf.Presentation.Controls
                 new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         public static readonly DependencyProperty ChildProperty = DependencyProperty.Register(
-            "Child", typeof(UIElement), typeof(Border), new PropertyMetadata(null));
+            "Child", typeof(UIElement), typeof(Border), new PropertyMetadata(null, ChildPropertyChangedCallback));
 
         public static readonly DependencyProperty PaddingProperty = DependencyProperty.Register(
             "Padding", 
             typeof(Thickness), 
             typeof(Border), 
             new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
+
+        private readonly IList<Rectangle> borders = new List<Rectangle>();
+
+        private readonly IPrimitivesService primitivesService;
+
+        private bool isBordersCollectionDirty;
+
+        public Border(IPrimitivesService primitivesService)
+        {
+            this.primitivesService = primitivesService;
+        }
 
         public Brush Background
         {
@@ -107,6 +121,20 @@ namespace RedBadger.Xpf.Presentation.Controls
             {
                 this.Child.Render(spriteBatch);
             }
+
+            var solidColorBorderBrush = this.BorderBrush as SolidColorBrush;
+            if (solidColorBorderBrush != null)
+            {
+                if (this.isBordersCollectionDirty)
+                {
+                    this.GenerateBorders();
+                }
+
+                foreach (var border in this.borders)
+                {
+                    spriteBatch.Draw(this.primitivesService.SinglePixel, border, solidColorBorderBrush.Color);
+                }
+            }
         }
 
         protected override Size ArrangeOverride(Size finalSize)
@@ -127,6 +155,8 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
+            this.isBordersCollectionDirty = true;
+
             UIElement child = this.Child;
             Size borderThicknessAndPaddingSize = this.BorderThickness.Collapse() + this.Padding.Collapse();
 
@@ -145,6 +175,86 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
 
             return borderThicknessAndPaddingSize;
+        }
+
+        private static void ChildPropertyChangedCallback(
+            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var oldChild = args.OldValue as IElement;
+            var newChild = args.NewValue as IElement;
+            var border = (IElement)dependencyObject;
+
+            border.InvalidateMeasure();
+
+            if (oldChild != null)
+            {
+                oldChild.VisualParent = null;
+            }
+
+            if (newChild != null)
+            {
+                newChild.VisualParent = border;
+            }
+        }
+
+        private void GenerateBorders()
+        {
+            this.borders.Clear();
+
+            var leftBorderThickness = (int)this.BorderThickness.Left;
+            var topBorderThickness = (int)this.BorderThickness.Top;
+            var rightBorderThickness = (int)this.BorderThickness.Right;
+            var bottomBorderThickness = (int)this.BorderThickness.Bottom;
+            var actualHeight = (int)this.ActualHeight;
+            var actualWidth = (int)this.ActualWidth;
+            var visualOffsetX = (int)this.VisualOffset.X;
+            var visualOffsetY = (int)this.VisualOffset.Y;
+
+            if (leftBorderThickness > 0)
+            {
+                var leftBorder = new Rectangle(0, 0, leftBorderThickness, actualHeight);
+                leftBorder.X += visualOffsetX;
+                leftBorder.Y += visualOffsetY;
+
+                this.borders.Add(leftBorder);
+            }
+
+            if (topBorderThickness > 0)
+            {
+                var topBorder = new Rectangle(
+                    leftBorderThickness, 0, actualWidth - leftBorderThickness, topBorderThickness);
+                topBorder.X += visualOffsetX;
+                topBorder.Y += visualOffsetY;
+
+                this.borders.Add(topBorder);
+            }
+
+            if (rightBorderThickness > 0)
+            {
+                var rightBorder = new Rectangle(
+                    actualWidth - rightBorderThickness, 
+                    topBorderThickness, 
+                    rightBorderThickness, 
+                    actualHeight - topBorderThickness);
+                rightBorder.X += visualOffsetX;
+                rightBorder.Y += visualOffsetY;
+
+                this.borders.Add(rightBorder);
+            }
+
+            if (bottomBorderThickness > 0)
+            {
+                var bottomBorder = new Rectangle(
+                    leftBorderThickness, 
+                    actualHeight - bottomBorderThickness, 
+                    actualWidth - (leftBorderThickness + rightBorderThickness), 
+                    bottomBorderThickness);
+                bottomBorder.X += visualOffsetX;
+                bottomBorder.Y += visualOffsetY;
+                this.borders.Add(bottomBorder);
+            }
+
+            this.isBordersCollectionDirty = false;
         }
     }
 }
