@@ -87,6 +87,7 @@
     <Compile Include="Internal\RectExtensions.cs" />
     <Compile Include="Internal\SizeExtensions.cs" />
     <Compile Include="Internal\ThicknessExtensions.cs" />
+    <Compile Include="Internal\UIElementPropertyChangedCallbacks.cs" />
     <Compile Include="Internal\Vector2Extensions.cs" />
     <Compile Include="Presentation\BindingService.cs" />
     <Compile Include="Presentation\Controls\StretchDirection.cs" />

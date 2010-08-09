@@ -1,9 +1,20 @@
 namespace RedBadger.Xpf.Internal
 {
+    using System;
+
     using RedBadger.Xpf.Presentation;
 
     public static class RectExtensions
     {
+        public static Rect Defalte(this Rect rect, Thickness thickness)
+        {
+            return new Rect(
+                rect.X + thickness.Left,
+                rect.Y + thickness.Top,
+                Math.Max(0f, rect.Width - (thickness.Left + thickness.Right)),
+                Math.Max(0f, rect.Height - (thickness.Top + thickness.Bottom)));
+        }
+
         public static bool IsDifferentFrom(this Rect rect1, Rect rect2)
         {
             if (rect1.IsEmpty)

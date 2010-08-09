@@ -101,6 +101,9 @@
     <Compile Include="..\RedBadger.Xpf\Internal\ThicknessExtensions.cs">
       <Link>Internal\ThicknessExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\UIElementPropertyChangedCallbacks.cs">
+      <Link>Internal\UIElementPropertyChangedCallbacks.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\Vector2Extensions.cs">
       <Link>Internal\Vector2Extensions.cs</Link>
     </Compile>

@@ -27,7 +27,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             "Padding", 
             typeof(Thickness), 
             typeof(TextBlock), 
-            new PropertyMetadata(Thickness.Empty, PaddingPropertyChangedCallback));
+            new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text", typeof(string), typeof(TextBlock), new PropertyMetadata(string.Empty, TextPropertyChangedCallback));
@@ -139,22 +139,6 @@ namespace RedBadger.Xpf.Presentation.Controls
             return new Size(
                 measureString.X + this.Padding.Left + this.Padding.Right, 
                 measureString.Y + this.Padding.Top + this.Padding.Bottom);
-        }
-
-        private static void PaddingPropertyChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var newValue = (Thickness)args.NewValue;
-            var oldValue = (Thickness)args.OldValue;
-
-            if (newValue.IsDifferentFrom(oldValue))
-            {
-                var uiElement = dependencyObject as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.InvalidateMeasure();
-                }
-            }
         }
 
         private static void TextPropertyChangedCallback(

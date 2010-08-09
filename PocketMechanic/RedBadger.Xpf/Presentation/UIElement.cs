@@ -27,7 +27,7 @@
             "Margin", 
             typeof(Thickness), 
             typeof(UIElement), 
-            new PropertyMetadata(Thickness.Empty, MarginPropertyChangedCallback));
+            new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         public static readonly DependencyProperty MaxHeightProperty = DependencyProperty.Register(
             "MaxHeight", 
@@ -348,22 +348,6 @@
                 if (uiElement != null)
                 {
                     uiElement.InvalidateArrange();
-                }
-            }
-        }
-
-        private static void MarginPropertyChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var newValue = (Thickness)args.NewValue;
-            var oldValue = (Thickness)args.OldValue;
-
-            if (newValue.IsDifferentFrom(oldValue))
-            {
-                var uiElement = dependencyObject as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.InvalidateMeasure();
                 }
             }
         }

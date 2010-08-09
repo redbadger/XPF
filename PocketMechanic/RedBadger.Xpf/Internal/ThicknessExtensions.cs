@@ -4,6 +4,11 @@ namespace RedBadger.Xpf.Internal
 
     public static class ThicknessExtensions
     {
+        public static Size Collapse(this Thickness thickness)
+        {
+            return new Size(thickness.Left + thickness.Right, thickness.Top + thickness.Bottom);
+        }
+
         public static bool IsDifferentFrom(this Thickness thickness1, Thickness thickness2)
         {
             if (thickness1.IsEmpty)
