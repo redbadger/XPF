@@ -5,8 +5,8 @@
 
     using Microsoft.Xna.Framework;
 
-    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Internal;
+    using RedBadger.Xpf.Presentation.Media;
 
     public abstract class UIElement : DependencyObject, IElement
     {
@@ -63,6 +63,21 @@
         private Size previousAvailableSize;
 
         private Rect previousFinalRect;
+
+        public Vector2 AbsoluteOffset
+        {
+            get
+            {
+                var absoluteOffset = this.VisualOffset;
+
+                if (this.VisualParent != null)
+                {
+                    absoluteOffset += this.VisualParent.AbsoluteOffset;
+                }
+
+                return absoluteOffset;
+            }
+        }
 
         public float ActualHeight
         {
@@ -219,6 +234,11 @@
         /// </remarks>
         internal Vector2 VisualOffset { get; set; }
 
+        public BindingService BindingFor(DependencyProperty dependencyProperty)
+        {
+            return new BindingService(this, dependencyProperty);
+        }
+
         /// <summary>
         ///   Positions child elements and determines a size for a UIElement.
         ///   Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
@@ -241,14 +261,14 @@
             {
                 this.ArrangeCore(finalRect);
 
+                var drawingContext = XpfServiceLocator.Get<DrawingContext>();
+                drawingContext.Open(this);
+                this.OnRender();
+                drawingContext.Close();
+
                 this.previousFinalRect = finalRect;
                 this.IsArrangeValid = true;
             }
-        }
-
-        public BindingService BindingFor(DependencyProperty dependencyProperty)
-        {
-            return new BindingService(this, dependencyProperty);
         }
 
         public void InvalidateArrange()
@@ -311,8 +331,6 @@
             }
         }
 
-        public abstract void Render(ISpriteBatch spriteBatch);
-
         /// <summary>
         ///   When overridden in a derived class, positions child elements and determines a size for a UIElement derived class.
         /// </summary>
@@ -334,6 +352,10 @@
         protected virtual Size MeasureOverride(Size availableSize)
         {
             return Size.Empty;
+        }
+
+        protected virtual void OnRender()
+        {
         }
 
         private static void HorizontalAlignmentPropertyChangedCallback(

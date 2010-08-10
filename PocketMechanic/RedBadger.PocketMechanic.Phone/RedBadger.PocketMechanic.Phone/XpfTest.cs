@@ -1,13 +1,9 @@
 namespace RedBadger.PocketMechanic.Phone
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Data;
-    using System.Windows.Media.Animation;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+    using RedBadger.Xpf;
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
@@ -15,7 +11,6 @@ namespace RedBadger.PocketMechanic.Phone
     using GridLength = RedBadger.Xpf.Presentation.GridLength;
     using Rect = RedBadger.Xpf.Presentation.Rect;
     using Thickness = RedBadger.Xpf.Presentation.Thickness;
-    using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     public class XpfTest : DrawableGameComponent
     {
@@ -79,12 +74,13 @@ namespace RedBadger.PocketMechanic.Phone
             grid.Children.Add(textBlock1);
 
             var textBlock2 = new TextBlock(spriteFontAdapter) { Text = "Textblock 2" };
-            var border = new Border(new PrimitivesService(GraphicsDevice))
-            {
-                Child = textBlock2,
-                BorderBrush = new SolidColorBrush(Color.Red),
-                BorderThickness = new Thickness(20)
-            };
+            var border = new Border
+                {
+                    Child = textBlock2,
+                    BorderBrush = new SolidColorBrush(Color.Red),
+                    BorderThickness = new Thickness(20),
+                    Background = new SolidColorBrush(Color.Aquamarine)
+                };
             Grid.SetColumn(border, 1);
             grid.Children.Add(border);
 
@@ -111,6 +107,8 @@ namespace RedBadger.PocketMechanic.Phone
                 this.GraphicsDevice.Viewport.Height);
 
             this.rootElement = new RootElement(viewPort) { Content = grid };
+
+            XpfServiceLocator.RegisterPrimitiveService(new PrimitivesService(GraphicsDevice));
         }
     }
 }

@@ -34,11 +34,15 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
         private Establish context = () =>
             {
+                XpfServiceLocator.RegisterPrimitiveService(new Mock<IPrimitivesService>().Object);
+
                 SpriteBatch = new Mock<ISpriteBatch>();
                 RootElement = new RootElement(new Rect(new Size(100, 100)));
                 Panel = new Panel();
                 RootElement.Content = Panel;
             };
+
+        private Cleanup after = () => XpfServiceLocator.Get<DrawingContext>().Clear();
     }
 
     [Subject(typeof(Panel), "Background")]
@@ -50,25 +54,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
                 RootElement.Draw(SpriteBatch.Object);
             };
 
-        private It should_default_to_white =
+        private It should_not_render_a_background =
             () =>
-            SpriteBatch.Verify(batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), Color.White));
-
-        private It should_render_the_background_in_the_right_place = () =>
-            {
-                var area = new Rectangle(
-                    (int)Panel.VisualOffset.X, 
-                    (int)Panel.VisualOffset.Y, 
-                    (int)Panel.ActualWidth, 
-                    (int)Panel.ActualHeight);
-
-                SpriteBatch.Verify(
-                    batch =>
-                    batch.Draw(
-                        Moq.It.IsAny<ITexture2D>(), 
-                        Moq.It.Is<Rectangle>(rectangle => rectangle.Equals(area)), 
-                        Moq.It.IsAny<Color>()));
-            };
+            SpriteBatch.Verify(batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), Times.Never());
     }
 
     [Subject(typeof(Panel), "Background")]
@@ -85,23 +73,23 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
         private It should_render_the_background_in_the_right_place = () =>
             {
-                var area = new Rectangle(
-                    (int)Panel.VisualOffset.X, 
-                    (int)Panel.VisualOffset.Y, 
-                    (int)Panel.ActualWidth, 
-                    (int)Panel.ActualHeight);
+                var area = new Rect(
+                    Panel.VisualOffset.X, 
+                    Panel.VisualOffset.Y, 
+                    Panel.ActualWidth, 
+                    Panel.ActualHeight);
 
                 SpriteBatch.Verify(
                     batch =>
                     batch.Draw(
                         Moq.It.IsAny<ITexture2D>(), 
-                        Moq.It.Is<Rectangle>(rectangle => rectangle.Equals(area)), 
+                        Moq.It.Is<Rect>(rect => rect.Equals(area)), 
                         Moq.It.IsAny<Color>()));
             };
 
         private It should_render_with_the_specified_background_color =
             () =>
             SpriteBatch.Verify(
-                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), expectedBackground.Color));
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), expectedBackground.Color));
     }
 }

@@ -6,7 +6,7 @@ namespace RedBadger.Xpf.Internal
 
     public static class RectExtensions
     {
-        public static Rect Defalte(this Rect rect, Thickness thickness)
+        public static Rect Deflate(this Rect rect, Thickness thickness)
         {
             return new Rect(
                 rect.X + thickness.Left,

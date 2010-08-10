@@ -68,6 +68,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
         private Establish context = () =>
             {
+                XpfServiceLocator.RegisterPrimitiveService(new Mock<IPrimitivesService>().Object);
+
                 SpriteBatch = new Mock<ISpriteBatch>();
                 SpriteFont = new Mock<ISpriteFont>();
                 RootElement = new RootElement(new Rect(new Size(100, 100))) { Content = StackPanel };

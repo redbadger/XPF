@@ -65,6 +65,9 @@
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Ninject">
+      <HintPath>..\..\Lib\Ninject\Desktop\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -131,6 +134,7 @@
     <Compile Include="Presentation\UIElementCollection.cs" />
     <Compile Include="Presentation\VerticalAlignment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XpfServiceLocator.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

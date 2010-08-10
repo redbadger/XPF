@@ -57,6 +57,9 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\Lib\Ninject\WP7\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -223,6 +226,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\VerticalAlignment.cs">
       <Link>Presentation\VerticalAlignment.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\XpfServiceLocator.cs">
+      <Link>XpfServiceLocator.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

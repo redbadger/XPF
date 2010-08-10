@@ -28,7 +28,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     {
         protected static Border Border;
 
-        private Establish context = () => { Border = new Border(new Mock<IPrimitivesService>().Object); };
+        private Establish context = () => { Border = new Border(); };
     }
 
     public abstract class a_Border_with_child : a_Border
@@ -39,10 +39,17 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
         protected static Size ChildSize;
 
+        protected static DrawingContext DrawingContext;
+
         protected static Mock<ISpriteBatch> SpriteBatch;
+
+        private Cleanup after = () => XpfServiceLocator.Get<DrawingContext>().Clear();
 
         private Establish context = () =>
             {
+                XpfServiceLocator.RegisterPrimitiveService(new Mock<IPrimitivesService>().Object);
+                DrawingContext = XpfServiceLocator.Get<DrawingContext>();
+
                 SpriteBatch = new Mock<ISpriteBatch>();
 
                 ChildSize = new Size(15, 35);
@@ -75,12 +82,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
             {
                 Border.Measure(AvailableSize);
                 Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
-                Border.Render(SpriteBatch.Object);
+                DrawingContext.Draw(SpriteBatch.Object);
             };
 
         private It should_have_no_effect_on_its_child = () => Child.Object.VisualOffset.ShouldEqual(Vector2.Zero);
-
-        private It should_render_its_child = () => Child.Verify(element => element.Render(Moq.It.IsAny<ISpriteBatch>()));
 
         private It should_set_itself_as_the_visual_parent_on_the_child =
             () => Child.Object.VisualParent.ShouldEqual(Border);
@@ -189,15 +194,15 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     [Subject(typeof(Border), "Rendering")]
     public class when_a_border_thickness_and_brush_have_been_specified : a_Border_with_child
     {
-        private static readonly Rectangle expectedBottomBorderRectangle = new Rectangle(1, 37, 15, 4);
+        private static readonly Rect expectedBottomBorderRectangle = new Rect(1, 37, 15, 4);
 
         private static readonly Color expectedColor = Color.Red;
 
-        private static readonly Rectangle expectedLeftBorderRectangle = new Rectangle(0, 0, 1, 41);
+        private static readonly Rect expectedLeftBorderRectangle = new Rect(0, 0, 1, 41);
 
-        private static readonly Rectangle expectedRightBorderRectangle = new Rectangle(16, 2, 3, 39);
+        private static readonly Rect expectedRightBorderRectangle = new Rect(16, 2, 3, 39);
 
-        private static readonly Rectangle expectedTopBorderRectangle = new Rectangle(1, 0, 18, 2);
+        private static readonly Rect expectedTopBorderRectangle = new Rect(1, 0, 18, 2);
 
         private static readonly Thickness thickness = new Thickness(1, 2, 3, 4);
 
@@ -213,7 +218,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 Border.BorderThickness = thickness;
                 Border.Measure(AvailableSize);
                 Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
-                Border.Render(SpriteBatch.Object);
+
+                DrawingContext.Draw(SpriteBatch.Object);
             };
 
         private It should_draw_the_bottom_border =
@@ -245,13 +251,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 Border.BorderThickness = new Thickness(1, 2, 3, 4);
                 Border.Measure(AvailableSize);
                 Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
-                Border.Render(SpriteBatch.Object);
+
+                DrawingContext.Draw(SpriteBatch.Object);
             };
 
         private It should_not_render_a_border =
             () =>
             SpriteBatch.Verify(
-                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), Moq.It.IsAny<Color>()), 
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
                 Times.Never());
     }
 
@@ -263,13 +270,63 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 Border.BorderBrush = new SolidColorBrush(Color.Black);
                 Border.Measure(AvailableSize);
                 Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
-                Border.Render(SpriteBatch.Object);
+
+                DrawingContext.Draw(SpriteBatch.Object);
             };
 
         private It should_not_render_a_border =
             () =>
             SpriteBatch.Verify(
-                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rectangle>(), Moq.It.IsAny<Color>()), 
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
                 Times.Never());
+    }
+
+    [Subject(typeof(Border), "Background")]
+    public class when_background_is_not_specified : a_Border_with_child
+    {
+        private Because of = () =>
+            {
+                Border.Measure(AvailableSize);
+                Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
+
+                DrawingContext.Draw(SpriteBatch.Object);
+            };
+
+        private It should_not_render_a_background =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
+                Times.Never());
+    }
+
+    [Subject(typeof(Border), "Background")]
+    public class when_background_is_specified : a_Border_with_child
+    {
+        private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Color.Blue);
+
+        private Because of = () =>
+            {
+                Border.Background = expectedBackground;
+                Border.Measure(AvailableSize);
+                Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
+
+                DrawingContext.Draw(SpriteBatch.Object);
+            };
+
+        private It should_render_the_background_in_the_right_place = () =>
+            {
+                var area = new Rect(
+                    Border.VisualOffset.X, Border.VisualOffset.Y, Border.ActualWidth, Border.ActualHeight);
+
+                SpriteBatch.Verify(
+                    batch =>
+                    batch.Draw(
+                        Moq.It.IsAny<ITexture2D>(), Moq.It.Is<Rect>(rect => rect.Equals(area)), Moq.It.IsAny<Color>()));
+            };
+
+        private It should_render_with_the_specified_background_color =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), expectedBackground.Color));
     }
 }

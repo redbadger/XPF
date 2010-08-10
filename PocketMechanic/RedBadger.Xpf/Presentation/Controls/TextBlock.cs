@@ -10,6 +10,7 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Presentation.Media;
 
+    using Rect = RedBadger.Xpf.Presentation.Rect;
     using Size = RedBadger.Xpf.Presentation.Size;
     using TextWrapping = RedBadger.Xpf.Presentation.TextWrapping;
     using Thickness = RedBadger.Xpf.Presentation.Thickness;
@@ -38,7 +39,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             typeof(TextBlock), 
             new PropertyMetadata(TextWrapping.NoWrap, TextWrappingPropertyChangedCallback));
 
-        private static readonly Regex WhiteSpaceRegEx = new Regex(@"\s+", RegexOptions.Compiled);
+        private static readonly Regex whiteSpaceRegEx = new Regex(@"\s+", RegexOptions.Compiled);
 
         private readonly ISpriteFont spriteFont;
 
@@ -114,10 +115,16 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        public override void Render(ISpriteBatch spriteBatch)
+        protected override void OnRender()
         {
-            this.RenderBackground(spriteBatch);
-            this.RenderForeground(spriteBatch);
+            var drawingContext = XpfServiceLocator.Get<DrawingContext>();
+
+            if (this.Background != null)
+            {
+                drawingContext.DrawRectangle(new Rect(0, 0, this.ActualWidth, this.ActualHeight), this.Background);
+            }
+
+            drawingContext.DrawText(this.spriteFont, this.formattedText, new Vector2(this.Padding.Left, this.Padding.Top), this.Foreground);
         }
 
         protected override Size ArrangeOverride(Size finalSize)
@@ -177,7 +184,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             const string Space = " ";
             var stringBuilder = new StringBuilder();
-            string[] words = WhiteSpaceRegEx.Split(text);
+            string[] words = whiteSpaceRegEx.Split(text);
 
             float lineWidth = 0f;
             float spaceWidth = font.MeasureString(Space).X;
@@ -199,28 +206,6 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
 
             return stringBuilder.ToString();
-        }
-
-        /// <summary>
-        ///   TODO: this is not fully implemented (Texture and Rectangle)
-        /// </summary>
-        /// <param name = "spriteBatch"></param>
-        private void RenderBackground(ISpriteBatch spriteBatch)
-        {
-            var area = new Rectangle(
-                (int)this.VisualOffset.X, (int)this.VisualOffset.Y, (int)this.ActualWidth, (int)this.ActualHeight);
-            var brush = this.Background as SolidColorBrush;
-
-            // need one pixel white texture here
-            spriteBatch.Draw((ITexture2D)null, area, brush != null ? brush.Color : Color.White);
-        }
-
-        private void RenderForeground(ISpriteBatch spriteBatch)
-        {
-            Vector2 drawPosition = this.VisualOffset + new Vector2(this.Padding.Left, this.Padding.Top);
-            var brush = this.Foreground as SolidColorBrush;
-            spriteBatch.DrawString(
-                this.spriteFont, this.formattedText, drawPosition, brush != null ? brush.Color : Color.Black);
         }
     }
 }

@@ -15,7 +15,12 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
     using Machine.Specifications;
 
+    using Moq;
+
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Media;
+
+    using It = Machine.Specifications.It;
 
     [Subject(typeof(DrawingContext), "State")]
     public class when_close_is_called_and_the_context_is_already_closed : a_DrawingContext
@@ -32,9 +37,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
     {
         private static Exception exception;
 
-        private Establish context = () => DrawingContext.Open();
+        private Establish context = () => DrawingContext.Open(UiElement.Object);
 
-        private Because of = () => exception = Catch.Exception(() => DrawingContext.Open());
+        private Because of = () => exception = Catch.Exception(() => DrawingContext.Open(UiElement.Object));
 
         private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -46,11 +51,11 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private Establish context = () =>
             {
-                DrawingContext.Open();
+                DrawingContext.Open(UiElement.Object);
                 DrawingContext.Close();
             };
 
-        private Because of = () => exception = Catch.Exception(() => DrawingContext.Open());
+        private Because of = () => exception = Catch.Exception(() => DrawingContext.Open(UiElement.Object));
 
         private It should_not_throw_an_exception = () => exception.ShouldBeNull();
     }
@@ -60,9 +65,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
     {
         private static Exception exception;
 
-        private Establish context = () => DrawingContext.Open();
+        private Establish context = () => DrawingContext.Open(UiElement.Object);
 
-        private Because of = () => exception = Catch.Exception(() => DrawingContext.Flush(SpriteBatch.Object));
+        private Because of = () => exception = Catch.Exception(() => DrawingContext.Draw(SpriteBatch.Object));
 
         private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }

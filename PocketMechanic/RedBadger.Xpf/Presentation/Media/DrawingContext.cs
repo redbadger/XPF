@@ -9,15 +9,20 @@
 
     public class DrawingContext
     {
-        private readonly IPrimitivesService primitivesService;
-
         private readonly IList<DrawingGroup> drawingGroups = new List<DrawingGroup>();
+
+        private readonly IPrimitivesService primitivesService;
 
         private DrawingGroup currentDrawingGroup;
 
         public DrawingContext(IPrimitivesService primitivesService)
         {
             this.primitivesService = primitivesService;
+        }
+
+        public void Clear()
+        {
+            this.drawingGroups.Clear();
         }
 
         public void Close()
@@ -28,21 +33,7 @@
             this.currentDrawingGroup = null;
         }
 
-        public void DrawRectangle(Rect rect, Brush brush)
-        {
-            this.ThrowIfContextIsClosed();
-
-            this.currentDrawingGroup.Jobs.Add(new SpriteTextureJob(this.primitivesService.SinglePixel, rect, brush));
-        }
-
-        public void DrawText(ISpriteFont spriteFont, string text, Color color)
-        {
-            this.ThrowIfContextIsClosed();
-
-            this.currentDrawingGroup.Jobs.Add(new SpriteFontJob(spriteFont, text, color));
-        }
-
-        public void Flush(ISpriteBatch spriteBatch)
+        public void Draw(ISpriteBatch spriteBatch)
         {
             this.ThrowIfContextIsOpen();
 
@@ -52,11 +43,38 @@
             }
         }
 
-        public void Open()
+        public void DrawRectangle(Rect rect, Brush brush)
+        {
+            this.ThrowIfContextIsClosed();
+
+            this.currentDrawingGroup.Jobs.Add(new SpriteTextureJob(this.primitivesService.SinglePixel, rect, brush));
+        }
+
+        public void DrawText(ISpriteFont spriteFont, string text, Brush brush)
+        {
+            this.DrawText(spriteFont, text, Vector2.Zero, brush);
+        }
+
+        public void DrawText(ISpriteFont spriteFont, string text, Vector2 position, Brush brush)
+        {
+            this.ThrowIfContextIsClosed();
+
+            this.currentDrawingGroup.Jobs.Add(new SpriteFontJob(spriteFont, text, position, brush));
+        }
+
+        public void Open(IElement element)
         {
             this.ThrowIfContextIsOpen();
 
-            this.currentDrawingGroup = new DrawingGroup();
+            this.currentDrawingGroup = new DrawingGroup(element);
+        }
+
+        public void ResolveOffsets()
+        {
+            foreach (var drawingGroup in this.drawingGroups)
+            {
+                drawingGroup.ResolveOffsets();
+            }
         }
 
         private void ThrowIfContextIsClosed()

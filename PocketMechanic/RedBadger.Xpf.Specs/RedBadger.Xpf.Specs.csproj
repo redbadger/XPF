@@ -67,6 +67,7 @@
     <Reference Include="Moq">
       <HintPath>..\..\Lib\Moq\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=2.0.1.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Rhino.Mocks">

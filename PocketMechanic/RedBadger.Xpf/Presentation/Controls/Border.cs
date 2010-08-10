@@ -4,9 +4,6 @@ namespace RedBadger.Xpf.Presentation.Controls
     using System.Collections.Generic;
     using System.Windows;
 
-    using Microsoft.Xna.Framework;
-
-    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Presentation.Media;
 
@@ -39,16 +36,9 @@ namespace RedBadger.Xpf.Presentation.Controls
             typeof(Border), 
             new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
-        private readonly IList<Rectangle> borders = new List<Rectangle>();
-
-        private readonly IPrimitivesService primitivesService;
+        private readonly IList<Rect> borders = new List<Rect>();
 
         private bool isBordersCollectionDirty;
-
-        public Border(IPrimitivesService primitivesService)
-        {
-            this.primitivesService = primitivesService;
-        }
 
         public Brush Background
         {
@@ -115,28 +105,6 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        public override void Render(ISpriteBatch spriteBatch)
-        {
-            if (this.Child != null)
-            {
-                this.Child.Render(spriteBatch);
-            }
-
-            var solidColorBorderBrush = this.BorderBrush as SolidColorBrush;
-            if (solidColorBorderBrush != null)
-            {
-                if (this.isBordersCollectionDirty)
-                {
-                    this.GenerateBorders();
-                }
-
-                foreach (var border in this.borders)
-                {
-                    spriteBatch.Draw(this.primitivesService.SinglePixel, border, solidColorBorderBrush.Color);
-                }
-            }
-        }
-
         protected override Size ArrangeOverride(Size finalSize)
         {
             UIElement child = this.Child;
@@ -145,8 +113,8 @@ namespace RedBadger.Xpf.Presentation.Controls
             {
                 var finalRect = new Rect(finalSize);
 
-                finalRect = finalRect.Defalte(this.BorderThickness);
-                finalRect = finalRect.Defalte(this.Padding);
+                finalRect = finalRect.Deflate(this.BorderThickness);
+                finalRect = finalRect.Deflate(this.Padding);
                 child.Arrange(finalRect);
             }
 
@@ -177,6 +145,29 @@ namespace RedBadger.Xpf.Presentation.Controls
             return borderThicknessAndPaddingSize;
         }
 
+        protected override void OnRender()
+        {
+            var drawingContext = XpfServiceLocator.Get<DrawingContext>();
+
+            if (!this.BorderThickness.IsEmpty && this.BorderBrush != null)
+            {
+                if (this.isBordersCollectionDirty)
+                {
+                    this.GenerateBorders();
+                }
+
+                foreach (var border in this.borders)
+                {
+                    drawingContext.DrawRectangle(border, this.BorderBrush);
+                }
+            }
+
+            if (this.Background != null)
+            {
+                drawingContext.DrawRectangle(new Rect(0, 0, this.ActualWidth, this.ActualHeight).Deflate(this.BorderThickness), this.Background);
+            }
+        }
+
         private static void ChildPropertyChangedCallback(
             DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
@@ -201,57 +192,39 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             this.borders.Clear();
 
-            var leftBorderThickness = (int)this.BorderThickness.Left;
-            var topBorderThickness = (int)this.BorderThickness.Top;
-            var rightBorderThickness = (int)this.BorderThickness.Right;
-            var bottomBorderThickness = (int)this.BorderThickness.Bottom;
-            var actualHeight = (int)this.ActualHeight;
-            var actualWidth = (int)this.ActualWidth;
-            var visualOffsetX = (int)this.VisualOffset.X;
-            var visualOffsetY = (int)this.VisualOffset.Y;
-
-            if (leftBorderThickness > 0)
+            if (this.BorderThickness.Left > 0)
             {
-                var leftBorder = new Rectangle(0, 0, leftBorderThickness, actualHeight);
-                leftBorder.X += visualOffsetX;
-                leftBorder.Y += visualOffsetY;
-
-                this.borders.Add(leftBorder);
+                this.borders.Add(new Rect(0, 0, this.BorderThickness.Left, this.ActualHeight));
             }
 
-            if (topBorderThickness > 0)
+            if (this.BorderThickness.Top > 0)
             {
-                var topBorder = new Rectangle(
-                    leftBorderThickness, 0, actualWidth - leftBorderThickness, topBorderThickness);
-                topBorder.X += visualOffsetX;
-                topBorder.Y += visualOffsetY;
-
-                this.borders.Add(topBorder);
+                this.borders.Add(
+                    new Rect(
+                        this.BorderThickness.Left, 
+                        0, 
+                        this.ActualWidth - this.BorderThickness.Left, 
+                        this.BorderThickness.Top));
             }
 
-            if (rightBorderThickness > 0)
+            if (this.BorderThickness.Right > 0)
             {
-                var rightBorder = new Rectangle(
-                    actualWidth - rightBorderThickness, 
-                    topBorderThickness, 
-                    rightBorderThickness, 
-                    actualHeight - topBorderThickness);
-                rightBorder.X += visualOffsetX;
-                rightBorder.Y += visualOffsetY;
-
-                this.borders.Add(rightBorder);
+                this.borders.Add(
+                    new Rect(
+                        this.ActualWidth - this.BorderThickness.Right, 
+                        this.BorderThickness.Top, 
+                        this.BorderThickness.Right, 
+                        this.ActualHeight - this.BorderThickness.Top));
             }
 
-            if (bottomBorderThickness > 0)
+            if (this.BorderThickness.Bottom > 0)
             {
-                var bottomBorder = new Rectangle(
-                    leftBorderThickness, 
-                    actualHeight - bottomBorderThickness, 
-                    actualWidth - (leftBorderThickness + rightBorderThickness), 
-                    bottomBorderThickness);
-                bottomBorder.X += visualOffsetX;
-                bottomBorder.Y += visualOffsetY;
-                this.borders.Add(bottomBorder);
+                this.borders.Add(
+                    new Rect(
+                        this.BorderThickness.Left, 
+                        this.ActualHeight - this.BorderThickness.Bottom, 
+                        this.ActualWidth - (this.BorderThickness.Left + this.BorderThickness.Right), 
+                        this.BorderThickness.Bottom));
             }
 
             this.isBordersCollectionDirty = false;

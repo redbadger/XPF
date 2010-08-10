@@ -2,8 +2,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 {
     using System.Windows;
 
-    using RedBadger.Xpf.Graphics;
-
     using Rect = RedBadger.Xpf.Presentation.Rect;
     using Size = RedBadger.Xpf.Presentation.Size;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
@@ -29,15 +27,6 @@ namespace RedBadger.Xpf.Presentation.Controls
             set
             {
                 this.SetValue(ContentProperty, value);
-            }
-        }
-
-        public override void Render(ISpriteBatch spriteBatch)
-        {
-            IElement content = this.Content;
-            if (content != null)
-            {
-                content.Render(spriteBatch);
             }
         }
 

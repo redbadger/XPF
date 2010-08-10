@@ -67,10 +67,6 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        public override void Render(ISpriteBatch spriteBatch)
-        {
-        }
-
         protected override Size ArrangeOverride(Size finalSize)
         {
             return this.GetScaledImageSize(finalSize);

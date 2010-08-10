@@ -3,10 +3,9 @@
     using System.Collections.Generic;
     using System.Windows;
 
-    using Microsoft.Xna.Framework;
-
-    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Media;
+
+    using Rect = RedBadger.Xpf.Presentation.Rect;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public class Panel : UIElement
@@ -42,28 +41,12 @@
             }
         }
 
-        public override void Render(ISpriteBatch spriteBatch)
+        protected override void OnRender()
         {
-            this.RenderBackground(spriteBatch);
-
-            foreach (var child in this.children)
+            if (this.Background != null)
             {
-                child.Render(spriteBatch);
+                XpfServiceLocator.Get<DrawingContext>().DrawRectangle(new Rect(0, 0, this.ActualWidth, this.ActualHeight), this.Background);
             }
-        }
-
-        /// <summary>
-        ///   TODO: this is not fully implemented (Texture and Rectangle)
-        /// </summary>
-        /// <param name = "spriteBatch"></param>
-        private void RenderBackground(ISpriteBatch spriteBatch)
-        {
-            var area = new Rectangle(
-                (int)this.VisualOffset.X, (int)this.VisualOffset.Y, (int)this.ActualWidth, (int)this.ActualHeight);
-            var brush = this.Background as SolidColorBrush;
-
-            // need one pixel white texture here
-            spriteBatch.Draw((ITexture2D)null, area, brush != null ? brush.Color : Color.White);
         }
     }
 }

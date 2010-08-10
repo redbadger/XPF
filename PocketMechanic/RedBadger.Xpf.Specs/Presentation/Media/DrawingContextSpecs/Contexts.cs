@@ -16,6 +16,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
     using Moq;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Media;
 
     public abstract class a_DrawingContext
@@ -26,9 +27,12 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         protected static Mock<ISpriteFont> SpriteFont;
 
+        protected static Mock<IElement> UiElement;
+
         private Establish context = () =>
             {
                 DrawingContext = new DrawingContext(new Mock<IPrimitivesService>().Object);
+                UiElement = new Mock<IElement>();
                 SpriteFont = new Mock<ISpriteFont>();
                 SpriteBatch = new Mock<ISpriteBatch>();
             };

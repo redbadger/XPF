@@ -1,12 +1,10 @@
 ﻿namespace RedBadger.Xpf.Presentation
 {
-    using RedBadger.Xpf.Graphics;
+    using Microsoft.Xna.Framework;
 
     public interface IElement
     {
         Size DesiredSize { get; }
-
-        IElement VisualParent { get; set; }
 
         /// <summary>
         ///   Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
@@ -18,9 +16,9 @@
 
         bool IsMeasureValid { get; }
 
-        void Measure(Size availableSize);
+        IElement VisualParent { get; set; }
 
-        void Render(ISpriteBatch spriteBatch);
+        Vector2 AbsoluteOffset { get; }
 
         /// <summary>
         ///   Positions child elements and determines a size for a UIElement.
@@ -33,5 +31,7 @@
         void InvalidateArrange();
 
         void InvalidateMeasure();
+
+        void Measure(Size availableSize);
     }
 }
