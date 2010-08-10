@@ -74,27 +74,24 @@ namespace RedBadger.PocketMechanic.Phone
 */
 
             var textBlock1 = new TextBlock(spriteFontAdapter) { Text = "Textblock 1" };
+
+            Grid.SetColumn(textBlock1, 0);
+            grid.Children.Add(textBlock1);
+
+            var textBlock2 = new TextBlock(spriteFontAdapter) { Text = "Textblock 2" };
             var border = new Border(new PrimitivesService(GraphicsDevice))
-                {
-                    Child = textBlock1,
-                    BorderBrush = new SolidColorBrush(Color.Red),
-                    BorderThickness = new Thickness(20)
-                };
-
-            Grid.SetColumn(border, 0);
+            {
+                Child = textBlock2,
+                BorderBrush = new SolidColorBrush(Color.Red),
+                BorderThickness = new Thickness(20)
+            };
+            Grid.SetColumn(border, 1);
             grid.Children.Add(border);
-
-            var textBlock2 = new TextBlock(spriteFontAdapter);
-            var binding = new Binding("Time") { Source = new Clock() };
-            textBlock2.BindingFor(TextBlock.TextProperty).Is(binding);
-            Grid.SetColumn(textBlock2, 1);
-            grid.Children.Add(textBlock2);
 
             var textBlock3 = new TextBlock(spriteFontAdapter) { Text = "TextBlock 3" };
             Grid.SetColumn(textBlock3, 0);
             Grid.SetRow(textBlock3, 1);
             grid.Children.Add(textBlock3);
-            textBlock3.BindingFor(TextBlock.TextProperty).Is(binding);
 
             var textBlock4 = new TextBlock(spriteFontAdapter) { Text = "TextBlock 4" };
             Grid.SetColumn(textBlock4, 1);

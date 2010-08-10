@@ -167,6 +167,12 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\Brush.cs">
       <Link>Presentation\Media\Brush.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\DrawingContext.cs">
+      <Link>Presentation\Media\DrawingContext.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\DrawingGroup.cs">
+      <Link>Presentation\Media\DrawingGroup.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\ImageSource.cs">
       <Link>Presentation\Media\ImageSource.cs</Link>
     </Compile>
@@ -181,6 +187,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\SolidColorBrush.cs">
       <Link>Presentation\Media\SolidColorBrush.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\SpriteJob.cs">
+      <Link>Presentation\Media\SpriteJob.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\Stretch.cs">
       <Link>Presentation\Media\Stretch.cs</Link>
