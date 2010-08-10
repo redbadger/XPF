@@ -92,7 +92,9 @@
     <Compile Include="Presentation\Controls\PanelSpecs.cs" />
     <Compile Include="Presentation\DefinitionBaseSpecs.cs" />
     <Compile Include="Presentation\GridLengthSpecs.cs" />
-    <Compile Include="Presentation\Media\DrawingContextSpecs\DrawingContextSpecs.cs" />
+    <Compile Include="Presentation\Media\DrawingContextSpecs\Contexts.cs" />
+    <Compile Include="Presentation\Media\DrawingContextSpecs\DrawingSpecs.cs" />
+    <Compile Include="Presentation\Media\DrawingContextSpecs\StateSpecs.cs" />
     <Compile Include="Presentation\Media\Imaging\XnaImageSpecs.cs" />
     <Compile Include="Presentation\RectSpecs.cs" />
     <Compile Include="Presentation\SizeSpecs.cs" />

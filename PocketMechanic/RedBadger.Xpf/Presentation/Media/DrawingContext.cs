@@ -9,9 +9,16 @@
 
     public class DrawingContext
     {
+        private readonly IPrimitivesService primitivesService;
+
         private readonly IList<DrawingGroup> drawingGroups = new List<DrawingGroup>();
 
         private DrawingGroup currentDrawingGroup;
+
+        public DrawingContext(IPrimitivesService primitivesService)
+        {
+            this.primitivesService = primitivesService;
+        }
 
         public void Close()
         {
@@ -21,11 +28,18 @@
             this.currentDrawingGroup = null;
         }
 
+        public void DrawRectangle(Rect rect, Brush brush)
+        {
+            this.ThrowIfContextIsClosed();
+
+            this.currentDrawingGroup.Jobs.Add(new SpriteTextureJob(this.primitivesService.SinglePixel, rect, brush));
+        }
+
         public void DrawText(ISpriteFont spriteFont, string text, Color color)
         {
             this.ThrowIfContextIsClosed();
 
-            this.currentDrawingGroup.Jobs.Add(new SpriteJob(spriteFont, text, color));
+            this.currentDrawingGroup.Jobs.Add(new SpriteFontJob(spriteFont, text, color));
         }
 
         public void Flush(ISpriteBatch spriteBatch)
@@ -49,7 +63,8 @@
         {
             if (this.currentDrawingGroup == null)
             {
-                throw new InvalidOperationException("The operation you're trying to perform is invalid whilst the DrawingContext is closed");
+                throw new InvalidOperationException(
+                    "The operation you're trying to perform is invalid whilst the DrawingContext is closed");
             }
         }
 
@@ -57,7 +72,8 @@
         {
             if (this.currentDrawingGroup != null)
             {
-                throw new InvalidOperationException("The operation you're trying to perform is invalid whilst the DrawingContext is open");
+                throw new InvalidOperationException(
+                    "The operation you're trying to perform is invalid whilst the DrawingContext is open");
             }
         }
     }

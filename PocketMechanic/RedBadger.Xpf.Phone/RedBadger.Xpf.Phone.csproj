@@ -185,11 +185,17 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\Imaging\XnaImage.cs">
       <Link>Presentation\Media\Imaging\XnaImage.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\ISpriteJob.cs">
+      <Link>Presentation\Media\ISpriteJob.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\SolidColorBrush.cs">
       <Link>Presentation\Media\SolidColorBrush.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\SpriteJob.cs">
-      <Link>Presentation\Media\SpriteJob.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\SpriteFontJob.cs">
+      <Link>Presentation\Media\SpriteFontJob.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\SpriteTextureJob.cs">
+      <Link>Presentation\Media\SpriteTextureJob.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\Stretch.cs">
       <Link>Presentation\Media\Stretch.cs</Link>

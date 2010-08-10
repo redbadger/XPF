@@ -3,6 +3,8 @@ namespace RedBadger.Xpf.Graphics
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+    using RedBadger.Xpf.Presentation;
+
     public interface ISpriteBatch
     {
         void Draw(Texture2D texture, Vector2 position, Color color);
@@ -34,6 +36,8 @@ namespace RedBadger.Xpf.Graphics
             Vector2 scale, 
             SpriteEffects effects, 
             float depth);
+
+        void Draw(ITexture2D texture2D, Rect rect, Color color);
 
         void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color);
 

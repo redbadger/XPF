@@ -4,7 +4,7 @@
 
     using RedBadger.Xpf.Graphics;
 
-    internal struct SpriteJob
+    internal struct SpriteFontJob : ISpriteJob
     {
         private readonly Color color;
 
@@ -12,7 +12,7 @@
 
         private readonly string text;
 
-        public SpriteJob(ISpriteFont spriteFont, string text, Color color)
+        public SpriteFontJob(ISpriteFont spriteFont, string text, Color color)
         {
             this.spriteFont = spriteFont;
             this.text = text;

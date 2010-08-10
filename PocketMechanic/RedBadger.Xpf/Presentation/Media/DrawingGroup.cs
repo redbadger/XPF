@@ -1,15 +1,14 @@
 ﻿namespace RedBadger.Xpf.Presentation.Media
 {
-    using System;
     using System.Collections.Generic;
 
     using RedBadger.Xpf.Graphics;
 
     internal class DrawingGroup
     {
-        private readonly IList<SpriteJob> jobs = new List<SpriteJob>();
+        private readonly IList<ISpriteJob> jobs = new List<ISpriteJob>();
 
-        public IList<SpriteJob> Jobs
+        public IList<ISpriteJob> Jobs
         {
             get
             {

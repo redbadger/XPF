@@ -15,44 +15,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
     using Machine.Specifications;
 
-    using Microsoft.Xna.Framework;
-
-    using Moq;
-
-    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Media;
 
-    using It = Machine.Specifications.It;
-
-    public abstract class a_DrawingContext
-    {
-        protected static DrawingContext DrawingContext;
-
-        protected static Mock<ISpriteBatch> SpriteBatch;
-
-        protected static Mock<ISpriteFont> SpriteFont;
-
-        private Establish context = () =>
-            {
-                DrawingContext = new DrawingContext();
-                SpriteFont = new Mock<ISpriteFont>();
-                SpriteBatch = new Mock<ISpriteBatch>();
-            };
-    }
-
-    [Subject(typeof(DrawingContext))]
-    public class when_drawing_starts_before_the_context_is_opened : a_DrawingContext
-    {
-        private static Exception exception;
-
-        private Because of =
-            () =>
-            exception = Catch.Exception(() => DrawingContext.DrawText(SpriteFont.Object, string.Empty, Color.AliceBlue));
-
-        private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
-    }
-
-    [Subject(typeof(DrawingContext))]
+    [Subject(typeof(DrawingContext), "State")]
     public class when_close_is_called_and_the_context_is_already_closed : a_DrawingContext
     {
         private static Exception exception;
@@ -62,7 +27,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
         private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
 
-    [Subject(typeof(DrawingContext))]
+    [Subject(typeof(DrawingContext), "State")]
     public class when_open_is_called_and_the_context_is_already_open : a_DrawingContext
     {
         private static Exception exception;
@@ -74,7 +39,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
         private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
 
-    [Subject(typeof(DrawingContext))]
+    [Subject(typeof(DrawingContext), "State")]
     public class when_open_is_called_after_the_drawing_context_has_been_closed : a_DrawingContext
     {
         private static Exception exception;
@@ -90,7 +55,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
         private It should_not_throw_an_exception = () => exception.ShouldBeNull();
     }
 
-    [Subject(typeof(DrawingContext))]
+    [Subject(typeof(DrawingContext), "State")]
     public class when_the_drawing_context_is_flushed_whilst_open : a_DrawingContext
     {
         private static Exception exception;
@@ -100,28 +65,5 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
         private Because of = () => exception = Catch.Exception(() => DrawingContext.Flush(SpriteBatch.Object));
 
         private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
-    }
-
-    [Subject(typeof(DrawingContext))]
-    public class when_drawing_text : a_DrawingContext
-    {
-        private const string ExpectedString = "String Value";
-
-        private static readonly Color expectedColor = Color.Black;
-
-        private static readonly Vector2 expectedDrawPosition = Vector2.Zero;
-
-        private Because of = () =>
-            {
-                DrawingContext.Open();
-                DrawingContext.DrawText(SpriteFont.Object, ExpectedString, expectedColor);
-                DrawingContext.Close();
-                DrawingContext.Flush(SpriteBatch.Object);
-            };
-
-        private It should_render_text =
-            () =>
-            SpriteBatch.Verify(
-                batch => batch.DrawString(SpriteFont.Object, ExpectedString, expectedDrawPosition, expectedColor));
     }
 }
