@@ -86,6 +86,9 @@
     <Compile Include="..\RedBadger.Xpf\Graphics\Texture2DAdapter.cs">
       <Link>Graphics\Texture2DAdapter.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\DependencyObjectExtensions.cs">
+      <Link>Internal\DependencyObjectExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\FloatExtensions.cs">
       <Link>Internal\FloatExtensions.cs</Link>
     </Compile>
