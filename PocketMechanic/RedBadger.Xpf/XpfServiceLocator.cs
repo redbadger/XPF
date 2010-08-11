@@ -11,7 +11,7 @@ namespace RedBadger.Xpf
 
         static XpfServiceLocator()
         {
-            kernel.Bind<DrawingContext>().ToSelf().InSingletonScope();
+            kernel.Bind<DrawingState>().ToSelf().InSingletonScope();
         }
 
         public static void RegisterPrimitiveService(IPrimitivesService primitivesService)

@@ -259,12 +259,11 @@
 
             if (!this.IsArrangeValid || finalRect.IsDifferentFrom(this.previousFinalRect))
             {
+                var drawingContext = XpfServiceLocator.Get<DrawingState>().GetDrawingContext(this);
+
                 this.ArrangeCore(finalRect);
 
-                var drawingContext = XpfServiceLocator.Get<DrawingContext>();
-                drawingContext.Open(this);
-                this.OnRender();
-                drawingContext.Close();
+                this.OnRender(drawingContext);
 
                 this.previousFinalRect = finalRect;
                 this.IsArrangeValid = true;
@@ -354,7 +353,7 @@
             return Size.Empty;
         }
 
-        protected virtual void OnRender()
+        protected virtual void OnRender(DrawingContext drawingContext)
         {
         }
 

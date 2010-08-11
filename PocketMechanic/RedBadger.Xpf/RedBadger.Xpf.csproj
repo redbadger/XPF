@@ -98,8 +98,8 @@
     <Compile Include="Presentation\Controls\StretchDirection.cs" />
     <Compile Include="Presentation\Controls\Viewbox.cs" />
     <Compile Include="Presentation\Media\Brush.cs" />
+    <Compile Include="Presentation\Media\DrawingState.cs" />
     <Compile Include="Presentation\Media\DrawingContext.cs" />
-    <Compile Include="Presentation\Media\DrawingGroup.cs" />
     <Compile Include="Presentation\Media\ISpriteJob.cs" />
     <Compile Include="Presentation\Media\SpriteFontJob.cs" />
     <Compile Include="Presentation\Media\SpriteTextureJob.cs" />

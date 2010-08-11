@@ -11,33 +11,13 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 {
-    using System;
-
     using Machine.Specifications;
 
     using Microsoft.Xna.Framework;
 
-    using Moq;
-
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Media;
-
-    using It = Machine.Specifications.It;
-
-    [Subject(typeof(DrawingContext), "Text")]
-    public class when_drawing_text_starts_before_the_context_is_opened : a_DrawingContext
-    {
-        private static Exception exception;
-
-        private Because of =
-            () =>
-            exception =
-            Catch.Exception(
-                () => DrawingContext.DrawText(SpriteFont.Object, string.Empty, new SolidColorBrush(Color.AliceBlue)));
-
-        private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
-    }
 
     [Subject(typeof(DrawingContext), "Text")]
     public class when_drawing_text : a_DrawingContext
@@ -50,29 +30,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private Because of = () =>
             {
-                DrawingContext.Open(UiElement.Object);
                 DrawingContext.DrawText(SpriteFont.Object, ExpectedString, new SolidColorBrush(expectedColor));
-                DrawingContext.Close();
-                DrawingContext.Draw(SpriteBatch.Object);
+                DrawingState.Draw(SpriteBatch.Object);
             };
 
         private It should_render_text =
             () =>
             SpriteBatch.Verify(
                 batch => batch.DrawString(SpriteFont.Object, ExpectedString, expectedDrawPosition, expectedColor));
-    }
-
-    [Subject(typeof(DrawingContext), "Rectangle")]
-    public class when_drawing_a_rectangle_starts_before_the_context_is_opened : a_DrawingContext
-    {
-        private static Exception exception;
-
-        private Because of =
-            () =>
-            exception =
-            Catch.Exception(() => DrawingContext.DrawRectangle(Rect.Empty, new SolidColorBrush(Color.AliceBlue)));
-
-        private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
 
     [Subject(typeof(DrawingContext), "Rectangle")]
@@ -84,10 +49,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private Because of = () =>
             {
-                DrawingContext.Open(UiElement.Object);
                 DrawingContext.DrawRectangle(expectedRect, expectedColor);
-                DrawingContext.Close();
-                DrawingContext.Draw(SpriteBatch.Object);
+                DrawingState.Draw(SpriteBatch.Object);
             };
 
         private It should_render_a_rectangle =
@@ -101,21 +64,13 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private static readonly Rect rect = new Rect(10, 20, 30, 40);
 
-        private static Mock<IElement> uIElement;
-
-        private Establish conetxt = () =>
-            {
-                uIElement = new Mock<IElement>();
-                uIElement.SetupGet(element => element.AbsoluteOffset).Returns(absoluteOffset);
-            };
+        private Establish conetxt = () => UiElement.SetupGet(element => element.AbsoluteOffset).Returns(absoluteOffset);
 
         private Because of = () =>
             {
-                DrawingContext.Open(uIElement.Object);
                 DrawingContext.DrawRectangle(rect, new SolidColorBrush(Color.AliceBlue));
-                DrawingContext.Close();
-                DrawingContext.ResolveOffsets();
-                DrawingContext.Draw(SpriteBatch.Object);
+                DrawingState.ResolveOffsets();
+                DrawingState.Draw(SpriteBatch.Object);
             };
 
         private It should_render_with_the_correct_offset =
@@ -135,22 +90,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private static readonly Vector2 textOffset = new Vector2(10, 20);
 
-        private static Mock<IElement> uIElement;
-
-        private Establish conetxt = () =>
-            {
-                uIElement = new Mock<IElement>();
-                uIElement.SetupGet(element => element.AbsoluteOffset).Returns(absoluteOffset);
-            };
+        private Establish context = () => UiElement.SetupGet(element => element.AbsoluteOffset).Returns(absoluteOffset);
 
         private Because of = () =>
             {
-                DrawingContext.Open(uIElement.Object);
                 DrawingContext.DrawText(
                     SpriteFont.Object, string.Empty, textOffset, new SolidColorBrush(Color.AliceBlue));
-                DrawingContext.Close();
-                DrawingContext.ResolveOffsets();
-                DrawingContext.Draw(SpriteBatch.Object);
+                DrawingState.ResolveOffsets();
+                DrawingState.Draw(SpriteBatch.Object);
             };
 
         private It should_render_with_the_correct_offset =

@@ -9,45 +9,39 @@
 
     public class DrawingContext
     {
-        private readonly IList<DrawingGroup> drawingGroups = new List<DrawingGroup>();
+        private readonly IElement element;
+
+        private readonly IList<ISpriteJob> jobs = new List<ISpriteJob>();
 
         private readonly IPrimitivesService primitivesService;
 
-        private DrawingGroup currentDrawingGroup;
-
-        public DrawingContext(IPrimitivesService primitivesService)
+        public DrawingContext(IElement element, IPrimitivesService primitivesService)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+
+            if (primitivesService == null)
+            {
+                throw new ArgumentNullException("primitivesService");
+            }
+
+            this.element = element;
             this.primitivesService = primitivesService;
-        }
-
-        public void Clear()
-        {
-            this.drawingGroups.Clear();
-        }
-
-        public void Close()
-        {
-            this.ThrowIfContextIsClosed();
-
-            this.drawingGroups.Add(this.currentDrawingGroup);
-            this.currentDrawingGroup = null;
         }
 
         public void Draw(ISpriteBatch spriteBatch)
         {
-            this.ThrowIfContextIsOpen();
-
-            foreach (var drawingGroup in this.drawingGroups)
+            foreach (ISpriteJob spriteJob in this.jobs)
             {
-                drawingGroup.Draw(spriteBatch);
+                spriteJob.Draw(spriteBatch);
             }
         }
 
         public void DrawRectangle(Rect rect, Brush brush)
         {
-            this.ThrowIfContextIsClosed();
-
-            this.currentDrawingGroup.Jobs.Add(new SpriteTextureJob(this.primitivesService.SinglePixel, rect, brush));
+            this.jobs.Add(new SpriteTextureJob(this.primitivesService.SinglePixel, rect, brush));
         }
 
         public void DrawText(ISpriteFont spriteFont, string text, Brush brush)
@@ -57,41 +51,18 @@
 
         public void DrawText(ISpriteFont spriteFont, string text, Vector2 position, Brush brush)
         {
-            this.ThrowIfContextIsClosed();
-
-            this.currentDrawingGroup.Jobs.Add(new SpriteFontJob(spriteFont, text, position, brush));
-        }
-
-        public void Open(IElement element)
-        {
-            this.ThrowIfContextIsOpen();
-
-            this.currentDrawingGroup = new DrawingGroup(element);
+            this.jobs.Add(new SpriteFontJob(spriteFont, text, position, brush));
         }
 
         public void ResolveOffsets()
         {
-            foreach (var drawingGroup in this.drawingGroups)
+            Vector2 absoluteOffset = this.element.AbsoluteOffset;
+            if (absoluteOffset != Vector2.Zero)
             {
-                drawingGroup.ResolveOffsets();
-            }
-        }
-
-        private void ThrowIfContextIsClosed()
-        {
-            if (this.currentDrawingGroup == null)
-            {
-                throw new InvalidOperationException(
-                    "The operation you're trying to perform is invalid whilst the DrawingContext is closed");
-            }
-        }
-
-        private void ThrowIfContextIsOpen()
-        {
-            if (this.currentDrawingGroup != null)
-            {
-                throw new InvalidOperationException(
-                    "The operation you're trying to perform is invalid whilst the DrawingContext is open");
+                foreach (ISpriteJob spriteJob in this.jobs)
+                {
+                    spriteJob.SetAbsoluteOffset(absoluteOffset);
+                }
             }
         }
     }

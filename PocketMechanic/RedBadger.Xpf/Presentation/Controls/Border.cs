@@ -145,10 +145,8 @@ namespace RedBadger.Xpf.Presentation.Controls
             return borderThicknessAndPaddingSize;
         }
 
-        protected override void OnRender()
+        protected override void OnRender(DrawingContext drawingContext)
         {
-            var drawingContext = XpfServiceLocator.Get<DrawingContext>();
-
             if (!this.BorderThickness.IsEmpty && this.BorderBrush != null)
             {
                 if (this.isBordersCollectionDirty)

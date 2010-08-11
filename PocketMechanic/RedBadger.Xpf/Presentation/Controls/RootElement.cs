@@ -16,7 +16,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         public void Draw(ISpriteBatch spriteBatch)
         {
-            XpfServiceLocator.Get<DrawingContext>().Draw(spriteBatch);
+            XpfServiceLocator.Get<DrawingState>().Draw(spriteBatch);
         }
 
         public void Update()
@@ -26,7 +26,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
             if (this.isFirst)
             {
-                XpfServiceLocator.Get<DrawingContext>().ResolveOffsets();
+                XpfServiceLocator.Get<DrawingState>().ResolveOffsets();
                 this.isFirst = false;
             }
         }

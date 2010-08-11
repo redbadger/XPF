@@ -173,8 +173,8 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\DrawingContext.cs">
       <Link>Presentation\Media\DrawingContext.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\DrawingGroup.cs">
-      <Link>Presentation\Media\DrawingGroup.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\DrawingState.cs">
+      <Link>Presentation\Media\DrawingState.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\ImageSource.cs">
       <Link>Presentation\Media\ImageSource.cs</Link>

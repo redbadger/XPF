@@ -4,7 +4,7 @@
 
     using RedBadger.Xpf.Graphics;
 
-    internal interface ISpriteJob
+    public interface ISpriteJob
     {
         void Draw(ISpriteBatch spriteBatch);
 

@@ -23,6 +23,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
     {
         protected static DrawingContext DrawingContext;
 
+        protected static DrawingState DrawingState;
+
         protected static Mock<ISpriteBatch> SpriteBatch;
 
         protected static Mock<ISpriteFont> SpriteFont;
@@ -31,8 +33,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private Establish context = () =>
             {
-                DrawingContext = new DrawingContext(new Mock<IPrimitivesService>().Object);
+                DrawingState = new DrawingState(new Mock<IPrimitivesService>().Object);
                 UiElement = new Mock<IElement>();
+                DrawingContext = DrawingState.GetDrawingContext(UiElement.Object);
+
                 SpriteFont = new Mock<ISpriteFont>();
                 SpriteBatch = new Mock<ISpriteBatch>();
             };

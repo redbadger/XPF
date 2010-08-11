@@ -41,11 +41,11 @@
             }
         }
 
-        protected override void OnRender()
+        protected override void OnRender(DrawingContext drawingContext)
         {
             if (this.Background != null)
             {
-                XpfServiceLocator.Get<DrawingContext>().DrawRectangle(new Rect(0, 0, this.ActualWidth, this.ActualHeight), this.Background);
+                drawingContext.DrawRectangle(new Rect(0, 0, this.ActualWidth, this.ActualHeight), this.Background);
             }
         }
     }

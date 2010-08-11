@@ -45,7 +45,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
                 RootElement.Content = TextBlock;
             };
 
-        private Cleanup after = () => XpfServiceLocator.Get<DrawingContext>().Clear();
+        private Cleanup after = () => XpfServiceLocator.Get<DrawingState>().Clear();
     }
 
     public abstract class a_Measured_and_Arranged_TextBlock : a_TextBlock

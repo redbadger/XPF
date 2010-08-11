@@ -115,10 +115,8 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        protected override void OnRender()
+        protected override void OnRender(DrawingContext drawingContext)
         {
-            var drawingContext = XpfServiceLocator.Get<DrawingContext>();
-
             if (this.Background != null)
             {
                 drawingContext.DrawRectangle(new Rect(0, 0, this.ActualWidth, this.ActualHeight), this.Background);
