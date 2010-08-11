@@ -25,14 +25,14 @@
         public void Draw(ISpriteBatch spriteBatch)
         {
             var solidColorBrush = this.brush as SolidColorBrush;
+            var drawRect = new Rect(this.rect.Position + this.absoluteOffset, this.rect.Size);
 
-            spriteBatch.Draw(this.texture2D, this.rect, solidColorBrush != null ? solidColorBrush.Color : Color.Maroon);
+            spriteBatch.Draw(this.texture2D, drawRect, solidColorBrush != null ? solidColorBrush.Color : Color.Maroon);
         }
 
         public void SetAbsoluteOffset(Vector2 offset)
         {
-            this.rect.X += offset.X;
-            this.rect.Y += offset.Y;
+            this.absoluteOffset = offset;
         }
     }
 }

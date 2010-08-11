@@ -39,16 +39,6 @@
             }
         }
 
-        public void DrawRectangle(Rect rect, Brush brush)
-        {
-            this.jobs.Add(new SpriteTextureJob(this.primitivesService.SinglePixel, rect, brush));
-        }
-
-        public void DrawText(ISpriteFont spriteFont, string text, Vector2 position, Brush brush)
-        {
-            this.jobs.Add(new SpriteFontJob(spriteFont, text, position, brush));
-        }
-
         public void PreDraw()
         {
             Vector2 absoluteOffset = this.element.AbsoluteOffset;
@@ -59,6 +49,21 @@
                     spriteJob.SetAbsoluteOffset(absoluteOffset);
                 }
             }
+        }
+
+        public void Clear()
+        {
+            this.jobs.Clear();
+        }
+
+        public void DrawRectangle(Rect rect, Brush brush)
+        {
+            this.jobs.Add(new SpriteTextureJob(this.primitivesService.SinglePixel, rect, brush));
+        }
+
+        public void DrawText(ISpriteFont spriteFont, string text, Vector2 position, Brush brush)
+        {
+            this.jobs.Add(new SpriteFontJob(spriteFont, text, position, brush));
         }
     }
 }

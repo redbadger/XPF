@@ -96,6 +96,7 @@
     <Compile Include="Presentation\Media\DrawingContextSpecs\Contexts.cs" />
     <Compile Include="Presentation\Media\DrawingContextSpecs\DrawingSpecs.cs" />
     <Compile Include="Presentation\Media\Imaging\XnaImageSpecs.cs" />
+    <Compile Include="Presentation\Media\RendererSpecs\RendererSpecs.cs" />
     <Compile Include="Presentation\RectSpecs\RectSpecs.cs" />
     <Compile Include="Presentation\SizeSpecs\SizeSpecs.cs" />
     <Compile Include="Presentation\UIElementCollectionSpecs\UIElementCollectionSpecs.cs" />

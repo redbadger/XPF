@@ -6,11 +6,14 @@
 
     public class Renderer : IRenderer
     {
-        private readonly IList<DrawingContext> drawingContexts = new List<DrawingContext>();
+        private readonly Dictionary<IElement, IDrawingContext> drawingContexts =
+            new Dictionary<IElement, IDrawingContext>();
 
         private readonly IPrimitivesService primitivesService;
 
         private readonly ISpriteBatch spriteBatch;
+
+        private bool isPreDrawRequired;
 
         public Renderer(ISpriteBatch spriteBatch, IPrimitivesService primitivesService)
         {
@@ -18,9 +21,14 @@
             this.primitivesService = primitivesService;
         }
 
+        public void Clear()
+        {
+            this.drawingContexts.Clear();
+        }
+
         public void Draw()
         {
-            foreach (DrawingContext drawingContext in this.drawingContexts)
+            foreach (DrawingContext drawingContext in this.drawingContexts.Values)
             {
                 drawingContext.Draw(this.spriteBatch);
             }
@@ -28,16 +36,32 @@
 
         public IDrawingContext GetDrawingContext(IElement element)
         {
-            var drawingContext = new DrawingContext(element, this.primitivesService);
-            this.drawingContexts.Add(drawingContext);
+            IDrawingContext drawingContext;
+
+            if (this.drawingContexts.TryGetValue(element, out drawingContext))
+            {
+                drawingContext.Clear();
+            }
+            else
+            {
+                drawingContext = new DrawingContext(element, this.primitivesService);
+                this.drawingContexts.Add(element, drawingContext);
+            }
+
+            this.isPreDrawRequired = true;
             return drawingContext;
         }
 
         public void PreDraw()
         {
-            foreach (DrawingContext drawingContext in this.drawingContexts)
+            if (this.isPreDrawRequired)
             {
-                drawingContext.PreDraw();
+                foreach (DrawingContext drawingContext in this.drawingContexts.Values)
+                {
+                    drawingContext.PreDraw();
+                }
+
+                this.isPreDrawRequired = false;
             }
         }
     }

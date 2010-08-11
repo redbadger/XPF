@@ -6,6 +6,8 @@ namespace RedBadger.Xpf.Presentation.Media
 
     public interface IDrawingContext
     {
+        void Clear();
+
         void DrawRectangle(Rect rect, Brush brush);
 
         void DrawText(ISpriteFont spriteFont, string text, Vector2 position, Brush brush);

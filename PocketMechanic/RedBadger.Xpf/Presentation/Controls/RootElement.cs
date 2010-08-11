@@ -8,8 +8,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         private readonly Rect viewPort;
 
-        private bool isFirst = true;
-
         public RootElement(IRenderer renderer, Rect viewPort)
         {
             this.renderer = renderer;
@@ -31,14 +29,14 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         public void Update()
         {
+            if (!this.IsArrangeValid)
+            {
+                this.renderer.Clear();
+            }
+
             this.Measure(this.viewPort.Size);
             this.Arrange(this.viewPort);
-
-            if (this.isFirst)
-            {
-                this.renderer.PreDraw();
-                this.isFirst = false;
-            }
+            this.renderer.PreDraw();
         }
     }
 }
