@@ -7,7 +7,7 @@
 
     using RedBadger.Xpf.Graphics;
 
-    public class DrawingContext
+    public class DrawingContext : IDrawingContext
     {
         private readonly IElement element;
 
@@ -54,7 +54,7 @@
             this.jobs.Add(new SpriteFontJob(spriteFont, text, position, brush));
         }
 
-        public void ResolveOffsets()
+        public void PreDraw()
         {
             Vector2 absoluteOffset = this.element.AbsoluteOffset;
             if (absoluteOffset != Vector2.Zero)

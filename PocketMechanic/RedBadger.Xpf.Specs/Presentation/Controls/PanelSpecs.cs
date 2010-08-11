@@ -42,7 +42,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
                 RootElement.Content = Panel;
             };
 
-        private Cleanup after = () => XpfServiceLocator.Get<DrawingState>().Clear();
+        private Cleanup after = () => XpfServiceLocator.Get<IRenderer>().Clear();
     }
 
     [Subject(typeof(Panel), "Background")]

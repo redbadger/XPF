@@ -4,13 +4,13 @@
 
     using RedBadger.Xpf.Graphics;
 
-    public class DrawingState
+    public class Renderer : IRenderer
     {
         private readonly IList<DrawingContext> drawingContexts = new List<DrawingContext>();
 
         private readonly IPrimitivesService primitivesService;
 
-        public DrawingState(IPrimitivesService primitivesService)
+        public Renderer(IPrimitivesService primitivesService)
         {
             this.primitivesService = primitivesService;
         }
@@ -28,18 +28,18 @@
             }
         }
 
-        public DrawingContext GetDrawingContext(IElement element)
+        public IDrawingContext GetDrawingContext(IElement element)
         {
             var drawingContext = new DrawingContext(element, this.primitivesService);
             this.drawingContexts.Add(drawingContext);
             return drawingContext;
         }
 
-        public void ResolveOffsets()
+        public void PreDraw()
         {
             foreach (DrawingContext drawingContext in this.drawingContexts)
             {
-                drawingContext.ResolveOffsets();
+                drawingContext.PreDraw();
             }
         }
     }

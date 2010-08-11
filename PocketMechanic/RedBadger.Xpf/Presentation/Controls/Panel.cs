@@ -41,7 +41,7 @@
             }
         }
 
-        protected override void OnRender(DrawingContext drawingContext)
+        protected override void OnRender(IDrawingContext drawingContext)
         {
             if (this.Background != null)
             {

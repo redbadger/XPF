@@ -45,16 +45,12 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
                 RootElement.Content = TextBlock;
             };
 
-        private Cleanup after = () => XpfServiceLocator.Get<DrawingState>().Clear();
+        private Cleanup after = () => XpfServiceLocator.Get<IRenderer>().Clear();
     }
 
     public abstract class a_Measured_and_Arranged_TextBlock : a_TextBlock
     {
-        private Establish context = () =>
-            {
-                RootElement.Update();
-                RootElement.Draw(SpriteBatch.Object);
-            };
+        private Establish context = () => RootElement.Update();
     }
 
     [Subject(typeof(TextBlock), "Foreground")]
@@ -229,11 +225,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     [Subject(typeof(TextBlock), "Wrapping")]
     public class when_wrapping_is_not_required : a_TextBlock_With_Content
     {
-        private Because of = () =>
-            {
-                RootElement.Update();
-                RootElement.Draw(SpriteBatch.Object);
-            };
+        private Because of = () => RootElement.Update();
 
         private It should_not_wrap = () => TextBlock.DesiredSize.Height.ShouldEqual(SentenceSize.Y);
     }
@@ -255,7 +247,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             {
                 TextBlock.Wrapping = TextWrapping.Wrap;
                 RootElement.Update();
-                RootElement.Draw(SpriteBatch.Object);
             };
 
         private It should_wrap = () => TextBlock.DesiredSize.Height.ShouldEqual(wrappedSentenceSize.Y);

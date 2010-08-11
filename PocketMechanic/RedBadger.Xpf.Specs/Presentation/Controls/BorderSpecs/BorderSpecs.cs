@@ -39,16 +39,16 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
         protected static Size ChildSize;
 
-        protected static DrawingState DrawingState;
+        protected static IRenderer Renderer;
 
         protected static Mock<ISpriteBatch> SpriteBatch;
 
-        private Cleanup after = () => XpfServiceLocator.Get<DrawingState>().Clear();
+        private Cleanup after = () => XpfServiceLocator.Get<IRenderer>().Clear();
 
         private Establish context = () =>
             {
                 XpfServiceLocator.RegisterPrimitiveService(new Mock<IPrimitivesService>().Object);
-                DrawingState = XpfServiceLocator.Get<DrawingState>();
+                Renderer = XpfServiceLocator.Get<IRenderer>();
 
                 SpriteBatch = new Mock<ISpriteBatch>();
 
@@ -82,7 +82,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
             {
                 Border.Measure(AvailableSize);
                 Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
-                DrawingState.Draw(SpriteBatch.Object);
+                Renderer.Draw(SpriteBatch.Object);
             };
 
         private It should_have_no_effect_on_its_child = () => Child.Object.VisualOffset.ShouldEqual(Vector2.Zero);
@@ -219,7 +219,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 Border.Measure(AvailableSize);
                 Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
 
-                DrawingState.Draw(SpriteBatch.Object);
+                Renderer.Draw(SpriteBatch.Object);
             };
 
         private It should_draw_the_bottom_border =
@@ -252,7 +252,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 Border.Measure(AvailableSize);
                 Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
 
-                DrawingState.Draw(SpriteBatch.Object);
+                Renderer.Draw(SpriteBatch.Object);
             };
 
         private It should_not_render_a_border =
@@ -271,7 +271,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 Border.Measure(AvailableSize);
                 Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
 
-                DrawingState.Draw(SpriteBatch.Object);
+                Renderer.Draw(SpriteBatch.Object);
             };
 
         private It should_not_render_a_border =
@@ -289,7 +289,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 Border.Measure(AvailableSize);
                 Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
 
-                DrawingState.Draw(SpriteBatch.Object);
+                Renderer.Draw(SpriteBatch.Object);
             };
 
         private It should_not_render_a_background =
@@ -310,7 +310,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 Border.Measure(AvailableSize);
                 Border.Arrange(new Rect(Vector2.Zero, AvailableSize));
 
-                DrawingState.Draw(SpriteBatch.Object);
+                Renderer.Draw(SpriteBatch.Object);
             };
 
         private It should_render_the_background_in_the_right_place = () =>
