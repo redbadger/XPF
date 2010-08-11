@@ -67,7 +67,6 @@
     <Reference Include="Moq">
       <HintPath>..\..\Lib\Moq\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject, Version=2.0.1.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Rhino.Mocks">
@@ -82,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Presentation\BindingServiceSpecs.cs" />
     <Compile Include="Presentation\Controls\BorderSpecs\BorderSpecs.cs" />
+    <Compile Include="Presentation\Controls\BorderSpecs\Contexts.cs" />
     <Compile Include="Presentation\Controls\ContentControlSpecs.cs" />
     <Compile Include="Presentation\Controls\ImageSpecs.cs" />
     <Compile Include="Presentation\GridSpecs\ArrangeSpecs.cs" />

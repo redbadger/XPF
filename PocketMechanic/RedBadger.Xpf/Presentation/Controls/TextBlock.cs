@@ -122,7 +122,11 @@ namespace RedBadger.Xpf.Presentation.Controls
                 drawingContext.DrawRectangle(new Rect(0, 0, this.ActualWidth, this.ActualHeight), this.Background);
             }
 
-            drawingContext.DrawText(this.spriteFont, this.formattedText, new Vector2(this.Padding.Left, this.Padding.Top), this.Foreground);
+            drawingContext.DrawText(
+                this.spriteFont,
+                this.formattedText,
+                new Vector2(this.Padding.Left, this.Padding.Top),
+                this.Foreground ?? new SolidColorBrush(Color.Black));
         }
 
         protected override Size ArrangeOverride(Size finalSize)

@@ -17,9 +17,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
     using Moq;
 
-    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
 
@@ -29,11 +29,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
         protected static Rect ViewPort = new Rect(new Vector2(10, 20), new Size(100, 200));
 
-        private Establish context = () =>
-            {
-                XpfServiceLocator.RegisterPrimitiveService(new Mock<IPrimitivesService>().Object);
-                RootElement = new RootElement(ViewPort);
-            };
+        private Establish context = () => RootElement = new RootElement(new Mock<IRenderer>().Object, ViewPort);
     }
 
     [Subject(typeof(RootElement))]

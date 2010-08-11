@@ -68,7 +68,7 @@
         {
             get
             {
-                var absoluteOffset = this.VisualOffset;
+                Vector2 absoluteOffset = this.VisualOffset;
 
                 if (this.VisualParent != null)
                 {
@@ -259,11 +259,21 @@
 
             if (!this.IsArrangeValid || finalRect.IsDifferentFrom(this.previousFinalRect))
             {
-                var drawingContext = XpfServiceLocator.Get<IRenderer>().GetDrawingContext(this);
+                IRenderer renderer;
+                IDrawingContext drawingContext = null;
+
+                bool hasRenderer = this.TryGetRenderer(out renderer);
+                if (hasRenderer)
+                {
+                    drawingContext = renderer.GetDrawingContext(this);
+                }
 
                 this.ArrangeCore(finalRect);
 
-                this.OnRender(drawingContext);
+                if (hasRenderer)
+                {
+                    this.OnRender(drawingContext);
+                }
 
                 this.previousFinalRect = finalRect;
                 this.IsArrangeValid = true;
@@ -328,6 +338,24 @@
                 this.IsMeasureValid = true;
                 this.DesiredSize = size;
             }
+        }
+
+        public bool TryGetRenderer(out IRenderer renderer)
+        {
+            var rootElement = this as IRootElement;
+            if (rootElement != null)
+            {
+                renderer = rootElement.Renderer;
+                return true;
+            }
+
+            if (this.VisualParent != null)
+            {
+                return this.VisualParent.TryGetRenderer(out renderer);
+            }
+
+            renderer = null;
+            return false;
         }
 
         /// <summary>

@@ -35,8 +35,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
         private Establish context = () =>
             {
-                XpfServiceLocator.RegisterPrimitiveService(new Mock<IPrimitivesService>().Object);
-
                 Texture = new Mock<ITexture2D>();
                 Texture.Setup(d => d.Width).Returns((int)ImageSize.Width);
                 Texture.Setup(d => d.Height).Returns((int)ImageSize.Height);
@@ -56,8 +54,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
         private Establish context = () =>
             {
-                XpfServiceLocator.RegisterPrimitiveService(new Mock<IPrimitivesService>().Object);
-
                 Texture = new Mock<ITexture2D>();
                 Texture.Setup(d => d.Width).Returns((int)ImageSize.Width);
                 Texture.Setup(d => d.Height).Returns((int)ImageSize.Height);

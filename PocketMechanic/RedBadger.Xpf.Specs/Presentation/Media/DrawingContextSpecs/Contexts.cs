@@ -33,12 +33,12 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private Establish context = () =>
             {
-                Renderer = new Renderer(new Mock<IPrimitivesService>().Object);
+                SpriteBatch = new Mock<ISpriteBatch>();
+                Renderer = new Renderer(SpriteBatch.Object, new Mock<IPrimitivesService>().Object);
                 UiElement = new Mock<IElement>();
                 DrawingContext = Renderer.GetDrawingContext(UiElement.Object);
 
                 SpriteFont = new Mock<ISpriteFont>();
-                SpriteBatch = new Mock<ISpriteBatch>();
             };
     }
 }

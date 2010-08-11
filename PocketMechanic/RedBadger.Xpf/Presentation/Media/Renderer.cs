@@ -10,21 +10,19 @@
 
         private readonly IPrimitivesService primitivesService;
 
-        public Renderer(IPrimitivesService primitivesService)
+        private readonly ISpriteBatch spriteBatch;
+
+        public Renderer(ISpriteBatch spriteBatch, IPrimitivesService primitivesService)
         {
+            this.spriteBatch = spriteBatch;
             this.primitivesService = primitivesService;
         }
 
-        public void Clear()
-        {
-            this.drawingContexts.Clear();
-        }
-
-        public void Draw(ISpriteBatch spriteBatch)
+        public void Draw()
         {
             foreach (DrawingContext drawingContext in this.drawingContexts)
             {
-                drawingContext.Draw(spriteBatch);
+                drawingContext.Draw(this.spriteBatch);
             }
         }
 

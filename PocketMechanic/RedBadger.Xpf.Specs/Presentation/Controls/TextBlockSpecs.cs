@@ -26,9 +26,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
     public abstract class a_TextBlock
     {
-        protected static RootElement RootElement;
+        protected static Mock<IDrawingContext> DrawingContext;
 
-        protected static Mock<ISpriteBatch> SpriteBatch;
+        protected static Mock<RootElement> RootElement;
 
         protected static Mock<ISpriteFont> SpriteFont;
 
@@ -36,37 +36,36 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
         private Establish context = () =>
             {
-                XpfServiceLocator.RegisterPrimitiveService(new Mock<IPrimitivesService>().Object);
+                var renderer = new Mock<IRenderer>();
+                DrawingContext = new Mock<IDrawingContext>();
+                renderer.Setup(r => r.GetDrawingContext(Moq.It.IsAny<IElement>())).Returns(DrawingContext.Object);
 
-                SpriteBatch = new Mock<ISpriteBatch>();
+                RootElement = new Mock<RootElement>(renderer.Object, new Rect(new Size(100, 100))) { CallBase = true };
                 SpriteFont = new Mock<ISpriteFont>();
-                RootElement = new RootElement(new Rect(new Size(100, 100)));
                 TextBlock = new TextBlock(SpriteFont.Object);
-                RootElement.Content = TextBlock;
+                RootElement.Object.Content = TextBlock;
             };
-
-        private Cleanup after = () => XpfServiceLocator.Get<IRenderer>().Clear();
     }
 
     public abstract class a_Measured_and_Arranged_TextBlock : a_TextBlock
     {
-        private Establish context = () => RootElement.Update();
+        private Establish context = () => RootElement.Object.Update();
     }
 
     [Subject(typeof(TextBlock), "Foreground")]
     public class when_foreground_is_not_specified : a_TextBlock
     {
-        private Because of = () =>
-            {
-                RootElement.Update();
-                RootElement.Draw(SpriteBatch.Object);
-            };
+        private Because of = () => RootElement.Object.Update();
 
         private It should_default_to_black =
             () =>
-            SpriteBatch.Verify(
-                batch =>
-                batch.DrawString(SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Vector2>(), Color.Black));
+            DrawingContext.Verify(
+                drawingContext =>
+                drawingContext.DrawText(
+                    SpriteFont.Object, 
+                    Moq.It.IsAny<string>(), 
+                    Moq.It.IsAny<Vector2>(), 
+                    Moq.It.Is<SolidColorBrush>(value => value.Color == Color.Black)));
     }
 
     [Subject(typeof(TextBlock), "Foreground")]
@@ -77,16 +76,16 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
         private Because of = () =>
             {
                 TextBlock.Foreground = expectedForeground;
-                RootElement.Update();
-                RootElement.Draw(SpriteBatch.Object);
+                RootElement.Object.Update();
+                RootElement.Object.Draw();
             };
 
         private It should_use_the_color_specified =
             () =>
-            SpriteBatch.Verify(
-                batch =>
-                batch.DrawString(
-                    SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Vector2>(), expectedForeground.Color));
+            DrawingContext.Verify(
+                drawingContext =>
+                drawingContext.DrawText(
+                    SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Vector2>(), expectedForeground));
     }
 
     [Subject(typeof(TextBlock), "Background")]
@@ -94,13 +93,15 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     {
         private Because of = () =>
             {
-                RootElement.Update();
-                RootElement.Draw(SpriteBatch.Object);
+                RootElement.Object.Update();
+                RootElement.Object.Draw();
             };
 
         private It should_not_render_a_background =
             () =>
-            SpriteBatch.Verify(batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), Times.Never());
+            DrawingContext.Verify(
+                drawingContext => drawingContext.DrawRectangle(Moq.It.IsAny<Rect>(), Moq.It.IsAny<Brush>()), 
+                Times.Never());
     }
 
     [Subject(typeof(TextBlock), "Background")]
@@ -111,30 +112,23 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
         private Because of = () =>
             {
                 TextBlock.Background = expectedBackground;
-                RootElement.Update();
-                RootElement.Draw(SpriteBatch.Object);
+                RootElement.Object.Update();
+                RootElement.Object.Draw();
             };
 
         private It should_render_the_background_in_the_right_place = () =>
             {
-                var area = new Rect(
-                    TextBlock.VisualOffset.X,
-                    TextBlock.VisualOffset.Y,
-                    TextBlock.ActualWidth, 
-                    TextBlock.ActualHeight);
+                var area = new Rect(0, 0, TextBlock.ActualWidth, TextBlock.ActualHeight);
 
-                SpriteBatch.Verify(
-                    batch =>
-                    batch.Draw(
-                        Moq.It.IsAny<ITexture2D>(), 
-                        Moq.It.Is<Rect>(rect => rect.Equals(area)), 
-                        Moq.It.IsAny<Color>()));
+                DrawingContext.Verify(
+                    drawingContext =>
+                    drawingContext.DrawRectangle(Moq.It.Is<Rect>(rect => rect.Equals(area)), Moq.It.IsAny<Brush>()));
             };
 
         private It should_render_with_the_specified_background_color =
             () =>
-            SpriteBatch.Verify(
-                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), expectedBackground.Color));
+            DrawingContext.Verify(
+                drawingContext => drawingContext.DrawRectangle(Moq.It.IsAny<Rect>(), expectedBackground));
     }
 
     [Subject(typeof(TextBlock), "Padding")]
@@ -158,17 +152,18 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
         private Because of = () =>
             {
                 TextBlock.Padding = padding;
-                RootElement.Update();
-                RootElement.Draw(SpriteBatch.Object);
+                RootElement.Object.Update();
+                RootElement.Object.Draw();
             };
 
         private It should_increase_the_desired_size = () => TextBlock.DesiredSize.ShouldEqual(expectedDesiredSize);
 
         private It should_take_padding_into_account_when_drawing =
             () =>
-            SpriteBatch.Verify(
-                batch =>
-                batch.DrawString(SpriteFont.Object, Moq.It.IsAny<string>(), expectedDrawPosition, Moq.It.IsAny<Color>()));
+            DrawingContext.Verify(
+                drawingContext =>
+                drawingContext.DrawText(
+                    SpriteFont.Object, Moq.It.IsAny<string>(), expectedDrawPosition, Moq.It.IsAny<Brush>()));
     }
 
     public abstract class a_TextBlock_With_Content : a_TextBlock
@@ -225,7 +220,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     [Subject(typeof(TextBlock), "Wrapping")]
     public class when_wrapping_is_not_required : a_TextBlock_With_Content
     {
-        private Because of = () => RootElement.Update();
+        private Because of = () => RootElement.Object.Update();
 
         private It should_not_wrap = () => TextBlock.DesiredSize.Height.ShouldEqual(SentenceSize.Y);
     }
@@ -246,7 +241,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
         private Because of = () =>
             {
                 TextBlock.Wrapping = TextWrapping.Wrap;
-                RootElement.Update();
+                RootElement.Object.Update();
             };
 
         private It should_wrap = () => TextBlock.DesiredSize.Height.ShouldEqual(wrappedSentenceSize.Y);

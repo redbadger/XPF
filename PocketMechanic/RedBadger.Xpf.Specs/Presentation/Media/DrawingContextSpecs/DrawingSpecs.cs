@@ -30,8 +30,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private Because of = () =>
             {
-                DrawingContext.DrawText(SpriteFont.Object, ExpectedString, new SolidColorBrush(expectedColor));
-                Renderer.Draw(SpriteBatch.Object);
+                DrawingContext.DrawText(
+                    SpriteFont.Object, ExpectedString, expectedDrawPosition, new SolidColorBrush(expectedColor));
+                Renderer.Draw();
             };
 
         private It should_render_text =
@@ -50,7 +51,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
         private Because of = () =>
             {
                 DrawingContext.DrawRectangle(expectedRect, expectedColor);
-                Renderer.Draw(SpriteBatch.Object);
+                Renderer.Draw();
             };
 
         private It should_render_a_rectangle =
@@ -70,7 +71,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
             {
                 DrawingContext.DrawRectangle(rect, new SolidColorBrush(Color.AliceBlue));
                 Renderer.PreDraw();
-                Renderer.Draw(SpriteBatch.Object);
+                Renderer.Draw();
             };
 
         private It should_render_with_the_correct_offset =
@@ -97,7 +98,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
                 DrawingContext.DrawText(
                     SpriteFont.Object, string.Empty, textOffset, new SolidColorBrush(Color.AliceBlue));
                 Renderer.PreDraw();
-                Renderer.Draw(SpriteBatch.Object);
+                Renderer.Draw();
             };
 
         private It should_render_with_the_correct_offset =

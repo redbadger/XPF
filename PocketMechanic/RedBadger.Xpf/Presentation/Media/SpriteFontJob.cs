@@ -34,7 +34,7 @@
         {
             var solidColorBrush = this.brush as SolidColorBrush;
             spriteBatch.DrawString(
-                this.spriteFont, this.text, this.position + this.absoluteOffset, solidColorBrush != null ? solidColorBrush.Color : Color.Black);
+                this.spriteFont, this.text, this.position + this.absoluteOffset, solidColorBrush != null ? solidColorBrush.Color : Color.Maroon);
         }
     }
 }

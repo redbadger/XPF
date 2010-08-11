@@ -17,7 +17,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
     using Moq;
 
-    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
@@ -26,23 +25,22 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
 
     public abstract class a_Panel
     {
+        protected static Mock<IDrawingContext> DrawingContext;
+
         protected static Panel Panel;
 
         protected static RootElement RootElement;
 
-        protected static Mock<ISpriteBatch> SpriteBatch;
-
         private Establish context = () =>
             {
-                XpfServiceLocator.RegisterPrimitiveService(new Mock<IPrimitivesService>().Object);
+                var renderer = new Mock<IRenderer>();
+                DrawingContext = new Mock<IDrawingContext>();
+                renderer.Setup(r => r.GetDrawingContext(Moq.It.IsAny<IElement>())).Returns(DrawingContext.Object);
 
-                SpriteBatch = new Mock<ISpriteBatch>();
-                RootElement = new RootElement(new Rect(new Size(100, 100)));
+                RootElement = new RootElement(renderer.Object, new Rect(new Size(100, 100)));
                 Panel = new Panel();
                 RootElement.Content = Panel;
             };
-
-        private Cleanup after = () => XpfServiceLocator.Get<IRenderer>().Clear();
     }
 
     [Subject(typeof(Panel), "Background")]
@@ -51,12 +49,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
         private Because of = () =>
             {
                 RootElement.Update();
-                RootElement.Draw(SpriteBatch.Object);
+                RootElement.Draw();
             };
 
         private It should_not_render_a_background =
             () =>
-            SpriteBatch.Verify(batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), Times.Never());
+            DrawingContext.Verify(
+                drawingContext => drawingContext.DrawRectangle(Moq.It.IsAny<Rect>(), Moq.It.IsAny<Brush>()), 
+                Times.Never());
     }
 
     [Subject(typeof(Panel), "Background")]
@@ -68,28 +68,21 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             {
                 Panel.Background = expectedBackground;
                 RootElement.Update();
-                RootElement.Draw(SpriteBatch.Object);
+                RootElement.Draw();
             };
 
         private It should_render_the_background_in_the_right_place = () =>
             {
-                var area = new Rect(
-                    Panel.VisualOffset.X, 
-                    Panel.VisualOffset.Y, 
-                    Panel.ActualWidth, 
-                    Panel.ActualHeight);
+                var area = new Rect(Panel.VisualOffset.X, Panel.VisualOffset.Y, Panel.ActualWidth, Panel.ActualHeight);
 
-                SpriteBatch.Verify(
-                    batch =>
-                    batch.Draw(
-                        Moq.It.IsAny<ITexture2D>(), 
-                        Moq.It.Is<Rect>(rect => rect.Equals(area)), 
-                        Moq.It.IsAny<Color>()));
+                DrawingContext.Verify(
+                    drawingContext =>
+                    drawingContext.DrawRectangle(Moq.It.Is<Rect>(rect => rect.Equals(area)), Moq.It.IsAny<Brush>()));
             };
 
         private It should_render_with_the_specified_background_color =
             () =>
-            SpriteBatch.Verify(
-                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), expectedBackground.Color));
+            DrawingContext.Verify(
+                drawingContext => drawingContext.DrawRectangle(Moq.It.IsAny<Rect>(), expectedBackground));
     }
 }

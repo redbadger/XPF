@@ -18,6 +18,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
 
@@ -62,20 +63,19 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     {
         protected static RootElement RootElement;
 
-        protected static Mock<ISpriteBatch> SpriteBatch;
-
         protected static Mock<ISpriteFont> SpriteFont;
 
         private Establish context = () =>
             {
-                XpfServiceLocator.RegisterPrimitiveService(new Mock<IPrimitivesService>().Object);
-
-                SpriteBatch = new Mock<ISpriteBatch>();
                 SpriteFont = new Mock<ISpriteFont>();
-                RootElement = new RootElement(new Rect(new Size(100, 100))) { Content = StackPanel };
+                RootElement = new RootElement(new Mock<IRenderer>().Object, new Rect(new Size(100, 100)))
+                    {
+                       Content = StackPanel 
+                    };
 
                 RootElement.Update();
-                RootElement.Draw(SpriteBatch.Object);
+
+                // RootElement.Draw();
             };
     }
 

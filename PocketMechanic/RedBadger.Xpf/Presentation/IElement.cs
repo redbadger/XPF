@@ -2,8 +2,12 @@
 {
     using Microsoft.Xna.Framework;
 
+    using RedBadger.Xpf.Presentation.Media;
+
     public interface IElement
     {
+        Vector2 AbsoluteOffset { get; }
+
         Size DesiredSize { get; }
 
         /// <summary>
@@ -18,8 +22,6 @@
 
         IElement VisualParent { get; set; }
 
-        Vector2 AbsoluteOffset { get; }
-
         /// <summary>
         ///   Positions child elements and determines a size for a UIElement.
         ///   Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
@@ -33,5 +35,7 @@
         void InvalidateMeasure();
 
         void Measure(Size availableSize);
+
+        bool TryGetRenderer(out IRenderer renderer);
     }
 }

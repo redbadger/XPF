@@ -8,8 +8,6 @@ namespace RedBadger.Xpf.Presentation.Media
     {
         void DrawRectangle(Rect rect, Brush brush);
 
-        void DrawText(ISpriteFont spriteFont, string text, Brush brush);
-
         void DrawText(ISpriteFont spriteFont, string text, Vector2 position, Brush brush);
     }
 }

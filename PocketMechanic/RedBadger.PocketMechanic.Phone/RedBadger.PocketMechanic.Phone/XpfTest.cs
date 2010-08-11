@@ -3,14 +3,10 @@ namespace RedBadger.PocketMechanic.Phone
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    using RedBadger.Xpf;
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
-
-    using GridLength = RedBadger.Xpf.Presentation.GridLength;
-    using Rect = RedBadger.Xpf.Presentation.Rect;
-    using Thickness = RedBadger.Xpf.Presentation.Thickness;
 
     public class XpfTest : DrawableGameComponent
     {
@@ -28,7 +24,7 @@ namespace RedBadger.PocketMechanic.Phone
         public override void Draw(GameTime gameTime)
         {
             this.spriteBatchAdapter.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            this.rootElement.Draw(this.spriteBatchAdapter);
+            this.rootElement.Draw();
             this.spriteBatchAdapter.End();
 
             base.Draw(gameTime);
@@ -67,7 +63,6 @@ namespace RedBadger.PocketMechanic.Phone
             sb.Children.Add(doubleAnimation);
             sb.Begin();
 */
-
             var textBlock1 = new TextBlock(spriteFontAdapter) { Text = "Textblock 1" };
 
             Grid.SetColumn(textBlock1, 0);
@@ -76,9 +71,9 @@ namespace RedBadger.PocketMechanic.Phone
             var textBlock2 = new TextBlock(spriteFontAdapter) { Text = "Textblock 2" };
             var border = new Border
                 {
-                    Child = textBlock2,
-                    BorderBrush = new SolidColorBrush(Color.Red),
-                    BorderThickness = new Thickness(20),
+                    Child = textBlock2, 
+                    BorderBrush = new SolidColorBrush(Color.Red), 
+                    BorderThickness = new Thickness(20), 
                     Background = new SolidColorBrush(Color.Aquamarine)
                 };
             Grid.SetColumn(border, 1);
@@ -101,14 +96,17 @@ namespace RedBadger.PocketMechanic.Phone
             grid.Children.Add(textBlock5);
 */
             var viewPort = new Rect(
-                this.GraphicsDevice.Viewport.X,
-                this.GraphicsDevice.Viewport.Y,
-                this.GraphicsDevice.Viewport.Width,
+                this.GraphicsDevice.Viewport.X, 
+                this.GraphicsDevice.Viewport.Y, 
+                this.GraphicsDevice.Viewport.Width, 
                 this.GraphicsDevice.Viewport.Height);
 
-            this.rootElement = new RootElement(viewPort) { Content = grid };
-
-            XpfServiceLocator.RegisterPrimitiveService(new PrimitivesService(GraphicsDevice));
+            this.rootElement =
+                new RootElement(
+                    new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice)), viewPort)
+                    {
+                       Content = grid 
+                    };
         }
     }
 }

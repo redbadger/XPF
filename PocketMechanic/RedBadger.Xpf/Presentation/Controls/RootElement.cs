@@ -1,22 +1,32 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
-    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Media;
 
-    public class RootElement : ContentControl
+    public class RootElement : ContentControl, IRootElement
     {
+        private readonly IRenderer renderer;
+
         private readonly Rect viewPort;
 
         private bool isFirst = true;
 
-        public RootElement(Rect viewPort)
+        public RootElement(IRenderer renderer, Rect viewPort)
         {
+            this.renderer = renderer;
             this.viewPort = viewPort;
         }
 
-        public void Draw(ISpriteBatch spriteBatch)
+        public IRenderer Renderer
         {
-            XpfServiceLocator.Get<IRenderer>().Draw(spriteBatch);
+            get
+            {
+                return this.renderer;
+            }
+        }
+
+        public void Draw()
+        {
+            this.renderer.Draw();
         }
 
         public void Update()
@@ -26,7 +36,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
             if (this.isFirst)
             {
-                XpfServiceLocator.Get<IRenderer>().PreDraw();
+                this.renderer.PreDraw();
                 this.isFirst = false;
             }
         }
