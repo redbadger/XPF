@@ -9,7 +9,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Presentation
+namespace RedBadger.Xpf.Specs.Presentation.BindingServiceSpecs
 {
     using System.ComponentModel;
     using System.Windows.Data;

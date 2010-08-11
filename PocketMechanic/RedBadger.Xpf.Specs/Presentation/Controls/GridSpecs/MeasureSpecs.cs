@@ -9,7 +9,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Presentation.GridSpecs
+namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
     using Machine.Specifications;
 
@@ -19,7 +19,6 @@ namespace RedBadger.Xpf.Specs.Presentation.GridSpecs
     using RedBadger.Xpf.Presentation.Controls;
 
     using It = Machine.Specifications.It;
-    using GridLength = RedBadger.Xpf.Presentation.GridLength;
 
     [Subject(typeof(Grid), "Measure")]
     public class when_an_element_is_added : a_Grid

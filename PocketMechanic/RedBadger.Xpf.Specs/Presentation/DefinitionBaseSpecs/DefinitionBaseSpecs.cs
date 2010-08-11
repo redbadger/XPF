@@ -9,7 +9,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Presentation
+namespace RedBadger.Xpf.Specs.Presentation.DefinitionBaseSpecs
 {
     using Machine.Specifications;
 
