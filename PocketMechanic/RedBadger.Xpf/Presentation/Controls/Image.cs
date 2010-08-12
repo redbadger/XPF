@@ -4,7 +4,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     using Microsoft.Xna.Framework;
 
-    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Media;
 
     using Size = RedBadger.Xpf.Presentation.Size;
@@ -12,17 +11,17 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class Image : UIElement
     {
-        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty SourceProperty = XpfDependencyProperty.Register(
             "Source", typeof(ImageSource), typeof(Image), new PropertyMetadata(null, SourcePropertyChangedCallback));
 
-        public static readonly DependencyProperty StretchDirectionProperty =
-            DependencyProperty.Register(
+        public static readonly XpfDependencyProperty StretchDirectionProperty =
+            XpfDependencyProperty.Register(
                 "StretchDirection", 
                 typeof(StretchDirection), 
                 typeof(Image), 
                 new PropertyMetadata(StretchDirection.Both, StretchDirectionPropertyChangedCallback));
 
-        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty StretchProperty = XpfDependencyProperty.Register(
             "Stretch", 
             typeof(Stretch), 
             typeof(Image), 
@@ -32,12 +31,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (ImageSource)this.GetValue(SourceProperty);
+                return (ImageSource)this.GetValue(SourceProperty.Value);
             }
 
             set
             {
-                this.SetValue(SourceProperty, value);
+                this.SetValue(SourceProperty.Value, value);
             }
         }
 
@@ -45,12 +44,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Stretch)this.GetValue(StretchProperty);
+                return (Stretch)this.GetValue(StretchProperty.Value);
             }
 
             set
             {
-                this.SetValue(StretchProperty, value);
+                this.SetValue(StretchProperty.Value, value);
             }
         }
 
@@ -58,12 +57,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (StretchDirection)this.GetValue(StretchDirectionProperty);
+                return (StretchDirection)this.GetValue(StretchDirectionProperty.Value);
             }
 
             set
             {
-                this.SetValue(StretchDirectionProperty, value);
+                this.SetValue(StretchDirectionProperty.Value, value);
             }
         }
 
