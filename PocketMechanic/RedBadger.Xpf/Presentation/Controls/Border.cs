@@ -14,23 +14,23 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class Border : UIElement
     {
-        public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty BackgroundProperty = XpfDependencyProperty.Register(
             "Background", typeof(Brush), typeof(Border), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty BorderBrushProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty BorderBrushProperty = XpfDependencyProperty.Register(
             "BorderBrush", typeof(Brush), typeof(Border), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty BorderThicknessProperty =
-            DependencyProperty.Register(
+        public static readonly XpfDependencyProperty BorderThicknessProperty =
+            XpfDependencyProperty.Register(
                 "BorderThickness", 
                 typeof(Thickness), 
                 typeof(Border), 
                 new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
-        public static readonly DependencyProperty ChildProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty ChildProperty = XpfDependencyProperty.Register(
             "Child", typeof(UIElement), typeof(Border), new PropertyMetadata(null, ChildPropertyChangedCallback));
 
-        public static readonly DependencyProperty PaddingProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty PaddingProperty = XpfDependencyProperty.Register(
             "Padding", 
             typeof(Thickness), 
             typeof(Border), 
@@ -44,12 +44,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Brush)this.GetValue(BackgroundProperty);
+                return (Brush)this.GetValue(BackgroundProperty.Value);
             }
 
             set
             {
-                this.SetValue(BackgroundProperty, value);
+                this.SetValue(BackgroundProperty.Value, value);
             }
         }
 
@@ -57,12 +57,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Brush)this.GetValue(BorderBrushProperty);
+                return (Brush)this.GetValue(BorderBrushProperty.Value);
             }
 
             set
             {
-                this.SetValue(BorderBrushProperty, value);
+                this.SetValue(BorderBrushProperty.Value, value);
             }
         }
 
@@ -70,12 +70,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Thickness)this.GetValue(BorderThicknessProperty);
+                return (Thickness)this.GetValue(BorderThicknessProperty.Value);
             }
 
             set
             {
-                this.SetValue(BorderThicknessProperty, value);
+                this.SetValue(BorderThicknessProperty.Value, value);
             }
         }
 
@@ -83,12 +83,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (UIElement)this.GetValue(ChildProperty);
+                return (UIElement)this.GetValue(ChildProperty.Value);
             }
 
             set
             {
-                this.SetValue(ChildProperty, value);
+                this.SetValue(ChildProperty.Value, value);
             }
         }
 
@@ -96,12 +96,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Thickness)this.GetValue(PaddingProperty);
+                return (Thickness)this.GetValue(PaddingProperty.Value);
             }
 
             set
             {
-                this.SetValue(PaddingProperty, value);
+                this.SetValue(PaddingProperty.Value, value);
             }
         }
 

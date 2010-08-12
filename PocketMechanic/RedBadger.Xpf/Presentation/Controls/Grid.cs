@@ -14,10 +14,10 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class Grid : Panel
     {
-        public static readonly DependencyProperty ColumnProperty = DependencyProperty.RegisterAttached(
+        public static readonly XpfDependencyProperty ColumnProperty = XpfDependencyProperty.RegisterAttached(
             "Column", typeof(int), typeof(Grid), new PropertyMetadata(0));
 
-        public static readonly DependencyProperty RowProperty = DependencyProperty.RegisterAttached(
+        public static readonly XpfDependencyProperty RowProperty = XpfDependencyProperty.RegisterAttached(
             "Row", typeof(int), typeof(Grid), new PropertyMetadata(0));
 
         private readonly IList<ColumnDefinition> columnDefinitions = new List<ColumnDefinition>();
@@ -61,7 +61,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 throw new ArgumentNullException("element");
             }
 
-            return (int)element.GetValue(ColumnProperty);
+            return (int)element.GetValue(ColumnProperty.Value);
         }
 
         public static int GetRow(UIElement element)
@@ -71,7 +71,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 throw new ArgumentNullException("element");
             }
 
-            return (int)element.GetValue(RowProperty);
+            return (int)element.GetValue(RowProperty.Value);
         }
 
         public static void SetColumn(UIElement element, int value)
@@ -81,7 +81,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 throw new ArgumentNullException("element");
             }
 
-            element.SetValue(ColumnProperty, value);
+            element.SetValue(ColumnProperty.Value, value);
         }
 
         public static void SetRow(UIElement element, int value)
@@ -91,7 +91,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 throw new ArgumentNullException("element");
             }
 
-            element.SetValue(RowProperty, value);
+            element.SetValue(RowProperty.Value, value);
         }
 
         protected override Size ArrangeOverride(Size finalSize)

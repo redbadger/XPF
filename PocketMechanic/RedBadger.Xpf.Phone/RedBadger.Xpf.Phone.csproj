@@ -92,9 +92,6 @@
     <Compile Include="..\RedBadger.Xpf\Graphics\Texture2DAdapter.cs">
       <Link>Graphics\Texture2DAdapter.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Internal\DependencyObjectExtensions.cs">
-      <Link>Internal\DependencyObjectExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\FloatExtensions.cs">
       <Link>Internal\FloatExtensions.cs</Link>
     </Compile>
@@ -116,8 +113,8 @@
     <Compile Include="..\RedBadger.Xpf\Internal\Vector2Extensions.cs">
       <Link>Internal\Vector2Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\BindingService.cs">
-      <Link>Presentation\BindingService.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\BindingExpression.cs">
+      <Link>Presentation\BindingExpression.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Border.cs">
       <Link>Presentation\Controls\Border.cs</Link>
@@ -215,6 +212,12 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Orientation.cs">
       <Link>Presentation\Orientation.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChangedEventArgs.cs">
+      <Link>Presentation\PropertyChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChangedNotifier.cs">
+      <Link>Presentation\PropertyChangedNotifier.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Rect.cs">
       <Link>Presentation\Rect.cs</Link>
     </Compile>
@@ -235,6 +238,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\VerticalAlignment.cs">
       <Link>Presentation\VerticalAlignment.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\XpfDependencyProperty.cs">
+      <Link>Presentation\XpfDependencyProperty.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

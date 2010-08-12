@@ -6,13 +6,13 @@
 
     public class RowDefinition : DefinitionBase
     {
-        public static readonly DependencyProperty HeightProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty HeightProperty = XpfDependencyProperty.Register(
             "Height", typeof(GridLength), typeof(RowDefinition), new PropertyMetadata(new GridLength()));
 
-        public static readonly DependencyProperty MaxHeightProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty MaxHeightProperty = XpfDependencyProperty.Register(
             "MaxHeight", typeof(float), typeof(RowDefinition), new PropertyMetadata(float.PositiveInfinity));
 
-        public static readonly DependencyProperty MinHeightProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty MinHeightProperty = XpfDependencyProperty.Register(
             "MinHeight", typeof(float), typeof(RowDefinition), new PropertyMetadata(0f));
 
         public RowDefinition()
@@ -24,12 +24,12 @@
         {
             get
             {
-                return (GridLength)this.GetValue(HeightProperty);
+                return (GridLength)this.GetValue(HeightProperty.Value);
             }
 
             set
             {
-                this.SetValue(HeightProperty, value);
+                this.SetValue(HeightProperty.Value, value);
             }
         }
 
@@ -37,12 +37,12 @@
         {
             get
             {
-                return (float)this.GetValue(MaxHeightProperty);
+                return (float)this.GetValue(MaxHeightProperty.Value);
             }
 
             set
             {
-                this.SetValue(MaxHeightProperty, value);
+                this.SetValue(MaxHeightProperty.Value, value);
             }
         }
 
@@ -50,12 +50,12 @@
         {
             get
             {
-                return (float)this.GetValue(MinHeightProperty);
+                return (float)this.GetValue(MinHeightProperty.Value);
             }
 
             set
             {
-                this.SetValue(MinHeightProperty, value);
+                this.SetValue(MinHeightProperty.Value, value);
             }
         }
     }

@@ -6,13 +6,13 @@
 
     public class ColumnDefinition : DefinitionBase
     {
-        public static readonly DependencyProperty MaxWidthProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty MaxWidthProperty = XpfDependencyProperty.Register(
             "MaxWidth", typeof(float), typeof(ColumnDefinition), new PropertyMetadata(float.PositiveInfinity));
 
-        public static readonly DependencyProperty MinWidthProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty MinWidthProperty = XpfDependencyProperty.Register(
             "MinWidth", typeof(float), typeof(ColumnDefinition), new PropertyMetadata(0f));
 
-        public static readonly DependencyProperty WidthProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty WidthProperty = XpfDependencyProperty.Register(
             "Width", typeof(GridLength), typeof(ColumnDefinition), new PropertyMetadata(new GridLength()));
 
         public ColumnDefinition()
@@ -24,12 +24,12 @@
         {
             get
             {
-                return (float)this.GetValue(MaxWidthProperty);
+                return (float)this.GetValue(MaxWidthProperty.Value);
             }
 
             set
             {
-                this.SetValue(MaxWidthProperty, value);
+                this.SetValue(MaxWidthProperty.Value, value);
             }
         }
 
@@ -37,12 +37,12 @@
         {
             get
             {
-                return (float)this.GetValue(MinWidthProperty);
+                return (float)this.GetValue(MinWidthProperty.Value);
             }
 
             set
             {
-                this.SetValue(MinWidthProperty, value);
+                this.SetValue(MinWidthProperty.Value, value);
             }
         }
 
@@ -50,12 +50,12 @@
         {
             get
             {
-                return (GridLength)this.GetValue(WidthProperty);
+                return (GridLength)this.GetValue(WidthProperty.Value);
             }
 
             set
             {
-                this.SetValue(WidthProperty, value);
+                this.SetValue(WidthProperty.Value, value);
             }
         }
     }

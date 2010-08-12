@@ -1,5 +1,8 @@
 ﻿namespace RedBadger.Xpf.Presentation
 {
+    using System.Windows;
+    using System.Windows.Data;
+
     using Microsoft.Xna.Framework;
 
     using RedBadger.Xpf.Presentation.Media;
@@ -37,5 +40,9 @@
         void Measure(Size availableSize);
 
         bool TryGetRenderer(out IRenderer renderer);
+
+        void ClearBinding(XpfDependencyProperty dependencyProperty);
+
+        BindingExpression SetBinding(XpfDependencyProperty dependencyProperty, Binding binding);
     }
 }

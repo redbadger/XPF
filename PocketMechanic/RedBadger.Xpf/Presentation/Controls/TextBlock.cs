@@ -18,22 +18,22 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class TextBlock : UIElement
     {
-        public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty BackgroundProperty = XpfDependencyProperty.Register(
             "Background", typeof(Brush), typeof(TextBlock), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty ForegroundProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty ForegroundProperty = XpfDependencyProperty.Register(
             "Foreground", typeof(Brush), typeof(TextBlock), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty PaddingProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty PaddingProperty = XpfDependencyProperty.Register(
             "Padding", 
             typeof(Thickness), 
             typeof(TextBlock), 
             new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty TextProperty = XpfDependencyProperty.Register(
             "Text", typeof(string), typeof(TextBlock), new PropertyMetadata(string.Empty, TextPropertyChangedCallback));
 
-        public static readonly DependencyProperty WrappingProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty WrappingProperty = XpfDependencyProperty.Register(
             "Wrapping", 
             typeof(TextWrapping), 
             typeof(TextBlock), 
@@ -54,12 +54,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Brush)this.GetValue(BackgroundProperty);
+                return (Brush)this.GetValue(BackgroundProperty.Value);
             }
 
             set
             {
-                this.SetValue(BackgroundProperty, value);
+                this.SetValue(BackgroundProperty.Value, value);
             }
         }
 
@@ -67,12 +67,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Brush)this.GetValue(ForegroundProperty);
+                return (Brush)this.GetValue(ForegroundProperty.Value);
             }
 
             set
             {
-                this.SetValue(ForegroundProperty, value);
+                this.SetValue(ForegroundProperty.Value, value);
             }
         }
 
@@ -80,12 +80,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Thickness)this.GetValue(PaddingProperty);
+                return (Thickness)this.GetValue(PaddingProperty.Value);
             }
 
             set
             {
-                this.SetValue(PaddingProperty, value);
+                this.SetValue(PaddingProperty.Value, value);
             }
         }
 
@@ -93,12 +93,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (string)this.GetValue(TextProperty);
+                return (string)this.GetValue(TextProperty.Value);
             }
 
             set
             {
-                this.SetValue(TextProperty, value);
+                this.SetValue(TextProperty.Value, value);
             }
         }
 
@@ -106,27 +106,13 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (TextWrapping)this.GetValue(WrappingProperty);
+                return (TextWrapping)this.GetValue(WrappingProperty.Value);
             }
 
             set
             {
-                this.SetValue(WrappingProperty, value);
+                this.SetValue(WrappingProperty.Value, value);
             }
-        }
-
-        protected override void OnRender(IDrawingContext drawingContext)
-        {
-            if (this.Background != null)
-            {
-                drawingContext.DrawRectangle(new Rect(0, 0, this.ActualWidth, this.ActualHeight), this.Background);
-            }
-
-            drawingContext.DrawText(
-                this.spriteFont,
-                this.formattedText,
-                new Vector2(this.Padding.Left, this.Padding.Top),
-                this.Foreground ?? new SolidColorBrush(Color.Black));
         }
 
         protected override Size ArrangeOverride(Size finalSize)
@@ -148,6 +134,20 @@ namespace RedBadger.Xpf.Presentation.Controls
             return new Size(
                 measureString.X + this.Padding.Left + this.Padding.Right, 
                 measureString.Y + this.Padding.Top + this.Padding.Bottom);
+        }
+
+        protected override void OnRender(IDrawingContext drawingContext)
+        {
+            if (this.Background != null)
+            {
+                drawingContext.DrawRectangle(new Rect(0, 0, this.ActualWidth, this.ActualHeight), this.Background);
+            }
+
+            drawingContext.DrawText(
+                this.spriteFont, 
+                this.formattedText, 
+                new Vector2(this.Padding.Left, this.Padding.Top), 
+                this.Foreground ?? new SolidColorBrush(Color.Black));
         }
 
         private static void TextPropertyChangedCallback(

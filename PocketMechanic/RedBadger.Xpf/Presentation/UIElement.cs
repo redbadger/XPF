@@ -1,7 +1,9 @@
 ﻿namespace RedBadger.Xpf.Presentation
 {
     using System;
+    using System.Collections.Generic;
     using System.Windows;
+    using System.Windows.Data;
 
     using Microsoft.Xna.Framework;
 
@@ -10,55 +12,58 @@
 
     public abstract class UIElement : DependencyObject, IElement
     {
-        public static readonly DependencyProperty HeightProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty HeightProperty = XpfDependencyProperty.Register(
             "Height", 
             typeof(float), 
             typeof(UIElement), 
             new PropertyMetadata(float.NaN, PropertyOfTypeFloatChangedCallback));
 
-        public static readonly DependencyProperty HorizontalAlignmentProperty =
-            DependencyProperty.Register(
+        public static readonly XpfDependencyProperty HorizontalAlignmentProperty =
+            XpfDependencyProperty.Register(
                 "HorizontalAlignment", 
                 typeof(HorizontalAlignment), 
                 typeof(UIElement), 
                 new PropertyMetadata(HorizontalAlignment.Stretch, HorizontalAlignmentPropertyChangedCallback));
 
-        public static readonly DependencyProperty MarginProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty MarginProperty = XpfDependencyProperty.Register(
             "Margin", 
             typeof(Thickness), 
             typeof(UIElement), 
             new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
-        public static readonly DependencyProperty MaxHeightProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty MaxHeightProperty = XpfDependencyProperty.Register(
             "MaxHeight", 
             typeof(float), 
             typeof(UIElement), 
             new PropertyMetadata(float.PositiveInfinity, PropertyOfTypeFloatChangedCallback));
 
-        public static readonly DependencyProperty MaxWidthProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty MaxWidthProperty = XpfDependencyProperty.Register(
             "MaxWidth", 
             typeof(float), 
             typeof(UIElement), 
             new PropertyMetadata(float.PositiveInfinity, PropertyOfTypeFloatChangedCallback));
 
-        public static readonly DependencyProperty MinHeightProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty MinHeightProperty = XpfDependencyProperty.Register(
             "MinHeight", typeof(float), typeof(UIElement), new PropertyMetadata(0f, PropertyOfTypeFloatChangedCallback));
 
-        public static readonly DependencyProperty MinWidthProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty MinWidthProperty = XpfDependencyProperty.Register(
             "MinWidth", typeof(float), typeof(UIElement), new PropertyMetadata(0f, PropertyOfTypeFloatChangedCallback));
 
-        public static readonly DependencyProperty VerticalAlignmentProperty =
-            DependencyProperty.Register(
+        public static readonly XpfDependencyProperty VerticalAlignmentProperty =
+            XpfDependencyProperty.Register(
                 "VerticalAlignment", 
                 typeof(VerticalAlignment), 
                 typeof(UIElement), 
                 new PropertyMetadata(VerticalAlignment.Stretch, VerticalAlignmentPropertyChangedCallback));
 
-        public static readonly DependencyProperty WidthProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty WidthProperty = XpfDependencyProperty.Register(
             "Width", 
             typeof(float), 
             typeof(UIElement), 
             new PropertyMetadata(float.NaN, PropertyOfTypeFloatChangedCallback));
+
+        private readonly Dictionary<XpfDependencyProperty, BindingExpression> bindings =
+            new Dictionary<XpfDependencyProperty, BindingExpression>();
 
         private Size previousAvailableSize;
 
@@ -101,12 +106,12 @@
         {
             get
             {
-                return (float)this.GetValue(HeightProperty);
+                return (float)this.GetValue(HeightProperty.Value);
             }
 
             set
             {
-                this.SetValue(HeightProperty, value);
+                this.SetValue(HeightProperty.Value, value);
             }
         }
 
@@ -114,20 +119,20 @@
         {
             get
             {
-                return (HorizontalAlignment)this.GetValue(HorizontalAlignmentProperty);
+                return (HorizontalAlignment)this.GetValue(HorizontalAlignmentProperty.Value);
             }
 
             set
             {
-                this.SetValue(HorizontalAlignmentProperty, value);
+                this.SetValue(HorizontalAlignmentProperty.Value, value);
             }
         }
 
         /// <summary>
-        ///   Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
+        ///     Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if the size and position of layout are valid; otherwise, <c>false</c>.
+        ///     <c>true</c> if the size and position of layout are valid; otherwise, <c>false</c>.
         /// </value>
         public bool IsArrangeValid { get; private set; }
 
@@ -137,12 +142,12 @@
         {
             get
             {
-                return (Thickness)this.GetValue(MarginProperty);
+                return (Thickness)this.GetValue(MarginProperty.Value);
             }
 
             set
             {
-                this.SetValue(MarginProperty, value);
+                this.SetValue(MarginProperty.Value, value);
             }
         }
 
@@ -150,12 +155,12 @@
         {
             get
             {
-                return (float)this.GetValue(MaxHeightProperty);
+                return (float)this.GetValue(MaxHeightProperty.Value);
             }
 
             set
             {
-                this.SetValue(MaxHeightProperty, value);
+                this.SetValue(MaxHeightProperty.Value, value);
             }
         }
 
@@ -163,12 +168,12 @@
         {
             get
             {
-                return (float)this.GetValue(MaxWidthProperty);
+                return (float)this.GetValue(MaxWidthProperty.Value);
             }
 
             set
             {
-                this.SetValue(MaxWidthProperty, value);
+                this.SetValue(MaxWidthProperty.Value, value);
             }
         }
 
@@ -176,12 +181,12 @@
         {
             get
             {
-                return (float)this.GetValue(MinHeightProperty);
+                return (float)this.GetValue(MinHeightProperty.Value);
             }
 
             set
             {
-                this.SetValue(MinHeightProperty, value);
+                this.SetValue(MinHeightProperty.Value, value);
             }
         }
 
@@ -189,12 +194,12 @@
         {
             get
             {
-                return (float)this.GetValue(MinWidthProperty);
+                return (float)this.GetValue(MinWidthProperty.Value);
             }
 
             set
             {
-                this.SetValue(MinWidthProperty, value);
+                this.SetValue(MinWidthProperty.Value, value);
             }
         }
 
@@ -204,12 +209,12 @@
         {
             get
             {
-                return (VerticalAlignment)this.GetValue(VerticalAlignmentProperty);
+                return (VerticalAlignment)this.GetValue(VerticalAlignmentProperty.Value);
             }
 
             set
             {
-                this.SetValue(VerticalAlignmentProperty, value);
+                this.SetValue(VerticalAlignmentProperty.Value, value);
             }
         }
 
@@ -219,30 +224,25 @@
         {
             get
             {
-                return (float)this.GetValue(WidthProperty);
+                return (float)this.GetValue(WidthProperty.Value);
             }
 
             set
             {
-                this.SetValue(WidthProperty, value);
+                this.SetValue(WidthProperty.Value, value);
             }
         }
 
         /// <remarks>
-        ///   In WPF this is protected internal.  For the purposes of unit testing we've not made this protected.
-        ///   TODO: implement a reflection based mechanism (for Moq?) to get back values from protected properties
+        ///     In WPF this is protected internal.  For the purposes of unit testing we've not made this protected.
+        ///     TODO: implement a reflection based mechanism (for Moq?) to get back values from protected properties
         /// </remarks>
         internal Vector2 VisualOffset { get; set; }
 
-        public BindingService BindingFor(DependencyProperty dependencyProperty)
-        {
-            return new BindingService(this, dependencyProperty);
-        }
-
         /// <summary>
-        ///   Positions child elements and determines a size for a UIElement.
-        ///   Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
-        ///   This method constitutes the second pass of a layout update.
+        ///     Positions child elements and determines a size for a UIElement.
+        ///     Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
+        ///     This method constitutes the second pass of a layout update.
         /// </summary>
         /// <param name = "finalRect">The final size that the parent computes for the child element, provided as a Rect instance.</param>
         public void Arrange(Rect finalRect)
@@ -280,6 +280,16 @@
             }
         }
 
+        public void ClearBinding(XpfDependencyProperty dependencyProperty)
+        {
+            BindingExpression bindingExpression;
+            if (this.bindings.TryGetValue(dependencyProperty, out bindingExpression))
+            {
+                bindingExpression.ClearBinding();
+                this.bindings.Remove(dependencyProperty);
+            }
+        }
+
         public void InvalidateArrange()
         {
             this.IsArrangeValid = false;
@@ -305,13 +315,13 @@
         }
 
         /// <summary>
-        ///   Updates the DesiredSize of a UIElement.
-        ///   Derrived elements call this method from their own MeasureOverride implementations to form a recursive layout update.
-        ///   Calling this method constitutes the first pass (the "Measure" pass) of a layout update.
+        ///     Updates the DesiredSize of a UIElement.
+        ///     Derrived elements call this method from their own MeasureOverride implementations to form a recursive layout update.
+        ///     Calling this method constitutes the first pass (the "Measure" pass) of a layout update.
         /// </summary>
         /// <param name = "availableSize">
-        ///   The available space that a parent element can allocate a child element.
-        ///   A child element can request a larger space than what is available; the provided size might be accommodated.
+        ///     The available space that a parent element can allocate a child element.
+        ///     A child element can request a larger space than what is available; the provided size might be accommodated.
         /// </param>
         public void Measure(Size availableSize)
         {
@@ -340,6 +350,19 @@
             }
         }
 
+        public BindingExpression SetBinding(XpfDependencyProperty dependencyProperty, Binding binding)
+        {
+            BindingExpression bindingExpression;
+            if (!this.bindings.TryGetValue(dependencyProperty, out bindingExpression))
+            {
+                bindingExpression = new BindingExpression(this, dependencyProperty);
+                this.bindings.Add(dependencyProperty, bindingExpression);
+            }
+
+            bindingExpression.SetBinding(binding);
+            return bindingExpression;
+        }
+
         public bool TryGetRenderer(out IRenderer renderer)
         {
             var rootElement = this as IRootElement;
@@ -359,7 +382,7 @@
         }
 
         /// <summary>
-        ///   When overridden in a derived class, positions child elements and determines a size for a UIElement derived class.
+        ///     When overridden in a derived class, positions child elements and determines a size for a UIElement derived class.
         /// </summary>
         /// <param name = "finalSize">The final area within the parent that this element should use to arrange itself and its children.</param>
         /// <returns>The actual size used.</returns>
@@ -369,11 +392,11 @@
         }
 
         /// <summary>
-        ///   When overridden in a derived class, measures the size in layout required for child elements and determines a size for the UIElement-derived class.
+        ///     When overridden in a derived class, measures the size in layout required for child elements and determines a size for the UIElement-derived class.
         /// </summary>
         /// <param name = "availableSize">
-        ///   The available size that this element can give to child elements.
-        ///   Infinity can be specified as a value to indicate that the element will size to whatever content is available.
+        ///     The available size that this element can give to child elements.
+        ///     Infinity can be specified as a value to indicate that the element will size to whatever content is available.
         /// </param>
         /// <returns>The size that this element determines it needs during layout, based on its calculations of child element sizes.</returns>
         protected virtual Size MeasureOverride(Size availableSize)
@@ -434,12 +457,12 @@
         }
 
         /// <summary>
-        ///   Defines the template for core-level arrange layout definition.
+        ///     Defines the template for core-level arrange layout definition.
         /// </summary>
         /// <remarks>
-        ///   In WPF this method is defined on UIElement as protected virtual and has a base implementation.
-        ///   FrameworkElement (which derrives from UIElement) creates a sealed implemention, similar to the below,
-        ///   which discards UIElement's base implementation.
+        ///     In WPF this method is defined on UIElement as protected virtual and has a base implementation.
+        ///     FrameworkElement (which derrives from UIElement) creates a sealed implemention, similar to the below,
+        ///     which discards UIElement's base implementation.
         /// </remarks>
         /// <param name = "finalRect">The final area within the parent that element should use to arrange itself and its child elements.</param>
         private void ArrangeCore(Rect finalRect)
@@ -554,12 +577,12 @@
         }
 
         /// <summary>
-        ///   Implements basic measure-pass layout system behavior.
+        ///     Implements basic measure-pass layout system behavior.
         /// </summary>
         /// <remarks>
-        ///   In WPF this method is definded on UIElement as protected virtual and returns an empty Size.
-        ///   FrameworkElement (which derrives from UIElement) then creates a sealed implementation similar to the below.
-        ///   In XPF UIElement and FrameworkElement have been collapsed into a single class.
+        ///     In WPF this method is definded on UIElement as protected virtual and returns an empty Size.
+        ///     FrameworkElement (which derrives from UIElement) then creates a sealed implementation similar to the below.
+        ///     In XPF UIElement and FrameworkElement have been collapsed into a single class.
         /// </remarks>
         /// <param name = "availableSize">The available size that the parent element can give to the child elements.</param>
         /// <returns>The desired size of this element in layout.</returns>

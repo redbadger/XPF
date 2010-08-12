@@ -10,7 +10,7 @@
 
     public class Panel : UIElement
     {
-        public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty BackgroundProperty = XpfDependencyProperty.Register(
             "Background", typeof(Brush), typeof(Panel), new PropertyMetadata(null));
 
         private readonly IList<UIElement> children;
@@ -24,12 +24,12 @@
         {
             get
             {
-                return (Brush)this.GetValue(BackgroundProperty);
+                return (Brush)this.GetValue(BackgroundProperty.Value);
             }
 
             set
             {
-                this.SetValue(BackgroundProperty, value);
+                this.SetValue(BackgroundProperty.Value, value);
             }
         }
 

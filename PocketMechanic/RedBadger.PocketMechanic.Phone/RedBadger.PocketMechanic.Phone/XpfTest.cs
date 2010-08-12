@@ -1,7 +1,11 @@
 namespace RedBadger.PocketMechanic.Phone
 {
+    using System;
+    using System.ComponentModel;
+    using System.Threading;
     using System.Windows.Data;
 
+    using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -10,6 +14,8 @@ namespace RedBadger.PocketMechanic.Phone
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
+    using BindingExpression = RedBadger.Xpf.Presentation.BindingExpression;
+
     public class XpfTest : DrawableGameComponent
     {
         private RootElement rootElement;
@@ -17,6 +23,12 @@ namespace RedBadger.PocketMechanic.Phone
         private SpriteBatchAdapter spriteBatchAdapter;
 
         private SpriteFont spriteFont;
+
+        private MyBindingObject myBindingObject;
+
+        private TextBlock textBlock2;
+
+        private Timer timer;
 
         public XpfTest(Game game)
             : base(game)
@@ -80,9 +92,16 @@ namespace RedBadger.PocketMechanic.Phone
             grid.Children.Add(border);
             //stackpanel.Children.Add(border);
 
-            textBlock1.BindingFor(TextBlock.TextProperty).Is(new Binding("Time") { Source = new Clock() });
+            this.myBindingObject = new MyBindingObject();
+            textBlock1.SetBinding(
+                TextBlock.TextProperty, new Binding("MyWidth") { Source = this.myBindingObject });
 
-            var textBlock2 = new TextBlock(spriteFontAdapter) { Text = "Textblock 2" };
+            this.textBlock2 = new TextBlock(spriteFontAdapter) { Text = "Textblock 2" };
+            this.textBlock2.SetBinding(
+                TextBlock.TextProperty,
+                new Binding("MyWidth") { Source = this.myBindingObject, Mode = BindingMode.TwoWay });
+
+            this.myBindingObject.MyWidth = "100";
             border = new Border
                 {
                     Child = textBlock2, 
@@ -122,6 +141,42 @@ namespace RedBadger.PocketMechanic.Phone
                     {
                        Content = grid
                     };
+
+            Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
+                l => this.textBlock2.Text = DateTime.Now.TimeOfDay.ToString());
+
+            //GC.Collect();
         }
+
+        public class MyBindingObject : INotifyPropertyChanged
+        {
+            private string myWidth;
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            public string MyWidth
+            {
+                get
+                {
+                    return this.myWidth;
+                }
+
+                set
+                {
+                    this.myWidth = value;
+                    this.InvokePropertyChanged(new PropertyChangedEventArgs("MyWidth"));
+                }
+            }
+
+            public void InvokePropertyChanged(PropertyChangedEventArgs e)
+            {
+                PropertyChangedEventHandler handler = this.PropertyChanged;
+                if (handler != null)
+                {
+                    handler(this, e);
+                }
+            }
+        }
+
     }
 }
