@@ -73,4 +73,24 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingServiceSpecs
 
         private It should_have_the_correct_width = () => textBlock.Width.ShouldEqual(ExpectedWidth);
     }
+
+    [Subject(typeof(TextBlock), "Binding")]
+    public class when_the_width_of_a_textblock_is_set_and_the_binding_is_two_way
+    {
+        private const float ExpectedWidth = 100f;
+
+        private static readonly BindingObject bindingObject = new BindingObject();
+
+        private static TextBlock textBlock;
+
+        private Establish context = () =>
+            {
+                textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
+                textBlock.BindingFor(UIElement.WidthProperty).Is(new Binding("MyWidth") { Source = bindingObject, Mode = BindingMode.TwoWay});
+            };
+
+        private Because of = () => textBlock.Width = ExpectedWidth;
+
+        private It should_update_the_bound_property = () => bindingObject.MyWidth.ShouldEqual(ExpectedWidth);
+    }
 }
