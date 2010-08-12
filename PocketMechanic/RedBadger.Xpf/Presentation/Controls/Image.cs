@@ -6,6 +6,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     using RedBadger.Xpf.Presentation.Media;
 
+    using Rect = RedBadger.Xpf.Presentation.Rect;
     using Size = RedBadger.Xpf.Presentation.Size;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
@@ -74,6 +75,11 @@ namespace RedBadger.Xpf.Presentation.Controls
         protected override Size MeasureOverride(Size availableSize)
         {
             return this.GetScaledImageSize(availableSize);
+        }
+
+        protected override void OnRender(IDrawingContext drawingContext)
+        {
+            drawingContext.DrawImage(this.Source, new Rect(this.RenderSize));
         }
 
         private static void SourcePropertyChangedCallback(

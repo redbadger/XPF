@@ -203,6 +203,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\SpriteFontJob.cs">
       <Link>Presentation\Media\SpriteFontJob.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\SpriteImageJob.cs">
+      <Link>Presentation\Media\SpriteImageJob.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\SpriteTextureJob.cs">
       <Link>Presentation\Media\SpriteTextureJob.cs</Link>
     </Compile>

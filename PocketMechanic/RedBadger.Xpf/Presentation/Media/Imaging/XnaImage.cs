@@ -16,8 +16,16 @@ namespace RedBadger.Xpf.Presentation.Media.Imaging
             }
 
             this.texture = texture;
-            this.PixelHeight = this.texture.Height;
-            this.PixelWidth = this.texture.Width;
+            this.PixelHeight = this.Texture.Height;
+            this.PixelWidth = this.Texture.Width;
+        }
+
+        public ITexture2D Texture
+        {
+            get
+            {
+                return this.texture;
+            }
         }
     }
 }

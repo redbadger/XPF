@@ -64,6 +64,11 @@
             }
         }
 
+        public void DrawImage(ImageSource imageSource, Rect rect)
+        {
+            this.jobs.Add(new SpriteImageJob(imageSource, rect));
+        }
+
         public void DrawRectangle(Rect rect, Brush brush)
         {
             this.jobs.Add(new SpriteTextureJob(this.primitivesService.SinglePixel, rect, brush));

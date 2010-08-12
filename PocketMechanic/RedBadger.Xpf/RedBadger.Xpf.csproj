@@ -100,6 +100,7 @@
     <Compile Include="Presentation\Media\IDrawingContext.cs" />
     <Compile Include="Presentation\Media\ISpriteJob.cs" />
     <Compile Include="Presentation\Media\SpriteFontJob.cs" />
+    <Compile Include="Presentation\Media\SpriteImageJob.cs" />
     <Compile Include="Presentation\Media\SpriteTextureJob.cs" />
     <Compile Include="Presentation\Media\Stretch.cs" />
     <Compile Include="Presentation\Media\ImageSource.cs" />

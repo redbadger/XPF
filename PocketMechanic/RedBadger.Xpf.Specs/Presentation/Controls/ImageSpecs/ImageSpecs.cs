@@ -23,6 +23,27 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ImageSpecs
 
     using It = Machine.Specifications.It;
 
+    public abstract class an_image
+    {
+        protected static Mock<IDrawingContext> DrawingContext;
+
+        protected static Image Image;
+
+        protected static Mock<RootElement> RootElement;
+
+        private static Mock<IRenderer> renderer;
+
+        private Establish context = () =>
+            {
+                renderer = new Mock<IRenderer>();
+                DrawingContext = new Mock<IDrawingContext>();
+                renderer.Setup(r => r.GetDrawingContext(Moq.It.IsAny<IElement>())).Returns(DrawingContext.Object);
+                RootElement = new Mock<RootElement>(renderer.Object, new Rect(new Size(100, 100))) { CallBase = true };
+                Image = new Image();
+                RootElement.Object.Content = Image;
+            };
+    }
+
     public abstract class a_smaller_Image
     {
         protected static readonly Size AvailableSize = new Size(9, 20);
@@ -373,5 +394,30 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ImageSpecs
         private It should_invalidate_arrange = () => Image.IsArrangeValid.ShouldBeFalse();
 
         private It should_invalidate_measure = () => Image.IsMeasureValid.ShouldBeFalse();
+    }
+
+    [Subject(typeof(Image), "Stretch")]
+    public class when_an_image_source_is_specified : an_image
+    {
+        private static XnaImage imageSource;
+
+        private Because of = () =>
+            {
+                imageSource = new XnaImage(new Mock<ITexture2D>().Object);
+                Image.Source = imageSource;
+                RootElement.Object.Update();
+                RootElement.Object.Draw();
+            };
+
+        private It should_render_the_image =
+            () => DrawingContext.Verify(drawingContext => drawingContext.DrawImage(imageSource, Moq.It.IsAny<Rect>()));
+
+        private It should_render_the_image_with_the_correct_size =
+            () =>
+            DrawingContext.Verify(
+                drawingContext =>
+                drawingContext.DrawImage(
+                    Moq.It.IsAny<ImageSource>(), 
+                    Moq.It.Is<Rect>(rect => rect.X == 0 && rect.Y == 0 && rect.Size == Image.RenderSize)));
     }
 }
