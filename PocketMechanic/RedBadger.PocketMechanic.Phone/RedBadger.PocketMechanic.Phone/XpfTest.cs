@@ -13,18 +13,17 @@ namespace RedBadger.PocketMechanic.Phone
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
-
-    using BindingExpression = RedBadger.Xpf.Presentation.BindingExpression;
+    using RedBadger.Xpf.Presentation.Media.Imaging;
 
     public class XpfTest : DrawableGameComponent
     {
+        private MyBindingObject myBindingObject;
+
         private RootElement rootElement;
 
         private SpriteBatchAdapter spriteBatchAdapter;
 
         private SpriteFont spriteFont;
-
-        private MyBindingObject myBindingObject;
 
         private TextBlock textBlock2;
 
@@ -53,6 +52,7 @@ namespace RedBadger.PocketMechanic.Phone
         protected override void LoadContent()
         {
             this.spriteFont = this.Game.Content.Load<SpriteFont>("SpriteFont");
+            var badger = this.Game.Content.Load<Texture2D>("badger");
             this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
             var spriteFontAdapter = new SpriteFontAdapter(this.spriteFont);
 
@@ -61,10 +61,10 @@ namespace RedBadger.PocketMechanic.Phone
             grid.ColumnDefinitions.Add(column1);
             grid.ColumnDefinitions.Add(new ColumnDefinition());
             grid.RowDefinitions.Add(new RowDefinition());
-            grid.RowDefinitions.Add(new RowDefinition());
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100) });
 
+            var stackpanel = new StackPanel { Orientation = Orientation.Horizontal };
 
-            var stackpanel = new StackPanel() { Orientation = Orientation.Horizontal };
             /*
             var sb = new Storyboard();
             var doubleAnimation = new DoubleAnimation()
@@ -90,38 +90,49 @@ namespace RedBadger.PocketMechanic.Phone
 
             Grid.SetColumn(border, 0);
             grid.Children.Add(border);
-            //stackpanel.Children.Add(border);
 
+            // stackpanel.Children.Add(border);
             this.myBindingObject = new MyBindingObject();
-            textBlock1.SetBinding(
-                TextBlock.TextProperty, new Binding("MyWidth") { Source = this.myBindingObject });
+            textBlock1.SetBinding(TextBlock.TextProperty, new Binding("MyWidth") { Source = this.myBindingObject });
 
             this.textBlock2 = new TextBlock(spriteFontAdapter) { Text = "Textblock 2" };
             this.textBlock2.SetBinding(
-                TextBlock.TextProperty,
+                TextBlock.TextProperty, 
                 new Binding("MyWidth") { Source = this.myBindingObject, Mode = BindingMode.TwoWay });
 
             this.myBindingObject.MyWidth = "100";
             border = new Border
                 {
-                    Child = textBlock2, 
+                    Child = this.textBlock2, 
                     BorderBrush = new SolidColorBrush(Color.Red), 
                     BorderThickness = new Thickness(20), 
                     Background = new SolidColorBrush(Color.Aquamarine)
                 };
             Grid.SetColumn(border, 1);
             grid.Children.Add(border);
-            //stackpanel.Children.Add(border);
 
-            var textBlock3 = new TextBlock(spriteFontAdapter) { Text = "TextBlock 3" };
+            // stackpanel.Children.Add(border);
+            var textBlock3 = new TextBlock(spriteFontAdapter)
+                {
+                    Text = "TextBlock 3", 
+                    Background = new SolidColorBrush(Color.Blue), 
+                    Padding = new Thickness(10, 10), 
+                    HorizontalAlignment = HorizontalAlignment.Right, 
+                    VerticalAlignment = VerticalAlignment.Bottom
+                };
             Grid.SetColumn(textBlock3, 0);
             Grid.SetRow(textBlock3, 1);
             grid.Children.Add(textBlock3);
 
-            var textBlock4 = new TextBlock(spriteFontAdapter) { Text = "TextBlock 4" };
-            Grid.SetColumn(textBlock4, 1);
-            Grid.SetRow(textBlock4, 1);
-            grid.Children.Add(textBlock4);
+            var image = new Image
+                {
+                    Source = new XnaImage(new Texture2DAdapter(badger)), 
+                    Stretch = Stretch.Fill, 
+                    StretchDirection = StretchDirection.DownOnly
+                };
+            Grid.SetColumn(image, 1);
+            Grid.SetRow(image, 1);
+            grid.Children.Add(image);
 
             /*
             var textBlock5 = new TextBlock(spriteFontAdapter) { Text = "TextBlock 5!" };
@@ -139,13 +150,13 @@ namespace RedBadger.PocketMechanic.Phone
                 new RootElement(
                     new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice)), viewPort)
                     {
-                       Content = grid
+                       Content = grid 
                     };
 
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
                 l => this.textBlock2.Text = DateTime.Now.TimeOfDay.ToString());
 
-            //GC.Collect();
+            // GC.Collect();
         }
 
         public class MyBindingObject : INotifyPropertyChanged
@@ -177,6 +188,5 @@ namespace RedBadger.PocketMechanic.Phone
                 }
             }
         }
-
     }
 }

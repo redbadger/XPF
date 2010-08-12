@@ -131,6 +131,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Grid.cs">
       <Link>Presentation\Controls\Grid.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Image.cs">
+      <Link>Presentation\Controls\Image.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Panel.cs">
       <Link>Presentation\Controls\Panel.cs</Link>
     </Compile>
