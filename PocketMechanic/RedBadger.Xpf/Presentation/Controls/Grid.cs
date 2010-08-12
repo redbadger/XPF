@@ -144,6 +144,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             foreach (DefinitionBase definition in definitions)
             {
+                definition.MinLength = 0f;
                 float availableLength = 0f;
                 float userMinLength = definition.UserMinLength;
                 float userMaxLength = definition.UserMaxLength;

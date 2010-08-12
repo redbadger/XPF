@@ -6,8 +6,8 @@
 
     public class Renderer : IRenderer
     {
-        private readonly Dictionary<IElement, IDrawingContext> drawingContexts =
-            new Dictionary<IElement, IDrawingContext>();
+        private readonly Dictionary<IElement, DrawingContext> drawingContexts =
+            new Dictionary<IElement, DrawingContext>();
 
         private readonly IPrimitivesService primitivesService;
 
@@ -21,9 +21,12 @@
             this.primitivesService = primitivesService;
         }
 
-        public void Clear()
+        public void ClearInvalidDrawingContexts()
         {
-            this.drawingContexts.Clear();
+            foreach (DrawingContext drawingContext in this.drawingContexts.Values)
+            {
+                drawingContext.ClearIfInvalid();
+            }
         }
 
         public void Draw()
@@ -36,7 +39,7 @@
 
         public IDrawingContext GetDrawingContext(IElement element)
         {
-            IDrawingContext drawingContext;
+            DrawingContext drawingContext;
 
             if (this.drawingContexts.TryGetValue(element, out drawingContext))
             {

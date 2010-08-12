@@ -29,7 +29,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         internal float FinalOffset { get; set; }
 
-        internal float MinLength { get; private set; }
+        internal float MinLength { get; set; }
 
         internal GridLength UserLength
         {

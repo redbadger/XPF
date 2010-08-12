@@ -55,6 +55,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.RootElementSpecs
                 RootElement.Update();
             };
 
-        private It should_clear_the_renderer = () => Renderer.Verify(renderer => renderer.Clear());
+        private It should_clear_the_renderer = () => Renderer.Verify(renderer => renderer.ClearInvalidDrawingContexts());
     }
 }

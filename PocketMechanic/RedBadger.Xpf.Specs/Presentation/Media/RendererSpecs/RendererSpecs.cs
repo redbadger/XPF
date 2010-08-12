@@ -60,7 +60,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
     }
 
     [Subject(typeof(Renderer))]
-    public class after_clearing : a_Renderer
+    public class when_a_renderer_contains_an_invalid_context_after_clearing : a_Renderer
     {
         private Establish context =
             () =>
@@ -69,7 +69,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
 
         private Because of = () =>
             {
-                Renderer.Clear();
+                Renderer.ClearInvalidDrawingContexts();
                 Renderer.Draw();
             };
 
@@ -78,5 +78,29 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
             SpriteBatch.Verify(
                 batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
                 Times.Never());
+    }
+
+    [Subject(typeof(Renderer))]
+    public class when_a_renderer_contains_a_valid_context_after_clearing : a_Renderer
+    {
+        private Establish context =
+            () =>
+                {
+                    var mock = new Mock<IElement>();
+                    mock.SetupGet(element => element.IsArrangeValid).Returns(true);
+                    Renderer.GetDrawingContext(mock.Object).DrawRectangle(
+                        Rect.Empty, new SolidColorBrush(Color.AliceBlue));
+                };
+
+        private Because of = () =>
+            {
+                Renderer.ClearInvalidDrawingContexts();
+                Renderer.Draw();
+            };
+
+        private It should_still_draw =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()));
     }
 }

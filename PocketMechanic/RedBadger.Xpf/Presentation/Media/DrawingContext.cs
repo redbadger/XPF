@@ -31,6 +31,19 @@
             this.primitivesService = primitivesService;
         }
 
+        public void Clear()
+        {
+            this.jobs.Clear();
+        }
+
+        public void ClearIfInvalid()
+        {
+            if (!this.element.IsArrangeValid)
+            {
+                this.Clear();
+            }
+        }
+
         public void Draw(ISpriteBatch spriteBatch)
         {
             foreach (ISpriteJob spriteJob in this.jobs)
@@ -49,11 +62,6 @@
                     spriteJob.SetAbsoluteOffset(absoluteOffset);
                 }
             }
-        }
-
-        public void Clear()
-        {
-            this.jobs.Clear();
         }
 
         public void DrawRectangle(Rect rect, Brush brush)

@@ -2,7 +2,7 @@ namespace RedBadger.Xpf.Presentation.Media
 {
     public interface IRenderer
     {
-        void Clear();
+        void ClearInvalidDrawingContexts();
 
         void Draw();
 

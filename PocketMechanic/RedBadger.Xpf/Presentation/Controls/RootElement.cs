@@ -31,7 +31,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             if (!this.IsArrangeValid)
             {
-                this.renderer.Clear();
+                this.renderer.ClearInvalidDrawingContexts();
             }
 
             this.Measure(this.viewPort.Size);

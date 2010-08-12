@@ -165,6 +165,70 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
                 TopLeftChild.Object.DesiredSize.Width + TopRightChild.Object.DesiredSize.Width);
     }
 
+    [Subject(typeof(Grid), "Measure - Auto")]
+    public class when_a_grid_has_auto_columns_and_rows_defined_and_a_child_element_gets_bigger :
+        a_Grid
+    {
+        private Establish context = () =>
+            {
+                child = new Mock<UIElement> { CallBase = true };
+                child.Object.Width = 10;
+                child.Object.Height = 20;
+                Grid.Children.Add(child.Object);
+
+                Grid.ColumnDefinitions.Add(new ColumnDefinition());
+                Grid.RowDefinitions.Add(new RowDefinition());
+
+                Grid.Measure(availableSize);
+            };
+
+        private Because of = () =>
+            {
+                child.Object.Width = 30;
+                child.Object.Height = 40;
+
+                Grid.Measure(availableSize);
+            };
+
+        private It should_adjust_its_desired_size_accordingly = () => Grid.DesiredSize.ShouldEqual(new Size(30, 40));
+
+        private static Mock<UIElement> child;
+
+        private static readonly Size availableSize = new Size(100, 100);
+    }
+
+    [Subject(typeof(Grid), "Measure - Auto")]
+    public class when_a_grid_has_auto_columns_and_rows_defined_and_a_child_element_gets_smaller :
+        a_Grid
+    {
+        private Establish context = () =>
+            {
+                child = new Mock<UIElement> { CallBase = true };
+                child.Object.Width = 30;
+                child.Object.Height = 40;
+                Grid.Children.Add(child.Object);
+
+                Grid.ColumnDefinitions.Add(new ColumnDefinition());
+                Grid.RowDefinitions.Add(new RowDefinition());
+
+                Grid.Measure(availableSize);
+            };
+
+        private Because of = () =>
+            {
+                child.Object.Width = 10;
+                child.Object.Height = 20;
+
+                Grid.Measure(availableSize);
+            };
+
+        private It should_adjust_its_desired_size_accordingly = () => Grid.DesiredSize.ShouldEqual(new Size(10, 20));
+
+        private static Mock<UIElement> child;
+
+        private static readonly Size availableSize = new Size(100, 100);
+    }
+
     [Subject(typeof(Grid), "Measure - Pixel")]
     public class when_there_is_a_column_with_pixel_width : a_Grid
     {
@@ -223,7 +287,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
             () => Grid.DesiredSize.Width.ShouldEqual(child.Object.DesiredSize.Width);
     }
 
-    [Subject(typeof(Grid), "Measure - Auto")]
+    [Subject(typeof(Grid), "Measure - Pixel")]
     public class when_measuring_a_grid_with_two_rows_and_two_columns_both_of_pixel_values :
         a_Grid_with_two_rows_and_two_columns
     {
