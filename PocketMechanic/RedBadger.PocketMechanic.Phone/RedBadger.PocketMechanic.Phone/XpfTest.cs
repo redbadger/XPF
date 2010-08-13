@@ -94,10 +94,10 @@ namespace RedBadger.PocketMechanic.Phone
 
             this.textBlock2 = new TextBlock(spriteFontAdapter) { Text = "Textblock 2" };
             this.textBlock2.SetBinding(
-                TextBlock.TextProperty, 
+                TextBlock.TextProperty,
                 new Binding("MyWidth") { Source = this.myBindingObject, Mode = BindingMode.TwoWay });
 
-            this.myBindingObject.MyWidth = "100";
+            this.myBindingObject.MyWidth = 100;
             border = new Border
                 {
                     Child = this.textBlock2, 
@@ -124,7 +124,7 @@ namespace RedBadger.PocketMechanic.Phone
             var image = new Image
                 {
                     Source = new XnaImage(new Texture2DAdapter(badger)), 
-                    Stretch = Stretch.Fill
+                    Stretch = Stretch.None
                 };
             Grid.SetColumn(image, 1);
             Grid.SetRow(image, 1);
@@ -150,18 +150,18 @@ namespace RedBadger.PocketMechanic.Phone
                     };
             var clock = new Clock();
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
-                l => this.textBlock2.Text = clock.Time);
+                l => this.textBlock2.Text = DateTime.Now.Second.ToString());
 
             // GC.Collect();
         }
 
         public class MyBindingObject : INotifyPropertyChanged
         {
-            private string myWidth;
+            private int myWidth;
 
             public event PropertyChangedEventHandler PropertyChanged;
 
-            public string MyWidth
+            public int MyWidth
             {
                 get
                 {

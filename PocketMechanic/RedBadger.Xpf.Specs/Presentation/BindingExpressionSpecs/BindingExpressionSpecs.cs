@@ -11,6 +11,7 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
 {
+    using System;
     using System.ComponentModel;
     using System.Windows.Data;
 
@@ -91,7 +92,8 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
                 myBindingObject = new MyBindingObject();
                 textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
                 textBlock.SetBinding(
-                    UIElement.WidthProperty, new Binding("MyWidth") { Source = myBindingObject, Mode = BindingMode.TwoWay });
+                    UIElement.WidthProperty, 
+                    new Binding("MyWidth") { Source = myBindingObject, Mode = BindingMode.TwoWay });
             };
 
         private Because of = () => textBlock.Width = ExpectedWidth;
@@ -153,4 +155,59 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
 
         private It should_not_use_the_binding = () => float.IsNaN(textBlock.Width).ShouldBeTrue();
     }
+
+    [Subject(typeof(BindingExpression), "Binding Mode")]
+    public class when_the_binding_mode_is_default
+    {
+        private static Exception exception;
+
+        private static Mock<UIElement> textBlock;
+
+        private Establish context = () => textBlock = new Mock<UIElement> { CallBase = true };
+
+        private Because of =
+            () =>
+            exception =
+            Catch.Exception(
+                () => textBlock.Object.SetBinding(UIElement.WidthProperty, new Binding { Mode = BindingMode.Default }));
+
+        private It should_throw_an_exception = () => exception.ShouldBeOfType<NotSupportedException>();
+    }
+
+    [Subject(typeof(BindingExpression), "Binding Mode")]
+    public class when_the_binding_mode_is_one_time
+    {
+        private static Exception exception;
+
+        private static Mock<UIElement> textBlock;
+
+        private Establish context = () => textBlock = new Mock<UIElement> { CallBase = true };
+
+        private Because of =
+            () =>
+            exception =
+            Catch.Exception(
+                () => textBlock.Object.SetBinding(UIElement.WidthProperty, new Binding { Mode = BindingMode.OneTime }));
+
+        private It should_throw_an_exception = () => exception.ShouldBeOfType<NotSupportedException>();
+    }
+
+    [Subject(typeof(BindingExpression), "Binding Mode")]
+    public class when_the_binding_mode_is_one_way_to_source
+    {
+        private static Exception exception;
+
+        private static Mock<UIElement> textBlock;
+
+        private Establish context = () => textBlock = new Mock<UIElement> { CallBase = true };
+
+        private Because of =
+            () =>
+            exception =
+            Catch.Exception(
+                () => textBlock.Object.SetBinding(UIElement.WidthProperty, new Binding { Mode = BindingMode.OneWayToSource }));
+
+        private It should_throw_an_exception = () => exception.ShouldBeOfType<NotSupportedException>();
+    }
+
 }

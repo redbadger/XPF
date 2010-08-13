@@ -6,7 +6,7 @@ namespace RedBadger.Xpf.Presentation
 
     internal sealed class PropertyChangedNotifier : DependencyObject, IDisposable
     {
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
+        public static readonly XpfDependencyProperty ValueProperty = XpfDependencyProperty.Register(
             "Value", typeof(object), typeof(PropertyChangedNotifier), new PropertyMetadata(null, OnPropertyChanged));
 
         private readonly BindingExpression bindingExpression;
@@ -30,7 +30,7 @@ namespace RedBadger.Xpf.Presentation
 
             this.propertySource = new WeakReference(propertySource);
 
-            this.bindingExpression = new BindingExpression(this, new XpfDependencyProperty(ValueProperty, "Value"));
+            this.bindingExpression = new BindingExpression(this, ValueProperty);
             var binding = new Binding(property.Name) { Mode = BindingMode.OneWay, Source = propertySource };
             this.bindingExpression.SetBinding(binding);
 
@@ -63,12 +63,12 @@ namespace RedBadger.Xpf.Presentation
         {
             get
             {
-                return this.GetValue(ValueProperty);
+                return this.GetValue(ValueProperty.Value);
             }
 
             set
             {
-                this.SetValue(ValueProperty, value);
+                this.SetValue(ValueProperty.Value, value);
             }
         }
 
@@ -93,7 +93,7 @@ namespace RedBadger.Xpf.Presentation
             {
                 if (disposing)
                 {
-                    this.ClearValue(ValueProperty);
+                    this.ClearValue(ValueProperty.Value);
                 }
 
                 this.isDisposed = true;

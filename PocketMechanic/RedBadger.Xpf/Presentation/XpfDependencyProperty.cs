@@ -5,13 +5,16 @@
 
     public class XpfDependencyProperty
     {
-        public XpfDependencyProperty(DependencyProperty dependencyProperty, string name)
+        private XpfDependencyProperty(DependencyProperty dependencyProperty, string name, Type propertyType)
         {
             this.Value = dependencyProperty;
             this.Name = name;
+            this.PropertyType = propertyType;
         }
 
         public string Name { get; private set; }
+
+        public Type PropertyType { get; private set; }
 
         public DependencyProperty Value { get; private set; }
 
@@ -19,7 +22,7 @@
             string name, Type propertyType, Type ownerType, PropertyMetadata typeMetadata)
         {
             return new XpfDependencyProperty(
-                DependencyProperty.Register(name, propertyType, ownerType, typeMetadata), name);
+                DependencyProperty.Register(name, propertyType, ownerType, typeMetadata), name, propertyType);
         }
 
         public static XpfDependencyProperty RegisterAttached(
@@ -27,7 +30,7 @@
         {
             return
                 new XpfDependencyProperty(
-                    DependencyProperty.RegisterAttached(name, propertyType, ownerType, typeMetadata), name);
+                    DependencyProperty.RegisterAttached(name, propertyType, ownerType, typeMetadata), name, propertyType);
         }
     }
 }
