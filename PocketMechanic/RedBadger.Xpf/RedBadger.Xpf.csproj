@@ -90,6 +90,7 @@
     <Compile Include="Internal\UIElementPropertyChangedCallbacks.cs" />
     <Compile Include="Internal\Vector2Extensions.cs" />
     <Compile Include="Presentation\BindingExpression.cs" />
+    <Compile Include="Presentation\Controls\Button.cs" />
     <Compile Include="Presentation\Controls\StretchDirection.cs" />
     <Compile Include="Presentation\Controls\Viewbox.cs" />
     <Compile Include="Presentation\IRootElement.cs" />
