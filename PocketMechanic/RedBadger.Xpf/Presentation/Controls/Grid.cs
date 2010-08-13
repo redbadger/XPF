@@ -108,9 +108,9 @@ namespace RedBadger.Xpf.Presentation.Controls
                     int rowIndex = this.cells[i].RowIndex;
 
                     var finalRect = new Rect(
-                        this.widthDefinitions[columnIndex].FinalOffset,
-                        this.heightDefinitions[rowIndex].FinalOffset,
-                        this.widthDefinitions[columnIndex].FinalLength,
+                        this.widthDefinitions[columnIndex].FinalOffset, 
+                        this.heightDefinitions[rowIndex].FinalOffset, 
+                        this.widthDefinitions[columnIndex].FinalLength, 
                         this.heightDefinitions[rowIndex].FinalLength);
 
                     child.Arrange(finalRect);
@@ -191,8 +191,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
             if (cumulativeLength.IsGreaterThan(finalLength))
             {
-                throw new NotImplementedException(
-                    "Calculated length is greater than final length and needs redistributing.");
+                // TODO: deal with redistributing the extra length when gridlenth star is implemented
             }
 
             definitions[0].FinalOffset = 0.0f;

@@ -58,7 +58,7 @@ namespace RedBadger.PocketMechanic.Phone
             grid.ColumnDefinitions.Add(column1);
             grid.ColumnDefinitions.Add(new ColumnDefinition());
             grid.RowDefinitions.Add(new RowDefinition());
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(300) });
 
             var stackpanel = new StackPanel { Orientation = Orientation.Horizontal };
 
@@ -124,7 +124,7 @@ namespace RedBadger.PocketMechanic.Phone
             var image = new Image
                 {
                     Source = new XnaImage(new Texture2DAdapter(badger)), 
-                    Stretch = Stretch.Uniform
+                    Stretch = Stretch.Fill
                 };
             Grid.SetColumn(image, 1);
             Grid.SetRow(image, 1);
