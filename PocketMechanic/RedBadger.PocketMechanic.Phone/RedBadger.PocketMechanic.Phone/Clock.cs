@@ -16,7 +16,7 @@
             this.timer.ObserveOnDispatcher().Subscribe(Observer.Create<long>(l =>
                 {
                     DateTime dateTime = DateTime.Now;
-                    this.Time = dateTime.Second % 2 == 0 ? dateTime.ToString() : dateTime.ToShortTimeString();
+                    this.Time = dateTime.Second % 2 == 0 ? dateTime.ToLongTimeString() : dateTime.ToShortTimeString();
                 }));
         }
 

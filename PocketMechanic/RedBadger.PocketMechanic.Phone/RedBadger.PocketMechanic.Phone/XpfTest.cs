@@ -2,7 +2,6 @@ namespace RedBadger.PocketMechanic.Phone
 {
     using System;
     using System.ComponentModel;
-    using System.Threading;
     using System.Windows.Data;
 
     using Microsoft.Phone.Reactive;
@@ -26,8 +25,6 @@ namespace RedBadger.PocketMechanic.Phone
         private SpriteFont spriteFont;
 
         private TextBlock textBlock2;
-
-        private Timer timer;
 
         public XpfTest(Game game)
             : base(game)
@@ -127,8 +124,7 @@ namespace RedBadger.PocketMechanic.Phone
             var image = new Image
                 {
                     Source = new XnaImage(new Texture2DAdapter(badger)), 
-                    Stretch = Stretch.Fill, 
-                    StretchDirection = StretchDirection.DownOnly
+                    Stretch = Stretch.Uniform
                 };
             Grid.SetColumn(image, 1);
             Grid.SetRow(image, 1);
@@ -152,9 +148,9 @@ namespace RedBadger.PocketMechanic.Phone
                     {
                        Content = grid 
                     };
-
+            var clock = new Clock();
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
-                l => this.textBlock2.Text = DateTime.Now.TimeOfDay.ToString());
+                l => this.textBlock2.Text = clock.Time);
 
             // GC.Collect();
         }
