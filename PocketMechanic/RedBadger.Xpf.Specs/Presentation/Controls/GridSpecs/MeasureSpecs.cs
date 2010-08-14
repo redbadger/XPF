@@ -19,7 +19,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 
     using RedBadger.Xpf.Presentation.Controls;
 
-    using GridLength = RedBadger.Xpf.Presentation.GridLength;
     using It = Machine.Specifications.It;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 

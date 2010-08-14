@@ -17,7 +17,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 
     using RedBadger.Xpf.Presentation.Controls;
 
-    using GridLength = RedBadger.Xpf.Presentation.GridLength;
     using Vector = RedBadger.Xpf.Presentation.Vector;
 
     [Subject(typeof(Grid), "Arrange")]

@@ -11,9 +11,10 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.DefinitionBaseSpecs
 {
+    using System.Windows;
+
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
     [Subject(typeof(DefinitionBase))]

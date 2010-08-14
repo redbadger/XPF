@@ -2,8 +2,6 @@
 {
     using System.Windows;
 
-    using GridLength = RedBadger.Xpf.Presentation.GridLength;
-
     public class ColumnDefinition : DefinitionBase
     {
         public static readonly XpfDependencyProperty MaxWidthProperty = XpfDependencyProperty.Register(

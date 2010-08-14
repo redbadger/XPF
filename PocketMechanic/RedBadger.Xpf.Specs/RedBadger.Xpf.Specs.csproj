@@ -93,7 +93,6 @@
     <Compile Include="Presentation\Controls\TextBlockSpecs\TextBlockSpecs.cs" />
     <Compile Include="Presentation\Controls\PanelSpecs\PanelSpecs.cs" />
     <Compile Include="Presentation\DefinitionBaseSpecs\DefinitionBaseSpecs.cs" />
-    <Compile Include="Presentation\GridLengthSpecs\GridLengthSpecs.cs" />
     <Compile Include="Presentation\Media\DrawingContextSpecs\Contexts.cs" />
     <Compile Include="Presentation\Media\DrawingContextSpecs\DrawingSpecs.cs" />
     <Compile Include="Presentation\Media\Imaging\XnaImageSpecs.cs" />

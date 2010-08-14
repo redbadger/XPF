@@ -3,9 +3,6 @@ namespace RedBadger.Xpf.Presentation.Controls
     using System;
     using System.Windows;
 
-    using GridLength = RedBadger.Xpf.Presentation.GridLength;
-    using GridUnitType = RedBadger.Xpf.Presentation.GridUnitType;
-
     public abstract class DefinitionBase : DependencyObject
     {
         private readonly DefinitionType definitionType;

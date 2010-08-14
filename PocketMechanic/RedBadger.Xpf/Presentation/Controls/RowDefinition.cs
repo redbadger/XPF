@@ -2,8 +2,6 @@
 {
     using System.Windows;
 
-    using GridLength = RedBadger.Xpf.Presentation.GridLength;
-
     public class RowDefinition : DefinitionBase
     {
         public static readonly XpfDependencyProperty HeightProperty = XpfDependencyProperty.Register(

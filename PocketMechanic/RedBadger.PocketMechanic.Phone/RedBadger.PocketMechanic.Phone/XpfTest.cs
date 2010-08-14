@@ -16,7 +16,6 @@ namespace RedBadger.PocketMechanic.Phone
     using RedBadger.Xpf.Presentation.Media;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
-    using GridLength = RedBadger.Xpf.Presentation.GridLength;
     using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
     using Stretch = RedBadger.Xpf.Presentation.Media.Stretch;
