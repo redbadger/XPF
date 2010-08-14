@@ -1,18 +1,17 @@
 ﻿namespace RedBadger.Xpf.Presentation
 {
+    using System.Windows;
     using System.Windows.Data;
-
-    using Microsoft.Xna.Framework;
 
     using RedBadger.Xpf.Presentation.Media;
 
     public interface IElement
     {
-        Vector2 AbsoluteOffset { get; }
+        Vector AbsoluteOffset { get; }
 
         Size DesiredSize { get; }
 
-        float Height { get; set; }
+        double Height { get; set; }
 
         /// <summary>
         ///     Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
@@ -24,11 +23,11 @@
 
         bool IsMeasureValid { get; }
 
+        Thickness Margin { get; set; }
+
         IElement VisualParent { get; set; }
 
-        float Width { get; set; }
-
-        Thickness Margin { get; set; }
+        double Width { get; set; }
 
         /// <summary>
         ///     Positions child elements and determines a size for a UIElement.

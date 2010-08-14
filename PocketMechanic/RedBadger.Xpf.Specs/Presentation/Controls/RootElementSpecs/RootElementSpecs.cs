@@ -27,7 +27,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.RootElementSpecs
     {
         protected static RootElement RootElement;
 
-        protected static Rect ViewPort = new Rect(new Vector2(10, 20), new Size(100, 200));
+        protected static Rect ViewPort = new Rect(new Vector(10, 20), new Size(100, 200));
 
         private Establish context = () =>
             {

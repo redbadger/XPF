@@ -144,16 +144,16 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             foreach (DefinitionBase definition in definitions)
             {
-                definition.MinLength = 0f;
-                float availableLength = 0f;
-                float userMinLength = definition.UserMinLength;
-                float userMaxLength = definition.UserMaxLength;
+                definition.MinLength = 0;
+                double availableLength = 0;
+                double userMinLength = definition.UserMinLength;
+                double userMaxLength = definition.UserMaxLength;
 
                 switch (definition.UserLength.GridUnitType)
                 {
                     case GridUnitType.Auto:
                         definition.LengthType = GridUnitType.Auto;
-                        availableLength = float.PositiveInfinity;
+                        availableLength = double.PositiveInfinity;
                         break;
                     case GridUnitType.Pixel:
                         definition.LengthType = GridUnitType.Pixel;
@@ -167,13 +167,13 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private static void SetFinalSize(DefinitionBase[] definitions, float finalLength)
+        private static void SetFinalSize(DefinitionBase[] definitions, double finalLength)
         {
-            float cumulativeLength = 0.0f;
+            double cumulativeLength = 0.0;
 
             foreach (DefinitionBase definition in definitions)
             {
-                float minLength = 0.0f;
+                double minLength = 0.0;
                 switch (definition.UserLength.GridUnitType)
                 {
                     case GridUnitType.Auto:
@@ -194,7 +194,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 // TODO: deal with redistributing the extra length when gridlenth star is implemented
             }
 
-            definitions[0].FinalOffset = 0.0f;
+            definitions[0].FinalOffset = 0.0;
             for (int i = 1; i < definitions.Length; i++)
             {
                 var previousDefinition = definitions[i - 1];
@@ -262,12 +262,12 @@ namespace RedBadger.Xpf.Presentation.Controls
             {
                 Cell cell = this.cells[cellIndex];
 
-                float x = cell.WidthType == GridUnitType.Auto
-                              ? float.PositiveInfinity
+                double x = cell.WidthType == GridUnitType.Auto
+                              ? double.PositiveInfinity
                               : this.widthDefinitions[cell.ColumnIndex].AvailableLength;
 
-                float y = cell.HeightType == GridUnitType.Auto
-                              ? float.PositiveInfinity
+                double y = cell.HeightType == GridUnitType.Auto
+                              ? double.PositiveInfinity
                               : this.heightDefinitions[cell.RowIndex].AvailableLength;
 
                 child.Measure(new Size(x, y));

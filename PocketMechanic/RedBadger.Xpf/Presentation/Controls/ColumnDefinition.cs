@@ -7,10 +7,10 @@
     public class ColumnDefinition : DefinitionBase
     {
         public static readonly XpfDependencyProperty MaxWidthProperty = XpfDependencyProperty.Register(
-            "MaxWidth", typeof(float), typeof(ColumnDefinition), new PropertyMetadata(float.PositiveInfinity));
+            "MaxWidth", typeof(double), typeof(ColumnDefinition), new PropertyMetadata(double.PositiveInfinity));
 
         public static readonly XpfDependencyProperty MinWidthProperty = XpfDependencyProperty.Register(
-            "MinWidth", typeof(float), typeof(ColumnDefinition), new PropertyMetadata(0f));
+            "MinWidth", typeof(double), typeof(ColumnDefinition), new PropertyMetadata(0d));
 
         public static readonly XpfDependencyProperty WidthProperty = XpfDependencyProperty.Register(
             "Width", typeof(GridLength), typeof(ColumnDefinition), new PropertyMetadata(new GridLength()));
@@ -20,11 +20,11 @@
         {
         }
 
-        public float MaxWidth
+        public double MaxWidth
         {
             get
             {
-                return (float)this.GetValue(MaxWidthProperty.Value);
+                return (double)this.GetValue(MaxWidthProperty.Value);
             }
 
             set
@@ -33,11 +33,11 @@
             }
         }
 
-        public float MinWidth
+        public double MinWidth
         {
             get
             {
-                return (float)this.GetValue(MinWidthProperty.Value);
+                return (double)this.GetValue(MinWidthProperty.Value);
             }
 
             set

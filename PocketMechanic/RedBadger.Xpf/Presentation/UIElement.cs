@@ -5,8 +5,6 @@
     using System.Windows;
     using System.Windows.Data;
 
-    using Microsoft.Xna.Framework;
-
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Presentation.Media;
 
@@ -14,9 +12,9 @@
     {
         public static readonly XpfDependencyProperty HeightProperty = XpfDependencyProperty.Register(
             "Height", 
-            typeof(float), 
-            typeof(UIElement), 
-            new PropertyMetadata(float.NaN, PropertyOfTypeFloatChangedCallback));
+            typeof(double), 
+            typeof(UIElement),
+            new PropertyMetadata(double.NaN, PropertyOfTypeDoubleChangedCallback));
 
         public static readonly XpfDependencyProperty HorizontalAlignmentProperty =
             XpfDependencyProperty.Register(
@@ -32,22 +30,22 @@
             new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         public static readonly XpfDependencyProperty MaxHeightProperty = XpfDependencyProperty.Register(
-            "MaxHeight", 
-            typeof(float), 
-            typeof(UIElement), 
-            new PropertyMetadata(float.PositiveInfinity, PropertyOfTypeFloatChangedCallback));
+            "MaxHeight",
+            typeof(double), 
+            typeof(UIElement),
+            new PropertyMetadata(double.PositiveInfinity, PropertyOfTypeDoubleChangedCallback));
 
         public static readonly XpfDependencyProperty MaxWidthProperty = XpfDependencyProperty.Register(
-            "MaxWidth", 
-            typeof(float), 
-            typeof(UIElement), 
-            new PropertyMetadata(float.PositiveInfinity, PropertyOfTypeFloatChangedCallback));
+            "MaxWidth",
+            typeof(double), 
+            typeof(UIElement),
+            new PropertyMetadata(double.PositiveInfinity, PropertyOfTypeDoubleChangedCallback));
 
         public static readonly XpfDependencyProperty MinHeightProperty = XpfDependencyProperty.Register(
-            "MinHeight", typeof(float), typeof(UIElement), new PropertyMetadata(0f, PropertyOfTypeFloatChangedCallback));
+            "MinHeight", typeof(double), typeof(UIElement), new PropertyMetadata(0d, PropertyOfTypeDoubleChangedCallback));
 
         public static readonly XpfDependencyProperty MinWidthProperty = XpfDependencyProperty.Register(
-            "MinWidth", typeof(float), typeof(UIElement), new PropertyMetadata(0f, PropertyOfTypeFloatChangedCallback));
+            "MinWidth", typeof(double), typeof(UIElement), new PropertyMetadata(0d, PropertyOfTypeDoubleChangedCallback));
 
         public static readonly XpfDependencyProperty VerticalAlignmentProperty =
             XpfDependencyProperty.Register(
@@ -57,10 +55,10 @@
                 new PropertyMetadata(VerticalAlignment.Stretch, VerticalAlignmentPropertyChangedCallback));
 
         public static readonly XpfDependencyProperty WidthProperty = XpfDependencyProperty.Register(
-            "Width", 
-            typeof(float), 
-            typeof(UIElement), 
-            new PropertyMetadata(float.NaN, PropertyOfTypeFloatChangedCallback));
+            "Width",
+            typeof(double), 
+            typeof(UIElement),
+            new PropertyMetadata(double.NaN, PropertyOfTypeDoubleChangedCallback));
 
         private readonly Dictionary<XpfDependencyProperty, BindingExpression> bindings =
             new Dictionary<XpfDependencyProperty, BindingExpression>();
@@ -69,11 +67,11 @@
 
         private Rect previousFinalRect;
 
-        public Vector2 AbsoluteOffset
+        public Vector AbsoluteOffset
         {
             get
             {
-                Vector2 absoluteOffset = this.VisualOffset;
+                Vector absoluteOffset = this.VisualOffset;
 
                 if (this.VisualParent != null)
                 {
@@ -84,7 +82,7 @@
             }
         }
 
-        public float ActualHeight
+        public double ActualHeight
         {
             get
             {
@@ -92,7 +90,7 @@
             }
         }
 
-        public float ActualWidth
+        public double ActualWidth
         {
             get
             {
@@ -102,11 +100,11 @@
 
         public Size DesiredSize { get; private set; }
 
-        public float Height
+        public double Height
         {
             get
             {
-                return (float)this.GetValue(HeightProperty.Value);
+                return (double)this.GetValue(HeightProperty.Value);
             }
 
             set
@@ -151,11 +149,11 @@
             }
         }
 
-        public float MaxHeight
+        public double MaxHeight
         {
             get
             {
-                return (float)this.GetValue(MaxHeightProperty.Value);
+                return (double)this.GetValue(MaxHeightProperty.Value);
             }
 
             set
@@ -164,11 +162,11 @@
             }
         }
 
-        public float MaxWidth
+        public double MaxWidth
         {
             get
             {
-                return (float)this.GetValue(MaxWidthProperty.Value);
+                return (double)this.GetValue(MaxWidthProperty.Value);
             }
 
             set
@@ -177,11 +175,11 @@
             }
         }
 
-        public float MinHeight
+        public double MinHeight
         {
             get
             {
-                return (float)this.GetValue(MinHeightProperty.Value);
+                return (double)this.GetValue(MinHeightProperty.Value);
             }
 
             set
@@ -190,11 +188,11 @@
             }
         }
 
-        public float MinWidth
+        public double MinWidth
         {
             get
             {
-                return (float)this.GetValue(MinWidthProperty.Value);
+                return (double)this.GetValue(MinWidthProperty.Value);
             }
 
             set
@@ -220,11 +218,11 @@
 
         public IElement VisualParent { get; set; }
 
-        public float Width
+        public double Width
         {
             get
             {
-                return (float)this.GetValue(WidthProperty.Value);
+                return (double)this.GetValue(WidthProperty.Value);
             }
 
             set
@@ -237,7 +235,7 @@
         ///     In WPF this is protected internal.  For the purposes of unit testing we've not made this protected.
         ///     TODO: implement a reflection based mechanism (for Moq?) to get back values from protected properties
         /// </remarks>
-        internal Vector2 VisualOffset { get; set; }
+        internal Vector VisualOffset { get; set; }
 
         public virtual void OnApplyTemplate()
         {
@@ -251,12 +249,12 @@
         /// <param name = "finalRect">The final size that the parent computes for the child element, provided as a Rect instance.</param>
         public void Arrange(Rect finalRect)
         {
-            if (float.IsNaN(finalRect.Width) || float.IsNaN(finalRect.Height))
+            if (double.IsNaN(finalRect.Width) || double.IsNaN(finalRect.Height))
             {
                 throw new InvalidOperationException("Width and Height must be numbers");
             }
 
-            if (float.IsPositiveInfinity(finalRect.Width) || float.IsPositiveInfinity(finalRect.Height))
+            if (double.IsPositiveInfinity(finalRect.Width) || double.IsPositiveInfinity(finalRect.Height))
             {
                 throw new InvalidOperationException("Width and Height must be less than infinity");
             }
@@ -329,7 +327,7 @@
         /// </param>
         public void Measure(Size availableSize)
         {
-            if (float.IsNaN(availableSize.Width) || float.IsNaN(availableSize.Height))
+            if (double.IsNaN(availableSize.Width) || double.IsNaN(availableSize.Height))
             {
                 throw new InvalidOperationException("AvailableSize Width or Height cannot be NaN");
             }
@@ -338,12 +336,12 @@
             {
                 Size size = this.MeasureCore(availableSize);
 
-                if (float.IsPositiveInfinity(size.Width) || float.IsPositiveInfinity(size.Height))
+                if (double.IsPositiveInfinity(size.Width) || double.IsPositiveInfinity(size.Height))
                 {
                     throw new InvalidOperationException("The implementing element returned a PositiveInfinity");
                 }
 
-                if (float.IsNaN(size.Width) || float.IsNaN(size.Height))
+                if (double.IsNaN(size.Width) || double.IsNaN(size.Height))
                 {
                     throw new InvalidOperationException("The implementing element returned NaN");
                 }
@@ -428,11 +426,11 @@
             }
         }
 
-        private static void PropertyOfTypeFloatChangedCallback(
+        private static void PropertyOfTypeDoubleChangedCallback(
             DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            var newValue = (float)args.NewValue;
-            var oldValue = (float)args.OldValue;
+            var newValue = (double)args.NewValue;
+            var oldValue = (double)args.OldValue;
 
             if (newValue.IsDifferentFrom(oldValue))
             {
@@ -474,15 +472,15 @@
             Size finalSize = finalRect.Size;
 
             Thickness margin = this.Margin;
-            float horizontalMargin = margin.Left + margin.Right;
-            float verticalMargin = margin.Top + margin.Bottom;
+            double horizontalMargin = margin.Left + margin.Right;
+            double verticalMargin = margin.Top + margin.Bottom;
 
-            finalSize.Width = Math.Max(0f, finalSize.Width - horizontalMargin);
-            finalSize.Height = Math.Max(0f, finalSize.Height - verticalMargin);
+            finalSize.Width = Math.Max(0, finalSize.Width - horizontalMargin);
+            finalSize.Height = Math.Max(0, finalSize.Height - verticalMargin);
 
             var desiredSizeWithoutMargins = new Size(
-                Math.Max(0f, this.DesiredSize.Width - horizontalMargin), 
-                Math.Max(0f, this.DesiredSize.Height - verticalMargin));
+                Math.Max(0, this.DesiredSize.Width - horizontalMargin), 
+                Math.Max(0, this.DesiredSize.Height - verticalMargin));
 
             if (finalSize.Width.IsLessThan(desiredSizeWithoutMargins.Width))
             {
@@ -506,13 +504,13 @@
 
             var minMax = new MinMax(this);
 
-            float largestWidth = Math.Max(desiredSizeWithoutMargins.Width, minMax.MaxWidth);
+            double largestWidth = Math.Max(desiredSizeWithoutMargins.Width, minMax.MaxWidth);
             if (largestWidth.IsLessThan(finalSize.Width))
             {
                 finalSize.Width = largestWidth;
             }
 
-            float largestHeight = Math.Max(desiredSizeWithoutMargins.Height, minMax.MaxHeight);
+            double largestHeight = Math.Max(desiredSizeWithoutMargins.Height, minMax.MaxHeight);
             if (largestHeight.IsLessThan(finalSize.Height))
             {
                 finalSize.Height = largestHeight;
@@ -524,18 +522,18 @@
             var inkSize = new Size(
                 Math.Min(renderSize.Width, minMax.MaxWidth), Math.Min(renderSize.Height, minMax.MaxHeight));
             var clientSize = new Size(
-                Math.Max(0f, finalRect.Width - horizontalMargin), Math.Max(0f, finalRect.Height - verticalMargin));
+                Math.Max(0, finalRect.Width - horizontalMargin), Math.Max(0, finalRect.Height - verticalMargin));
 
-            Vector2 offset = this.ComputeAlignmentOffset(clientSize, inkSize);
+            Vector offset = this.ComputeAlignmentOffset(clientSize, inkSize);
             offset.X += finalRect.X + margin.Left;
             offset.Y += finalRect.Y + margin.Top;
 
             this.VisualOffset = offset;
         }
 
-        private Vector2 ComputeAlignmentOffset(Size clientSize, Size inkSize)
+        private Vector ComputeAlignmentOffset(Size clientSize, Size inkSize)
         {
-            var vector = new Vector2();
+            var vector = new Vector();
             HorizontalAlignment horizontalAlignment = this.HorizontalAlignment;
             VerticalAlignment verticalAlignment = this.VerticalAlignment;
 
@@ -553,10 +551,10 @@
             {
                 case HorizontalAlignment.Center:
                 case HorizontalAlignment.Stretch:
-                    vector.X = (clientSize.Width - inkSize.Width) * 0.5f;
+                    vector.X = (clientSize.Width - inkSize.Width) * 0.5;
                     break;
                 case HorizontalAlignment.Left:
-                    vector.X = 0f;
+                    vector.X = 0;
                     break;
                 case HorizontalAlignment.Right:
                     vector.X = clientSize.Width - inkSize.Width;
@@ -567,13 +565,13 @@
             {
                 case VerticalAlignment.Center:
                 case VerticalAlignment.Stretch:
-                    vector.Y = (clientSize.Height - inkSize.Height) * 0.5f;
+                    vector.Y = (clientSize.Height - inkSize.Height) * 0.5;
                     return vector;
                 case VerticalAlignment.Bottom:
                     vector.Y = clientSize.Height - inkSize.Height;
                     return vector;
                 case VerticalAlignment.Top:
-                    vector.Y = 0f;
+                    vector.Y = 0;
                     break;
             }
 
@@ -595,12 +593,12 @@
             this.OnApplyTemplate();
 
             Thickness margin = this.Margin;
-            float horizontalMargin = margin.Left + margin.Right;
-            float verticalMargin = margin.Top + margin.Bottom;
+            double horizontalMargin = margin.Left + margin.Right;
+            double verticalMargin = margin.Top + margin.Bottom;
 
             var availableSizeWithoutMargins = new Size(
-                Math.Max(availableSize.Width - horizontalMargin, 0f), 
-                Math.Max(availableSize.Height - verticalMargin, 0f));
+                Math.Max(availableSize.Width - horizontalMargin, 0), 
+                Math.Max(availableSize.Height - verticalMargin, 0));
 
             var minMax = new MinMax(this);
 
@@ -618,8 +616,8 @@
                 size.Height = minMax.MaxHeight;
             }
 
-            float desiredWidth = size.Width + horizontalMargin;
-            float desiredHeight = size.Height + verticalMargin;
+            double desiredWidth = size.Width + horizontalMargin;
+            double desiredHeight = size.Height + verticalMargin;
 
             if (desiredWidth > availableSize.Width)
             {
@@ -631,7 +629,7 @@
                 desiredHeight = availableSize.Height;
             }
 
-            return new Size(Math.Max(0.0f, desiredWidth), Math.Max(0.0f, desiredHeight));
+            return new Size(Math.Max(0, desiredWidth), Math.Max(0, desiredHeight));
         }
     }
 }

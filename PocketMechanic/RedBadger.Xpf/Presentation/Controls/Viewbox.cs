@@ -1,26 +1,24 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
-    using Microsoft.Xna.Framework;
-
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Presentation.Media;
 
     public class Viewbox
     {
-        internal static Vector2 ComputeScaleFactor(
+        internal static Vector ComputeScaleFactor(
             Size availableSize, Size contentSize, Stretch stretch, StretchDirection stretchDirection)
         {
-            float scaleX = 1.0f;
-            float scaleY = 1.0f;
-            bool isWidthContrained = !float.IsPositiveInfinity(availableSize.Width);
-            bool isHeightConstrained = !float.IsPositiveInfinity(availableSize.Height);
+            double scaleX = 1.0;
+            double scaleY = 1.0;
+            bool isWidthContrained = !double.IsPositiveInfinity(availableSize.Width);
+            bool isHeightConstrained = !double.IsPositiveInfinity(availableSize.Height);
             if (stretch == Stretch.None || (!isWidthContrained && !isHeightConstrained))
             {
-                return new Vector2(scaleX, scaleY);
+                return new Vector(scaleX, scaleY);
             }
 
-            scaleX = contentSize.Width.IsCloseTo(0f) ? 0f : (availableSize.Width / contentSize.Width);
-            scaleY = contentSize.Height.IsCloseTo(0f) ? 0f : (availableSize.Height / contentSize.Height);
+            scaleX = contentSize.Width.IsCloseTo(0) ? 0 : (availableSize.Width / contentSize.Width);
+            scaleY = contentSize.Height.IsCloseTo(0) ? 0 : (availableSize.Height / contentSize.Height);
             if (!isWidthContrained)
             {
                 scaleX = scaleY;
@@ -46,33 +44,33 @@ namespace RedBadger.Xpf.Presentation.Controls
             switch (stretchDirection)
             {
                 case StretchDirection.UpOnly:
-                    if (scaleX < 1.0f)
+                    if (scaleX < 1.0)
                     {
-                        scaleX = 1.0f;
+                        scaleX = 1.0;
                     }
 
-                    if (scaleY < 1.0f)
+                    if (scaleY < 1.0)
                     {
-                        scaleY = 1.0f;
+                        scaleY = 1.0;
                     }
 
                     break;
 
                 case StretchDirection.DownOnly:
-                    if (scaleX > 1.0f)
+                    if (scaleX > 1.0)
                     {
-                        scaleX = 1.0f;
+                        scaleX = 1.0;
                     }
 
-                    if (scaleY > 1.0f)
+                    if (scaleY > 1.0)
                     {
-                        scaleY = 1.0f;
+                        scaleY = 1.0;
                     }
 
                     break;
             }
 
-            return new Vector2(scaleX, scaleY);
+            return new Vector(scaleX, scaleY);
         }
     }
 }

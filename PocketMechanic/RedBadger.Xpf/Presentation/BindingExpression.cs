@@ -46,15 +46,16 @@ namespace RedBadger.Xpf.Presentation
 
         public void SetBinding(Binding binding)
         {
-#if !WINDOWS_PHONE
-            if (binding.Mode != BindingMode.Default)
+#if WINDOWS_PHONE
+            if (binding.Mode != BindingMode.OneWay && binding.Mode != BindingMode.TwoWay)
             {
-#endif
-                if (binding.Mode != BindingMode.OneWay && binding.Mode != BindingMode.TwoWay)
-                {
-                    throw new NotSupportedException("XPF only supports OneWay and TwoWay binding.");
-                }
-#if !WINDOWS_PHONE
+                throw new NotSupportedException("XPF only supports OneWay and TwoWay binding.");
+            }
+#else
+            if (binding.Mode != BindingMode.Default && binding.Mode != BindingMode.OneWay &&
+                binding.Mode != BindingMode.TwoWay)
+            {
+                throw new NotSupportedException("XPF only supports OneWay and TwoWay binding.");
             }
 #endif
 

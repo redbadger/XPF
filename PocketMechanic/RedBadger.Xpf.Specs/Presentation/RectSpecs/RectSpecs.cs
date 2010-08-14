@@ -14,17 +14,15 @@ namespace RedBadger.Xpf.Specs.Presentation.RectSpecs
 
     using Machine.Specifications;
 
-    using Microsoft.Xna.Framework;
-
     public abstract class a_Rect
     {
-        protected const float X = 5f;
+        protected const double X = 5;
 
-        protected const float Y = 15f;
+        protected const double Y = 15;
 
-        protected const float Height = 10f;
+        protected const double Height = 10;
 
-        protected const float Width = 20f;
+        protected const double Width = 20;
 
         protected static Rect rect;
 
@@ -35,13 +33,13 @@ namespace RedBadger.Xpf.Specs.Presentation.RectSpecs
     {
         protected static Rect rect;
 
-        private Establish context = () => rect = new Rect(0f, 0f, 0f, 0f);
+        private Establish context = () => rect = new Rect(0, 0, 0, 0);
     }
 
     [Subject(typeof(Rect))]
     public class when_initialised : a_Rect
     {
-        private It should_have_the_expected_Position = () => rect.Position.ShouldEqual(new Vector2(X, Y));
+        private It should_have_the_expected_Position = () => rect.Position.ShouldEqual(new Vector(X, Y));
 
         private It should_have_the_expected_Size = () => rect.Size.ShouldEqual(new Size(Width, Height));
     }
@@ -49,9 +47,9 @@ namespace RedBadger.Xpf.Specs.Presentation.RectSpecs
     [Subject(typeof(Rect))]
     public class when_an_empty_rect_is_initialised : an_Empty_Rect
     {
-        private It should_have_a_position_at_zero_zero = () => rect.Position.ShouldEqual(new Vector2(0f, 0f));
+        private It should_have_a_position_at_zero_zero = () => rect.Position.ShouldEqual(new Vector(0, 0));
 
-        private It should_have_a_size_of_zero_zero = () => rect.Size.ShouldEqual(new Size(0f, 0f));
+        private It should_have_a_size_of_zero_zero = () => rect.Size.ShouldEqual(new Size(0, 0));
 
         private It should_be_equal_to_an_empty_rect = () => rect.ShouldEqual(Rect.Empty);
 

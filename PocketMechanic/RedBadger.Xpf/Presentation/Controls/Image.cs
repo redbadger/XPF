@@ -2,13 +2,12 @@ namespace RedBadger.Xpf.Presentation.Controls
 {
     using System.Windows;
 
-    using Microsoft.Xna.Framework;
-
     using RedBadger.Xpf.Presentation.Media;
 
     using Rect = RedBadger.Xpf.Presentation.Rect;
     using Size = RedBadger.Xpf.Presentation.Size;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
+    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public class Image : UIElement
     {
@@ -139,7 +138,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
 
             Size contentSize = source.Size;
-            Vector2 scale = Viewbox.ComputeScaleFactor(givenSize, contentSize, this.Stretch, this.StretchDirection);
+            Vector scale = Viewbox.ComputeScaleFactor(givenSize, contentSize, this.Stretch, this.StretchDirection);
             return new Size(contentSize.Width * scale.X, contentSize.Height * scale.Y);
         }
     }

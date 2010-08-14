@@ -30,7 +30,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
         private static Exception exception;
 
         private Because of =
-            () => exception = Catch.Exception(() => uiElement.Object.Arrange(new Rect(new Size(float.NaN, 0))));
+            () => exception = Catch.Exception(() => uiElement.Object.Arrange(new Rect(new Size(double.NaN, 0))));
 
         private It should_throw_a_Exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -41,7 +41,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
         private static Exception exception;
 
         private Because of =
-            () => exception = Catch.Exception(() => uiElement.Object.Arrange(new Rect(new Size(0, float.NaN))));
+            () => exception = Catch.Exception(() => uiElement.Object.Arrange(new Rect(new Size(0, double.NaN))));
 
         private It should_throw_a_Exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -53,7 +53,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Because of =
             () =>
-            exception = Catch.Exception(() => uiElement.Object.Arrange(new Rect(new Size(float.PositiveInfinity, 0))));
+            exception = Catch.Exception(() => uiElement.Object.Arrange(new Rect(new Size(double.PositiveInfinity, 0))));
 
         private It should_throw_a_Exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -65,7 +65,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Because of =
             () =>
-            exception = Catch.Exception(() => uiElement.Object.Arrange(new Rect(new Size(0, float.PositiveInfinity))));
+            exception = Catch.Exception(() => uiElement.Object.Arrange(new Rect(new Size(0, double.PositiveInfinity))));
 
         private It should_throw_a_Exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -173,7 +173,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Size clientSize = new Size(100, 100);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(25, 25);
+        private static readonly Vector expectedVisualOffset = new Vector(25, 25);
 
         private static readonly Size inkSize = new Size(50, 50);
 
@@ -190,7 +190,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Size clientSize = new Size(100, 100);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(0, 0);
+        private static readonly Vector expectedVisualOffset = new Vector(0, 0);
 
         private static readonly Size inkSize = new Size(50, 50);
 
@@ -212,7 +212,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Size clientSize = new Size(100, 100);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(25, 25);
+        private static readonly Vector expectedVisualOffset = new Vector(25, 25);
 
         private static readonly Size inkSize = new Size(50, 50);
 
@@ -234,7 +234,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Size clientSize = new Size(100, 100);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(50, 50);
+        private static readonly Vector expectedVisualOffset = new Vector(50, 50);
 
         private static readonly Size inkSize = new Size(50, 50);
 
@@ -256,7 +256,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Size clientSize = new Size(50, 50);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(0, 0);
+        private static readonly Vector expectedVisualOffset = new Vector(0, 0);
 
         private static readonly Size inkSize = new Size(100, 100);
 
@@ -273,7 +273,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Size clientSize = new Size(50, 50);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(0, 0);
+        private static readonly Vector expectedVisualOffset = new Vector(0, 0);
 
         private static readonly Size inkSize = new Size(100, 100);
 
@@ -295,7 +295,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Size clientSize = new Size(50, 50);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(-25, -25);
+        private static readonly Vector expectedVisualOffset = new Vector(-25, -25);
 
         private static readonly Size inkSize = new Size(100, 100);
 
@@ -317,7 +317,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Size clientSize = new Size(50, 50);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(-50, -50);
+        private static readonly Vector expectedVisualOffset = new Vector(-50, -50);
 
         private static readonly Size inkSize = new Size(100, 100);
 
@@ -340,7 +340,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Size clientSize = new Size(100, 100);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(10, 20);
+        private static readonly Vector expectedVisualOffset = new Vector(10, 20);
 
         private static readonly Size inkSize = new Size(50, 50);
 
@@ -364,7 +364,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Size clientSize = new Size(100, 100);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(200, 300);
+        private static readonly Vector expectedVisualOffset = new Vector(200, 300);
 
         private static readonly Size inkSize = new Size(50, 50);
 
@@ -376,7 +376,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
                 uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => uiElement.Object.Arrange(new Rect(new Vector2(200, 300), clientSize));
+        private Because of = () => uiElement.Object.Arrange(new Rect(new Vector(200, 300), clientSize));
 
         private It should_set_the_visual_offset = () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }

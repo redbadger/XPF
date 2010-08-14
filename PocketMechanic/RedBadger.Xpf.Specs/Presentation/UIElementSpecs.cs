@@ -30,7 +30,7 @@ namespace RedBadger.Xpf.Specs.Presentation
     {
         private static Exception exception;
 
-        private Because of = () => exception = Catch.Exception(() => uiElement.Measure(new Size(float.NaN, 0)));
+        private Because of = () => exception = Catch.Exception(() => uiElement.Measure(new Size(double.NaN, 0)));
 
         private It should_throw_a_Exception =
             () => exception.ShouldBeOfType<InvalidOperationException>();
@@ -41,7 +41,7 @@ namespace RedBadger.Xpf.Specs.Presentation
     {
         private static Exception exception;
 
-        private Because of = () => exception = Catch.Exception(() => uiElement.Measure(new Size(0, float.NaN)));
+        private Because of = () => exception = Catch.Exception(() => uiElement.Measure(new Size(0, double.NaN)));
 
         private It should_throw_a_Exception =
             () => exception.ShouldBeOfType<InvalidOperationException>();
@@ -115,12 +115,12 @@ namespace RedBadger.Xpf.Specs.Presentation
     {
         private static Exception exception;
 
-        private static readonly Size availableSize = new Size(float.PositiveInfinity, float.PositiveInfinity);
+        private static readonly Size availableSize = new Size(double.PositiveInfinity, double.PositiveInfinity);
 
         private Establish context =
             () =>
             uiElement.Expect(element => element.MeasureOverride(availableSize)).Return(
-                new Size(float.PositiveInfinity, 0));
+                new Size(double.PositiveInfinity, 0));
 
         private Because of = () => exception = Catch.Exception(() => uiElement.Measure(availableSize));
 
@@ -132,12 +132,12 @@ namespace RedBadger.Xpf.Specs.Presentation
     {
         private static Exception exception;
 
-        private static readonly Size availableSize = new Size(float.PositiveInfinity, float.PositiveInfinity);
+        private static readonly Size availableSize = new Size(double.PositiveInfinity, double.PositiveInfinity);
 
         private Establish context =
             () =>
             uiElement.Expect(element => element.MeasureOverride(availableSize)).Return(
-                new Size(0, float.PositiveInfinity));
+                new Size(0, double.PositiveInfinity));
 
         private Because of = () => exception = Catch.Exception(() => uiElement.Measure(availableSize));
 
@@ -149,12 +149,12 @@ namespace RedBadger.Xpf.Specs.Presentation
     {
         private static Exception exception;
 
-        private static readonly Size availableSize = new Size(float.PositiveInfinity, float.PositiveInfinity);
+        private static readonly Size availableSize = new Size(double.PositiveInfinity, double.PositiveInfinity);
 
         private Establish context =
             () =>
             uiElement.Expect(element => element.MeasureOverride(availableSize)).Return(
-                new Size(float.NaN, 0));
+                new Size(double.NaN, 0));
 
         private Because of = () => exception = Catch.Exception(() => uiElement.Measure(availableSize));
 
@@ -166,12 +166,12 @@ namespace RedBadger.Xpf.Specs.Presentation
     {
         private static Exception exception;
 
-        private static readonly Size availableSize = new Size(float.PositiveInfinity, float.PositiveInfinity);
+        private static readonly Size availableSize = new Size(double.PositiveInfinity, double.PositiveInfinity);
 
         private Establish context =
             () =>
             uiElement.Expect(element => element.MeasureOverride(availableSize)).Return(
-                new Size(0, float.NaN));
+                new Size(0, double.NaN));
 
         private Because of = () => exception = Catch.Exception(() => uiElement.Measure(availableSize));
 

@@ -32,8 +32,8 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             bool isHorizontalOrientation = this.Orientation == Orientation.Horizontal;
             var finalRect = new Rect(arrangeSize);
-            float width = 0f;
-            float height = 0f;
+            double width = 0;
+            double height = 0;
             foreach (UIElement child in this.Children)
             {
                 if (child != null)
@@ -66,11 +66,11 @@ namespace RedBadger.Xpf.Presentation.Controls
             bool isHorizontalOrientation = this.Orientation == Orientation.Horizontal;
             if (isHorizontalOrientation)
             {
-                availableSize.Width = float.PositiveInfinity;
+                availableSize.Width = double.PositiveInfinity;
             }
             else
             {
-                availableSize.Height = float.PositiveInfinity;
+                availableSize.Height = double.PositiveInfinity;
             }
 
             foreach (UIElement child in this.Children)

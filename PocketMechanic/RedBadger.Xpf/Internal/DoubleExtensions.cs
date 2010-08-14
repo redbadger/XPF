@@ -2,26 +2,26 @@
 {
     using System;
 
-    public static class FloatExtensions
+    public static class DoubleExtensions
     {
-        public static bool IsCloseTo(this float value1, float value2)
+        public static bool IsCloseTo(this double value1, double value2)
         {
             return !value1.IsDifferentFrom(value2);
         }
 
-        public static bool IsDifferentFrom(this float value1, float float2)
+        public static bool IsDifferentFrom(this double value1, double double2)
         {
-            if (value1 == float2)
+            if (value1 == double2)
             {
                 return false;
             }
 
-            float epsilon = (Math.Abs(value1) + Math.Abs(float2) + 10.0f) * 2.2204460492503131E-8f;
-            float difference = value1 - float2;
+            double epsilon = (Math.Abs(value1) + Math.Abs(double2) + 10.0) * 2.2204460492503131E-8;
+            double difference = value1 - double2;
             return !(-epsilon < difference && difference < epsilon);
         }
 
-        public static bool IsGreaterThanOrCloseTo(this float value1, float value2)
+        public static bool IsGreaterThanOrCloseTo(this double value1, double value2)
         {
             if (value1 <= value2)
             {
@@ -31,17 +31,17 @@
             return true;
         }
 
-        public static bool IsLessThan(this float value1, float value2)
+        public static bool IsLessThan(this double value1, double value2)
         {
             return value1 < value2 && value1.IsDifferentFrom(value2);
         }
 
-        public static bool IsGreaterThan(this float value1, float value2)
+        public static bool IsGreaterThan(this double value1, double value2)
         {
             return value1 > value2 && value1.IsDifferentFrom(value2);
         }
 
-        public static bool IsLessThanOrCloseTo(this float value1, float value2)
+        public static bool IsLessThanOrCloseTo(this double value1, double value2)
         {
             if (value1 >= value2)
             {

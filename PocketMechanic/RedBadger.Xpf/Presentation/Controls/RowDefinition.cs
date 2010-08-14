@@ -10,10 +10,10 @@
             "Height", typeof(GridLength), typeof(RowDefinition), new PropertyMetadata(new GridLength()));
 
         public static readonly XpfDependencyProperty MaxHeightProperty = XpfDependencyProperty.Register(
-            "MaxHeight", typeof(float), typeof(RowDefinition), new PropertyMetadata(float.PositiveInfinity));
+            "MaxHeight", typeof(double), typeof(RowDefinition), new PropertyMetadata(double.PositiveInfinity));
 
         public static readonly XpfDependencyProperty MinHeightProperty = XpfDependencyProperty.Register(
-            "MinHeight", typeof(float), typeof(RowDefinition), new PropertyMetadata(0f));
+            "MinHeight", typeof(double), typeof(RowDefinition), new PropertyMetadata(0d));
 
         public RowDefinition()
             : base(DefinitionType.Row)
@@ -33,11 +33,11 @@
             }
         }
 
-        public float MaxHeight
+        public double MaxHeight
         {
             get
             {
-                return (float)this.GetValue(MaxHeightProperty.Value);
+                return (double)this.GetValue(MaxHeightProperty.Value);
             }
 
             set
@@ -46,11 +46,11 @@
             }
         }
 
-        public float MinHeight
+        public double MinHeight
         {
             get
             {
-                return (float)this.GetValue(MinHeightProperty.Value);
+                return (double)this.GetValue(MinHeightProperty.Value);
             }
 
             set

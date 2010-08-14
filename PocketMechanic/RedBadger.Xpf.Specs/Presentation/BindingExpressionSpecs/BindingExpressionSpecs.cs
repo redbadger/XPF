@@ -29,11 +29,11 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
 
     public class MyBindingObject : INotifyPropertyChanged
     {
-        private float myWidth;
+        private double myWidth;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public float MyWidth
+        public double MyWidth
         {
             get
             {
@@ -60,7 +60,7 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
     [Subject(typeof(BindingExpression), "Binding")]
     public class when_the_width_of_a_textblock_is_set_through_a_binding
     {
-        private const float ExpectedWidth = 100f;
+        private const double ExpectedWidth = 100;
 
         private static MyBindingObject myBindingObject;
 
@@ -81,7 +81,7 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
     [Subject(typeof(BindingExpression), "Binding")]
     public class when_the_width_of_a_textblock_is_set_and_the_binding_is_two_way
     {
-        private const float ExpectedWidth = 100f;
+        private const double ExpectedWidth = 100;
 
         private static MyBindingObject myBindingObject;
 
@@ -104,7 +104,7 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
     [Subject(typeof(BindingExpression), "Binding")]
     public class when_a_binding_is_changed
     {
-        private const float ExpectedWidth = 100f;
+        private const double ExpectedWidth = 100;
 
         private static MyBindingObject myBindingObject1;
 
@@ -133,7 +133,7 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
     [Subject(typeof(BindingExpression), "Binding")]
     public class when_a_binding_is_cleared
     {
-        private const float ExpectedWidth = 100f;
+        private const double ExpectedWidth = 100;
 
         private static MyBindingObject myBindingObject1;
 
@@ -153,7 +153,7 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
                 myBindingObject1.MyWidth = ExpectedWidth + 1;
             };
 
-        private It should_not_use_the_binding = () => float.IsNaN(textBlock.Width).ShouldBeTrue();
+        private It should_not_use_the_binding = () => double.IsNaN(textBlock.Width).ShouldBeTrue();
     }
 
     [Subject(typeof(BindingExpression), "Binding Mode")]
@@ -171,7 +171,7 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
             Catch.Exception(
                 () => textBlock.Object.SetBinding(UIElement.WidthProperty, new Binding { Mode = BindingMode.Default }));
 
-        private It should_throw_an_exception = () => exception.ShouldBeOfType<NotSupportedException>();
+        private It should_not_throw_an_exception = () => exception.ShouldBeNull();
     }
 
     [Subject(typeof(BindingExpression), "Binding Mode")]

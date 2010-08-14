@@ -1,6 +1,6 @@
 ﻿namespace RedBadger.Xpf.Presentation.Media
 {
-    using Microsoft.Xna.Framework;
+    using System.Windows.Media;
 
     using RedBadger.Xpf.Graphics;
 
@@ -8,24 +8,24 @@
     {
         private readonly Brush brush;
 
-        private readonly Vector2 position;
+        private readonly Vector position;
 
         private readonly ISpriteFont spriteFont;
 
         private readonly string text;
 
-        private Vector2 absoluteOffset;
+        private Vector absoluteOffset;
 
-        public SpriteFontJob(ISpriteFont spriteFont, string text, Vector2 position, Brush brush)
+        public SpriteFontJob(ISpriteFont spriteFont, string text, Vector position, Brush brush)
         {
             this.spriteFont = spriteFont;
             this.text = text;
             this.position = position;
             this.brush = brush;
-            this.absoluteOffset = Vector2.Zero;
+            this.absoluteOffset = Vector.Zero;
         }
 
-        public void SetAbsoluteOffset(Vector2 offset)
+        public void SetAbsoluteOffset(Vector offset)
         {
             this.absoluteOffset = offset;
         }
@@ -34,7 +34,7 @@
         {
             var solidColorBrush = this.brush as SolidColorBrush;
             spriteBatch.DrawString(
-                this.spriteFont, this.text, this.position + this.absoluteOffset, solidColorBrush != null ? solidColorBrush.Color : Color.Maroon);
+                this.spriteFont, this.text, this.position + this.absoluteOffset, solidColorBrush != null ? solidColorBrush.Color : Colors.Magenta);
         }
     }
 }

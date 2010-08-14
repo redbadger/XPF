@@ -33,7 +33,7 @@ namespace RedBadger.Xpf.Specs.Presentation.GridLengthSpecs
 
         private It should_default_to_a_unit_type_of_auto = () => gridLength.GridUnitType.ShouldEqual(GridUnitType.Auto);
 
-        private It should_default_to_a_value_of_zero = () => gridLength.Value.ShouldEqual(0f);
+        private It should_default_to_a_value_of_zero = () => gridLength.Value.ShouldEqual(0);
     }
 
     [Subject(typeof(GridLength))]
@@ -41,7 +41,7 @@ namespace RedBadger.Xpf.Specs.Presentation.GridLengthSpecs
     {
         private static Exception exception;
 
-        private Because of = () => exception = Catch.Exception(() => new GridLength(float.NaN));
+        private Because of = () => exception = Catch.Exception(() => new GridLength(double.NaN));
 
         private It should_throw_an_exception = () => exception.ShouldBeOfType<ArgumentException>();
     }
@@ -51,7 +51,7 @@ namespace RedBadger.Xpf.Specs.Presentation.GridLengthSpecs
     {
         private static Exception exception;
 
-        private Because of = () => exception = Catch.Exception(() => new GridLength(float.PositiveInfinity));
+        private Because of = () => exception = Catch.Exception(() => new GridLength(double.PositiveInfinity));
 
         private It should_throw_an_exception = () => exception.ShouldBeOfType<ArgumentException>();
     }
@@ -59,7 +59,7 @@ namespace RedBadger.Xpf.Specs.Presentation.GridLengthSpecs
     [Subject(typeof(GridLength))]
     public class when_initialized_with_a_value
     {
-        private const float ExpectedValue = 10;
+        private const double ExpectedValue = 10;
 
         private static GridLength gridLength;
 
@@ -73,11 +73,11 @@ namespace RedBadger.Xpf.Specs.Presentation.GridLengthSpecs
     [Subject(typeof(GridLength))]
     public class when_initialized_with_a_value_and_a_unit_type_of_auto
     {
-        private const float ExpectedValue = 1f;
+        private const double ExpectedValue = 1;
 
         private static GridLength gridLength;
 
-        private Because of = () => gridLength = new GridLength(10f, GridUnitType.Auto);
+        private Because of = () => gridLength = new GridLength(10, GridUnitType.Auto);
 
         private It should_have_a_unit_type_of_auto = () => gridLength.GridUnitType.ShouldEqual(GridUnitType.Auto);
 

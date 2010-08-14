@@ -13,8 +13,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
     using Machine.Specifications;
 
-    using Microsoft.Xna.Framework;
-
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
@@ -26,16 +24,16 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
         private Because of = () => Grid.Arrange(new Rect(AvailableSize));
 
         private It should_layout_the_bottom_left_child_correctly =
-            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector2(0, 80));
+            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, 80));
 
         private It should_layout_the_bottom_right_child_correctly =
-            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector2(50, 80));
+            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector(50, 80));
 
         private It should_layout_the_top_left_child_correctly =
-            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector2.Zero);
+            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector.Zero);
 
         private It should_layout_the_top_right_child_correctly =
-            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector2(50, 0));
+            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector(50, 0));
     }
 
     [Subject(typeof(Grid), "Arrange")]
@@ -43,10 +41,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     {
         private Establish context = () =>
             {
-                ColumnOneDefinition.Width = new GridLength(5f);
-                ColumnTwoDefinition.Width = new GridLength(6f);
-                RowOneDefinition.Height = new GridLength(7f);
-                RowTwoDefinition.Height = new GridLength(8f);
+                ColumnOneDefinition.Width = new GridLength(5);
+                ColumnTwoDefinition.Width = new GridLength(6);
+                RowOneDefinition.Height = new GridLength(7);
+                RowTwoDefinition.Height = new GridLength(8);
 
                 Grid.Measure(AvailableSize);
             };
@@ -54,25 +52,25 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
         private Because of = () => Grid.Arrange(new Rect(AvailableSize));
 
         private It should_layout_the_bottom_left_child_correctly =
-            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector2(0f, 7f));
+            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, 7));
 
         private It should_layout_the_bottom_right_child_correctly =
-            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector2(5f, 7f));
+            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector(5, 7));
 
         private It should_layout_the_top_left_child_correctly =
-            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector2.Zero);
+            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector.Zero);
 
         private It should_layout_the_top_right_child_correctly =
-            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector2(5f, 0f));
+            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector(5, 0));
     }
 
     [Subject(typeof(Grid), "Arrange")]
     public class when_there_are_two_rows_and_two_columns_with_minimum_values_which_are_greater_than_their_children :
         a_Grid_with_two_rows_and_two_columns
     {
-        private const float MinHeight = 90f;
+        private const double MinHeight = 90;
 
-        private const float MinWidth = 80f;
+        private const double MinWidth = 80;
 
         private Establish context = () =>
             {
@@ -88,25 +86,25 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
         private Because of = () => Grid.Arrange(new Rect(AvailableSize));
 
         private It should_layout_the_bottom_left_child_correctly =
-            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector2(0f, MinHeight));
+            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, MinHeight));
 
         private It should_layout_the_bottom_right_child_correctly =
-            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector2(MinWidth, MinHeight));
+            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector(MinWidth, MinHeight));
 
         private It should_layout_the_top_left_child_correctly =
-            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector2.Zero);
+            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector.Zero);
 
         private It should_layout_the_top_right_child_correctly =
-            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector2(MinWidth, 0f));
+            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector(MinWidth, 0));
     }
 
     [Subject(typeof(Grid), "Arrange")]
     public class when_there_are_two_rows_and_two_columns_with_maximum_values_which_are_less_than_their_children :
         a_Grid_with_two_rows_and_two_columns
     {
-        private const float MaxHeight = 9f;
+        private const double MaxHeight = 9;
 
-        private const float MaxWidth = 8f;
+        private const double MaxWidth = 8;
 
         private Establish context = () =>
             {
@@ -122,15 +120,15 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
         private Because of = () => Grid.Arrange(new Rect(AvailableSize));
 
         private It should_layout_the_bottom_left_child_correctly =
-            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector2(0f, MaxHeight));
+            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, MaxHeight));
 
         private It should_layout_the_bottom_right_child_correctly =
-            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector2(MaxWidth, MaxHeight));
+            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector(MaxWidth, MaxHeight));
 
         private It should_layout_the_top_left_child_correctly =
-            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector2.Zero);
+            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector.Zero);
 
         private It should_layout_the_top_right_child_correctly =
-            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector2(MaxWidth, 0f));
+            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector(MaxWidth, 0));
     }
 }

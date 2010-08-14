@@ -3,18 +3,20 @@ namespace RedBadger.Xpf.Presentation.Controls
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Windows;
-
-    using Microsoft.Xna.Framework;
+    using System.Windows.Media;
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Presentation.Media;
 
+    using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using Rect = RedBadger.Xpf.Presentation.Rect;
     using Size = RedBadger.Xpf.Presentation.Size;
+    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
     using TextWrapping = RedBadger.Xpf.Presentation.TextWrapping;
     using Thickness = RedBadger.Xpf.Presentation.Thickness;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
+    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public class TextBlock : UIElement
     {
@@ -123,17 +125,17 @@ namespace RedBadger.Xpf.Presentation.Controls
         protected override Size MeasureOverride(Size availableSize)
         {
             this.formattedText = this.Text;
-            Vector2 measureString = this.spriteFont.MeasureString(this.formattedText);
+            Size measureString = this.spriteFont.MeasureString(this.formattedText);
 
-            if (this.Wrapping == TextWrapping.Wrap && measureString.X > availableSize.Width)
+            if (this.Wrapping == TextWrapping.Wrap && measureString.Width > availableSize.Width)
             {
                 this.formattedText = WrapText(this.spriteFont, this.formattedText, availableSize.Width);
                 measureString = this.spriteFont.MeasureString(this.formattedText);
             }
 
             return new Size(
-                measureString.X + this.Padding.Left + this.Padding.Right, 
-                measureString.Y + this.Padding.Top + this.Padding.Bottom);
+                measureString.Width + this.Padding.Left + this.Padding.Right, 
+                measureString.Height + this.Padding.Top + this.Padding.Bottom);
         }
 
         protected override void OnRender(IDrawingContext drawingContext)
@@ -146,8 +148,8 @@ namespace RedBadger.Xpf.Presentation.Controls
             drawingContext.DrawText(
                 this.spriteFont, 
                 this.formattedText, 
-                new Vector2(this.Padding.Left, this.Padding.Top), 
-                this.Foreground ?? new SolidColorBrush(Color.Black));
+                new Vector(this.Padding.Left, this.Padding.Top), 
+                this.Foreground ?? new SolidColorBrush(Colors.Black));
         }
 
         private static void TextPropertyChangedCallback(
@@ -182,28 +184,28 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private static string WrapText(ISpriteFont font, string text, float maxLineWidth)
+        private static string WrapText(ISpriteFont font, string text, double maxLineWidth)
         {
             const string Space = " ";
             var stringBuilder = new StringBuilder();
             string[] words = whiteSpaceRegEx.Split(text);
 
-            float lineWidth = 0f;
-            float spaceWidth = font.MeasureString(Space).X;
+            double lineWidth = 0;
+            double spaceWidth = font.MeasureString(Space).Width;
 
             foreach (string word in words)
             {
-                Vector2 size = font.MeasureString(word);
+                Size size = font.MeasureString(word);
 
-                if (lineWidth + size.X < maxLineWidth)
+                if (lineWidth + size.Width < maxLineWidth)
                 {
                     stringBuilder.AppendFormat("{0}{1}", lineWidth == 0 ? string.Empty : Space, word);
-                    lineWidth += size.X + spaceWidth;
+                    lineWidth += size.Width + spaceWidth;
                 }
                 else
                 {
                     stringBuilder.AppendFormat("\n{0}", word);
-                    lineWidth = size.X + spaceWidth;
+                    lineWidth = size.Width + spaceWidth;
                 }
             }
 

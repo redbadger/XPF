@@ -6,26 +6,26 @@ namespace RedBadger.Xpf.Presentation
     {
         private readonly GridUnitType gridUnitType;
 
-        private readonly float value;
+        private readonly double value;
 
-        public GridLength(float value)
+        public GridLength(double value)
             : this(value, GridUnitType.Pixel)
         {
         }
 
-        public GridLength(float value, GridUnitType gridUnitType)
+        public GridLength(double value, GridUnitType gridUnitType)
         {
-            if (float.IsNaN(value))
+            if (double.IsNaN(value))
             {
                 throw new ArgumentException();
             }
 
-            if (float.IsInfinity(value))
+            if (double.IsInfinity(value))
             {
                 throw new ArgumentException();
             }
 
-            this.value = gridUnitType == GridUnitType.Auto ? 1f : value;
+            this.value = gridUnitType == GridUnitType.Auto ? 1 : value;
             this.gridUnitType = gridUnitType;
         }
 
@@ -37,7 +37,7 @@ namespace RedBadger.Xpf.Presentation
             }
         }
 
-        public float Value
+        public double Value
         {
             get
             {

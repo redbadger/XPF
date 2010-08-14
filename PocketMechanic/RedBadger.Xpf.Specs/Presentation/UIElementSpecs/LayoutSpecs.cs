@@ -29,7 +29,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private static readonly Size desiredSize = new Size(50, 50);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(125, 125);
+        private static readonly Vector expectedVisualOffset = new Vector(125, 125);
 
         private static readonly Size explicitSize = new Size(100, 100);
 
@@ -66,7 +66,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private static readonly Size desiredSize = new Size(200, 200);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(100, 100);
+        private static readonly Vector expectedVisualOffset = new Vector(100, 100);
 
         private static readonly Size explicitSize = new Size(100, 100);
 
@@ -103,7 +103,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private static readonly Size desiredSize = new Size(50, 50);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(125, 125);
+        private static readonly Vector expectedVisualOffset = new Vector(125, 125);
 
         private static readonly Size minimumSize = new Size(100, 100);
 
@@ -140,7 +140,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private static readonly Size desiredSize = new Size(200, 200);
 
-        private static readonly Vector2 expectedVisualOffset = new Vector2(100, 100);
+        private static readonly Vector expectedVisualOffset = new Vector(100, 100);
 
         private static readonly Size maximumSize = new Size(100, 100);
 
@@ -358,24 +358,24 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
         private Establish context = () =>
             {
                 element1 = new Mock<UIElement> { CallBase = true };
-                element1.Object.VisualOffset = new Vector2(10, 20);
+                element1.Object.VisualOffset = new Vector(10, 20);
 
                 element2 = new Mock<UIElement> { CallBase = true };
-                element2.Object.VisualOffset = new Vector2(30, 40);
+                element2.Object.VisualOffset = new Vector(30, 40);
                 element2.Object.VisualParent = element1.Object;
 
                 element3 = new Mock<UIElement> { CallBase = true };
-                element3.Object.VisualOffset = new Vector2(50, 60);
+                element3.Object.VisualOffset = new Vector(50, 60);
                 element3.Object.VisualParent = element2.Object;
             };
 
         private It should_return_a_correct_value_for_element_1 =
-            () => element1.Object.AbsoluteOffset.ShouldEqual(new Vector2(10, 20));
+            () => element1.Object.AbsoluteOffset.ShouldEqual(new Vector(10, 20));
 
         private It should_return_a_correct_value_for_element_2 =
-            () => element2.Object.AbsoluteOffset.ShouldEqual(new Vector2(40, 60));
+            () => element2.Object.AbsoluteOffset.ShouldEqual(new Vector(40, 60));
 
         private It should_return_a_correct_value_for_element_3 =
-            () => element3.Object.AbsoluteOffset.ShouldEqual(new Vector2(90, 120));
+            () => element3.Object.AbsoluteOffset.ShouldEqual(new Vector(90, 120));
     }
 }

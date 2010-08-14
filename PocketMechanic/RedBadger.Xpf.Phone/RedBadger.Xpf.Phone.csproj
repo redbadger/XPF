@@ -85,8 +85,8 @@
     <Compile Include="..\RedBadger.Xpf\Graphics\Texture2DAdapter.cs">
       <Link>Graphics\Texture2DAdapter.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Internal\FloatExtensions.cs">
-      <Link>Internal\FloatExtensions.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Internal\DoubleExtensions.cs">
+      <Link>Internal\DoubleExtensions.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\MinMax.cs">
       <Link>Internal\MinMax.cs</Link>
@@ -103,8 +103,8 @@
     <Compile Include="..\RedBadger.Xpf\Internal\UIElementPropertyChangedCallbacks.cs">
       <Link>Internal\UIElementPropertyChangedCallbacks.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Internal\Vector2Extensions.cs">
-      <Link>Internal\Vector2Extensions.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Internal\VectorExtensions.cs">
+      <Link>Internal\VectorExtensions.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\BindingExpression.cs">
       <Link>Presentation\BindingExpression.cs</Link>
@@ -237,6 +237,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\UIElementCollection.cs">
       <Link>Presentation\UIElementCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Vector.cs">
+      <Link>Presentation\Vector.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\VerticalAlignment.cs">
       <Link>Presentation\VerticalAlignment.cs</Link>

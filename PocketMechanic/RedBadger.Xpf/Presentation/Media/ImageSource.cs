@@ -6,9 +6,9 @@ namespace RedBadger.Xpf.Presentation.Media
 
     public abstract class ImageSource : DependencyObject
     {
-        public abstract float Height { get; }
+        public abstract double Height { get; }
 
-        public abstract float Width { get; }
+        public abstract double Width { get; }
 
         internal virtual Size Size
         {

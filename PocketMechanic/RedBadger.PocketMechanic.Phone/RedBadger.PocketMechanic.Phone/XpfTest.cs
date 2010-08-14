@@ -3,6 +3,7 @@ namespace RedBadger.PocketMechanic.Phone
     using System;
     using System.ComponentModel;
     using System.Windows.Data;
+    using System.Windows.Media;
 
     using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
@@ -13,6 +14,9 @@ namespace RedBadger.PocketMechanic.Phone
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
     using RedBadger.Xpf.Presentation.Media.Imaging;
+
+    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
+    using Stretch = RedBadger.Xpf.Presentation.Media.Stretch;
 
     public class XpfTest : DrawableGameComponent
     {
@@ -80,9 +84,9 @@ namespace RedBadger.PocketMechanic.Phone
             var border = new Border
                 {
                     Child = textBlock1, 
-                    BorderBrush = new SolidColorBrush(Color.Red), 
+                    BorderBrush = new SolidColorBrush(Colors.Red), 
                     BorderThickness = new Thickness(20), 
-                    Background = new SolidColorBrush(Color.Aquamarine)
+                    Background = new SolidColorBrush(Colors.Cyan)
                 };
 
             Grid.SetColumn(border, 0);
@@ -101,9 +105,9 @@ namespace RedBadger.PocketMechanic.Phone
             border = new Border
                 {
                     Child = this.textBlock2, 
-                    BorderBrush = new SolidColorBrush(Color.Red), 
+                    BorderBrush = new SolidColorBrush(Colors.Red), 
                     BorderThickness = new Thickness(20), 
-                    Background = new SolidColorBrush(Color.Aquamarine)
+                    Background = new SolidColorBrush(Colors.Cyan)
                 };
             Grid.SetColumn(border, 1);
             grid.Children.Add(border);
@@ -112,7 +116,7 @@ namespace RedBadger.PocketMechanic.Phone
             var textBlock3 = new TextBlock(spriteFontAdapter)
                 {
                     Text = "TextBlock 3", 
-                    Background = new SolidColorBrush(Color.Blue), 
+                    Background = new SolidColorBrush(Colors.Blue), 
                     Padding = new Thickness(10, 10), 
                     HorizontalAlignment = HorizontalAlignment.Right, 
                     VerticalAlignment = VerticalAlignment.Bottom
@@ -123,10 +127,10 @@ namespace RedBadger.PocketMechanic.Phone
 
             var image = new Image
                 {
-                    Source = new XnaImage(new Texture2DAdapter(badger)), 
-                    Stretch = Stretch.Fill
+                    Source = new XnaImage(new Texture2DAdapter(badger)),
+                    Stretch = Stretch.Fill,
+                    Margin = new Thickness(10)
                 };
-            image.Margin = new Thickness(10);
             Grid.SetColumn(image, 1);
             Grid.SetRow(image, 1);
             grid.Children.Add(image);

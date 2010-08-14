@@ -31,9 +31,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.StackPanelSpecs
 
     public abstract class a_StackPanel_with_2_children : a_StackPanel
     {
-        protected const float ElementHeight = 100f;
+        protected const double ElementHeight = 100;
 
-        protected const float ElementWidth = 200f;
+        protected const double ElementWidth = 200;
 
         protected static readonly Size AvailableSize = new Size(500, 500);
 

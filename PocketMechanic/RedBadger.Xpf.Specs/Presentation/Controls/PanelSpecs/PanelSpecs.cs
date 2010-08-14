@@ -11,9 +11,9 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
 {
-    using Machine.Specifications;
+    using System.Windows.Media;
 
-    using Microsoft.Xna.Framework;
+    using Machine.Specifications;
 
     using Moq;
 
@@ -21,7 +21,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
+    using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using It = Machine.Specifications.It;
+    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     public abstract class a_Panel
     {
@@ -62,7 +64,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
     [Subject(typeof(Panel), "Background")]
     public class when_panel_background_is_specified : a_Panel
     {
-        private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Color.Blue);
+        private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Colors.Blue);
 
         private Because of = () =>
             {

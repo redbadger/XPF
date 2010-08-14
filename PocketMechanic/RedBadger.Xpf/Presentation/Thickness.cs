@@ -7,25 +7,25 @@
     [DebuggerDisplay("{Left}, {Top}, {Right}, {Bottom}")]
     public struct Thickness
     {
-        public float Bottom;
+        public double Bottom;
 
-        public float Left;
+        public double Left;
 
-        public float Right;
+        public double Right;
 
-        public float Top;
+        public double Top;
 
-        public Thickness(float left, float top)
+        public Thickness(double left, double top)
             : this(left, top, left, top)
         {
         }
 
-        public Thickness(float uniformLength)
+        public Thickness(double uniformLength)
             : this(uniformLength, uniformLength, uniformLength, uniformLength)
         {
         }
 
-        public Thickness(float left, float top, float right, float bottom)
+        public Thickness(double left, double top, double right, double bottom)
         {
             this.Left = left;
             this.Top = top;
@@ -45,8 +45,8 @@
         {
             get
             {
-                return this.Left.IsCloseTo(0f) && this.Right.IsCloseTo(0f) && this.Top.IsCloseTo(0f) &&
-                       this.Bottom.IsCloseTo(0f);
+                return this.Left.IsCloseTo(0) && this.Right.IsCloseTo(0) && this.Top.IsCloseTo(0) &&
+                       this.Bottom.IsCloseTo(0);
             }
         }
     }

@@ -54,8 +54,8 @@
 
         public void PreDraw()
         {
-            Vector2 absoluteOffset = this.element.AbsoluteOffset;
-            if (absoluteOffset != Vector2.Zero)
+            Vector absoluteOffset = this.element.AbsoluteOffset;
+            if (absoluteOffset != Vector.Zero)
             {
                 foreach (ISpriteJob spriteJob in this.jobs)
                 {
@@ -74,7 +74,7 @@
             this.jobs.Add(new SpriteTextureJob(this.primitivesService.SinglePixel, rect, brush));
         }
 
-        public void DrawText(ISpriteFont spriteFont, string text, Vector2 position, Brush brush)
+        public void DrawText(ISpriteFont spriteFont, string text, Vector position, Brush brush)
         {
             this.jobs.Add(new SpriteFontJob(spriteFont, text, position, brush));
         }

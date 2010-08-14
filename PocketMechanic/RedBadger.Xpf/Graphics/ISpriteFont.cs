@@ -1,7 +1,8 @@
 ﻿namespace RedBadger.Xpf.Graphics
 {
-    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+
+    using RedBadger.Xpf.Presentation;
 
     public interface ISpriteFont
     {
@@ -10,6 +11,6 @@
             get;
         }
 
-        Vector2 MeasureString(string text);
+        Size MeasureString(string text);
     }
 }

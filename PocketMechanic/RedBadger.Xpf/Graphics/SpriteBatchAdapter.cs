@@ -5,6 +5,8 @@
 
     using RedBadger.Xpf.Presentation;
 
+    using Color = System.Windows.Media.Color;
+
     public class SpriteBatchAdapter : SpriteBatch, ISpriteBatch
     {
         public SpriteBatchAdapter(GraphicsDevice graphicsDevice)
@@ -17,13 +19,17 @@
             if (texture2D != null)
             {
                 var rectangle = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height);
-                this.Draw(texture2D.Value, rectangle, color);
+                this.Draw(texture2D.Value, rectangle, new Microsoft.Xna.Framework.Color(color.R, color.G, color.B));
             }
         }
 
-        public void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color)
+        public void DrawString(ISpriteFont spriteFont, string text, Vector position, Color color)
         {
-            this.DrawString(spriteFont.Value, text ?? string.Empty, position, color);
+            this.DrawString(
+                spriteFont.Value, 
+                text ?? string.Empty, 
+                new Vector2((float)position.X, (float)position.Y), 
+                new Microsoft.Xna.Framework.Color(color.R, color.G, color.B));
         }
     }
 }

@@ -11,9 +11,9 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
 {
-    using Machine.Specifications;
+    using System.Windows.Media;
 
-    using Microsoft.Xna.Framework;
+    using Machine.Specifications;
 
     using Moq;
 
@@ -22,7 +22,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
+    using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using It = Machine.Specifications.It;
+    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     public abstract class a_TextBlock
     {
@@ -64,14 +66,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
                 drawingContext.DrawText(
                     SpriteFont.Object, 
                     Moq.It.IsAny<string>(), 
-                    Moq.It.IsAny<Vector2>(), 
-                    Moq.It.Is<SolidColorBrush>(value => value.Color == Color.Black)));
+                    Moq.It.IsAny<Vector>(), 
+                    Moq.It.Is<SolidColorBrush>(value => value.Color == Colors.Black)));
     }
 
     [Subject(typeof(TextBlock), "Foreground")]
     public class when_foreground_is_specified : a_TextBlock
     {
-        private static readonly SolidColorBrush expectedForeground = new SolidColorBrush(Color.White);
+        private static readonly SolidColorBrush expectedForeground = new SolidColorBrush(Colors.White);
 
         private Because of = () =>
             {
@@ -85,7 +87,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
             DrawingContext.Verify(
                 drawingContext =>
                 drawingContext.DrawText(
-                    SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Vector2>(), expectedForeground));
+                    SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Vector>(), expectedForeground));
     }
 
     [Subject(typeof(TextBlock), "Background")]
@@ -107,7 +109,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
     [Subject(typeof(TextBlock), "Background")]
     public class when_textblock_background_is_specified : a_TextBlock
     {
-        private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Color.Blue);
+        private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Colors.Blue);
 
         private Because of = () =>
             {
@@ -136,11 +138,11 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
     {
         private static readonly Size expectedDesiredSize = new Size(50, 70);
 
-        private static readonly Vector2 expectedDrawPosition = new Vector2(10, 20);
+        private static readonly Vector expectedDrawPosition = new Vector(10, 20);
 
         private static readonly Thickness padding = new Thickness(10, 20, 30, 40);
 
-        private static readonly Vector2 stringSize = new Vector2(10, 10);
+        private static readonly Size stringSize = new Size(10, 10);
 
         private Establish context = () =>
             {
@@ -172,7 +174,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
 
         protected const string Word = "word";
 
-        protected static readonly Vector2 SentenceSize = new Vector2(310, 10);
+        protected static readonly Size SentenceSize = new Size(310, 10);
 
         private const string Sentence =
             Word + Space + Word + Space + Word + Space + Word + Space + Word + Space + Word + Space + Word;
@@ -180,8 +182,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
         private Establish context = () =>
             {
                 SpriteFont.Setup(font => font.MeasureString(Sentence)).Returns(SentenceSize);
-                SpriteFont.Setup(font => font.MeasureString(Word)).Returns(new Vector2(40, 10));
-                SpriteFont.Setup(font => font.MeasureString(Space)).Returns(new Vector2(5, 10));
+                SpriteFont.Setup(font => font.MeasureString(Word)).Returns(new Size(40, 10));
+                SpriteFont.Setup(font => font.MeasureString(Space)).Returns(new Size(5, 10));
 
                 TextBlock.Text = Sentence;
             };
@@ -222,7 +224,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
     {
         private Because of = () => RootElement.Object.Update();
 
-        private It should_not_wrap = () => TextBlock.DesiredSize.Height.ShouldEqual(SentenceSize.Y);
+        private It should_not_wrap = () => TextBlock.DesiredSize.Height.ShouldEqual(SentenceSize.Height);
     }
 
     [Subject(typeof(TextBlock), "Wrapping")]
@@ -233,7 +235,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
         private const string WrappedSentence =
             Word + Space + Word + NewLine + Word + Space + Word + NewLine + Word + Space + Word + NewLine + Word;
 
-        private static readonly Vector2 wrappedSentenceSize = new Vector2(85, 30);
+        private static readonly Size wrappedSentenceSize = new Size(85, 30);
 
         private Establish context =
             () => SpriteFont.Setup(font => font.MeasureString(WrappedSentence)).Returns(wrappedSentenceSize);
@@ -244,7 +246,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
                 RootElement.Object.Update();
             };
 
-        private It should_wrap = () => TextBlock.DesiredSize.Height.ShouldEqual(wrappedSentenceSize.Y);
+        private It should_wrap = () => TextBlock.DesiredSize.Height.ShouldEqual(wrappedSentenceSize.Height);
     }
 
     [Subject(typeof(TextBlock), "Wrapping")]

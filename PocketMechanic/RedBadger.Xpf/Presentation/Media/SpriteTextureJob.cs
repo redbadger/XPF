@@ -1,6 +1,6 @@
 ﻿namespace RedBadger.Xpf.Presentation.Media
 {
-    using Microsoft.Xna.Framework;
+    using System.Windows.Media;
 
     using RedBadger.Xpf.Graphics;
 
@@ -10,7 +10,7 @@
 
         private readonly ITexture2D texture2D;
 
-        private Vector2 absoluteOffset;
+        private Vector absoluteOffset;
 
         private Rect rect;
 
@@ -19,7 +19,7 @@
             this.texture2D = texture2D;
             this.rect = rect;
             this.brush = brush;
-            this.absoluteOffset = Vector2.Zero;
+            this.absoluteOffset = Vector.Zero;
         }
 
         public void Draw(ISpriteBatch spriteBatch)
@@ -27,10 +27,10 @@
             var solidColorBrush = this.brush as SolidColorBrush;
             var drawRect = new Rect(this.rect.Position + this.absoluteOffset, this.rect.Size);
 
-            spriteBatch.Draw(this.texture2D, drawRect, solidColorBrush != null ? solidColorBrush.Color : Color.Maroon);
+            spriteBatch.Draw(this.texture2D, drawRect, solidColorBrush != null ? solidColorBrush.Color : Colors.Magenta);
         }
 
-        public void SetAbsoluteOffset(Vector2 offset)
+        public void SetAbsoluteOffset(Vector offset)
         {
             this.absoluteOffset = offset;
         }

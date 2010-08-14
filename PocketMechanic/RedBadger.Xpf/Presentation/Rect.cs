@@ -9,25 +9,25 @@ namespace RedBadger.Xpf.Presentation
     [DebuggerDisplay("{Width} x {Height} @ {X}, {Y}")]
     public struct Rect
     {
-        public float Height;
+        public double Height;
 
-        public float Width;
+        public double Width;
 
-        public float X;
+        public double X;
 
-        public float Y;
+        public double Y;
 
         public Rect(Size size)
-            : this(Vector2.Zero, size)
+            : this(Vector.Zero, size)
         {
         }
 
-        public Rect(Vector2 position, Size size)
+        public Rect(Vector position, Size size)
             : this(position.X, position.Y, size.Width, size.Height)
         {
         }
 
-        public Rect(float x, float y, float width, float height)
+        public Rect(double x, double y, double width, double height)
         {
             this.X = x;
             this.Y = y;
@@ -47,15 +47,15 @@ namespace RedBadger.Xpf.Presentation
         {
             get
             {
-                return this.X.IsCloseTo(0f) && this.Y.IsCloseTo(0f) && this.Width.IsCloseTo(0f) && this.Height.IsCloseTo(0f);
+                return this.X.IsCloseTo(0) && this.Y.IsCloseTo(0) && this.Width.IsCloseTo(0) && this.Height.IsCloseTo(0);
             }
         }
 
-        public Vector2 Position
+        public Vector Position
         {
             get
             {
-                return new Vector2(this.X, this.Y);
+                return new Vector(this.X, this.Y);
             }
         }
 

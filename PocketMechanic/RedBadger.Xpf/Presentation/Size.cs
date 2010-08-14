@@ -3,14 +3,16 @@ namespace RedBadger.Xpf.Presentation
     using System;
     using System.Diagnostics;
 
+    using RedBadger.Xpf.Internal;
+
     [DebuggerDisplay("{Width} x {Height}")]
     public struct Size : IEquatable<Size>
     {
-        public float Height;
+        public double Height;
 
-        public float Width;
+        public double Width;
 
-        public Size(float width, float height)
+        public Size(double width, double height)
         {
             this.Width = width;
             this.Height = height;

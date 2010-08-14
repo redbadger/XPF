@@ -43,8 +43,8 @@ namespace RedBadger.Xpf.Specs.Presentation.SizeSpecs
 
         private It should_return_an_instance_with_zeroed_values = () =>
             {
-                size.Width.ShouldEqual(0.0f);
-                size.Height.ShouldEqual(0.0f);
+                size.Width.ShouldEqual(0.0);
+                size.Height.ShouldEqual(0.0);
             };
     }
 }

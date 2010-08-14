@@ -1,8 +1,7 @@
 namespace RedBadger.Xpf.Presentation.Media
 {
     using System;
-
-    using Microsoft.Xna.Framework;
+    using System.Windows.Media;
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Media.Imaging;
@@ -13,13 +12,13 @@ namespace RedBadger.Xpf.Presentation.Media
 
         private readonly Rect rect;
 
-        private Vector2 absoluteOffset;
+        private Vector absoluteOffset;
 
         public SpriteImageJob(ImageSource imageSource, Rect rect)
         {
             this.imageSource = imageSource;
             this.rect = rect;
-            this.absoluteOffset = Vector2.Zero;
+            this.absoluteOffset = Vector.Zero;
         }
 
         public void Draw(ISpriteBatch spriteBatch)
@@ -31,10 +30,10 @@ namespace RedBadger.Xpf.Presentation.Media
             }
 
             var drawRect = new Rect(this.rect.Position + this.absoluteOffset, this.rect.Size);
-            spriteBatch.Draw(image.Texture, drawRect, Color.White);
+            spriteBatch.Draw(image.Texture, drawRect, Colors.White);
         }
 
-        public void SetAbsoluteOffset(Vector2 offset)
+        public void SetAbsoluteOffset(Vector offset)
         {
             this.absoluteOffset = offset;
         }

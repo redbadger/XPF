@@ -11,8 +11,8 @@ namespace RedBadger.Xpf.Internal
             return new Rect(
                 rect.X + thickness.Left,
                 rect.Y + thickness.Top,
-                Math.Max(0f, rect.Width - (thickness.Left + thickness.Right)),
-                Math.Max(0f, rect.Height - (thickness.Top + thickness.Bottom)));
+                Math.Max(0, rect.Width - (thickness.Left + thickness.Right)),
+                Math.Max(0, rect.Height - (thickness.Top + thickness.Bottom)));
         }
 
         public static bool IsDifferentFrom(this Rect rect1, Rect rect2)

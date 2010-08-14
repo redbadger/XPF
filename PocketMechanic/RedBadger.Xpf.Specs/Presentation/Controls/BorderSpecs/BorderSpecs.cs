@@ -11,17 +11,18 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 {
-    using Machine.Specifications;
+    using System.Windows.Media;
 
-    using Microsoft.Xna.Framework;
+    using Machine.Specifications;
 
     using Moq;
 
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Media;
 
+    using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using It = Machine.Specifications.It;
+    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     [Subject(typeof(Border))]
     public class when_initialized : a_Border
@@ -40,7 +41,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     {
         private Because of = () => RootElement.Object.Update();
 
-        private It should_have_no_effect_on_its_child = () => Child.Object.VisualOffset.ShouldEqual(Vector2.Zero);
+        private It should_have_no_effect_on_its_child = () => Child.Object.VisualOffset.ShouldEqual(Vector.Zero);
 
         private It should_set_itself_as_the_visual_parent_on_the_child =
             () => Child.Object.VisualParent.ShouldEqual(Border);
@@ -64,7 +65,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 ChildSize.Width + padding.Left + padding.Right, ChildSize.Height + padding.Top + padding.Bottom));
 
         private It should_take_padding_into_account_when_drawing =
-            () => Child.Object.VisualOffset.ShouldEqual(new Vector2(padding.Left, padding.Top));
+            () => Child.Object.VisualOffset.ShouldEqual(new Vector(padding.Left, padding.Top));
     }
 
     [Subject(typeof(Border), "Padding/Thickness")]
@@ -95,7 +96,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 ChildSize.Width + thickness.Left + thickness.Right, ChildSize.Height + thickness.Top + thickness.Bottom));
 
         private It should_take_padding_into_account_when_drawing =
-            () => Child.Object.VisualOffset.ShouldEqual(new Vector2(thickness.Left, thickness.Top));
+            () => Child.Object.VisualOffset.ShouldEqual(new Vector(thickness.Left, thickness.Top));
     }
 
     [Subject(typeof(Border), "Padding/Thickness")]
@@ -132,7 +133,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
         private It should_take_padding_into_account_when_drawing =
             () =>
             Child.Object.VisualOffset.ShouldEqual(
-                new Vector2(padding.Left + thickness.Left, padding.Top + thickness.Top));
+                new Vector(padding.Left + thickness.Left, padding.Top + thickness.Top));
     }
 
     [Subject(typeof(Border), "Rendering")]
@@ -158,7 +159,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
         private Because of = () =>
             {
-                expectedBrush = new SolidColorBrush(Color.Red);
+                expectedBrush = new SolidColorBrush(Colors.Red);
                 Border.BorderBrush = expectedBrush;
                 Border.BorderThickness = thickness;
                 RootElement.Object.Update();
@@ -206,7 +207,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     {
         private Because of = () =>
             {
-                Border.BorderBrush = new SolidColorBrush(Color.Black);
+                Border.BorderBrush = new SolidColorBrush(Colors.Black);
                 RootElement.Object.Update();
             };
 
@@ -232,7 +233,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     [Subject(typeof(Border), "Background")]
     public class when_background_is_specified : a_Border_with_child
     {
-        private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Color.Blue);
+        private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Colors.Blue);
 
         private Because of = () =>
             {

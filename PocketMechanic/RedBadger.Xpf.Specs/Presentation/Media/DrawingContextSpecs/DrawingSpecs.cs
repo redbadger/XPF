@@ -11,27 +11,28 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 {
-    using Machine.Specifications;
+    using System.Windows.Media;
 
-    using Microsoft.Xna.Framework;
+    using Machine.Specifications;
 
     using Moq;
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Media;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
+    using DrawingContext = RedBadger.Xpf.Presentation.Media.DrawingContext;
     using It = Machine.Specifications.It;
+    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     [Subject(typeof(DrawingContext), "Text")]
     public class when_drawing_text : a_DrawingContext
     {
         private const string ExpectedString = "String Value";
 
-        private static readonly Color expectedColor = Color.Black;
+        private static readonly Color expectedColor = Colors.Black;
 
-        private static readonly Vector2 expectedDrawPosition = Vector2.Zero;
+        private static readonly Vector expectedDrawPosition = Vector.Zero;
 
         private Because of = () =>
             {
@@ -49,7 +50,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
     [Subject(typeof(DrawingContext), "Rectangle")]
     public class when_drawing_a_rectangle : a_DrawingContext
     {
-        private static readonly SolidColorBrush expectedBrush = new SolidColorBrush(Color.AliceBlue);
+        private static readonly SolidColorBrush expectedBrush = new SolidColorBrush(Colors.AliceBlue);
 
         private static readonly Rect expectedRect = new Rect(10, 20, 30, 40);
 
@@ -66,7 +67,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
     [Subject(typeof(DrawingContext), "Image")]
     public class when_drawing_an_image : a_DrawingContext
     {
-        private static readonly SolidColorBrush expectedColor = new SolidColorBrush(Color.White);
+        private static readonly SolidColorBrush expectedColor = new SolidColorBrush(Colors.White);
 
         private static readonly Rect expectedRect = new Rect(10, 20, 30, 40);
 
@@ -86,7 +87,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
     [Subject(typeof(DrawingContext), "Rectangle")]
     public class when_resolving_offsets_for_a_rectangle : a_DrawingContext
     {
-        private static readonly Vector2 absoluteOffset = new Vector2(20, 30);
+        private static readonly Vector absoluteOffset = new Vector(20, 30);
 
         private static readonly Rect rect = new Rect(10, 20, 30, 40);
 
@@ -94,7 +95,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private Because of = () =>
             {
-                DrawingContext.DrawRectangle(rect, new SolidColorBrush(Color.AliceBlue));
+                DrawingContext.DrawRectangle(rect, new SolidColorBrush(Colors.AliceBlue));
                 Renderer.PreDraw();
                 Renderer.Draw();
             };
@@ -112,16 +113,16 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
     [Subject(typeof(DrawingContext), "Text")]
     public class when_resolving_offsets_for_text : a_DrawingContext
     {
-        private static readonly Vector2 absoluteOffset = new Vector2(20, 30);
+        private static readonly Vector absoluteOffset = new Vector(20, 30);
 
-        private static readonly Vector2 textOffset = new Vector2(10, 20);
+        private static readonly Vector textOffset = new Vector(10, 20);
 
         private Establish context = () => UiElement.SetupGet(element => element.AbsoluteOffset).Returns(absoluteOffset);
 
         private Because of = () =>
             {
                 DrawingContext.DrawText(
-                    SpriteFont.Object, string.Empty, textOffset, new SolidColorBrush(Color.AliceBlue));
+                    SpriteFont.Object, string.Empty, textOffset, new SolidColorBrush(Colors.AliceBlue));
                 Renderer.PreDraw();
                 Renderer.Draw();
             };
@@ -140,7 +141,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
     [Subject(typeof(DrawingContext), "Image")]
     public class when_resolving_offsets_for_an_image : a_DrawingContext
     {
-        private static readonly Vector2 absoluteOffset = new Vector2(20, 30);
+        private static readonly Vector absoluteOffset = new Vector(20, 30);
 
         private static readonly Rect rect = new Rect(10, 20, 30, 40);
 

@@ -46,9 +46,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
     [Subject(typeof(Button), "Padding")]
     public class when_padding_is_specified : a_Button
     {
-        private const float ChildHeight = 20;
+        private const double ChildHeight = 20;
 
-        private const float ChildWidth = 10;
+        private const double ChildWidth = 10;
 
         private static Mock<UIElement> child;
 
@@ -78,7 +78,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
                 new Size(ChildWidth + padding.Left + padding.Right, ChildHeight + padding.Top + padding.Bottom));
 
         private It should_have_a_child_with_the_correct_visual_offset =
-            () => child.Object.VisualOffset.ShouldEqual(new Vector2(padding.Left, padding.Top));
+            () => child.Object.VisualOffset.ShouldEqual(new Vector(padding.Left, padding.Top));
 
         private static Thickness padding;
     }

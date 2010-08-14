@@ -6,32 +6,32 @@ namespace RedBadger.Xpf.Internal
 
     internal struct MinMax
     {
-        internal readonly float MaxHeight;
+        internal readonly double MaxHeight;
 
-        internal readonly float MaxWidth;
+        internal readonly double MaxWidth;
 
-        internal readonly float MinHeight;
+        internal readonly double MinHeight;
 
-        internal readonly float MinWidth;
+        internal readonly double MinWidth;
 
         internal MinMax(UIElement element)
         {
             this.MaxHeight = element.MaxHeight;
             this.MinHeight = element.MinHeight;
-            float height = element.Height;
+            double height = element.Height;
 
-            float explicitHeight = float.IsNaN(height) ? float.PositiveInfinity : height;
+            double explicitHeight = double.IsNaN(height) ? double.PositiveInfinity : height;
             this.MaxHeight = Math.Max(Math.Min(explicitHeight, this.MaxHeight), this.MinHeight);
-            explicitHeight = float.IsNaN(height) ? 0f : height;
+            explicitHeight = double.IsNaN(height) ? 0 : height;
             this.MinHeight = Math.Max(Math.Min(this.MaxHeight, explicitHeight), this.MinHeight);
             
             this.MaxWidth = element.MaxWidth;
             this.MinWidth = element.MinWidth;
-            float width = element.Width;
+            double width = element.Width;
             
-            float explicitWidth = float.IsNaN(width) ? float.PositiveInfinity : width;
+            double explicitWidth = double.IsNaN(width) ? double.PositiveInfinity : width;
             this.MaxWidth = Math.Max(Math.Min(explicitWidth, this.MaxWidth), this.MinWidth);
-            explicitWidth = float.IsNaN(width) ? 0f : width;
+            explicitWidth = double.IsNaN(width) ? 0 : width;
             this.MinWidth = Math.Max(Math.Min(this.MaxWidth, explicitWidth), this.MinWidth);
         }
     }

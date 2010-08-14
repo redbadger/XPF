@@ -131,8 +131,8 @@ namespace RedBadger.Xpf.Presentation.Controls
             if (child != null)
             {
                 var childConstraint = new Size(
-                    Math.Max(0f, availableSize.Width - borderThicknessAndPaddingSize.Width), 
-                    Math.Max(0f, availableSize.Height - borderThicknessAndPaddingSize.Height));
+                    Math.Max(0, availableSize.Width - borderThicknessAndPaddingSize.Width), 
+                    Math.Max(0, availableSize.Height - borderThicknessAndPaddingSize.Height));
                 child.Measure(childConstraint);
 
                 var size = new Size(

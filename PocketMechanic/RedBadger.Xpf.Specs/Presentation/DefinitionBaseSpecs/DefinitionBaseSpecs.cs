@@ -21,11 +21,11 @@ namespace RedBadger.Xpf.Specs.Presentation.DefinitionBaseSpecs
     {
         private const GridUnitType ExpectedGridUnitType = GridUnitType.Pixel;
 
-        private const float ExpectedMaxWidth = 100f;
+        private const double ExpectedMaxWidth = 100;
 
-        private const float ExpectedMinWidth = 10f;
+        private const double ExpectedMinWidth = 10;
 
-        private const float ExpectedWidth = 10f;
+        private const double ExpectedWidth = 10;
 
         private static ColumnDefinition columnDefinition;
 
@@ -57,11 +57,11 @@ namespace RedBadger.Xpf.Specs.Presentation.DefinitionBaseSpecs
     {
         private const GridUnitType ExpectedGridUnitType = GridUnitType.Pixel;
 
-        private const float ExpectedHeight = 10f;
+        private const double ExpectedHeight = 10;
 
-        private const float ExpectedMaxHeight = 100f;
+        private const double ExpectedMaxHeight = 100;
 
-        private const float ExpectedMinHeight = 10f;
+        private const double ExpectedMinHeight = 10;
 
         private static RowDefinition rowDefinition;
 

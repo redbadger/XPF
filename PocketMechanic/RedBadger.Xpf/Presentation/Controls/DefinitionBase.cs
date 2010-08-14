@@ -23,13 +23,13 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         public GridUnitType LengthType { get; set; }
 
-        internal float AvailableLength { get; set; }
+        internal double AvailableLength { get; set; }
 
-        internal float FinalLength { get; set; }
+        internal double FinalLength { get; set; }
 
-        internal float FinalOffset { get; set; }
+        internal double FinalOffset { get; set; }
 
-        internal float MinLength { get; set; }
+        internal double MinLength { get; set; }
 
         internal GridLength UserLength
         {
@@ -44,12 +44,12 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        internal float UserMaxLength
+        internal double UserMaxLength
         {
             get
             {
                 return
-                    (float)
+                    (double)
                     this.GetValue(
                         this.definitionType == DefinitionType.Column
                             ? ColumnDefinition.MaxWidthProperty.Value
@@ -57,12 +57,12 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        internal float UserMinLength
+        internal double UserMinLength
         {
             get
             {
                 return
-                    (float)
+                    (double)
                     this.GetValue(
                         this.definitionType == DefinitionType.Column
                             ? ColumnDefinition.MinWidthProperty.Value
@@ -70,7 +70,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        internal void UpdateMinLength(float minLength)
+        internal void UpdateMinLength(double minLength)
         {
             this.MinLength = Math.Max(this.MinLength, minLength);
         }

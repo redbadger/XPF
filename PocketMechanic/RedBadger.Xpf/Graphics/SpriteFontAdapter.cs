@@ -3,6 +3,8 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+    using RedBadger.Xpf.Presentation;
+
     public class SpriteFontAdapter : ISpriteFont
     {
         private readonly SpriteFont spriteFont;
@@ -20,9 +22,10 @@
             }
         }
 
-        public Vector2 MeasureString(string text)
+        public Size MeasureString(string text)
         {
-            return this.spriteFont.MeasureString(text ?? string.Empty);
+            Vector2 size = this.spriteFont.MeasureString(text ?? string.Empty);
+            return new Size(size.X, size.Y);
         }
     }
 }

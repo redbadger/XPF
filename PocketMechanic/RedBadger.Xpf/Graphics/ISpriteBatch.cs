@@ -1,6 +1,6 @@
 namespace RedBadger.Xpf.Graphics
 {
-    using Microsoft.Xna.Framework;
+    using System.Windows.Media;
 
     using RedBadger.Xpf.Presentation;
 
@@ -8,6 +8,6 @@ namespace RedBadger.Xpf.Graphics
     {
         void Draw(ITexture2D texture2D, Rect rect, Color color);
 
-        void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color);
+        void DrawString(ISpriteFont spriteFont, string text, Vector position, Color color);
     }
 }

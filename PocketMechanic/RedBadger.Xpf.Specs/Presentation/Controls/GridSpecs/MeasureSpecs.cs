@@ -232,7 +232,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     [Subject(typeof(Grid), "Measure - Pixel")]
     public class when_there_is_a_column_with_pixel_width : a_Grid
     {
-        private const float ColumnWidth = 10f;
+        private const double ColumnWidth = 10;
 
         private static readonly Size availableSize = new Size(100, 100);
 
@@ -261,7 +261,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     [Subject(typeof(Grid), "Measure - Pixel")]
     public class when_there_is_a_row_with_pixel_height : a_Grid
     {
-        private const float RowHeight = 10f;
+        private const double RowHeight = 10;
 
         private static readonly Size availableSize = new Size(100, 100);
 
@@ -291,13 +291,13 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     public class when_measuring_a_grid_with_two_rows_and_two_columns_both_of_pixel_values :
         a_Grid_with_two_rows_and_two_columns
     {
-        private const float ExpectedHeight1 = 66f;
+        private const double ExpectedHeight1 = 66f;
 
-        private const float ExpectedHeight2 = 80f;
+        private const double ExpectedHeight2 = 80;
 
-        private const float ExpectedWidth1 = 45f;
+        private const double ExpectedWidth1 = 45f;
 
-        private const float ExpectedWidth2 = 54f;
+        private const double ExpectedWidth2 = 54f;
 
         private Establish context = () =>
             {
@@ -319,7 +319,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     [Subject(typeof(Grid), "Measure - Min and Max")]
     public class when_there_is_a_column_with_min_width_and_the_child_is_smaller : a_Grid
     {
-        private const float ColumnMinWidth = 10f;
+        private const double ColumnMinWidth = 10;
 
         private static readonly Size availableSize = new Size(100, 100);
 
@@ -348,7 +348,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     [Subject(typeof(Grid), "Measure - Min and Max")]
     public class when_there_is_a_column_with_max_width_and_the_child_is_larger : a_Grid
     {
-        private const float ColumnMaxWidth = 50f;
+        private const double ColumnMaxWidth = 50;
 
         private static readonly Size availableSize = new Size(100, 100);
 
@@ -377,7 +377,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     [Subject(typeof(Grid), "Measure - Min and Max")]
     public class when_there_is_a_row_with_min_height_and_the_child_is_smaller : a_Grid
     {
-        private const float RowMinHeight = 10f;
+        private const double RowMinHeight = 10;
 
         private static readonly Size availableSize = new Size(100, 100);
 
@@ -406,7 +406,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     [Subject(typeof(Grid), "Measure - Min and Max")]
     public class when_there_is_a_row_with_max_height_and_the_child_is_larger : a_Grid
     {
-        private const float RowMaxHeight = 50f;
+        private const double RowMaxHeight = 50;
 
         private static readonly Size availableSize = new Size(100, 100);
 
