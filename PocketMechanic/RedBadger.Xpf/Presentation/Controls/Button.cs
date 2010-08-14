@@ -1,20 +1,17 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls
 {
-    using System;
     using System.Windows;
 
     using RedBadger.Xpf.Internal;
 
-    using Size = RedBadger.Xpf.Presentation.Size;
     using Thickness = RedBadger.Xpf.Presentation.Thickness;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public class Button : ContentControl
     {
         public static readonly XpfDependencyProperty PaddingProperty = XpfDependencyProperty.Register(
-            "Padding",
-            typeof(Thickness),
-            typeof(Button),
+            "Padding", 
+            typeof(Thickness), 
+            typeof(Button), 
             new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         public Thickness Padding
@@ -30,9 +27,12 @@
             }
         }
 
-        protected override Size MeasureOverride(Size availableSize)
+        public override void OnApplyTemplate()
         {
-            return base.MeasureOverride(availableSize) + this.Padding.Collapse();
+            if (this.Content != null)
+            {
+                this.Content.Margin = this.Padding;
+            }
         }
     }
 }

@@ -13,6 +13,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
 {
     using Machine.Specifications;
 
+    using Microsoft.Xna.Framework;
+
     using Moq;
 
     using RedBadger.Xpf.Presentation;
@@ -55,7 +57,11 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
                 child = new Mock<UIElement> { CallBase = true };
                 child.Object.Width = ChildWidth;
                 child.Object.Height = ChildHeight;
+                child.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                child.Object.VerticalAlignment = VerticalAlignment.Top;
 
+                Button.HorizontalAlignment = HorizontalAlignment.Left;
+                Button.VerticalAlignment= VerticalAlignment.Top;
                 Button.Content = child.Object;
             };
 
@@ -71,7 +77,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
             Button.DesiredSize.ShouldEqual(
                 new Size(ChildWidth + padding.Left + padding.Right, ChildHeight + padding.Top + padding.Bottom));
 
-        private It should_have_the_correct_visual_offset;
+        private It should_have_a_child_with_the_correct_visual_offset =
+            () => child.Object.VisualOffset.ShouldEqual(new Vector2(padding.Left, padding.Top));
 
         private static Thickness padding;
     }

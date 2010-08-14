@@ -239,6 +239,10 @@
         /// </remarks>
         internal Vector2 VisualOffset { get; set; }
 
+        public virtual void OnApplyTemplate()
+        {
+        }
+
         /// <summary>
         ///     Positions child elements and determines a size for a UIElement.
         ///     Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
@@ -588,6 +592,8 @@
         /// <returns>The desired size of this element in layout.</returns>
         private Size MeasureCore(Size availableSize)
         {
+            this.OnApplyTemplate();
+
             Thickness margin = this.Margin;
             float horizontalMargin = margin.Left + margin.Right;
             float verticalMargin = margin.Top + margin.Bottom;

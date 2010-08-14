@@ -28,6 +28,8 @@
 
         float Width { get; set; }
 
+        Thickness Margin { get; set; }
+
         /// <summary>
         ///     Positions child elements and determines a size for a UIElement.
         ///     Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.

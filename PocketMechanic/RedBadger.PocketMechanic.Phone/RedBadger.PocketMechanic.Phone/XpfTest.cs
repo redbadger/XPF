@@ -58,7 +58,7 @@ namespace RedBadger.PocketMechanic.Phone
             grid.ColumnDefinitions.Add(column1);
             grid.ColumnDefinitions.Add(new ColumnDefinition());
             grid.RowDefinitions.Add(new RowDefinition());
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(300) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(200) });
 
             var stackpanel = new StackPanel { Orientation = Orientation.Horizontal };
 
@@ -97,7 +97,7 @@ namespace RedBadger.PocketMechanic.Phone
                 TextBlock.TextProperty,
                 new Binding("MyWidth") { Source = this.myBindingObject, Mode = BindingMode.TwoWay });
 
-            this.myBindingObject.MyWidth = 100;
+            // this.myBindingObject.MyWidth = "100";
             border = new Border
                 {
                     Child = this.textBlock2, 
@@ -124,8 +124,9 @@ namespace RedBadger.PocketMechanic.Phone
             var image = new Image
                 {
                     Source = new XnaImage(new Texture2DAdapter(badger)), 
-                    Stretch = Stretch.None
+                    Stretch = Stretch.Fill
                 };
+            image.Margin = new Thickness(10);
             Grid.SetColumn(image, 1);
             Grid.SetRow(image, 1);
             grid.Children.Add(image);
@@ -150,18 +151,18 @@ namespace RedBadger.PocketMechanic.Phone
                     };
             var clock = new Clock();
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
-                l => this.textBlock2.Text = DateTime.Now.Second.ToString());
+                l => this.textBlock2.Text = clock.Time);
 
             // GC.Collect();
         }
 
         public class MyBindingObject : INotifyPropertyChanged
         {
-            private int myWidth;
+            private string myWidth;
 
             public event PropertyChangedEventHandler PropertyChanged;
 
-            public int MyWidth
+            public string MyWidth
             {
                 get
                 {
