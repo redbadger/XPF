@@ -23,7 +23,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.StackPanelSpecs
     using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_StackPanel

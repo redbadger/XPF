@@ -1,11 +1,12 @@
 ﻿namespace RedBadger.Xpf.Graphics
 {
+    using System.Windows;
+
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    using RedBadger.Xpf.Presentation;
-
     using Color = System.Windows.Media.Color;
+    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public class SpriteBatchAdapter : SpriteBatch, ISpriteBatch
     {

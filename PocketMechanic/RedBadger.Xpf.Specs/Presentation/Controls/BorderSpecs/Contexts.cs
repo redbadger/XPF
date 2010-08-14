@@ -23,7 +23,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
     using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using It = Moq.It;
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
     using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 

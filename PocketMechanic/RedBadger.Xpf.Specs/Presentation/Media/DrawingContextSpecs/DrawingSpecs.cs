@@ -11,6 +11,7 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 {
+    using System.Windows;
     using System.Windows.Media;
 
     using Machine.Specifications;
@@ -18,12 +19,12 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
     using Moq;
 
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
     using DrawingContext = RedBadger.Xpf.Presentation.Media.DrawingContext;
     using It = Machine.Specifications.It;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
+    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     [Subject(typeof(DrawingContext), "Text")]
     public class when_drawing_text : a_DrawingContext

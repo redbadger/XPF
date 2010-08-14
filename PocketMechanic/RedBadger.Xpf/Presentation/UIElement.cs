@@ -469,7 +469,7 @@
         /// <param name = "finalRect">The final area within the parent that element should use to arrange itself and its child elements.</param>
         private void ArrangeCore(Rect finalRect)
         {
-            Size finalSize = finalRect.Size;
+            var finalSize = finalRect != Rect.Empty ? new Size(finalRect.Width, finalRect.Height) : new Size();
 
             Thickness margin = this.Margin;
             double horizontalMargin = margin.Left + margin.Right;

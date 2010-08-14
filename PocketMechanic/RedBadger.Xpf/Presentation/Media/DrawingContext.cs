@@ -2,10 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-
-    using Microsoft.Xna.Framework;
+    using System.Windows;
 
     using RedBadger.Xpf.Graphics;
+
+    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public class DrawingContext : IDrawingContext
     {

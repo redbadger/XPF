@@ -220,9 +220,6 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChangedNotifier.cs">
       <Link>Presentation\PropertyChangedNotifier.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Rect.cs">
-      <Link>Presentation\Rect.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\TextWrapping.cs">
       <Link>Presentation\TextWrapping.cs</Link>
     </Compile>

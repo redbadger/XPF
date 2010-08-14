@@ -26,7 +26,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
     using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using It = Machine.Specifications.It;
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
     using TextWrapping = RedBadger.Xpf.Presentation.TextWrapping;
     using Thickness = RedBadger.Xpf.Presentation.Thickness;

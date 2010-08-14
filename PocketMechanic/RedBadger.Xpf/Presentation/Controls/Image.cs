@@ -4,7 +4,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     using RedBadger.Xpf.Presentation.Media;
 
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
     using Vector = RedBadger.Xpf.Presentation.Vector;
 
@@ -77,7 +76,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override void OnRender(IDrawingContext drawingContext)
         {
-            drawingContext.DrawImage(this.Source, new Rect(this.RenderSize));
+            drawingContext.DrawImage(this.Source, new Rect(new Point(), this.RenderSize));
         }
 
         private static void SourcePropertyChangedCallback(

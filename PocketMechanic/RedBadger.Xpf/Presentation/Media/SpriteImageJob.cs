@@ -1,10 +1,13 @@
 namespace RedBadger.Xpf.Presentation.Media
 {
     using System;
+    using System.Windows;
     using System.Windows.Media;
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Media.Imaging;
+
+    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public struct SpriteImageJob : ISpriteJob
     {
@@ -29,7 +32,10 @@ namespace RedBadger.Xpf.Presentation.Media
                 throw new NotImplementedException("Currently an ImageSource must be an XnaImage");
             }
 
-            var drawRect = new Rect(this.rect.Position + this.absoluteOffset, this.rect.Size);
+            var drawRect = this.rect != Rect.Empty ? this.rect : new Rect();
+            drawRect.X += this.absoluteOffset.X;
+            drawRect.Y += this.absoluteOffset.Y;
+
             spriteBatch.Draw(image.Texture, drawRect, Colors.White);
         }
 

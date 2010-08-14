@@ -8,7 +8,6 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Internal;
 
     using GridUnitType = RedBadger.Xpf.Presentation.GridUnitType;
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public class Grid : Panel

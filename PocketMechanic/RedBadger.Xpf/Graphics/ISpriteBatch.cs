@@ -1,8 +1,9 @@
 namespace RedBadger.Xpf.Graphics
 {
+    using System.Windows;
     using System.Windows.Media;
 
-    using RedBadger.Xpf.Presentation;
+    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public interface ISpriteBatch
     {

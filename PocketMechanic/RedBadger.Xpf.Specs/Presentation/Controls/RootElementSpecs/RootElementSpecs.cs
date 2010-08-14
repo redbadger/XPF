@@ -21,14 +21,13 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.RootElementSpecs
     using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public abstract class a_RootElement
     {
         protected static RootElement RootElement;
 
-        protected static Rect ViewPort = new Rect(new Vector(10, 20), new Size(100, 200));
+        protected static Rect ViewPort = new Rect(10, 20, 100, 200);
 
         private Establish context = () =>
             {
@@ -44,7 +43,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.RootElementSpecs
     {
         private Because of = () => RootElement.Update();
 
-        private It should_have_the_correct_visual_offset = () => RootElement.VisualOffset.ShouldEqual(ViewPort.Position);
+        private It should_have_the_correct_visual_offset = () => RootElement.VisualOffset.ShouldEqual(new Vector(ViewPort.X, ViewPort.Y));
     }
 
     [Subject(typeof(RootElement))]

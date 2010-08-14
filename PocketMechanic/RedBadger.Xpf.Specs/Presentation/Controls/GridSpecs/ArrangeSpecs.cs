@@ -11,10 +11,14 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
+    using System.Windows;
+
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+
+    using GridLength = RedBadger.Xpf.Presentation.GridLength;
+    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     [Subject(typeof(Grid), "Arrange")]
     public class when_there_are_two_rows_and_two_columns_of_type_auto : a_Grid_with_two_rows_and_two_columns

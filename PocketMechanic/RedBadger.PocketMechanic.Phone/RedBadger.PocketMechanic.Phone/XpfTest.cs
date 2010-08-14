@@ -2,6 +2,7 @@ namespace RedBadger.PocketMechanic.Phone
 {
     using System;
     using System.ComponentModel;
+    using System.Windows;
     using System.Windows.Data;
     using System.Windows.Media;
 
@@ -15,8 +16,12 @@ namespace RedBadger.PocketMechanic.Phone
     using RedBadger.Xpf.Presentation.Media;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
+    using GridLength = RedBadger.Xpf.Presentation.GridLength;
+    using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
     using Stretch = RedBadger.Xpf.Presentation.Media.Stretch;
+    using Thickness = RedBadger.Xpf.Presentation.Thickness;
+    using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     public class XpfTest : DrawableGameComponent
     {

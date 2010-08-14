@@ -5,7 +5,6 @@
 
     using RedBadger.Xpf.Presentation.Media;
 
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public class Panel : UIElement

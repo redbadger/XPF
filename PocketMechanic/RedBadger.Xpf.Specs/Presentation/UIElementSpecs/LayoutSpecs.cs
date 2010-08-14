@@ -20,7 +20,6 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
     using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using It = Machine.Specifications.It;
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using Thickness = RedBadger.Xpf.Presentation.Thickness;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
     using Vector = RedBadger.Xpf.Presentation.Vector;

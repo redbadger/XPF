@@ -1,5 +1,7 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
+    using System.Windows;
+
     using RedBadger.Xpf.Presentation.Media;
 
     public class RootElement : ContentControl, IRootElement
@@ -34,7 +36,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 this.renderer.ClearInvalidDrawingContexts();
             }
 
-            this.Measure(this.viewPort.Size);
+            this.Measure(new Size(this.viewPort.Width, this.viewPort.Height));
             this.Arrange(this.viewPort);
             this.renderer.PreDraw();
         }

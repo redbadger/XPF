@@ -24,7 +24,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ImageSpecs
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
     using It = Machine.Specifications.It;
-    using Rect = RedBadger.Xpf.Presentation.Rect;
 
     public abstract class an_image
     {

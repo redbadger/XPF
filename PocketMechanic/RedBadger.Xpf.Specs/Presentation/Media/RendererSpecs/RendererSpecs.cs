@@ -11,6 +11,7 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
 {
+    using System.Windows;
     using System.Windows.Media;
 
     using Machine.Specifications;

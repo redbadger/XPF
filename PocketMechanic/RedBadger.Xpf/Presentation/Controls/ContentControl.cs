@@ -2,7 +2,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 {
     using System.Windows;
 
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     /// <summary>
@@ -34,7 +33,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             IElement content = this.Content;
             if (content != null)
             {
-                content.Arrange(new Rect(finalSize));
+                content.Arrange(new Rect(new Point(), finalSize));
             }
 
             return finalSize;

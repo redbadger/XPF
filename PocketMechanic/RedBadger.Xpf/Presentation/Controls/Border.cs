@@ -7,7 +7,6 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Presentation.Media;
 
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using Thickness = RedBadger.Xpf.Presentation.Thickness;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
@@ -110,7 +109,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
             if (child != null)
             {
-                var finalRect = new Rect(finalSize);
+                var finalRect = new Rect(new Point(), finalSize);
 
                 finalRect = finalRect.Deflate(this.BorderThickness);
                 finalRect = finalRect.Deflate(this.Padding);

@@ -24,7 +24,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
 
     using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using It = Machine.Specifications.It;
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     public abstract class a_Panel

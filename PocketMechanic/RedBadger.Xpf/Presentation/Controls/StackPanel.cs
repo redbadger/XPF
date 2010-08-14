@@ -3,7 +3,6 @@ namespace RedBadger.Xpf.Presentation.Controls
     using System;
     using System.Windows;
 
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public class StackPanel : Panel
@@ -30,7 +29,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         protected override Size ArrangeOverride(Size arrangeSize)
         {
             bool isHorizontalOrientation = this.Orientation == Orientation.Horizontal;
-            var finalRect = new Rect(arrangeSize);
+            var finalRect = new Rect(new Point(),  arrangeSize);
             double width = 0;
             double height = 0;
             foreach (UIElement child in this.Children)

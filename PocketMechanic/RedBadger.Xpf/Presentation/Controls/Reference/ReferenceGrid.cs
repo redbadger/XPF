@@ -7,7 +7,6 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
     using RedBadger.Xpf.Internal;
 
-    using Rect = RedBadger.Xpf.Presentation.Rect;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public enum GridUnitType

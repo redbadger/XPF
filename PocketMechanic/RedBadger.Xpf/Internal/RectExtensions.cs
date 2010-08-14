@@ -1,8 +1,9 @@
 namespace RedBadger.Xpf.Internal
 {
     using System;
+    using System.Windows;
 
-    using RedBadger.Xpf.Presentation;
+    using Thickness = RedBadger.Xpf.Presentation.Thickness;
 
     public static class RectExtensions
     {
