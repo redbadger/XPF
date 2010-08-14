@@ -1,6 +1,8 @@
 namespace RedBadger.Xpf.Internal
 {
-    using RedBadger.Xpf.Presentation;
+    using System.Windows;
+
+    using Thickness = RedBadger.Xpf.Presentation.Thickness;
 
     public static class ThicknessExtensions
     {

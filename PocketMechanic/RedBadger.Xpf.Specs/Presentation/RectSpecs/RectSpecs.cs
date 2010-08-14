@@ -10,9 +10,12 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.RectSpecs
 {
-    using RedBadger.Xpf.Presentation;
+    using System.Windows;
 
     using Machine.Specifications;
+
+    using Rect = RedBadger.Xpf.Presentation.Rect;
+    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public abstract class a_Rect
     {

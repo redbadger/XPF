@@ -11,14 +11,15 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 {
+    using System.Windows;
+
     using Machine.Specifications;
 
     using Moq;
     using Moq.Protected;
 
-    using RedBadger.Xpf.Presentation;
-
     using It = Machine.Specifications.It;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     [Subject(typeof(UIElement), "Measure")]
     public class after_measure_is_called : a_UIElement

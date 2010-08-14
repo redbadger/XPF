@@ -11,18 +11,23 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 {
+    using System.Windows;
     using System.Windows.Media;
 
     using Machine.Specifications;
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
     using Brush = RedBadger.Xpf.Presentation.Media.Brush;
+    using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using It = Machine.Specifications.It;
+    using Rect = RedBadger.Xpf.Presentation.Rect;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
+    using Thickness = RedBadger.Xpf.Presentation.Thickness;
+    using Vector = RedBadger.Xpf.Presentation.Vector;
+    using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     [Subject(typeof(Border))]
     public class when_initialized : a_Border

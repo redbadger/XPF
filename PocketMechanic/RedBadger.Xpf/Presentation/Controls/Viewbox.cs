@@ -1,7 +1,11 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
+    using System.Windows;
+
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Presentation.Media;
+
+    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public class Viewbox
     {

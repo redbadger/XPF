@@ -3,7 +3,6 @@ namespace RedBadger.Xpf.Presentation.Controls
     using System.Windows;
 
     using Rect = RedBadger.Xpf.Presentation.Rect;
-    using Size = RedBadger.Xpf.Presentation.Size;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     /// <summary>

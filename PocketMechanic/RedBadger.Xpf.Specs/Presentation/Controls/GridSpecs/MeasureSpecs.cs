@@ -11,14 +11,17 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
+    using System.Windows;
+
     using Machine.Specifications;
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
+    using GridLength = RedBadger.Xpf.Presentation.GridLength;
     using It = Machine.Specifications.It;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     [Subject(typeof(Grid), "Measure")]
     public class when_an_element_is_added : a_Grid

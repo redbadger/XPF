@@ -11,12 +11,17 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
+    using System.Windows;
+
     using Machine.Specifications;
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+
+    using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
+    using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     public abstract class a_Grid
     {

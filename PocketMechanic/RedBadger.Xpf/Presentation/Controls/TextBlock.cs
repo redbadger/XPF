@@ -11,7 +11,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using Rect = RedBadger.Xpf.Presentation.Rect;
-    using Size = RedBadger.Xpf.Presentation.Size;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
     using TextWrapping = RedBadger.Xpf.Presentation.TextWrapping;
     using Thickness = RedBadger.Xpf.Presentation.Thickness;

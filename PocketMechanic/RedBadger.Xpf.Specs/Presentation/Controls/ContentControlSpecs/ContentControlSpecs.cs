@@ -11,6 +11,8 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ContentControlSpecs
 {
+    using System.Windows;
+
     using Machine.Specifications;
 
     using Moq;

@@ -1,8 +1,7 @@
 namespace RedBadger.Xpf.Presentation
 {
     using System.Diagnostics;
-
-    using Microsoft.Xna.Framework;
+    using System.Windows;
 
     using RedBadger.Xpf.Internal;
 

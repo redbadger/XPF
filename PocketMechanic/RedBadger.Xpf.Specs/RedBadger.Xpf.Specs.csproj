@@ -99,7 +99,6 @@
     <Compile Include="Presentation\Media\Imaging\XnaImageSpecs.cs" />
     <Compile Include="Presentation\Media\RendererSpecs\RendererSpecs.cs" />
     <Compile Include="Presentation\RectSpecs\RectSpecs.cs" />
-    <Compile Include="Presentation\SizeSpecs\SizeSpecs.cs" />
     <Compile Include="Presentation\UIElementCollectionSpecs\UIElementCollectionSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\ArrangeSpecs.cs" />

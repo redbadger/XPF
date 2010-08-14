@@ -11,12 +11,14 @@
 namespace RedBadger.Xpf.Specs.Presentation
 {
     using System;
-
-    using Xpf.Presentation;
+    using System.Windows;
 
     using Machine.Specifications;
 
     using Rhino.Mocks;
+
+    using Thickness = RedBadger.Xpf.Presentation.Thickness;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_UIElement
     {
@@ -95,19 +97,6 @@ namespace RedBadger.Xpf.Specs.Presentation
 
         private It should_reduce_the_size_returned_to_keep_it_within_the_available_size_passed_to_Measure =
             () => uiElement.DesiredSize.ShouldEqual(availableSize);
-    }
-
-    [Subject(typeof(UIElement), "Measuring")]
-    public class when_an_implementing_control_returns_a_negative_size : a_UIElement
-    {
-        private static readonly Size availableSize = new Size(10, 10);
-
-        private Establish context =
-            () => uiElement.Expect(element => element.MeasureOverride(availableSize)).Return(new Size(-10, -10));
-
-        private Because of = () => uiElement.Measure(availableSize);
-
-        private It should_return_a_zero_value_instead = () => uiElement.DesiredSize.ShouldEqual(Size.Empty);
     }
 
     [Subject(typeof(UIElement), "Measure")]
@@ -207,19 +196,6 @@ namespace RedBadger.Xpf.Specs.Presentation
                                                                                                      MeasureOverride(
                                                                                                          expectedAvailableSize));
                                                                                          };
-    }
-
-    [Subject(typeof(UIElement), "Measure")]
-    public class after_measure_is_called : a_UIElement
-    {
-        private Establish context = () => uiElement.Measure(Size.Empty);
-
-        private Because of = () => uiElement.Measure(Size.Empty);
-
-        private It should_be_considered_valid = () => uiElement.IsMeasureValid.ShouldBeTrue();
-
-        private It should_not_measure_again =
-            () => uiElement.AssertWasCalled(element => element.MeasureOverride(Size.Empty), element => element.Repeat.Once());
     }
 
     internal static class UIElementMockingExtensions

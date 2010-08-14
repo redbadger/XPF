@@ -11,17 +11,18 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.RootElementSpecs
 {
-    using Machine.Specifications;
+    using System.Windows;
 
-    using Microsoft.Xna.Framework;
+    using Machine.Specifications;
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
+    using Rect = RedBadger.Xpf.Presentation.Rect;
+    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public abstract class a_RootElement
     {

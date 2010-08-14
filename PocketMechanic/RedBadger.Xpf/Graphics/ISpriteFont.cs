@@ -1,8 +1,8 @@
 ﻿namespace RedBadger.Xpf.Graphics
 {
-    using Microsoft.Xna.Framework.Graphics;
+    using System.Windows;
 
-    using RedBadger.Xpf.Presentation;
+    using Microsoft.Xna.Framework.Graphics;
 
     public interface ISpriteFont
     {

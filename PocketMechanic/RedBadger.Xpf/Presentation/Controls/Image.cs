@@ -5,7 +5,6 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Presentation.Media;
 
     using Rect = RedBadger.Xpf.Presentation.Rect;
-    using Size = RedBadger.Xpf.Presentation.Size;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
     using Vector = RedBadger.Xpf.Presentation.Vector;
 

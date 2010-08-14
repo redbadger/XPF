@@ -11,6 +11,8 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.UIElementCollectionSpecs
 {
+    using System.Windows;
+
     using Machine.Specifications;
 
     using Moq;
@@ -18,6 +20,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementCollectionSpecs
     using RedBadger.Xpf.Presentation;
 
     using It = Machine.Specifications.It;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_UIElementCollection
     {

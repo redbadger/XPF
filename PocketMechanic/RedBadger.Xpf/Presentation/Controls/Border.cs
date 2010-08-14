@@ -8,7 +8,6 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Presentation.Media;
 
     using Rect = RedBadger.Xpf.Presentation.Rect;
-    using Size = RedBadger.Xpf.Presentation.Size;
     using Thickness = RedBadger.Xpf.Presentation.Thickness;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
@@ -125,9 +124,13 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             this.isBordersCollectionDirty = true;
 
-            UIElement child = this.Child;
-            Size borderThicknessAndPaddingSize = this.BorderThickness.Collapse() + this.Padding.Collapse();
+            var borderSize = this.BorderThickness.Collapse();
+            var paddingSize = this.Padding.Collapse();
 
+            var borderThicknessAndPaddingSize = new Size(
+                borderSize.Width + paddingSize.Width, borderSize.Height + paddingSize.Height);
+
+            UIElement child = this.Child;
             if (child != null)
             {
                 var childConstraint = new Size(
@@ -162,7 +165,8 @@ namespace RedBadger.Xpf.Presentation.Controls
 
             if (this.Background != null)
             {
-                drawingContext.DrawRectangle(new Rect(0, 0, this.ActualWidth, this.ActualHeight).Deflate(this.BorderThickness), this.Background);
+                drawingContext.DrawRectangle(
+                    new Rect(0, 0, this.ActualWidth, this.ActualHeight).Deflate(this.BorderThickness), this.Background);
             }
         }
 

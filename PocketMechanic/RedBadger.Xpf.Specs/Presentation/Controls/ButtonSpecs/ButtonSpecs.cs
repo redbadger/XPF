@@ -11,6 +11,8 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
 {
+    using System.Windows;
+
     using Machine.Specifications;
 
     using Microsoft.Xna.Framework;
@@ -21,7 +23,13 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
+    using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using It = Machine.Specifications.It;
+    using Rect = RedBadger.Xpf.Presentation.Rect;
+    using Thickness = RedBadger.Xpf.Presentation.Thickness;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
+    using Vector = RedBadger.Xpf.Presentation.Vector;
+    using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     public abstract class a_Button
     {
