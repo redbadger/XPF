@@ -19,11 +19,9 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     using Moq;
     using Moq.Protected;
 
-    using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using It = Machine.Specifications.It;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
     using Vector = RedBadger.Xpf.Presentation.Vector;
-    using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     [Subject(typeof(UIElement), "Arrange")]
     public class when_the_width_of_the_supplied_available_space_is_not_a_number : a_Measured_UIElement

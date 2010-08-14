@@ -18,11 +18,9 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     using Moq;
     using Moq.Protected;
 
-    using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using It = Machine.Specifications.It;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
     using Vector = RedBadger.Xpf.Presentation.Vector;
-    using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]
     public class when_an_explicit_size_is_set_and_the_children_want_less_space : a_UIElement

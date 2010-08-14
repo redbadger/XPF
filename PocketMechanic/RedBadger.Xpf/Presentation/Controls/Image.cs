@@ -1,9 +1,11 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
     using System.Windows;
+    using System.Windows.Media;
 
     using RedBadger.Xpf.Presentation.Media;
 
+    using ImageSource = RedBadger.Xpf.Presentation.Media.ImageSource;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
     using Vector = RedBadger.Xpf.Presentation.Vector;
 

@@ -11,16 +11,11 @@ namespace RedBadger.PocketMechanic.Phone
     using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
-    using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
-    using Stretch = RedBadger.Xpf.Presentation.Media.Stretch;
-
-    using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     public class XpfTest : DrawableGameComponent
     {

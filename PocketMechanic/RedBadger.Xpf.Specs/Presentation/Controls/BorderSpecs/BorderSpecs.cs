@@ -21,11 +21,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     using RedBadger.Xpf.Presentation.Controls;
 
     using Brush = RedBadger.Xpf.Presentation.Media.Brush;
-    using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using It = Machine.Specifications.It;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
     using Vector = RedBadger.Xpf.Presentation.Vector;
-    using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     [Subject(typeof(Border))]
     public class when_initialized : a_Border

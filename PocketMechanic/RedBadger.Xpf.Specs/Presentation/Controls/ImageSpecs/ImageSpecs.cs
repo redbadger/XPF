@@ -12,6 +12,7 @@
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ImageSpecs
 {
     using System.Windows;
+    using System.Windows.Media;
 
     using Machine.Specifications;
 
@@ -23,6 +24,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ImageSpecs
     using RedBadger.Xpf.Presentation.Media;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
+    using ImageSource = RedBadger.Xpf.Presentation.Media.ImageSource;
     using It = Machine.Specifications.It;
 
     public abstract class an_image

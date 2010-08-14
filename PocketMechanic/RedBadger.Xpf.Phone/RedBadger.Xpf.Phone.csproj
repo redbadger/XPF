@@ -130,6 +130,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Image.cs">
       <Link>Presentation\Controls\Image.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Orientation.cs">
+      <Link>Presentation\Controls\Orientation.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Panel.cs">
       <Link>Presentation\Controls\Panel.cs</Link>
     </Compile>
@@ -150,9 +153,6 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Viewbox.cs">
       <Link>Presentation\Controls\Viewbox.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\HorizontalAlignment.cs">
-      <Link>Presentation\HorizontalAlignment.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IElement.cs">
       <Link>Presentation\IElement.cs</Link>
@@ -202,12 +202,6 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\SpriteTextureJob.cs">
       <Link>Presentation\Media\SpriteTextureJob.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Stretch.cs">
-      <Link>Presentation\Media\Stretch.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Orientation.cs">
-      <Link>Presentation\Orientation.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChangedEventArgs.cs">
       <Link>Presentation\PropertyChangedEventArgs.cs</Link>
     </Compile>
@@ -225,9 +219,6 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Vector.cs">
       <Link>Presentation\Vector.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\VerticalAlignment.cs">
-      <Link>Presentation\VerticalAlignment.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\XpfDependencyProperty.cs">
       <Link>Presentation\XpfDependencyProperty.cs</Link>

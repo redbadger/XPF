@@ -1,4 +1,4 @@
-﻿namespace RedBadger.Xpf.Presentation
+﻿namespace RedBadger.Xpf.Presentation.Controls
 {
     public enum Orientation
     {

@@ -24,12 +24,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
     using RedBadger.Xpf.Presentation.Media;
 
     using Brush = RedBadger.Xpf.Presentation.Media.Brush;
-    using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using It = Machine.Specifications.It;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
     using TextWrapping = RedBadger.Xpf.Presentation.TextWrapping;
     using Vector = RedBadger.Xpf.Presentation.Vector;
-    using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     public abstract class a_TextBlock
     {

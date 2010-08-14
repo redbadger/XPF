@@ -21,10 +21,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
-    using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using It = Moq.It;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
-    using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     public abstract class a_Border
     {
