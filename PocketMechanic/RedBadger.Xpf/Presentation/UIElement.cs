@@ -26,8 +26,8 @@
         public static readonly XpfDependencyProperty MarginProperty = XpfDependencyProperty.Register(
             "Margin", 
             typeof(Thickness), 
-            typeof(UIElement), 
-            new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
+            typeof(UIElement),
+            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         public static readonly XpfDependencyProperty MaxHeightProperty = XpfDependencyProperty.Register(
             "MaxHeight",

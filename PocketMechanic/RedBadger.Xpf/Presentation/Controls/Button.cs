@@ -4,15 +4,13 @@
 
     using RedBadger.Xpf.Internal;
 
-    using Thickness = RedBadger.Xpf.Presentation.Thickness;
-
     public class Button : ContentControl
     {
         public static readonly XpfDependencyProperty PaddingProperty = XpfDependencyProperty.Register(
             "Padding", 
             typeof(Thickness), 
             typeof(Button), 
-            new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
+            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         public Thickness Padding
         {

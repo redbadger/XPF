@@ -2,7 +2,6 @@ namespace RedBadger.Xpf.Internal
 {
     using System.Windows;
 
-    using Thickness = RedBadger.Xpf.Presentation.Thickness;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     internal static class UIElementPropertyChangedCallbacks

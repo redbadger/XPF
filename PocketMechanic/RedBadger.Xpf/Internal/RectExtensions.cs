@@ -3,8 +3,6 @@ namespace RedBadger.Xpf.Internal
     using System;
     using System.Windows;
 
-    using Thickness = RedBadger.Xpf.Presentation.Thickness;
-
     public static class RectExtensions
     {
         public static Rect Deflate(this Rect rect, Thickness thickness)

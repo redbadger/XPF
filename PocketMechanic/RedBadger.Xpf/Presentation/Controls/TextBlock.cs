@@ -12,7 +12,6 @@ namespace RedBadger.Xpf.Presentation.Controls
     using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
     using TextWrapping = RedBadger.Xpf.Presentation.TextWrapping;
-    using Thickness = RedBadger.Xpf.Presentation.Thickness;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
     using Vector = RedBadger.Xpf.Presentation.Vector;
 
@@ -27,8 +26,8 @@ namespace RedBadger.Xpf.Presentation.Controls
         public static readonly XpfDependencyProperty PaddingProperty = XpfDependencyProperty.Register(
             "Padding", 
             typeof(Thickness), 
-            typeof(TextBlock), 
-            new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
+            typeof(TextBlock),
+            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         public static readonly XpfDependencyProperty TextProperty = XpfDependencyProperty.Register(
             "Text", typeof(string), typeof(TextBlock), new PropertyMetadata(string.Empty, TextPropertyChangedCallback));

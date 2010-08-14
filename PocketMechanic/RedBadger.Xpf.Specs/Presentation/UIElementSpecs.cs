@@ -17,7 +17,6 @@ namespace RedBadger.Xpf.Specs.Presentation
 
     using Rhino.Mocks;
 
-    using Thickness = RedBadger.Xpf.Presentation.Thickness;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_UIElement

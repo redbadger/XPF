@@ -7,7 +7,6 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Presentation.Media;
 
-    using Thickness = RedBadger.Xpf.Presentation.Thickness;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public class Border : UIElement
@@ -22,8 +21,8 @@ namespace RedBadger.Xpf.Presentation.Controls
             XpfDependencyProperty.Register(
                 "BorderThickness", 
                 typeof(Thickness), 
-                typeof(Border), 
-                new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
+                typeof(Border),
+                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         public static readonly XpfDependencyProperty ChildProperty = XpfDependencyProperty.Register(
             "Child", typeof(UIElement), typeof(Border), new PropertyMetadata(null, ChildPropertyChangedCallback));
@@ -31,8 +30,8 @@ namespace RedBadger.Xpf.Presentation.Controls
         public static readonly XpfDependencyProperty PaddingProperty = XpfDependencyProperty.Register(
             "Padding", 
             typeof(Thickness), 
-            typeof(Border), 
-            new PropertyMetadata(Thickness.Empty, UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
+            typeof(Border),
+            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         private readonly IList<Rect> borders = new List<Rect>();
 
@@ -149,7 +148,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override void OnRender(IDrawingContext drawingContext)
         {
-            if (!this.BorderThickness.IsEmpty && this.BorderBrush != null)
+            if (this.BorderThickness != new Thickness() && this.BorderBrush != null)
             {
                 if (this.isBordersCollectionDirty)
                 {

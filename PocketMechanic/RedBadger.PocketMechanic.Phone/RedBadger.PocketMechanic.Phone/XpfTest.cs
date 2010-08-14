@@ -20,7 +20,7 @@ namespace RedBadger.PocketMechanic.Phone
     using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
     using Stretch = RedBadger.Xpf.Presentation.Media.Stretch;
-    using Thickness = RedBadger.Xpf.Presentation.Thickness;
+
     using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
     public class XpfTest : DrawableGameComponent
@@ -122,7 +122,7 @@ namespace RedBadger.PocketMechanic.Phone
                 {
                     Text = "TextBlock 3", 
                     Background = new SolidColorBrush(Colors.Blue), 
-                    Padding = new Thickness(10, 10), 
+                    Padding = new Thickness(10), 
                     HorizontalAlignment = HorizontalAlignment.Right, 
                     VerticalAlignment = VerticalAlignment.Bottom
                 };

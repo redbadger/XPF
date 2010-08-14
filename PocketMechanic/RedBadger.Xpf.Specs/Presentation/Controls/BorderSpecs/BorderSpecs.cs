@@ -24,7 +24,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     using HorizontalAlignment = RedBadger.Xpf.Presentation.HorizontalAlignment;
     using It = Machine.Specifications.It;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
-    using Thickness = RedBadger.Xpf.Presentation.Thickness;
     using Vector = RedBadger.Xpf.Presentation.Vector;
     using VerticalAlignment = RedBadger.Xpf.Presentation.VerticalAlignment;
 
@@ -35,9 +34,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
         private It should_have_no_border_brush = () => Border.BorderBrush.ShouldBeNull();
 
-        private It should_have_no_padding = () => Border.Padding.ShouldEqual(Thickness.Empty);
+        private It should_have_no_padding = () => Border.Padding.ShouldEqual(new Thickness());
 
-        private It should_have_no_thickness = () => Border.BorderThickness.ShouldEqual(Thickness.Empty);
+        private It should_have_no_thickness = () => Border.BorderThickness.ShouldEqual(new Thickness());
     }
 
     [Subject(typeof(Border))]

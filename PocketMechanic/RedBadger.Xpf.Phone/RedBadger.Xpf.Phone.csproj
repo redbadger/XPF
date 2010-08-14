@@ -223,9 +223,6 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\TextWrapping.cs">
       <Link>Presentation\TextWrapping.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Thickness.cs">
-      <Link>Presentation\Thickness.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\UIElement.cs">
       <Link>Presentation\UIElement.cs</Link>
     </Compile>
