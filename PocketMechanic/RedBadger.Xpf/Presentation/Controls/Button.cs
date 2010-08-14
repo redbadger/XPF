@@ -4,7 +4,7 @@
 
     using RedBadger.Xpf.Internal;
 
-    public class Button : ContentControl
+    public class Button : ButtonBase
     {
         public static readonly XpfDependencyProperty PaddingProperty = XpfDependencyProperty.Register(
             "Padding", 

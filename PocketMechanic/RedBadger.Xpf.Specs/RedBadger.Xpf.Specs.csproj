@@ -82,6 +82,7 @@
     <Compile Include="Presentation\BindingExpressionSpecs\BindingExpressionSpecs.cs" />
     <Compile Include="Presentation\Controls\BorderSpecs\BorderSpecs.cs" />
     <Compile Include="Presentation\Controls\BorderSpecs\Contexts.cs" />
+    <Compile Include="Presentation\Controls\ButtonBaseSpecs\ButtonBaseSpecs.cs" />
     <Compile Include="Presentation\Controls\ButtonSpecs\ButtonSpecs.cs" />
     <Compile Include="Presentation\Controls\ContentControlSpecs\ContentControlSpecs.cs" />
     <Compile Include="Presentation\Controls\ImageSpecs\ImageSpecs.cs" />

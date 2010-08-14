@@ -2,12 +2,10 @@ namespace RedBadger.Xpf.Presentation.Controls
 {
     using System.Windows;
 
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-
     /// <summary>
-    ///   Represents a control with a single piece of content.
+    ///     Represents a control with a single piece of content.
     /// </summary>
-    public class ContentControl : UIElement
+    public class ContentControl : Control
     {
         public static readonly XpfDependencyProperty ContentProperty = XpfDependencyProperty.Register(
             "Content", 
@@ -51,7 +49,8 @@ namespace RedBadger.Xpf.Presentation.Controls
             return content.DesiredSize;
         }
 
-        private static void ContentPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        private static void ContentPropertyChangedCallback(
+            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             var content = args.NewValue as IElement;
             var contentControl = (IElement)dependencyObject;

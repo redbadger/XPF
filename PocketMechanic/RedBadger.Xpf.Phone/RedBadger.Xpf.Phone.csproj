@@ -115,11 +115,17 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Button.cs">
       <Link>Presentation\Controls\Button.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ButtonBase.cs">
+      <Link>Presentation\Controls\ButtonBase.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ColumnDefinition.cs">
       <Link>Presentation\Controls\ColumnDefinition.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ContentControl.cs">
       <Link>Presentation\Controls\ContentControl.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Control.cs">
+      <Link>Presentation\Controls\Control.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\DefinitionBase.cs">
       <Link>Presentation\Controls\DefinitionBase.cs</Link>
@@ -156,6 +162,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IElement.cs">
       <Link>Presentation\IElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Input\MouseButtonEventArgs.cs">
+      <Link>Presentation\Input\MouseButtonEventArgs.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IRootElement.cs">
       <Link>Presentation\IRootElement.cs</Link>

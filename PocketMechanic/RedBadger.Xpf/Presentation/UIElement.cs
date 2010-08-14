@@ -6,6 +6,7 @@
     using System.Windows.Data;
 
     using RedBadger.Xpf.Internal;
+    using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
 
     public abstract class UIElement : DependencyObject, IElement
@@ -13,7 +14,7 @@
         public static readonly XpfDependencyProperty HeightProperty = XpfDependencyProperty.Register(
             "Height", 
             typeof(double), 
-            typeof(UIElement),
+            typeof(UIElement), 
             new PropertyMetadata(double.NaN, PropertyOfTypeDoubleChangedCallback));
 
         public static readonly XpfDependencyProperty HorizontalAlignmentProperty =
@@ -26,23 +27,26 @@
         public static readonly XpfDependencyProperty MarginProperty = XpfDependencyProperty.Register(
             "Margin", 
             typeof(Thickness), 
-            typeof(UIElement),
+            typeof(UIElement), 
             new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         public static readonly XpfDependencyProperty MaxHeightProperty = XpfDependencyProperty.Register(
-            "MaxHeight",
+            "MaxHeight", 
             typeof(double), 
-            typeof(UIElement),
+            typeof(UIElement), 
             new PropertyMetadata(double.PositiveInfinity, PropertyOfTypeDoubleChangedCallback));
 
         public static readonly XpfDependencyProperty MaxWidthProperty = XpfDependencyProperty.Register(
-            "MaxWidth",
+            "MaxWidth", 
             typeof(double), 
-            typeof(UIElement),
+            typeof(UIElement), 
             new PropertyMetadata(double.PositiveInfinity, PropertyOfTypeDoubleChangedCallback));
 
         public static readonly XpfDependencyProperty MinHeightProperty = XpfDependencyProperty.Register(
-            "MinHeight", typeof(double), typeof(UIElement), new PropertyMetadata(0d, PropertyOfTypeDoubleChangedCallback));
+            "MinHeight", 
+            typeof(double), 
+            typeof(UIElement), 
+            new PropertyMetadata(0d, PropertyOfTypeDoubleChangedCallback));
 
         public static readonly XpfDependencyProperty MinWidthProperty = XpfDependencyProperty.Register(
             "MinWidth", typeof(double), typeof(UIElement), new PropertyMetadata(0d, PropertyOfTypeDoubleChangedCallback));
@@ -55,9 +59,9 @@
                 new PropertyMetadata(VerticalAlignment.Stretch, VerticalAlignmentPropertyChangedCallback));
 
         public static readonly XpfDependencyProperty WidthProperty = XpfDependencyProperty.Register(
-            "Width",
+            "Width", 
             typeof(double), 
-            typeof(UIElement),
+            typeof(UIElement), 
             new PropertyMetadata(double.NaN, PropertyOfTypeDoubleChangedCallback));
 
         private readonly Dictionary<XpfDependencyProperty, BindingExpression> bindings =
@@ -406,6 +410,14 @@
             return Size.Empty;
         }
 
+        protected virtual void OnMouseLeftButtonDown(MouseButtonEventArgs mouseButtonEventArgs)
+        {
+        }
+
+        protected virtual void OnMouseLeftButtonUp(MouseButtonEventArgs mouseButtonEventArgs)
+        {
+        }
+
         protected virtual void OnRender(IDrawingContext drawingContext)
         {
         }
@@ -597,8 +609,7 @@
             double verticalMargin = margin.Top + margin.Bottom;
 
             var availableSizeWithoutMargins = new Size(
-                Math.Max(availableSize.Width - horizontalMargin, 0), 
-                Math.Max(availableSize.Height - verticalMargin, 0));
+                Math.Max(availableSize.Width - horizontalMargin, 0), Math.Max(availableSize.Height - verticalMargin, 0));
 
             var minMax = new MinMax(this);
 

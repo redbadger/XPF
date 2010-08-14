@@ -91,9 +91,12 @@
     <Compile Include="Internal\VectorExtensions.cs" />
     <Compile Include="Presentation\BindingExpression.cs" />
     <Compile Include="Presentation\Controls\Button.cs" />
+    <Compile Include="Presentation\Controls\ButtonBase.cs" />
+    <Compile Include="Presentation\Controls\Control.cs" />
     <Compile Include="Presentation\Controls\StretchDirection.cs" />
     <Compile Include="Presentation\Controls\Viewbox.cs" />
     <Compile Include="Presentation\Controls\Orientation.cs" />
+    <Compile Include="Presentation\Input\MouseButtonEventArgs.cs" />
     <Compile Include="Presentation\Vector.cs" />
     <Compile Include="Presentation\IRootElement.cs" />
     <Compile Include="Presentation\Media\Brush.cs" />
