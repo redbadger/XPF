@@ -5,6 +5,7 @@ namespace RedBadger.PocketMechanic.Phone
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Media;
+    using System.Windows.Media.Animation;
 
     using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
@@ -65,20 +66,6 @@ namespace RedBadger.PocketMechanic.Phone
 
             var stackpanel = new StackPanel { Orientation = Orientation.Horizontal };
 
-            /*
-            var sb = new Storyboard();
-            var doubleAnimation = new DoubleAnimation()
-                {
-                    Duration = new Duration(TimeSpan.FromSeconds(4)),
-                    From = 10,
-                    To = 200,
-                    RepeatBehavior = RepeatBehavior.Forever
-                };
-            Storyboard.SetTarget(doubleAnimation, column1);
-            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("MaxWidth"));
-            sb.Children.Add(doubleAnimation);
-            sb.Begin();
-*/
             var textBlock1 = new TextBlock(spriteFontAdapter);
             var border = new Border
                 {
@@ -90,6 +77,20 @@ namespace RedBadger.PocketMechanic.Phone
 
             Grid.SetColumn(border, 0);
             grid.Children.Add(border);
+
+            var sb = new Storyboard();
+            var doubleAnimation = new DoubleAnimation()
+                {
+                    Duration = new Duration(TimeSpan.FromSeconds(4)),
+                    From = 30,
+                    To = 200,
+                    RepeatBehavior = RepeatBehavior.Forever,
+                    AutoReverse = true
+                };
+            Storyboard.SetTarget(doubleAnimation, textBlock1);
+            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("Width"));
+            sb.Children.Add(doubleAnimation);
+            sb.Begin();
 
             // stackpanel.Children.Add(border);
             this.myBindingObject = new MyBindingObject();
