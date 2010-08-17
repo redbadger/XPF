@@ -18,7 +18,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.StackPanelSpecs
     using Moq;
 
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
@@ -71,7 +70,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.StackPanelSpecs
         private Establish context = () =>
             {
                 SpriteFont = new Mock<ISpriteFont>();
-                RootElement = new RootElement(new Mock<IRenderer>().Object, new Rect(new Size(100, 100)))
+                RootElement = new RootElement(new Rect(new Size(100, 100)), new Mock<IRenderer>().Object)
                     {
                        Content = StackPanel 
                     };

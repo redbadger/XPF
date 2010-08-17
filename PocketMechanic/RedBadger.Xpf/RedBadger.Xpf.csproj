@@ -70,6 +70,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -82,6 +84,8 @@
     <Compile Include="Graphics\SpriteBatchAdapter.cs" />
     <Compile Include="Graphics\SpriteFontAdapter.cs" />
     <Compile Include="Graphics\Texture2DAdapter.cs" />
+    <Compile Include="Presentation\Input\IInputElement.cs" />
+    <Compile Include="Presentation\Input\IMouse.cs" />
     <Compile Include="Internal\DoubleExtensions.cs" />
     <Compile Include="Internal\MinMax.cs" />
     <Compile Include="Internal\RectExtensions.cs" />
@@ -97,6 +101,7 @@
     <Compile Include="Presentation\Controls\Viewbox.cs" />
     <Compile Include="Presentation\Controls\Orientation.cs" />
     <Compile Include="Presentation\IDependencyObject.cs" />
+    <Compile Include="Presentation\Input\InputManager.cs" />
     <Compile Include="Presentation\Input\MouseButtonEventArgs.cs" />
     <Compile Include="Presentation\Vector.cs" />
     <Compile Include="Presentation\IRootElement.cs" />
@@ -135,7 +140,9 @@
     <Compile Include="Presentation\ElementCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Input\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

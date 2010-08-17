@@ -75,6 +75,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -94,6 +96,7 @@
     <Compile Include="Presentation\Controls\TextBlockSpecs\TextBlockSpecs.cs" />
     <Compile Include="Presentation\Controls\PanelSpecs\PanelSpecs.cs" />
     <Compile Include="Presentation\DefinitionBaseSpecs\DefinitionBaseSpecs.cs" />
+    <Compile Include="Presentation\Input\InputManagerSpecs\InputManagerSpecs.cs" />
     <Compile Include="Presentation\Media\DrawingContextSpecs\Contexts.cs" />
     <Compile Include="Presentation\Media\DrawingContextSpecs\DrawingSpecs.cs" />
     <Compile Include="Presentation\Media\Imaging\XnaImageSpecs.cs" />

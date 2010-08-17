@@ -5,7 +5,9 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     using RedBadger.Xpf.Presentation.Input;
 
-    public abstract class ButtonBase : ContentControl
+    using IInputElement = RedBadger.Xpf.Presentation.Input.IInputElement;
+
+    public abstract class ButtonBase : ContentControl, IInputElement
     {
         public static readonly XpfDependencyProperty IsPressedProperty = XpfDependencyProperty.Register(
             "IsPressed", typeof(bool), typeof(ButtonBase), new PropertyMetadata(false));

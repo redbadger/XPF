@@ -42,7 +42,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ImageSpecs
                 renderer = new Mock<IRenderer>();
                 DrawingContext = new Mock<IDrawingContext>();
                 renderer.Setup(r => r.GetDrawingContext(Moq.It.IsAny<IElement>())).Returns(DrawingContext.Object);
-                RootElement = new Mock<RootElement>(renderer.Object, new Rect(new Size(100, 100))) { CallBase = true };
+                RootElement = new Mock<RootElement>(new Rect(new Size(100, 100)), renderer.Object) { CallBase = true };
                 Image = new Image();
                 RootElement.Object.Content = Image;
             };

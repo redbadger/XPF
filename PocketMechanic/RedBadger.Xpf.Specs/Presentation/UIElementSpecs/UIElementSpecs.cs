@@ -17,14 +17,8 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
     using Machine.Specifications;
 
-    using Moq;
-
-    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Media;
 
-    using It = Machine.Specifications.It;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     [Subject(typeof(UIElement), "Children")]
@@ -38,23 +32,9 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     }
 
     [Subject(typeof(UIElement), "Hit Testing")]
-    public class when_a_point_is_inside_an_element : a_UIElement
+    public class when_a_point_is_inside_an_element : a_UIElement_in_a_RootElement
     {
         private static bool hitTestResult;
-
-        private Establish context = () =>
-            {
-                var viewPort = new Rect(30, 40, 200, 200);
-
-                var renderer = new Mock<Renderer>(
-                    new Mock<ISpriteBatch>().Object, new Mock<IPrimitivesService>().Object) {
-                                                                                               CallBase = true 
-                                                                                            };
-                var rootElement = new Mock<RootElement>(renderer.Object, viewPort) { CallBase = true };
-
-                rootElement.Object.Content = UIElement.Object;
-                rootElement.Object.Update();
-            };
 
         private Because of = () => hitTestResult = UIElement.Object.HitTest(new Point(40, 50));
 
@@ -62,23 +42,9 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     }
 
     [Subject(typeof(UIElement), "Hit Testing")]
-    public class when_a_point_is_outside_an_element : a_UIElement
+    public class when_a_point_is_outside_an_element : a_UIElement_in_a_RootElement
     {
         private static bool hitTestResult;
-
-        private Establish context = () =>
-            {
-                var viewPort = new Rect(30, 40, 200, 200);
-
-                var renderer = new Mock<Renderer>(
-                    new Mock<ISpriteBatch>().Object, new Mock<IPrimitivesService>().Object) {
-                                                                                               CallBase = true 
-                                                                                            };
-                var rootElement = new Mock<RootElement>(renderer.Object, viewPort) { CallBase = true };
-
-                rootElement.Object.Content = UIElement.Object;
-                rootElement.Object.Update();
-            };
 
         private Because of = () => hitTestResult = UIElement.Object.HitTest(new Point(20, 30));
 

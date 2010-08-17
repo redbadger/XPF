@@ -51,7 +51,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 DrawingContext = new Mock<IDrawingContext>();
                 renderer.Setup(r => r.GetDrawingContext(It.IsAny<IElement>())).Returns(DrawingContext.Object);
 
-                RootElement = new Mock<RootElement>(renderer.Object, new Rect(AvailableSize)) { CallBase = true };
+                RootElement = new Mock<RootElement>(new Rect(AvailableSize), renderer.Object) { CallBase = true };
 
                 ChildSize = new Size(15, 35);
                 Child = new Mock<UIElement> { CallBase = true };

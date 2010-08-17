@@ -29,6 +29,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
     {
         protected static Button Button;
 
+        protected static Mock<IDrawingContext> DrawingContext;
+
         protected static Mock<RootElement> RootElement;
 
         private Establish context = () =>
@@ -36,13 +38,11 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
                 var renderer = new Mock<IRenderer>();
                 DrawingContext = new Mock<IDrawingContext>();
                 renderer.Setup(r => r.GetDrawingContext(Moq.It.IsAny<IElement>())).Returns(DrawingContext.Object);
-                RootElement = new Mock<RootElement>(renderer.Object, new Rect(new Size(200, 200))) { CallBase = true };
+                RootElement = new Mock<RootElement>(new Rect(new Size(200, 200)), renderer.Object) { CallBase = true };
 
                 Button = new Button();
                 RootElement.Object.Content = Button;
             };
-
-        protected static Mock<IDrawingContext> DrawingContext;
     }
 
     [Subject(typeof(Button), "Padding")]
@@ -54,6 +54,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
 
         private static Mock<UIElement> child;
 
+        private static Thickness padding;
+
         private Establish context = () =>
             {
                 child = new Mock<UIElement> { CallBase = true };
@@ -63,7 +65,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
                 child.Object.VerticalAlignment = VerticalAlignment.Top;
 
                 Button.HorizontalAlignment = HorizontalAlignment.Left;
-                Button.VerticalAlignment= VerticalAlignment.Top;
+                Button.VerticalAlignment = VerticalAlignment.Top;
                 Button.Content = child.Object;
             };
 
@@ -74,14 +76,12 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
                 RootElement.Object.Update();
             };
 
+        private It should_have_a_child_with_the_correct_visual_offset =
+            () => child.Object.VisualOffset.ShouldEqual(new Vector(padding.Left, padding.Top));
+
         private It should_increase_the_desired_size =
             () =>
             Button.DesiredSize.ShouldEqual(
                 new Size(ChildWidth + padding.Left + padding.Right, ChildHeight + padding.Top + padding.Bottom));
-
-        private It should_have_a_child_with_the_correct_visual_offset =
-            () => child.Object.VisualOffset.ShouldEqual(new Vector(padding.Left, padding.Top));
-
-        private static Thickness padding;
     }
 }

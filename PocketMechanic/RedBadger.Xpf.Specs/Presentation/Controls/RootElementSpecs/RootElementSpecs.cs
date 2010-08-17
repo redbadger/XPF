@@ -32,7 +32,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.RootElementSpecs
         private Establish context = () =>
             {
                 Renderer = new Mock<IRenderer>();
-                RootElement = new RootElement(Renderer.Object, ViewPort);
+                RootElement = new RootElement(ViewPort, Renderer.Object);
             };
 
         protected static Mock<IRenderer> Renderer;

@@ -43,7 +43,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
                 DrawingContext = new Mock<IDrawingContext>();
                 renderer.Setup(r => r.GetDrawingContext(Moq.It.IsAny<IElement>())).Returns(DrawingContext.Object);
 
-                RootElement = new RootElement(renderer.Object, new Rect(new Size(100, 100)));
+                RootElement = new RootElement(new Rect(new Size(100, 100)), renderer.Object);
                 Panel = new Panel();
                 RootElement.Content = Panel;
             };

@@ -18,6 +18,10 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     using Moq;
     using Moq.Protected;
 
+    using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media;
+
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_UIElement
@@ -55,6 +59,26 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
             {
                 UIElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(finalSize);
                 UIElement.Object.Arrange(new Rect(finalSize));
+            };
+    }
+
+    public abstract class a_UIElement_in_a_RootElement : a_UIElement
+    {
+        private Establish context = () =>
+            {
+                var viewPort = new Rect(30, 40, 200, 200);
+
+                var renderer = new Mock<Renderer>(
+                    new Mock<ISpriteBatch>().Object, new Mock<IPrimitivesService>().Object) {
+                                                                                               CallBase = true 
+                                                                                            };
+                var rootElement = new Mock<RootElement>(viewPort, renderer.Object)
+                    {
+                       CallBase = true 
+                    };
+
+                rootElement.Object.Content = UIElement.Object;
+                rootElement.Object.Update();
             };
     }
 }

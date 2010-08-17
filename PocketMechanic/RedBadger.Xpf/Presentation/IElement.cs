@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Windows;
 
+    using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
 
     public interface IElement : IDependencyObject
@@ -46,6 +47,8 @@
         void InvalidateMeasure();
 
         void Measure(Size availableSize);
+
+        bool OnNextMouseData(MouseData mouseData);
 
         bool TryGetRenderer(out IRenderer renderer);
     }

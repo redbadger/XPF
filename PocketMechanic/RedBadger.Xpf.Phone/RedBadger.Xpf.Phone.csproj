@@ -169,6 +169,15 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\IElement.cs">
       <Link>Presentation\IElement.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Input\IInputElement.cs">
+      <Link>Presentation\Input\IInputElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Input\IMouse.cs">
+      <Link>Presentation\Input\IMouse.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Input\InputManager.cs">
+      <Link>Presentation\Input\InputManager.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Input\MouseButtonEventArgs.cs">
       <Link>Presentation\Input\MouseButtonEventArgs.cs</Link>
     </Compile>

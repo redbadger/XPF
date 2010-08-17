@@ -9,6 +9,8 @@
     using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
 
+    using IInputElement = RedBadger.Xpf.Presentation.Input.IInputElement;
+
     public abstract class UIElement : DependencyObject, IElement
     {
         public static readonly XpfDependencyProperty HeightProperty = XpfDependencyProperty.Register(
@@ -228,16 +230,6 @@
         /// </remarks>
         internal Vector VisualOffset { get; set; }
 
-        public bool HitTest(Point point)
-        {
-            if (this.actualRect != Rect.Empty)
-            {
-                return this.actualRect.Contains(point);
-            }
-
-            return false;
-        }
-
         public virtual void OnApplyTemplate()
         {
         }
@@ -325,6 +317,16 @@
             yield break;
         }
 
+        public bool HitTest(Point point)
+        {
+            if (this.actualRect != Rect.Empty)
+            {
+                return this.actualRect.Contains(point);
+            }
+
+            return false;
+        }
+
         public void InvalidateArrange()
         {
             this.IsArrangeValid = false;
@@ -383,6 +385,27 @@
                 this.IsMeasureValid = true;
                 this.DesiredSize = size;
             }
+        }
+
+        public bool OnNextMouseData(MouseData mouseData)
+        {
+            foreach (var child in this.GetChildren())
+            {
+                if (child.OnNextMouseData(mouseData))
+                {
+                    if (child is IInputElement && child.HitTest(mouseData.Point))
+                    {
+                        var element = child as UIElement;
+                        if (element != null)
+                        {
+                            element.OnMouseLeftButtonDown(new MouseButtonEventArgs());
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
 
         public bool TryGetRenderer(out IRenderer renderer)
