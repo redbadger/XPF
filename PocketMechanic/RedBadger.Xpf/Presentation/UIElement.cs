@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Windows;
     using System.Windows.Data;
 
@@ -68,24 +67,11 @@
         private readonly Dictionary<XpfDependencyProperty, BindingExpression> bindings =
             new Dictionary<XpfDependencyProperty, BindingExpression>();
 
+        private Rect actualRect = Rect.Empty;
+
         private Size previousAvailableSize;
 
         private Rect previousFinalRect;
-
-        public Vector AbsoluteOffset
-        {
-            get
-            {
-                var absoluteOffset = this.VisualOffset;
-
-                if (this.VisualParent != null)
-                {
-                    absoluteOffset += this.VisualParent.AbsoluteOffset;
-                }
-
-                return absoluteOffset;
-            }
-        }
 
         public double ActualHeight
         {
@@ -242,13 +228,41 @@
         /// </remarks>
         internal Vector VisualOffset { get; set; }
 
-        public virtual IEnumerable<IElement> GetChildren()
+        public bool HitTest(Point point)
         {
-            yield break;
+            if (this.actualRect != Rect.Empty)
+            {
+                return this.actualRect.Contains(point);
+            }
+
+            return false;
         }
 
         public virtual void OnApplyTemplate()
         {
+        }
+
+        public void ClearBinding(XpfDependencyProperty dependencyProperty)
+        {
+            BindingExpression bindingExpression;
+            if (this.bindings.TryGetValue(dependencyProperty, out bindingExpression))
+            {
+                bindingExpression.ClearBinding();
+                this.bindings.Remove(dependencyProperty);
+            }
+        }
+
+        public BindingExpression SetBinding(XpfDependencyProperty dependencyProperty, Binding binding)
+        {
+            BindingExpression bindingExpression;
+            if (!this.bindings.TryGetValue(dependencyProperty, out bindingExpression))
+            {
+                bindingExpression = new BindingExpression(this, dependencyProperty);
+                this.bindings.Add(dependencyProperty, bindingExpression);
+            }
+
+            bindingExpression.SetBinding(binding);
+            return bindingExpression;
         }
 
         /// <summary>
@@ -292,14 +306,23 @@
             }
         }
 
-        public void ClearBinding(XpfDependencyProperty dependencyProperty)
+        public Vector CalculateAbsoluteOffset()
         {
-            BindingExpression bindingExpression;
-            if (this.bindings.TryGetValue(dependencyProperty, out bindingExpression))
+            var absoluteOffset = this.VisualOffset;
+
+            if (this.VisualParent != null)
             {
-                bindingExpression.ClearBinding();
-                this.bindings.Remove(dependencyProperty);
+                absoluteOffset += this.VisualParent.CalculateAbsoluteOffset();
             }
+
+            this.actualRect = new Rect(absoluteOffset.X, absoluteOffset.Y, this.ActualWidth, this.ActualHeight);
+
+            return absoluteOffset;
+        }
+
+        public virtual IEnumerable<IElement> GetChildren()
+        {
+            yield break;
         }
 
         public void InvalidateArrange()
@@ -360,19 +383,6 @@
                 this.IsMeasureValid = true;
                 this.DesiredSize = size;
             }
-        }
-
-        public BindingExpression SetBinding(XpfDependencyProperty dependencyProperty, Binding binding)
-        {
-            BindingExpression bindingExpression;
-            if (!this.bindings.TryGetValue(dependencyProperty, out bindingExpression))
-            {
-                bindingExpression = new BindingExpression(this, dependencyProperty);
-                this.bindings.Add(dependencyProperty, bindingExpression);
-            }
-
-            bindingExpression.SetBinding(binding);
-            return bindingExpression;
         }
 
         public bool TryGetRenderer(out IRenderer renderer)

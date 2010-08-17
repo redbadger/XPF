@@ -370,12 +370,12 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
             };
 
         private It should_return_a_correct_value_for_element_1 =
-            () => element1.Object.AbsoluteOffset.ShouldEqual(new Vector(10, 20));
+            () => element1.Object.CalculateAbsoluteOffset().ShouldEqual(new Vector(10, 20));
 
         private It should_return_a_correct_value_for_element_2 =
-            () => element2.Object.AbsoluteOffset.ShouldEqual(new Vector(40, 60));
+            () => element2.Object.CalculateAbsoluteOffset().ShouldEqual(new Vector(40, 60));
 
         private It should_return_a_correct_value_for_element_3 =
-            () => element3.Object.AbsoluteOffset.ShouldEqual(new Vector(90, 120));
+            () => element3.Object.CalculateAbsoluteOffset().ShouldEqual(new Vector(90, 120));
     }
 }

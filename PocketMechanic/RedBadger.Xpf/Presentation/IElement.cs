@@ -7,8 +7,6 @@
 
     public interface IElement : IDependencyObject
     {
-        Vector AbsoluteOffset { get; }
-
         Size DesiredSize { get; }
 
         double Height { get; set; }
@@ -37,7 +35,11 @@
         /// <param name = "finalRect">The final size that the parent computes for the child element, provided as a Rect instance.</param>
         void Arrange(Rect finalRect);
 
+        Vector CalculateAbsoluteOffset();
+
         IEnumerable<IElement> GetChildren();
+
+        bool HitTest(Point point);
 
         void InvalidateArrange();
 

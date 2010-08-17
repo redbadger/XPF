@@ -92,7 +92,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private static readonly Rect rect = new Rect(10, 20, 30, 40);
 
-        private Establish conetxt = () => UiElement.SetupGet(element => element.AbsoluteOffset).Returns(absoluteOffset);
+        private Establish conetxt = () => UiElement.Setup(element => element.CalculateAbsoluteOffset()).Returns(absoluteOffset);
 
         private Because of = () =>
             {
@@ -118,7 +118,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private static readonly Vector textOffset = new Vector(10, 20);
 
-        private Establish context = () => UiElement.SetupGet(element => element.AbsoluteOffset).Returns(absoluteOffset);
+        private Establish context = () => UiElement.Setup(element => element.CalculateAbsoluteOffset()).Returns(absoluteOffset);
 
         private Because of = () =>
             {
@@ -146,7 +146,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private static readonly Rect rect = new Rect(10, 20, 30, 40);
 
-        private Establish context = () => UiElement.SetupGet(element => element.AbsoluteOffset).Returns(absoluteOffset);
+        private Establish context = () => UiElement.Setup(element => element.CalculateAbsoluteOffset()).Returns(absoluteOffset);
 
         private Because of = () =>
             {
