@@ -9,7 +9,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
+namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonDownSpecs
 {
     using System.Collections.Generic;
     using System.Windows;
@@ -53,7 +53,7 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
             };
     }
 
-    [Subject("Mouse Input")]
+    [Subject("Mouse Input - Left Button Down")]
     public class when_a_single_element_is_placed_inside_a_root_element : a_RootElement_with_input_manager
     {
         private const string OnMouseLeftButtonDown = "OnMouseLeftButtonDown";
@@ -76,7 +76,7 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
             () => button.Protected().Verify(OnMouseLeftButtonDown, Times.Once(), ItExpr.IsAny<MouseButtonEventArgs>());
     }
 
-    [Subject("Mouse Input")]
+    [Subject("Mouse Input - Left Button Down")]
     public class when_a_stack_of_elements_on_top_of_each_other_are_placed_inside_a_root_element :
         a_RootElement_with_input_manager
     {
@@ -116,7 +116,7 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
             () => button2.Protected().Verify(OnMouseLeftButtonDown, Times.Once(), ItExpr.IsAny<MouseButtonEventArgs>());
     }
 
-    [Subject("Mouse Input")]
+    [Subject("Mouse Input - Left Button Down")]
     public class when_a_stack_of_elements_inside_each_other_are_placed_inside_a_root_element :
         a_RootElement_with_input_manager
     {
@@ -151,7 +151,7 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
             () => button2.Protected().Verify(OnMouseLeftButtonDown, Times.Once(), ItExpr.IsAny<MouseButtonEventArgs>());
     }
 
-    [Subject("Mouse Input")]
+    [Subject("Mouse Input - Left Button Down")]
     public class when_a_stack_of_elements_after_each_other_are_placed_inside_a_root_element :
         a_RootElement_with_input_manager
     {

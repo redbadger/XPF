@@ -34,6 +34,11 @@
                 this.mouseData.OnNext(
                     new MouseData(MouseAction.LeftButtonDown, new Point(currentState.X, currentState.Y)));
             }
+            else if (this.previousState.LeftButton == ButtonState.Pressed && currentState.LeftButton == ButtonState.Released)
+            {
+                this.mouseData.OnNext(
+                    new MouseData(MouseAction.LeftButtonUp, new Point(currentState.X, currentState.Y)));
+            }
 
             this.previousState = currentState;
         }

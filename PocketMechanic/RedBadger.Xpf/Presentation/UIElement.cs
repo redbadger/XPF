@@ -622,7 +622,16 @@
                 {
                     if (child is IInputElement && child.HitTest(mouseData.Point))
                     {
-                        child.OnMouseLeftButtonDown(new MouseButtonEventArgs());
+                        switch (mouseData.Action)
+                        {
+                            case MouseAction.LeftButtonDown:
+                                child.OnMouseLeftButtonDown(new MouseButtonEventArgs());
+                                break;
+                            case MouseAction.LeftButtonUp:
+                                child.OnMouseLeftButtonUp(new MouseButtonEventArgs());
+                                break;
+                        }
+
                         return true;
                     }
                 }
