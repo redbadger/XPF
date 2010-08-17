@@ -388,26 +388,47 @@
             }
         }
 
-        public void OnNextMouseData(MouseData mouseData)
+        public void OnNextMouseMove(MouseData mouseData)
         {
-            this.HandleMouseData(mouseData);
+            this.OnMouseMove(new MouseButtonEventArgs(mouseData.Point));
+        }
+
+        public void OnNextMouseUpDown(MouseData mouseData)
+        {
+            if (!this.HandleMouseUpDownOnChildren(mouseData))
+            {
+                HandleMouseUpDown(this, mouseData);
+            }
         }
 
         public bool TryGetRenderer(out IRenderer renderer)
         {
-            var rootElement = this as IRootElement;
-            if (rootElement != null)
+            IRootElement rootElement;
+            if (this.TryGetRootElement(out rootElement))
             {
                 renderer = rootElement.Renderer;
                 return true;
             }
 
-            if (this.VisualParent != null)
+            renderer = null;
+            return false;
+        }
+
+        public bool TryGetRootElement(out IRootElement rootElement)
+        {
+            var element = this as IRootElement;
+            if (element != null)
             {
-                return this.VisualParent.TryGetRenderer(out renderer);
+                rootElement = element;
+                return true;
             }
 
-            renderer = null;
+            if (this.VisualParent != null)
+            {
+                return this.VisualParent.TryGetRootElement(out rootElement);
+            }
+
+            rootElement = null;
             return false;
         }
 
@@ -442,8 +463,32 @@
         {
         }
 
+        protected virtual void OnMouseMove(MouseButtonEventArgs mouseButtonEventArgs)
+        {
+        }
+
         protected virtual void OnRender(IDrawingContext drawingContext)
         {
+        }
+
+        private static bool HandleMouseUpDown(UIElement element, MouseData mouseData)
+        {
+            if (element is IInputElement && element.HitTest(mouseData.Point))
+            {
+                switch (mouseData.Action)
+                {
+                    case MouseAction.LeftButtonDown:
+                        element.OnMouseLeftButtonDown(new MouseButtonEventArgs(mouseData.Point));
+                        break;
+                    case MouseAction.LeftButtonUp:
+                        element.OnMouseLeftButtonUp(new MouseButtonEventArgs(mouseData.Point));
+                        break;
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         private static void HorizontalAlignmentPropertyChangedCallback(
@@ -614,30 +659,12 @@
             return vector;
         }
 
-        private bool HandleMouseData(MouseData mouseData)
+        private bool HandleMouseUpDownOnChildren(MouseData mouseData)
         {
-            foreach (var child in this.GetChildren().OfType<UIElement>().Reverse())
-            {
-                if (!child.HandleMouseData(mouseData))
-                {
-                    if (child is IInputElement && child.HitTest(mouseData.Point))
-                    {
-                        switch (mouseData.Action)
-                        {
-                            case MouseAction.LeftButtonDown:
-                                child.OnMouseLeftButtonDown(new MouseButtonEventArgs());
-                                break;
-                            case MouseAction.LeftButtonUp:
-                                child.OnMouseLeftButtonUp(new MouseButtonEventArgs());
-                                break;
-                        }
-
-                        return true;
-                    }
-                }
-            }
-
-            return false;
+            return
+                this.GetChildren().OfType<UIElement>().Reverse().Where(
+                    child => !child.HandleMouseUpDownOnChildren(mouseData)).Any(
+                        child => HandleMouseUpDown(child, mouseData));
         }
 
         /// <summary>

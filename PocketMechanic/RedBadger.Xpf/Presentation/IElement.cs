@@ -48,8 +48,12 @@
 
         void Measure(Size availableSize);
 
-        void OnNextMouseData(MouseData mouseData);
+        void OnNextMouseMove(MouseData mouseData);
+
+        void OnNextMouseUpDown(MouseData mouseData);
 
         bool TryGetRenderer(out IRenderer renderer);
+
+        bool TryGetRootElement(out IRootElement rootElement);
     }
 }

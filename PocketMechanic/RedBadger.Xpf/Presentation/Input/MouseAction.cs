@@ -3,6 +3,7 @@
     public enum MouseAction
     {
         LeftButtonDown,
-        LeftButtonUp
+        LeftButtonUp,
+        Move
     }
 }

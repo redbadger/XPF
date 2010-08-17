@@ -4,13 +4,13 @@
     using System.Collections.Generic;
     using System.Windows;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
-
     using Microsoft.Xna.Framework.Input;
 
     using RedBadger.Xpf.Presentation.Input;
+
+#if WINDOWS_PHONE
+    using Microsoft.Phone.Reactive;
+#endif
 
     public class InputManager : IInputManager
     {
@@ -34,7 +34,8 @@
                 this.mouseData.OnNext(
                     new MouseData(MouseAction.LeftButtonDown, new Point(currentState.X, currentState.Y)));
             }
-            else if (this.previousState.LeftButton == ButtonState.Pressed && currentState.LeftButton == ButtonState.Released)
+            else if (this.previousState.LeftButton == ButtonState.Pressed &&
+                     currentState.LeftButton == ButtonState.Released)
             {
                 this.mouseData.OnNext(
                     new MouseData(MouseAction.LeftButtonUp, new Point(currentState.X, currentState.Y)));
