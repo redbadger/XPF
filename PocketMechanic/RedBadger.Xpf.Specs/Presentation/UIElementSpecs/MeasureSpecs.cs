@@ -24,21 +24,21 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     [Subject(typeof(UIElement), "Measure")]
     public class after_measure_is_called : a_UIElement
     {
-        private Because of = () => uiElement.Object.Measure(Size.Empty);
+        private Because of = () => UIElement.Object.Measure(Size.Empty);
 
-        private It should_apply_the_template = () => uiElement.Verify(element => element.OnApplyTemplate(), Times.Once());
+        private It should_apply_the_template = () => UIElement.Verify(element => element.OnApplyTemplate(), Times.Once());
 
-        private It should_be_considered_valid = () => uiElement.Object.IsMeasureValid.ShouldBeTrue();
+        private It should_be_considered_valid = () => UIElement.Object.IsMeasureValid.ShouldBeTrue();
     }
 
     [Subject(typeof(UIElement), "Measure")]
     public class after_measure_is_called_a_second_time : a_UIElement
     {
-        private Establish context = () => uiElement.Object.Measure(Size.Empty);
+        private Establish context = () => UIElement.Object.Measure(Size.Empty);
 
-        private Because of = () => uiElement.Object.Measure(Size.Empty);
+        private Because of = () => UIElement.Object.Measure(Size.Empty);
 
         private It should_not_measure_again =
-            () => uiElement.Protected().Verify(MeasureOverride, Times.Once(), ItExpr.IsAny<Size>());
+            () => UIElement.Protected().Verify(MeasureOverride, Times.Once(), ItExpr.IsAny<Size>());
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace RedBadger.Xpf.Presentation
 {
+    using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Data;
 
@@ -48,5 +49,7 @@
         BindingExpression SetBinding(XpfDependencyProperty dependencyProperty, Binding binding);
 
         bool TryGetRenderer(out IRenderer renderer);
+
+        IEnumerable<IElement> GetChildren();
     }
 }

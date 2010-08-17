@@ -26,9 +26,9 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         protected const string MeasureOverride = "MeasureOverride";
 
-        protected static Mock<UIElement> uiElement;
+        protected static Mock<UIElement> UIElement;
 
-        private Establish context = () => uiElement = new Mock<UIElement> { CallBase = true };
+        private Establish context = () => UIElement = new Mock<UIElement> { CallBase = true };
     }
 
     public abstract class a_Measured_UIElement : a_UIElement
@@ -41,9 +41,9 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.Is<Size>(size => size.Equals(availableSize))).
+                UIElement.Protected().Setup<Size>(MeasureOverride, ItExpr.Is<Size>(size => size.Equals(availableSize))).
                     Returns(desiredSize);
-                uiElement.Object.Measure(availableSize);
+                UIElement.Object.Measure(availableSize);
             };
     }
 
@@ -53,8 +53,8 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(finalSize);
-                uiElement.Object.Arrange(new Rect(finalSize));
+                UIElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(finalSize);
+                UIElement.Object.Arrange(new Rect(finalSize));
             };
     }
 }

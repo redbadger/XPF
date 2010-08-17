@@ -11,6 +11,7 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ContentControlSpecs
 {
+    using System.Linq;
     using System.Windows;
 
     using Machine.Specifications;
@@ -30,6 +31,12 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ContentControlSpecs
     }
 
     [Subject(typeof(ContentControl))]
+    public class when_empty : a_ContentControl
+    {
+        private It should_not_return_any_children = () => ContentControl.GetChildren().Count().ShouldEqual(0);
+    }
+
+    [Subject(typeof(ContentControl))]
     public class when_content_is_added : a_ContentControl
     {
         private static Mock<IElement> childContent;
@@ -46,5 +53,11 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ContentControlSpecs
 
         private It should_mark_itself_as_the_visual_parent =
             () => childContent.VerifySet(element => element.VisualParent = ContentControl);
+
+        private It should_return_that_child_when_its_children_are_requested =
+            () => ContentControl.GetChildren().First().ShouldBeTheSameAs(childContent.Object);
+
+        private It should_return_the_correct_number_of_children_when_its_children_are_requested =
+            () => ContentControl.GetChildren().Count().ShouldEqual(1);
     }
 }

@@ -35,28 +35,28 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
-                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+                UIElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+                UIElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
             };
 
         private Because of = () =>
             {
-                uiElement.Object.Width = explicitSize.Width;
-                uiElement.Object.Height = explicitSize.Height;
-                uiElement.Object.Measure(availableSize);
-                uiElement.Object.Arrange(new Rect(availableSize));
+                UIElement.Object.Width = explicitSize.Width;
+                UIElement.Object.Height = explicitSize.Height;
+                UIElement.Object.Measure(availableSize);
+                UIElement.Object.Arrange(new Rect(availableSize));
             };
 
         private It should_arrange_its_children_within_the_explicit_size =
             () =>
-            uiElement.Protected().Verify(
+            UIElement.Protected().Verify(
                 ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(explicitSize)));
 
         private It should_have_a_desired_size_equal_to_the_size_that_was_specified =
-            () => uiElement.Object.DesiredSize.ShouldEqual(explicitSize);
+            () => UIElement.Object.DesiredSize.ShouldEqual(explicitSize);
 
         private It should_have_the_correct_visual_offset =
-            () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+            () => UIElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]
@@ -72,28 +72,28 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
-                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+                UIElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+                UIElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
             };
 
         private Because of = () =>
             {
-                uiElement.Object.Width = explicitSize.Width;
-                uiElement.Object.Height = explicitSize.Height;
-                uiElement.Object.Measure(availableSize);
-                uiElement.Object.Arrange(new Rect(availableSize));
+                UIElement.Object.Width = explicitSize.Width;
+                UIElement.Object.Height = explicitSize.Height;
+                UIElement.Object.Measure(availableSize);
+                UIElement.Object.Arrange(new Rect(availableSize));
             };
 
         private It should_arrange_its_children_within_the_explicit_size =
             () =>
-            uiElement.Protected().Verify(
+            UIElement.Protected().Verify(
                 ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(explicitSize)));
 
         private It should_have_a_desired_size_equal_to_the_size_that_was_specified =
-            () => uiElement.Object.DesiredSize.ShouldEqual(explicitSize);
+            () => UIElement.Object.DesiredSize.ShouldEqual(explicitSize);
 
         private It should_have_the_correct_visual_offset =
-            () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+            () => UIElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]
@@ -109,28 +109,28 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
-                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+                UIElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+                UIElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
             };
 
         private Because of = () =>
             {
-                uiElement.Object.MinWidth = minimumSize.Width;
-                uiElement.Object.MinHeight = minimumSize.Height;
-                uiElement.Object.Measure(availableSize);
-                uiElement.Object.Arrange(new Rect(availableSize));
+                UIElement.Object.MinWidth = minimumSize.Width;
+                UIElement.Object.MinHeight = minimumSize.Height;
+                UIElement.Object.Measure(availableSize);
+                UIElement.Object.Arrange(new Rect(availableSize));
             };
 
         private It should_arrange_its_children_within_the_available_size =
             () =>
-            uiElement.Protected().Verify(
+            UIElement.Protected().Verify(
                 ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(availableSize)));
 
         private It should_have_a_desired_size_equal_to_the_minimum_size_that_was_specified =
-            () => uiElement.Object.DesiredSize.ShouldEqual(minimumSize);
+            () => UIElement.Object.DesiredSize.ShouldEqual(minimumSize);
 
         private It should_have_the_correct_visual_offset =
-            () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+            () => UIElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]
@@ -146,28 +146,28 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                uiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
-                uiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+                UIElement.Protected().Setup<Size>(MeasureOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
+                UIElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(desiredSize);
             };
 
         private Because of = () =>
             {
-                uiElement.Object.MaxWidth = maximumSize.Width;
-                uiElement.Object.MaxHeight = maximumSize.Height;
-                uiElement.Object.Measure(availableSize);
-                uiElement.Object.Arrange(new Rect(availableSize));
+                UIElement.Object.MaxWidth = maximumSize.Width;
+                UIElement.Object.MaxHeight = maximumSize.Height;
+                UIElement.Object.Measure(availableSize);
+                UIElement.Object.Arrange(new Rect(availableSize));
             };
 
         private It should_arrange_its_children_within_the_maximum_size =
             () =>
-            uiElement.Protected().Verify(
+            UIElement.Protected().Verify(
                 ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(maximumSize)));
 
         private It should_have_a_desired_size_equal_to_the_maximum_size_that_was_specified =
-            () => uiElement.Object.DesiredSize.ShouldEqual(maximumSize);
+            () => UIElement.Object.DesiredSize.ShouldEqual(maximumSize);
 
         private It should_have_the_correct_visual_offset =
-            () => uiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+            () => UIElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Layout - Invalidate")]
@@ -179,20 +179,20 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
                 parentUiElement.Object.Measure(Size.Empty);
                 parentUiElement.Object.Arrange(Rect.Empty);
 
-                uiElement.Object.VisualParent = parentUiElement.Object;
+                UIElement.Object.VisualParent = parentUiElement.Object;
             };
 
-        private Because of = () => uiElement.Object.InvalidateMeasure();
+        private Because of = () => UIElement.Object.InvalidateMeasure();
 
-        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => UIElement.Object.IsArrangeValid.ShouldBeFalse();
 
         private It should_invalidate_its_parents_arrange =
-            () => uiElement.Object.VisualParent.IsArrangeValid.ShouldBeFalse();
+            () => UIElement.Object.VisualParent.IsArrangeValid.ShouldBeFalse();
 
         private It should_invalidate_its_parents_measure =
-            () => uiElement.Object.VisualParent.IsMeasureValid.ShouldBeFalse();
+            () => UIElement.Object.VisualParent.IsMeasureValid.ShouldBeFalse();
 
-        private It should_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeFalse();
+        private It should_invalidate_measure = () => UIElement.Object.IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(UIElement), "Layout - Invalidate")]
@@ -204,146 +204,146 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
                 parentUiElement.Object.Measure(Size.Empty);
                 parentUiElement.Object.Arrange(Rect.Empty);
 
-                uiElement.Object.VisualParent = parentUiElement.Object;
+                UIElement.Object.VisualParent = parentUiElement.Object;
             };
 
-        private Because of = () => uiElement.Object.InvalidateArrange();
+        private Because of = () => UIElement.Object.InvalidateArrange();
 
-        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => UIElement.Object.IsArrangeValid.ShouldBeFalse();
 
         private It should_invalidate_its_parents_arrange =
-            () => uiElement.Object.VisualParent.IsArrangeValid.ShouldBeFalse();
+            () => UIElement.Object.VisualParent.IsArrangeValid.ShouldBeFalse();
 
         private It should_not_invalidate_its_parents_measure =
-            () => uiElement.Object.VisualParent.IsMeasureValid.ShouldBeTrue();
+            () => UIElement.Object.VisualParent.IsMeasureValid.ShouldBeTrue();
 
-        private It should_not_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeTrue();
+        private It should_not_invalidate_measure = () => UIElement.Object.IsMeasureValid.ShouldBeTrue();
     }
 
     [Subject(typeof(UIElement), "Layout - Invalidate")]
     public class when_height_is_changed : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.Height = 100;
+        private Because of = () => UIElement.Object.Height = 100;
 
-        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => UIElement.Object.IsArrangeValid.ShouldBeFalse();
 
-        private It should_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeFalse();
+        private It should_invalidate_measure = () => UIElement.Object.IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(UIElement), "Layout - Invalidate")]
     public class when_minimum_height_is_changed : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.MinHeight = 100;
+        private Because of = () => UIElement.Object.MinHeight = 100;
 
-        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => UIElement.Object.IsArrangeValid.ShouldBeFalse();
 
-        private It should_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeFalse();
+        private It should_invalidate_measure = () => UIElement.Object.IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(UIElement), "Layout - Invalidate")]
     public class when_maximum_height_is_changed : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.MaxHeight = 100;
+        private Because of = () => UIElement.Object.MaxHeight = 100;
 
-        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => UIElement.Object.IsArrangeValid.ShouldBeFalse();
 
-        private It should_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeFalse();
+        private It should_invalidate_measure = () => UIElement.Object.IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(UIElement), "Layout - Invalidate")]
     public class when_width_is_changed : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.Width = 100;
+        private Because of = () => UIElement.Object.Width = 100;
 
-        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => UIElement.Object.IsArrangeValid.ShouldBeFalse();
 
-        private It should_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeFalse();
+        private It should_invalidate_measure = () => UIElement.Object.IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(UIElement), "Layout - Invalidate")]
     public class when_minimum_width_is_changed : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.MinWidth = 100;
+        private Because of = () => UIElement.Object.MinWidth = 100;
 
-        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => UIElement.Object.IsArrangeValid.ShouldBeFalse();
 
-        private It should_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeFalse();
+        private It should_invalidate_measure = () => UIElement.Object.IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(UIElement), "Layout - Invalidate")]
     public class when_maximum_width_is_changed : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.MaxWidth = 100;
+        private Because of = () => UIElement.Object.MaxWidth = 100;
 
-        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => UIElement.Object.IsArrangeValid.ShouldBeFalse();
 
-        private It should_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeFalse();
+        private It should_invalidate_measure = () => UIElement.Object.IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(UIElement), "Layout - Invalidate")]
     public class when_margin_is_changed : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.Margin = new Thickness(10, 20, 30, 40);
+        private Because of = () => UIElement.Object.Margin = new Thickness(10, 20, 30, 40);
 
-        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => UIElement.Object.IsArrangeValid.ShouldBeFalse();
 
-        private It should_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeFalse();
+        private It should_invalidate_measure = () => UIElement.Object.IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(UIElement), "Layout - Invalidate")]
     public class when_horizontal_alignment_is_changed : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.HorizontalAlignment = HorizontalAlignment.Left;
+        private Because of = () => UIElement.Object.HorizontalAlignment = HorizontalAlignment.Left;
 
-        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => UIElement.Object.IsArrangeValid.ShouldBeFalse();
 
-        private It should_not_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeTrue();
+        private It should_not_invalidate_measure = () => UIElement.Object.IsMeasureValid.ShouldBeTrue();
     }
 
     [Subject(typeof(UIElement), "Layout - Invalidate")]
     public class when_vertical_alignment_is_changed : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.VerticalAlignment = VerticalAlignment.Bottom;
+        private Because of = () => UIElement.Object.VerticalAlignment = VerticalAlignment.Bottom;
 
-        private It should_invalidate_arrange = () => uiElement.Object.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => UIElement.Object.IsArrangeValid.ShouldBeFalse();
 
-        private It should_not_invalidate_measure = () => uiElement.Object.IsMeasureValid.ShouldBeTrue();
+        private It should_not_invalidate_measure = () => UIElement.Object.IsMeasureValid.ShouldBeTrue();
     }
 
     [Subject(typeof(UIElement), "Layout - Size Change")]
     public class when_the_available_size_changes : a_Measured_UIElement
     {
-        private Because of = () => uiElement.Object.Measure(new Size(200, 200));
+        private Because of = () => UIElement.Object.Measure(new Size(200, 200));
 
         private It should_measure_again =
-            () => uiElement.Protected().Verify(MeasureOverride, Times.Exactly(2), ItExpr.IsAny<Size>());
+            () => UIElement.Protected().Verify(MeasureOverride, Times.Exactly(2), ItExpr.IsAny<Size>());
     }
 
     [Subject(typeof(UIElement), "Layout - Size Change")]
     public class when_the_available_size_doesnt_change_enough : a_Measured_UIElement
     {
-        private Because of = () => uiElement.Object.Measure(new Size(100.000001f, 100.000001f));
+        private Because of = () => UIElement.Object.Measure(new Size(100.000001f, 100.000001f));
 
         private It should_not_measure_again =
-            () => uiElement.Protected().Verify(MeasureOverride, Times.Once(), ItExpr.IsAny<Size>());
+            () => UIElement.Protected().Verify(MeasureOverride, Times.Once(), ItExpr.IsAny<Size>());
     }
 
     [Subject(typeof(UIElement), "Layout - Size Change")]
     public class when_the_final_size_changes : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.Arrange(new Rect(new Size(200, 200)));
+        private Because of = () => UIElement.Object.Arrange(new Rect(new Size(200, 200)));
 
         private It should_arrange_again =
-            () => uiElement.Protected().Verify(ArrangeOverride, Times.Exactly(2), ItExpr.IsAny<Size>());
+            () => UIElement.Protected().Verify(ArrangeOverride, Times.Exactly(2), ItExpr.IsAny<Size>());
     }
 
     [Subject(typeof(UIElement), "Layout - Size Change")]
     public class when_the_final_size_doesnt_change_enough : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => uiElement.Object.Arrange(new Rect(new Size(100.000001f, 100.000001f)));
+        private Because of = () => UIElement.Object.Arrange(new Rect(new Size(100.000001f, 100.000001f)));
 
         private It should_not_arrange_again =
-            () => uiElement.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.IsAny<Size>());
+            () => UIElement.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.IsAny<Size>());
     }
 
     [Subject(typeof(UIElement), "Layout - Absolute Offset")]

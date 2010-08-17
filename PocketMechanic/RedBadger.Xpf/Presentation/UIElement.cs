@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Data;
 
@@ -75,7 +76,7 @@
         {
             get
             {
-                Vector absoluteOffset = this.VisualOffset;
+                var absoluteOffset = this.VisualOffset;
 
                 if (this.VisualParent != null)
                 {
@@ -241,6 +242,11 @@
         /// </remarks>
         internal Vector VisualOffset { get; set; }
 
+        public virtual IEnumerable<IElement> GetChildren()
+        {
+            yield break;
+        }
+
         public virtual void OnApplyTemplate()
         {
         }
@@ -300,7 +306,7 @@
         {
             this.IsArrangeValid = false;
 
-            IElement visualParent = this.VisualParent;
+            var visualParent = this.VisualParent;
             if (visualParent != null)
             {
                 visualParent.InvalidateArrange();
@@ -311,7 +317,7 @@
         {
             this.IsMeasureValid = false;
 
-            IElement visualParent = this.VisualParent;
+            var visualParent = this.VisualParent;
             if (visualParent != null)
             {
                 visualParent.InvalidateMeasure();
@@ -338,7 +344,7 @@
 
             if (!this.IsMeasureValid || availableSize.IsDifferentFrom(this.previousAvailableSize))
             {
-                Size size = this.MeasureCore(availableSize);
+                var size = this.MeasureCore(availableSize);
 
                 if (double.IsPositiveInfinity(size.Width) || double.IsPositiveInfinity(size.Height))
                 {
@@ -441,8 +447,8 @@
         private static void PropertyOfTypeDoubleChangedCallback(
             DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            var newValue = (double)args.NewValue;
-            var oldValue = (double)args.OldValue;
+            double newValue = (double)args.NewValue;
+            double oldValue = (double)args.OldValue;
 
             if (newValue.IsDifferentFrom(oldValue))
             {
@@ -483,7 +489,7 @@
         {
             var finalSize = finalRect != Rect.Empty ? new Size(finalRect.Width, finalRect.Height) : new Size();
 
-            Thickness margin = this.Margin;
+            var margin = this.Margin;
             double horizontalMargin = margin.Left + margin.Right;
             double verticalMargin = margin.Top + margin.Bottom;
 
@@ -528,7 +534,7 @@
                 finalSize.Height = largestHeight;
             }
 
-            Size renderSize = this.ArrangeOverride(finalSize);
+            var renderSize = this.ArrangeOverride(finalSize);
             this.RenderSize = renderSize;
 
             var inkSize = new Size(
@@ -536,7 +542,7 @@
             var clientSize = new Size(
                 Math.Max(0, finalRect.Width - horizontalMargin), Math.Max(0, finalRect.Height - verticalMargin));
 
-            Vector offset = this.ComputeAlignmentOffset(clientSize, inkSize);
+            var offset = this.ComputeAlignmentOffset(clientSize, inkSize);
             offset.X += finalRect.X + margin.Left;
             offset.Y += finalRect.Y + margin.Top;
 
@@ -546,8 +552,8 @@
         private Vector ComputeAlignmentOffset(Size clientSize, Size inkSize)
         {
             var vector = new Vector();
-            HorizontalAlignment horizontalAlignment = this.HorizontalAlignment;
-            VerticalAlignment verticalAlignment = this.VerticalAlignment;
+            var horizontalAlignment = this.HorizontalAlignment;
+            var verticalAlignment = this.VerticalAlignment;
 
             if (horizontalAlignment == HorizontalAlignment.Stretch && inkSize.Width > clientSize.Width)
             {
@@ -604,7 +610,7 @@
         {
             this.OnApplyTemplate();
 
-            Thickness margin = this.Margin;
+            var margin = this.Margin;
             double horizontalMargin = margin.Left + margin.Right;
             double verticalMargin = margin.Top + margin.Bottom;
 
@@ -613,7 +619,7 @@
 
             var minMax = new MinMax(this);
 
-            Size size = this.MeasureOverride(availableSizeWithoutMargins);
+            var size = this.MeasureOverride(availableSizeWithoutMargins);
 
             size = new Size(Math.Max(size.Width, minMax.MinWidth), Math.Max(size.Height, minMax.MinHeight));
 

@@ -1,5 +1,6 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
+    using System.Collections.Generic;
     using System.Windows;
 
     /// <summary>
@@ -26,9 +27,20 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
+        public override IEnumerable<IElement> GetChildren()
+        {
+            var content = this.Content;
+            if (content != null)
+            {
+                yield return content;
+            }
+
+            yield break;
+        }
+
         protected override Size ArrangeOverride(Size finalSize)
         {
-            IElement content = this.Content;
+            var content = this.Content;
             if (content != null)
             {
                 content.Arrange(new Rect(new Point(), finalSize));
@@ -39,7 +51,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            IElement content = this.Content;
+            var content = this.Content;
             if (content == null)
             {
                 return Size.Empty;

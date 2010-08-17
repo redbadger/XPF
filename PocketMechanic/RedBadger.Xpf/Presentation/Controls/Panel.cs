@@ -1,6 +1,7 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Windows;
 
     using RedBadger.Xpf.Presentation.Media;
@@ -38,6 +39,11 @@
             {
                 return this.children;
             }
+        }
+
+        public override IEnumerable<IElement> GetChildren()
+        {
+            return this.children.Cast<IElement>().AsEnumerable();
         }
 
         protected override void OnRender(IDrawingContext drawingContext)

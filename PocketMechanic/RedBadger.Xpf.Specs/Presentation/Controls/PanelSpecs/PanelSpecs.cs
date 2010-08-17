@@ -11,6 +11,8 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Media;
 
@@ -25,6 +27,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
     using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using It = Machine.Specifications.It;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_Panel
     {
@@ -44,6 +47,30 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
                 Panel = new Panel();
                 RootElement.Content = Panel;
             };
+    }
+
+    [Subject(typeof(Panel), "Children")]
+    public class when_a_panel_has_children : a_Panel
+    {
+        private static readonly Mock<UIElement> child1 = new Mock<UIElement>();
+
+        private static readonly Mock<UIElement> child2 = new Mock<UIElement>();
+
+        private static IEnumerable<IElement> children;
+
+        private Establish context = () =>
+            {
+                Panel.Children.Add(child1.Object);
+                Panel.Children.Add(child2.Object);
+            };
+
+        private Because of = () => children = Panel.GetChildren();
+
+        private It should_contain_the_correct_number_of_children = () => children.Count().ShouldEqual(2);
+
+        private It should_return_the_first_child_first = () => children.First().ShouldBeTheSameAs(child1.Object);
+
+        private It should_return_the_last_child_last = () => children.Last().ShouldBeTheSameAs(child2.Object);
     }
 
     [Subject(typeof(Panel), "Background")]

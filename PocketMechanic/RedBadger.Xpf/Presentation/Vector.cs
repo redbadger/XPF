@@ -3,8 +3,6 @@ namespace RedBadger.Xpf.Presentation
     using System;
     using System.Diagnostics;
 
-    using RedBadger.Xpf.Internal;
-
     [DebuggerDisplay("{X} x {Y}")]
     public struct Vector : IEquatable<Vector>
     {
