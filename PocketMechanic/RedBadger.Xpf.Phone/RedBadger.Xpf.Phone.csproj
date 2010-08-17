@@ -85,6 +85,9 @@
     <Compile Include="..\RedBadger.Xpf\Graphics\Texture2DAdapter.cs">
       <Link>Graphics\Texture2DAdapter.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Input\InputManager.cs">
+      <Link>Input\InputManager.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\DoubleExtensions.cs">
       <Link>Internal\DoubleExtensions.cs</Link>
     </Compile>
@@ -172,14 +175,17 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Input\IInputElement.cs">
       <Link>Presentation\Input\IInputElement.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Input\IMouse.cs">
-      <Link>Presentation\Input\IMouse.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Input\IInputManager.cs">
+      <Link>Presentation\Input\IInputManager.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Input\InputManager.cs">
-      <Link>Presentation\Input\InputManager.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Input\MouseAction.cs">
+      <Link>Presentation\Input\MouseAction.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Input\MouseButtonEventArgs.cs">
       <Link>Presentation\Input\MouseButtonEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Input\MouseData.cs">
+      <Link>Presentation\Input\MouseData.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IRootElement.cs">
       <Link>Presentation\IRootElement.cs</Link>

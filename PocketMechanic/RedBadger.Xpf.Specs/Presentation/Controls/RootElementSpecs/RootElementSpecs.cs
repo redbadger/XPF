@@ -25,6 +25,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.RootElementSpecs
 
     public abstract class a_RootElement
     {
+        protected static Mock<IRenderer> Renderer;
+
         protected static RootElement RootElement;
 
         protected static Rect ViewPort = new Rect(10, 20, 100, 200);
@@ -34,8 +36,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.RootElementSpecs
                 Renderer = new Mock<IRenderer>();
                 RootElement = new RootElement(ViewPort, Renderer.Object);
             };
-
-        protected static Mock<IRenderer> Renderer;
     }
 
     [Subject(typeof(RootElement))]
@@ -43,7 +43,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.RootElementSpecs
     {
         private Because of = () => RootElement.Update();
 
-        private It should_have_the_correct_visual_offset = () => RootElement.VisualOffset.ShouldEqual(new Vector(ViewPort.X, ViewPort.Y));
+        private It should_have_the_correct_visual_offset =
+            () => RootElement.VisualOffset.ShouldEqual(new Vector(ViewPort.X, ViewPort.Y));
     }
 
     [Subject(typeof(RootElement))]

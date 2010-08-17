@@ -1,13 +1,18 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
+    using System;
+    using System.Linq;
     using System.Windows;
 
     using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
+#if WINDOWS_PHONE
+    using Microsoft.Phone.Reactive;
+#endif
 
     public class RootElement : ContentControl, IRootElement
     {
-        private readonly InputManager inputManager;
+        private readonly IInputManager inputManager;
 
         private readonly IRenderer renderer;
 
@@ -18,14 +23,28 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
         }
 
-        public RootElement(Rect viewPort, IRenderer renderer, IMouse mouse)
+        public RootElement(Rect viewPort, IRenderer renderer, IInputManager inputManager)
         {
-            this.renderer = renderer;
-            this.viewPort = viewPort;
-
-            if (mouse != null)
+            if (renderer == null)
             {
-                this.inputManager = new InputManager(this, mouse);
+                throw new ArgumentNullException("renderer");
+            }
+
+            this.viewPort = viewPort;
+            this.renderer = renderer;
+            this.inputManager = inputManager;
+
+            if (this.inputManager != null)
+            {
+                this.inputManager.MouseData.Subscribe(Observer.Create<MouseData>(this.OnNextMouseData));
+            }
+        }
+
+        public IInputManager InputManager
+        {
+            get
+            {
+                return this.inputManager;
             }
         }
 

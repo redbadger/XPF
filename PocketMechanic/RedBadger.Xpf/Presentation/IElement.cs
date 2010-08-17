@@ -48,7 +48,7 @@
 
         void Measure(Size availableSize);
 
-        bool OnNextMouseData(MouseData mouseData);
+        void OnNextMouseData(MouseData mouseData);
 
         bool TryGetRenderer(out IRenderer renderer);
     }

@@ -85,7 +85,7 @@
     <Compile Include="Graphics\SpriteFontAdapter.cs" />
     <Compile Include="Graphics\Texture2DAdapter.cs" />
     <Compile Include="Presentation\Input\IInputElement.cs" />
-    <Compile Include="Presentation\Input\IMouse.cs" />
+    <Compile Include="Presentation\Input\IInputManager.cs" />
     <Compile Include="Internal\DoubleExtensions.cs" />
     <Compile Include="Internal\MinMax.cs" />
     <Compile Include="Internal\RectExtensions.cs" />
@@ -101,8 +101,10 @@
     <Compile Include="Presentation\Controls\Viewbox.cs" />
     <Compile Include="Presentation\Controls\Orientation.cs" />
     <Compile Include="Presentation\IDependencyObject.cs" />
-    <Compile Include="Presentation\Input\InputManager.cs" />
+    <Compile Include="Input\InputManager.cs" />
+    <Compile Include="Presentation\Input\MouseAction.cs" />
     <Compile Include="Presentation\Input\MouseButtonEventArgs.cs" />
+    <Compile Include="Presentation\Input\MouseData.cs" />
     <Compile Include="Presentation\Vector.cs" />
     <Compile Include="Presentation\IRootElement.cs" />
     <Compile Include="Presentation\Media\Brush.cs" />
@@ -140,9 +142,7 @@
     <Compile Include="Presentation\ElementCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Input\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

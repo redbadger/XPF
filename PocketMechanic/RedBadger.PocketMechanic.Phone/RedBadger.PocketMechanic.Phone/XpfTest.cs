@@ -12,6 +12,7 @@ namespace RedBadger.PocketMechanic.Phone
     using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
@@ -149,7 +150,7 @@ namespace RedBadger.PocketMechanic.Phone
                 this.GraphicsDevice.Viewport.Height);
 
             this.rootElement =
-                new RootElement(viewPort, new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice)))
+                new RootElement(viewPort, new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice)), new InputManager())
                     {
                        Content = grid 
                     };

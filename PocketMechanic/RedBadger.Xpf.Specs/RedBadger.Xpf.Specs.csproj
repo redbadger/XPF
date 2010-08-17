@@ -81,6 +81,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Input\MouseInputSpecs\MouseInputSpecs.cs" />
     <Compile Include="Presentation\BindingExpressionSpecs\BindingExpressionSpecs.cs" />
     <Compile Include="Presentation\Controls\BorderSpecs\BorderSpecs.cs" />
     <Compile Include="Presentation\Controls\BorderSpecs\Contexts.cs" />
@@ -96,7 +97,6 @@
     <Compile Include="Presentation\Controls\TextBlockSpecs\TextBlockSpecs.cs" />
     <Compile Include="Presentation\Controls\PanelSpecs\PanelSpecs.cs" />
     <Compile Include="Presentation\DefinitionBaseSpecs\DefinitionBaseSpecs.cs" />
-    <Compile Include="Presentation\Input\InputManagerSpecs\InputManagerSpecs.cs" />
     <Compile Include="Presentation\Media\DrawingContextSpecs\Contexts.cs" />
     <Compile Include="Presentation\Media\DrawingContextSpecs\DrawingSpecs.cs" />
     <Compile Include="Presentation\Media\Imaging\XnaImageSpecs.cs" />

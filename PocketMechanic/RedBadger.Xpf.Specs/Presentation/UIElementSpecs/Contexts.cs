@@ -72,10 +72,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
                     new Mock<ISpriteBatch>().Object, new Mock<IPrimitivesService>().Object) {
                                                                                                CallBase = true 
                                                                                             };
-                var rootElement = new Mock<RootElement>(viewPort, renderer.Object)
-                    {
-                       CallBase = true 
-                    };
+                var rootElement = new Mock<RootElement>(viewPort, renderer.Object) { CallBase = true };
 
                 rootElement.Object.Content = UIElement.Object;
                 rootElement.Object.Update();

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Data;
 
@@ -387,25 +388,9 @@
             }
         }
 
-        public bool OnNextMouseData(MouseData mouseData)
+        public void OnNextMouseData(MouseData mouseData)
         {
-            foreach (var child in this.GetChildren())
-            {
-                if (child.OnNextMouseData(mouseData))
-                {
-                    if (child is IInputElement && child.HitTest(mouseData.Point))
-                    {
-                        var element = child as UIElement;
-                        if (element != null)
-                        {
-                            element.OnMouseLeftButtonDown(new MouseButtonEventArgs());
-                            return false;
-                        }
-                    }
-                }
-            }
-
-            return true;
+            this.HandleMouseData(mouseData);
         }
 
         public bool TryGetRenderer(out IRenderer renderer)
@@ -627,6 +612,23 @@
             }
 
             return vector;
+        }
+
+        private bool HandleMouseData(MouseData mouseData)
+        {
+            foreach (var child in this.GetChildren().OfType<UIElement>().Reverse())
+            {
+                if (!child.HandleMouseData(mouseData))
+                {
+                    if (child is IInputElement && child.HitTest(mouseData.Point))
+                    {
+                        child.OnMouseLeftButtonDown(new MouseButtonEventArgs());
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
