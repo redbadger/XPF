@@ -36,7 +36,7 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
 
         protected static RootElement RootElement;
 
-        protected static Rect ViewPort = new Rect(10, 20, 100, 200);
+        protected static Rect ViewPort = new Rect(10, 20, 100, 100);
 
         private Establish context = () =>
             {
@@ -117,6 +117,41 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
     }
 
     [Subject("Mouse Input")]
+    public class when_a_stack_of_elements_inside_each_other_are_placed_inside_a_root_element :
+        a_RootElement_with_input_manager
+    {
+        private const string OnMouseLeftButtonDown = "OnMouseLeftButtonDown";
+
+        private static Mock<ButtonBase> button1;
+
+        private static Mock<ButtonBase> button2;
+
+        private Establish context = () =>
+            {
+                button1 = new Mock<ButtonBase> { CallBase = true };
+                button1.Object.Width = button1.Object.Height = 100;
+
+                button2 = new Mock<ButtonBase> { CallBase = true };
+                button2.Object.Width = button2.Object.Height = 100;
+
+                button1.Object.Content = button2.Object;
+                RootElement.Content = button1.Object;
+            };
+
+        private Because of = () =>
+            {
+                RootElement.Update();
+                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(40, 50) });
+            };
+
+        private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
+            () => button1.Protected().Verify(OnMouseLeftButtonDown, Times.Never(), ItExpr.IsAny<MouseButtonEventArgs>());
+
+        private It should_raise_left_mouse_button_down_event_on_the_top_most_element =
+            () => button2.Protected().Verify(OnMouseLeftButtonDown, Times.Once(), ItExpr.IsAny<MouseButtonEventArgs>());
+    }
+
+    [Subject("Mouse Input")]
     public class when_a_stack_of_elements_after_each_other_are_placed_inside_a_root_element :
         a_RootElement_with_input_manager
     {
@@ -133,11 +168,13 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
                 stackPanel = new Mock<StackPanel> { CallBase = true };
 
                 button1 = new Mock<ButtonBase> { CallBase = true };
-                button1.Object.Width = button1.Object.Height = 100;
+                button1.Object.Width = 100;
+                button1.Object.Height = 50;
                 stackPanel.Object.Children.Add(button1.Object);
 
                 button2 = new Mock<ButtonBase> { CallBase = true };
-                button2.Object.Width = button2.Object.Height = 100;
+                button2.Object.Width = 100;
+                button2.Object.Height = 50;
                 stackPanel.Object.Children.Add(button2.Object);
 
                 RootElement.Content = stackPanel.Object;
