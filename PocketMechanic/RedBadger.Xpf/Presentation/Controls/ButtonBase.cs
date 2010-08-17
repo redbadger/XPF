@@ -27,19 +27,9 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        internal void RaiseMouseLeftButtonUp()
-        {
-            this.OnMouseLeftButtonUp(new MouseButtonEventArgs());
-        }
-
-        internal void RaiseMouseLeftButtonDown()
-        {
-            this.OnMouseLeftButtonDown(new MouseButtonEventArgs());
-        }
-
         protected virtual void OnClick()
         {
-            EventHandler<EventArgs> handler = this.Click;
+            var handler = this.Click;
             if (handler != null)
             {
                 handler(this, new EventArgs());

@@ -11,41 +11,78 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 {
+    using System.Collections.Generic;
+    using System.Windows;
+
     using Machine.Specifications;
 
     using Moq;
 
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Input;
+    using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
 
-    public abstract class a_ButtonBase
+    public abstract class a_ButtonBase_inside_a_RootElement_with_input_manager
     {
         protected static Mock<ButtonBase> ButtonBase;
 
-        private Establish context = () => ButtonBase = new Mock<ButtonBase> { CallBase = true };
+        protected static Mock<IInputManager> InputManager;
+
+        protected static Subject<MouseData> MouseData;
+
+        protected static Mock<Renderer> Renderer;
+
+        protected static RootElement RootElement;
+
+        protected static Rect ViewPort = new Rect(0, 0, 100, 100);
+
+        private Establish context = () =>
+            {
+                Renderer = new Mock<Renderer>(new Mock<ISpriteBatch>().Object, new Mock<IPrimitivesService>().Object)
+                    {
+                       CallBase = true 
+                    };
+
+                MouseData = new Subject<MouseData>();
+                InputManager = new Mock<IInputManager>();
+                InputManager.SetupGet(inputManager => inputManager.MouseData).Returns(MouseData);
+
+                RootElement = new RootElement(ViewPort, Renderer.Object, InputManager.Object);
+
+                ButtonBase = new Mock<ButtonBase> { CallBase = true };
+                RootElement.Content = ButtonBase.Object;
+
+                RootElement.Update();
+            };
     }
 
     [Subject(typeof(ButtonBase))]
-    public class when_the_left_mouse_button_is_pressed : a_ButtonBase
+    public class when_the_left_mouse_button_is_pressed : a_ButtonBase_inside_a_RootElement_with_input_manager
     {
-        private Because of = () => ButtonBase.Object.RaiseMouseLeftButtonDown();
+        private Because of =
+            () => MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
 
         private It should_set_that_the_button_is_pressed = () => ButtonBase.Object.IsPressed.ShouldBeTrue();
     }
 
     [Subject(typeof(ButtonBase))]
-    public class when_the_left_mouse_button_is_pressed_and_the_control_is_disabled : a_ButtonBase
+    public class when_the_left_mouse_button_is_pressed_and_the_control_is_disabled :
+        a_ButtonBase_inside_a_RootElement_with_input_manager
     {
         private Establish context = () => ButtonBase.Object.IsEnabled = false;
 
-        private Because of = () => ButtonBase.Object.RaiseMouseLeftButtonDown();
+        private Because of =
+            () => MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
 
         private It should_not_set_that_the_button_is_pressed = () => ButtonBase.Object.IsPressed.ShouldBeFalse();
     }
 
     [Subject(typeof(ButtonBase))]
-    public class when_the_left_mouse_button_is_released_and_the_control_is_pressed : a_ButtonBase
+    public class when_the_left_mouse_button_is_released_and_the_control_is_pressed :
+        a_ButtonBase_inside_a_RootElement_with_input_manager
     {
         private static bool wasClicked;
 
@@ -56,7 +93,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
                 ButtonBase.Object.Click += (sender, args) => wasClicked = true;
             };
 
-        private Because of = () => ButtonBase.Object.RaiseMouseLeftButtonUp();
+        private Because of =
+            () => MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(0, 0) });
 
         private It should_raise_the_click_event = () => wasClicked.ShouldBeTrue();
 
@@ -65,7 +103,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 
     [Subject(typeof(ButtonBase))]
     public class when_the_left_mouse_button_is_released_and_the_control_is_pressed_but_disabled :
-        a_ButtonBase
+        a_ButtonBase_inside_a_RootElement_with_input_manager
     {
         private static bool wasClicked;
 
@@ -77,7 +115,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
                 ButtonBase.Object.Click += (sender, args) => wasClicked = true;
             };
 
-        private Because of = () => ButtonBase.Object.RaiseMouseLeftButtonUp();
+        private Because of =
+            () => MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(0, 0) });
 
         private It should_not_raise_the_click_event = () => wasClicked.ShouldBeFalse();
 

@@ -50,6 +50,8 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonUpSpecs
                 InputManager.SetupGet(inputManager => inputManager.MouseData).Returns(MouseData);
 
                 RootElement = new RootElement(ViewPort, Renderer.Object, InputManager.Object);
+
+                RootElement.Update();
             };
     }
 
@@ -66,11 +68,8 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonUpSpecs
                 RootElement.Content = button.Object;
             };
 
-        private Because of = () =>
-            {
-                RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(40, 50) });
-            };
+        private Because of =
+            () => MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(40, 50) });
 
         private It should_raise_left_mouse_button_down_event =
             () => button.Protected().Verify(OnMouseLeftButtonUp, Times.Once(), ItExpr.IsAny<MouseButtonEventArgs>());
@@ -103,11 +102,8 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonUpSpecs
                 RootElement.Content = grid.Object;
             };
 
-        private Because of = () =>
-            {
-                RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(40, 50) });
-            };
+        private Because of =
+            () => MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(40, 50) });
 
         private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
             () => button1.Protected().Verify(OnMouseLeftButtonUp, Times.Never(), ItExpr.IsAny<MouseButtonEventArgs>());
@@ -138,11 +134,8 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonUpSpecs
                 RootElement.Content = button1.Object;
             };
 
-        private Because of = () =>
-            {
-                RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(40, 50) });
-            };
+        private Because of =
+            () => MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(40, 50) });
 
         private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
             () => button1.Protected().Verify(OnMouseLeftButtonUp, Times.Never(), ItExpr.IsAny<MouseButtonEventArgs>());
@@ -180,11 +173,8 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonUpSpecs
                 RootElement.Content = stackPanel.Object;
             };
 
-        private Because of = () =>
-            {
-                RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(40, 50) });
-            };
+        private Because of =
+            () => MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(40, 50) });
 
         private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
             () => button2.Protected().Verify(OnMouseLeftButtonUp, Times.Never(), ItExpr.IsAny<MouseButtonEventArgs>());
