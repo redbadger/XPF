@@ -137,8 +137,8 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
                 return this.rowDefinitions ?? (this.rowDefinitions = new RowDefinitionCollection(this));
             }
         }
-
-        public static int GetColumn(UIElement element)
+        
+        public static int GetColumn(IDependencyObject element)
         {
             if (element == null)
             {
@@ -148,7 +148,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
             return (int)element.GetValue(ColumnProperty);
         }
 
-        public static int GetRow(UIElement element)
+        public static int GetRow(IDependencyObject element)
         {
             if (element == null)
             {
@@ -158,7 +158,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
             return (int)element.GetValue(RowProperty);
         }
 
-        public static void SetColumn(UIElement element, int value)
+        public static void SetColumn(IDependencyObject element, int value)
         {
             if (element == null)
             {
@@ -168,7 +168,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
             element.SetValue(ColumnProperty, value);
         }
 
-        public static void SetRow(UIElement element, int value)
+        public static void SetRow(IDependencyObject element, int value)
         {
             if (element == null)
             {
@@ -218,7 +218,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
             for (int i = 0; i < this.cellCaches.Length; i++)
             {
-                UIElement child = this.Children[i];
+                IElement child = this.Children[i];
                 if (child != null)
                 {
                     int columnIndex = this.cellCaches[i].ColumnIndex;
@@ -407,7 +407,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
         private void MeasureCell(int cellIndex, bool forceInfinityV)
         {
-            UIElement child = this.Children[cellIndex];
+            IElement child = this.Children[cellIndex];
             if (child != null)
             {
                 CellCache cell = this.cellCaches[cellIndex];
@@ -577,7 +577,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
         /// </summary>
         private void ValidateCellsCore()
         {
-            IList<UIElement> children = this.Children;
+            IList<IElement> children = this.Children;
             this.cellCaches = new CellCache[children.Count];
             this.cellGroup1 = int.MaxValue;
             this.cellGroup2 = int.MaxValue;
@@ -588,7 +588,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
             bool hasGroup3CellsInAutoRows = false;
             for (int i = this.cellCaches.Length - 1; i >= 0; i--)
             {
-                UIElement element = children[i];
+                IElement element = children[i];
                 if (element != null)
                 {
                     var cache = new CellCache

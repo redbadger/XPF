@@ -13,11 +13,11 @@
         public static readonly XpfDependencyProperty BackgroundProperty = XpfDependencyProperty.Register(
             "Background", typeof(Brush), typeof(Panel), new PropertyMetadata(null));
 
-        private readonly IList<UIElement> children;
+        private readonly ElementCollection children;
 
         public Panel()
         {
-            this.children = new UIElementCollection(this);
+            this.children = new ElementCollection(this);
         }
 
         public Brush Background
@@ -33,7 +33,7 @@
             }
         }
 
-        public IList<UIElement> Children
+        public IList<IElement> Children
         {
             get
             {
@@ -43,7 +43,7 @@
 
         public override IEnumerable<IElement> GetChildren()
         {
-            return this.children.Cast<IElement>().AsEnumerable();
+            return this.children.AsEnumerable();
         }
 
         protected override void OnRender(IDrawingContext drawingContext)

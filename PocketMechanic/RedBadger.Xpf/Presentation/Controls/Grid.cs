@@ -7,8 +7,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     using RedBadger.Xpf.Internal;
 
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-
     public class Grid : Panel
     {
         public static readonly XpfDependencyProperty ColumnProperty = XpfDependencyProperty.RegisterAttached(
@@ -51,44 +49,44 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        public static int GetColumn(UIElement element)
+        public static int GetColumn(IDependencyObject dependencyObject)
         {
-            if (element == null)
+            if (dependencyObject == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException("dependencyObject");
             }
 
-            return (int)element.GetValue(ColumnProperty.Value);
+            return (int)dependencyObject.GetValue(ColumnProperty.Value);
         }
 
-        public static int GetRow(UIElement element)
+        public static int GetRow(IDependencyObject dependencyObject)
         {
-            if (element == null)
+            if (dependencyObject == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException("dependencyObject");
             }
 
-            return (int)element.GetValue(RowProperty.Value);
+            return (int)dependencyObject.GetValue(RowProperty.Value);
         }
 
-        public static void SetColumn(UIElement element, int value)
+        public static void SetColumn(IDependencyObject dependencyObject, int value)
         {
-            if (element == null)
+            if (dependencyObject == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException("dependencyObject");
             }
 
-            element.SetValue(ColumnProperty.Value, value);
+            dependencyObject.SetValue(ColumnProperty.Value, value);
         }
 
-        public static void SetRow(UIElement element, int value)
+        public static void SetRow(IDependencyObject dependencyObject, int value)
         {
-            if (element == null)
+            if (dependencyObject == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException("dependencyObject");
             }
 
-            element.SetValue(RowProperty.Value, value);
+            dependencyObject.SetValue(RowProperty.Value, value);
         }
 
         protected override Size ArrangeOverride(Size finalSize)
@@ -98,7 +96,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
             for (int i = 0; i < this.cells.Length; i++)
             {
-                UIElement child = this.Children[i];
+                IElement child = this.Children[i];
                 if (child != null)
                 {
                     int columnIndex = this.cells[i].ColumnIndex;
@@ -209,7 +207,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
             for (int i = this.cells.Length - 1; i >= 0; i--)
             {
-                UIElement element = this.Children[i];
+                IElement element = this.Children[i];
                 if (element != null)
                 {
                     var cell = new Cell
@@ -254,7 +252,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         private void MeasureCell(int cellIndex)
         {
-            UIElement child = this.Children[cellIndex];
+            IElement child = this.Children[cellIndex];
             if (child != null)
             {
                 Cell cell = this.cells[cellIndex];
@@ -282,7 +280,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                     this.MeasureCell(currentCellIndex);
 
                     Cell cell = this.cells[currentCellIndex];
-                    UIElement child = this.Children[currentCellIndex];
+                    IElement child = this.Children[currentCellIndex];
 
                     DefinitionBase widthDefinition = this.widthDefinitions[cell.ColumnIndex];
                     widthDefinition.UpdateMinLength(Math.Min(child.DesiredSize.Width, widthDefinition.UserMaxLength));

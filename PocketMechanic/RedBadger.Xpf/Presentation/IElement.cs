@@ -2,11 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Windows;
-    using System.Windows.Data;
 
     using RedBadger.Xpf.Presentation.Media;
 
-    public interface IElement
+    public interface IElement : IDependencyObject
     {
         Vector AbsoluteOffset { get; }
 
@@ -38,7 +37,7 @@
         /// <param name = "finalRect">The final size that the parent computes for the child element, provided as a Rect instance.</param>
         void Arrange(Rect finalRect);
 
-        void ClearBinding(XpfDependencyProperty dependencyProperty);
+        IEnumerable<IElement> GetChildren();
 
         void InvalidateArrange();
 
@@ -46,10 +45,6 @@
 
         void Measure(Size availableSize);
 
-        BindingExpression SetBinding(XpfDependencyProperty dependencyProperty, Binding binding);
-
         bool TryGetRenderer(out IRenderer renderer);
-
-        IEnumerable<IElement> GetChildren();
     }
 }

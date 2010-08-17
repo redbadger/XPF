@@ -160,6 +160,12 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Viewbox.cs">
       <Link>Presentation\Controls\Viewbox.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\ElementCollection.cs">
+      <Link>Presentation\ElementCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\IDependencyObject.cs">
+      <Link>Presentation\IDependencyObject.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IElement.cs">
       <Link>Presentation\IElement.cs</Link>
     </Compile>
@@ -222,9 +228,6 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\UIElement.cs">
       <Link>Presentation\UIElement.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\UIElementCollection.cs">
-      <Link>Presentation\UIElementCollection.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Vector.cs">
       <Link>Presentation\Vector.cs</Link>

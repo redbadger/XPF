@@ -3,13 +3,13 @@
     using System.Collections;
     using System.Collections.Generic;
 
-    public class UIElementCollection : IList<UIElement>
+    public class ElementCollection : IList<IElement>
     {
-        private readonly List<UIElement> children = new List<UIElement>();
+        private readonly List<IElement> children = new List<IElement>();
 
         private readonly IElement owner;
 
-        public UIElementCollection(IElement owner)
+        public ElementCollection(IElement owner)
         {
             this.owner = owner;
         }
@@ -30,7 +30,7 @@
             }
         }
 
-        public UIElement this[int index]
+        public IElement this[int index]
         {
             get
             {
@@ -39,8 +39,8 @@
 
             set
             {
-                UIElement oldItem = this.children[index];
-                UIElement newItem = value;
+                IElement oldItem = this.children[index];
+                IElement newItem = value;
 
                 this.children[index] = newItem;
                 this.owner.InvalidateMeasure();
@@ -48,7 +48,7 @@
             }
         }
 
-        public void Add(UIElement item)
+        public void Add(IElement item)
         {
             this.children.Add(item);
             this.owner.InvalidateMeasure();
@@ -60,17 +60,17 @@
             this.children.Clear();
         }
 
-        public bool Contains(UIElement item)
+        public bool Contains(IElement item)
         {
             return this.children.Contains(item);
         }
 
-        public void CopyTo(UIElement[] array, int arrayIndex)
+        public void CopyTo(IElement[] array, int arrayIndex)
         {
             this.children.CopyTo(array, arrayIndex);
         }
 
-        public bool Remove(UIElement item)
+        public bool Remove(IElement item)
         {
             bool wasRemoved = this.children.Remove(item);
             if (wasRemoved)
@@ -87,17 +87,17 @@
             return this.GetEnumerator();
         }
 
-        public IEnumerator<UIElement> GetEnumerator()
+        public IEnumerator<IElement> GetEnumerator()
         {
             return this.children.GetEnumerator();
         }
 
-        public int IndexOf(UIElement item)
+        public int IndexOf(IElement item)
         {
             return this.children.IndexOf(item);
         }
 
-        public void Insert(int index, UIElement item)
+        public void Insert(int index, IElement item)
         {
             this.children.Insert(index, item);
             this.owner.InvalidateMeasure();
@@ -112,7 +112,7 @@
             this.SetParents(oldItem, null);
         }
 
-        private void SetParents(UIElement oldItem, UIElement newItem)
+        private void SetParents(IElement oldItem, IElement newItem)
         {
             if (oldItem != null)
             {
