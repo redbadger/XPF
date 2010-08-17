@@ -54,18 +54,35 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 
                 ButtonBase = new Mock<ButtonBase> { CallBase = true };
                 RootElement.Content = ButtonBase.Object;
-
-                RootElement.Update();
             };
     }
 
     [Subject(typeof(ButtonBase))]
-    public class when_the_left_mouse_button_is_pressed : a_ButtonBase_inside_a_RootElement_with_input_manager
+    public class when_the_left_mouse_button_is_pressed_within_the_control_boundary :
+        a_ButtonBase_inside_a_RootElement_with_input_manager
     {
         private Because of =
-            () => MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
+            () =>
+            {
+                RootElement.Update();
+                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
+            };
 
         private It should_set_that_the_button_is_pressed = () => ButtonBase.Object.IsPressed.ShouldBeTrue();
+    }
+
+    [Subject(typeof(ButtonBase))]
+    public class when_the_left_mouse_button_is_pressed_outside_the_control_boundary :
+        a_ButtonBase_inside_a_RootElement_with_input_manager
+    {
+        private Because of =
+            () =>
+            {
+                RootElement.Update();
+                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(101, 101) });
+            };
+
+        private It should_not_set_that_the_button_is_pressed = () => ButtonBase.Object.IsPressed.ShouldBeFalse();
     }
 
     [Subject(typeof(ButtonBase))]
@@ -75,7 +92,11 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
         private Establish context = () => ButtonBase.Object.IsEnabled = false;
 
         private Because of =
-            () => MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
+            () =>
+            {
+                RootElement.Update();
+                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
+            };
 
         private It should_not_set_that_the_button_is_pressed = () => ButtonBase.Object.IsPressed.ShouldBeFalse();
     }
@@ -94,7 +115,11 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
             };
 
         private Because of =
-            () => MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(0, 0) });
+            () =>
+            {
+                RootElement.Update();
+                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(0, 0) });
+            };
 
         private It should_raise_the_click_event = () => wasClicked.ShouldBeTrue();
 
@@ -116,10 +141,58 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
             };
 
         private Because of =
-            () => MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(0, 0) });
+            () =>
+            {
+                RootElement.Update();
+                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(0, 0) });
+            };
 
         private It should_not_raise_the_click_event = () => wasClicked.ShouldBeFalse();
 
         private It should_not_set_that_the_button_is_released = () => ButtonBase.Object.IsPressed.ShouldBeTrue();
+    }
+
+    [Subject(typeof(ButtonBase))]
+    public class when_the_left_button_is_pressed_and_then_released_inside_the_control_boundary :
+        a_ButtonBase_inside_a_RootElement_with_input_manager
+    {
+        private static bool wasClicked;
+
+        private Establish context = () =>
+            {
+                wasClicked = false;
+                ButtonBase.Object.Click += (sender, args) => wasClicked = true;
+            };
+
+        private Because of = () =>
+            {
+                RootElement.Update();
+                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
+                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(0, 0) });
+            };
+
+        private It should_raise_the_click_event = () => wasClicked.ShouldBeTrue();
+    }
+
+    [Subject(typeof(ButtonBase))]
+    public class when_the_left_button_is_pressed_and_then_released_outside_the_control_boundary :
+        a_ButtonBase_inside_a_RootElement_with_input_manager
+    {
+        private static bool wasClicked;
+
+        private Establish context = () =>
+            {
+                wasClicked = false;
+                ButtonBase.Object.Click += (sender, args) => wasClicked = true;
+            };
+
+        private Because of = () =>
+            {
+                RootElement.Update();
+                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
+                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(101, 101) });
+            };
+
+        private It should_not_raise_the_click_event = () => wasClicked.ShouldBeFalse();
     }
 }
