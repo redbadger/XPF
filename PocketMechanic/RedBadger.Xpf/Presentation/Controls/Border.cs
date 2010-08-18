@@ -28,7 +28,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         public static readonly XpfDependencyProperty ChildProperty = XpfDependencyProperty.Register(
-            "Child", typeof(UIElement), typeof(Border), new PropertyMetadata(null, ChildPropertyChangedCallback));
+            "Child", typeof(IElement), typeof(Border), new PropertyMetadata(null, ChildPropertyChangedCallback));
 
         public static readonly XpfDependencyProperty PaddingProperty = XpfDependencyProperty.Register(
             "Padding", 
@@ -79,7 +79,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        public UIElement Child
+        public IElement Child
         {
             get
             {

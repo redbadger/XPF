@@ -118,9 +118,6 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Button.cs">
       <Link>Presentation\Controls\Button.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ButtonBase.cs">
-      <Link>Presentation\Controls\ButtonBase.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ColumnDefinition.cs">
       <Link>Presentation\Controls\ColumnDefinition.cs</Link>
     </Compile>
@@ -145,11 +142,23 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Panel.cs">
       <Link>Presentation\Controls\Panel.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Primitives\ButtonBase.cs">
+      <Link>Presentation\Controls\Primitives\ButtonBase.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Primitives\IScrollInfo.cs">
+      <Link>Presentation\Controls\Primitives\IScrollInfo.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\RootElement.cs">
       <Link>Presentation\Controls\RootElement.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\RowDefinition.cs">
       <Link>Presentation\Controls\RowDefinition.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ScrollContentPresenter.cs">
+      <Link>Presentation\Controls\ScrollContentPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ScrollViewer.cs">
+      <Link>Presentation\Controls\ScrollViewer.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\StackPanel.cs">
       <Link>Presentation\Controls\StackPanel.cs</Link>

@@ -9,7 +9,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Presentation.UIElementCollectionSpecs
+namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
 {
     using System.Windows;
 
@@ -22,7 +22,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementCollectionSpecs
     using It = Machine.Specifications.It;
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
-    public abstract class a_UIElementCollection
+    public abstract class an_ElementCollection
     {
         protected static Mock<UIElement> Child1;
 
@@ -43,7 +43,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementCollectionSpecs
     }
 
     [Subject(typeof(ElementCollection), "Visual Parent")]
-    public class when_adding_an_element_to : a_UIElementCollection
+    public class when_adding_an_element_to : an_ElementCollection
     {
         private Establish context = () => Owner.Object.Measure(Size.Empty);
 
@@ -56,7 +56,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementCollectionSpecs
     }
 
     [Subject(typeof(ElementCollection), "Visual Parent")]
-    public class when_setting_an_element_in : a_UIElementCollection
+    public class when_setting_an_element_in : an_ElementCollection
     {
         private Establish context = () =>
             {
@@ -76,7 +76,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementCollectionSpecs
     }
 
     [Subject(typeof(ElementCollection), "Visual Parent")]
-    public class when_removing_an_element_from : a_UIElementCollection
+    public class when_removing_an_element_from : an_ElementCollection
     {
         private Establish context = () =>
             {
@@ -93,7 +93,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementCollectionSpecs
     }
 
     [Subject(typeof(ElementCollection), "Visual Parent")]
-    public class when_removing_an_element_at_a_certain_position_from : a_UIElementCollection
+    public class when_removing_an_element_at_a_certain_position_from : an_ElementCollection
     {
         private Establish context = () =>
             {
@@ -110,7 +110,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementCollectionSpecs
     }
 
     [Subject(typeof(ElementCollection), "Visual Parent")]
-    public class when_inserting_an_element_into : a_UIElementCollection
+    public class when_inserting_an_element_into : an_ElementCollection
     {
         private Establish context = () => Owner.Object.Measure(Size.Empty);
 

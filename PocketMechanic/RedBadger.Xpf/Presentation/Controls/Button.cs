@@ -3,6 +3,7 @@
     using System.Windows;
 
     using RedBadger.Xpf.Internal;
+    using RedBadger.Xpf.Presentation.Controls.Primitives;
 
     public class Button : ButtonBase
     {

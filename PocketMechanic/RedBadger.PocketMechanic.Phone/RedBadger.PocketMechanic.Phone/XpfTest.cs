@@ -14,6 +14,7 @@ namespace RedBadger.PocketMechanic.Phone
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Controls.Primitives;
     using RedBadger.Xpf.Presentation.Media;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 

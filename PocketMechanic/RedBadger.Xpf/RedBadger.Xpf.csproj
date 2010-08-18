@@ -84,6 +84,9 @@
     <Compile Include="Graphics\SpriteBatchAdapter.cs" />
     <Compile Include="Graphics\SpriteFontAdapter.cs" />
     <Compile Include="Graphics\Texture2DAdapter.cs" />
+    <Compile Include="Presentation\Controls\Primitives\IScrollInfo.cs" />
+    <Compile Include="Presentation\Controls\ScrollContentPresenter.cs" />
+    <Compile Include="Presentation\Controls\ScrollViewer.cs" />
     <Compile Include="Presentation\Input\IInputElement.cs" />
     <Compile Include="Presentation\Input\IInputManager.cs" />
     <Compile Include="Internal\DoubleExtensions.cs" />
@@ -95,7 +98,7 @@
     <Compile Include="Internal\VectorExtensions.cs" />
     <Compile Include="Presentation\BindingExpression.cs" />
     <Compile Include="Presentation\Controls\Button.cs" />
-    <Compile Include="Presentation\Controls\ButtonBase.cs" />
+    <Compile Include="Presentation\Controls\Primitives\ButtonBase.cs" />
     <Compile Include="Presentation\Controls\Control.cs" />
     <Compile Include="Presentation\Controls\StretchDirection.cs" />
     <Compile Include="Presentation\Controls\Viewbox.cs" />

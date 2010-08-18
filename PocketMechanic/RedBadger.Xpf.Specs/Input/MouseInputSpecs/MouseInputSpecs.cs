@@ -21,6 +21,7 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Controls.Primitives;
     using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
 

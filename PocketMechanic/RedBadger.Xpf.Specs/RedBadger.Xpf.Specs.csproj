@@ -94,6 +94,7 @@
     <Compile Include="Presentation\Controls\GridSpecs\Contexts.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\MeasureSpecs.cs" />
     <Compile Include="Presentation\Controls\RootElementSpecs\RootElementSpecs.cs" />
+    <Compile Include="Presentation\Controls\ScrollViewerSpecs.cs" />
     <Compile Include="Presentation\Controls\StackPanelSpecs\StackPanelSpecs.cs" />
     <Compile Include="Presentation\Controls\TextBlockSpecs\TextBlockSpecs.cs" />
     <Compile Include="Presentation\Controls\PanelSpecs\PanelSpecs.cs" />
@@ -102,7 +103,7 @@
     <Compile Include="Presentation\Media\DrawingContextSpecs\DrawingSpecs.cs" />
     <Compile Include="Presentation\Media\Imaging\XnaImageSpecs.cs" />
     <Compile Include="Presentation\Media\RendererSpecs\RendererSpecs.cs" />
-    <Compile Include="Presentation\UIElementCollectionSpecs\UIElementCollectionSpecs.cs" />
+    <Compile Include="Presentation\ElementCollectionSpecs\ElementCollectionSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\ArrangeSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\Contexts.cs" />

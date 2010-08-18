@@ -22,6 +22,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ContentControlSpecs
     using RedBadger.Xpf.Presentation.Controls;
 
     using It = Machine.Specifications.It;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_ContentControl
     {
@@ -59,5 +60,22 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ContentControlSpecs
 
         private It should_return_the_correct_number_of_children_when_its_children_are_requested =
             () => ContentControl.GetChildren().Count().ShouldEqual(1);
+    }
+
+    [Subject(typeof(ContentControl))]
+    public class when_content_is_changed : a_ContentControl
+    {
+        private static Mock<UIElement> oldChild;
+
+        private Establish context = () =>
+            {
+                oldChild = new Mock<UIElement> { CallBase = true };
+                ContentControl.Content = oldChild.Object;
+            };
+
+        private Because of = () => ContentControl.Content = new Mock<IElement>().Object;
+
+        private It should_unset_itself_as_the_parent_of_the_outgoing_child =
+            () => oldChild.Object.VisualParent.ShouldBeNull();
     }
 }

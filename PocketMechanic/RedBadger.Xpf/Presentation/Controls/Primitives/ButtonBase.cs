@@ -1,4 +1,4 @@
-namespace RedBadger.Xpf.Presentation.Controls
+namespace RedBadger.Xpf.Presentation.Controls.Primitives
 {
     using System;
     using System.Windows;

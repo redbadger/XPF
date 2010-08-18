@@ -61,17 +61,30 @@ namespace RedBadger.Xpf.Presentation.Controls
             return content.DesiredSize;
         }
 
+        protected virtual void OnContentChanged(IElement oldContent, IElement newContent)
+        {
+        }
+
         private static void ContentPropertyChangedCallback(
             DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            var content = args.NewValue as IElement;
-            var contentControl = (IElement)dependencyObject;
+            var oldContent = args.OldValue as IElement;
+            var newContent = args.NewValue as IElement;
+            var contentControl = (ContentControl)dependencyObject;
 
             contentControl.InvalidateMeasure();
-            if (content != null)
+
+            if (oldContent != null)
             {
-                content.VisualParent = contentControl;
+                oldContent.VisualParent = null;
             }
+
+            if (newContent != null)
+            {
+                newContent.VisualParent = contentControl;
+            }
+
+            contentControl.OnContentChanged(oldContent, newContent);
         }
     }
 }

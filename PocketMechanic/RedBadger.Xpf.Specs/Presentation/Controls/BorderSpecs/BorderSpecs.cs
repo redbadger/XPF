@@ -18,6 +18,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
     using Moq;
 
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
     using Brush = RedBadger.Xpf.Presentation.Media.Brush;
@@ -46,6 +47,15 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
         private It should_set_itself_as_the_visual_parent_on_the_child =
             () => Child.Object.VisualParent.ShouldEqual(Border);
+    }
+
+    [Subject(typeof(Border))]
+    public class when_content_is_changed : a_Border_with_child
+    {
+        private Because of = () => Border.Child = new Mock<IElement>().Object;
+
+        private It should_unset_itself_as_the_parent_of_the_outgoing_child =
+            () => Child.Object.VisualParent.ShouldBeNull();
     }
 
     [Subject(typeof(Border), "Padding/Thickness")]
