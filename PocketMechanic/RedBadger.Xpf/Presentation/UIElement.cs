@@ -10,7 +10,9 @@
     using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
 
-    using IInputElement = RedBadger.Xpf.Presentation.Input.IInputElement;
+#if WINDOWS_PHONE
+    using Microsoft.Phone.Reactive;
+#endif
 
     public abstract class UIElement : DependencyObject, IElement
     {
@@ -70,11 +72,18 @@
         private readonly Dictionary<XpfDependencyProperty, BindingExpression> bindings =
             new Dictionary<XpfDependencyProperty, BindingExpression>();
 
+        private readonly Subject<MouseData> mouseData = new Subject<MouseData>();
+
         private Rect actualRect = Rect.Empty;
 
         private Size previousAvailableSize;
 
         private Rect previousFinalRect;
+
+        protected UIElement()
+        {
+            this.MouseData.Subscribe(Observer.Create<MouseData>(this.OnNextMouseData));
+        }
 
         public double ActualHeight
         {
@@ -192,6 +201,14 @@
             set
             {
                 this.SetValue(MinWidthProperty.Value, value);
+            }
+        }
+
+        public Subject<MouseData> MouseData
+        {
+            get
+            {
+                return this.mouseData;
             }
         }
 
@@ -388,19 +405,6 @@
             }
         }
 
-        public void OnNextMouseMove(MouseData mouseData)
-        {
-            this.OnMouseMove(new MouseButtonEventArgs(mouseData.Point));
-        }
-
-        public void OnNextMouseUpDown(MouseData mouseData)
-        {
-            if (!this.HandleMouseUpDownOnChildren(mouseData))
-            {
-                HandleMouseUpDown(this, mouseData);
-            }
-        }
-
         public bool TryGetRenderer(out IRenderer renderer)
         {
             IRootElement rootElement;
@@ -455,40 +459,12 @@
             return Size.Empty;
         }
 
-        protected virtual void OnMouseLeftButtonDown(MouseButtonEventArgs mouseButtonEventArgs)
-        {
-        }
-
-        protected virtual void OnMouseLeftButtonUp(MouseButtonEventArgs mouseButtonEventArgs)
-        {
-        }
-
-        protected virtual void OnMouseMove(MouseButtonEventArgs mouseButtonEventArgs)
+        protected virtual void OnNextMouseData(MouseData obj)
         {
         }
 
         protected virtual void OnRender(IDrawingContext drawingContext)
         {
-        }
-
-        private static bool HandleMouseUpDown(UIElement element, MouseData mouseData)
-        {
-            if (element is IInputElement && element.HitTest(mouseData.Point))
-            {
-                switch (mouseData.Action)
-                {
-                    case MouseAction.LeftButtonDown:
-                        element.OnMouseLeftButtonDown(new MouseButtonEventArgs(mouseData.Point));
-                        break;
-                    case MouseAction.LeftButtonUp:
-                        element.OnMouseLeftButtonUp(new MouseButtonEventArgs(mouseData.Point));
-                        break;
-                }
-
-                return true;
-            }
-
-            return false;
         }
 
         private static void HorizontalAlignmentPropertyChangedCallback(
@@ -657,14 +633,6 @@
             }
 
             return vector;
-        }
-
-        private bool HandleMouseUpDownOnChildren(MouseData mouseData)
-        {
-            return
-                this.GetChildren().OfType<UIElement>().Reverse().Where(
-                    child => !child.HandleMouseUpDownOnChildren(mouseData)).Any(
-                        child => HandleMouseUpDown(child, mouseData));
         }
 
         /// <summary>

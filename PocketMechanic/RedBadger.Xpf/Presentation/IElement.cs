@@ -6,6 +6,10 @@
     using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
 
+#if WINDOWS_PHONE
+    using Microsoft.Phone.Reactive;
+#endif
+    
     public interface IElement : IDependencyObject
     {
         Size DesiredSize { get; }
@@ -28,6 +32,8 @@
 
         double Width { get; set; }
 
+        Subject<MouseData> MouseData { get; }
+
         /// <summary>
         ///     Positions child elements and determines a size for a UIElement.
         ///     Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
@@ -47,10 +53,6 @@
         void InvalidateMeasure();
 
         void Measure(Size availableSize);
-
-        void OnNextMouseMove(MouseData mouseData);
-
-        void OnNextMouseUpDown(MouseData mouseData);
 
         bool TryGetRenderer(out IRenderer renderer);
 

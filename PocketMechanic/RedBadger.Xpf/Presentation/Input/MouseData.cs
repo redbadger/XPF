@@ -1,7 +1,9 @@
 ﻿namespace RedBadger.Xpf.Presentation.Input
 {
+    using System.Diagnostics;
     using System.Windows;
 
+    [DebuggerDisplay("{Action} @ {Point}")]
     public struct MouseData
     {
         public MouseAction Action;

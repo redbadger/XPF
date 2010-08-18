@@ -40,61 +40,55 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected override void OnNextMouseData(MouseData mouseData)
         {
-            base.OnMouseLeftButtonDown(e);
-
-            this.isMouseLeftButtonDown = true;
-
             if (!this.IsEnabled)
             {
                 return;
             }
 
-            this.CaptureMouse();
-            if (this.isMouseCaptured)
+            switch (mouseData.Action)
             {
-                this.IsPressed = true;
+                case MouseAction.LeftButtonDown:
+                    this.isMouseLeftButtonDown = true;
+
+                    if (this.CaptureMouse())
+                    {
+                        this.IsPressed = true;
+                    }
+
+                    break;
+                case MouseAction.LeftButtonUp:
+                    this.isMouseLeftButtonDown = false;
+
+                    if (this.IsPressed)
+                    {
+                        this.OnClick();
+                    }
+
+                    this.ReleaseMouseCapture();
+                    this.IsPressed = false;
+                    break;
+                case MouseAction.Move:
+                    if (this.isMouseLeftButtonDown && this.isMouseCaptured)
+                    {
+                        this.IsPressed = this.HitTest(mouseData.Point);
+                    }
+
+                    break;
             }
         }
 
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonUp(e);
-
-            this.isMouseLeftButtonDown = false;
-
-            if (!this.IsEnabled)
-            {
-                return;
-            }
-
-            if (this.IsPressed)
-            {
-                this.OnClick();
-            }
-
-            this.ReleaseMouseCapture();
-            this.IsPressed = false;
-        }
-
-        protected override void OnMouseMove(MouseButtonEventArgs mouseButtonEventArgs)
-        {
-            base.OnMouseMove(mouseButtonEventArgs);
-
-            if (this.isMouseLeftButtonDown && this.IsEnabled && this.isMouseCaptured)
-            {
-                this.IsPressed = this.HitTest(mouseButtonEventArgs.Position);
-            }
-        }
-
-        private void CaptureMouse()
+        private bool CaptureMouse()
         {
             IRootElement rootElement;
             if (!this.isMouseCaptured && this.TryGetRootElement(out rootElement))
             {
                 this.isMouseCaptured = rootElement.CaptureMouse(this);
+                return this.isMouseCaptured;
             }
+
+            return false;
         }
 
         private void ReleaseMouseCapture()

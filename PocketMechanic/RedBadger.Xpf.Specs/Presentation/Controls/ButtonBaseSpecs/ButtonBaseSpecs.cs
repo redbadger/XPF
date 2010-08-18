@@ -64,7 +64,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
         private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
             };
 
         private It should_set_that_the_button_is_pressed = () => ButtonBase.Object.IsPressed.ShouldBeTrue();
@@ -77,7 +77,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
         private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(101, 101) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(101, 101)));
             };
 
         private It should_not_set_that_the_button_is_pressed = () => ButtonBase.Object.IsPressed.ShouldBeFalse();
@@ -92,7 +92,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
         private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
             };
 
         private It should_not_set_that_the_button_is_pressed = () => ButtonBase.Object.IsPressed.ShouldBeFalse();
@@ -114,7 +114,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
         private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(0, 0) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(0, 0)));
             };
 
         private It should_raise_the_click_event = () => wasClicked.ShouldBeTrue();
@@ -139,7 +139,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
         private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(0, 0) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(0, 0)));
             };
 
         private It should_not_raise_the_click_event = () => wasClicked.ShouldBeFalse();
@@ -162,8 +162,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
         private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(0, 0) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(0, 0)));
             };
 
         private It should_raise_the_click_event = () => wasClicked.ShouldBeTrue();
@@ -184,8 +184,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
         private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(101, 101) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
+                MouseData.OnNext(new MouseData(MouseAction.Move, new Point(101, 101)));
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(101, 101)));
             };
 
         private It should_not_raise_the_click_event = () => wasClicked.ShouldBeFalse();
@@ -218,13 +219,13 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
             {
                 RootElement.Update();
                 state1 = ButtonBase.Object.IsPressed;
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonDown, Point = new Point(0, 0) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
                 state2 = ButtonBase.Object.IsPressed;
-                MouseData.OnNext(new MouseData { Action = MouseAction.Move, Point = new Point(101, 101) });
+                MouseData.OnNext(new MouseData(MouseAction.Move, new Point(101, 101)));
                 state3 = ButtonBase.Object.IsPressed;
-                MouseData.OnNext(new MouseData { Action = MouseAction.Move, Point = new Point(99, 99) });
+                MouseData.OnNext(new MouseData(MouseAction.Move, new Point(99, 99)));
                 state4 = ButtonBase.Object.IsPressed;
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(10, 10) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(10, 10)));
                 state6 = ButtonBase.Object.IsPressed;
             };
 

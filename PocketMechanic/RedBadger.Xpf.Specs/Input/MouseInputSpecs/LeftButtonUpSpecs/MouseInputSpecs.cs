@@ -28,6 +28,8 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonUpSpecs
 
     public abstract class a_RootElement_with_input_manager
     {
+        protected const string OnNextMouseData = "OnNextMouseData";
+
         protected static Mock<IInputManager> InputManager;
 
         protected static Subject<MouseData> MouseData;
@@ -54,10 +56,8 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonUpSpecs
     }
 
     [Subject("Mouse Input - Left Button Up")]
-    public class when_a_single_element_is_placed_inside_a_root_element : a_RootElement_with_input_manager
+    public class when_a_single_control_is_placed_inside_a_root_element : a_RootElement_with_input_manager
     {
-        private const string OnMouseLeftButtonUp = "OnMouseLeftButtonUp";
-
         private static Mock<ButtonBase> button;
 
         private Establish context = () =>
@@ -66,23 +66,22 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonUpSpecs
                 RootElement.Content = button.Object;
             };
 
-        private Because of =
-            () =>
+        private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(40, 50) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(40, 50)));
             };
 
-        private It should_raise_left_mouse_button_down_event =
-            () => button.Protected().Verify(OnMouseLeftButtonUp, Times.Once(), ItExpr.IsAny<MouseButtonEventArgs>());
+        private It should_notify_the_button_that_the_left_mouse_was_pressed =
+            () =>
+            button.Protected().Verify(
+                OnNextMouseData, Times.Once(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonUp));
     }
 
     [Subject("Mouse Input - Left Button Up")]
     public class when_a_stack_of_elements_on_top_of_each_other_are_placed_inside_a_root_element :
         a_RootElement_with_input_manager
     {
-        private const string OnMouseLeftButtonUp = "OnMouseLeftButtonUp";
-
         private static Mock<ButtonBase> button1;
 
         private static Mock<ButtonBase> button2;
@@ -104,26 +103,25 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonUpSpecs
                 RootElement.Content = grid.Object;
             };
 
-        private Because of =
-            () =>
+        private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(40, 50) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(40, 50)));
             };
 
-        private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
-            () => button1.Protected().Verify(OnMouseLeftButtonUp, Times.Never(), ItExpr.IsAny<MouseButtonEventArgs>());
+        private It should_not_raise_left_mouse_button_up_event_on_the_bottom_most_element =
+            () => button1.Protected().Verify(OnNextMouseData, Times.Never(), ItExpr.IsAny<MouseData>());
 
-        private It should_raise_left_mouse_button_down_event_on_the_top_most_element =
-            () => button2.Protected().Verify(OnMouseLeftButtonUp, Times.Once(), ItExpr.IsAny<MouseButtonEventArgs>());
+        private It should_raise_left_mouse_button_up_event_on_the_top_most_element =
+            () =>
+            button2.Protected().Verify(
+                OnNextMouseData, Times.Once(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonUp));
     }
 
     [Subject("Mouse Input - Left Button Up")]
     public class when_a_stack_of_elements_inside_each_other_are_placed_inside_a_root_element :
         a_RootElement_with_input_manager
     {
-        private const string OnMouseLeftButtonUp = "OnMouseLeftButtonUp";
-
         private static Mock<ButtonBase> button1;
 
         private static Mock<ButtonBase> button2;
@@ -140,26 +138,27 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonUpSpecs
                 RootElement.Content = button1.Object;
             };
 
-        private Because of =
-            () =>
+        private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(40, 50) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(40, 50)));
             };
 
-        private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
-            () => button1.Protected().Verify(OnMouseLeftButtonUp, Times.Never(), ItExpr.IsAny<MouseButtonEventArgs>());
+        private It should_not_raise_left_mouse_button_up_event_on_the_bottom_most_element =
+            () =>
+            button1.Protected().Verify(
+                OnNextMouseData, Times.Never(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonUp));
 
-        private It should_raise_left_mouse_button_down_event_on_the_top_most_element =
-            () => button2.Protected().Verify(OnMouseLeftButtonUp, Times.Once(), ItExpr.IsAny<MouseButtonEventArgs>());
+        private It should_raise_left_mouse_button_up_event_on_the_top_most_element =
+            () =>
+            button2.Protected().Verify(
+                OnNextMouseData, Times.Once(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonUp));
     }
 
     [Subject("Mouse Input - Left Button Up")]
     public class when_a_stack_of_elements_after_each_other_are_placed_inside_a_root_element :
         a_RootElement_with_input_manager
     {
-        private const string OnMouseLeftButtonUp = "OnMouseLeftButtonUp";
-
         private static Mock<ButtonBase> button1;
 
         private static Mock<ButtonBase> button2;
@@ -183,17 +182,20 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonUpSpecs
                 RootElement.Content = stackPanel.Object;
             };
 
-        private Because of =
-            () =>
+        private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData { Action = MouseAction.LeftButtonUp, Point = new Point(40, 50) });
+                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(40, 50)));
             };
 
-        private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
-            () => button2.Protected().Verify(OnMouseLeftButtonUp, Times.Never(), ItExpr.IsAny<MouseButtonEventArgs>());
+        private It should_not_raise_left_mouse_button_up_event_on_the_bottom_most_element =
+            () =>
+            button2.Protected().Verify(
+                OnNextMouseData, Times.Never(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonUp));
 
-        private It should_raise_left_mouse_button_down_event_on_the_top_most_element =
-            () => button1.Protected().Verify(OnMouseLeftButtonUp, Times.Once(), ItExpr.IsAny<MouseButtonEventArgs>());
+        private It should_raise_left_mouse_button_up_event_on_the_top_most_element =
+            () =>
+            button1.Protected().Verify(
+                OnNextMouseData, Times.Once(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonUp));
     }
 }

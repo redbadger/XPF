@@ -7,9 +7,8 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
+    using IInputElement = RedBadger.Xpf.Presentation.Input.IInputElement;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public class RootElement : ContentControl, IRootElement
     {
@@ -39,11 +38,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
             if (this.inputManager != null)
             {
-                this.inputManager.MouseData.Where(
-                    data => data.Action == MouseAction.LeftButtonDown || data.Action == MouseAction.LeftButtonUp).
-                    Subscribe(Observer.Create<MouseData>(this.OnNextMouseUpDownInternal));
-                this.inputManager.MouseData.Where(data => data.Action == MouseAction.Move).Subscribe(
-                    Observer.Create<MouseData>(this.OnNextMouseMoveInternal));
+                this.inputManager.MouseData.Subscribe(this.MouseData);
             }
         }
 
@@ -101,28 +96,38 @@ namespace RedBadger.Xpf.Presentation.Controls
             this.elementWithMouseCapture = null;
         }
 
-        private void OnNextMouseMoveInternal(MouseData mouseData)
+        protected override void OnNextMouseData(MouseData mouseData)
         {
             if (this.elementWithMouseCapture != null)
             {
-                this.elementWithMouseCapture.OnNextMouseMove(mouseData);
+                this.elementWithMouseCapture.MouseData.OnNext(mouseData);
             }
             else
             {
-                this.OnNextMouseMove(mouseData);
+                if (!OnNextMouseDataFindChild(this, mouseData))
+                {
+                    OnNextMouseDataFindElement(this, mouseData);
+                }
             }
         }
 
-        private void OnNextMouseUpDownInternal(MouseData mouseData)
+        private static bool OnNextMouseDataFindChild(UIElement element, MouseData mouseData)
         {
-            if (this.elementWithMouseCapture != null)
+            return
+                element.GetChildren().OfType<UIElement>().Reverse().Where(
+                    child => !OnNextMouseDataFindChild(child, mouseData)).Any(
+                        child => OnNextMouseDataFindElement(child, mouseData));
+        }
+
+        private static bool OnNextMouseDataFindElement(UIElement element, MouseData mouseData)
+        {
+            if (element is IInputElement && element.HitTest(mouseData.Point))
             {
-                this.elementWithMouseCapture.OnNextMouseUpDown(mouseData);
+                element.MouseData.OnNext(mouseData);
+                return true;
             }
-            else
-            {
-                this.OnNextMouseUpDown(mouseData);
-            }
+
+            return false;
         }
     }
 }
