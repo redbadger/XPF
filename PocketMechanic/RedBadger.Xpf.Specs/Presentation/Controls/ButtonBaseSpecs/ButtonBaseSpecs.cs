@@ -35,7 +35,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 
         protected static Mock<Renderer> Renderer;
 
-        protected static RootElement RootElement;
+        protected static Mock<RootElement> RootElement;
 
         protected static Rect ViewPort = new Rect(0, 0, 100, 100);
 
@@ -50,10 +50,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
                 InputManager = new Mock<IInputManager>();
                 InputManager.SetupGet(inputManager => inputManager.MouseData).Returns(MouseData);
 
-                RootElement = new RootElement(ViewPort, Renderer.Object, InputManager.Object);
+                RootElement = new Mock<RootElement>(ViewPort, Renderer.Object, InputManager.Object) { CallBase = true };
 
                 ButtonBase = new Mock<ButtonBase> { CallBase = true };
-                RootElement.Content = ButtonBase.Object;
+                RootElement.Object.Content = ButtonBase.Object;
             };
     }
 
@@ -63,7 +63,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
     {
         private Because of = () =>
             {
-                RootElement.Update();
+                RootElement.Object.Update();
                 MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
             };
 
@@ -76,7 +76,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
     {
         private Because of = () =>
             {
-                RootElement.Update();
+                RootElement.Object.Update();
                 MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(101, 101)));
             };
 
@@ -91,7 +91,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 
         private Because of = () =>
             {
-                RootElement.Update();
+                RootElement.Object.Update();
                 MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
             };
 
@@ -113,7 +113,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 
         private Because of = () =>
             {
-                RootElement.Update();
+                RootElement.Object.Update();
                 MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(0, 0)));
             };
 
@@ -138,7 +138,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 
         private Because of = () =>
             {
-                RootElement.Update();
+                RootElement.Object.Update();
                 MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(0, 0)));
             };
 
@@ -161,7 +161,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 
         private Because of = () =>
             {
-                RootElement.Update();
+                RootElement.Object.Update();
                 MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
                 MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(0, 0)));
             };
@@ -183,7 +183,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 
         private Because of = () =>
             {
-                RootElement.Update();
+                RootElement.Object.Update();
                 MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
                 MouseData.OnNext(new MouseData(MouseAction.Move, new Point(101, 101)));
                 MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(101, 101)));
@@ -217,7 +217,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 
         private Because of = () =>
             {
-                RootElement.Update();
+                RootElement.Object.Update();
                 state1 = ButtonBase.Object.IsPressed;
                 MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
                 state2 = ButtonBase.Object.IsPressed;

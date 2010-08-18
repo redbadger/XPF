@@ -9,7 +9,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonDownSpecs
+namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
 {
     using System.Collections.Generic;
     using System.Windows;
@@ -79,26 +79,26 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonDownSpecs
     }
 
     [Subject("Mouse Input - Left Button Down")]
-    public class when_a_stack_of_elements_on_top_of_each_other_are_placed_inside_a_root_element :
+    public class when_mouse_left_button_is_pressed_over_the_top_of_a_Z_ordered_stack_of_elements :
         a_RootElement_with_input_manager
     {
-        private static Mock<ButtonBase> button1;
-
-        private static Mock<ButtonBase> button2;
+        private static Mock<ButtonBase> bottomButton;
 
         private static Mock<Grid> grid;
+
+        private static Mock<ButtonBase> topButton;
 
         private Establish context = () =>
             {
                 grid = new Mock<Grid> { CallBase = true };
 
-                button1 = new Mock<ButtonBase> { CallBase = true };
-                button1.Object.Width = button1.Object.Height = 100;
-                grid.Object.Children.Add(button1.Object);
+                bottomButton = new Mock<ButtonBase> { CallBase = true };
+                bottomButton.Object.Width = bottomButton.Object.Height = 100;
+                grid.Object.Children.Add(bottomButton.Object);
 
-                button2 = new Mock<ButtonBase> { CallBase = true };
-                button2.Object.Width = button2.Object.Height = 100;
-                grid.Object.Children.Add(button2.Object);
+                topButton = new Mock<ButtonBase> { CallBase = true };
+                topButton.Object.Width = topButton.Object.Height = 100;
+                grid.Object.Children.Add(topButton.Object);
 
                 RootElement.Content = grid.Object;
             };
@@ -110,32 +110,32 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonDownSpecs
             };
 
         private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
-            () => button1.Protected().Verify(OnNextMouseData, Times.Never(), ItExpr.IsAny<MouseData>());
+            () => bottomButton.Protected().Verify(OnNextMouseData, Times.Never(), ItExpr.IsAny<MouseData>());
 
         private It should_raise_left_mouse_button_down_event_on_the_top_most_element =
             () =>
-            button2.Protected().Verify(
+            topButton.Protected().Verify(
                 OnNextMouseData, Times.Once(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonDown));
     }
 
     [Subject("Mouse Input - Left Button Down")]
-    public class when_a_stack_of_elements_inside_each_other_are_placed_inside_a_root_element :
+    public class when_mouse_left_button_is_pressed_over_the_top_of_a_nested_stack_of_elements :
         a_RootElement_with_input_manager
     {
-        private static Mock<ButtonBase> button1;
+        private static Mock<ButtonBase> innerButton;
 
-        private static Mock<ButtonBase> button2;
+        private static Mock<ButtonBase> outerButton;
 
         private Establish context = () =>
             {
-                button1 = new Mock<ButtonBase> { CallBase = true };
-                button1.Object.Width = button1.Object.Height = 100;
+                outerButton = new Mock<ButtonBase> { CallBase = true };
+                outerButton.Object.Width = outerButton.Object.Height = 100;
 
-                button2 = new Mock<ButtonBase> { CallBase = true };
-                button2.Object.Width = button2.Object.Height = 100;
+                innerButton = new Mock<ButtonBase> { CallBase = true };
+                innerButton.Object.Width = innerButton.Object.Height = 100;
 
-                button1.Object.Content = button2.Object;
-                RootElement.Content = button1.Object;
+                outerButton.Object.Content = innerButton.Object;
+                RootElement.Content = outerButton.Object;
             };
 
         private Because of = () =>
@@ -146,38 +146,38 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonDownSpecs
 
         private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
             () =>
-            button1.Protected().Verify(
+            outerButton.Protected().Verify(
                 OnNextMouseData, Times.Never(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonDown));
 
         private It should_raise_left_mouse_button_down_event_on_the_top_most_element =
             () =>
-            button2.Protected().Verify(
+            innerButton.Protected().Verify(
                 OnNextMouseData, Times.Once(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonDown));
     }
 
     [Subject("Mouse Input - Left Button Down")]
-    public class when_a_stack_of_elements_after_each_other_are_placed_inside_a_root_element :
+    public class when_mouse_left_button_is_pressed_over_the_first_of_a_vertical_stack_of_elements :
         a_RootElement_with_input_manager
     {
-        private static Mock<ButtonBase> button1;
-
-        private static Mock<ButtonBase> button2;
+        private static Mock<ButtonBase> bottomButton;
 
         private static Mock<StackPanel> stackPanel;
+
+        private static Mock<ButtonBase> topButton;
 
         private Establish context = () =>
             {
                 stackPanel = new Mock<StackPanel> { CallBase = true };
 
-                button1 = new Mock<ButtonBase> { CallBase = true };
-                button1.Object.Width = 100;
-                button1.Object.Height = 50;
-                stackPanel.Object.Children.Add(button1.Object);
+                topButton = new Mock<ButtonBase> { CallBase = true };
+                topButton.Object.Width = 100;
+                topButton.Object.Height = 50;
+                stackPanel.Object.Children.Add(topButton.Object);
 
-                button2 = new Mock<ButtonBase> { CallBase = true };
-                button2.Object.Width = 100;
-                button2.Object.Height = 50;
-                stackPanel.Object.Children.Add(button2.Object);
+                bottomButton = new Mock<ButtonBase> { CallBase = true };
+                bottomButton.Object.Width = 100;
+                bottomButton.Object.Height = 50;
+                stackPanel.Object.Children.Add(bottomButton.Object);
 
                 RootElement.Content = stackPanel.Object;
             };
@@ -190,12 +190,12 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs.LeftButtonDownSpecs
 
         private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
             () =>
-            button2.Protected().Verify(
+            bottomButton.Protected().Verify(
                 OnNextMouseData, Times.Never(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonDown));
 
         private It should_raise_left_mouse_button_down_event_on_the_top_most_element =
             () =>
-            button1.Protected().Verify(
+            topButton.Protected().Verify(
                 OnNextMouseData, Times.Once(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonDown));
     }
 }

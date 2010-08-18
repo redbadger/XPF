@@ -8,7 +8,6 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Presentation.Media;
 
     using IInputElement = RedBadger.Xpf.Presentation.Input.IInputElement;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public class RootElement : ContentControl, IRootElement
     {
@@ -111,15 +110,15 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private static bool OnNextMouseDataFindChild(UIElement element, MouseData mouseData)
+        private static bool OnNextMouseDataFindChild(IElement element, MouseData mouseData)
         {
             return
-                element.GetChildren().OfType<UIElement>().Reverse().Where(
+                element.GetChildren().Reverse().Where(
                     child => !OnNextMouseDataFindChild(child, mouseData)).Any(
                         child => OnNextMouseDataFindElement(child, mouseData));
         }
 
-        private static bool OnNextMouseDataFindElement(UIElement element, MouseData mouseData)
+        private static bool OnNextMouseDataFindElement(IElement element, MouseData mouseData)
         {
             if (element is IInputElement && element.HitTest(mouseData.Point))
             {

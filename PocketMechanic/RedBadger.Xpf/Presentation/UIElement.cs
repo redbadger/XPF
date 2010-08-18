@@ -459,7 +459,7 @@
             return Size.Empty;
         }
 
-        protected virtual void OnNextMouseData(MouseData obj)
+        protected virtual void OnNextMouseData(MouseData data)
         {
         }
 

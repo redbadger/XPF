@@ -81,8 +81,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Input\MouseInputSpecs\LeftButtonUpSpecs\MouseInputSpecs.cs" />
-    <Compile Include="Input\MouseInputSpecs\LeftButtonDownSpecs\MouseInputSpecs.cs" />
+    <Compile Include="Input\MouseInputSpecs\MouseInputSpecs.cs" />
     <Compile Include="Presentation\BindingExpressionSpecs\BindingClasses.cs" />
     <Compile Include="Presentation\BindingExpressionSpecs\BindingExpressionSpecs.cs" />
     <Compile Include="Presentation\Controls\BorderSpecs\BorderSpecs.cs" />
