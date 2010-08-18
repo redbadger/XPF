@@ -41,6 +41,11 @@
                     new MouseData(MouseAction.LeftButtonUp, new Point(currentState.X, currentState.Y)));
             }
 
+            if (currentState.X != this.previousState.X || currentState.Y != this.previousState.Y)
+            {
+                this.mouseData.OnNext(new MouseData(MouseAction.Move, new Point(currentState.X, currentState.Y)));
+            }
+
             this.previousState = currentState;
         }
     }

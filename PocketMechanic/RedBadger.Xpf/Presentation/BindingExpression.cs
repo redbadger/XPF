@@ -109,7 +109,7 @@ namespace RedBadger.Xpf.Presentation
 
             public static void SetValue(DependencyObject dependencyObject, XpfDependencyProperty property, object value)
             {
-                if (value != null && property.PropertyType != null && value.GetType() != property.PropertyType)
+                if (value != null && property.PropertyType != null && !property.PropertyType.IsAssignableFrom(value.GetType()))
                 {
                     value = Convert.ChangeType(value, property.PropertyType, CultureInfo.InvariantCulture);
                 }

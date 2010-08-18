@@ -15,13 +15,16 @@ namespace RedBadger.Xpf.Presentation.Controls
             "Background", typeof(Brush), typeof(Border), new PropertyMetadata(null));
 
         public static readonly XpfDependencyProperty BorderBrushProperty = XpfDependencyProperty.Register(
-            "BorderBrush", typeof(Brush), typeof(Border), new PropertyMetadata(null));
+            "BorderBrush", 
+            typeof(Brush), 
+            typeof(Border), 
+            new PropertyMetadata(null, (o, args) => ((IElement)o).InvalidateArrange()));
 
         public static readonly XpfDependencyProperty BorderThicknessProperty =
             XpfDependencyProperty.Register(
                 "BorderThickness", 
                 typeof(Thickness), 
-                typeof(Border),
+                typeof(Border), 
                 new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         public static readonly XpfDependencyProperty ChildProperty = XpfDependencyProperty.Register(
@@ -30,7 +33,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         public static readonly XpfDependencyProperty PaddingProperty = XpfDependencyProperty.Register(
             "Padding", 
             typeof(Thickness), 
-            typeof(Border),
+            typeof(Border), 
             new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
 
         private readonly IList<Rect> borders = new List<Rect>();
@@ -104,7 +107,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            UIElement child = this.Child;
+            var child = this.Child;
 
             if (child != null)
             {
@@ -128,7 +131,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             var borderThicknessAndPaddingSize = new Size(
                 borderSize.Width + paddingSize.Width, borderSize.Height + paddingSize.Height);
 
-            UIElement child = this.Child;
+            var child = this.Child;
             if (child != null)
             {
                 var childConstraint = new Size(

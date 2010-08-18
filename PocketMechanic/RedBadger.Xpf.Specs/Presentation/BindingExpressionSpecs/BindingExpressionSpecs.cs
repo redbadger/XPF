@@ -12,8 +12,8 @@
 namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
 {
     using System;
-    using System.ComponentModel;
     using System.Windows.Data;
+    using System.Windows.Media;
 
     using Machine.Specifications;
 
@@ -25,37 +25,7 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
 
     using BindingExpression = RedBadger.Xpf.Presentation.BindingExpression;
     using It = Machine.Specifications.It;
-    using PropertyChangedEventArgs = System.ComponentModel.PropertyChangedEventArgs;
-
-    public class MyBindingObject : INotifyPropertyChanged
-    {
-        private double myWidth;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public double MyWidth
-        {
-            get
-            {
-                return this.myWidth;
-            }
-
-            set
-            {
-                this.myWidth = value;
-                this.InvokePropertyChanged(new PropertyChangedEventArgs("MyWidth"));
-            }
-        }
-
-        public void InvokePropertyChanged(PropertyChangedEventArgs e)
-        {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-    }
+    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     [Subject(typeof(BindingExpression), "Binding")]
     public class when_the_width_of_a_textblock_is_set_through_a_binding
@@ -205,9 +175,28 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
             () =>
             exception =
             Catch.Exception(
-                () => textBlock.Object.SetBinding(UIElement.WidthProperty, new Binding { Mode = BindingMode.OneWayToSource }));
+                () =>
+                textBlock.Object.SetBinding(UIElement.WidthProperty, new Binding { Mode = BindingMode.OneWayToSource }));
 
         private It should_throw_an_exception = () => exception.ShouldBeOfType<NotSupportedException>();
     }
 
+    [Subject(typeof(BindingExpression), "Type Conversion")]
+    public class when_the_property_value_is_of_a_type_derived_from_the_property_type
+    {
+        private Establish context = () =>
+            {
+                myBindingObject = new BorderBrushBindingObject();
+                border = new Border();
+                border.SetBinding(Border.BorderBrushProperty, new Binding("Brush") { Source = myBindingObject });
+            };
+
+        private Because of = () => myBindingObject.Brush = new SolidColorBrush(Colors.AliceBlue);
+
+        private It should_bind_the_value_of_the_derived_type = () => border.BorderBrush.ShouldBeOfType<SolidColorBrush>();
+
+        private static BorderBrushBindingObject myBindingObject;
+
+        private static Border border;
+    }
 }

@@ -14,7 +14,6 @@ namespace RedBadger.PocketMechanic.Phone
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
@@ -55,14 +54,15 @@ namespace RedBadger.PocketMechanic.Phone
         protected override void LoadContent()
         {
             this.spriteFont = this.Game.Content.Load<SpriteFont>("SpriteFont");
-            var badger = this.Game.Content.Load<Texture2D>("badger");
+            var badger2 = new XnaImage(new Texture2DAdapter(this.Game.Content.Load<Texture2D>("badger2")));
+            var badger3 = new XnaImage(new Texture2DAdapter(this.Game.Content.Load<Texture2D>("badger3")));
             this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
             var spriteFontAdapter = new SpriteFontAdapter(this.spriteFont);
 
             var grid = new Grid();
             var column1 = new ColumnDefinition();
             grid.ColumnDefinitions.Add(column1);
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(200) });
             grid.RowDefinitions.Add(new RowDefinition());
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(200) });
 
@@ -81,12 +81,12 @@ namespace RedBadger.PocketMechanic.Phone
             grid.Children.Add(border);
 
             var sb = new Storyboard();
-            var doubleAnimation = new DoubleAnimation()
+            var doubleAnimation = new DoubleAnimation
                 {
-                    Duration = new Duration(TimeSpan.FromSeconds(4)),
-                    From = 30,
-                    To = 200,
-                    RepeatBehavior = RepeatBehavior.Forever,
+                    Duration = new Duration(TimeSpan.FromSeconds(4)), 
+                    From = 30, 
+                    To = 200, 
+                    RepeatBehavior = RepeatBehavior.Forever, 
                     AutoReverse = true
                 };
             Storyboard.SetTarget(doubleAnimation, textBlock1);
@@ -100,7 +100,7 @@ namespace RedBadger.PocketMechanic.Phone
 
             this.textBlock2 = new TextBlock(spriteFontAdapter) { Text = "Textblock 2" };
             this.textBlock2.SetBinding(
-                TextBlock.TextProperty,
+                TextBlock.TextProperty, 
                 new Binding("MyWidth") { Source = this.myBindingObject, Mode = BindingMode.TwoWay });
 
             // this.myBindingObject.MyWidth = "100";
@@ -129,19 +129,29 @@ namespace RedBadger.PocketMechanic.Phone
 
             var image = new Image
                 {
-                    Source = new XnaImage(new Texture2DAdapter(badger)),
-                    Stretch = Stretch.Fill,
-                    Margin = new Thickness(10)
+                    Source = badger2, 
+                    Stretch = Stretch.Fill, 
+                    StretchDirection = StretchDirection.DownOnly, 
                 };
-            Grid.SetColumn(image, 1);
-            Grid.SetRow(image, 1);
-            grid.Children.Add(image);
+
+            var imageBorder = new Border { Child = image, BorderThickness = new Thickness(10) };
+            var button = new Button { Content = imageBorder };
+            var borderBrushConverter = new BorderBrushConverter();
+            imageBorder.SetBinding(Border.BorderBrushProperty, new Binding("Brush") { Source = borderBrushConverter });
+            button.SetBinding(
+                ButtonBase.IsPressedProperty,
+                new Binding("IsPressed") { Source = borderBrushConverter, Mode = BindingMode.TwoWay });
+            button.Click += (sender, args) => image.Source = image.Source == badger2 ? badger3 : badger2;
+            Grid.SetColumn(button, 1);
+            Grid.SetRow(button, 1);
+            grid.Children.Add(button);
 
             /*
             var textBlock5 = new TextBlock(spriteFontAdapter) { Text = "TextBlock 5!" };
             Grid.SetColumn(textBlock5, 0);
             Grid.SetRow(textBlock5, 0);
             grid.Children.Add(textBlock5);
+             * button
 */
             var viewPort = new Rect(
                 this.GraphicsDevice.Viewport.X, 
@@ -149,16 +159,63 @@ namespace RedBadger.PocketMechanic.Phone
                 this.GraphicsDevice.Viewport.Width, 
                 this.GraphicsDevice.Viewport.Height);
 
-            this.rootElement =
-                new RootElement(viewPort, new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice)), new InputManager())
-                    {
-                       Content = grid 
-                    };
+            this.rootElement = new RootElement(
+                viewPort, 
+                new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice)), 
+                new InputManager()) {
+                                       Content = grid 
+                                    };
             var clock = new Clock();
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
                 l => this.textBlock2.Text = clock.Time);
 
             // GC.Collect();
+        }
+
+        public class BorderBrushConverter : INotifyPropertyChanged
+        {
+            private SolidColorBrush brush;
+
+            private bool isPressed;
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            public SolidColorBrush Brush
+            {
+                get
+                {
+                    return this.brush;
+                }
+
+                set
+                {
+                    this.brush = value;
+                    this.InvokePropertyChanged(new PropertyChangedEventArgs("Brush"));
+                }
+            }
+
+            public bool IsPressed
+            {
+                get
+                {
+                    return this.isPressed;
+                }
+
+                set
+                {
+                    this.isPressed = value;
+                    this.Brush = this.isPressed ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Green);
+                }
+            }
+
+            public void InvokePropertyChanged(PropertyChangedEventArgs e)
+            {
+                var handler = this.PropertyChanged;
+                if (handler != null)
+                {
+                    handler(this, e);
+                }
+            }
         }
 
         public class MyBindingObject : INotifyPropertyChanged
@@ -183,7 +240,7 @@ namespace RedBadger.PocketMechanic.Phone
 
             public void InvokePropertyChanged(PropertyChangedEventArgs e)
             {
-                PropertyChangedEventHandler handler = this.PropertyChanged;
+                var handler = this.PropertyChanged;
                 if (handler != null)
                 {
                     handler(this, e);
