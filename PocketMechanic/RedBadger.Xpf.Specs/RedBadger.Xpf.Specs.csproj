@@ -81,6 +81,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\MSpecExtensions.cs" />
     <Compile Include="Input\MouseInputSpecs\MouseInputSpecs.cs" />
     <Compile Include="Presentation\BindingExpressionSpecs\BindingClasses.cs" />
     <Compile Include="Presentation\BindingExpressionSpecs\BindingExpressionSpecs.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Presentation\Controls\GridSpecs\Contexts.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\MeasureSpecs.cs" />
     <Compile Include="Presentation\Controls\RootElementSpecs\RootElementSpecs.cs" />
+    <Compile Include="Presentation\Controls\ScrollContentPresenterSpecs\ScrollContentPresenterSpecs.cs" />
     <Compile Include="Presentation\Controls\ScrollViewerSpecs.cs" />
     <Compile Include="Presentation\Controls\StackPanelSpecs\StackPanelSpecs.cs" />
     <Compile Include="Presentation\Controls\TextBlockSpecs\TextBlockSpecs.cs" />

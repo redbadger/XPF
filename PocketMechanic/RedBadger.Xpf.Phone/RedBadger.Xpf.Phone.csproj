@@ -88,6 +88,9 @@
     <Compile Include="..\RedBadger.Xpf\Input\InputManager.cs">
       <Link>Input\InputManager.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\Controls\ScrollData.cs">
+      <Link>Internal\Controls\ScrollData.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\DoubleExtensions.cs">
       <Link>Internal\DoubleExtensions.cs</Link>
     </Compile>

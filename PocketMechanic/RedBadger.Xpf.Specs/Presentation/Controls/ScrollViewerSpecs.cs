@@ -14,40 +14,41 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     using System.Collections.Generic;
     using System.Windows;
 
-    using Moq;
-
     using Machine.Specifications;
 
+    using Moq;
+
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
+    using RedBadger.Xpf.Specs.Extensions;
 
     using It = Machine.Specifications.It;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
     using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public abstract class a_ScrollViewer
     {
-        protected static ScrollViewer ScrollViewer;
+        protected static Subject<Gesture> Gestures;
 
         protected static Mock<IInputManager> InputManager;
-
-        protected static Subject<Gesture> Gestures;
 
         protected static Mock<Renderer> Renderer;
 
         protected static Mock<RootElement> RootElement;
+
+        protected static ScrollViewer ScrollViewer;
 
         protected static Rect ViewPort = new Rect(0, 0, 100, 100);
 
         private Establish context = () =>
             {
                 Renderer = new Mock<Renderer>(new Mock<ISpriteBatch>().Object, new Mock<IPrimitivesService>().Object)
-                {
-                    CallBase = true
-                };
+                    {
+                       CallBase = true 
+                    };
 
                 Gestures = new Subject<Gesture>();
                 InputManager = new Mock<IInputManager>();
@@ -63,25 +64,25 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
     [Subject(typeof(ScrollViewer), "Content")]
     public class when_content_is_set_to_a_control_that_doesnt_implement_IScrollInfo : a_ScrollViewer
     {
-        Establish context = () => content = new Mock<IElement>();
+        private static Mock<IElement> content;
+
+        private Establish context = () => content = new Mock<IElement>();
 
         private Because of = () => ScrollViewer.Content = content.Object;
-
-        private It should_use_a_ScrollContentPresenter =
-            () => ScrollViewer.Content.ShouldBeOfType<ScrollContentPresenter>();
 
         private It should_set_the_content_of_the_ScrollContentPresenter_to_the_control =
             () => ((ScrollContentPresenter)ScrollViewer.Content).Content.ShouldBeTheSameAs(content.Object);
 
-        private static Mock<IElement> content;
+        private It should_use_a_ScrollContentPresenter =
+            () => ScrollViewer.Content.ShouldBeOfType<ScrollContentPresenter>();
     }
 
     [Subject(typeof(ScrollViewer), "Mouse Capture")]
-    public class when_a_free_drag_gesture_is_started : a_ScrollViewer
+    public class when_a_left_mouse_button_down_gesture_is_received : a_ScrollViewer
     {
         private Establish context = () => RootElement.Object.Update();
 
-        private Because of = () => Gestures.OnNext(new Gesture(GestureType.FreeDrag, new Point(), new Vector()));
+        private Because of = () => Gestures.OnNext(new Gesture(GestureType.LeftButtonDown, new Point(), new Vector()));
 
         private It should_capture_the_mouse = () => ScrollViewer.IsMouseCaptured.ShouldBeTrue();
     }
@@ -98,5 +99,85 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
         private Because of = () => Gestures.OnNext(new Gesture(GestureType.LeftButtonUp, new Point(), new Vector()));
 
         private It should_release_mouse_capture = () => ScrollViewer.IsMouseCaptured.ShouldBeFalse();
+    }
+
+    [Subject(typeof(ScrollViewer), "Scrolling")]
+    public class when_horizontal_and_vertical_scrolling_is_enabled : a_ScrollViewer
+    {
+        private static Mock<UIElement> content;
+
+        private Establish context = () =>
+            {
+                content = new Mock<UIElement> { CallBase = true };
+                content.Object.Width = 200;
+                content.Object.Height = 200;
+
+                ScrollViewer.Content = content.Object;
+            };
+
+        private Because of = () => RootElement.Object.Update();
+
+        private It should_allow_the_contents_height_to_exceed_the_height_of_the_viewport =
+            () => ScrollViewer.Extent.Height.ShouldBeGreaterThan(ScrollViewer.Viewport.Height);
+
+        private It should_allow_the_contents_width_to_exceed_the_width_of_the_viewport =
+            () => ScrollViewer.Extent.Width.ShouldBeGreaterThan(ScrollViewer.Viewport.Width);
+    }
+
+    [Subject(typeof(ScrollViewer), "Scrolling")]
+    public class when_horizontal_and_vertical_scrolling_is_disabled : a_ScrollViewer
+    {
+        private static Mock<UIElement> content;
+
+        private Establish context = () =>
+            {
+                content = new Mock<UIElement> { CallBase = true };
+                content.Object.Width = 200;
+                content.Object.Height = 200;
+
+                ScrollViewer.Content = content.Object;
+            };
+
+        private Because of = () =>
+            {
+                ScrollViewer.CanHorizontallyScroll = false;
+                ScrollViewer.CanVerticallyScroll = false;
+                RootElement.Object.Update();
+            };
+
+        private It should_constrain_the_contents_height_to_be_less_than_or_equal_to_the_height_of_the_viewport =
+            () => ScrollViewer.Extent.Height.ShouldBeLessThanOrEqualTo(ScrollViewer.Viewport.Height);
+
+        private It should_constrain_the_contents_width_to_be_less_than_or_equal_to_the_width_of_the_viewport =
+            () => ScrollViewer.Extent.Width.ShouldBeLessThanOrEqualTo(ScrollViewer.Viewport.Width);
+    }
+
+    [Subject(typeof(ScrollViewer), "Scrolling")]
+    public class when_free_drag_gestures_are_received : a_ScrollViewer
+    {
+        private static readonly Size extent = new Size(200, 200);
+
+        private static readonly Size viewport = new Size(100, 100);
+
+        private static Mock<ScrollContentPresenter> scrollInfo;
+
+        private Establish context = () =>
+            {
+                scrollInfo = new Mock<ScrollContentPresenter> { CallBase = true };
+                ScrollViewer.Content = scrollInfo.Object;
+
+                RootElement.Object.Update();
+            };
+
+        private Because of = () =>
+            {
+                ScrollViewer.CaptureMouse();
+                Gestures.OnNext(new Gesture(GestureType.FreeDrag, new Point(), new Vector(-20, -30)));
+                Gestures.OnNext(new Gesture(GestureType.FreeDrag, new Point(), new Vector(-5, 3)));
+            };
+
+        private It should_the_scroll_content_horizontally = () => scrollInfo.Object.Offset.X.ShouldEqual(25);
+
+        private It should_the_scroll_content_vertically = () => scrollInfo.Object.Offset.Y.ShouldEqual(27);
     }
 }
