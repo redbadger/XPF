@@ -105,9 +105,8 @@
     <Compile Include="Presentation\Controls\Orientation.cs" />
     <Compile Include="Presentation\IDependencyObject.cs" />
     <Compile Include="Input\InputManager.cs" />
-    <Compile Include="Presentation\Input\MouseAction.cs" />
-    <Compile Include="Presentation\Input\MouseButtonEventArgs.cs" />
-    <Compile Include="Presentation\Input\MouseData.cs" />
+    <Compile Include="Presentation\Input\GestureType.cs" />
+    <Compile Include="Presentation\Input\Gesture.cs" />
     <Compile Include="Presentation\Vector.cs" />
     <Compile Include="Presentation\IRootElement.cs" />
     <Compile Include="Presentation\Media\Brush.cs" />

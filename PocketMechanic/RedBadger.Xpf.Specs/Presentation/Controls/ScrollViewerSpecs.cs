@@ -11,20 +11,53 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls
 {
+    using System.Collections.Generic;
+    using System.Windows;
+
     using Moq;
 
     using Machine.Specifications;
 
+    using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Input;
+    using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
+    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public abstract class a_ScrollViewer
     {
         protected static ScrollViewer ScrollViewer;
 
-        private Establish context = () => ScrollViewer = new ScrollViewer();
+        protected static Mock<IInputManager> InputManager;
+
+        protected static Subject<Gesture> Gestures;
+
+        protected static Mock<Renderer> Renderer;
+
+        protected static Mock<RootElement> RootElement;
+
+        protected static Rect ViewPort = new Rect(0, 0, 100, 100);
+
+        private Establish context = () =>
+            {
+                Renderer = new Mock<Renderer>(new Mock<ISpriteBatch>().Object, new Mock<IPrimitivesService>().Object)
+                {
+                    CallBase = true
+                };
+
+                Gestures = new Subject<Gesture>();
+                InputManager = new Mock<IInputManager>();
+                InputManager.SetupGet(inputManager => inputManager.Gestures).Returns(Gestures);
+
+                RootElement = new Mock<RootElement>(ViewPort, Renderer.Object, InputManager.Object) { CallBase = true };
+
+                ScrollViewer = new ScrollViewer();
+                RootElement.Object.Content = ScrollViewer;
+            };
     }
 
     [Subject(typeof(ScrollViewer), "Content")]
@@ -41,5 +74,29 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls
             () => ((ScrollContentPresenter)ScrollViewer.Content).Content.ShouldBeTheSameAs(content.Object);
 
         private static Mock<IElement> content;
+    }
+
+    [Subject(typeof(ScrollViewer), "Mouse Capture")]
+    public class when_a_free_drag_gesture_is_started : a_ScrollViewer
+    {
+        private Establish context = () => RootElement.Object.Update();
+
+        private Because of = () => Gestures.OnNext(new Gesture(GestureType.FreeDrag, new Point(), new Vector()));
+
+        private It should_capture_the_mouse = () => ScrollViewer.IsMouseCaptured.ShouldBeTrue();
+    }
+
+    [Subject(typeof(ScrollViewer), "Mouse Capture")]
+    public class when_a_mouse_button_gesture_is_received_the_mouse_is_captured : a_ScrollViewer
+    {
+        private Establish context = () =>
+            {
+                ScrollViewer.CaptureMouse();
+                RootElement.Object.Update();
+            };
+
+        private Because of = () => Gestures.OnNext(new Gesture(GestureType.LeftButtonUp, new Point(), new Vector()));
+
+        private It should_release_mouse_capture = () => ScrollViewer.IsMouseCaptured.ShouldBeFalse();
     }
 }

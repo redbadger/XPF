@@ -4,7 +4,7 @@
 
     public interface IInputManager
     {
-        IObservable<MouseData> MouseData { get; }
+        IObservable<Gesture> Gestures { get; }
 
         void Update();
     }

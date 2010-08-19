@@ -32,7 +32,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 
         protected static Mock<IInputManager> InputManager;
 
-        protected static Subject<MouseData> MouseData;
+        protected static Subject<Gesture> MouseData;
 
         protected static Mock<Renderer> Renderer;
 
@@ -47,9 +47,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
                        CallBase = true 
                     };
 
-                MouseData = new Subject<MouseData>();
+                MouseData = new Subject<Gesture>();
                 InputManager = new Mock<IInputManager>();
-                InputManager.SetupGet(inputManager => inputManager.MouseData).Returns(MouseData);
+                InputManager.SetupGet(inputManager => inputManager.Gestures).Returns(MouseData);
 
                 RootElement = new Mock<RootElement>(ViewPort, Renderer.Object, InputManager.Object) { CallBase = true };
 
@@ -62,41 +62,38 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
     public class when_the_left_mouse_button_is_pressed_within_the_control_boundary :
         a_ButtonBase_inside_a_RootElement_with_input_manager
     {
-        private Because of = () =>
-            {
-                RootElement.Object.Update();
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
-            };
 
-        private It should_set_that_the_button_is_pressed = () => ButtonBase.Object.IsPressed.ShouldBeTrue();
+        private Establish context = () => RootElement.Object.Update();
+
+        private Because of = () => MouseData.OnNext(new Gesture(GestureType.LeftButtonDown, new Point(0, 0)));
+
+        private It should_be_pressed = () => ButtonBase.Object.IsPressed.ShouldBeTrue();
     }
 
     [Subject(typeof(ButtonBase), "Left mouse button down")]
     public class when_the_left_mouse_button_is_pressed_outside_the_control_boundary :
         a_ButtonBase_inside_a_RootElement_with_input_manager
     {
-        private Because of = () =>
-            {
-                RootElement.Object.Update();
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(101, 101)));
-            };
+        private Establish context = () => RootElement.Object.Update();
 
-        private It should_not_set_that_the_button_is_pressed = () => ButtonBase.Object.IsPressed.ShouldBeFalse();
+        private Because of = () => MouseData.OnNext(new Gesture(GestureType.LeftButtonDown, new Point(101, 101)));
+
+        private It should_not_be_pressed = () => ButtonBase.Object.IsPressed.ShouldBeFalse();
     }
 
     [Subject(typeof(ButtonBase), "Disabled")]
     public class when_the_left_mouse_button_is_pressed_and_the_control_is_disabled :
         a_ButtonBase_inside_a_RootElement_with_input_manager
     {
-        private Establish context = () => ButtonBase.Object.IsEnabled = false;
-
-        private Because of = () =>
+        private Establish context = () =>
             {
+                ButtonBase.Object.IsEnabled = false;
                 RootElement.Object.Update();
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
             };
 
-        private It should_not_set_that_the_button_is_pressed = () => ButtonBase.Object.IsPressed.ShouldBeFalse();
+        private Because of = () => MouseData.OnNext(new Gesture(GestureType.LeftButtonDown, new Point(0, 0)));
+
+        private It should_not_be_pressed = () => ButtonBase.Object.IsPressed.ShouldBeFalse();
     }
 
     [Subject(typeof(ButtonBase), "Click")]
@@ -110,17 +107,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
                 ButtonBase.Object.IsPressed = true;
                 wasClicked = false;
                 ButtonBase.Object.Click += (sender, args) => wasClicked = true;
+                RootElement.Object.Update();
             };
 
-        private Because of = () =>
-            {
-                RootElement.Object.Update();
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(0, 0)));
-            };
+        private Because of = () => MouseData.OnNext(new Gesture(GestureType.LeftButtonUp, new Point(0, 0)));
 
         private It should_raise_the_click_event = () => wasClicked.ShouldBeTrue();
 
-        private It should_set_that_the_button_is_released = () => ButtonBase.Object.IsPressed.ShouldBeFalse();
+        private It should_not_be_pressed = () => ButtonBase.Object.IsPressed.ShouldBeFalse();
     }
 
     [Subject(typeof(ButtonBase), "Disabled")]
@@ -135,17 +129,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
                 ButtonBase.Object.IsPressed = true;
                 wasClicked = false;
                 ButtonBase.Object.Click += (sender, args) => wasClicked = true;
+                RootElement.Object.Update();
             };
 
-        private Because of = () =>
-            {
-                RootElement.Object.Update();
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(0, 0)));
-            };
+        private Because of = () => MouseData.OnNext(new Gesture(GestureType.LeftButtonUp, new Point(0, 0)));
 
         private It should_not_raise_the_click_event = () => wasClicked.ShouldBeFalse();
 
-        private It should_not_set_that_the_button_is_released = () => ButtonBase.Object.IsPressed.ShouldBeTrue();
+        private It should_be_pressed = () => ButtonBase.Object.IsPressed.ShouldBeTrue();
     }
 
     [Subject(typeof(ButtonBase), "Click")]
@@ -158,13 +149,13 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
             {
                 wasClicked = false;
                 ButtonBase.Object.Click += (sender, args) => wasClicked = true;
+                RootElement.Object.Update();
             };
 
         private Because of = () =>
             {
-                RootElement.Object.Update();
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(0, 0)));
+                MouseData.OnNext(new Gesture(GestureType.LeftButtonDown, new Point(0, 0)));
+                MouseData.OnNext(new Gesture(GestureType.LeftButtonUp, new Point(0, 0)));
             };
 
         private It should_raise_the_click_event = () => wasClicked.ShouldBeTrue();
@@ -180,14 +171,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
             {
                 wasClicked = false;
                 ButtonBase.Object.Click += (sender, args) => wasClicked = true;
+                RootElement.Object.Update();
             };
 
         private Because of = () =>
             {
-                RootElement.Object.Update();
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
-                MouseData.OnNext(new MouseData(MouseAction.Move, new Point(101, 101)));
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(101, 101)));
+                MouseData.OnNext(new Gesture(GestureType.LeftButtonDown, new Point(0, 0)));
+                MouseData.OnNext(new Gesture(GestureType.Move, new Point(101, 101)));
+                MouseData.OnNext(new Gesture(GestureType.LeftButtonUp, new Point(101, 101)));
             };
 
         private It should_not_raise_the_click_event = () => wasClicked.ShouldBeFalse();
@@ -214,19 +205,19 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
             {
                 state5 = false;
                 ButtonBase.Object.Click += (sender, args) => state5 = true;
+                RootElement.Object.Update();
             };
 
         private Because of = () =>
             {
-                RootElement.Object.Update();
                 state1 = ButtonBase.Object.IsPressed;
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(0, 0)));
+                MouseData.OnNext(new Gesture(GestureType.LeftButtonDown, new Point(0, 0)));
                 state2 = ButtonBase.Object.IsPressed;
-                MouseData.OnNext(new MouseData(MouseAction.Move, new Point(101, 101)));
+                MouseData.OnNext(new Gesture(GestureType.Move, new Point(101, 101)));
                 state3 = ButtonBase.Object.IsPressed;
-                MouseData.OnNext(new MouseData(MouseAction.Move, new Point(99, 99)));
+                MouseData.OnNext(new Gesture(GestureType.Move, new Point(99, 99)));
                 state4 = ButtonBase.Object.IsPressed;
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonUp, new Point(10, 10)));
+                MouseData.OnNext(new Gesture(GestureType.LeftButtonUp, new Point(10, 10)));
                 state6 = ButtonBase.Object.IsPressed;
             };
 

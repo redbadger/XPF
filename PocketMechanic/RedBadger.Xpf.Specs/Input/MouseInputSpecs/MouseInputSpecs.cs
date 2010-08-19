@@ -29,11 +29,11 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
 
     public abstract class a_RootElement_with_input_manager
     {
-        protected const string OnNextMouseData = "OnNextMouseData";
+        protected const string OnNextGesture = "OnNextGesture";
 
         protected static Mock<IInputManager> InputManager;
 
-        protected static Subject<MouseData> MouseData;
+        protected static Subject<Gesture> MouseData;
 
         protected static Mock<Renderer> Renderer;
 
@@ -48,9 +48,9 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
                        CallBase = true 
                     };
 
-                MouseData = new Subject<MouseData>();
+                MouseData = new Subject<Gesture>();
                 InputManager = new Mock<IInputManager>();
-                InputManager.SetupGet(inputManager => inputManager.MouseData).Returns(MouseData);
+                InputManager.SetupGet(inputManager => inputManager.Gestures).Returns(MouseData);
 
                 RootElement = new RootElement(ViewPort, Renderer.Object, InputManager.Object);
             };
@@ -70,13 +70,13 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
         private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(40, 50)));
+                MouseData.OnNext(new Gesture(GestureType.LeftButtonDown, new Point(40, 50)));
             };
 
         private It should_notify_the_button_that_the_left_mouse_was_pressed =
             () =>
             button.Protected().Verify(
-                OnNextMouseData, Times.Once(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonDown));
+                OnNextGesture, Times.Once(), ItExpr.Is<Gesture>(data => data.Type == GestureType.LeftButtonDown));
     }
 
     [Subject("Mouse Input - Left Button Down")]
@@ -107,16 +107,16 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
         private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(40, 50)));
+                MouseData.OnNext(new Gesture(GestureType.LeftButtonDown, new Point(40, 50)));
             };
 
         private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
-            () => bottomButton.Protected().Verify(OnNextMouseData, Times.Never(), ItExpr.IsAny<MouseData>());
+            () => bottomButton.Protected().Verify(OnNextGesture, Times.Never(), ItExpr.IsAny<Gesture>());
 
         private It should_raise_left_mouse_button_down_event_on_the_top_most_element =
             () =>
             topButton.Protected().Verify(
-                OnNextMouseData, Times.Once(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonDown));
+                OnNextGesture, Times.Once(), ItExpr.Is<Gesture>(data => data.Type == GestureType.LeftButtonDown));
     }
 
     [Subject("Mouse Input - Left Button Down")]
@@ -142,18 +142,18 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
         private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(40, 50)));
+                MouseData.OnNext(new Gesture(GestureType.LeftButtonDown, new Point(40, 50)));
             };
 
         private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
             () =>
             outerButton.Protected().Verify(
-                OnNextMouseData, Times.Never(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonDown));
+                OnNextGesture, Times.Never(), ItExpr.Is<Gesture>(data => data.Type == GestureType.LeftButtonDown));
 
         private It should_raise_left_mouse_button_down_event_on_the_top_most_element =
             () =>
             innerButton.Protected().Verify(
-                OnNextMouseData, Times.Once(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonDown));
+                OnNextGesture, Times.Once(), ItExpr.Is<Gesture>(data => data.Type == GestureType.LeftButtonDown));
     }
 
     [Subject("Mouse Input - Left Button Down")]
@@ -186,17 +186,17 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
         private Because of = () =>
             {
                 RootElement.Update();
-                MouseData.OnNext(new MouseData(MouseAction.LeftButtonDown, new Point(40, 50)));
+                MouseData.OnNext(new Gesture(GestureType.LeftButtonDown, new Point(40, 50)));
             };
 
         private It should_not_raise_left_mouse_button_down_event_on_the_bottom_most_element =
             () =>
             bottomButton.Protected().Verify(
-                OnNextMouseData, Times.Never(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonDown));
+                OnNextGesture, Times.Never(), ItExpr.Is<Gesture>(data => data.Type == GestureType.LeftButtonDown));
 
         private It should_raise_left_mouse_button_down_event_on_the_top_most_element =
             () =>
             topButton.Protected().Verify(
-                OnNextMouseData, Times.Once(), ItExpr.Is<MouseData>(data => data.Action == MouseAction.LeftButtonDown));
+                OnNextGesture, Times.Once(), ItExpr.Is<Gesture>(data => data.Type == GestureType.LeftButtonDown));
     }
 }

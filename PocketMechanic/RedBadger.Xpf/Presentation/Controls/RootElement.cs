@@ -37,7 +37,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
             if (this.inputManager != null)
             {
-                this.inputManager.MouseData.Subscribe(this.MouseData);
+                this.inputManager.Gestures.Subscribe(this.Gestures);
             }
         }
 
@@ -90,39 +90,41 @@ namespace RedBadger.Xpf.Presentation.Controls
             return false;
         }
 
-        public void ReleaseMouseCapture()
+        public void ReleaseMouseCapture(IElement element)
         {
-            this.elementWithMouseCapture = null;
+            if (this.elementWithMouseCapture == element)
+            {
+                this.elementWithMouseCapture = null;
+            }
         }
 
-        protected override void OnNextMouseData(MouseData mouseData)
+        protected override void OnNextGesture(Gesture gesture)
         {
             if (this.elementWithMouseCapture != null)
             {
-                this.elementWithMouseCapture.MouseData.OnNext(mouseData);
+                this.elementWithMouseCapture.Gestures.OnNext(gesture);
             }
             else
             {
-                if (!OnNextMouseDataFindChild(this, mouseData))
+                if (!OnNextGestureFindChild(this, gesture))
                 {
-                    OnNextMouseDataFindElement(this, mouseData);
+                    OnNextGestureFindElement(this, gesture);
                 }
             }
         }
 
-        private static bool OnNextMouseDataFindChild(IElement element, MouseData mouseData)
+        private static bool OnNextGestureFindChild(IElement element, Gesture gesture)
         {
             return
-                element.GetChildren().Reverse().Where(
-                    child => !OnNextMouseDataFindChild(child, mouseData)).Any(
-                        child => OnNextMouseDataFindElement(child, mouseData));
+                element.GetChildren().Reverse().Where(child => !OnNextGestureFindChild(child, gesture)).Any(
+                    child => OnNextGestureFindElement(child, gesture));
         }
 
-        private static bool OnNextMouseDataFindElement(IElement element, MouseData mouseData)
+        private static bool OnNextGestureFindElement(IElement element, Gesture gesture)
         {
-            if (element is IInputElement && element.HitTest(mouseData.Point))
+            if (element is IInputElement && element.HitTest(gesture.Point))
             {
-                element.MouseData.OnNext(mouseData);
+                element.Gestures.OnNext(gesture);
                 return true;
             }
 

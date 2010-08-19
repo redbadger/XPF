@@ -12,9 +12,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Primitives
         public static readonly XpfDependencyProperty IsPressedProperty = XpfDependencyProperty.Register(
             "IsPressed", typeof(bool), typeof(ButtonBase), new PropertyMetadata(false));
 
-        private bool isMouseCaptured;
-
-        private bool isMouseLeftButtonDown;
+        private bool isLeftButtonDown;
 
         public event EventHandler<EventArgs> Click;
 
@@ -40,17 +38,17 @@ namespace RedBadger.Xpf.Presentation.Controls.Primitives
             }
         }
 
-        protected override void OnNextMouseData(MouseData mouseData)
+        protected override void OnNextGesture(Gesture gesture)
         {
             if (!this.IsEnabled)
             {
                 return;
             }
 
-            switch (mouseData.Action)
+            switch (gesture.Type)
             {
-                case MouseAction.LeftButtonDown:
-                    this.isMouseLeftButtonDown = true;
+                case GestureType.LeftButtonDown:
+                    this.isLeftButtonDown = true;
 
                     if (this.CaptureMouse())
                     {
@@ -58,8 +56,8 @@ namespace RedBadger.Xpf.Presentation.Controls.Primitives
                     }
 
                     break;
-                case MouseAction.LeftButtonUp:
-                    this.isMouseLeftButtonDown = false;
+                case GestureType.LeftButtonUp:
+                    this.isLeftButtonDown = false;
 
                     if (this.IsPressed)
                     {
@@ -69,37 +67,14 @@ namespace RedBadger.Xpf.Presentation.Controls.Primitives
                     this.ReleaseMouseCapture();
                     this.IsPressed = false;
                     break;
-                case MouseAction.Move:
-                    if (this.isMouseLeftButtonDown && this.isMouseCaptured)
+                case GestureType.Move:
+                    if (this.isLeftButtonDown && this.IsMouseCaptured)
                     {
-                        this.IsPressed = this.HitTest(mouseData.Point);
+                        this.IsPressed = this.HitTest(gesture.Point);
                     }
 
                     break;
             }
-        }
-
-        private bool CaptureMouse()
-        {
-            IRootElement rootElement;
-            if (!this.isMouseCaptured && this.TryGetRootElement(out rootElement))
-            {
-                this.isMouseCaptured = rootElement.CaptureMouse(this);
-                return this.isMouseCaptured;
-            }
-
-            return false;
-        }
-
-        private void ReleaseMouseCapture()
-        {
-            IRootElement rootElement;
-            if (this.TryGetRootElement(out rootElement))
-            {
-                rootElement.ReleaseMouseCapture();
-            }
-
-            this.isMouseCaptured = false;
         }
     }
 }

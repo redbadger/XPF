@@ -11,6 +11,6 @@
 
         bool CaptureMouse(IElement element);
 
-        void ReleaseMouseCapture();
+        void ReleaseMouseCapture(IElement element);
     }
 }

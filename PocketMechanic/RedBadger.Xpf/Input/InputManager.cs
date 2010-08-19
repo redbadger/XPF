@@ -14,15 +14,15 @@
 
     public class InputManager : IInputManager
     {
-        private readonly Subject<MouseData> mouseData = new Subject<MouseData>();
+        private readonly Subject<Gesture> gestures = new Subject<Gesture>();
 
         private MouseState previousState;
 
-        public IObservable<MouseData> MouseData
+        public IObservable<Gesture> Gestures
         {
             get
             {
-                return this.mouseData;
+                return this.gestures;
             }
         }
 
@@ -31,19 +31,19 @@
             var currentState = Mouse.GetState();
             if (this.previousState.LeftButton == ButtonState.Released && currentState.LeftButton == ButtonState.Pressed)
             {
-                this.mouseData.OnNext(
-                    new MouseData(MouseAction.LeftButtonDown, new Point(currentState.X, currentState.Y)));
+                this.gestures.OnNext(
+                    new Gesture(GestureType.LeftButtonDown, new Point(currentState.X, currentState.Y)));
             }
             else if (this.previousState.LeftButton == ButtonState.Pressed &&
                      currentState.LeftButton == ButtonState.Released)
             {
-                this.mouseData.OnNext(
-                    new MouseData(MouseAction.LeftButtonUp, new Point(currentState.X, currentState.Y)));
+                this.gestures.OnNext(
+                    new Gesture(GestureType.LeftButtonUp, new Point(currentState.X, currentState.Y)));
             }
 
             if (currentState.X != this.previousState.X || currentState.Y != this.previousState.Y)
             {
-                this.mouseData.OnNext(new MouseData(MouseAction.Move, new Point(currentState.X, currentState.Y)));
+                this.gestures.OnNext(new Gesture(GestureType.Move, new Point(currentState.X, currentState.Y)));
             }
 
             this.previousState = currentState;

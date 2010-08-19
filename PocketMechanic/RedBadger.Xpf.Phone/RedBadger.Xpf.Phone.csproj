@@ -181,20 +181,17 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\IElement.cs">
       <Link>Presentation\IElement.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Input\Gesture.cs">
+      <Link>Presentation\Input\Gesture.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Input\GestureType.cs">
+      <Link>Presentation\Input\GestureType.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Input\IInputElement.cs">
       <Link>Presentation\Input\IInputElement.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Input\IInputManager.cs">
       <Link>Presentation\Input\IInputManager.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Input\MouseAction.cs">
-      <Link>Presentation\Input\MouseAction.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Input\MouseButtonEventArgs.cs">
-      <Link>Presentation\Input\MouseButtonEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Input\MouseData.cs">
-      <Link>Presentation\Input\MouseData.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IRootElement.cs">
       <Link>Presentation\IRootElement.cs</Link>

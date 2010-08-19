@@ -29,6 +29,10 @@
                 typeof(UIElement), 
                 new PropertyMetadata(HorizontalAlignment.Stretch, HorizontalAlignmentPropertyChangedCallback));
 
+        public static readonly XpfDependencyProperty IsMouseCapturedProperty =
+            XpfDependencyProperty.Register(
+                "IsMouseCaptured", typeof(bool), typeof(UIElement), new PropertyMetadata(false));
+
         public static readonly XpfDependencyProperty MarginProperty = XpfDependencyProperty.Register(
             "Margin", 
             typeof(Thickness), 
@@ -72,7 +76,7 @@
         private readonly Dictionary<XpfDependencyProperty, BindingExpression> bindings =
             new Dictionary<XpfDependencyProperty, BindingExpression>();
 
-        private readonly Subject<MouseData> mouseData = new Subject<MouseData>();
+        private readonly Subject<Gesture> gestures = new Subject<Gesture>();
 
         private Rect actualRect = Rect.Empty;
 
@@ -82,7 +86,7 @@
 
         protected UIElement()
         {
-            this.MouseData.Subscribe(Observer.Create<MouseData>(this.OnNextMouseData));
+            this.Gestures.Subscribe(Observer.Create<Gesture>(this.OnNextGesture));
         }
 
         public double ActualHeight
@@ -102,6 +106,14 @@
         }
 
         public Size DesiredSize { get; private set; }
+
+        public Subject<Gesture> Gestures
+        {
+            get
+            {
+                return this.gestures;
+            }
+        }
 
         public double Height
         {
@@ -130,14 +142,27 @@
         }
 
         /// <summary>
-        ///     Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
+        ///   Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
         /// </summary>
         /// <value>
-        ///     <c>true</c> if the size and position of layout are valid; otherwise, <c>false</c>.
+        ///   <c>true</c> if the size and position of layout are valid; otherwise, <c>false</c>.
         /// </value>
         public bool IsArrangeValid { get; private set; }
 
         public bool IsMeasureValid { get; private set; }
+
+        public bool IsMouseCaptured
+        {
+            get
+            {
+                return (bool)this.GetValue(IsMouseCapturedProperty.Value);
+            }
+
+            private set
+            {
+                this.SetValue(IsMouseCapturedProperty.Value, value);
+            }
+        }
 
         public Thickness Margin
         {
@@ -204,14 +229,6 @@
             }
         }
 
-        public Subject<MouseData> MouseData
-        {
-            get
-            {
-                return this.mouseData;
-            }
-        }
-
         public Size RenderSize { get; private set; }
 
         public VerticalAlignment VerticalAlignment
@@ -243,13 +260,34 @@
         }
 
         /// <remarks>
-        ///     In WPF this is protected internal.  For the purposes of unit testing we've not made this protected.
-        ///     TODO: implement a reflection based mechanism (for Moq?) to get back values from protected properties
+        ///   In WPF this is protected internal.  For the purposes of unit testing we've not made this protected.
+        ///   TODO: implement a reflection based mechanism (for Moq?) to get back values from protected properties
         /// </remarks>
         internal Vector VisualOffset { get; set; }
 
+        public bool CaptureMouse()
+        {
+            IRootElement rootElement;
+            if (!this.IsMouseCaptured && this.TryGetRootElement(out rootElement))
+            {
+                this.IsMouseCaptured = rootElement.CaptureMouse(this);
+            }
+
+            return this.IsMouseCaptured;
+        }
+
         public virtual void OnApplyTemplate()
         {
+        }
+
+        public void ReleaseMouseCapture()
+        {
+            IRootElement rootElement;
+            if (this.IsMouseCaptured && this.TryGetRootElement(out rootElement))
+            {
+                rootElement.ReleaseMouseCapture(this);
+                this.IsMouseCaptured = false;
+            }
         }
 
         public void ClearBinding(XpfDependencyProperty dependencyProperty)
@@ -276,9 +314,9 @@
         }
 
         /// <summary>
-        ///     Positions child elements and determines a size for a UIElement.
-        ///     Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
-        ///     This method constitutes the second pass of a layout update.
+        ///   Positions child elements and determines a size for a UIElement.
+        ///   Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
+        ///   This method constitutes the second pass of a layout update.
         /// </summary>
         /// <param name = "finalRect">The final size that the parent computes for the child element, provided as a Rect instance.</param>
         public void Arrange(Rect finalRect)
@@ -370,13 +408,13 @@
         }
 
         /// <summary>
-        ///     Updates the DesiredSize of a UIElement.
-        ///     Derrived elements call this method from their own MeasureOverride implementations to form a recursive layout update.
-        ///     Calling this method constitutes the first pass (the "Measure" pass) of a layout update.
+        ///   Updates the DesiredSize of a UIElement.
+        ///   Derrived elements call this method from their own MeasureOverride implementations to form a recursive layout update.
+        ///   Calling this method constitutes the first pass (the "Measure" pass) of a layout update.
         /// </summary>
         /// <param name = "availableSize">
-        ///     The available space that a parent element can allocate a child element.
-        ///     A child element can request a larger space than what is available; the provided size might be accommodated.
+        ///   The available space that a parent element can allocate a child element.
+        ///   A child element can request a larger space than what is available; the provided size might be accommodated.
         /// </param>
         public void Measure(Size availableSize)
         {
@@ -437,7 +475,7 @@
         }
 
         /// <summary>
-        ///     When overridden in a derived class, positions child elements and determines a size for a UIElement derived class.
+        ///   When overridden in a derived class, positions child elements and determines a size for a UIElement derived class.
         /// </summary>
         /// <param name = "finalSize">The final area within the parent that this element should use to arrange itself and its children.</param>
         /// <returns>The actual size used.</returns>
@@ -447,11 +485,11 @@
         }
 
         /// <summary>
-        ///     When overridden in a derived class, measures the size in layout required for child elements and determines a size for the UIElement-derived class.
+        ///   When overridden in a derived class, measures the size in layout required for child elements and determines a size for the UIElement-derived class.
         /// </summary>
         /// <param name = "availableSize">
-        ///     The available size that this element can give to child elements.
-        ///     Infinity can be specified as a value to indicate that the element will size to whatever content is available.
+        ///   The available size that this element can give to child elements.
+        ///   Infinity can be specified as a value to indicate that the element will size to whatever content is available.
         /// </param>
         /// <returns>The size that this element determines it needs during layout, based on its calculations of child element sizes.</returns>
         protected virtual Size MeasureOverride(Size availableSize)
@@ -459,7 +497,7 @@
             return Size.Empty;
         }
 
-        protected virtual void OnNextMouseData(MouseData data)
+        protected virtual void OnNextGesture(Gesture gesture)
         {
         }
 
@@ -516,12 +554,12 @@
         }
 
         /// <summary>
-        ///     Defines the template for core-level arrange layout definition.
+        ///   Defines the template for core-level arrange layout definition.
         /// </summary>
         /// <remarks>
-        ///     In WPF this method is defined on UIElement as protected virtual and has a base implementation.
-        ///     FrameworkElement (which derrives from UIElement) creates a sealed implemention, similar to the below,
-        ///     which discards UIElement's base implementation.
+        ///   In WPF this method is defined on UIElement as protected virtual and has a base implementation.
+        ///   FrameworkElement (which derrives from UIElement) creates a sealed implemention, similar to the below,
+        ///   which discards UIElement's base implementation.
         /// </remarks>
         /// <param name = "finalRect">The final area within the parent that element should use to arrange itself and its child elements.</param>
         private void ArrangeCore(Rect finalRect)
@@ -636,12 +674,12 @@
         }
 
         /// <summary>
-        ///     Implements basic measure-pass layout system behavior.
+        ///   Implements basic measure-pass layout system behavior.
         /// </summary>
         /// <remarks>
-        ///     In WPF this method is definded on UIElement as protected virtual and returns an empty Size.
-        ///     FrameworkElement (which derrives from UIElement) then creates a sealed implementation similar to the below.
-        ///     In XPF UIElement and FrameworkElement have been collapsed into a single class.
+        ///   In WPF this method is definded on UIElement as protected virtual and returns an empty Size.
+        ///   FrameworkElement (which derrives from UIElement) then creates a sealed implementation similar to the below.
+        ///   In XPF UIElement and FrameworkElement have been collapsed into a single class.
         /// </remarks>
         /// <param name = "availableSize">The available size that the parent element can give to the child elements.</param>
         /// <returns>The desired size of this element in layout.</returns>
