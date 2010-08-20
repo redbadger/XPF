@@ -12,8 +12,8 @@
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Windows;
-    using System.Windows.Data;
     using System.Windows.Media;
 
     using Machine.Specifications;
@@ -32,14 +32,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private Establish context = () => ItemsControl = new ItemsControl();
     }
 
-    [Subject(typeof(ItemsControl), "")]
+    [Subject(typeof(ItemsControl), "Panel")]
     public class when_a_panel_is_not_specified : a_ItemsControl
     {
         private It should_use_a_stack_panel = () => ItemsControl.ItemsPanel.ShouldBeOfType<StackPanel>();
     }
 
-    [Subject(typeof(ItemsControl), "")]
-    public class when_items_source_is_set_to_a_list_of_two_items_and_item_template_is_a_text_block : a_ItemsControl
+    [Subject(typeof(ItemsControl), "Items Source")]
+    public class when_items_source_is_set_to_a_list_of_two_items : a_ItemsControl
     {
         private static IList<Color> items;
 
@@ -48,21 +48,16 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private Because of = () =>
             {
                 ItemsControl.ItemsSource = items;
-                ItemsControl.ItemTemplate = () =>
-                    {
-                        var textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
-                        textBlock.SetBinding(TextBlock.TextProperty, new Binding());
-                        return textBlock;
-                    };
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 
-                ItemsControl.Measure(new Size(100, 100));
-                ItemsControl.Arrange(new Rect(0, 0, 100, 100));
+                ItemsControl.Measure(new Size());
+                ItemsControl.Arrange(new Rect());
             };
 
-        private It should_lay_out_item_1_as_using_a_text_block =
+        private It should_lay_out_item_1_as_using_the_item_template =
             () => ItemsControl.ItemsPanel.Children[0].ShouldBeOfType<TextBlock>();
 
-        private It should_lay_out_item_2_as_using_a_text_block =
+        private It should_lay_out_item_2_as_using_the_item_template =
             () => ItemsControl.ItemsPanel.Children[1].ShouldBeOfType<TextBlock>();
 
         private It should_set_the_data_context_of_item_1 =
@@ -70,11 +65,45 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 
         private It should_set_the_data_context_of_item_2 =
             () => ItemsControl.ItemsPanel.Children[1].DataContext.ShouldEqual(Colors.Red);
+    }
 
-        private It should_use_the_ToString_value_of_item_1 =
-            () => ((TextBlock)ItemsControl.ItemsPanel.Children[0]).Text.ShouldEqual(Colors.Blue.ToString());
+    [Subject(typeof(ItemsControl), "Items Source")]
+    public class when_an_item_template_has_not_been_specified : a_ItemsControl
+    {
+        private static IList<Color> items;
 
-        private It should_use_the_ToString_value_of_item_2 =
-            () => ((TextBlock)ItemsControl.ItemsPanel.Children[1]).Text.ShouldEqual(Colors.Red.ToString());
+        private Establish context = () => items = new List<Color> { Colors.Blue, Colors.Red };
+
+        private Because of = () =>
+            {
+                ItemsControl.ItemsSource = items;
+
+                ItemsControl.Measure(new Size());
+                ItemsControl.Arrange(new Rect());
+            };
+
+        private It should_not_render_anything = () => ItemsControl.ItemsPanel.Children.Count.ShouldEqual(0);
+    }
+
+    [Subject(typeof(ItemsControl), "Items Source")]
+    public class when_items_source_is_an_empty_observable_collection_and_a_new_item_is_added : a_ItemsControl
+    {
+        private static IList<Color> items;
+
+        private Establish context = () =>
+            {
+                items = new ObservableCollection<Color>();
+                ItemsControl.ItemsSource = items;
+
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
+
+                ItemsControl.Measure(new Size());
+                ItemsControl.Arrange(new Rect());
+            };
+
+        private Because of = () => items.Add(Colors.Blue);
+
+        private It should_lay_it_out_using_the_item_template =
+            () => ItemsControl.ItemsPanel.Children[0].ShouldBeOfType<TextBlock>();
     }
 }
