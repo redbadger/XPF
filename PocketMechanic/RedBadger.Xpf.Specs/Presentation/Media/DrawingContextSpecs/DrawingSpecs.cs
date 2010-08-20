@@ -19,6 +19,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
     using Moq;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
     using DrawingContext = RedBadger.Xpf.Presentation.Media.DrawingContext;
@@ -92,7 +93,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private static readonly Rect rect = new Rect(10, 20, 30, 40);
 
-        private Establish conetxt = () => UiElement.Setup(element => element.CalculateAbsoluteOffset()).Returns(absoluteOffset);
+        private Establish conetxt =
+            () => UiElement.Setup(element => element.CalculateAbsoluteOffset()).Returns(absoluteOffset);
 
         private Because of = () =>
             {
@@ -118,7 +120,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private static readonly Vector textOffset = new Vector(10, 20);
 
-        private Establish context = () => UiElement.Setup(element => element.CalculateAbsoluteOffset()).Returns(absoluteOffset);
+        private Establish context =
+            () => UiElement.Setup(element => element.CalculateAbsoluteOffset()).Returns(absoluteOffset);
 
         private Because of = () =>
             {
@@ -146,7 +149,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private static readonly Rect rect = new Rect(10, 20, 30, 40);
 
-        private Establish context = () => UiElement.Setup(element => element.CalculateAbsoluteOffset()).Returns(absoluteOffset);
+        private Establish context =
+            () => UiElement.Setup(element => element.CalculateAbsoluteOffset()).Returns(absoluteOffset);
 
         private Because of = () =>
             {
@@ -162,6 +166,53 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
                 batch.Draw(
                     Moq.It.IsAny<ITexture2D>(), 
                     new Rect(absoluteOffset.X + rect.X, absoluteOffset.Y + rect.Y, rect.Width, rect.Height), 
+                    Moq.It.IsAny<Color>()));
+    }
+
+    [Subject(typeof(DrawingContext), "PreDraw")]
+    public class when_resolving_offsets_at_the_origin : a_DrawingContext
+    {
+        private static readonly Vector absoluteOffset1 = new Vector(20, 30);
+
+        private static readonly Vector absoluteOffset2 = Vector.Zero;
+
+        private static readonly Rect rect = new Rect(0, 0, 30, 40);
+
+        private static bool isFirst;
+
+        private Establish context = () =>
+            {
+                isFirst = true;
+
+                UiElement.Setup(element => element.CalculateAbsoluteOffset()).Returns(
+                    () =>
+                        {
+                            var absoluteOffset = isFirst ? absoluteOffset1 : absoluteOffset2;
+                            isFirst = false;
+                            return absoluteOffset;
+                        });
+            };
+
+        private Because of = () =>
+            {
+                DrawingContext.DrawRectangle(rect, new SolidColorBrush(Colors.AliceBlue));
+                Renderer.PreDraw();
+
+                // Call GetDrawingContext again on *another* element - this forces PreDraw to reoccur,
+                // but does not clear the DrawingContext of the element we want to re-evaluate on the 2nd PreDraw.
+                Renderer.GetDrawingContext(new Mock<IElement>().Object);
+                Renderer.PreDraw();
+
+                Renderer.Draw();
+            };
+
+        private It should_render_at_the_origin =
+            () =>
+            SpriteBatch.Verify(
+                batch =>
+                batch.Draw(
+                    Moq.It.IsAny<ITexture2D>(), 
+                    new Rect(absoluteOffset2.X + rect.X, absoluteOffset2.Y + rect.Y, rect.Width, rect.Height), 
                     Moq.It.IsAny<Color>()));
     }
 }

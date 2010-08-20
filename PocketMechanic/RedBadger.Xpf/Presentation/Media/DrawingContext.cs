@@ -56,12 +56,10 @@
         public void PreDraw()
         {
             Vector absoluteOffset = this.element.CalculateAbsoluteOffset();
-            if (absoluteOffset != Vector.Zero)
+
+            foreach (ISpriteJob spriteJob in this.jobs)
             {
-                foreach (ISpriteJob spriteJob in this.jobs)
-                {
-                    spriteJob.SetAbsoluteOffset(absoluteOffset);
-                }
+                spriteJob.SetAbsoluteOffset(absoluteOffset);
             }
         }
 

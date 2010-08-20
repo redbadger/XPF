@@ -51,8 +51,10 @@ namespace RedBadger.PocketMechanic.Phone
 
             var image = new Image { Source = badger3, Stretch = Stretch.UniformToFill };
             var grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1000) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(3000) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(600) });
+            /*
+                        grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(3000) });
+            */
             grid.Children.Add(image);
 
             var button = new Button
