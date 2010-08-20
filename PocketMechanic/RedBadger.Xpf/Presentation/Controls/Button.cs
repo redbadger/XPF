@@ -11,7 +11,7 @@
             "Padding", 
             typeof(Thickness), 
             typeof(Button), 
-            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
+            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
 
         public Thickness Padding
         {

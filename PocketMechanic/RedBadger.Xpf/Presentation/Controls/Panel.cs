@@ -8,14 +8,14 @@
 
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
-    public class Panel : UIElement
+    public abstract class Panel : UIElement
     {
         public static readonly XpfDependencyProperty BackgroundProperty = XpfDependencyProperty.Register(
             "Background", typeof(Brush), typeof(Panel), new PropertyMetadata(null));
 
         private readonly ElementCollection children;
 
-        public Panel()
+        protected Panel()
         {
             this.children = new ElementCollection(this);
         }

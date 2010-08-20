@@ -94,6 +94,7 @@
     <Compile Include="Presentation\Controls\GridSpecs\ArrangeSpecs.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\Contexts.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\MeasureSpecs.cs" />
+    <Compile Include="Presentation\Controls\ItemsControlSpecs\ItemsControlSpecs.cs" />
     <Compile Include="Presentation\Controls\RootElementSpecs\RootElementSpecs.cs" />
     <Compile Include="Presentation\Controls\ScrollContentPresenterSpecs\ScrollContentPresenterSpecs.cs" />
     <Compile Include="Presentation\Controls\ScrollViewerSpecs.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Presentation\UIElementSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\ArrangeSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\Contexts.cs" />
+    <Compile Include="Presentation\UIElementSpecs\DataContextSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\MeasureSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\UIElementSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

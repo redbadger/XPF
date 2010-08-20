@@ -12,6 +12,8 @@
 
     public interface IElement : IDependencyObject
     {
+        object DataContext { get; set; }
+
         Size DesiredSize { get; }
 
         Subject<Gesture> Gestures { get; }

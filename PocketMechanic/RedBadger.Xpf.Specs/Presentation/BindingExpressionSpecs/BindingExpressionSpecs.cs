@@ -184,6 +184,10 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
     [Subject(typeof(BindingExpression), "Type Conversion")]
     public class when_the_property_value_is_of_a_type_derived_from_the_property_type
     {
+        private static Border border;
+
+        private static BorderBrushBindingObject myBindingObject;
+
         private Establish context = () =>
             {
                 myBindingObject = new BorderBrushBindingObject();
@@ -193,10 +197,19 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
 
         private Because of = () => myBindingObject.Brush = new SolidColorBrush(Colors.AliceBlue);
 
-        private It should_bind_the_value_of_the_derived_type = () => border.BorderBrush.ShouldBeOfType<SolidColorBrush>();
+        private It should_bind_the_value_of_the_derived_type =
+            () => border.BorderBrush.ShouldBeOfType<SolidColorBrush>();
+    }
 
-        private static BorderBrushBindingObject myBindingObject;
+    [Subject(typeof(BindingExpression), "Type Conversion")]
+    public class when_the_property_value_is_of_a_type_that_doesnt_implement_IConvertible
+    {
+        private Establish context = () => textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
 
-        private static Border border;
+        private Because of = () => textBlock.SetBinding(TextBlock.TextProperty, new Binding { Source = Colors.Red });
+
+        private It should_convert_the_value_to_a_string_representation = () => textBlock.Text.ShouldEqual(Colors.Red.ToString());
+
+        private static TextBlock textBlock;
     }
 }

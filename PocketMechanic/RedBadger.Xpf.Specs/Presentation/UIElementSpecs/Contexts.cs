@@ -30,9 +30,9 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         protected const string MeasureOverride = "MeasureOverride";
 
-        protected static Mock<UIElement> UIElement;
+        protected static Mock<UIElement> UiElement;
 
-        private Establish context = () => UIElement = new Mock<UIElement> { CallBase = true };
+        private Establish context = () => UiElement = new Mock<UIElement> { CallBase = true };
     }
 
     public abstract class a_Measured_UIElement : a_UIElement
@@ -45,9 +45,9 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UIElement.Protected().Setup<Size>(MeasureOverride, ItExpr.Is<Size>(size => size.Equals(availableSize))).
+                UiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.Is<Size>(size => size.Equals(availableSize))).
                     Returns(desiredSize);
-                UIElement.Object.Measure(availableSize);
+                UiElement.Object.Measure(availableSize);
             };
     }
 
@@ -57,8 +57,8 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UIElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(finalSize);
-                UIElement.Object.Arrange(new Rect(finalSize));
+                UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(finalSize);
+                UiElement.Object.Arrange(new Rect(finalSize));
             };
     }
 
@@ -74,7 +74,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
                                                                                             };
                 var rootElement = new Mock<RootElement>(viewPort, renderer.Object) { CallBase = true };
 
-                rootElement.Object.Content = UIElement.Object;
+                rootElement.Object.Content = UiElement.Object;
                 rootElement.Object.Update();
             };
     }

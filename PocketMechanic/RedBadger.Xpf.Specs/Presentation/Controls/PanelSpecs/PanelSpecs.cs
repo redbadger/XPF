@@ -33,7 +33,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
     {
         protected static Mock<IDrawingContext> DrawingContext;
 
-        protected static Panel Panel;
+        protected static Mock<Panel> Panel;
 
         protected static RootElement RootElement;
 
@@ -44,8 +44,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
                 renderer.Setup(r => r.GetDrawingContext(Moq.It.IsAny<IElement>())).Returns(DrawingContext.Object);
 
                 RootElement = new RootElement(new Rect(new Size(100, 100)), renderer.Object);
-                Panel = new Panel();
-                RootElement.Content = Panel;
+                Panel = new Mock<Panel> { CallBase = true };
+                RootElement.Content = Panel.Object;
             };
     }
 
@@ -60,11 +60,11 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
 
         private Establish context = () =>
             {
-                Panel.Children.Add(child1.Object);
-                Panel.Children.Add(child2.Object);
+                Panel.Object.Children.Add(child1.Object);
+                Panel.Object.Children.Add(child2.Object);
             };
 
-        private Because of = () => children = Panel.GetChildren();
+        private Because of = () => children = Panel.Object.GetChildren();
 
         private It should_contain_the_correct_number_of_children = () => children.Count().ShouldEqual(2);
 
@@ -96,14 +96,18 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
 
         private Because of = () =>
             {
-                Panel.Background = expectedBackground;
+                Panel.Object.Background = expectedBackground;
                 RootElement.Update();
                 RootElement.Draw();
             };
 
         private It should_render_the_background_in_the_right_place = () =>
             {
-                var area = new Rect(Panel.VisualOffset.X, Panel.VisualOffset.Y, Panel.ActualWidth, Panel.ActualHeight);
+                var area = new Rect(
+                    Panel.Object.VisualOffset.X, 
+                    Panel.Object.VisualOffset.Y, 
+                    Panel.Object.ActualWidth, 
+                    Panel.Object.ActualHeight);
 
                 DrawingContext.Verify(
                     drawingContext =>

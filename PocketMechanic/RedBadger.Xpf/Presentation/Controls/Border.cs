@@ -25,7 +25,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 "BorderThickness", 
                 typeof(Thickness), 
                 typeof(Border), 
-                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
+                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
 
         public static readonly XpfDependencyProperty ChildProperty = XpfDependencyProperty.Register(
             "Child", typeof(IElement), typeof(Border), new PropertyMetadata(null, ChildPropertyChangedCallback));
@@ -34,7 +34,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             "Padding", 
             typeof(Thickness), 
             typeof(Border), 
-            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
+            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
 
         private readonly IList<Rect> borders = new List<Rect>();
 

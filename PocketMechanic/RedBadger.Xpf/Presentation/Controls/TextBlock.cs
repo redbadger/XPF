@@ -27,7 +27,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             "Padding", 
             typeof(Thickness), 
             typeof(TextBlock),
-            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
+            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
 
         public static readonly XpfDependencyProperty TextProperty = XpfDependencyProperty.Register(
             "Text", typeof(string), typeof(TextBlock), new PropertyMetadata(string.Empty, TextPropertyChangedCallback));

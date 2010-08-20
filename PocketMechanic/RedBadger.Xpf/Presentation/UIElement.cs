@@ -16,18 +16,21 @@
 
     public abstract class UIElement : DependencyObject, IElement
     {
+        public static readonly XpfDependencyProperty DataContextProperty = XpfDependencyProperty.Register(
+            "DataContext", typeof(object), typeof(UIElement), new PropertyMetadata(null, DataContextChanged));
+
         public static readonly XpfDependencyProperty HeightProperty = XpfDependencyProperty.Register(
             "Height", 
             typeof(double), 
             typeof(UIElement), 
-            new PropertyMetadata(double.NaN, PropertyOfTypeDoubleChangedCallback));
+            new PropertyMetadata(double.NaN, InvalidateMeasureIfDoubleChanged));
 
         public static readonly XpfDependencyProperty HorizontalAlignmentProperty =
             XpfDependencyProperty.Register(
                 "HorizontalAlignment", 
                 typeof(HorizontalAlignment), 
                 typeof(UIElement), 
-                new PropertyMetadata(HorizontalAlignment.Stretch, HorizontalAlignmentPropertyChangedCallback));
+                new PropertyMetadata(HorizontalAlignment.Stretch, InvalidateArrangeIfHorizontalAlignmentChanged));
 
         public static readonly XpfDependencyProperty IsMouseCapturedProperty =
             XpfDependencyProperty.Register(
@@ -37,41 +40,38 @@
             "Margin", 
             typeof(Thickness), 
             typeof(UIElement), 
-            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.PropertyOfTypeThickness));
+            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
 
         public static readonly XpfDependencyProperty MaxHeightProperty = XpfDependencyProperty.Register(
             "MaxHeight", 
             typeof(double), 
             typeof(UIElement), 
-            new PropertyMetadata(double.PositiveInfinity, PropertyOfTypeDoubleChangedCallback));
+            new PropertyMetadata(double.PositiveInfinity, InvalidateMeasureIfDoubleChanged));
 
         public static readonly XpfDependencyProperty MaxWidthProperty = XpfDependencyProperty.Register(
             "MaxWidth", 
             typeof(double), 
             typeof(UIElement), 
-            new PropertyMetadata(double.PositiveInfinity, PropertyOfTypeDoubleChangedCallback));
+            new PropertyMetadata(double.PositiveInfinity, InvalidateMeasureIfDoubleChanged));
 
         public static readonly XpfDependencyProperty MinHeightProperty = XpfDependencyProperty.Register(
-            "MinHeight", 
-            typeof(double), 
-            typeof(UIElement), 
-            new PropertyMetadata(0d, PropertyOfTypeDoubleChangedCallback));
+            "MinHeight", typeof(double), typeof(UIElement), new PropertyMetadata(0d, InvalidateMeasureIfDoubleChanged));
 
         public static readonly XpfDependencyProperty MinWidthProperty = XpfDependencyProperty.Register(
-            "MinWidth", typeof(double), typeof(UIElement), new PropertyMetadata(0d, PropertyOfTypeDoubleChangedCallback));
+            "MinWidth", typeof(double), typeof(UIElement), new PropertyMetadata(0d, InvalidateMeasureIfDoubleChanged));
 
         public static readonly XpfDependencyProperty VerticalAlignmentProperty =
             XpfDependencyProperty.Register(
                 "VerticalAlignment", 
                 typeof(VerticalAlignment), 
                 typeof(UIElement), 
-                new PropertyMetadata(VerticalAlignment.Stretch, VerticalAlignmentPropertyChangedCallback));
+                new PropertyMetadata(VerticalAlignment.Stretch, InvalidateArrangeIfVerticalAlignmentChanged));
 
         public static readonly XpfDependencyProperty WidthProperty = XpfDependencyProperty.Register(
             "Width", 
             typeof(double), 
             typeof(UIElement), 
-            new PropertyMetadata(double.NaN, PropertyOfTypeDoubleChangedCallback));
+            new PropertyMetadata(double.NaN, InvalidateMeasureIfDoubleChanged));
 
         private readonly Dictionary<XpfDependencyProperty, BindingExpression> bindings =
             new Dictionary<XpfDependencyProperty, BindingExpression>();
@@ -102,6 +102,19 @@
             get
             {
                 return this.RenderSize.Width;
+            }
+        }
+
+        public object DataContext
+        {
+            get
+            {
+                return this.GetValue(DataContextProperty.Value);
+            }
+
+            set
+            {
+                this.SetValue(DataContextProperty.Value, value);
             }
         }
 
@@ -310,6 +323,7 @@
             }
 
             bindingExpression.SetBinding(binding);
+            bindingExpression.SetDataContext(this.DataContext);
             return bindingExpression;
         }
 
@@ -505,7 +519,17 @@
         {
         }
 
-        private static void HorizontalAlignmentPropertyChangedCallback(
+        private static void DataContextChanged(
+            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var element = dependencyObject as UIElement;
+            if (element != null)
+            {
+                element.DataContextChanged(args.NewValue);
+            }
+        }
+
+        private static void InvalidateArrangeIfHorizontalAlignmentChanged(
             DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             var newValue = (HorizontalAlignment)args.NewValue;
@@ -521,23 +545,7 @@
             }
         }
 
-        private static void PropertyOfTypeDoubleChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            double newValue = (double)args.NewValue;
-            double oldValue = (double)args.OldValue;
-
-            if (newValue.IsDifferentFrom(oldValue))
-            {
-                var uiElement = dependencyObject as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.InvalidateMeasure();
-                }
-            }
-        }
-
-        private static void VerticalAlignmentPropertyChangedCallback(
+        private static void InvalidateArrangeIfVerticalAlignmentChanged(
             DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             var newValue = (VerticalAlignment)args.NewValue;
@@ -549,6 +557,22 @@
                 if (uiElement != null)
                 {
                     uiElement.InvalidateArrange();
+                }
+            }
+        }
+
+        private static void InvalidateMeasureIfDoubleChanged(
+            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            double newValue = (double)args.NewValue;
+            double oldValue = (double)args.OldValue;
+
+            if (newValue.IsDifferentFrom(oldValue))
+            {
+                var uiElement = dependencyObject as UIElement;
+                if (uiElement != null)
+                {
+                    uiElement.InvalidateMeasure();
                 }
             }
         }
@@ -671,6 +695,14 @@
             }
 
             return vector;
+        }
+
+        private void DataContextChanged(object newValue)
+        {
+            foreach (var bindingExpression in this.bindings.Values)
+            {
+                bindingExpression.SetDataContext(newValue);
+            }
         }
 
         /// <summary>

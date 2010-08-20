@@ -57,8 +57,9 @@ namespace RedBadger.Xpf.Presentation
             {
                 throw new NotSupportedException("XPF only supports OneWay and TwoWay binding.");
             }
-#endif
 
+#endif
+            this.frameworkElement.DataContext = this.GetDefaultDataContext();
             this.frameworkElement.SetBinding(BindingFrameworkElement.DependencyProperty.Value, binding);
 
             if (this.propertyChangedNotifier != null)
@@ -72,6 +73,16 @@ namespace RedBadger.Xpf.Presentation
                 this.propertyChangedNotifier = new PropertyChangedNotifier(this.uiElement, this.dependencyProperty);
                 this.propertyChangedNotifier.ValueChanged += this.PropertyChangedNotifierOnValueChanged;
             }
+        }
+
+        public void SetDataContext(object dataContext)
+        {
+            this.frameworkElement.DataContext = dataContext ?? this.GetDefaultDataContext();
+        }
+
+        private object GetDefaultDataContext()
+        {
+            return this.dependencyProperty.PropertyType.IsClass ? (object)null : 0;
         }
 
         private void PropertyChangedNotifierOnValueChanged(
@@ -109,9 +120,17 @@ namespace RedBadger.Xpf.Presentation
 
             public static void SetValue(DependencyObject dependencyObject, XpfDependencyProperty property, object value)
             {
-                if (value != null && property.PropertyType != null && !property.PropertyType.IsAssignableFrom(value.GetType()))
+                if (value != null && !property.PropertyType.IsAssignableFrom(value.GetType()))
                 {
-                    value = Convert.ChangeType(value, property.PropertyType, CultureInfo.InvariantCulture);
+                    if (!(value is IConvertible))
+                    {
+                        value = value.ToString();
+                    }
+
+                    if (property.PropertyType != null)
+                    {
+                        value = Convert.ChangeType(value, property.PropertyType, CultureInfo.InvariantCulture);
+                    }
                 }
 
                 dependencyObject.SetValue(property.Value, value);

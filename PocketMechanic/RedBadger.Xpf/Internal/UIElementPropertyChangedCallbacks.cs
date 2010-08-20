@@ -6,7 +6,7 @@ namespace RedBadger.Xpf.Internal
 
     internal static class UIElementPropertyChangedCallbacks
     {
-        public static void PropertyOfTypeThickness(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        public static void InvalidateMeasureIfThicknessChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             var newValue = (Thickness)args.NewValue;
             var oldValue = (Thickness)args.OldValue;
