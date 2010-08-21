@@ -59,12 +59,41 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private It should_throw_an_exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
 
+    [Subject(typeof(ItemsControl), "Item Template")]
+    public class when_item_template_is_changed : a_ItemsControl
+    {
+        private static IList<Color> items;
+
+        private Establish context = () =>
+            {
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
+                items = new ObservableCollection<Color> { Colors.Blue };
+                ItemsControl.ItemsSource = items;
+
+                ItemsControl.Measure(new Size());
+            };
+
+        private Because of = () =>
+            {
+                ItemsControl.ItemTemplate = () => new Border();
+                items.Add(Colors.Red);
+
+                ItemsControl.Measure(new Size());
+            };
+
+        private It should_1_use_the_original_item_template_for_items_added_before_the_change =
+            () => ItemsControl.ItemsPanel.Children[0].ShouldBeOfType<TextBlock>();
+
+        private It should_2_use_the_new_item_template_for_items_added_after_the_change =
+            () => ItemsControl.ItemsPanel.Children[1].ShouldBeOfType<Border>();
+    }
+
     [Subject(typeof(ItemsControl), "Items Source")]
     public class when_items_source_has_not_been_specified : a_ItemsControl
     {
         private static Exception exception;
 
-        private Because of = () => exception = Catch.Exception(() => { ItemsControl.Measure(new Size()); });
+        private Because of = () => exception = Catch.Exception(() => ItemsControl.Measure(new Size()));
 
         private It should_not_throw_an_exception = () => exception.ShouldBeNull();
     }
