@@ -16,6 +16,7 @@ namespace RedBadger.PocketMechanic.Phone
     using RedBadger.Xpf.Presentation.Media;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
+    using Color = System.Windows.Media.Color;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     public class ScrollTest : DrawableGameComponent
@@ -57,7 +58,12 @@ namespace RedBadger.PocketMechanic.Phone
                 {
                     ItemTemplate = () =>
                         {
-                            var textBlock = new TextBlock(spriteFontAdapter);
+                            var textBlock = new TextBlock(spriteFontAdapter)
+                                {
+                                    Margin = new Thickness(0, 0, 0, 50),
+                                    Background = new SolidColorBrush(GetRandomColor())
+                                };
+                            // textBlock.Text = ((SolidColorBrush)textBlock.Background).Color.ToString();
                             textBlock.SetBinding(TextBlock.TextProperty, new Binding());
                             return textBlock;
                         }
@@ -77,6 +83,23 @@ namespace RedBadger.PocketMechanic.Phone
 
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
                 l => items.Add(DateTime.Now.ToString()));
+        }
+
+        private static Color GetRandomColor()
+        {
+            var random = new Random();
+            var next = random.Next(3);
+            switch (next)
+            {
+                case 0:
+                    return Colors.Red;
+                case 1:
+                    return Colors.Blue;
+                case 2:
+                    return Colors.Yellow;
+            }
+
+            return Colors.Purple;
         }
     }
 }

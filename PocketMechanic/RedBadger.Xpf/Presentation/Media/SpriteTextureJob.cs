@@ -11,11 +11,11 @@
     {
         private readonly Brush brush;
 
+        private readonly Rect rect;
+
         private readonly ITexture2D texture2D;
 
         private Vector absoluteOffset;
-
-        private Rect rect;
 
         public SpriteTextureJob(ITexture2D texture2D, Rect rect, Brush brush)
         {

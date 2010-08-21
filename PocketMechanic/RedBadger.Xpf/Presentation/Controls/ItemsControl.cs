@@ -23,6 +23,8 @@
         public static readonly XpfDependencyProperty ItemsSourceProperty = XpfDependencyProperty.Register(
             "ItemsSource", typeof(IEnumerable), typeof(ItemsControl), new PropertyMetadata(null, ItemsSourceChanged));
 
+        private bool isItemSourceNew;
+
         private IDisposable itemsChanged;
 
         public ItemsControl()
@@ -82,12 +84,34 @@
 
         public override void OnApplyTemplate()
         {
-            if (this.ItemTemplate == null || this.ItemsSource == null)
+            if (this.isItemSourceNew)
             {
-                return;
+                this.PopulatePanelFromItemsSource();
+                this.isItemSourceNew = false;
+            }
+        }
+
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            var itemsPanel = this.ItemsPanel;
+            if (itemsPanel != null)
+            {
+                itemsPanel.Arrange(new Rect(new Point(), finalSize));
             }
 
-            this.PopulatePanelFromItemsSource();
+            return finalSize;
+        }
+
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            var itemsPanel = this.ItemsPanel;
+            if (itemsPanel == null)
+            {
+                return Size.Empty;
+            }
+
+            itemsPanel.Measure(availableSize);
+            return itemsPanel.DesiredSize;
         }
 
         private static void ItemsPanelChanged(
@@ -106,7 +130,7 @@
             var itemsControl = dependencyObject as ItemsControl;
             if (itemsControl != null)
             {
-                itemsControl.ItemsSourceChanged(args.NewValue);
+                itemsControl.ItemsSourceChanged(args.OldValue, args.NewValue);
             }
         }
 
@@ -128,13 +152,11 @@
             }
         }
 
-        private void ItemsSourceChanged(object newValue)
+        private void ItemsSourceChanged(object oldValue, object newValue)
         {
-            if (newValue == null)
+            if (oldValue is INotifyCollectionChanged)
             {
-                this.ItemsPanel.Children.Clear();
                 this.itemsChanged.Dispose();
-                return;
             }
 
             var observableCollection = newValue as INotifyCollectionChanged;
@@ -146,10 +168,18 @@
                         handler => observableCollection.CollectionChanged += handler, 
                         handler => observableCollection.CollectionChanged -= handler).Subscribe(this.OnNextItemChange);
             }
+
+            this.isItemSourceNew = true;
+            this.InvalidateMeasure();
         }
 
         private IElement NewItem(object item)
         {
+            if (this.ItemTemplate == null)
+            {
+                throw new InvalidOperationException("An ItemTemplate has not been supplied");
+            }
+
             var element = this.ItemTemplate();
             element.DataContext = item;
             return element;
@@ -212,9 +242,12 @@
         {
             this.ItemsPanel.Children.Clear();
 
-            foreach (var item in this.ItemsSource)
+            if (this.ItemsSource != null)
             {
-                this.ItemsPanel.Children.Add(this.NewItem(item));
+                foreach (var item in this.ItemsSource)
+                {
+                    this.ItemsPanel.Children.Add(this.NewItem(item));
+                }
             }
         }
     }
