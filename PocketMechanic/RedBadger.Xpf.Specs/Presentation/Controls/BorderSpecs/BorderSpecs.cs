@@ -244,7 +244,17 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     [Subject(typeof(Border), "Background")]
     public class when_background_is_specified : a_Border_with_child
     {
-        private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Colors.Blue);
+        private static SolidColorBrush expectedBackground;
+
+        private static Thickness margin;
+
+        private Establish context = () =>
+            {
+                expectedBackground = new SolidColorBrush(Colors.Blue);
+
+                margin = new Thickness(1, 2, 3, 4);
+                Border.Margin = margin;
+            };
 
         private Because of = () =>
             {
@@ -255,7 +265,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
         private It should_render_the_background_in_the_right_place = () =>
             {
                 var area = new Rect(
-                    Border.VisualOffset.X, Border.VisualOffset.Y, Border.ActualWidth, Border.ActualHeight);
+                    margin.Left, 
+                    margin.Top, 
+                    Border.ActualWidth - (margin.Left + margin.Right), 
+                    Border.ActualHeight - (margin.Top + margin.Bottom));
 
                 DrawingContext.Verify(
                     drawingContext =>

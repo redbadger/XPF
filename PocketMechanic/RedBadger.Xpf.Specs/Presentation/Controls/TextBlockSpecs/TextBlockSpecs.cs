@@ -112,7 +112,19 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
     [Subject(typeof(TextBlock), "Background")]
     public class when_textblock_background_is_specified : a_TextBlock
     {
-        private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Colors.Blue);
+        private static SolidColorBrush expectedBackground;
+
+        private static Thickness margin;
+
+        private Establish context = () =>
+            {
+                expectedBackground = new SolidColorBrush(Colors.Blue);
+                TextBlock.Width = 10;
+                TextBlock.Height = 5;
+
+                margin = new Thickness(1, 2, 3, 4);
+                TextBlock.Margin = margin;
+            };
 
         private Because of = () =>
             {
@@ -123,7 +135,11 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
 
         private It should_render_the_background_in_the_right_place = () =>
             {
-                var area = new Rect(0, 0, TextBlock.ActualWidth, TextBlock.ActualHeight);
+                var area = new Rect(
+                    margin.Left, 
+                    margin.Top, 
+                    TextBlock.ActualWidth - (margin.Left + margin.Right), 
+                    TextBlock.ActualHeight - (margin.Top + margin.Bottom));
 
                 DrawingContext.Verify(
                     drawingContext =>

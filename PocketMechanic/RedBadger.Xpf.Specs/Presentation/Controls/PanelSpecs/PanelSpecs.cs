@@ -92,22 +92,31 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
     [Subject(typeof(Panel), "Background")]
     public class when_panel_background_is_specified : a_Panel
     {
-        private static readonly SolidColorBrush expectedBackground = new SolidColorBrush(Colors.Blue);
+        private static SolidColorBrush expectedBackground;
+
+        private static Thickness margin;
+
+        private Establish context = () =>
+        {
+            expectedBackground = new SolidColorBrush(Colors.Blue);
+
+            margin = new Thickness(1, 2, 3, 4);
+            Panel.Object.Margin = margin;
+        };
 
         private Because of = () =>
             {
                 Panel.Object.Background = expectedBackground;
                 RootElement.Update();
-                RootElement.Draw();
             };
 
         private It should_render_the_background_in_the_right_place = () =>
             {
                 var area = new Rect(
-                    Panel.Object.VisualOffset.X, 
-                    Panel.Object.VisualOffset.Y, 
-                    Panel.Object.ActualWidth, 
-                    Panel.Object.ActualHeight);
+                    margin.Left,
+                    margin.Top,
+                    Panel.Object.ActualWidth - (margin.Left + margin.Right),
+                    Panel.Object.ActualHeight - (margin.Top + margin.Bottom));
 
                 DrawingContext.Verify(
                     drawingContext =>

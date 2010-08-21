@@ -25,7 +25,8 @@ namespace RedBadger.Xpf.Presentation.Controls
                 "BorderThickness", 
                 typeof(Thickness), 
                 typeof(Border), 
-                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
+                new PropertyMetadata(
+                    new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
 
         public static readonly XpfDependencyProperty ChildProperty = XpfDependencyProperty.Register(
             "Child", typeof(IElement), typeof(Border), new PropertyMetadata(null, ChildPropertyChangedCallback));
@@ -167,7 +168,12 @@ namespace RedBadger.Xpf.Presentation.Controls
             if (this.Background != null)
             {
                 drawingContext.DrawRectangle(
-                    new Rect(0, 0, this.ActualWidth, this.ActualHeight).Deflate(this.BorderThickness), this.Background);
+                    new Rect(
+                        this.Margin.Left, 
+                        this.Margin.Top, 
+                        this.ActualWidth - (this.Margin.Left + this.Margin.Right), 
+                        this.ActualHeight - (this.Margin.Top + this.Margin.Bottom)).Deflate(this.BorderThickness), 
+                    this.Background);
             }
         }
 

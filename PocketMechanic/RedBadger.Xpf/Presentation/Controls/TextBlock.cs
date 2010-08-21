@@ -139,7 +139,13 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             if (this.Background != null)
             {
-                drawingContext.DrawRectangle(new Rect(0, 0, this.ActualWidth, this.ActualHeight), this.Background);
+                drawingContext.DrawRectangle(
+                    new Rect(
+                        this.Margin.Left,
+                        this.Margin.Top,
+                        this.ActualWidth - (this.Margin.Left + this.Margin.Right),
+                        this.ActualHeight - (this.Margin.Top + this.Margin.Bottom)),
+                    this.Background);
             }
 
             drawingContext.DrawText(
