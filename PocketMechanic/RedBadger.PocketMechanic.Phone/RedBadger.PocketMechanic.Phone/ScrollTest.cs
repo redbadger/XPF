@@ -1,8 +1,12 @@
 namespace RedBadger.PocketMechanic.Phone
 {
+    using System;
+    using System.Collections.ObjectModel;
     using System.Windows;
+    using System.Windows.Data;
     using System.Windows.Media;
 
+    using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -45,39 +49,34 @@ namespace RedBadger.PocketMechanic.Phone
         protected override void LoadContent()
         {
             this.spriteFont = this.Game.Content.Load<SpriteFont>("SpriteFont");
-            var badger3 = new XnaImage(new Texture2DAdapter(this.Game.Content.Load<Texture2D>("badger3")));
             this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
             var spriteFontAdapter = new SpriteFontAdapter(this.spriteFont);
+            var items = new ObservableCollection<string>();
 
-            var image = new Image { Source = badger3, Stretch = Stretch.UniformToFill };
-            var grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(600) });
-            /*
-                        grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(3000) });
-            */
-            grid.Children.Add(image);
-
-            var button = new Button
+            var itemsControl = new ItemsControl
                 {
-                    Content =
-                        new Border {
-                               Background = new SolidColorBrush(Colors.Orange)
-                            }, 
-                    Width = 100, 
-                    Height = 100
+                    ItemTemplate = () =>
+                        {
+                            var textBlock = new TextBlock(spriteFontAdapter);
+                            textBlock.SetBinding(TextBlock.TextProperty, new Binding());
+                            return textBlock;
+                        }
                 };
-            grid.Children.Add(button);
+            itemsControl.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = items });
 
-            var scrollViewer = new ScrollViewer { Content = grid };
+            var scrollViewer = new ScrollViewer { Content = itemsControl, CanHorizontallyScroll = false };
 
             var viewPort = new Rect(
-                this.GraphicsDevice.Viewport.X, 
-                this.GraphicsDevice.Viewport.Y, 
-                this.GraphicsDevice.Viewport.Width, 
+                this.GraphicsDevice.Viewport.X,
+                this.GraphicsDevice.Viewport.Y,
+                this.GraphicsDevice.Viewport.Width,
                 this.GraphicsDevice.Viewport.Height);
 
             var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
             this.rootElement = new RootElement(viewPort, renderer, new InputManager()) { Content = scrollViewer };
+
+            Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
+                l => items.Add(DateTime.Now.ToString()));
         }
     }
 }

@@ -87,10 +87,7 @@
                 return;
             }
 
-            foreach (var item in this.ItemsSource)
-            {
-                this.AddItem(item);
-            }
+            this.PopulatePanelFromItemsSource();
         }
 
         private static void ItemsPanelChanged(
@@ -113,13 +110,6 @@
             }
         }
 
-        private void AddItem(object item)
-        {
-            var element = this.ItemTemplate();
-            element.DataContext = item;
-            this.ItemsPanel.Children.Add(element);
-        }
-
         private void ItemsPanelChanged(object oldValue, object newValue)
         {
             this.InvalidateMeasure();
@@ -140,13 +130,13 @@
 
         private void ItemsSourceChanged(object newValue)
         {
-            /*
             if (newValue == null)
             {
+                this.ItemsPanel.Children.Clear();
                 this.itemsChanged.Dispose();
                 return;
             }
-*/
+
             var observableCollection = newValue as INotifyCollectionChanged;
             if (observableCollection != null)
             {
@@ -158,6 +148,13 @@
             }
         }
 
+        private IElement NewItem(object item)
+        {
+            var element = this.ItemTemplate();
+            element.DataContext = item;
+            return element;
+        }
+
         private void OnNextItemChange(IEvent<NotifyCollectionChangedEventArgs> eventData)
         {
             switch (eventData.EventArgs.Action)
@@ -165,10 +162,59 @@
                 case NotifyCollectionChangedAction.Add:
                     foreach (var newItem in eventData.EventArgs.NewItems)
                     {
-                        this.AddItem(newItem);
+                        this.ItemsPanel.Children.Add(this.NewItem(newItem));
                     }
 
                     break;
+                case NotifyCollectionChangedAction.Remove:
+                    {
+                        var startingIndex = eventData.EventArgs.OldStartingIndex;
+                        for (int index = startingIndex;
+                             index < startingIndex + eventData.EventArgs.OldItems.Count;
+                             index++)
+                        {
+                            this.ItemsPanel.Children.RemoveAt(index);
+                        }
+
+                        break;
+                    }
+
+                case NotifyCollectionChangedAction.Replace:
+                    {
+                        var startingIndex = eventData.EventArgs.NewStartingIndex;
+
+                        foreach (var newItem in eventData.EventArgs.NewItems)
+                        {
+                            this.ItemsPanel.Children.RemoveAt(startingIndex);
+                            this.ItemsPanel.Children.Insert(startingIndex, this.NewItem(newItem));
+                            startingIndex++;
+                        }
+
+                        break;
+                    }
+
+#if !WINDOWS_PHONE
+                case NotifyCollectionChangedAction.Move:
+                    var elementToMove = this.ItemsPanel.Children[eventData.EventArgs.OldStartingIndex];
+                    this.ItemsPanel.Children.RemoveAt(eventData.EventArgs.OldStartingIndex);
+                    this.ItemsPanel.Children.Insert(eventData.EventArgs.NewStartingIndex, elementToMove);
+                    break;
+#endif
+                case NotifyCollectionChangedAction.Reset:
+                    this.PopulatePanelFromItemsSource();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void PopulatePanelFromItemsSource()
+        {
+            this.ItemsPanel.Children.Clear();
+
+            foreach (var item in this.ItemsSource)
+            {
+                this.ItemsPanel.Children.Add(this.NewItem(item));
             }
         }
     }
