@@ -23,13 +23,17 @@
         public static readonly XpfDependencyProperty ItemsSourceProperty = XpfDependencyProperty.Register(
             "ItemsSource", typeof(IEnumerable), typeof(ItemsControl), new PropertyMetadata(null, ItemsSourceChanged));
 
+        private readonly ScrollViewer scrollViewer;
+
         private bool isItemSourceNew;
 
         private IDisposable itemsChanged;
 
         public ItemsControl()
         {
+            this.scrollViewer = new ScrollViewer { VisualParent = this };
             this.ItemsPanel = new StackPanel();
+            this.scrollViewer.Content = this.ItemsPanel;
         }
 
         public Func<IElement> ItemTemplate
@@ -73,10 +77,10 @@
 
         public override IEnumerable<IElement> GetChildren()
         {
-            var content = this.ItemsPanel;
-            if (content != null)
+            var child = this.scrollViewer;
+            if (child != null)
             {
-                yield return content;
+                yield return child;
             }
 
             yield break;
@@ -93,10 +97,10 @@
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            var itemsPanel = this.ItemsPanel;
-            if (itemsPanel != null)
+            var child = this.scrollViewer;
+            if (child != null)
             {
-                itemsPanel.Arrange(new Rect(new Point(), finalSize));
+                child.Arrange(new Rect(new Point(), finalSize));
             }
 
             return finalSize;
@@ -104,14 +108,14 @@
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            var itemsPanel = this.ItemsPanel;
-            if (itemsPanel == null)
+            var child = this.scrollViewer;
+            if (child == null)
             {
                 return Size.Empty;
             }
 
-            itemsPanel.Measure(availableSize);
-            return itemsPanel.DesiredSize;
+            child.Measure(availableSize);
+            return child.DesiredSize;
         }
 
         private static void ItemsPanelChanged(
@@ -148,7 +152,7 @@
 
             if (newPanel != null)
             {
-                newPanel.VisualParent = this;
+                this.scrollViewer.Content = newPanel;
             }
         }
 
@@ -198,7 +202,7 @@
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     {
-                        var startingIndex = eventData.EventArgs.OldStartingIndex;
+                        int startingIndex = eventData.EventArgs.OldStartingIndex;
                         for (int index = startingIndex;
                              index < startingIndex + eventData.EventArgs.OldItems.Count;
                              index++)
@@ -211,7 +215,7 @@
 
                 case NotifyCollectionChangedAction.Replace:
                     {
-                        var startingIndex = eventData.EventArgs.NewStartingIndex;
+                        int startingIndex = eventData.EventArgs.NewStartingIndex;
 
                         foreach (var newItem in eventData.EventArgs.NewItems)
                         {

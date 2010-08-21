@@ -63,14 +63,11 @@ namespace RedBadger.PocketMechanic.Phone
                                     Margin = new Thickness(0, 0, 0, 50),
                                     Background = new SolidColorBrush(GetRandomColor())
                                 };
-                            // textBlock.Text = ((SolidColorBrush)textBlock.Background).Color.ToString();
                             textBlock.SetBinding(TextBlock.TextProperty, new Binding());
                             return textBlock;
-                        }
+                        },
+                    ItemsSource = items
                 };
-            itemsControl.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = items });
-
-            var scrollViewer = new ScrollViewer { Content = itemsControl, CanHorizontallyScroll = false };
 
             var viewPort = new Rect(
                 this.GraphicsDevice.Viewport.X,
@@ -79,7 +76,7 @@ namespace RedBadger.PocketMechanic.Phone
                 this.GraphicsDevice.Viewport.Height);
 
             var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
-            this.rootElement = new RootElement(viewPort, renderer, new InputManager()) { Content = scrollViewer };
+            this.rootElement = new RootElement(viewPort, renderer, new InputManager()) { Content = itemsControl };
 
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
                 l => items.Add(DateTime.Now.ToString()));

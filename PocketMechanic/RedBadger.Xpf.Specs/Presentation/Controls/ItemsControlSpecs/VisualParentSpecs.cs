@@ -35,16 +35,27 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 
         private Because of = () => ItemsControl.ItemsPanel = panel.Object;
 
+        private It should_add_the_panel_as_a_descendant_in_its_visual_tree = () =>
+            {
+                var ancestor = ItemsControl.ItemsPanel.VisualParent;
+                while (ancestor != null && !(ancestor is ItemsControl))
+                {
+                    ancestor = ancestor.VisualParent;
+                }
+
+                ancestor.ShouldBeTheSameAs(ItemsControl);
+            };
+
         private It should_invalidate_measure = () => ItemsControl.IsMeasureValid.ShouldBeFalse();
+    }
 
-        private It should_mark_itself_as_the_visual_parent =
-            () => ItemsControl.ItemsPanel.VisualParent.ShouldBeTheSameAs(ItemsControl);
+    [Subject(typeof(ItemsControl))]
+    public class when_asked_for_its_children : a_ItemsControl
+    {
+        private It should_return_a_scroll_viewer =
+            () => ItemsControl.GetChildren().First().ShouldBeOfType<ScrollViewer>();
 
-        private It should_return_the_correct_number_of_panels_when_its_children_are_requested =
-            () => ItemsControl.GetChildren().Count().ShouldEqual(1);
-
-        private It should_return_the_panel_when_its_children_are_requested =
-            () => ItemsControl.GetChildren().First().ShouldBeTheSameAs(panel.Object);
+        private It should_return_one_child_only = () => ItemsControl.GetChildren().Count().ShouldEqual(1);
     }
 
     [Subject(typeof(ItemsControl))]
@@ -60,14 +71,21 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 
         private Because of = () => ItemsControl.ItemsPanel = new Mock<Panel>().Object;
 
-        private It should_unset_itself_as_the_parent_of_the_outgoing_panel =
-            () => oldPanel.Object.VisualParent.ShouldBeNull();
+        private It should_unset_the_parent_of_the_outgoing_panel = () => oldPanel.Object.VisualParent.ShouldBeNull();
     }
 
     [Subject(typeof(ItemsControl))]
     public class when_the_default_panel_is_used : a_ItemsControl
     {
-        private It should_mark_itself_as_the_visual_parent =
-            () => ItemsControl.ItemsPanel.VisualParent.ShouldBeTheSameAs(ItemsControl);
+        private It should_have_added_a_panel_as_a_descendant_in_its_visual_tree = () =>
+            {
+                var ancestor = ItemsControl.ItemsPanel.VisualParent;
+                while (ancestor != null && !(ancestor is ItemsControl))
+                {
+                    ancestor = ancestor.VisualParent;
+                }
+
+                ancestor.ShouldBeTheSameAs(ItemsControl);
+            };
     }
 }
