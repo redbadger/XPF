@@ -26,7 +26,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static IEnumerable<IElement> enumerable;
 
-        private Because of = () => enumerable = UiElement.Object.GetChildren();
+        private Because of = () => enumerable = UiElement.Object.GetVisualChildren();
 
         private It should_not_return_any_children = () => enumerable.Count().ShouldEqual(0);
     }

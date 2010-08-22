@@ -27,7 +27,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        public override IEnumerable<IElement> GetChildren()
+        public override IEnumerable<IElement> GetVisualChildren()
         {
             var content = this.Content;
             if (content != null)

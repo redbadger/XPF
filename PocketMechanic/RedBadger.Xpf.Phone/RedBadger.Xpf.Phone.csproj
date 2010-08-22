@@ -151,6 +151,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Primitives\ButtonBase.cs">
       <Link>Presentation\Controls\Primitives\ButtonBase.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Primitives\IPanel.cs">
+      <Link>Presentation\Controls\Primitives\IPanel.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Primitives\IScrollInfo.cs">
       <Link>Presentation\Controls\Primitives\IScrollInfo.cs</Link>
     </Compile>
@@ -177,6 +180,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Viewbox.cs">
       <Link>Presentation\Controls\Viewbox.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\VirtualizingStackPanel.cs">
+      <Link>Presentation\Controls\VirtualizingStackPanel.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\ElementCollection.cs">
       <Link>Presentation\ElementCollection.cs</Link>

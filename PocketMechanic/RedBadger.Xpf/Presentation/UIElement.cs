@@ -382,7 +382,7 @@
             return absoluteOffset;
         }
 
-        public virtual IEnumerable<IElement> GetChildren()
+        public virtual IEnumerable<IElement> GetVisualChildren()
         {
             yield break;
         }

@@ -14,13 +14,14 @@ namespace RedBadger.PocketMechanic.Phone
     using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
-    using RedBadger.Xpf.Presentation.Media.Imaging;
 
     using Color = System.Windows.Media.Color;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     public class ScrollTest : DrawableGameComponent
     {
+        private readonly Random random = new Random();
+
         private RootElement rootElement;
 
         private SpriteBatchAdapter spriteBatchAdapter;
@@ -52,27 +53,27 @@ namespace RedBadger.PocketMechanic.Phone
             this.spriteFont = this.Game.Content.Load<SpriteFont>("SpriteFont");
             this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
             var spriteFontAdapter = new SpriteFontAdapter(this.spriteFont);
-            var items = new ObservableCollection<string>();
 
+            var items = new ObservableCollection<string>();
             var itemsControl = new ItemsControl
                 {
-                    ItemTemplate = () =>
+                    ItemTemplate = item =>
                         {
                             var textBlock = new TextBlock(spriteFontAdapter)
                                 {
-                                    Margin = new Thickness(0, 0, 0, 50),
-                                    Background = new SolidColorBrush(GetRandomColor())
+                                    Margin = new Thickness(0, 0, 0, 50), 
+                                    Background = new SolidColorBrush(GetRandomColor(this.random))
                                 };
                             textBlock.SetBinding(TextBlock.TextProperty, new Binding());
                             return textBlock;
-                        },
+                        }, 
                     ItemsSource = items
                 };
 
             var viewPort = new Rect(
-                this.GraphicsDevice.Viewport.X,
-                this.GraphicsDevice.Viewport.Y,
-                this.GraphicsDevice.Viewport.Width,
+                this.GraphicsDevice.Viewport.X, 
+                this.GraphicsDevice.Viewport.Y, 
+                this.GraphicsDevice.Viewport.Width, 
                 this.GraphicsDevice.Viewport.Height);
 
             var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
@@ -82,10 +83,9 @@ namespace RedBadger.PocketMechanic.Phone
                 l => items.Add(DateTime.Now.ToString()));
         }
 
-        private static Color GetRandomColor()
+        private static Color GetRandomColor(Random random)
         {
-            var random = new Random();
-            var next = random.Next(3);
+            int next = random.Next(3);
             switch (next)
             {
                 case 0:

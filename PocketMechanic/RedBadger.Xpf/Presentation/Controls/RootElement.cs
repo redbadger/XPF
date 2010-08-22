@@ -116,7 +116,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         private static bool OnNextGestureFindChild(IElement element, Gesture gesture)
         {
             return
-                element.GetChildren().Reverse().Where(child => !OnNextGestureFindChild(child, gesture)).Any(
+                element.GetVisualChildren().Reverse().Where(child => !OnNextGestureFindChild(child, gesture)).Any(
                     child => OnNextGestureFindElement(child, gesture));
         }
 

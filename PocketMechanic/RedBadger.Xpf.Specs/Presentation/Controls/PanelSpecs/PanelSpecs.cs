@@ -64,7 +64,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
                 Panel.Object.Children.Add(child2.Object);
             };
 
-        private Because of = () => children = Panel.Object.GetChildren();
+        private Because of = () => children = Panel.Object.GetVisualChildren();
 
         private It should_contain_the_correct_number_of_children = () => children.Count().ShouldEqual(2);
 

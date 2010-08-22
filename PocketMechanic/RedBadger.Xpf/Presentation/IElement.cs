@@ -46,7 +46,7 @@
 
         Vector CalculateAbsoluteOffset();
 
-        IEnumerable<IElement> GetChildren();
+        IEnumerable<IElement> GetVisualChildren();
 
         bool HitTest(Point point);
 

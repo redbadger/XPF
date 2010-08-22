@@ -76,8 +76,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.StackPanelSpecs
                     };
 
                 RootElement.Update();
-
-                // RootElement.Draw();
             };
     }
 

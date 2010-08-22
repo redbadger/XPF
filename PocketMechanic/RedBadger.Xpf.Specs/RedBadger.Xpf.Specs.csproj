@@ -94,7 +94,10 @@
     <Compile Include="Presentation\Controls\GridSpecs\ArrangeSpecs.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\Contexts.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\MeasureSpecs.cs" />
-    <Compile Include="Presentation\Controls\ItemsControlSpecs\ItemsControlSpecs.cs" />
+    <Compile Include="Presentation\Controls\ItemsControlSpecs\Contexts.cs" />
+    <Compile Include="Presentation\Controls\ItemsControlSpecs\ItemsSourceSpecs.cs" />
+    <Compile Include="Presentation\Controls\ItemsControlSpecs\ItemTemplateSpecs.cs" />
+    <Compile Include="Presentation\Controls\ItemsControlSpecs\ItemsPanelSpecs.cs" />
     <Compile Include="Presentation\Controls\ItemsControlSpecs\VisualParentSpecs.cs" />
     <Compile Include="Presentation\Controls\RootElementSpecs\RootElementSpecs.cs" />
     <Compile Include="Presentation\Controls\ScrollContentPresenterSpecs\ScrollContentPresenterSpecs.cs" />
@@ -102,6 +105,7 @@
     <Compile Include="Presentation\Controls\StackPanelSpecs\StackPanelSpecs.cs" />
     <Compile Include="Presentation\Controls\TextBlockSpecs\TextBlockSpecs.cs" />
     <Compile Include="Presentation\Controls\PanelSpecs\PanelSpecs.cs" />
+    <Compile Include="Presentation\Controls\VirtualizingStackPanelSpecs\VirtualizingStackPanelSpecs.cs" />
     <Compile Include="Presentation\DefinitionBaseSpecs\DefinitionBaseSpecs.cs" />
     <Compile Include="Presentation\Media\DrawingContextSpecs\Contexts.cs" />
     <Compile Include="Presentation\Media\DrawingContextSpecs\DrawingSpecs.cs" />

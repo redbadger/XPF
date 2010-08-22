@@ -34,7 +34,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ContentControlSpecs
     [Subject(typeof(ContentControl))]
     public class when_empty : a_ContentControl
     {
-        private It should_not_return_any_children = () => ContentControl.GetChildren().Count().ShouldEqual(0);
+        private It should_not_return_any_children = () => ContentControl.GetVisualChildren().Count().ShouldEqual(0);
     }
 
     [Subject(typeof(ContentControl))]
@@ -56,10 +56,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ContentControlSpecs
             () => childContent.VerifySet(element => element.VisualParent = ContentControl);
 
         private It should_return_that_child_when_its_children_are_requested =
-            () => ContentControl.GetChildren().First().ShouldBeTheSameAs(childContent.Object);
+            () => ContentControl.GetVisualChildren().First().ShouldBeTheSameAs(childContent.Object);
 
         private It should_return_the_correct_number_of_children_when_its_children_are_requested =
-            () => ContentControl.GetChildren().Count().ShouldEqual(1);
+            () => ContentControl.GetVisualChildren().Count().ShouldEqual(1);
     }
 
     [Subject(typeof(ContentControl))]

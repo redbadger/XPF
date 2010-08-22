@@ -15,7 +15,7 @@
     {
         public static readonly XpfDependencyProperty ItemTemplateProperty =
             XpfDependencyProperty.Register(
-                "ItemTemplate", typeof(Func<IElement>), typeof(ItemsControl), new PropertyMetadata(null));
+                "ItemTemplate", typeof(Func<object, IElement>), typeof(ItemsControl), new PropertyMetadata(null));
 
         public static readonly XpfDependencyProperty ItemsPanelProperty = XpfDependencyProperty.Register(
             "ItemsPanel", typeof(Panel), typeof(ItemsControl), new PropertyMetadata(null, ItemsPanelChanged));
@@ -25,9 +25,9 @@
 
         private readonly ScrollViewer scrollViewer;
 
-        private bool isItemSourceNew;
+        private IDisposable changingItems;
 
-        private IDisposable itemsChanged;
+        private bool isItemsSourceNew;
 
         public ItemsControl()
         {
@@ -36,11 +36,11 @@
             this.scrollViewer.Content = this.ItemsPanel;
         }
 
-        public Func<IElement> ItemTemplate
+        public Func<object, IElement> ItemTemplate
         {
             get
             {
-                return (Func<IElement>)this.GetValue(ItemTemplateProperty.Value);
+                return (Func<object, IElement>)this.GetValue(ItemTemplateProperty.Value);
             }
 
             set
@@ -75,7 +75,7 @@
             }
         }
 
-        public override IEnumerable<IElement> GetChildren()
+        public override IEnumerable<IElement> GetVisualChildren()
         {
             var child = this.scrollViewer;
             if (child != null)
@@ -88,10 +88,10 @@
 
         public override void OnApplyTemplate()
         {
-            if (this.isItemSourceNew)
+            if (this.isItemsSourceNew)
             {
                 this.PopulatePanelFromItemsSource();
-                this.isItemSourceNew = false;
+                this.isItemsSourceNew = false;
             }
         }
 
@@ -160,33 +160,21 @@
         {
             if (oldValue is INotifyCollectionChanged)
             {
-                this.itemsChanged.Dispose();
+                this.changingItems.Dispose();
             }
 
             var observableCollection = newValue as INotifyCollectionChanged;
             if (observableCollection != null)
             {
-                this.itemsChanged =
+                this.changingItems =
                     Observable.FromEvent<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
                         handler => new NotifyCollectionChangedEventHandler(handler), 
                         handler => observableCollection.CollectionChanged += handler, 
                         handler => observableCollection.CollectionChanged -= handler).Subscribe(this.OnNextItemChange);
             }
 
-            this.isItemSourceNew = true;
+            this.isItemsSourceNew = true;
             this.InvalidateMeasure();
-        }
-
-        private IElement NewItem(object item)
-        {
-            if (this.ItemTemplate == null)
-            {
-                throw new InvalidOperationException("An ItemTemplate has not been supplied");
-            }
-
-            var element = this.ItemTemplate();
-            element.DataContext = item;
-            return element;
         }
 
         private void OnNextItemChange(IEvent<NotifyCollectionChangedEventArgs> eventData)
@@ -196,7 +184,7 @@
                 case NotifyCollectionChangedAction.Add:
                     foreach (var newItem in eventData.EventArgs.NewItems)
                     {
-                        this.ItemsPanel.Children.Add(this.NewItem(newItem));
+                        this.ItemsPanel.AddChild(newItem, this.ItemTemplate);
                     }
 
                     break;
@@ -207,7 +195,7 @@
                              index < startingIndex + eventData.EventArgs.OldItems.Count;
                              index++)
                         {
-                            this.ItemsPanel.Children.RemoveAt(index);
+                            this.ItemsPanel.RemoveChildAt(index);
                         }
 
                         break;
@@ -219,8 +207,8 @@
 
                         foreach (var newItem in eventData.EventArgs.NewItems)
                         {
-                            this.ItemsPanel.Children.RemoveAt(startingIndex);
-                            this.ItemsPanel.Children.Insert(startingIndex, this.NewItem(newItem));
+                            this.ItemsPanel.RemoveChildAt(startingIndex);
+                            this.ItemsPanel.InsertChildAt(startingIndex, newItem, this.ItemTemplate);
                             startingIndex++;
                         }
 
@@ -229,9 +217,8 @@
 
 #if !WINDOWS_PHONE
                 case NotifyCollectionChangedAction.Move:
-                    var elementToMove = this.ItemsPanel.Children[eventData.EventArgs.OldStartingIndex];
-                    this.ItemsPanel.Children.RemoveAt(eventData.EventArgs.OldStartingIndex);
-                    this.ItemsPanel.Children.Insert(eventData.EventArgs.NewStartingIndex, elementToMove);
+                    this.ItemsPanel.MoveChild(
+                        eventData.EventArgs.OldStartingIndex, eventData.EventArgs.NewStartingIndex);
                     break;
 #endif
                 case NotifyCollectionChangedAction.Reset:
@@ -244,13 +231,13 @@
 
         private void PopulatePanelFromItemsSource()
         {
-            this.ItemsPanel.Children.Clear();
+            this.ItemsPanel.ClearChildren();
 
             if (this.ItemsSource != null)
             {
                 foreach (var item in this.ItemsSource)
                 {
-                    this.ItemsPanel.Children.Add(this.NewItem(item));
+                    this.ItemsPanel.AddChild(item, this.ItemTemplate);
                 }
             }
         }

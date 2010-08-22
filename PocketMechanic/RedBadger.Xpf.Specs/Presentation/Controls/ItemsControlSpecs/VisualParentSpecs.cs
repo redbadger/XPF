@@ -23,7 +23,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
     using It = Machine.Specifications.It;
 
     [Subject(typeof(ItemsControl))]
-    public class when_a_panel_is_set : a_ItemsControl
+    public class when_a_panel_is_set : an_ItemsControl
     {
         private static Mock<Panel> panel;
 
@@ -50,16 +50,16 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
     }
 
     [Subject(typeof(ItemsControl))]
-    public class when_asked_for_its_children : a_ItemsControl
+    public class when_asked_for_its_children : an_ItemsControl
     {
         private It should_return_a_scroll_viewer =
-            () => ItemsControl.GetChildren().First().ShouldBeOfType<ScrollViewer>();
+            () => ItemsControl.GetVisualChildren().First().ShouldBeOfType<ScrollViewer>();
 
-        private It should_return_one_child_only = () => ItemsControl.GetChildren().Count().ShouldEqual(1);
+        private It should_return_one_child_only = () => ItemsControl.GetVisualChildren().Count().ShouldEqual(1);
     }
 
     [Subject(typeof(ItemsControl))]
-    public class when_panel_is_changed : a_ItemsControl
+    public class when_panel_is_changed : an_ItemsControl
     {
         private static Mock<Panel> oldPanel;
 
@@ -75,7 +75,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
     }
 
     [Subject(typeof(ItemsControl))]
-    public class when_the_default_panel_is_used : a_ItemsControl
+    public class when_the_default_panel_is_used : an_ItemsControl
     {
         private It should_have_added_a_panel_as_a_descendant_in_its_visual_tree = () =>
             {
