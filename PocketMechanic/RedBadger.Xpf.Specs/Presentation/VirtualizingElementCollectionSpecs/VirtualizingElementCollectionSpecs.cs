@@ -12,6 +12,7 @@
 namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
 {
     using System.Linq;
+    using System.Windows;
 
     using Machine.Specifications;
 
@@ -20,12 +21,15 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
     using RedBadger.Xpf.Presentation;
 
     using It = Machine.Specifications.It;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_VirtualElementCollection
     {
+        protected static UIElement Owner = new Mock<UIElement> { CallBase = true }.Object;
+
         protected static VirtualizingElementCollection Subject;
 
-        private Establish context = () => Subject = new VirtualizingElementCollection();
+        private Establish context = () => Subject = new VirtualizingElementCollection(Owner);
     }
 
     [Subject(typeof(VirtualizingElementCollection), "Add")]
@@ -76,38 +80,86 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
         private It should_shift_the_existing_element = () => Subject[0].ShouldBeTheSameAs(element2);
     }
 
-    [Subject(typeof(VirtualizingElementCollection), "Virtualization")]
+    [Subject(typeof(VirtualizingElementCollection), "Realization")]
     public class when_realizing_an_element : a_VirtualElementCollection
     {
         private static readonly object item = new object();
 
         private static IElement element;
 
-        private Establish context = () => Subject.Add(item, o => new Mock<UIElement> { CallBase = true }.Object);
+        private Establish context = () =>
+            {
+                Subject.Add(item, o => new Mock<UIElement> { CallBase = true }.Object);
+                Owner.Measure(new Size());
+            };
 
         private Because of = () => element = Subject.Realize(0);
 
         private It should_appear_in_the_realized_elements = () => Subject.RealizedElements.Count.ShouldEqual(1);
 
+        private It should_invalidate_its_owners_measure = () => Owner.IsMeasureValid.ShouldBeFalse();
+
         private It should_realize_the_element = () => Subject.IsReal(0).ShouldBeTrue();
 
         private It should_set_the_data_context_of_the_element = () => element.DataContext.ShouldBeTheSameAs(item);
+
+        private It should_set_the_elements_visual_parent = () => element.VisualParent.ShouldBeTheSameAs(Owner);
+    }
+
+    [Subject(typeof(VirtualizingElementCollection), "Realization")]
+    public class when_realizing_an_already_realized_element : a_VirtualElementCollection
+    {
+        private static object originalContext;
+
+        private static IElement realized1;
+
+        private static IElement realized2;
+
+        private Establish context = () =>
+            {
+                Subject.Add(new object(), o => new Mock<UIElement> { CallBase = true }.Object);
+                realized1 = Subject.Realize(0);
+                originalContext = realized1.DataContext;
+                Owner.Measure(new Size());
+            };
+
+        private Because of = () => realized2 = Subject.Realize(0);
+
+        private It should_not_change_the_data_context = () => realized2.DataContext.ShouldBeTheSameAs(originalContext);
+
+        private It should_not_change_the_elements_visual_parent =
+            () => realized2.VisualParent.ShouldBeTheSameAs(realized1.VisualParent);
+
+        private It should_not_invalidate_its_owners_measure = () => Owner.IsMeasureValid.ShouldBeTrue();
+
+        private It should_not_realize_the_element_again = () => realized2.ShouldBeTheSameAs(realized1);
+
+        private It should_still_appear_in_the_realized_elements = () => Subject.RealizedElements.Count.ShouldEqual(1);
+
+        private It should_still_be_realized = () => Subject.IsReal(0).ShouldBeTrue();
     }
 
     [Subject(typeof(VirtualizingElementCollection), "Virtualization")]
     public class when_virtualizing_an_element : a_VirtualElementCollection
     {
+        private static IElement element;
+
         private Establish context = () =>
             {
                 Subject.Add(null, o => new Mock<IElement>().Object);
-                Subject.Realize(0);
+                element = Subject.Realize(0);
+                Owner.Measure(new Size());
             };
 
         private Because of = () => Subject.Virtualize(0);
 
+        private It should_invalidate_its_owners_measure = () => Owner.IsMeasureValid.ShouldBeFalse();
+
         private It should_not_appear_in_the_realized_elements = () => Subject.RealizedElements.Count.ShouldEqual(0);
 
         private It should_realize_the_element = () => Subject.IsReal(0).ShouldBeFalse();
+
+        private It should_unset_the_elements_visual_parent = () => element.VisualParent.ShouldBeNull();
     }
 
     [Subject(typeof(VirtualizingElementCollection), "Virtualization")]

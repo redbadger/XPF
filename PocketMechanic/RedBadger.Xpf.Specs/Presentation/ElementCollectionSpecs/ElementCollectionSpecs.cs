@@ -22,7 +22,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
     [Subject(typeof(ElementCollection), "Visual Parent")]
     public class when_adding_an_element_to : an_ElementCollection
     {
-        private Establish context = () => Owner.Object.Measure(Size.Empty);
+        private Establish context = () => Owner.Object.Measure(new Size());
 
         private Because of = () => ElementCollection.Add(Child1.Object);
 

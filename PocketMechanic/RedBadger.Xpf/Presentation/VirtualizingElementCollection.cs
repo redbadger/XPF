@@ -9,7 +9,14 @@
     {
         private readonly IList<Memento> items = new List<Memento>();
 
+        private readonly IElement owner;
+
         private readonly IList<IElement> realizedElements = new List<IElement>();
+
+        public VirtualizingElementCollection(IElement owner)
+        {
+            this.owner = owner;
+        }
 
         public int Count
         {
@@ -61,14 +68,31 @@
 
         public IElement Realize(int index)
         {
-            var element = this.items[index].Realize();
+            var memento = this.items[index];
+
+            if (memento.IsReal)
+            {
+                return memento.Element;
+            }
+
+            var element = memento.Realize();
             this.realizedElements.Add(element);
+            element.VisualParent = this.owner;
+            this.owner.InvalidateMeasure();
             return element;
         }
 
         public void Virtualize(int index)
         {
-            this.realizedElements.Remove(this.items[index].Virtualize());
+            var memento = this.items[index];
+
+            if (memento.IsReal)
+            {
+                var element = memento.Virtualize();
+                element.VisualParent = null;
+                this.realizedElements.Remove(element);
+                this.owner.InvalidateMeasure();
+            }
         }
 
         public void Add(IElement element)
@@ -139,18 +163,6 @@
             this.items.Insert(newIndex, memento);
         }
 
-        protected static IElement NewContainer(object item, Func<object, IElement> template)
-        {
-            if (template == null)
-            {
-                throw new InvalidOperationException("A Template for this Item has not been supplied");
-            }
-
-            var element = template(item);
-            element.DataContext = item;
-            return element;
-        }
-
         private class Memento
         {
             private readonly object item;
@@ -163,7 +175,7 @@
             {
                 if (template == null)
                 {
-                    throw new ArgumentNullException("template");
+                    throw new InvalidOperationException("A Template for this Item has not been supplied");
                 }
 
                 this.item = item;
