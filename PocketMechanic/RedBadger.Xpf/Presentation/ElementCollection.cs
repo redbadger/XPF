@@ -1,11 +1,12 @@
 ﻿namespace RedBadger.Xpf.Presentation
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
 
-    public class ElementCollection : IList<IElement>
+    public class ElementCollection : IList<IElement>, ITemplatedList<IElement>
     {
-        private readonly List<IElement> children = new List<IElement>();
+        private readonly List<IElement> elements = new List<IElement>();
 
         private readonly IElement owner;
 
@@ -18,7 +19,7 @@
         {
             get
             {
-                return this.children.Count;
+                return this.elements.Count;
             }
         }
 
@@ -34,15 +35,15 @@
         {
             get
             {
-                return this.children[index];
+                return this.elements[index];
             }
 
             set
             {
-                IElement oldItem = this.children[index];
-                IElement newItem = value;
+                var oldItem = this.elements[index];
+                var newItem = value;
 
-                this.children[index] = newItem;
+                this.elements[index] = newItem;
                 this.owner.InvalidateMeasure();
                 this.SetParents(oldItem, newItem);
             }
@@ -50,29 +51,30 @@
 
         public void Add(IElement item)
         {
-            this.children.Add(item);
+            this.elements.Add(item);
             this.owner.InvalidateMeasure();
             this.SetParents(null, item);
         }
 
         public void Clear()
         {
-            this.children.Clear();
+            this.elements.Clear();
+            this.owner.InvalidateMeasure();
         }
 
         public bool Contains(IElement item)
         {
-            return this.children.Contains(item);
+            return this.elements.Contains(item);
         }
 
         public void CopyTo(IElement[] array, int arrayIndex)
         {
-            this.children.CopyTo(array, arrayIndex);
+            this.elements.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(IElement item)
         {
-            bool wasRemoved = this.children.Remove(item);
+            bool wasRemoved = this.elements.Remove(item);
             if (wasRemoved)
             {
                 this.owner.InvalidateMeasure();
@@ -89,27 +91,56 @@
 
         public IEnumerator<IElement> GetEnumerator()
         {
-            return this.children.GetEnumerator();
+            return this.elements.GetEnumerator();
         }
 
         public int IndexOf(IElement item)
         {
-            return this.children.IndexOf(item);
+            return this.elements.IndexOf(item);
         }
 
         public void Insert(int index, IElement item)
         {
-            this.children.Insert(index, item);
+            this.elements.Insert(index, item);
             this.owner.InvalidateMeasure();
             this.SetParents(null, item);
         }
 
         public void RemoveAt(int index)
         {
-            var oldItem = this.children[index];
-            this.children.RemoveAt(index);
+            var oldItem = this.elements[index];
+            this.elements.RemoveAt(index);
             this.owner.InvalidateMeasure();
             this.SetParents(oldItem, null);
+        }
+
+        public void Add(object item, Func<object, IElement> template)
+        {
+            this.Add(Realize(item, template));
+        }
+
+        public void Insert(int index, object item, Func<object, IElement> template)
+        {
+            this.Insert(index, Realize(item, template));
+        }
+
+        public void Move(int oldIndex, int newIndex)
+        {
+            var element = this[oldIndex];
+            this.RemoveAt(oldIndex);
+            this.Insert(newIndex, element);
+        }
+
+        private static IElement Realize(object item, Func<object, IElement> template)
+        {
+            if (template == null)
+            {
+                throw new InvalidOperationException("An element cannot be created without a template");
+            }
+
+            var element = template(item);
+            element.DataContext = item;
+            return element;
         }
 
         private void SetParents(IElement oldItem, IElement newItem)

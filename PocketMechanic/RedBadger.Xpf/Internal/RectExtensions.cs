@@ -3,7 +3,7 @@ namespace RedBadger.Xpf.Internal
     using System;
     using System.Windows;
 
-    public static class RectExtensions
+    internal static class RectExtensions
     {
         public static Rect Deflate(this Rect rect, Thickness thickness)
         {

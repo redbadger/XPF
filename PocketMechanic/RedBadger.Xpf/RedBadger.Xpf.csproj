@@ -88,7 +88,7 @@
     <Compile Include="Internal\Controls\ScrollData.cs" />
     <Compile Include="Presentation\Controls\ItemsControl.cs" />
     <Compile Include="Presentation\Controls\Primitives\IScrollInfo.cs" />
-    <Compile Include="Presentation\Controls\Primitives\IPanel.cs" />
+    <Compile Include="Presentation\ITemplatedList.cs" />
     <Compile Include="Presentation\Controls\ScrollContentPresenter.cs" />
     <Compile Include="Presentation\Controls\ScrollViewer.cs" />
     <Compile Include="Presentation\Controls\VirtualizingStackPanel.cs" />
@@ -141,6 +141,7 @@
     <Compile Include="Presentation\Controls\StackPanel.cs" />
     <Compile Include="Presentation\Controls\TextBlock.cs" />
     <Compile Include="Presentation\IElement.cs" />
+    <Compile Include="Presentation\VirtualizingElementCollection.cs" />
     <Compile Include="Presentation\XpfDependencyProperty.cs" />
     <Compile Include="Presentation\PropertyChangedEventArgs.cs" />
     <Compile Include="Presentation\PropertyChangedNotifier.cs" />

@@ -179,12 +179,13 @@
 
         private void OnNextItemChange(IEvent<NotifyCollectionChangedEventArgs> eventData)
         {
+            var children = (ITemplatedList<IElement>)this.ItemsPanel.Children;
             switch (eventData.EventArgs.Action)
             {
                 case NotifyCollectionChangedAction.Add:
                     foreach (var newItem in eventData.EventArgs.NewItems)
                     {
-                        this.ItemsPanel.AddChild(newItem, this.ItemTemplate);
+                        children.Add(newItem, this.ItemTemplate);
                     }
 
                     break;
@@ -195,7 +196,7 @@
                              index < startingIndex + eventData.EventArgs.OldItems.Count;
                              index++)
                         {
-                            this.ItemsPanel.RemoveChildAt(index);
+                            children.RemoveAt(index);
                         }
 
                         break;
@@ -207,8 +208,8 @@
 
                         foreach (var newItem in eventData.EventArgs.NewItems)
                         {
-                            this.ItemsPanel.RemoveChildAt(startingIndex);
-                            this.ItemsPanel.InsertChildAt(startingIndex, newItem, this.ItemTemplate);
+                            this.ItemsPanel.Children.RemoveAt(startingIndex);
+                            children.Insert(startingIndex, newItem, this.ItemTemplate);
                             startingIndex++;
                         }
 
@@ -217,8 +218,8 @@
 
 #if !WINDOWS_PHONE
                 case NotifyCollectionChangedAction.Move:
-                    this.ItemsPanel.MoveChild(
-                        eventData.EventArgs.OldStartingIndex, eventData.EventArgs.NewStartingIndex);
+                    children.Move(eventData.EventArgs.OldStartingIndex, eventData.EventArgs.NewStartingIndex);
+
                     break;
 #endif
                 case NotifyCollectionChangedAction.Reset:
@@ -231,13 +232,14 @@
 
         private void PopulatePanelFromItemsSource()
         {
-            this.ItemsPanel.ClearChildren();
+            var children = (ITemplatedList<IElement>)this.ItemsPanel.Children;
+            children.Clear();
 
             if (this.ItemsSource != null)
             {
                 foreach (var item in this.ItemsSource)
                 {
-                    this.ItemsPanel.AddChild(item, this.ItemTemplate);
+                    children.Add(item, this.ItemTemplate);
                 }
             }
         }

@@ -2,8 +2,13 @@
 {
     using System;
 
-    public static class DoubleExtensions
+    internal static class DoubleExtensions
     {
+        public static double Coerce(this double offset, double min, double max)
+        {
+            return Math.Max(Math.Min(offset, max), min);
+        }
+
         public static bool IsCloseTo(this double value1, double value2)
         {
             return !value1.IsDifferentFrom(value2);
@@ -28,12 +33,7 @@
 
         public static bool IsGreaterThanOrCloseTo(this double value1, double value2)
         {
-            if (value1 <= value2)
-            {
-                return value1.IsCloseTo(value2);
-            }
-
-            return true;
+            return value1 > value2 || value1.IsCloseTo(value2);
         }
 
         public static bool IsLessThan(this double value1, double value2)
@@ -43,12 +43,7 @@
 
         public static bool IsLessThanOrCloseTo(this double value1, double value2)
         {
-            if (value1 >= value2)
-            {
-                return value1.IsCloseTo(value2);
-            }
-
-            return true;
+            return value1 < value2 || value1.IsCloseTo(value2);
         }
     }
 }

@@ -2,7 +2,7 @@ namespace RedBadger.Xpf.Internal
 {
     using RedBadger.Xpf.Presentation;
 
-    public static class VectorExtensions
+    internal static class VectorExtensions
     {
         public static bool IsCloseTo(this Vector value1, Vector value2)
         {

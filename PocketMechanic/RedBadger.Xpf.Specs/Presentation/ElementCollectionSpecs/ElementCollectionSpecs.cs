@@ -15,32 +15,9 @@ namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
 
     using Machine.Specifications;
 
-    using Moq;
-
     using RedBadger.Xpf.Presentation;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-
-    public abstract class an_ElementCollection
-    {
-        protected static Mock<UIElement> Child1;
-
-        protected static Mock<UIElement> Child2;
-
-        protected static Mock<UIElement> Owner;
-
-        protected static ElementCollection ElementCollection;
-
-        private Establish context = () =>
-            {
-                Child1 = new Mock<UIElement> { CallBase = true };
-                Child2 = new Mock<UIElement> { CallBase = true };
-                Owner = new Mock<UIElement> { CallBase = true };
-
-                ElementCollection = new ElementCollection(Owner.Object);
-            };
-    }
 
     [Subject(typeof(ElementCollection), "Visual Parent")]
     public class when_adding_an_element_to : an_ElementCollection

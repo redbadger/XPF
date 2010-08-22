@@ -151,9 +151,6 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Primitives\ButtonBase.cs">
       <Link>Presentation\Controls\Primitives\ButtonBase.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Primitives\IPanel.cs">
-      <Link>Presentation\Controls\Primitives\IPanel.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Primitives\IScrollInfo.cs">
       <Link>Presentation\Controls\Primitives\IScrollInfo.cs</Link>
     </Compile>
@@ -207,6 +204,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IRootElement.cs">
       <Link>Presentation\IRootElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\ITemplatedList.cs">
+      <Link>Presentation\ITemplatedList.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\Brush.cs">
       <Link>Presentation\Media\Brush.cs</Link>
@@ -264,6 +264,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Vector.cs">
       <Link>Presentation\Vector.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\VirtualizingElementCollection.cs">
+      <Link>Presentation\VirtualizingElementCollection.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\XpfDependencyProperty.cs">
       <Link>Presentation\XpfDependencyProperty.cs</Link>

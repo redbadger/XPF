@@ -11,15 +11,28 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
 {
+    using System.Linq;
+
     using Machine.Specifications;
 
+    using Moq;
+
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+
+    using It = Machine.Specifications.It;
 
     public abstract class a_VirtualizingStackPanel
     {
-        protected static VirtualizingStackPanel virtualizingStackPanel;
+        protected static ITemplatedList<IElement> Children;
 
-        private Establish context = () => virtualizingStackPanel = new VirtualizingStackPanel();
+        protected static VirtualizingStackPanel Subject;
+
+        private Establish context = () =>
+            {
+                Subject = new VirtualizingStackPanel();
+                Children = Subject.Children as ITemplatedList<IElement>;
+            };
     }
 
     [Subject(typeof(VirtualizingStackPanel), "Scrolling")]
@@ -29,9 +42,99 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
 
         private Establish context = () => scrollViewer = new ScrollViewer();
 
-        private Because of = () => scrollViewer.Content = virtualizingStackPanel;
+        private Because of = () => scrollViewer.Content = Subject;
 
-        private It should_not_need_a_ScrollContentPresenter =
-            () => virtualizingStackPanel.VisualParent.ShouldBeOfType<ScrollViewer>();
+        private It should_not_need_a_ScrollContentPresenter = () => Subject.VisualParent.ShouldBeOfType<ScrollViewer>();
+    }
+
+    [Subject(typeof(VirtualizingStackPanel), "Children")]
+    public class when_a_child_is_added : a_VirtualizingStackPanel
+    {
+        private Because of = () => Children.Add(null, o => new Mock<IElement>().Object);
+
+        private It should_contain_the_child = () => Subject.Children[0].ShouldBeOfType<IElement>();
+    }
+
+    [Subject(typeof(VirtualizingStackPanel), "Children")]
+    public class when_a_child_is_inserted : a_VirtualizingStackPanel
+    {
+        private Because of = () => Children.Insert(0, null, o => new Mock<IElement>().Object);
+
+        private It should_contain_the_child = () => Subject.Children[0].ShouldBeOfType<IElement>();
+    }
+
+    [Subject(typeof(VirtualizingStackPanel), "Children")]
+    public class when_a_child_is_removed : a_VirtualizingStackPanel
+    {
+        private Establish context = () => Children.Add(null, o => new Mock<IElement>().Object);
+
+        private Because of = () => Children.RemoveAt(0);
+
+        private It should_no_longer_contain_the_child = () => Subject.Children.Count.ShouldEqual(0);
+    }
+
+    [Subject(typeof(VirtualizingStackPanel), "Children")]
+    public class when_the_children_are_cleared : a_VirtualizingStackPanel
+    {
+        private Establish context = () => Children.Add(null, o => new Mock<IElement>().Object);
+
+        private Because of = () => Children.Clear();
+
+        private It should_no_longer_contain_the_child = () => Subject.Children.Count.ShouldEqual(0);
+    }
+
+    [Subject(typeof(VirtualizingStackPanel), "Children")]
+    public class when_a_child_is_moved : a_VirtualizingStackPanel
+    {
+        private static IElement child1;
+
+        private static IElement child2;
+
+        private Establish context = () =>
+            {
+                child1 = new Mock<IElement>().Object;
+                Children.Add(null, o => child1);
+                child2 = new Mock<IElement>().Object;
+                Children.Add(null, o => child2);
+            };
+
+        private Because of = () => Children.Move(0, 1);
+
+        private It should_move_the_child_to_the_new_position = () => Subject.Children[1].ShouldBeTheSameAs(child1);
+
+        private It should_shift_what_was_there_before = () => Subject.Children[0].ShouldBeTheSameAs(child2);
+    }
+
+    [Subject(typeof(VirtualizingStackPanel), "Virtualization")]
+    public class when_a_child_is_added_that_makes_the_extent_bigger_than_the_viewport : a_VirtualizingStackPanel
+    {
+        private static UIElement firstChild;
+
+        private static ScrollViewer scrollViewer;
+
+        private Establish context = () =>
+            {
+                scrollViewer = new ScrollViewer { Content = Subject, Height = 100 };
+                firstChild = new Mock<UIElement>().Object;
+                firstChild.Height = 100;
+                Children.Add(null, o => firstChild);
+            };
+
+        private Because of = () =>
+            {
+                var element = new Mock<UIElement>().Object;
+                element.Height = 50;
+                Children.Add(null, o => element);
+            };
+
+        private It should_contain_all_the_added_children = () => Subject.Children.Count.ShouldEqual(2);
+
+/*
+        private It should_not_add_the_child_to_its_visual_tree =
+            () => Subject.GetVisualChildren().Count().ShouldEqual(1);
+
+        private It should_virtualize_the_child_which_is_not_in_view =
+            () => Subject.GetVisualChildren().Last().ShouldBeTheSameAs(firstChild);
+*/
     }
 }

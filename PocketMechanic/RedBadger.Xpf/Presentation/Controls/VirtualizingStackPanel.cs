@@ -1,6 +1,5 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls
 {
-    using System;
     using System.Windows;
 
     using RedBadger.Xpf.Internal.Controls;
@@ -8,7 +7,7 @@
 
     using Vector = RedBadger.Xpf.Presentation.Vector;
 
-    public class VirtualizingStackPanel : StackPanel, IScrollInfo, IPanel
+    public class VirtualizingStackPanel : StackPanel, IScrollInfo
     {
         private ScrollData scrollData;
 
@@ -64,12 +63,10 @@
 
         public void SetHorizontalOffset(double offset)
         {
-            throw new NotImplementedException();
         }
 
         public void SetVerticalOffset(double offset)
         {
-            throw new NotImplementedException();
         }
     }
 }

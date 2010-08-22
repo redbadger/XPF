@@ -2,7 +2,7 @@ namespace RedBadger.Xpf.Internal
 {
     using System.Windows;
 
-    public static class SizeExtensions
+    internal static class SizeExtensions
     {
         public static bool IsDifferentFrom(this Size size1, Size size2)
         {

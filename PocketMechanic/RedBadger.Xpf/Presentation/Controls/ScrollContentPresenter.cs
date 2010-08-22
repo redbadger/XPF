@@ -71,33 +71,49 @@
 
         public void SetHorizontalOffset(double offset)
         {
-            if (this.CanHorizontallyScroll)
+            if (!this.CanHorizontallyScroll)
             {
-                offset = ValidateInputOffset(offset);
-                if (this.scrollData.Offset.X.IsDifferentFrom(offset))
-                {
-                    this.scrollData.Offset.X = offset;
-                    this.InvalidateArrange();
-                }
+                return;
+            }
+
+            if (double.IsNaN(offset))
+            {
+                throw new ArgumentOutOfRangeException("offset");
+            }
+
+            offset = Math.Max(0d, offset);
+
+            if (this.scrollData.Offset.X.IsDifferentFrom(offset))
+            {
+                this.scrollData.Offset.X = offset;
+                this.InvalidateArrange();
             }
         }
 
         public void SetVerticalOffset(double offset)
         {
-            if (this.CanVerticallyScroll)
+            if (!this.CanVerticallyScroll)
             {
-                offset = ValidateInputOffset(offset);
-                if (this.scrollData.Offset.Y.IsDifferentFrom(offset))
-                {
-                    this.scrollData.Offset.Y = offset;
-                    this.InvalidateArrange();
-                }
+                return;
+            }
+
+            if (double.IsNaN(offset))
+            {
+                throw new ArgumentOutOfRangeException("offset");
+            }
+
+            offset = Math.Max(0d, offset);
+
+            if (this.scrollData.Offset.Y.IsDifferentFrom(offset))
+            {
+                this.scrollData.Offset.Y = offset;
+                this.InvalidateArrange();
             }
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            IElement content = this.Content;
+            var content = this.Content;
 
             this.UpdateScrollData(finalSize, this.scrollData.Extent);
 
@@ -119,13 +135,13 @@
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            IElement content = this.Content;
+            var content = this.Content;
             var desiredSize = new Size();
             var extent = new Size();
 
             if (content != null)
             {
-                Size availableSizeForContent = availableSize;
+                var availableSizeForContent = availableSize;
                 if (this.scrollData.CanHorizontallyScroll)
                 {
                     availableSizeForContent.Width = double.PositiveInfinity;
@@ -149,39 +165,15 @@
             return desiredSize;
         }
 
-        private static double CoerceOffset(double offset, double extent, double viewport)
-        {
-            if (offset > (extent - viewport))
-            {
-                offset = extent - viewport;
-            }
-
-            if (offset < 0.0)
-            {
-                offset = 0.0;
-            }
-
-            return offset;
-        }
-
-        private static double ValidateInputOffset(double offset)
-        {
-            if (double.IsNaN(offset))
-            {
-                throw new ArgumentOutOfRangeException("offset");
-            }
-
-            return Math.Max(0.0, offset);
-        }
-
         private void UpdateScrollData(Size viewport, Size extent)
         {
             this.scrollData.Viewport = viewport;
             this.scrollData.Extent = extent;
 
-            var x = CoerceOffset(this.scrollData.Offset.X, this.scrollData.Extent.Width, this.scrollData.Viewport.Width);
-            var y = CoerceOffset(
-                this.scrollData.Offset.Y, this.scrollData.Extent.Height, this.scrollData.Viewport.Height);
+            double x = this.scrollData.Offset.X.Coerce(
+                0d, this.scrollData.Extent.Width - this.scrollData.Viewport.Width);
+            double y = this.scrollData.Offset.Y.Coerce(
+                0d, this.scrollData.Extent.Height - this.scrollData.Viewport.Height);
 
             this.scrollData.Offset = new Vector(x, y);
         }
