@@ -12,6 +12,7 @@
 namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
 {
     using System.Linq;
+    using System.Windows;
 
     using Machine.Specifications;
 
@@ -21,6 +22,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
     using RedBadger.Xpf.Presentation.Controls;
 
     using It = Machine.Specifications.It;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_VirtualizingStackPanel
     {
@@ -50,17 +52,39 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
     [Subject(typeof(VirtualizingStackPanel), "Children")]
     public class when_a_child_is_added : a_VirtualizingStackPanel
     {
-        private Because of = () => Children.Add(null, o => new Mock<IElement>().Object);
+        private Because of = () =>
+            {
+                var element = new Mock<UIElement> { CallBase = true }.Object;
+                element.Width = 100;
+                Children.Add(null, o => element);
+                Subject.Measure(new Size());
+                Subject.Arrange(new Rect());
+            };
 
         private It should_contain_the_child = () => Subject.Children[0].ShouldBeOfType<IElement>();
+
+        private It should_not_arrange_the_child = () => Subject.Children[0].IsArrangeValid.ShouldBeFalse();
+
+        private It should_not_measure_the_child = () => Subject.Children[0].IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(VirtualizingStackPanel), "Children")]
     public class when_a_child_is_inserted : a_VirtualizingStackPanel
     {
-        private Because of = () => Children.Insert(0, null, o => new Mock<IElement>().Object);
+        private Because of = () =>
+            {
+                var element = new Mock<UIElement> { CallBase = true }.Object;
+                element.Width = 100;
+                Children.Insert(0, null, o => element);
+                Subject.Measure(new Size());
+                Subject.Arrange(new Rect());
+            };
 
         private It should_contain_the_child = () => Subject.Children[0].ShouldBeOfType<IElement>();
+
+        private It should_not_arrange_the_child = () => Subject.Children[0].IsArrangeValid.ShouldBeFalse();
+
+        private It should_not_measure_the_child = () => Subject.Children[0].IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(VirtualizingStackPanel), "Children")]
@@ -106,7 +130,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
     }
 
     [Subject(typeof(VirtualizingStackPanel), "Virtualization")]
-    public class when_a_child_is_added_that_makes_the_extent_bigger_than_the_viewport : a_VirtualizingStackPanel
+    public class when_a_child_is_added_that_wants_to_make_the_extent_bigger_than_the_viewport : a_VirtualizingStackPanel
     {
         private static UIElement firstChild;
 
@@ -118,6 +142,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
                 firstChild = new Mock<UIElement>().Object;
                 firstChild.Height = 100;
                 Children.Add(null, o => firstChild);
+                Subject.Measure(new Size());
             };
 
         private Because of = () =>
@@ -130,6 +155,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
         private It should_contain_all_the_added_children = () => Subject.Children.Count.ShouldEqual(2);
 
 /*
+        private It should_have_an_extent_equal_to_the_viewport =
+            () => scrollViewer.Extent.ShouldEqual(scrollViewer.Viewport);
+
         private It should_not_add_the_child_to_its_visual_tree =
             () => Subject.GetVisualChildren().Count().ShouldEqual(1);
 

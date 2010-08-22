@@ -134,7 +134,6 @@
     <Compile Include="Presentation\Controls\DefinitionBase.cs" />
     <Compile Include="Presentation\Controls\Grid.cs" />
     <Compile Include="Presentation\Controls\Image.cs" />
-    <Compile Include="Presentation\Controls\Reference\ReferenceGrid.cs" />
     <Compile Include="Presentation\Controls\Panel.cs" />
     <Compile Include="Presentation\Controls\RootElement.cs" />
     <Compile Include="Presentation\Controls\RowDefinition.cs" />

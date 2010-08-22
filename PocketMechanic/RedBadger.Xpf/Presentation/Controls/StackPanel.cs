@@ -32,7 +32,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             var finalRect = new Rect(new Point(),  arrangeSize);
             double width = 0;
             double height = 0;
-            foreach (UIElement child in this.Children)
+            foreach (UIElement child in this.GetVisualChildren())
             {
                 if (child != null)
                 {
@@ -71,22 +71,24 @@ namespace RedBadger.Xpf.Presentation.Controls
                 availableSize.Height = double.PositiveInfinity;
             }
 
-            foreach (UIElement child in this.Children)
+            foreach (UIElement child in this.GetVisualChildren())
             {
-                if (child != null)
+                if (child == null)
                 {
-                    child.Measure(availableSize);
-                    Size desiredSize = child.DesiredSize;
-                    if (isHorizontalOrientation)
-                    {
-                        size.Width += desiredSize.Width;
-                        size.Height = Math.Max(size.Height, desiredSize.Height);
-                    }
-                    else
-                    {
-                        size.Width = Math.Max(size.Width, desiredSize.Width);
-                        size.Height += desiredSize.Height;
-                    }
+                    continue;
+                }
+
+                child.Measure(availableSize);
+                Size desiredSize = child.DesiredSize;
+                if (isHorizontalOrientation)
+                {
+                    size.Width += desiredSize.Width;
+                    size.Height = Math.Max(size.Height, desiredSize.Height);
+                }
+                else
+                {
+                    size.Width = Math.Max(size.Width, desiredSize.Width);
+                    size.Height += desiredSize.Height;
                 }
             }
 
