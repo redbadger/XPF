@@ -32,7 +32,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
 
         private Establish context = () => Owner.Object.Measure(Size.Empty);
 
-        private Because of = () => Subject.Add(item, o => element);
+        private Because of = () => Subject.Add(item, () => element);
 
         private It should_invalidate_its_owners_measure = () => Owner.Object.IsMeasureValid.ShouldBeFalse();
 
@@ -50,7 +50,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
 
         private Establish context = () => Owner.Object.Measure(Size.Empty);
 
-        private Because of = () => Subject.Insert(0, item, o => element);
+        private Because of = () => Subject.Insert(0, item, () => element);
 
         private It should_invalidate_its_owners_measure = () => Owner.Object.IsMeasureValid.ShouldBeFalse();
 
@@ -64,7 +64,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
     {
         private Establish context = () =>
             {
-                Subject.Add(new object(), o => new Mock<IElement>().Object);
+                Subject.Add(new object(), () => new Mock<IElement>().Object);
                 Owner.Object.Measure(Size.Empty);
             };
 
@@ -82,8 +82,8 @@ namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
 
         private Establish context = () =>
             {
-                Subject.Add(null, o => element1);
-                Subject.Add(null, o => element2);
+                Subject.Add(null, () => element1);
+                Subject.Add(null, () => element2);
             };
 
         private Because of = () => Subject.Move(0, 1);

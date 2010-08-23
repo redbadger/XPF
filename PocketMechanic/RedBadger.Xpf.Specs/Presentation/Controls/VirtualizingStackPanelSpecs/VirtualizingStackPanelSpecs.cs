@@ -56,7 +56,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
             {
                 var element = new Mock<UIElement> { CallBase = true }.Object;
                 element.Width = 100;
-                Children.Add(null, o => element);
+                Children.Add(null, () => element);
                 Subject.Measure(new Size());
                 Subject.Arrange(new Rect());
             };
@@ -66,67 +66,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
         private It should_not_arrange_the_child = () => Subject.Children[0].IsArrangeValid.ShouldBeFalse();
 
         private It should_not_measure_the_child = () => Subject.Children[0].IsMeasureValid.ShouldBeFalse();
-    }
-
-    [Subject(typeof(VirtualizingStackPanel), "Children")]
-    public class when_a_child_is_inserted : a_VirtualizingStackPanel
-    {
-        private Because of = () =>
-            {
-                var element = new Mock<UIElement> { CallBase = true }.Object;
-                element.Width = 100;
-                Children.Insert(0, null, o => element);
-                Subject.Measure(new Size());
-                Subject.Arrange(new Rect());
-            };
-
-        private It should_contain_the_child = () => Subject.Children[0].ShouldBeOfType<IElement>();
-
-        private It should_not_arrange_the_child = () => Subject.Children[0].IsArrangeValid.ShouldBeFalse();
-
-        private It should_not_measure_the_child = () => Subject.Children[0].IsMeasureValid.ShouldBeFalse();
-    }
-
-    [Subject(typeof(VirtualizingStackPanel), "Children")]
-    public class when_a_child_is_removed : a_VirtualizingStackPanel
-    {
-        private Establish context = () => Children.Add(null, o => new Mock<IElement>().Object);
-
-        private Because of = () => Children.RemoveAt(0);
-
-        private It should_no_longer_contain_the_child = () => Subject.Children.Count.ShouldEqual(0);
-    }
-
-    [Subject(typeof(VirtualizingStackPanel), "Children")]
-    public class when_the_children_are_cleared : a_VirtualizingStackPanel
-    {
-        private Establish context = () => Children.Add(null, o => new Mock<IElement>().Object);
-
-        private Because of = () => Children.Clear();
-
-        private It should_no_longer_contain_the_child = () => Subject.Children.Count.ShouldEqual(0);
-    }
-
-    [Subject(typeof(VirtualizingStackPanel), "Children")]
-    public class when_a_child_is_moved : a_VirtualizingStackPanel
-    {
-        private static IElement child1;
-
-        private static IElement child2;
-
-        private Establish context = () =>
-            {
-                child1 = new Mock<IElement>().Object;
-                Children.Add(null, o => child1);
-                child2 = new Mock<IElement>().Object;
-                Children.Add(null, o => child2);
-            };
-
-        private Because of = () => Children.Move(0, 1);
-
-        private It should_move_the_child_to_the_new_position = () => Subject.Children[1].ShouldBeTheSameAs(child1);
-
-        private It should_shift_what_was_there_before = () => Subject.Children[0].ShouldBeTheSameAs(child2);
     }
 
     [Subject(typeof(VirtualizingStackPanel), "Virtualization")]
@@ -141,7 +80,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
                 scrollViewer = new ScrollViewer { Content = Subject, Height = 100 };
                 firstChild = new Mock<UIElement>().Object;
                 firstChild.Height = 100;
-                Children.Add(null, o => firstChild);
+                Children.Add(null, () => firstChild);
                 Subject.Measure(new Size());
             };
 
@@ -149,7 +88,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
             {
                 var element = new Mock<UIElement>().Object;
                 element.Height = 50;
-                Children.Add(null, o => element);
+                Children.Add(null, () => element);
             };
 
         private It should_contain_all_the_added_children = () => Subject.Children.Count.ShouldEqual(2);

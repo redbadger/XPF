@@ -1,10 +1,8 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls
 {
-    using System;
     using System.Collections.Generic;
     using System.Windows;
 
-    using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Internal.Controls;
     using RedBadger.Xpf.Presentation.Controls.Primitives;
 
@@ -79,12 +77,13 @@
         {
         }
 
-        protected override void CreateChildrenCollection()
+        protected override IList<IElement> CreateChildrenCollection()
         {
-            this.Children = this.children = new VirtualizingElementCollection(this);
+            this.children = new VirtualizingElementCollection(this);
+            return this.children;
         }
 
-/*
+        /*
         protected override Size MeasureOverride(Size availableSize)
         {
             var extent = new Size();

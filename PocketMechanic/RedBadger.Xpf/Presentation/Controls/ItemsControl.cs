@@ -15,7 +15,7 @@
     {
         public static readonly XpfDependencyProperty ItemTemplateProperty =
             XpfDependencyProperty.Register(
-                "ItemTemplate", typeof(Func<object, IElement>), typeof(ItemsControl), new PropertyMetadata(null));
+                "ItemTemplate", typeof(Func<IElement>), typeof(ItemsControl), new PropertyMetadata(null));
 
         public static readonly XpfDependencyProperty ItemsPanelProperty = XpfDependencyProperty.Register(
             "ItemsPanel", typeof(Panel), typeof(ItemsControl), new PropertyMetadata(null, ItemsPanelChanged));
@@ -35,11 +35,11 @@
             this.ItemsPanel = new StackPanel();
         }
 
-        public Func<object, IElement> ItemTemplate
+        public Func<IElement> ItemTemplate
         {
             get
             {
-                return (Func<object, IElement>)this.GetValue(ItemTemplateProperty.Value);
+                return (Func<IElement>)this.GetValue(ItemTemplateProperty.Value);
             }
 
             set
@@ -139,6 +139,12 @@
 
         private void ItemsPanelChanged(object newValue)
         {
+            if (!(((Panel)newValue).Children is ITemplatedList<IElement>))
+            {
+                throw new NotSupportedException(
+                    "ItemsControl requires a panel whose Children collection implements ITemplatedList<IElement>");
+            }
+
             this.InvalidateMeasure();
 
             var newPanel = newValue as IElement;
@@ -217,8 +223,6 @@
                 case NotifyCollectionChangedAction.Reset:
                     this.PopulatePanelFromItemsSource();
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 

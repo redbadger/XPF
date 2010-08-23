@@ -35,7 +35,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
     [Subject(typeof(VirtualizingElementCollection), "Add")]
     public class when_inserting_an_element : a_VirtualElementCollection
     {
-        private Because of = () => Subject.Insert(0, new object(), o => new Mock<UIElement>().Object);
+        private Because of = () => Subject.Insert(0, new object(), () => new Mock<UIElement>().Object);
 
         private It should_insert_an_element_of_the_right_type = () => Subject[0].ShouldBeOfType<UIElement>();
     }
@@ -43,7 +43,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
     [Subject(typeof(VirtualizingElementCollection), "Insert")]
     public class when_adding_an_element : a_VirtualElementCollection
     {
-        private Because of = () => Subject.Add(null, o => new Mock<UIElement>().Object);
+        private Because of = () => Subject.Add(null, () => new Mock<UIElement>().Object);
 
         private It should_add_an_element_of_the_right_type = () => Subject[0].ShouldBeOfType<UIElement>();
     }
@@ -51,7 +51,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
     [Subject(typeof(VirtualizingElementCollection), "Remove")]
     public class when_removing_an_element : a_VirtualElementCollection
     {
-        private Establish context = () => Subject.Add(null, o => new Mock<IElement>().Object);
+        private Establish context = () => Subject.Add(null, () => new Mock<IElement>().Object);
 
         private Because of = () => Subject.RemoveAt(0);
 
@@ -68,9 +68,9 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
         private Establish context = () =>
             {
                 element1 = new Mock<IElement>().Object;
-                Subject.Add(null, o => element1);
+                Subject.Add(null, () => element1);
                 element2 = new Mock<IElement>().Object;
-                Subject.Add(null, o => element2);
+                Subject.Add(null, () => element2);
             };
 
         private Because of = () => Subject.Move(0, 1);
@@ -89,7 +89,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
 
         private Establish context = () =>
             {
-                Subject.Add(item, o => new Mock<UIElement> { CallBase = true }.Object);
+                Subject.Add(item, () => new Mock<UIElement> { CallBase = true }.Object);
                 Owner.Measure(new Size());
             };
 
@@ -123,7 +123,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
 
         private Establish context = () =>
             {
-                Subject.Add(new object(), o => new Mock<UIElement> { CallBase = true }.Object);
+                Subject.Add(new object(), () => new Mock<UIElement> { CallBase = true }.Object);
                 using (var cursor = Subject.GetCursor(0))
                 {
                     realized1 = cursor.Items.First();
@@ -162,8 +162,8 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
 
         private Establish context = () =>
             {
-                Subject.Add(null, o => new Mock<IElement>().Object);
-                Subject.Add(null, o => new Mock<IElement>().Object);
+                Subject.Add(null, () => new Mock<UIElement> { CallBase = true }.Object);
+                Subject.Add(null, () => new Mock<UIElement> { CallBase = true }.Object);
                 using (var cursor = Subject.GetCursor(0))
                 {
                     element = cursor.Items.First();
@@ -184,6 +184,8 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
 
         private It should_invalidate_its_owners_measure = () => Owner.IsMeasureValid.ShouldBeFalse();
 
+        private It should_unset_the_elements_data_context = () => element.DataContext.ShouldBeNull();
+
         private It should_unset_the_elements_visual_parent = () => element.VisualParent.ShouldBeNull();
 
         private It should_virtualize_the_element = () => Subject.IsReal(0).ShouldBeFalse();
@@ -196,8 +198,8 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
 
         private Establish context = () =>
             {
-                Subject.Add(null, o => new Mock<IElement>().Object);
-                Subject.Add(null, o => new Mock<IElement>().Object);
+                Subject.Add(null, () => new Mock<IElement>().Object);
+                Subject.Add(null, () => new Mock<IElement>().Object);
                 using (var cursor = Subject.GetCursor(1))
                 {
                     cursor.Items.First();
@@ -216,7 +218,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
     {
         private static IElement element;
 
-        private Establish context = () => Subject.Add(null, o => new Mock<IElement>().Object);
+        private Establish context = () => Subject.Add(null, () => new Mock<IElement>().Object);
 
         private Because of = () => element = Subject[0];
 
@@ -228,7 +230,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
     [Subject(typeof(VirtualizingElementCollection), "Virtualization")]
     public class when_clearing_the_collection : a_VirtualElementCollection
     {
-        private Establish context = () => Subject.Add(null, o => new Mock<IElement>().Object);
+        private Establish context = () => Subject.Add(null, () => new Mock<IElement>().Object);
 
         private Because of = () => Subject.Clear();
 
@@ -245,7 +247,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
         private Establish context = () =>
             {
                 element = new Mock<IElement>().Object;
-                Subject.Add(null, o => element);
+                Subject.Add(null, () => element);
             };
 
         private Because of = () => doesContainElement = Subject.Contains(element);
@@ -260,8 +262,8 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
 
         private Establish context = () =>
             {
-                Subject.Add(null, o => new Mock<IElement>().Object);
-                Subject.Add(null, o => new Mock<IElement>().Object);
+                Subject.Add(null, () => new Mock<IElement>().Object);
+                Subject.Add(null, () => new Mock<IElement>().Object);
                 using (var cursor = Subject.GetCursor(1))
                 {
                     cursor.Items.First();

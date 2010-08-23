@@ -11,13 +11,37 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 {
+    using System;
+    using System.Collections.Generic;
+
     using Machine.Specifications;
 
+    using Moq;
+    using Moq.Protected;
+
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+
+    using It = Machine.Specifications.It;
 
     [Subject(typeof(ItemsControl), "Panel")]
     public class when_a_panel_is_not_specified : an_ItemsControl
     {
         private It should_use_a_stack_panel = () => ItemsControl.ItemsPanel.ShouldBeOfType<StackPanel>();
+    }
+
+    [Subject(typeof(ItemsControl), "Panel")]
+    public class when_the_panel_specified_has_a_children_collection_that_isnt_ITemplatedList : an_ItemsControl
+    {
+        private static readonly Mock<Panel> panel = new Mock<Panel>();
+
+        private static Exception exception;
+
+        private Establish context =
+            () => panel.Protected().Setup<IList<IElement>>("CreateChildrenCollection").Returns(new List<IElement>());
+
+        private Because of = () => exception = Catch.Exception(() => ItemsControl.ItemsPanel = panel.Object);
+
+        private It should_throw_an_exception = () => exception.ShouldBeOfType<NotSupportedException>();
     }
 }

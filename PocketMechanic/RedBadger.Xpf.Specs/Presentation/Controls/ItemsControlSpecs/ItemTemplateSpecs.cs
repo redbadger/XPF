@@ -51,7 +51,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 
         private Establish context = () =>
             {
-                ItemsControl.ItemTemplate = item => new TextBlock(new Mock<ISpriteFont>().Object);
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
                 items = new ObservableCollection<Color> { Colors.Blue };
                 ItemsControl.ItemsSource = items;
 
@@ -60,7 +60,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 
         private Because of = () =>
             {
-                ItemsControl.ItemTemplate = item => new Border();
+                ItemsControl.ItemTemplate = () => new Border();
                 items.Add(Colors.Red);
 
                 ItemsControl.Measure(new Size());

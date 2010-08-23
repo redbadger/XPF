@@ -56,7 +56,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private Establish context = () =>
             {
                 ItemsControl.ItemsSource = new List<int> { 1, 2, 3 };
-                ItemsControl.ItemTemplate = item => new TextBlock(new Mock<ISpriteFont>().Object);
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 
                 ItemsControl.Measure(new Size());
 
@@ -85,7 +85,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private Because of = () =>
             {
                 ItemsControl.ItemsSource = items;
-                ItemsControl.ItemTemplate = item => new TextBlock(new Mock<ISpriteFont>().Object);
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 
                 ItemsControl.Measure(new Size());
             };
@@ -113,7 +113,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
                 items = new ObservableCollection<Color>();
                 ItemsControl.ItemsSource = items;
 
-                ItemsControl.ItemTemplate = item => new TextBlock(new Mock<ISpriteFont>().Object);
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 
                 ItemsControl.Measure(new Size());
             };
@@ -137,7 +137,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
                 items = new ObservableCollection<Color>();
                 ItemsControl.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = items });
 
-                ItemsControl.ItemTemplate = item => new TextBlock(new Mock<ISpriteFont>().Object);
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 
                 ItemsControl.Measure(new Size());
             };
@@ -161,7 +161,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
                 items = new ObservableCollection<Color> { Colors.Blue };
                 ItemsControl.ItemsSource = items;
 
-                ItemsControl.ItemTemplate = item => new TextBlock(new Mock<ISpriteFont>().Object);
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 
                 ItemsControl.Measure(new Size());
             };
@@ -186,7 +186,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
                 items = new ObservableCollection<Color> { Colors.Blue };
                 ItemsControl.ItemsSource = items;
 
-                ItemsControl.ItemTemplate = item => new TextBlock(new Mock<ISpriteFont>().Object);
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 
                 ItemsControl.Measure(new Size());
 
@@ -220,7 +220,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
                 items = new ObservableCollection<Color> { Colors.Blue, Colors.Red };
                 ItemsControl.ItemsSource = items;
 
-                ItemsControl.ItemTemplate = item => new TextBlock(new Mock<ISpriteFont>().Object);
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 
                 ItemsControl.Measure(new Size());
 
@@ -250,7 +250,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
                 items = new ObservableCollection<Color> { Colors.Blue };
                 ItemsControl.ItemsSource = items;
 
-                ItemsControl.ItemTemplate = item => new TextBlock(new Mock<ISpriteFont>().Object);
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 
                 ItemsControl.Measure(new Size());
             };
@@ -271,7 +271,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
                 items = new ObservableCollection<Color> { Colors.Blue };
                 ItemsControl.ItemsSource = items;
 
-                ItemsControl.ItemTemplate = item => new TextBlock(new Mock<ISpriteFont>().Object);
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 
                 ItemsControl.Measure(new Size());
             };
@@ -298,7 +298,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
                 items = new ObservableCollection<Color> { Colors.Blue };
                 ItemsControl.ItemsSource = items;
 
-                ItemsControl.ItemTemplate = item => new TextBlock(new Mock<ISpriteFont>().Object);
+                ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 
                 ItemsControl.Measure(new Size());
             };

@@ -115,12 +115,12 @@
             this.items.RemoveAt(index);
         }
 
-        public virtual void Add(object item, Func<object, IElement> template)
+        public virtual void Add(object item, Func<IElement> template)
         {
             this.items.Add(new Memento(item, template));
         }
 
-        public virtual void Insert(int index, object item, Func<object, IElement> template)
+        public virtual void Insert(int index, object item, Func<IElement> template)
         {
             this.items.Insert(index, new Memento(item, template));
         }
@@ -167,17 +167,7 @@
                     for (int i = this.firstMemento; i < this.mementoes.Count; i++)
                     {
                         var memento = this.mementoes[i];
-                        IElement element;
-                        if (memento.IsReal)
-                        {
-                            element = memento.Element;
-                        }
-                        else
-                        {
-                            element = memento.Realize();
-                            element.VisualParent = this.owner;
-                            this.owner.InvalidateMeasure();
-                        }
+                        var element = memento.IsReal ? memento.Element : memento.Realize(this.owner);
 
                         this.currentRealizedMementoes.AddLast(memento);
                         yield return element;
@@ -219,11 +209,11 @@
         {
             private readonly object item;
 
-            private readonly Func<object, IElement> template;
+            private readonly Func<IElement> template;
 
             private IElement element;
 
-            public Memento(object item, Func<object, IElement> template)
+            public Memento(object item, Func<IElement> template)
             {
                 if (template == null)
                 {
@@ -252,21 +242,24 @@
 
             public IElement Create()
             {
-                return this.template(this.item);
+                var newElement = this.template();
+                newElement.DataContext = this.item;
+                return newElement;
             }
 
-            public IElement Realize()
+            public IElement Realize(IElement owner)
             {
                 this.element = this.Create();
-                this.element.DataContext = this.item;
+                this.element.VisualParent = owner;
+                owner.InvalidateMeasure();
                 return this.element;
             }
 
-            public IElement Virtualize()
+            public void Virtualize()
             {
-                var virtualized = this.element;
+                this.element.DataContext = null;
+                this.element.VisualParent = null;
                 this.element = null;
-                return virtualized;
             }
         }
     }

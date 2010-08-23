@@ -30,7 +30,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private Establish context = () =>
             {
                 ItemsControl.Measure(Size.Empty);
-                panel = new Mock<Panel>();
+                panel = new Mock<Panel> { CallBase = true };
             };
 
         private Because of = () => ItemsControl.ItemsPanel = panel.Object;
@@ -69,7 +69,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
                 ItemsControl.ItemsPanel = oldPanel.Object;
             };
 
-        private Because of = () => ItemsControl.ItemsPanel = new Mock<Panel>().Object;
+        private Because of = () => ItemsControl.ItemsPanel = new Mock<Panel> { CallBase = true }.Object;
 
         private It should_unset_the_parent_of_the_outgoing_panel = () => oldPanel.Object.VisualParent.ShouldBeNull();
     }

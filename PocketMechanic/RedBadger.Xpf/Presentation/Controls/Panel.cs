@@ -48,9 +48,9 @@
             return this.children.AsEnumerable();
         }
 
-        protected virtual void CreateChildrenCollection()
+        protected virtual IList<IElement> CreateChildrenCollection()
         {
-            this.children = new ElementCollection(this);
+            return new ElementCollection(this);
         }
 
         protected override void OnRender(IDrawingContext drawingContext)
@@ -71,7 +71,7 @@
         {
             if (this.children == null)
             {
-                this.CreateChildrenCollection();
+                this.children = this.CreateChildrenCollection();
             }
         }
     }
