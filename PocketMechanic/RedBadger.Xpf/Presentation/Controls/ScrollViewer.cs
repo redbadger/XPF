@@ -61,19 +61,26 @@
 
         protected override void OnContentChanged(IElement oldContent, IElement newContent)
         {
+            var oldScrollContentPresenter = oldContent as ScrollContentPresenter;
+            if (oldScrollContentPresenter != null)
+            {
+                oldScrollContentPresenter.Content.VisualParent = null;
+            }
+
             var newScrollInfo = newContent as IScrollInfo;
             if (newScrollInfo != null)
             {
                 this.scrollInfo = newScrollInfo;
-                return;
             }
+            else
+            {
+                var scrollContentPresenter = new ScrollContentPresenter();
 
-            var scrollContentPresenter = new ScrollContentPresenter();
+                this.Content = scrollContentPresenter;
+                scrollContentPresenter.Content = newContent;
 
-            this.Content = scrollContentPresenter;
-            scrollContentPresenter.Content = newContent;
-
-            this.scrollInfo = scrollContentPresenter;
+                this.scrollInfo = scrollContentPresenter;
+            }
         }
 
         protected override void OnNextGesture(Gesture gesture)

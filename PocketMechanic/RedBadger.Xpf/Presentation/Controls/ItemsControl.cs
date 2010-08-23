@@ -33,7 +33,6 @@
         {
             this.scrollViewer = new ScrollViewer { VisualParent = this };
             this.ItemsPanel = new StackPanel();
-            this.scrollViewer.Content = this.ItemsPanel;
         }
 
         public Func<object, IElement> ItemTemplate
@@ -124,7 +123,7 @@
             var itemsControl = dependencyObject as ItemsControl;
             if (itemsControl != null)
             {
-                itemsControl.ItemsPanelChanged(args.OldValue, args.NewValue);
+                itemsControl.ItemsPanelChanged(args.NewValue);
             }
         }
 
@@ -138,18 +137,11 @@
             }
         }
 
-        private void ItemsPanelChanged(object oldValue, object newValue)
+        private void ItemsPanelChanged(object newValue)
         {
             this.InvalidateMeasure();
 
-            var oldPanel = oldValue as IElement;
             var newPanel = newValue as IElement;
-
-            if (oldPanel != null)
-            {
-                oldPanel.VisualParent = null;
-            }
-
             if (newPanel != null)
             {
                 this.scrollViewer.Content = newPanel;
