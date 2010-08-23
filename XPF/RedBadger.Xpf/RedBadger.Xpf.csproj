@@ -85,6 +85,7 @@
     <Compile Include="Graphics\SpriteBatchAdapter.cs" />
     <Compile Include="Graphics\SpriteFontAdapter.cs" />
     <Compile Include="Graphics\Texture2DAdapter.cs" />
+    <Compile Include="Graphics\ViewportExtensions.cs" />
     <Compile Include="Internal\Controls\ScrollData.cs" />
     <Compile Include="Presentation\Controls\ItemsControl.cs" />
     <Compile Include="Presentation\Controls\Primitives\IScrollInfo.cs" />

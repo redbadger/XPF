@@ -85,6 +85,9 @@
     <Compile Include="..\RedBadger.Xpf\Graphics\Texture2DAdapter.cs">
       <Link>Graphics\Texture2DAdapter.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\ViewportExtensions.cs">
+      <Link>Graphics\ViewportExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Input\InputManager.cs">
       <Link>Input\InputManager.cs</Link>
     </Compile>

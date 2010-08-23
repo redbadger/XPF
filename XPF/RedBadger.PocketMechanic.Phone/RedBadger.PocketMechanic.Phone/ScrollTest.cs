@@ -70,14 +70,12 @@ namespace RedBadger.PocketMechanic.Phone
                     ItemsSource = items
                 };
 
-            var viewPort = new Rect(
-                this.GraphicsDevice.Viewport.X, 
-                this.GraphicsDevice.Viewport.Y, 
-                this.GraphicsDevice.Viewport.Width, 
-                this.GraphicsDevice.Viewport.Height);
-
             var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
-            this.rootElement = new RootElement(viewPort, renderer, new InputManager()) { Content = itemsControl };
+
+            this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager())
+                {
+                   Content = itemsControl 
+                };
 
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
                 l => items.Add(DateTime.Now.ToString()));
