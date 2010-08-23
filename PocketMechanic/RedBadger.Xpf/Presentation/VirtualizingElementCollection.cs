@@ -7,15 +7,13 @@
 
     public class VirtualizingElementCollection : IList<IElement>, ITemplatedList<IElement>
     {
+        private readonly Cursor cursor;
+
         private readonly IList<Memento> items = new List<Memento>();
-
-        private readonly IElement owner;
-
-        private readonly IList<IElement> realizedElements = new List<IElement>();
 
         public VirtualizingElementCollection(IElement owner)
         {
-            this.owner = owner;
+            this.cursor = new Cursor(this.items, owner);
         }
 
         public int Count
@@ -34,11 +32,11 @@
             }
         }
 
-        public IList<IElement> RealizedElements
+        public IEnumerable<IElement> RealizedElements
         {
             get
             {
-                return this.realizedElements;
+                return this.cursor.CurrentlyRealized;
             }
         }
 
@@ -47,12 +45,7 @@
             get
             {
                 var memento = this.items[index];
-                if (memento.IsReal)
-                {
-                    return memento.Element;
-                }
-
-                return memento.Create();
+                return memento.IsReal ? memento.Element : memento.Create();
             }
 
             set
@@ -61,38 +54,14 @@
             }
         }
 
+        public Cursor GetCursor(int startIndex)
+        {
+            return this.cursor.UnDispose(startIndex);
+        }
+
         public bool IsReal(int index)
         {
             return this.items[index].IsReal;
-        }
-
-        public IElement Realize(int index)
-        {
-            var memento = this.items[index];
-
-            if (memento.IsReal)
-            {
-                return memento.Element;
-            }
-
-            var element = memento.Realize();
-            this.realizedElements.Add(element);
-            element.VisualParent = this.owner;
-            this.owner.InvalidateMeasure();
-            return element;
-        }
-
-        public void Virtualize(int index)
-        {
-            var memento = this.items[index];
-
-            if (memento.IsReal)
-            {
-                var element = memento.Virtualize();
-                element.VisualParent = null;
-                this.realizedElements.Remove(element);
-                this.owner.InvalidateMeasure();
-            }
         }
 
         public void Add(IElement element)
@@ -163,7 +132,90 @@
             this.items.Insert(newIndex, memento);
         }
 
-        private class Memento
+        public class Cursor : IDisposable
+        {
+            private readonly IList<Memento> mementoes;
+
+            private readonly IElement owner;
+
+            private LinkedList<Memento> currentRealizedMementoes = new LinkedList<Memento>();
+
+            private int firstMemento;
+
+            private bool isDisposed;
+
+            private LinkedList<Memento> previousRealizedMementoes = new LinkedList<Memento>();
+
+            public Cursor(IList<Memento> mementoes, IElement owner)
+            {
+                this.mementoes = mementoes;
+                this.owner = owner;
+            }
+
+            public IEnumerable<IElement> CurrentlyRealized
+            {
+                get
+                {
+                    return this.previousRealizedMementoes.Select(memento => memento.Element);
+                }
+            }
+
+            public IEnumerable<IElement> Items
+            {
+                get
+                {
+                    for (int i = this.firstMemento; i < this.mementoes.Count; i++)
+                    {
+                        var memento = this.mementoes[i];
+                        IElement element;
+                        if (memento.IsReal)
+                        {
+                            element = memento.Element;
+                        }
+                        else
+                        {
+                            element = memento.Realize();
+                            element.VisualParent = this.owner;
+                            this.owner.InvalidateMeasure();
+                        }
+
+                        this.currentRealizedMementoes.AddLast(memento);
+                        yield return element;
+                    }
+                }
+            }
+
+            public void Dispose(bool isDisposing)
+            {
+                this.isDisposed = true;
+                foreach (var memento in this.previousRealizedMementoes.Except(this.currentRealizedMementoes))
+                {
+                    memento.Virtualize();
+                }
+
+                this.previousRealizedMementoes.Clear();
+                var newCurrent = this.previousRealizedMementoes;
+                this.previousRealizedMementoes = this.currentRealizedMementoes;
+                this.currentRealizedMementoes = newCurrent;
+            }
+
+            public Cursor UnDispose(int startIndex)
+            {
+                this.isDisposed = false;
+                this.firstMemento = startIndex;
+                return this;
+            }
+
+            public void Dispose()
+            {
+                if (!this.isDisposed)
+                {
+                    this.Dispose(true);
+                }
+            }
+        }
+
+        public class Memento
         {
             private readonly object item;
 

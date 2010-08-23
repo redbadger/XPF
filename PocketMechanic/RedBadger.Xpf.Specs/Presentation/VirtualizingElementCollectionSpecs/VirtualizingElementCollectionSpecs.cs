@@ -45,7 +45,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
     {
         private Because of = () => Subject.Add(null, o => new Mock<UIElement>().Object);
 
-        private It should_insert_an_element_of_the_right_type = () => Subject[0].ShouldBeOfType<UIElement>();
+        private It should_add_an_element_of_the_right_type = () => Subject[0].ShouldBeOfType<UIElement>();
     }
 
     [Subject(typeof(VirtualizingElementCollection), "Remove")]
@@ -93,13 +93,19 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
                 Owner.Measure(new Size());
             };
 
-        private Because of = () => element = Subject.Realize(0);
+        private Because of = () =>
+            {
+                using (var cursor = Subject.GetCursor(0))
+                {
+                    element = cursor.Items.First();
+                }
+            };
 
-        private It should_appear_in_the_realized_elements = () => Subject.RealizedElements.Count.ShouldEqual(1);
+        private It should_have_a_realized_count_of_1 = () => Subject.RealizedElements.Count().ShouldEqual(1);
 
         private It should_invalidate_its_owners_measure = () => Owner.IsMeasureValid.ShouldBeFalse();
 
-        private It should_realize_the_element = () => Subject.IsReal(0).ShouldBeTrue();
+        private It should_realize_the_element = () => element.ShouldNotBeNull();
 
         private It should_set_the_data_context_of_the_element = () => element.DataContext.ShouldBeTheSameAs(item);
 
@@ -118,12 +124,24 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
         private Establish context = () =>
             {
                 Subject.Add(new object(), o => new Mock<UIElement> { CallBase = true }.Object);
-                realized1 = Subject.Realize(0);
+                using (var cursor = Subject.GetCursor(0))
+                {
+                    realized1 = cursor.Items.First();
+                }
+
                 originalContext = realized1.DataContext;
                 Owner.Measure(new Size());
             };
 
-        private Because of = () => realized2 = Subject.Realize(0);
+        private Because of = () =>
+            {
+                using (var cursor = Subject.GetCursor(0))
+                {
+                    realized2 = cursor.Items.First();
+                }
+            };
+
+        private It should_have_a_realized_count_of_1 = () => Subject.RealizedElements.Count().ShouldEqual(1);
 
         private It should_not_change_the_data_context = () => realized2.DataContext.ShouldBeTheSameAs(originalContext);
 
@@ -133,8 +151,6 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
         private It should_not_invalidate_its_owners_measure = () => Owner.IsMeasureValid.ShouldBeTrue();
 
         private It should_not_realize_the_element_again = () => realized2.ShouldBeTheSameAs(realized1);
-
-        private It should_still_appear_in_the_realized_elements = () => Subject.RealizedElements.Count.ShouldEqual(1);
 
         private It should_still_be_realized = () => Subject.IsReal(0).ShouldBeTrue();
     }
@@ -147,19 +163,30 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
         private Establish context = () =>
             {
                 Subject.Add(null, o => new Mock<IElement>().Object);
-                element = Subject.Realize(0);
+                Subject.Add(null, o => new Mock<IElement>().Object);
+                using (var cursor = Subject.GetCursor(0))
+                {
+                    element = cursor.Items.First();
+                }
+
                 Owner.Measure(new Size());
             };
 
-        private Because of = () => Subject.Virtualize(0);
+        private Because of = () =>
+            {
+                using (var cursor = Subject.GetCursor(1))
+                {
+                    cursor.Items.First();
+                }
+            };
+
+        private It should_have_a_realized_count_of_1 = () => Subject.RealizedElements.Count().ShouldEqual(1);
 
         private It should_invalidate_its_owners_measure = () => Owner.IsMeasureValid.ShouldBeFalse();
 
-        private It should_not_appear_in_the_realized_elements = () => Subject.RealizedElements.Count.ShouldEqual(0);
-
-        private It should_realize_the_element = () => Subject.IsReal(0).ShouldBeFalse();
-
         private It should_unset_the_elements_visual_parent = () => element.VisualParent.ShouldBeNull();
+
+        private It should_virtualize_the_element = () => Subject.IsReal(0).ShouldBeFalse();
     }
 
     [Subject(typeof(VirtualizingElementCollection), "Virtualization")]
@@ -171,12 +198,17 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
             {
                 Subject.Add(null, o => new Mock<IElement>().Object);
                 Subject.Add(null, o => new Mock<IElement>().Object);
-                Subject.Realize(1);
+                using (var cursor = Subject.GetCursor(1))
+                {
+                    cursor.Items.First();
+                }
             };
 
         private Because of = () => count = Subject.Count;
 
         private It should_count_both_real_and_virtual_elements = () => count.ShouldEqual(2);
+
+        private It should_have_a_realized_count_of_1 = () => Subject.RealizedElements.Count().ShouldEqual(1);
     }
 
     [Subject(typeof(VirtualizingElementCollection), "Virtualization")]
@@ -230,7 +262,10 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
             {
                 Subject.Add(null, o => new Mock<IElement>().Object);
                 Subject.Add(null, o => new Mock<IElement>().Object);
-                Subject.Realize(1);
+                using (var cursor = Subject.GetCursor(1))
+                {
+                    cursor.Items.First();
+                }
             };
 
         private Because of = () => areAnyNull = Subject.Any(element => element == null);
