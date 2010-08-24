@@ -97,7 +97,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
             {
                 using (var cursor = Subject.GetCursor(0))
                 {
-                    element = cursor.Items.First();
+                    element = cursor.First();
                 }
             };
 
@@ -126,7 +126,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
                 Subject.Add(new object(), () => new Mock<UIElement> { CallBase = true }.Object);
                 using (var cursor = Subject.GetCursor(0))
                 {
-                    realized1 = cursor.Items.First();
+                    realized1 = cursor.First();
                 }
 
                 originalContext = realized1.DataContext;
@@ -137,7 +137,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
             {
                 using (var cursor = Subject.GetCursor(0))
                 {
-                    realized2 = cursor.Items.First();
+                    realized2 = cursor.First();
                 }
             };
 
@@ -166,7 +166,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
                 Subject.Add(null, () => new Mock<UIElement> { CallBase = true }.Object);
                 using (var cursor = Subject.GetCursor(0))
                 {
-                    element = cursor.Items.First();
+                    element = cursor.First();
                 }
 
                 Owner.Measure(new Size());
@@ -176,7 +176,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
             {
                 using (var cursor = Subject.GetCursor(1))
                 {
-                    cursor.Items.First();
+                    cursor.First();
                 }
             };
 
@@ -202,7 +202,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
                 Subject.Add(null, () => new Mock<IElement>().Object);
                 using (var cursor = Subject.GetCursor(1))
                 {
-                    cursor.Items.First();
+                    cursor.First();
                 }
             };
 
@@ -266,7 +266,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
                 Subject.Add(null, () => new Mock<IElement>().Object);
                 using (var cursor = Subject.GetCursor(1))
                 {
-                    cursor.Items.First();
+                    cursor.First();
                 }
             };
 

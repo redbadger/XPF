@@ -1,8 +1,10 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls
 {
+    using System;
     using System.Collections.Generic;
     using System.Windows;
 
+    using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Internal.Controls;
     using RedBadger.Xpf.Presentation.Controls.Primitives;
 
@@ -83,8 +85,7 @@
             return this.children;
         }
 
-        /*
-        protected override Size MeasureOverride(Size availableSize)
+/*        protected override Size MeasureOverride(Size availableSize)
         {
             var extent = new Size();
 
@@ -99,19 +100,29 @@
                 availableSizeForContent.Height = double.PositiveInfinity;
             }
 
-            foreach (UIElement child in this.GetVisualChildren())
+            // TODO: work out what the first visible child is from the scrolldata offset
+            int firstVisibleChild = 0;
+            bool isLastChild = false;
+            foreach (var child in this.children.GetCursor(firstVisibleChild))
             {
+                if (isLastChild)
+                {
+                    break;
+                }
+
                 if (child != null)
                 {
                     child.Measure(availableSizeForContent);
                     var childDesiredSize = child.DesiredSize;
                     if (this.Orientation == Orientation.Horizontal)
                     {
+                        isLastChild = extent.Width + childDesiredSize.Width > availableSize.Width;
                         extent.Width += childDesiredSize.Width;
                         extent.Height = Math.Max(extent.Height, childDesiredSize.Height);
                     }
                     else
                     {
+                        isLastChild = extent.Height + childDesiredSize.Height > availableSize.Height;
                         extent.Width = Math.Max(extent.Width, childDesiredSize.Width);
                         extent.Height += childDesiredSize.Height;
                     }
@@ -136,7 +147,6 @@
                 0d, this.scrollData.Extent.Height - this.scrollData.Viewport.Height);
 
             this.scrollData.Offset = new Vector(x, y);
-        }
-*/
+        }*/
     }
 }

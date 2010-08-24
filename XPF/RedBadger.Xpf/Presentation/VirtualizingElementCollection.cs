@@ -11,9 +11,12 @@
 
         private readonly IList<Memento> items = new List<Memento>();
 
+        private readonly IElement owner;
+
         public VirtualizingElementCollection(IElement owner)
         {
-            this.cursor = new Cursor(this.items, owner);
+            this.owner = owner;
+            this.cursor = new Cursor(this.items);
         }
 
         public int Count
@@ -117,12 +120,12 @@
 
         public virtual void Add(object item, Func<IElement> template)
         {
-            this.items.Add(new Memento(item, template));
+            this.items.Add(new Memento(item, template, this.owner));
         }
 
         public virtual void Insert(int index, object item, Func<IElement> template)
         {
-            this.items.Insert(index, new Memento(item, template));
+            this.items.Insert(index, new Memento(item, template, this.owner));
         }
 
         public virtual void Move(int oldIndex, int newIndex)
@@ -132,11 +135,9 @@
             this.items.Insert(newIndex, memento);
         }
 
-        public class Cursor : IDisposable
+        public class Cursor : IDisposable, IEnumerable<IElement>
         {
             private readonly IList<Memento> mementoes;
-
-            private readonly IElement owner;
 
             private LinkedList<Memento> currentRealizedMementoes = new LinkedList<Memento>();
 
@@ -146,10 +147,9 @@
 
             private LinkedList<Memento> previousRealizedMementoes = new LinkedList<Memento>();
 
-            public Cursor(IList<Memento> mementoes, IElement owner)
+            public Cursor(IList<Memento> mementoes)
             {
                 this.mementoes = mementoes;
-                this.owner = owner;
             }
 
             public IEnumerable<IElement> CurrentlyRealized
@@ -157,21 +157,6 @@
                 get
                 {
                     return this.previousRealizedMementoes.Select(memento => memento.Element);
-                }
-            }
-
-            public IEnumerable<IElement> Items
-            {
-                get
-                {
-                    for (int i = this.firstMemento; i < this.mementoes.Count; i++)
-                    {
-                        var memento = this.mementoes[i];
-                        var element = memento.IsReal ? memento.Element : memento.Realize(this.owner);
-
-                        this.currentRealizedMementoes.AddLast(memento);
-                        yield return element;
-                    }
                 }
             }
 
@@ -203,17 +188,36 @@
                     this.Dispose(true);
                 }
             }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return this.GetEnumerator();
+            }
+
+            public IEnumerator<IElement> GetEnumerator()
+            {
+                for (int i = this.firstMemento; i < this.mementoes.Count; i++)
+                {
+                    var memento = this.mementoes[i];
+                    var element = memento.IsReal ? memento.Element : memento.Realize();
+
+                    this.currentRealizedMementoes.AddLast(memento);
+                    yield return element;
+                }
+            }
         }
 
         public class Memento
         {
             private readonly object item;
 
+            private readonly IElement owner;
+
             private readonly Func<IElement> template;
 
             private IElement element;
 
-            public Memento(object item, Func<IElement> template)
+            public Memento(object item, Func<IElement> template, IElement owner)
             {
                 if (template == null)
                 {
@@ -222,6 +226,9 @@
 
                 this.item = item;
                 this.template = template;
+                this.owner = owner;
+
+                this.owner.InvalidateMeasure();
             }
 
             public IElement Element
@@ -247,11 +254,11 @@
                 return newElement;
             }
 
-            public IElement Realize(IElement owner)
+            public IElement Realize()
             {
                 this.element = this.Create();
-                this.element.VisualParent = owner;
-                owner.InvalidateMeasure();
+                this.element.VisualParent = this.owner;
+                this.owner.InvalidateMeasure();
                 return this.element;
             }
 

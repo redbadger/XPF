@@ -77,11 +77,12 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
 
         private Establish context = () =>
             {
-                scrollViewer = new ScrollViewer { Content = Subject, Height = 100 };
+                scrollViewer = new ScrollViewer { Content = Subject, Width = 50, Height = 100 };
                 firstChild = new Mock<UIElement>().Object;
-                firstChild.Height = 100;
+                firstChild.Width = 50;
+                firstChild.Height =101;
                 Children.Add(null, () => firstChild);
-                Subject.Measure(new Size());
+                Subject.Measure(new Size(50, 100));
             };
 
         private Because of = () =>
@@ -89,13 +90,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
                 var element = new Mock<UIElement>().Object;
                 element.Height = 50;
                 Children.Add(null, () => element);
+                Subject.Measure(new Size(50, 100));
             };
 
         private It should_contain_all_the_added_children = () => Subject.Children.Count.ShouldEqual(2);
 
 /*
-        private It should_have_an_extent_equal_to_the_viewport =
-            () => scrollViewer.Extent.ShouldEqual(scrollViewer.Viewport);
+        private It should_have_an_extent_equal_to_the_first_childs_desired_size =
+            () => scrollViewer.Extent.ShouldEqual(firstChild.DesiredSize);
 
         private It should_not_add_the_child_to_its_visual_tree =
             () => Subject.GetVisualChildren().Count().ShouldEqual(1);
