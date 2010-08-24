@@ -135,6 +135,14 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="RunSpecs" Condition=" '$(BuildingInsideVisualStudio)' != 'true' ">
+    <PropertyGroup>
+      <MSpecCommand>..\..\Lib\mspec\mspec.exe --teamcity "$(TargetDir)$(AssemblyName).dll"</MSpecCommand>
+    </PropertyGroup>
+    <Message Importance="high" Text="Running Specs with this command: $(MSpecCommand)" />
+    <Exec Command="$(MSpecCommand)" IgnoreExitCode="true" />
+  </Target>
+  <Target Name="AfterBuild" DependsOnTargets="RunSpecs" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

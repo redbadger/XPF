@@ -107,30 +107,33 @@ div.supplement {
   </style>
 </head>
 <body>
-  <ul class="prev-next">
+  <ul class="prev-next"><li class="notimplemented">
+      <a href="#127">Go to first not implemented specification &dArr;</a>
+    </li>
   </ul>
 <h1>
     RedBadger.Xpf.Specs
 </h1>
 <h2 class="count">
-  18 concerns,
-  67 contexts,
-  102 specifications
+  71 concerns,
+  229 contexts,
+  396 specifications,
+    <span class="notimplemented">1 not implemented spec</span>
 </h2>
 
   <hr/>
   <hr/>
 <h2 class="concern">
-  ContentControl specifications
+  BindingExpression Binding specifications
 </h2>
 <h3 class="count">
-  1 context, 1 specification
+  4 contexts, 4 specifications
 </h3><h3 class="context">
-  when content is added
+  when a binding is changed
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="35">should mark itself as the visual parent</a>
+</h4><ul><li class="spec"><a name="22">should use the latest binding</a>
 
 
 
@@ -154,24 +157,2326 @@ div.supplement {
 </script> 
 
           </li>
-        </ul><h2 class="concern">
-  Panel Background specifications
-</h2>
-<h3 class="count">
-  2 contexts, 4 specifications
-</h3><h3 class="context">
-  when panel background is not specified
+        </ul><h3 class="context">
+  when a binding is cleared
 </h3>
 <h4 class="count">
-  2 specifications
-</h4><ul><li class="spec"><a name="30">should default to white</a>
+  1 specification
+</h4><ul><li class="spec"><a name="23">should not use the binding</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="31">should render the background in the right place</a>
+          </li>
+        </ul><h3 class="context">
+  when the width of a textblock is set and the binding is two way
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="21">should update the bound property</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the width of a textblock is set through a binding
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="20">should have the correct width</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  BindingExpression Binding Mode specifications
+</h2>
+<h3 class="count">
+  3 contexts, 3 specifications
+</h3><h3 class="context">
+  when the binding mode is default
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="24">should not throw an exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the binding mode is one time
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="25">should throw an exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the binding mode is one way to source
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="26">should throw an exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  BindingExpression Type Conversion specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  when the property value is of a type derived from the property type
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="27">should bind the value of the derived type</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the property value is of a type that doesnt implement IConvertible
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="28">should convert the value to a string representation</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Border specifications
+</h2>
+<h3 class="count">
+  3 contexts, 7 specifications
+</h3><h3 class="context">
+  when content is changed
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="45">should unset itself as the parent of the outgoing child</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when initialized
+</h3>
+<h4 class="count">
+  4 specifications
+</h4><ul><li class="spec"><a name="39">should have no background</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="40">should have no border brush</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="41">should have no padding</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="42">should have no thickness</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when used in its default state
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="43">should have no effect on its child</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="44">should set itself as the visual parent on the child</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Border Background specifications
+</h2>
+<h3 class="count">
+  2 contexts, 3 specifications
+</h3><h3 class="context">
+  when background is not specified
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="60">should not render a background</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when background is specified
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="61">should render the background in the right place</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="62">should render with the specified background color</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Border BorderBrush specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when the border brush is changed
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="63">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Border Padding/Thickness specifications
+</h2>
+<h3 class="count">
+  5 contexts, 8 specifications
+</h3><h3 class="context">
+  when padding and thickness are specified
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="52">should increase the desired size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="53">should take padding into account when drawing</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when padding is changed
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="48">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when padding is specified
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="46">should increase the desired size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="47">should take padding into account when drawing</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when thickness is changed
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="51">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when thickness is specified
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="49">should increase the desired size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="50">should take padding into account when drawing</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Border Rendering specifications
+</h2>
+<h3 class="count">
+  3 contexts, 6 specifications
+</h3><h3 class="context">
+  when a border thickness and brush have been specified
+</h3>
+<h4 class="count">
+  4 specifications
+</h4><ul><li class="spec"><a name="54">should draw the bottom border</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="55">should draw the left border</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="56">should draw the right border</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="57">should draw the top border</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when no border brush has been specified
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="58">should not render a border</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when no thickness has been specified
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="59">should not render a border</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Button Padding specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when padding is specified
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="79">should have a child with the correct visual offset</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="80">should increase the desired size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ButtonBase Click specifications
+</h2>
+<h3 class="count">
+  3 contexts, 4 specifications
+</h3><h3 class="context">
+  when the left button is pressed and then released inside the control boundary
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="71">should raise the click event</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the left button is pressed and then released outside the control boundary
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="72">should not raise the click event</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the left mouse button is released and the control is pressed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="67">should raise the click event</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="68">should not be pressed</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ButtonBase Disabled specifications
+</h2>
+<h3 class="count">
+  2 contexts, 3 specifications
+</h3><h3 class="context">
+  when the left mouse button is pressed and the control is disabled
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="66">should not be pressed</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the left mouse button is released and the control is pressed but disabled
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="69">should not raise the click event</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="70">should be pressed</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ButtonBase Left mouse button down specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  when the left mouse button is pressed outside the control boundary
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="65">should not be pressed</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the left mouse button is pressed within the control boundary
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="64">should be pressed</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ButtonBase Mouse Capture specifications
+</h2>
+<h3 class="count">
+  1 context, 6 specifications
+</h3><h3 class="context">
+  when the left button is pressed inside the boundary and then moved outside the boundary and back in again and then released over the control
+</h3>
+<h4 class="count">
+  6 specifications
+</h4><ul><li class="spec"><a name="73">should 1 not be pressed initially</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="74">should 2 be pressed while the mouse is initially inside</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="75">should 3 not be pressed when the mouse moves out</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="76">should 4 be pressed when the mouse moves back in</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="77">should 5 raise the click</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="78">should 6 not be pressed after the click is raised</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ContentControl specifications
+</h2>
+<h3 class="count">
+  3 contexts, 6 specifications
+</h3><h3 class="context">
+  when content is added
+</h3>
+<h4 class="count">
+  4 specifications
+</h4><ul><li class="spec"><a name="82">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="83">should mark itself as the visual parent</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="84">should return that child when its children are requested</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="85">should return the correct number of children when its children are requested</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when content is changed
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="86">should unset itself as the parent of the outgoing child</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when empty
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="81">should not return any children</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  DefinitionBase specifications
+</h2>
+<h3 class="count">
+  2 contexts, 8 specifications
+</h3><h3 class="context">
+  when a column definition is initialized
+</h3>
+<h4 class="count">
+  4 specifications
+</h4><ul><li class="spec"><a name="247">should return column max width when user max length is requested</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="248">should return column min width when user min length is requested</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="249">should return column width when user length is requested</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="250">should return the columns unit type when user length is requested</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a row definition is initialized
+</h3>
+<h4 class="count">
+  4 specifications
+</h4><ul><li class="spec"><a name="251">should return row max height when user max length is requested</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="252">should return row min height when user min length is requested</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="253">should return row height when user length is requested</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="254">should return the rows unit type when user length is requested</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  DrawingContext Image specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  when drawing an image
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="277">should render an image</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when resolving offsets for an image
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="280">should render with the correct offset</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  DrawingContext PreDraw specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when resolving offsets at the origin
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="281">should render at the origin</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  DrawingContext Rectangle specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  when drawing a rectangle
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="276">should render a rectangle</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when resolving offsets for a rectangle
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="278">should render with the correct offset</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  DrawingContext Text specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  when drawing text
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="275">should render text</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when resolving offsets for text
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="279">should render with the correct offset</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ElementCollection Visual Parent specifications
+</h2>
+<h3 class="count">
+  9 contexts, 20 specifications
+</h3><h3 class="context">
+  when adding an element to
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="255">should invalidate its owners measure</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="256">should set the elements visual parent</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when adding an element via a TemplatedList reference
+</h3>
+<h4 class="count">
+  3 specifications
+</h4><ul><li class="spec"><a name="266">should invalidate its owners measure</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="267">should set the elements data context</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="268">should set the elements visual parent</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when clearing the collection via a TemplatedList reference
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="272">should invalidate its owners measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when inserting an element into
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="264">should invalidate its owners measure</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="265">should set the elements visual parent</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when inserting an element via a TemplatedList reference
+</h3>
+<h4 class="count">
+  3 specifications
+</h4><ul><li class="spec"><a name="269">should invalidate its owners measure</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="270">should set the elements data context</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="271">should set the elements visual parent</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when moving an element via a TemplatedList reference
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="273">should move the element</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="274">should shift the existing element</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when removing an element at a certain position from
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="262">should invalidate its owners measure</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="263">should unset the elements visual parent</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when removing an element from
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="260">should invalidate its owners measure</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="261">should unset the elements visual parent</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when setting an element in
+</h3>
+<h4 class="count">
+  3 specifications
+</h4><ul><li class="spec"><a name="257">should invalidate its owners measure</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="258">should set the elements visual parent</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="259">should unset the old elements visual parent</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Grid Arrange specifications
+</h2>
+<h3 class="count">
+  4 contexts, 16 specifications
+</h3><h3 class="context">
+  when there are two rows and two columns of type auto
+</h3>
+<h4 class="count">
+  4 specifications
+</h4><ul><li class="spec"><a name="87">should layout the bottom left child correctly</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="88">should layout the bottom right child correctly</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="89">should layout the top left child correctly</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="90">should layout the top right child correctly</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when there are two rows and two columns of type pixel
+</h3>
+<h4 class="count">
+  4 specifications
+</h4><ul><li class="spec"><a name="91">should layout the bottom left child correctly</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="92">should layout the bottom right child correctly</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="93">should layout the top left child correctly</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="94">should layout the top right child correctly</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when there are two rows and two columns with maximum values which are less than their children
+</h3>
+<h4 class="count">
+  4 specifications
+</h4><ul><li class="spec"><a name="99">should layout the bottom left child correctly</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="100">should layout the bottom right child correctly</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="101">should layout the top left child correctly</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="102">should layout the top right child correctly</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when there are two rows and two columns with minimum values which are greater than their children
+</h3>
+<h4 class="count">
+  4 specifications
+</h4><ul><li class="spec"><a name="95">should layout the bottom left child correctly</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="96">should layout the bottom right child correctly</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="97">should layout the top left child correctly</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="98">should layout the top right child correctly</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Grid Measure specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  when a column index is specified greater than the number of columns available
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="127">should put it in the last column</a>
+
+<div class="notimplemented">
+  &lArr; NOT IMPLEMENTED
+  <ul class="prev-next">
+    <li class="prev notimplemented">
+    </li>
+    <li class="next notimplemented">
+    </li>
+  </ul>
+</div>
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when an element is added
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="103">should have a desired size equal to that of its child</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Grid Measure - Auto specifications
+</h2>
+<h3 class="count">
+  6 contexts, 9 specifications
+</h3><h3 class="context">
+  when a grid has auto columns and rows defined and a child element gets bigger
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="111">should adjust its desired size accordingly</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a grid has auto columns and rows defined and a child element gets smaller
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="112">should adjust its desired size accordingly</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when measuring a grid with two rows and two columns
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="109">should have a desired height equal to the sum of the tallest children in each row</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="110">should have a desired width equal to the sum of the widest children in each column</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when there are two columns
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="105">should have a desired height equal to that of the highest child</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="106">should have a desired width equal to the sum of its children</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when there are two rows
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="107">should have a desired height equal to the sum of its children</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="108">should have a desired width equal to that of the widest child</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when two elements are added
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="104">should have a desired size that equal to that of the largest element</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Grid Measure - Min and Max specifications
+</h2>
+<h3 class="count">
+  4 contexts, 8 specifications
+</h3><h3 class="context">
+  when there is a column with max width and the child is larger
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="121">should have a desired height equal to that of the child</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="122">should have a desired width equal to the max width</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when there is a column with min width and the child is smaller
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="119">should have a desired height equal to that of the child</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="120">should have a desired width equal to the min width</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when there is a row with max height and the child is larger
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="125">should have a desired height equal to the max height</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="126">should have a desired width equal to that of the child</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when there is a row with min height and the child is smaller
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="123">should have a desired height equal to the min height</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="124">should have a desired width equal to that of the child</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Grid Measure - Pixel specifications
+</h2>
+<h3 class="count">
+  3 contexts, 6 specifications
+</h3><h3 class="context">
+  when measuring a grid with two rows and two columns both of pixel values
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="117">should have a desired height equal to the sum of row heights</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="118">should have a desired width equal to the sum of the column widths</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when there is a column with pixel width
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="113">should have a desired height equal to that of the child</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="114">should have a desired width equal to that of the column width</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when there is a row with pixel height
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="115">should have a desired height equal to that of the row height</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="116">should have a desired width equal to that of the child</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Image Stretch specifications
+</h2>
+<h3 class="count">
+  18 contexts, 36 specifications
+</h3><h3 class="context">
+  when a larger image is set to a stretch value of Fill
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="148">should have a desired size equal to the available size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="149">should have a render size equal to the available size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a larger image is set to a stretch value of Fill but not allowed to shrink
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="150">should have a desired size equal to the available size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="151">should have a render size equal to the image size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a larger image is set to a stretch value of UniformToFill
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="152">should have a desired size equal to the available size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="153">should have the correct render size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a larger image is set to a stretch value of UniformToFill but not allowed to shrink
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="154">should have a desired size equal to the available size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="155">should have a render size equal to the image size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a larger image is set to not stretch
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="142">should have a desired size equal to the available size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="143">should have a render size equal to that of the image source</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a larger image is set to stretch value of Uniform
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="144">should have the correct desired size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="145">should have the correct render size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a larger image is set to stretch value of Uniform but not allowed to shrink
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="146">should have a desired size equal to the available size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="147">should have a render size equal to the image size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a smaller image is set to a stretch value of Fill
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="134">should have a desired size equal to the available size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="135">should have a render size equal to the available size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a smaller image is set to a stretch value of Fill but not allowed to expand
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="136">should have a desired size equal to the image size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="137">should have a render size equal to the image size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a smaller image is set to a stretch value of UniformToFill
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="138">should have a desired size equal to the available size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="139">should have the correct render size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a smaller image is set to a stretch value of UniformToFill but not allowed to expand
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="140">should have a desired size equal to the image size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="141">should have a render size equal to the image size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a smaller image is set to not stretch
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="128">should have a desired size equal to that of the image source</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="129">should have a render size equal to that of the image source</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a smaller image is set to stretch value of Uniform
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="130">should have the correct desired size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="131">should have the correct render size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a smaller image is set to stretch value of Uniform but not allowed to expand
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="132">should have a desired size equal to the image size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="133">should have a render size equal to the image size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when an image source is specified
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="162">should render the image</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="163">should render the image with the correct size</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when image source is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="160">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="161">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when stretch direction is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="158">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="159">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when stretch is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="156">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="157">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ItemsControl specifications
+</h2>
+<h3 class="count">
+  4 contexts, 6 specifications
+</h3><h3 class="context">
+  when a panel is set
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="164">should add the panel as a descendant in its visual tree</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="165">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when asked for its children
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="166">should return a scroll viewer</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="167">should return one child only</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when panel is changed
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="168">should unset the parent of the outgoing panel</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the default panel is used
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="169">should have added a panel as a descendant in its visual tree</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ItemsControl Item Template specifications
+</h2>
+<h3 class="count">
+  2 contexts, 3 specifications
+</h3><h3 class="context">
+  when an item template has not been specified
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="170">should throw an exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when item template is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="171">should 1 use the original item template for items added before the change</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="172">should 2 use the new item template for items added after the change</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ItemsControl Items Source specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  when items source has not been specified
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="173">should not throw an exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when items source is changed
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="174">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ItemsControl Items Source - Non Observable specifications
+</h2>
+<h3 class="count">
+  2 contexts, 6 specifications
+</h3><h3 class="context">
+  when items source is not observable and is changed to a new non observable list
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="175">should use the new item source for the data contexts</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="176">should use the new items source</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when items source is set to a list of two items
+</h3>
+<h4 class="count">
+  4 specifications
+</h4><ul><li class="spec"><a name="177">should lay out item 1 as using the item template</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="178">should lay out item 2 as using the item template</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="179">should set the data context on element 1</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="180">should set the data context on element 2</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ItemsControl Items Source - Observable specifications
+</h2>
+<h3 class="count">
+  8 contexts, 15 specifications
+</h3><h3 class="context">
+  when a observable item source is replaced with a non observable
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="194">should not observe the old source</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="195">should use the new source</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when items source is an empty observable collection and a new item is added
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="181">should lay it out using the item template</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="182">should set the data context</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when items source is an observable collection with 1 item and it is cleared
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="192">should not have any elements in the panel</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when items source is an observable collection with 1 item and it is removed
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="185">should remove the element from the panel</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when items source is an observable collection with 1 item and it is replaced
+</h3>
+<h4 class="count">
+  3 specifications
+</h4><ul><li class="spec"><a name="186">should have the same number of elements in the panel</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="187">should replace the element in the panel</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="188">should set the data context on the new element</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when items source is an observable collection with 2 items and the first item is moved to the end
+</h3>
+<h4 class="count">
+  3 specifications
+</h4><ul><li class="spec"><a name="189">should have the same number of elements in the panel</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="190">should move the first element in the panel to the end</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="191">should move the last element in the panel to the front</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when items source is bound to an empty observable collection and a new item is added
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="183">should lay it out using the item template</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="184">should set the data context</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when items source is set to null and new items are added to the old source
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="193">should clear all elements from the panel and not observe the old source</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ItemsControl Panel specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  when a panel is not specified
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="196">should use a stack panel</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the panel specified has a children collection that isnt ITemplatedList
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="197">should throw an exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Mouse Input - Left Button Down specifications
+</h2>
+<h3 class="count">
+  4 contexts, 7 specifications
+</h3><h3 class="context">
+  when a single control is placed inside a root element
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="1">should notify the button that the left mouse was pressed</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when mouse left button is pressed over the first of a vertical stack of elements
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="6">should not raise left mouse button down event on the bottom most element</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="7">should raise left mouse button down event on the top most element</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when mouse left button is pressed over the top of a nested stack of elements
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="4">should not raise left mouse button down event on the bottom most element</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="5">should raise left mouse button down event on the top most element</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when mouse left button is pressed over the top of a Z ordered stack of elements
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="2">should not raise left mouse button down event on the bottom most element</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="3">should raise left mouse button down event on the top most element</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  Panel Background specifications
+</h2>
+<h3 class="count">
+  2 contexts, 3 specifications
+</h3><h3 class="context">
+  when panel background is not specified
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="201">should not render a background</a>
 
 
 
@@ -184,14 +2489,14 @@ div.supplement {
 </h3>
 <h4 class="count">
   2 specifications
-</h4><ul><li class="spec"><a name="32">should render the background in the right place</a>
+</h4><ul><li class="spec"><a name="202">should render the background in the right place</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="33">should render with the specified background color</a>
+          </li><li class="spec"><a name="203">should render with the specified background color</a>
 
 
 
@@ -200,37 +2505,48 @@ div.supplement {
 
           </li>
         </ul><h2 class="concern">
-  Rect specifications
+  Panel Children specifications
 </h2>
 <h3 class="count">
-  2 contexts, 6 specifications
+  1 context, 3 specifications
 </h3><h3 class="context">
-  when an empty rect is initialised
+  when a panel has children
 </h3>
 <h4 class="count">
-  4 specifications
-</h4><ul><li class="spec"><a name="5">should have a position at zero zero</a>
+  3 specifications
+</h4><ul><li class="spec"><a name="198">should contain the correct number of children</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="6">should have a size of zero zero</a>
+          </li><li class="spec"><a name="199">should return the first child first</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="7">should be equal to an empty rect</a>
+          </li><li class="spec"><a name="200">should return the last child last</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="8">should say it is empty</a>
+          </li>
+        </ul><h2 class="concern">
+  Renderer specifications
+</h2>
+<h3 class="count">
+  3 contexts, 3 specifications
+</h3><h3 class="context">
+  when a renderer contains a valid context after clearing
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="288">should still draw</a>
 
 
 
@@ -239,18 +2555,24 @@ div.supplement {
 
           </li>
         </ul><h3 class="context">
-  when initialised
+  when a renderer contains an invalid context after clearing
 </h3>
 <h4 class="count">
-  2 specifications
-</h4><ul><li class="spec"><a name="3">should have the expected Position</a>
+  1 specification
+</h4><ul><li class="spec"><a name="287">should not draw anything</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="4">should have the expected Size</a>
+          </li>
+        </ul><h3 class="context">
+  when the same element requests a drawing context more than once
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="286">should only draw the element once</a>
 
 
 
@@ -262,31 +2584,13 @@ div.supplement {
   RootElement specifications
 </h2>
 <h3 class="count">
-  1 context, 1 specification
+  2 contexts, 2 specifications
 </h3><h3 class="context">
   after update
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="34">should have the correct visual offset</a>
-
-
-
-
- 
-
-          </li>
-        </ul><h2 class="concern">
-  Size specifications
-</h2>
-<h3 class="count">
-  2 contexts, 2 specifications
-</h3><h3 class="context">
-  requesting an empty size
-</h3>
-<h4 class="count">
-  1 specification
-</h4><ul><li class="spec"><a name="2">should return an instance with zeroed values</a>
+</h4><ul><li class="spec"><a name="204">should have the correct visual offset</a>
 
 
 
@@ -295,11 +2599,309 @@ div.supplement {
 
           </li>
         </ul><h3 class="context">
-  when a size is added to another size using a addition operator
+  when arrange is invalid
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="1">should result in a sum of the 2 sizes</a>
+</h4><ul><li class="spec"><a name="205">should clear the renderer</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ScrollContentPresenter Arrange specifications
+</h2>
+<h3 class="count">
+  2 contexts, 3 specifications
+</h3><h3 class="context">
+  when content is scrolled
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="214">should set the child visual offset correctly</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when content is scrolled beyond its extent
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="215">should coerce the child visual offset to keep it inside the extent</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="216">should coerce its own offset to keep it inside the extent</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ScrollContentPresenter Horizontal Offset specifications
+</h2>
+<h3 class="count">
+  4 contexts, 4 specifications
+</h3><h3 class="context">
+  when horizontal offset is changed
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="209">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when horizontal offset is set to a negative value
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="207">should set the offset to zero</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when horizontal offset is set to not a number
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="206">should throw an exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when horizontal scrolling is disabled and an offset is set
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="208">should have no effect</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ScrollContentPresenter Vertical Offset specifications
+</h2>
+<h3 class="count">
+  4 contexts, 4 specifications
+</h3><h3 class="context">
+  when vertical offset is changed
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="213">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when vertical offset is set to a negative value
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="211">should set the offset to zero</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when vertical offset is set to not a number
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="210">should throw an exception</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when vertical scrolling is disabled and an offset is set
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="212">should have no effect</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ScrollViewer Content specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when content is set to a control that doesnt implement IScrollInfo
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="29">should set the content of the ScrollContentPresenter to the control</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="30">should use a ScrollContentPresenter</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ScrollViewer Mouse Capture specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  when a left mouse button down gesture is received
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="31">should capture the mouse</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a mouse button gesture is received the mouse is captured
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="32">should release mouse capture</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ScrollViewer Scrolling specifications
+</h2>
+<h3 class="count">
+  3 contexts, 6 specifications
+</h3><h3 class="context">
+  when free drag gestures are received
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="37">should the scroll content horizontally</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="38">should the scroll content vertically</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when horizontal and vertical scrolling is disabled
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="35">should constrain the contents height to be less than or equal to the height of the viewport</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="36">should constrain the contents width to be less than or equal to the width of the viewport</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when horizontal and vertical scrolling is enabled
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="33">should allow the contents height to exceed the height of the viewport</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="34">should allow the contents width to exceed the width of the viewport</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  StackPanel specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when orientation is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="225">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="226">should invalidate measure</a>
 
 
 
@@ -317,14 +2919,14 @@ div.supplement {
 </h3>
 <h4 class="count">
   2 specifications
-</h4><ul><li class="spec"><a name="42">should layout the 2nd child to the right of the first</a>
+</h4><ul><li class="spec"><a name="223">should layout the 2nd child at the same vertical position</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="43">should layout the 2nd child at the same vertical position</a>
+          </li><li class="spec"><a name="224">should layout the 2nd child to the right of the first</a>
 
 
 
@@ -337,14 +2939,14 @@ div.supplement {
 </h3>
 <h4 class="count">
   2 specifications
-</h4><ul><li class="spec"><a name="40">should layout the 2nd child at the same horizontal position</a>
+</h4><ul><li class="spec"><a name="221">should layout the 2nd child at the same horizontal position</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="41">should layout the 2nd child below the first</a>
+          </li><li class="spec"><a name="222">should layout the 2nd child below the first</a>
 
 
 
@@ -357,14 +2959,14 @@ div.supplement {
 </h3>
 <h4 class="count">
   2 specifications
-</h4><ul><li class="spec"><a name="38">should have a bigger desired width</a>
+</h4><ul><li class="spec"><a name="219">should have a bigger desired width</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="39">should have the same desired height</a>
+          </li><li class="spec"><a name="220">should have the same desired height</a>
 
 
 
@@ -377,14 +2979,39 @@ div.supplement {
 </h3>
 <h4 class="count">
   2 specifications
-</h4><ul><li class="spec"><a name="36">should have a bigger desired height</a>
+</h4><ul><li class="spec"><a name="217">should have a bigger desired height</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="37">should have the same desired width</a>
+          </li><li class="spec"><a name="218">should have the same desired width</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  TextBlock specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when text is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="236">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="237">should invalidate measure</a>
 
 
 
@@ -396,20 +3023,13 @@ div.supplement {
   TextBlock Background specifications
 </h2>
 <h3 class="count">
-  2 contexts, 4 specifications
+  2 contexts, 3 specifications
 </h3><h3 class="context">
   when textblock background is not specified
 </h3>
 <h4 class="count">
-  2 specifications
-</h4><ul><li class="spec"><a name="46">should default to white</a>
-
-
-
-
- 
-
-          </li><li class="spec"><a name="47">should render the background in the right place</a>
+  1 specification
+</h4><ul><li class="spec"><a name="229">should not render a background</a>
 
 
 
@@ -422,14 +3042,14 @@ div.supplement {
 </h3>
 <h4 class="count">
   2 specifications
-</h4><ul><li class="spec"><a name="48">should render with the specified background color</a>
+</h4><ul><li class="spec"><a name="230">should render the background in the right place</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="49">should render the background in the right place</a>
+          </li><li class="spec"><a name="231">should render with the specified background color</a>
 
 
 
@@ -447,7 +3067,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="44">should default to black</a>
+</h4><ul><li class="spec"><a name="227">should default to black</a>
 
 
 
@@ -460,7 +3080,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="45">should use the color specified</a>
+</h4><ul><li class="spec"><a name="228">should use the color specified</a>
 
 
 
@@ -472,20 +3092,40 @@ div.supplement {
   TextBlock Padding specifications
 </h2>
 <h3 class="count">
-  1 context, 2 specifications
+  2 contexts, 4 specifications
 </h3><h3 class="context">
-  when padding is specified
+  when padding is changed
 </h3>
 <h4 class="count">
   2 specifications
-</h4><ul><li class="spec"><a name="50">should increase the desired size</a>
+</h4><ul><li class="spec"><a name="234">should invalidate arrange</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="51">should take padding into account when drawing</a>
+          </li><li class="spec"><a name="235">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when padding is specified
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="232">should increase the desired size</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="233">should take padding into account when drawing</a>
 
 
 
@@ -497,13 +3137,33 @@ div.supplement {
   TextBlock Wrapping specifications
 </h2>
 <h3 class="count">
-  2 contexts, 2 specifications
+  3 contexts, 4 specifications
 </h3><h3 class="context">
+  when text wrapping is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="238">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="239">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
   when wrapping is not required
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="52">should not wrap</a>
+</h4><ul><li class="spec"><a name="240">should not wrap</a>
 
 
 
@@ -516,7 +3176,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="53">should wrap</a>
+</h4><ul><li class="spec"><a name="241">should wrap</a>
 
 
 
@@ -534,28 +3194,28 @@ div.supplement {
 </h3>
 <h4 class="count">
   4 specifications
-</h4><ul><li class="spec"><a name="61">should be considered valid</a>
+</h4><ul><li class="spec"><a name="347">should be considered valid</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="62">should have set a render size</a>
+          </li><li class="spec"><a name="348">should have set a render size</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="63">should have set an actual height</a>
+          </li><li class="spec"><a name="349">should have set an actual height</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="64">should have set an actual width</a>
+          </li><li class="spec"><a name="350">should have set an actual width</a>
 
 
 
@@ -568,7 +3228,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="60">should not arrange again</a>
+</h4><ul><li class="spec"><a name="346">should not arrange again</a>
 
 
 
@@ -581,7 +3241,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="65">should layout its children within the desired size</a>
+</h4><ul><li class="spec"><a name="351">should layout its children within the desired size</a>
 
 
 
@@ -594,7 +3254,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="66">should layout its children within the desired size minus the margins</a>
+</h4><ul><li class="spec"><a name="352">should layout its children within the desired size minus the margins</a>
 
 
 
@@ -607,7 +3267,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="68">should layout its children within the desired size</a>
+</h4><ul><li class="spec"><a name="354">should layout its children within the desired size</a>
 
 
 
@@ -620,7 +3280,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="67">should layout its children within the final size</a>
+</h4><ul><li class="spec"><a name="353">should layout its children within the final size</a>
 
 
 
@@ -633,7 +3293,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="57">should throw a Exception</a>
+</h4><ul><li class="spec"><a name="343">should throw a Exception</a>
 
 
 
@@ -646,7 +3306,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="59">should throw a Exception</a>
+</h4><ul><li class="spec"><a name="345">should throw a Exception</a>
 
 
 
@@ -659,7 +3319,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="56">should throw a Exception</a>
+</h4><ul><li class="spec"><a name="342">should throw a Exception</a>
 
 
 
@@ -672,7 +3332,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="58">should throw a Exception</a>
+</h4><ul><li class="spec"><a name="344">should throw a Exception</a>
 
 
 
@@ -690,7 +3350,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="75">should set the visual offset</a>
+</h4><ul><li class="spec"><a name="361">should set the visual offset</a>
 
 
 
@@ -703,7 +3363,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="74">should set the visual offset</a>
+</h4><ul><li class="spec"><a name="360">should set the visual offset</a>
 
 
 
@@ -716,7 +3376,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="76">should set the visual offset</a>
+</h4><ul><li class="spec"><a name="362">should set the visual offset</a>
 
 
 
@@ -729,7 +3389,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="73">should set the visual offset</a>
+</h4><ul><li class="spec"><a name="359">should set the visual offset</a>
 
 
 
@@ -742,7 +3402,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="71">should set the visual offset</a>
+</h4><ul><li class="spec"><a name="357">should set the visual offset</a>
 
 
 
@@ -755,7 +3415,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="70">should set the visual offset</a>
+</h4><ul><li class="spec"><a name="356">should set the visual offset</a>
 
 
 
@@ -768,7 +3428,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="77">should set the visual offset</a>
+</h4><ul><li class="spec"><a name="363">should set the visual offset</a>
 
 
 
@@ -781,7 +3441,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="78">should set the visual offset</a>
+</h4><ul><li class="spec"><a name="364">should set the visual offset</a>
 
 
 
@@ -794,7 +3454,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="72">should set the visual offset</a>
+</h4><ul><li class="spec"><a name="358">should set the visual offset</a>
 
 
 
@@ -807,7 +3467,158 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="69">should set the visual offset</a>
+</h4><ul><li class="spec"><a name="355">should set the visual offset</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  UIElement Children specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when children are requested
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="365">should not return any children</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  UIElement Data Context specifications
+</h2>
+<h3 class="count">
+  5 contexts, 5 specifications
+</h3><h3 class="context">
+  when a binding already has a source
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="336">should use the source of the binding not the data context</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a data context exists and a reference type binding with no source is set
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="335">should use the data context for its binding</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a data context exists and a value type binding with no source is set
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="334">should use the data context for its binding</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a reference type binding with no source exists and the data context is set
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="338">should use the data context for its binding</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a value type binding with no source exists and the data context is set
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="337">should use the data context for its binding</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  UIElement Hit Testing specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  when a point is inside an element
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="366">should return a positive hit test</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when a point is outside an element
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="367">should return a negative hit test</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  UIElement Layout - Absolute Offset specifications
+</h2>
+<h3 class="count">
+  1 context, 3 specifications
+</h3><h3 class="context">
+  when an absolute offset is requested
+</h3>
+<h4 class="count">
+  3 specifications
+</h4><ul><li class="spec"><a name="331">should return a correct value for element 1</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="332">should return a correct value for element 2</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="333">should return a correct value for element 3</a>
 
 
 
@@ -825,21 +3636,21 @@ div.supplement {
 </h3>
 <h4 class="count">
   3 specifications
-</h4><ul><li class="spec"><a name="88">should arrange its children within the maximum size</a>
+</h4><ul><li class="spec"><a name="298">should arrange its children within the maximum size</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="89">should have a desired size equal to the maximum size that was specified</a>
+          </li><li class="spec"><a name="299">should have a desired size equal to the maximum size that was specified</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="90">should have the correct visual offset</a>
+          </li><li class="spec"><a name="300">should have the correct visual offset</a>
 
 
 
@@ -852,21 +3663,21 @@ div.supplement {
 </h3>
 <h4 class="count">
   3 specifications
-</h4><ul><li class="spec"><a name="85">should arrange its children within the available size</a>
+</h4><ul><li class="spec"><a name="295">should arrange its children within the available size</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="86">should have a desired size equal to the minimum size that was specified</a>
+          </li><li class="spec"><a name="296">should have a desired size equal to the minimum size that was specified</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="87">should have the correct visual offset</a>
+          </li><li class="spec"><a name="297">should have the correct visual offset</a>
 
 
 
@@ -879,21 +3690,21 @@ div.supplement {
 </h3>
 <h4 class="count">
   3 specifications
-</h4><ul><li class="spec"><a name="79">should arrange its children within the explicit size</a>
+</h4><ul><li class="spec"><a name="289">should arrange its children within the explicit size</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="80">should have a desired size equal to the size that was specified</a>
+          </li><li class="spec"><a name="290">should have a desired size equal to the size that was specified</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="81">should have the correct visual offset</a>
+          </li><li class="spec"><a name="291">should have the correct visual offset</a>
 
 
 
@@ -906,21 +3717,21 @@ div.supplement {
 </h3>
 <h4 class="count">
   3 specifications
-</h4><ul><li class="spec"><a name="82">should arrange its children within the explicit size</a>
+</h4><ul><li class="spec"><a name="292">should arrange its children within the explicit size</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="83">should have a desired size equal to the size that was specified</a>
+          </li><li class="spec"><a name="293">should have a desired size equal to the size that was specified</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="84">should have the correct visual offset</a>
+          </li><li class="spec"><a name="294">should have the correct visual offset</a>
 
 
 
@@ -932,34 +3743,134 @@ div.supplement {
   UIElement Layout - Invalidate specifications
 </h2>
 <h3 class="count">
-  2 contexts, 8 specifications
+  11 contexts, 26 specifications
 </h3><h3 class="context">
   when arrange is invalidated
 </h3>
 <h4 class="count">
   4 specifications
-</h4><ul><li class="spec"><a name="95">should invalidate arrange</a>
+</h4><ul><li class="spec"><a name="305">should invalidate arrange</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="96">should invalidate its parents arrange</a>
+          </li><li class="spec"><a name="306">should invalidate its parents arrange</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="97">should not invalidate its parents measure</a>
+          </li><li class="spec"><a name="307">should not invalidate its parents measure</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="98">should not invalidate measure</a>
+          </li><li class="spec"><a name="308">should not invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when height is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="309">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="310">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when horizontal alignment is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="323">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="324">should not invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when margin is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="321">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="322">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when maximum height is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="313">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="314">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when maximum width is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="319">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="320">should invalidate measure</a>
 
 
 
@@ -972,28 +3883,108 @@ div.supplement {
 </h3>
 <h4 class="count">
   4 specifications
-</h4><ul><li class="spec"><a name="91">should invalidate arrange</a>
+</h4><ul><li class="spec"><a name="301">should invalidate arrange</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="92">should invalidate its parents arrange</a>
+          </li><li class="spec"><a name="302">should invalidate its parents arrange</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="93">should invalidate its parents measure</a>
+          </li><li class="spec"><a name="303">should invalidate its parents measure</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="94">should invalidate measure</a>
+          </li><li class="spec"><a name="304">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when minimum height is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="311">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="312">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when minimum width is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="317">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="318">should invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when vertical alignment is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="325">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="326">should not invalidate measure</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when width is changed
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="315">should invalidate arrange</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="316">should invalidate measure</a>
 
 
 
@@ -1011,7 +4002,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="99">should measure again</a>
+</h4><ul><li class="spec"><a name="327">should measure again</a>
 
 
 
@@ -1024,7 +4015,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="100">should not measure again</a>
+</h4><ul><li class="spec"><a name="328">should not measure again</a>
 
 
 
@@ -1037,7 +4028,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="101">should arrange again</a>
+</h4><ul><li class="spec"><a name="329">should arrange again</a>
 
 
 
@@ -1050,7 +4041,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="102">should not arrange again</a>
+</h4><ul><li class="spec"><a name="330">should not arrange again</a>
 
 
 
@@ -1062,20 +4053,20 @@ div.supplement {
   UIElement Measure specifications
 </h2>
 <h3 class="count">
-  10 contexts, 14 specifications
+  10 contexts, 13 specifications
 </h3><h3 class="context">
   after measure is called
 </h3>
 <h4 class="count">
   2 specifications
-</h4><ul><li class="spec"><a name="22">should be considered valid</a>
+</h4><ul><li class="spec"><a name="339">should apply the template</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="23">should not measure again</a>
+          </li><li class="spec"><a name="340">should be considered valid</a>
 
 
 
@@ -1084,18 +4075,11 @@ div.supplement {
 
           </li>
         </ul><h3 class="context">
-  after measure is called
+  after measure is called a second time
 </h3>
 <h4 class="count">
-  2 specifications
-</h4><ul><li class="spec"><a name="54">should be considered valid</a>
-
-
-
-
- 
-
-          </li><li class="spec"><a name="55">should not measure again</a>
+  1 specification
+</h4><ul><li class="spec"><a name="341">should not measure again</a>
 
 
 
@@ -1108,7 +4092,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="21">should be given an available size that does not include margins</a>
+</h4><ul><li class="spec"><a name="19">should be given an available size that does not include margins</a>
 
 
 
@@ -1121,7 +4105,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="18">should throw an exception</a>
+</h4><ul><li class="spec"><a name="16">should throw an exception</a>
 
 
 
@@ -1134,7 +4118,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="20">should throw an exception</a>
+</h4><ul><li class="spec"><a name="18">should throw an exception</a>
 
 
 
@@ -1147,7 +4131,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="14">should reduce the size returned to keep it within the available size passed to Measure</a>
+</h4><ul><li class="spec"><a name="13">should reduce the size returned to keep it within the available size passed to Measure</a>
 
 
 
@@ -1160,7 +4144,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="17">should throw an exception</a>
+</h4><ul><li class="spec"><a name="15">should throw an exception</a>
 
 
 
@@ -1173,7 +4157,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="19">should throw an exception</a>
+</h4><ul><li class="spec"><a name="17">should throw an exception</a>
 
 
 
@@ -1186,21 +4170,21 @@ div.supplement {
 </h3>
 <h4 class="count">
   3 specifications
-</h4><ul><li class="spec"><a name="11">should invalidate arrange</a>
+</h4><ul><li class="spec"><a name="10">should invalidate arrange</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="12">should be marked as having a valid Measure</a>
+          </li><li class="spec"><a name="11">should be marked as having a valid Measure</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="13">should have a desired size set</a>
+          </li><li class="spec"><a name="12">should have a desired size set</a>
 
 
 
@@ -1213,7 +4197,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="15">should reduce the size returned to keep it within the available size passed to Measure</a>
+</h4><ul><li class="spec"><a name="14">should reduce the size returned to keep it within the available size passed to Measure</a>
 
 
 
@@ -1225,26 +4209,13 @@ div.supplement {
   UIElement Measuring specifications
 </h2>
 <h3 class="count">
-  3 contexts, 3 specifications
+  2 contexts, 2 specifications
 </h3><h3 class="context">
-  when an implementing control returns a negative size
-</h3>
-<h4 class="count">
-  1 specification
-</h4><ul><li class="spec"><a name="16">should return a zero value instead</a>
-
-
-
-
- 
-
-          </li>
-        </ul><h3 class="context">
   when the supplied available size Height is not a number
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="10">should throw a Exception</a>
+</h4><ul><li class="spec"><a name="9">should throw a Exception</a>
 
 
 
@@ -1257,7 +4228,7 @@ div.supplement {
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="9">should throw a Exception</a>
+</h4><ul><li class="spec"><a name="8">should throw a Exception</a>
 
 
 
@@ -1266,16 +4237,16 @@ div.supplement {
 
           </li>
         </ul><h2 class="concern">
-  UIElementCollection Visual Parent specifications
+  VirtualizingElementCollection Add specifications
 </h2>
 <h3 class="count">
-  5 contexts, 6 specifications
+  1 context, 1 specification
 </h3><h3 class="context">
-  when adding an element to
+  when inserting an element
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="24">should set the elements visual parent</a>
+</h4><ul><li class="spec"><a name="368">should insert an element of the right type</a>
 
 
 
@@ -1283,12 +4254,17 @@ div.supplement {
  
 
           </li>
-        </ul><h3 class="context">
-  when inserting an element into
+        </ul><h2 class="concern">
+  VirtualizingElementCollection Insert specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when adding an element
 </h3>
 <h4 class="count">
   1 specification
-</h4><ul><li class="spec"><a name="29">should set the elements visual parent</a>
+</h4><ul><li class="spec"><a name="369">should add an element of the right type</a>
 
 
 
@@ -1296,45 +4272,375 @@ div.supplement {
  
 
           </li>
-        </ul><h3 class="context">
-  when removing an element at a certain position from
-</h3>
-<h4 class="count">
-  1 specification
-</h4><ul><li class="spec"><a name="28">should unset the elements visual parent</a>
-
-
-
-
- 
-
-          </li>
-        </ul><h3 class="context">
-  when removing an element from
-</h3>
-<h4 class="count">
-  1 specification
-</h4><ul><li class="spec"><a name="27">should unset the elements visual parent</a>
-
-
-
-
- 
-
-          </li>
-        </ul><h3 class="context">
-  when setting an element in
+        </ul><h2 class="concern">
+  VirtualizingElementCollection Move specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when moving an element
 </h3>
 <h4 class="count">
   2 specifications
-</h4><ul><li class="spec"><a name="25">should set the elements visual parent</a>
+</h4><ul><li class="spec"><a name="371">should move the element</a>
 
 
 
 
  
 
-          </li><li class="spec"><a name="26">should unset the old elements visual parent</a>
+          </li><li class="spec"><a name="372">should shift the existing element</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  VirtualizingElementCollection Realization specifications
+</h2>
+<h3 class="count">
+  2 contexts, 11 specifications
+</h3><h3 class="context">
+  when realizing an already realized element
+</h3>
+<h4 class="count">
+  6 specifications
+</h4><ul><li class="spec"><a name="378">should have a realized count of 1</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="379">should not change the data context</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="380">should not change the elements visual parent</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="381">should not invalidate its owners measure</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="382">should not realize the element again</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="383">should still be realized</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when realizing an element
+</h3>
+<h4 class="count">
+  5 specifications
+</h4><ul><li class="spec"><a name="373">should have a realized count of 1</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="374">should invalidate its owners measure</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="375">should realize the element</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="376">should set the data context of the element</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="377">should set the elements visual parent</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  VirtualizingElementCollection Remove specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when removing an element
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="370">should remove the element</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  VirtualizingElementCollection Virtualization specifications
+</h2>
+<h3 class="count">
+  6 contexts, 13 specifications
+</h3><h3 class="context">
+  when a collection that contains real and virtual elements is enumerated
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="395">should not realize virtual elements</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="396">should return elements that are not null</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when asked for a count and there are both real and virtual elements
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="389">should count both real and virtual elements</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="390">should have a realized count of 1</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when asked for a virtual element
+</h3>
+<h4 class="count">
+  2 specifications
+</h4><ul><li class="spec"><a name="391">should not realize the element in the collection</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="392">should return a realized element</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when asked if it contains a specific element
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="394">should always return false</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when clearing the collection
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="393">should return a count of zero</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when virtualizing an element
+</h3>
+<h4 class="count">
+  5 specifications
+</h4><ul><li class="spec"><a name="384">should have a realized count of 1</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="385">should invalidate its owners measure</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="386">should unset the elements data context</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="387">should unset the elements visual parent</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="388">should virtualize the element</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  VirtualizingStackPanel Children specifications
+</h2>
+<h3 class="count">
+  1 context, 3 specifications
+</h3><h3 class="context">
+  when a child is added
+</h3>
+<h4 class="count">
+  3 specifications
+</h4><ul><li class="spec"><a name="243">should contain the child</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="244">should not arrange the child</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="245">should not measure the child</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  VirtualizingStackPanel Scrolling specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when placed in a ScrollViewer
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="242">should not need a ScrollContentPresenter</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  VirtualizingStackPanel Virtualization specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when a child is added that wants to make the extent bigger than the viewport
+</h3>
+<h4 class="count">
+  1 specification
+</h4><ul><li class="spec"><a name="246">should contain all the added children</a>
+
+
+
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  XnaImage specifications
+</h2>
+<h3 class="count">
+  1 context, 4 specifications
+</h3><h3 class="context">
+  when an Xna image is instantiated
+</h3>
+<h4 class="count">
+  4 specifications
+</h4><ul><li class="spec"><a name="282">should have a Height set</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="283">should have a Pixel Height set</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="284">should have a Pixel Width set</a>
+
+
+
+
+ 
+
+          </li><li class="spec"><a name="285">should have a Width set</a>
 
 
 
