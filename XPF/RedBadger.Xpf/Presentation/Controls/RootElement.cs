@@ -26,6 +26,8 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         public RootElement(Rect viewPort, IRenderer renderer, IInputManager inputManager)
         {
+            License.Validate();
+
             if (renderer == null)
             {
                 throw new ArgumentNullException("renderer");

@@ -115,6 +115,9 @@
     <Compile Include="..\RedBadger.Xpf\Internal\VectorExtensions.cs">
       <Link>Internal\VectorExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\License.cs">
+      <Link>License.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\BindingExpression.cs">
       <Link>Presentation\BindingExpression.cs</Link>
     </Compile>
