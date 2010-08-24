@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("RedBadger.Xpf.Phone")]
 [assembly: AssemblyDescription("XPF - An XNA Layout Framework from Red Badger")]
 [assembly: AssemblyCompany("Red Badger Consulting Limited")]
-[assembly: AssemblyCopyright("Copyright ©  2010")]
+[assembly: AssemblyCopyright("Copyright Red Badger Consulting Limited © 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
