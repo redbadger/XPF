@@ -96,31 +96,16 @@ namespace RedBadger.PocketMechanic.Phone
             this.rootElement.Content = textBlock;
 
             var stackPanel = new StackPanel
-                {
-                    Background = new SolidColorBrush(Colors.Yellow), 
-                    Children =
+            {
+                Background = new SolidColorBrush(Colors.Red),
+                Children =
                         {
-                            new TextBlock(spriteFontAdapter) { Text = "Item 1" }, 
-                            new TextBlock(spriteFontAdapter) { Text = "Item 2" }, 
+                            new TextBlock(spriteFontAdapter) { Text = "Item 1" },
+                            new TextBlock(spriteFontAdapter) { Text = "Item 2" },
                             new TextBlock(spriteFontAdapter) { Text = "Item 3" }
-                        }, 
-                    HorizontalAlignment = HorizontalAlignment.Left, 
-                    VerticalAlignment = VerticalAlignment.Top, 
-                    Orientation = Orientation.Vertical, 
-                    Margin = new Thickness(10)
-                };
-
-            var border = new Border
-                {
-                    Child = stackPanel, 
-                    Background = new SolidColorBrush(Colors.Red), 
-                    BorderBrush = new SolidColorBrush(Colors.Blue), 
-                    HorizontalAlignment = HorizontalAlignment.Center, 
-                    VerticalAlignment = VerticalAlignment.Center, 
-                    BorderThickness = new Thickness(10)
-                };
-
-            this.rootElement.Content = border;
+                        }
+            };
+            this.rootElement.Content = stackPanel;
         }
 
         private static Color GetRandomColor(Random random)

@@ -11,7 +11,6 @@ namespace Xpf.Samples.S01GettingStarted
     using RedBadger.Xpf.Presentation.Media;
 
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
-    using TextWrapping = RedBadger.Xpf.Presentation.TextWrapping;
 
     public class MyComponent : DrawableGameComponent
     {
@@ -50,42 +49,34 @@ namespace Xpf.Samples.S01GettingStarted
             var spriteFont = this.Game.Content.Load<SpriteFont>("MySpriteFont");
             var spriteFontAdapter = new SpriteFontAdapter(spriteFont);
 
-            var textBlock = new TextBlock(spriteFontAdapter)
+            var grid = new Grid
                 {
-                    Text =
-                        "Red Badger is a product and service consultancy, specialising in bespoke software projects, developer tools and platforms on the Microsoft technology stack.", 
-                    Background = new SolidColorBrush(Colors.Red), 
-                    HorizontalAlignment = HorizontalAlignment.Left, 
-                    VerticalAlignment = VerticalAlignment.Top, 
-                    Wrapping = TextWrapping.Wrap, 
-                    Margin = new Thickness(10)
-                };
-
-            this.rootElement.Content = textBlock;
-
-            var stackPanel = new StackPanel
-                {
-                    Background = new SolidColorBrush(Colors.Red), 
+                    RowDefinitions = { new RowDefinition { Height = new GridLength(425) } },
+                    ColumnDefinitions = { new ColumnDefinition { Width = new GridLength(400) } },
+                    Background = new SolidColorBrush(Colors.Red),
                     Children =
                         {
-                            new TextBlock(spriteFontAdapter) { Text = "Item 1" }, 
-                            new TextBlock(spriteFontAdapter) { Text = "Item 2" }, 
-                            new TextBlock(spriteFontAdapter) { Text = "Item 3" }
-                        }, 
-                    HorizontalAlignment = HorizontalAlignment.Left, 
-                    VerticalAlignment = VerticalAlignment.Top, 
-                    Orientation = Orientation.Horizontal, 
-                    Margin = new Thickness(10)
+                            new TextBlock(spriteFontAdapter)
+                                {
+                                    Text = "Your Score: 5483",
+                                    Margin = new Thickness(5)
+                                },
+                            new TextBlock(spriteFontAdapter)
+                                {
+                                    Text = "High Score: 9999",
+                                    Margin = new Thickness(5),
+                                    HorizontalAlignment = HorizontalAlignment.Right 
+                                },
+                            new TextBlock(spriteFontAdapter)
+                                {
+                                    Text = "Lives: 3",
+                                    Margin = new Thickness(5),
+                                    VerticalAlignment = VerticalAlignment.Bottom 
+                                }
+                        }
                 };
 
-            this.rootElement.Content = stackPanel;
-
-            /*var grid = new Grid
-                {
-                    RowDefinitions = { new RowDefinition(), new RowDefinition() },
-                    ColumnDefinitions = { new ColumnDefinition(), new ColumnDefinition() }
-                };
-            this.rootElement.Content = grid;*/
+            this.rootElement.Content = grid;
         }
     }
 }
