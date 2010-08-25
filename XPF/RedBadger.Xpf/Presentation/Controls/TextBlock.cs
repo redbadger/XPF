@@ -116,7 +116,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            return this.DesiredSize;
+            return finalSize;
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -139,13 +139,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             if (this.Background != null)
             {
-                drawingContext.DrawRectangle(
-                    new Rect(
-                        0, 
-                        0, 
-                        this.ActualWidth - (this.Margin.Left + this.Margin.Right), 
-                        this.ActualHeight - (this.Margin.Top + this.Margin.Bottom)), 
-                    this.Background);
+                drawingContext.DrawRectangle(new Rect(0, 0, this.ActualWidth, this.ActualHeight), this.Background);
             }
 
             drawingContext.DrawText(

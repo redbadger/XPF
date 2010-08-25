@@ -1,12 +1,9 @@
 namespace RedBadger.PocketMechanic.Phone
 {
     using System;
-    using System.Collections.ObjectModel;
     using System.Windows;
-    using System.Windows.Data;
     using System.Windows.Media;
 
-    using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -80,22 +77,50 @@ namespace RedBadger.PocketMechanic.Phone
 
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
                 l => items.Add(DateTime.Now.ToString()));*/
-
             var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
 
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 
             var textBlock = new TextBlock(spriteFontAdapter)
-            {
-                Text = "Red Badger is a product and service consultancy, specialising in bespoke software projects, developer tools and platforms on the Microsoft technology stack.",
-                Background = new SolidColorBrush(Colors.Red),
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-                Wrapping = TextWrapping.Wrap,
-                Margin = new Thickness(10)
-            };
+                {
+                    Text =
+                        "Red Badger is a product and service consultancy, specialising in bespoke software projects, developer tools and platforms on the Microsoft technology stack.", 
+                    Background = new SolidColorBrush(Colors.Red), 
+                    HorizontalAlignment = HorizontalAlignment.Left, 
+                    VerticalAlignment = VerticalAlignment.Top, 
+                    Wrapping = TextWrapping.Wrap, 
+                    Margin = new Thickness(10), 
+                    Padding = new Thickness(10)
+                };
 
             this.rootElement.Content = textBlock;
+
+            var stackPanel = new StackPanel
+                {
+                    Background = new SolidColorBrush(Colors.Yellow), 
+                    Children =
+                        {
+                            new TextBlock(spriteFontAdapter) { Text = "Item 1" }, 
+                            new TextBlock(spriteFontAdapter) { Text = "Item 2" }, 
+                            new TextBlock(spriteFontAdapter) { Text = "Item 3" }
+                        }, 
+                    HorizontalAlignment = HorizontalAlignment.Left, 
+                    VerticalAlignment = VerticalAlignment.Top, 
+                    Orientation = Orientation.Vertical, 
+                    Margin = new Thickness(10)
+                };
+
+            var border = new Border
+                {
+                    Child = stackPanel, 
+                    Background = new SolidColorBrush(Colors.Red), 
+                    BorderBrush = new SolidColorBrush(Colors.Blue), 
+                    HorizontalAlignment = HorizontalAlignment.Center, 
+                    VerticalAlignment = VerticalAlignment.Center, 
+                    BorderThickness = new Thickness(10)
+                };
+
+            this.rootElement.Content = border;
         }
 
         private static Color GetRandomColor(Random random)

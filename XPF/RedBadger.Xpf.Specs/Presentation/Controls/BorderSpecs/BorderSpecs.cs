@@ -264,11 +264,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
         private It should_render_the_background_in_the_right_place = () =>
             {
-                var area = new Rect(
-                    0, 
-                    0, 
-                    Border.ActualWidth - (margin.Left + margin.Right), 
-                    Border.ActualHeight - (margin.Top + margin.Bottom));
+                var area = new Rect(0, 0, Border.ActualWidth, Border.ActualHeight);
 
                 DrawingContext.Verify(
                     drawingContext =>

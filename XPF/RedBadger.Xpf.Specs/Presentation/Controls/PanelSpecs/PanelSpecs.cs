@@ -97,12 +97,12 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
         private static Thickness margin;
 
         private Establish context = () =>
-        {
-            expectedBackground = new SolidColorBrush(Colors.Blue);
+            {
+                expectedBackground = new SolidColorBrush(Colors.Blue);
 
-            margin = new Thickness(1, 2, 3, 4);
-            Panel.Object.Margin = margin;
-        };
+                margin = new Thickness(1, 2, 3, 4);
+                Panel.Object.Margin = margin;
+            };
 
         private Because of = () =>
             {
@@ -112,11 +112,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
 
         private It should_render_the_background_in_the_right_place = () =>
             {
-                var area = new Rect(
-                    0,
-                    0,
-                    Panel.Object.ActualWidth - (margin.Left + margin.Right),
-                    Panel.Object.ActualHeight - (margin.Top + margin.Bottom));
+                var area = new Rect(0, 0, Panel.Object.ActualWidth, Panel.Object.ActualHeight);
 
                 DrawingContext.Verify(
                     drawingContext =>
