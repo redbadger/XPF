@@ -136,8 +136,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
         private It should_render_the_background_in_the_right_place = () =>
             {
                 var area = new Rect(
-                    margin.Left, 
-                    margin.Top, 
+                    0, 
+                    0, 
                     TextBlock.ActualWidth - (margin.Left + margin.Right), 
                     TextBlock.ActualHeight - (margin.Top + margin.Bottom));
 

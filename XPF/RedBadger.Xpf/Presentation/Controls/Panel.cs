@@ -59,8 +59,8 @@
             {
                 drawingContext.DrawRectangle(
                     new Rect(
-                        this.Margin.Left, 
-                        this.Margin.Top, 
+                        0,
+                        0, 
                         this.ActualWidth - (this.Margin.Left + this.Margin.Right), 
                         this.ActualHeight - (this.Margin.Top + this.Margin.Bottom)), 
                     this.Background);

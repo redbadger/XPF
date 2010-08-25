@@ -26,7 +26,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         public static readonly XpfDependencyProperty PaddingProperty = XpfDependencyProperty.Register(
             "Padding", 
             typeof(Thickness), 
-            typeof(TextBlock),
+            typeof(TextBlock), 
             new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
 
         public static readonly XpfDependencyProperty TextProperty = XpfDependencyProperty.Register(
@@ -141,10 +141,10 @@ namespace RedBadger.Xpf.Presentation.Controls
             {
                 drawingContext.DrawRectangle(
                     new Rect(
-                        this.Margin.Left,
-                        this.Margin.Top,
-                        this.ActualWidth - (this.Margin.Left + this.Margin.Right),
-                        this.ActualHeight - (this.Margin.Top + this.Margin.Bottom)),
+                        0, 
+                        0, 
+                        this.ActualWidth - (this.Margin.Left + this.Margin.Right), 
+                        this.ActualHeight - (this.Margin.Top + this.Margin.Bottom)), 
                     this.Background);
             }
 

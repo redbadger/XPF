@@ -113,8 +113,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
         private It should_render_the_background_in_the_right_place = () =>
             {
                 var area = new Rect(
-                    margin.Left,
-                    margin.Top,
+                    0,
+                    0,
                     Panel.Object.ActualWidth - (margin.Left + margin.Right),
                     Panel.Object.ActualHeight - (margin.Top + margin.Bottom));
 

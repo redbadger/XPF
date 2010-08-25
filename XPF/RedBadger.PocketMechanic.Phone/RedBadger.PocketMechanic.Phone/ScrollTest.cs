@@ -17,6 +17,7 @@ namespace RedBadger.PocketMechanic.Phone
 
     using Color = System.Windows.Media.Color;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
+    using TextWrapping = RedBadger.Xpf.Presentation.TextWrapping;
 
     public class ScrollTest : DrawableGameComponent
     {
@@ -54,7 +55,7 @@ namespace RedBadger.PocketMechanic.Phone
             this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
             var spriteFontAdapter = new SpriteFontAdapter(this.spriteFont);
 
-            var items = new ObservableCollection<string>();
+            /*var items = new ObservableCollection<string>();
             var itemsControl = new ItemsControl
                 {
                     ItemTemplate = () =>
@@ -78,7 +79,23 @@ namespace RedBadger.PocketMechanic.Phone
                 };
 
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
-                l => items.Add(DateTime.Now.ToString()));
+                l => items.Add(DateTime.Now.ToString()));*/
+
+            var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
+
+            this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
+
+            var textBlock = new TextBlock(spriteFontAdapter)
+            {
+                Text = "Red Badger is a product and service consultancy, specialising in bespoke software projects, developer tools and platforms on the Microsoft technology stack.",
+                Background = new SolidColorBrush(Colors.Red),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+                Wrapping = TextWrapping.Wrap,
+                Margin = new Thickness(10)
+            };
+
+            this.rootElement.Content = textBlock;
         }
 
         private static Color GetRandomColor(Random random)
