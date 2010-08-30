@@ -10,6 +10,7 @@ namespace Xpf.Samples.S01GettingStarted
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
+    using Color = System.Windows.Media.Color;
     using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     public class MyComponent : DrawableGameComponent
@@ -51,6 +52,79 @@ namespace Xpf.Samples.S01GettingStarted
 
             var grid = new Grid
                 {
+                    Background = new SolidColorBrush(Colors.White),
+                    RowDefinitions =
+                        {
+                            new RowDefinition(),
+                            new RowDefinition { Height = new GridLength(320) },
+                            new RowDefinition()
+                        },
+                    ColumnDefinitions =
+                        {
+                            new ColumnDefinition { Width = new GridLength(200) },
+                            new ColumnDefinition { Width = new GridLength(200) }
+                        }
+                };
+
+            this.rootElement.Content = grid;
+
+            var topLeftBorder = new Border
+                {
+                    BorderBrush = new SolidColorBrush(Colors.Black),
+                    BorderThickness = new Thickness(0, 0, 0, 2),
+                    Child = new TextBlock(spriteFontAdapter)
+                        {
+                            Text = "Score: 5483",
+                            Margin = new Thickness(10)
+                        }
+                };
+            Grid.SetRow(topLeftBorder, 0);
+            Grid.SetColumn(topLeftBorder, 0);
+            grid.Children.Add(topLeftBorder);
+
+            var topRightBorder = new Border
+            {
+                BorderBrush = new SolidColorBrush(Colors.Black),
+                BorderThickness = new Thickness(0, 0, 0, 2),
+                Child = new TextBlock(spriteFontAdapter)
+                {
+                    Text = "High: 9999",
+                    Margin = new Thickness(10),
+                    HorizontalAlignment = HorizontalAlignment.Right
+                }
+            };
+            Grid.SetRow(topRightBorder, 0);
+            Grid.SetColumn(topRightBorder, 1);
+            grid.Children.Add(topRightBorder);
+
+            var bottomLeftBorder = new Border
+            {
+                BorderBrush = new SolidColorBrush(Colors.Black),
+                BorderThickness = new Thickness(0, 2, 0, 0),
+                Background = new SolidColorBrush(Color.FromRgb(106, 168, 79)),
+                Child = new TextBlock(spriteFontAdapter)
+                {
+                    Text = "Lives: 3",
+                    Margin = new Thickness(10),
+                    VerticalAlignment = VerticalAlignment.Bottom
+                }
+            };
+            Grid.SetRow(bottomLeftBorder, 2);
+            Grid.SetColumn(bottomLeftBorder, 0);
+            grid.Children.Add(bottomLeftBorder);
+
+            var bottomRightBorder = new Border
+            {
+                BorderBrush = new SolidColorBrush(Colors.Black),
+                BorderThickness = new Thickness(0, 2, 0, 0),
+                Background = new SolidColorBrush(Color.FromRgb(106, 168, 79))
+            };
+            Grid.SetRow(bottomRightBorder, 2);
+            Grid.SetColumn(bottomRightBorder, 1);
+            grid.Children.Add(bottomRightBorder);
+
+            /*var grid = new Grid
+                {
                     RowDefinitions = { new RowDefinition { Height = new GridLength(425) } },
                     ColumnDefinitions = { new ColumnDefinition { Width = new GridLength(400) } },
                     Background = new SolidColorBrush(Colors.Red),
@@ -76,7 +150,7 @@ namespace Xpf.Samples.S01GettingStarted
                         }
                 };
 
-            this.rootElement.Content = grid;
+            this.rootElement.Content = grid;*/
         }
     }
 }

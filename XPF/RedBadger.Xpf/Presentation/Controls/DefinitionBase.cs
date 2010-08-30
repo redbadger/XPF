@@ -18,13 +18,13 @@ namespace RedBadger.Xpf.Presentation.Controls
             Row
         }
 
-        public GridUnitType LengthType { get; set; }
-
         internal double AvailableLength { get; set; }
 
         internal double FinalLength { get; set; }
 
         internal double FinalOffset { get; set; }
+
+        internal GridUnitType LengthType { get; set; }
 
         internal double MinLength { get; set; }
 

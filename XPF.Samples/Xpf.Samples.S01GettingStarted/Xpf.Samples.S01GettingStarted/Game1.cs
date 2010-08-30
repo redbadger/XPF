@@ -11,7 +11,7 @@ namespace Xpf.Samples.S01GettingStarted
         {
             this.graphics = new GraphicsDeviceManager(this);
             this.graphics.PreferredBackBufferWidth = 400;
-            this.graphics.PreferredBackBufferHeight = 425;
+            this.graphics.PreferredBackBufferHeight = 420;
             this.Content.RootDirectory = "Content";
         }
 

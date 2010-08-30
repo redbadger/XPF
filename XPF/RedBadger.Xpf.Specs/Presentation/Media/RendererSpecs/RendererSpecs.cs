@@ -89,6 +89,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
             {
                 var mock = new Mock<IElement>();
                 mock.SetupGet(element => element.IsArrangeValid).Returns(true);
+                mock.SetupGet(element => element.VisualParent).Returns(new Mock<IElement>().Object);
                 Renderer.GetDrawingContext(mock.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.AliceBlue));
             };
 
@@ -102,5 +103,29 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
             () =>
             SpriteBatch.Verify(
                 batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()));
+    }
+
+    [Subject(typeof(Renderer))]
+    public class when_a_renderer_contains_an_orphaned_element : a_Renderer
+    {
+        private Establish context = () =>
+            {
+                var mock = new Mock<IElement>();
+                mock.SetupGet(element => element.IsArrangeValid).Returns(true);
+                mock.SetupGet(element => element.VisualParent).Returns(default(IElement));
+                Renderer.GetDrawingContext(mock.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.AliceBlue));
+            };
+
+        private Because of = () =>
+            {
+                Renderer.ClearInvalidDrawingContexts();
+                Renderer.Draw();
+            };
+
+        private It should_not_draw_the_orphaned_element =
+            () =>
+            SpriteBatch.Verify(
+                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
+                Times.Never());
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace RedBadger.Xpf.Presentation.Media
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using RedBadger.Xpf.Graphics;
 
@@ -23,6 +24,8 @@
 
         public void ClearInvalidDrawingContexts()
         {
+            this.ClearContextsWithOrphanedElements();
+
             foreach (DrawingContext drawingContext in this.drawingContexts.Values)
             {
                 drawingContext.ClearIfInvalid();
@@ -66,6 +69,12 @@
 
                 this.isPreDrawRequired = false;
             }
+        }
+
+        private void ClearContextsWithOrphanedElements()
+        {
+            this.drawingContexts.Keys.Where(element => element.VisualParent == null).ToList().ForEach(
+                orphan => this.drawingContexts.Remove(orphan));
         }
     }
 }

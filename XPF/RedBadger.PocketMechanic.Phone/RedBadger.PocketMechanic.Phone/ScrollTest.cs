@@ -1,9 +1,12 @@
 namespace RedBadger.PocketMechanic.Phone
 {
     using System;
+    using System.Collections.ObjectModel;
     using System.Windows;
+    using System.Windows.Data;
     using System.Windows.Media;
 
+    using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -25,6 +28,10 @@ namespace RedBadger.PocketMechanic.Phone
         private SpriteBatchAdapter spriteBatchAdapter;
 
         private SpriteFont spriteFont;
+
+        private StackPanel stackPanel;
+
+        private TextBlock textBlock;
 
         public ScrollTest(Game game)
             : base(game)
@@ -52,7 +59,7 @@ namespace RedBadger.PocketMechanic.Phone
             this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
             var spriteFontAdapter = new SpriteFontAdapter(this.spriteFont);
 
-            /*var items = new ObservableCollection<string>();
+            var items = new ObservableCollection<string>();
             var itemsControl = new ItemsControl
                 {
                     ItemTemplate = () =>
@@ -76,8 +83,9 @@ namespace RedBadger.PocketMechanic.Phone
                 };
 
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
-                l => items.Add(DateTime.Now.ToString()));*/
-            var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
+                l => items.Add(DateTime.Now.ToString()));
+            
+            /*var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
 
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 
@@ -95,17 +103,33 @@ namespace RedBadger.PocketMechanic.Phone
 
             this.rootElement.Content = textBlock;
 
-            var stackPanel = new StackPanel
-            {
-                Background = new SolidColorBrush(Colors.Red),
-                Children =
+            var grid = new Grid { RowDefinitions = { new RowDefinition(), new RowDefinition() } };
+
+            var button = new Button
+                {
+                    Content =
+                        new TextBlock(spriteFontAdapter)
+                            {
+                               Text = "Click", Background = new SolidColorBrush(Colors.Blue) 
+                            }
+                };
+            grid.Children.Add(button);
+            Grid.SetRow(button, 1);
+
+            this.textBlock = new TextBlock(spriteFontAdapter) { Text = "Item 1", Margin = new Thickness(15) };
+            this.stackPanel = new StackPanel
+                {
+                    Children =
                         {
-                            new TextBlock(spriteFontAdapter) { Text = "Item 1" },
-                            new TextBlock(spriteFontAdapter) { Text = "Item 2" },
-                            new TextBlock(spriteFontAdapter) { Text = "Item 3" }
+                            this.textBlock, 
+                            new TextBlock(spriteFontAdapter) { Text = "Item 2", Margin = new Thickness(15) }, 
+                            new TextBlock(spriteFontAdapter) { Text = "Item 3", Margin = new Thickness(15) }
                         }
-            };
-            this.rootElement.Content = stackPanel;
+                };
+            grid.Children.Add(this.stackPanel);
+            this.rootElement.Content = grid;
+
+            button.Click += (sender, args) => this.stackPanel.Children.RemoveAt(0);*/
         }
 
         private static Color GetRandomColor(Random random)

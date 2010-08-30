@@ -43,7 +43,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.Phone, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Reactive, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
-<!--
+    <!--
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
@@ -102,6 +102,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\DoubleExtensions.cs">
       <Link>Internal\DoubleExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\IEnumerableExtensions.cs">
+      <Link>Internal\IEnumerableExtensions.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\MinMax.cs">
       <Link>Internal\MinMax.cs</Link>
