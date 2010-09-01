@@ -122,35 +122,6 @@ namespace Xpf.Samples.S01GettingStarted
             Grid.SetRow(bottomRightBorder, 2);
             Grid.SetColumn(bottomRightBorder, 1);
             grid.Children.Add(bottomRightBorder);
-
-            /*var grid = new Grid
-                {
-                    RowDefinitions = { new RowDefinition { Height = new GridLength(425) } },
-                    ColumnDefinitions = { new ColumnDefinition { Width = new GridLength(400) } },
-                    Background = new SolidColorBrush(Colors.Red),
-                    Children =
-                        {
-                            new TextBlock(spriteFontAdapter)
-                                {
-                                    Text = "Your Score: 5483",
-                                    Margin = new Thickness(5)
-                                },
-                            new TextBlock(spriteFontAdapter)
-                                {
-                                    Text = "High Score: 9999",
-                                    Margin = new Thickness(5),
-                                    HorizontalAlignment = HorizontalAlignment.Right 
-                                },
-                            new TextBlock(spriteFontAdapter)
-                                {
-                                    Text = "Lives: 3",
-                                    Margin = new Thickness(5),
-                                    VerticalAlignment = VerticalAlignment.Bottom 
-                                }
-                        }
-                };
-
-            this.rootElement.Content = grid;*/
         }
     }
 }

@@ -5,13 +5,9 @@ namespace Xpf.Samples.S01GettingStarted
 
     public class Game1 : Game
     {
-        private readonly GraphicsDeviceManager graphics;
-
         public Game1()
         {
-            this.graphics = new GraphicsDeviceManager(this);
-            this.graphics.PreferredBackBufferWidth = 400;
-            this.graphics.PreferredBackBufferHeight = 420;
+            new GraphicsDeviceManager(this) { PreferredBackBufferWidth = 400, PreferredBackBufferHeight = 420 };
             this.Content.RootDirectory = "Content";
         }
 
