@@ -132,7 +132,6 @@ Global
 		{B43239E7-0131-4DC9-9BAB-8904293BD869}.Release|x86.ActiveCfg = Release|Any CPU
 		{317F94D9-9A21-427E-827F-2EE24C830304}.Build|Any CPU.ActiveCfg = Release|x86
 		{317F94D9-9A21-427E-827F-2EE24C830304}.Build|Mixed Platforms.ActiveCfg = Release|x86
-		{317F94D9-9A21-427E-827F-2EE24C830304}.Build|Mixed Platforms.Build.0 = Release|x86
 		{317F94D9-9A21-427E-827F-2EE24C830304}.Build|Windows Phone.ActiveCfg = Release|x86
 		{317F94D9-9A21-427E-827F-2EE24C830304}.Build|x86.ActiveCfg = Release|x86
 		{317F94D9-9A21-427E-827F-2EE24C830304}.Build|x86.Build.0 = Release|x86
