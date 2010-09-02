@@ -62,7 +62,7 @@
     <Reference Include="Machine.Specifications">
       <HintPath>..\..\Lib\MSpec\Machine.Specifications.dll</HintPath>
     </Reference>
-<!--
+    <!--
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
 -->
@@ -97,6 +97,7 @@
     <Compile Include="Presentation\Controls\BorderSpecs\Contexts.cs" />
     <Compile Include="Presentation\Controls\ButtonBaseSpecs\ButtonBaseSpecs.cs" />
     <Compile Include="Presentation\Controls\ButtonSpecs\ButtonSpecs.cs" />
+    <Compile Include="Presentation\Controls\CanvasSpecs\CanvasSpecs.cs" />
     <Compile Include="Presentation\Controls\ContentControlSpecs\ContentControlSpecs.cs" />
     <Compile Include="Presentation\Controls\ImageSpecs\ImageSpecs.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\ArrangeSpecs.cs" />
