@@ -1,13 +1,13 @@
-namespace RedBadger.Xpf.Presentation.Controls
+namespace RedBadger.Xpf.Internal.Controls
 {
     using System.Windows;
     using System.Windows.Media;
 
-    using RedBadger.Xpf.Internal;
+    using RedBadger.Xpf.Presentation.Controls;
 
     using Vector = RedBadger.Xpf.Presentation.Vector;
 
-    public class Viewbox
+    internal class Viewbox
     {
         internal static Vector ComputeScaleFactor(
             Size availableSize, Size contentSize, Stretch stretch, StretchDirection stretchDirection)

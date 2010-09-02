@@ -118,7 +118,7 @@
     <Compile Include="Presentation\Controls\Primitives\ButtonBase.cs" />
     <Compile Include="Presentation\Controls\Control.cs" />
     <Compile Include="Presentation\Controls\StretchDirection.cs" />
-    <Compile Include="Presentation\Controls\Viewbox.cs" />
+    <Compile Include="Internal\Controls\Viewbox.cs" />
     <Compile Include="Presentation\Controls\Orientation.cs" />
     <Compile Include="Presentation\IDependencyObject.cs" />
     <Compile Include="Input\InputManager.cs" />

@@ -3,6 +3,7 @@ namespace RedBadger.Xpf.Presentation.Controls
     using System.Windows;
     using System.Windows.Media;
 
+    using RedBadger.Xpf.Internal.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
     using ImageSource = RedBadger.Xpf.Presentation.Media.ImageSource;

@@ -100,6 +100,9 @@
     <Compile Include="..\RedBadger.Xpf\Internal\Controls\ScrollData.cs">
       <Link>Internal\Controls\ScrollData.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\Controls\Viewbox.cs">
+      <Link>Internal\Controls\Viewbox.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\DoubleExtensions.cs">
       <Link>Internal\DoubleExtensions.cs</Link>
     </Compile>
@@ -189,9 +192,6 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\TextBlock.cs">
       <Link>Presentation\Controls\TextBlock.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Viewbox.cs">
-      <Link>Presentation\Controls\Viewbox.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\VirtualizingStackPanel.cs">
       <Link>Presentation\Controls\VirtualizingStackPanel.cs</Link>
