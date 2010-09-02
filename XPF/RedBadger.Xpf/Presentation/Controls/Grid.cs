@@ -140,7 +140,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             foreach (DefinitionBase definition in definitions)
             {
                 definition.MinLength = 0;
-                double availableLength = 0;
+                double availableLength;
                 double userMinLength = definition.UserMinLength;
                 double userMaxLength = definition.UserMaxLength;
 
@@ -155,6 +155,8 @@ namespace RedBadger.Xpf.Presentation.Controls
                         availableLength = definition.UserLength.Value;
                         userMinLength = Math.Max(userMinLength, Math.Min(availableLength, userMaxLength));
                         break;
+                    default:
+                        throw new NotSupportedException();
                 }
 
                 definition.UpdateMinLength(userMinLength);
@@ -168,16 +170,17 @@ namespace RedBadger.Xpf.Presentation.Controls
 
             foreach (DefinitionBase definition in definitions)
             {
-                double minLength = 0.0;
+                double minLength;
                 switch (definition.UserLength.GridUnitType)
                 {
                     case GridUnitType.Auto:
                         minLength = definition.MinLength;
                         break;
-
                     case GridUnitType.Pixel:
                         minLength = definition.UserLength.Value;
                         break;
+                    default:
+                        throw new NotSupportedException();
                 }
 
                 definition.FinalLength = Math.Max(definition.MinLength, Math.Min(minLength, definition.UserMaxLength));

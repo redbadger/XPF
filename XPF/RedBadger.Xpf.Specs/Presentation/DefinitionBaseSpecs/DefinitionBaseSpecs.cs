@@ -18,7 +18,29 @@ namespace RedBadger.Xpf.Specs.Presentation.DefinitionBaseSpecs
     using RedBadger.Xpf.Presentation.Controls;
 
     [Subject(typeof(DefinitionBase))]
-    public class when_a_column_definition_is_initialized
+    public class when_a_default_column_definition_is_initialized
+    {
+        private static ColumnDefinition columnDefinition;
+
+        private Because of = () => columnDefinition = new ColumnDefinition();
+
+        private It should_have_a_width_with_a_grid_type_of_star =
+            () => columnDefinition.Width.GridUnitType.ShouldEqual(GridUnitType.Star);
+    }
+
+    [Subject(typeof(DefinitionBase))]
+    public class when_a_default_row_definition_is_initialized
+    {
+        private static RowDefinition rowDefinition;
+
+        private Because of = () => rowDefinition = new RowDefinition();
+
+        private It should_have_a_height_with_a_grid_type_of_star =
+            () => rowDefinition.Height.GridUnitType.ShouldEqual(GridUnitType.Star);
+    }
+
+    [Subject(typeof(DefinitionBase))]
+    public class when_a_pixel_column_definition_is_initialized
     {
         private const GridUnitType ExpectedGridUnitType = GridUnitType.Pixel;
 
@@ -54,7 +76,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DefinitionBaseSpecs
     }
 
     [Subject(typeof(DefinitionBase))]
-    public class when_a_row_definition_is_initialized
+    public class when_a_pixel_row_definition_is_initialized
     {
         private const GridUnitType ExpectedGridUnitType = GridUnitType.Pixel;
 

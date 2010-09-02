@@ -11,7 +11,7 @@
             "MinWidth", typeof(double), typeof(ColumnDefinition), new PropertyMetadata(0d));
 
         public static readonly XpfDependencyProperty WidthProperty = XpfDependencyProperty.Register(
-            "Width", typeof(GridLength), typeof(ColumnDefinition), new PropertyMetadata(new GridLength()));
+            "Width", typeof(GridLength), typeof(ColumnDefinition), new PropertyMetadata(new GridLength(1, GridUnitType.Star)));
 
         public ColumnDefinition()
             : base(DefinitionType.Column)

@@ -5,7 +5,7 @@
     public class RowDefinition : DefinitionBase
     {
         public static readonly XpfDependencyProperty HeightProperty = XpfDependencyProperty.Register(
-            "Height", typeof(GridLength), typeof(RowDefinition), new PropertyMetadata(new GridLength()));
+            "Height", typeof(GridLength), typeof(RowDefinition), new PropertyMetadata(new GridLength(1, GridUnitType.Star)));
 
         public static readonly XpfDependencyProperty MaxHeightProperty = XpfDependencyProperty.Register(
             "MaxHeight", typeof(double), typeof(RowDefinition), new PropertyMetadata(double.PositiveInfinity));

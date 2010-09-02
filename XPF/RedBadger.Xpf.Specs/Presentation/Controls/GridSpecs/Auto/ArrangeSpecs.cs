@@ -9,7 +9,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
+namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Auto
 {
     using System.Windows;
 
@@ -20,7 +20,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     using Vector = RedBadger.Xpf.Presentation.Vector;
 
     [Subject(typeof(Grid), "Arrange")]
-    public class when_there_are_two_rows_and_two_columns_of_type_auto : a_Grid_with_two_rows_and_two_columns
+    public class when_there_are_two_rows_and_two_columns_of_type_auto : an_Auto_Grid_with_two_rows_and_two_columns
     {
         private Establish context = () => Grid.Measure(AvailableSize);
 
@@ -40,7 +40,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     }
 
     [Subject(typeof(Grid), "Arrange")]
-    public class when_there_are_two_rows_and_two_columns_of_type_pixel : a_Grid_with_two_rows_and_two_columns
+    public class when_there_are_two_rows_and_two_columns_of_type_pixel : an_Auto_Grid_with_two_rows_and_two_columns
     {
         private Establish context = () =>
             {
@@ -69,7 +69,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 
     [Subject(typeof(Grid), "Arrange")]
     public class when_there_are_two_rows_and_two_columns_with_minimum_values_which_are_greater_than_their_children :
-        a_Grid_with_two_rows_and_two_columns
+        an_Auto_Grid_with_two_rows_and_two_columns
     {
         private const double MinHeight = 90;
 
@@ -103,7 +103,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 
     [Subject(typeof(Grid), "Arrange")]
     public class when_there_are_two_rows_and_two_columns_with_maximum_values_which_are_less_than_their_children :
-        a_Grid_with_two_rows_and_two_columns
+        an_Auto_Grid_with_two_rows_and_two_columns
     {
         private const double MaxHeight = 9;
 

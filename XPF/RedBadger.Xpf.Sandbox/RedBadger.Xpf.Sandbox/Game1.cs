@@ -5,24 +5,22 @@ namespace RedBadger.Xpf.Sandbox
     using Microsoft.Xna.Framework.Input;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media;
 
     /// <summary>
     ///   This is the main type for your game
     /// </summary>
     public class Game1 : Game
     {
-        private SpriteFontAdapter font;
-
-        private GraphicsDeviceManager graphics;
-
         private RootElement rootElement;
 
         private SpriteBatchAdapter spriteBatchAdapter;
 
         public Game1()
         {
-            this.graphics = new GraphicsDeviceManager(this)
+            new GraphicsDeviceManager(this)
                 {
                    PreferredBackBufferWidth = 1024, PreferredBackBufferHeight = 768 
                 };
@@ -43,6 +41,9 @@ namespace RedBadger.Xpf.Sandbox
 
         protected override void LoadContent()
         {
+            this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
+            var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
+            this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
         }
 
         protected override void Update(GameTime gameTime)
