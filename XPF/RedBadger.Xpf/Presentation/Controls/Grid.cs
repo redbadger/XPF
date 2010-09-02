@@ -49,44 +49,44 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        public static int GetColumn(IDependencyObject dependencyObject)
+        public static int GetColumn(IElement element)
         {
-            if (dependencyObject == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException("element");
             }
 
-            return (int)dependencyObject.GetValue(ColumnProperty.Value);
+            return (int)element.GetValue(ColumnProperty.Value);
         }
 
-        public static int GetRow(IDependencyObject dependencyObject)
+        public static int GetRow(IElement element)
         {
-            if (dependencyObject == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException("element");
             }
 
-            return (int)dependencyObject.GetValue(RowProperty.Value);
+            return (int)element.GetValue(RowProperty.Value);
         }
 
-        public static void SetColumn(IDependencyObject dependencyObject, int value)
+        public static void SetColumn(IElement element, int value)
         {
-            if (dependencyObject == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException("element");
             }
 
-            dependencyObject.SetValue(ColumnProperty.Value, value);
+            element.SetValue(ColumnProperty.Value, value);
         }
 
-        public static void SetRow(IDependencyObject dependencyObject, int value)
+        public static void SetRow(IElement element, int value)
         {
-            if (dependencyObject == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException("element");
             }
 
-            dependencyObject.SetValue(RowProperty.Value, value);
+            element.SetValue(RowProperty.Value, value);
         }
 
         protected override Size ArrangeOverride(Size finalSize)
