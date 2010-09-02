@@ -9,6 +9,15 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
+namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
+    using Machine.Specifications;
+
+    using RedBadger.Xpf.Presentation.Controls;
+
+    [Subject(typeof(Grid), "Measure")]
+    public class when_a_column_index_is_specified_greater_than_the_number_of_columns_available : a_Grid
+    {
+        private It should_put_it_in_the_last_column;
+    }
 }

@@ -23,7 +23,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Pixel
     using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     [Subject(typeof(Grid), "Measure - Pixel")]
-    public class when_there_is_a_column_with_pixel_width : a_Grid
+    public class when_there_is_a_column_width_defined : a_Grid
     {
         private const double ColumnWidth = 10;
 
@@ -31,26 +31,26 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Pixel
 
         private Establish context = () =>
             {
-                Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ColumnWidth) });
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ColumnWidth) });
 
                 child = new Mock<UIElement> { CallBase = true };
                 child.Object.Width = 50;
                 child.Object.Height = 60;
 
-                Grid.Children.Add(child.Object);
+                Subject.Children.Add(child.Object);
             };
 
-        private Because of = () => Grid.Measure(AvailableSize);
+        private Because of = () => Subject.Measure(AvailableSize);
 
         private It should_have_a_desired_height_equal_to_the_available_height =
-            () => Grid.DesiredSize.Height.ShouldEqual(AvailableSize.Height);
+            () => Subject.DesiredSize.Height.ShouldEqual(AvailableSize.Height);
 
         private It should_have_a_desired_width_equal_to_that_of_the_column_width =
-            () => Grid.DesiredSize.Width.ShouldEqual(ColumnWidth);
+            () => Subject.DesiredSize.Width.ShouldEqual(ColumnWidth);
     }
 
     [Subject(typeof(Grid), "Measure - Pixel")]
-    public class when_there_is_a_row_with_pixel_height : a_Grid
+    public class when_there_is_a_row_height_defined : a_Grid
     {
         private const double RowHeight = 10;
 
@@ -58,26 +58,26 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Pixel
 
         private Establish context = () =>
             {
-                Grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(RowHeight) });
+                Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(RowHeight) });
 
                 child = new Mock<UIElement> { CallBase = true };
                 child.Object.Width = 50;
                 child.Object.Height = 60;
 
-                Grid.Children.Add(child.Object);
+                Subject.Children.Add(child.Object);
             };
 
-        private Because of = () => Grid.Measure(AvailableSize);
+        private Because of = () => Subject.Measure(AvailableSize);
 
         private It should_have_a_desired_height_equal_to_that_of_the_row_height =
-            () => Grid.DesiredSize.Height.ShouldEqual(RowHeight);
+            () => Subject.DesiredSize.Height.ShouldEqual(RowHeight);
 
         private It should_have_a_desired_width_equal_to_the_available_width =
-            () => Grid.DesiredSize.Width.ShouldEqual(AvailableSize.Width);
+            () => Subject.DesiredSize.Width.ShouldEqual(AvailableSize.Width);
     }
 
     [Subject(typeof(Grid), "Measure - Pixel")]
-    public class when_measuring_a_pixel_grid_with_two_rows_and_two_columns : a_Grid
+    public class when_there_are_two_rows_and_two_columns : a_Grid
     {
         private const double ExpectedHeight1 = 66f;
 
@@ -89,24 +89,39 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Pixel
 
         private Establish context = () =>
             {
-                Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ExpectedWidth1) });
-                Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ExpectedWidth2) });
-                Grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(ExpectedHeight1) });
-                Grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(ExpectedHeight2) });
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ExpectedWidth1) });
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ExpectedWidth2) });
+                Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(ExpectedHeight1) });
+                Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(ExpectedHeight2) });
             };
 
-        private Because of = () => Grid.Measure(AvailableSize);
+        private Because of = () => Subject.Measure(AvailableSize);
 
         private It should_have_a_desired_height_equal_to_the_sum_of_row_heights =
-            () => Grid.DesiredSize.Height.ShouldEqual(ExpectedHeight1 + ExpectedHeight2);
+            () => Subject.DesiredSize.Height.ShouldEqual(ExpectedHeight1 + ExpectedHeight2);
 
         private It should_have_a_desired_width_equal_to_the_sum_of_the_column_widths =
-            () => Grid.DesiredSize.Width.ShouldEqual(ExpectedWidth1 + ExpectedWidth2);
+            () => Subject.DesiredSize.Width.ShouldEqual(ExpectedWidth1 + ExpectedWidth2);
     }
 
-    [Subject(typeof(Grid), "Measure")]
-    public class when_a_column_index_is_specified_greater_than_the_number_of_columns_available : a_Grid
+    [Subject(typeof(Grid), "Measure - Pixel")]
+    public class when_a_child_element_is_bigger_than_the_cell_size : a_Grid
     {
-        private It should_put_it_in_the_last_column;
+        private static Mock<UIElement> child;
+
+        private Establish context = () =>
+        {
+            child = new Mock<UIElement> { CallBase = true };
+            child.Object.Width = 40;
+            child.Object.Height = 50;
+            Subject.Children.Add(child.Object);
+
+            Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(20) });
+            Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(30) });
+        };
+
+        private Because of = () => Subject.Measure(AvailableSize);
+        
+        private It should_not_affect_the_desired_size = () => Subject.DesiredSize.ShouldEqual(new Size(20, 30));
     }
 }

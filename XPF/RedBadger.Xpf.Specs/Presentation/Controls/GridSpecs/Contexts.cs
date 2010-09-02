@@ -21,8 +21,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     {
         protected static readonly Size AvailableSize = new Size(200, 200);
 
-        protected static Grid Grid;
+        protected static Grid Subject;
 
-        private Establish context = () => Grid = new Grid();
+        private Establish context = () => Subject = new Grid();
     }
 }

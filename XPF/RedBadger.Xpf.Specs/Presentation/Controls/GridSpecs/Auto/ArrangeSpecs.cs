@@ -22,9 +22,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Auto
     [Subject(typeof(Grid), "Arrange")]
     public class when_there_are_two_rows_and_two_columns_of_type_auto : an_Auto_Grid_with_two_rows_and_two_columns
     {
-        private Establish context = () => Grid.Measure(AvailableSize);
+        private Establish context = () => Subject.Measure(AvailableSize);
 
-        private Because of = () => Grid.Arrange(new Rect(AvailableSize));
+        private Because of = () => Subject.Arrange(new Rect(AvailableSize));
 
         private It should_layout_the_bottom_left_child_correctly =
             () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, 80));
@@ -49,10 +49,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Auto
                 RowOneDefinition.Height = new GridLength(7);
                 RowTwoDefinition.Height = new GridLength(8);
 
-                Grid.Measure(AvailableSize);
+                Subject.Measure(AvailableSize);
             };
 
-        private Because of = () => Grid.Arrange(new Rect(AvailableSize));
+        private Because of = () => Subject.Arrange(new Rect(AvailableSize));
 
         private It should_layout_the_bottom_left_child_correctly =
             () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, 7));
@@ -83,10 +83,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Auto
                 RowOneDefinition.MinHeight = MinHeight;
                 RowTwoDefinition.MinHeight = MinHeight;
 
-                Grid.Measure(AvailableSize);
+                Subject.Measure(AvailableSize);
             };
 
-        private Because of = () => Grid.Arrange(new Rect(AvailableSize));
+        private Because of = () => Subject.Arrange(new Rect(AvailableSize));
 
         private It should_layout_the_bottom_left_child_correctly =
             () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, MinHeight));
@@ -117,10 +117,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Auto
                 RowOneDefinition.MaxHeight = MaxHeight;
                 RowTwoDefinition.MaxHeight = MaxHeight;
 
-                Grid.Measure(AvailableSize);
+                Subject.Measure(AvailableSize);
             };
 
-        private Because of = () => Grid.Arrange(new Rect(AvailableSize));
+        private Because of = () => Subject.Arrange(new Rect(AvailableSize));
 
         private It should_layout_the_bottom_left_child_correctly =
             () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, MaxHeight));
