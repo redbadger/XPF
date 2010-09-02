@@ -9,7 +9,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
+/*namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
 {
     using System.Linq;
     using System.Windows;
@@ -95,7 +95,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
 
         private It should_contain_all_the_added_children = () => Subject.Children.Count.ShouldEqual(2);
 
-/*
         private It should_have_an_extent_equal_to_the_first_childs_desired_size =
             () => scrollViewer.Extent.ShouldEqual(firstChild.DesiredSize);
 
@@ -104,6 +103,5 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
 
         private It should_virtualize_the_child_which_is_not_in_view =
             () => Subject.GetVisualChildren().Last().ShouldBeTheSameAs(firstChild);
-*/
     }
-}
+}*/

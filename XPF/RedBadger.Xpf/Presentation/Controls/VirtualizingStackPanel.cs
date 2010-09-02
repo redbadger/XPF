@@ -10,6 +10,7 @@
 
     using Vector = RedBadger.Xpf.Presentation.Vector;
 
+/*
     public class VirtualizingStackPanel : StackPanel, IScrollInfo
     {
         private VirtualizingElementCollection children;
@@ -85,9 +86,9 @@
             return this.children;
         }
 
-/*        protected override Size MeasureOverride(Size availableSize)
+        protected override Size MeasureOverride(Size availableSize)
         {
-            var extent = new Size();
+            var viewportUsed = new Size();
 
             var availableSizeForContent = availableSize;
             if (this.Orientation == Orientation.Horizontal || this.scrollData.CanHorizontallyScroll)
@@ -102,10 +103,10 @@
 
             // TODO: work out what the first visible child is from the scrolldata offset
             int firstVisibleChild = 0;
-            bool isLastChild = false;
+            bool isLastVisibleChild = false;
             foreach (var child in this.children.GetCursor(firstVisibleChild))
             {
-                if (isLastChild)
+                if (isLastVisibleChild)
                 {
                     break;
                 }
@@ -116,24 +117,24 @@
                     var childDesiredSize = child.DesiredSize;
                     if (this.Orientation == Orientation.Horizontal)
                     {
-                        isLastChild = extent.Width + childDesiredSize.Width > availableSize.Width;
-                        extent.Width += childDesiredSize.Width;
-                        extent.Height = Math.Max(extent.Height, childDesiredSize.Height);
+                        isLastVisibleChild = viewportUsed.Width + childDesiredSize.Width > availableSize.Width;
+                        viewportUsed.Width += childDesiredSize.Width;
+                        viewportUsed.Height = Math.Max(viewportUsed.Height, childDesiredSize.Height);
                     }
                     else
                     {
-                        isLastChild = extent.Height + childDesiredSize.Height > availableSize.Height;
-                        extent.Width = Math.Max(extent.Width, childDesiredSize.Width);
-                        extent.Height += childDesiredSize.Height;
+                        isLastVisibleChild = viewportUsed.Height + childDesiredSize.Height > availableSize.Height;
+                        viewportUsed.Width = Math.Max(viewportUsed.Width, childDesiredSize.Width);
+                        viewportUsed.Height += childDesiredSize.Height;
                     }
                 }
             }
 
-            this.UpdateScrollData(availableSize, extent);
-            extent.Width = Math.Min(availableSize.Width, extent.Width);
-            extent.Height = Math.Min(availableSize.Height, extent.Height);
+            this.UpdateScrollData(availableSize, viewportUsed);
+            viewportUsed.Width = Math.Min(availableSize.Width, viewportUsed.Width);
+            viewportUsed.Height = Math.Min(availableSize.Height, viewportUsed.Height);
 
-            return extent;
+            return viewportUsed;
         }
 
         private void UpdateScrollData(Size viewport, Size extent)
@@ -147,6 +148,7 @@
                 0d, this.scrollData.Extent.Height - this.scrollData.Viewport.Height);
 
             this.scrollData.Offset = new Vector(x, y);
-        }*/
+        }
     }
+*/
 }
