@@ -54,34 +54,26 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
                 Subject.RowDefinitions.Add(RowTwoDefinition);
 
                 TopLeftChild = new Mock<UIElement> { CallBase = true };
-                TopLeftChild.Object.Width = 50;
-                TopLeftChild.Object.Height = 60;
-                TopLeftChild.Object.HorizontalAlignment = HorizontalAlignment.Left;
-                TopLeftChild.Object.VerticalAlignment = VerticalAlignment.Top;
+                TopLeftChild.Object.Width = 1;
+                TopLeftChild.Object.Height = 2;
                 Grid.SetColumn(TopLeftChild.Object, 0);
                 Grid.SetRow(TopLeftChild.Object, 0);
 
                 TopRightChild = new Mock<UIElement> { CallBase = true };
-                TopRightChild.Object.Width = 70;
-                TopRightChild.Object.Height = 80;
-                TopRightChild.Object.HorizontalAlignment = HorizontalAlignment.Left;
-                TopRightChild.Object.VerticalAlignment = VerticalAlignment.Top;
+                TopRightChild.Object.Width = 3;
+                TopRightChild.Object.Height = 4;
                 Grid.SetColumn(TopRightChild.Object, 1);
                 Grid.SetRow(TopRightChild.Object, 0);
 
                 BottomLeftChild = new Mock<UIElement> { CallBase = true };
-                BottomLeftChild.Object.Width = 10;
-                BottomLeftChild.Object.Height = 20;
-                BottomLeftChild.Object.HorizontalAlignment = HorizontalAlignment.Left;
-                BottomLeftChild.Object.VerticalAlignment = VerticalAlignment.Top;
+                BottomLeftChild.Object.Width = 5;
+                BottomLeftChild.Object.Height = 6;
                 Grid.SetColumn(BottomLeftChild.Object, 0);
                 Grid.SetRow(BottomLeftChild.Object, 1);
 
                 BottomRightChild = new Mock<UIElement> { CallBase = true };
-                BottomRightChild.Object.Width = 30;
-                BottomRightChild.Object.Height = 40;
-                BottomRightChild.Object.HorizontalAlignment = HorizontalAlignment.Left;
-                BottomRightChild.Object.VerticalAlignment = VerticalAlignment.Top;
+                BottomRightChild.Object.Width = 7;
+                BottomRightChild.Object.Height = 8;
                 Grid.SetColumn(BottomRightChild.Object, 1);
                 Grid.SetRow(BottomRightChild.Object, 1);
 
