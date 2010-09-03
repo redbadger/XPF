@@ -47,10 +47,72 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
     [Subject(typeof(Grid), "Measure - Star")]
     public class when_there_are_two_rows_and_two_columns : a_Star_Grid_with_two_rows_and_two_columns
     {
+        private static readonly Size expectedCellSize = new Size(AvailableSize.Width / 2, AvailableSize.Height / 2);
+
         private Because of = () => Subject.Measure(AvailableSize);
+
+        private It should_allocate_a_quarter_of_the_space_to_cell_1 =
+            () => TopLeftChild.Object.DesiredSize.ShouldEqual(expectedCellSize);
+
+        private It should_allocate_a_quarter_of_the_space_to_cell_2 =
+            () => TopRightChild.Object.DesiredSize.ShouldEqual(expectedCellSize);
+
+        private It should_allocate_a_quarter_of_the_space_to_cell_3 =
+            () => BottomLeftChild.Object.DesiredSize.ShouldEqual(expectedCellSize);
+
+        private It should_allocate_a_quarter_of_the_space_to_cell_4 =
+            () => BottomRightChild.Object.DesiredSize.ShouldEqual(expectedCellSize);
 
         private It should_have_a_desired_size_equal_to_the_available_size =
             () => Subject.DesiredSize.ShouldEqual(AvailableSize);
+    }
+
+    [Subject(typeof(Grid), "Measure - Star")]
+    public class when_a_3_x_3_grid_has_differing_cell_sizes : a_Grid
+    {
+        private static readonly Mock<UIElement>[] children = new Mock<UIElement>[9];
+
+        private static readonly double widthUnit = AvailableSize.Width / 6;
+
+        private static readonly double heightUnit = AvailableSize.Height / 6;
+
+        private Establish context = () =>
+            {
+                for (int row = 0; row < 3; row++)
+                {
+                    Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(row + 1, GridUnitType.Star) });
+                }
+
+                for (int col = 0; col < 3; col++)
+                {
+                    Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(col + 1, GridUnitType.Star) });
+                }
+
+                for (int row = 0; row < 3; row++)
+                {
+                    for (int col = 0; col < 3; col++)
+                    {
+                        var i = row + col;
+                        children[i] = new Mock<UIElement> { CallBase = true };
+                        Subject.Children.Add(children[i].Object);
+                        Grid.SetColumn(children[i].Object, col);
+                        Grid.SetRow(children[i].Object, row);
+                    }
+                }
+            };
+
+        private Because of = () => Subject.Measure(AvailableSize);
+
+        private It should_give_each_cell_the_correct_space = () =>
+            {
+                for (int row = 0; row < 3; row++)
+                {
+                    for (int col = 0; col < 3; col++)
+                    {
+                        children[row + col].Object.DesiredSize.ShouldEqual(new Size(widthUnit * (col + 1), heightUnit * (row + 1)));
+                    }
+                }
+            };
     }
 
     [Subject(typeof(Grid), "Measure - Star")]

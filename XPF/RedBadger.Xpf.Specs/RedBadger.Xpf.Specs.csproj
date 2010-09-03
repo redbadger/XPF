@@ -101,6 +101,8 @@
     <Compile Include="Presentation\Controls\GridSpecs\Auto\Contexts.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\Auto\MeasureSpecs.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\MeasureSpecs.cs" />
+    <Compile Include="Presentation\Controls\GridSpecs\Pixel\ArrangeSpecs.cs" />
+    <Compile Include="Presentation\Controls\GridSpecs\Pixel\Contexts.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\Star\Contexts.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\Star\MeasureSpecs.cs" />
     <Compile Include="Presentation\Controls\ImageSpecs\ImageSpecs.cs" />

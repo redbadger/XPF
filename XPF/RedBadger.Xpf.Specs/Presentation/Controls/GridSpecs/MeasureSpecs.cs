@@ -11,13 +11,114 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
+    using System.Windows;
+
     using Machine.Specifications;
 
+    using Moq;
+
     using RedBadger.Xpf.Presentation.Controls;
+
+    using It = Machine.Specifications.It;
+    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     [Subject(typeof(Grid), "Measure")]
     public class when_a_column_index_is_specified_greater_than_the_number_of_columns_available : a_Grid
     {
         private It should_put_it_in_the_last_column;
+    }
+
+    [Subject(typeof(Grid), "Measure - Pixel/Auto/Star")]
+    public class when_a_grid_has_columns_of_mixed_pixel_auto_and_star : a_Grid
+    {
+        private const int Column1PixelWidth = 30;
+
+        private const int Column2ChildWidth = 20;
+
+        private static readonly Mock<UIElement>[] children = new Mock<UIElement>[4];
+
+        private static readonly double expectedProportionalWidth = (AvailableSize.Width - Column1PixelWidth -
+                                                                    Column2ChildWidth) / 2;
+
+        private Establish context = () =>
+            {
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(Column1PixelWidth) });
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                Subject.ColumnDefinitions.Add(new ColumnDefinition());
+                Subject.ColumnDefinitions.Add(new ColumnDefinition());
+
+                children[0] = new Mock<UIElement> { CallBase = true };
+                children[1] = new Mock<UIElement> { CallBase = true };
+                children[2] = new Mock<UIElement> { CallBase = true };
+                children[3] = new Mock<UIElement> { CallBase = true };
+
+                children[1].Object.Width = Column2ChildWidth;
+
+                Subject.Children.Add(children[0].Object);
+                Subject.Children.Add(children[1].Object);
+                Subject.Children.Add(children[2].Object);
+                Subject.Children.Add(children[3].Object);
+            };
+
+        private Because of = () => Subject.Measure(AvailableSize);
+
+        private It should_give_column_1_the_correct_amount_of_space =
+            () => children[0].Object.DesiredSize.Width.ShouldEqual(Column1PixelWidth);
+
+        private It should_give_column_2_the_correct_amount_of_space =
+            () => children[1].Object.DesiredSize.Width.ShouldEqual(Column2ChildWidth);
+
+        private It should_give_column_3_the_correct_amount_of_space =
+            () => children[2].Object.DesiredSize.Width.ShouldEqual(expectedProportionalWidth);
+
+        private It should_give_column_4_the_correct_amount_of_space =
+            () => children[3].Object.DesiredSize.Width.ShouldEqual(expectedProportionalWidth);
+    }
+
+    [Subject(typeof(Grid), "Measure - Pixel/Auto/Star")]
+    public class when_a_grid_has_rows_of_mixed_pixel_auto_and_star : a_Grid
+    {
+        private const int Row1PixelHeight = 30;
+
+        private const int Row2ChildHeight = 20;
+
+        private static readonly Mock<UIElement>[] children = new Mock<UIElement>[4];
+
+        private static readonly double expectedProportionalHeight = (AvailableSize.Height - Row1PixelHeight -
+                                                                    Row2ChildHeight) / 2;
+
+        private Establish context = () =>
+            {
+                Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(Row1PixelHeight) });
+                Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                Subject.RowDefinitions.Add(new RowDefinition());
+                Subject.RowDefinitions.Add(new RowDefinition());
+
+                children[0] = new Mock<UIElement> { CallBase = true };
+                children[1] = new Mock<UIElement> { CallBase = true };
+                children[2] = new Mock<UIElement> { CallBase = true };
+                children[3] = new Mock<UIElement> { CallBase = true };
+
+                children[1].Object.Height = Row2ChildHeight;
+
+                Subject.Children.Add(children[0].Object);
+                Subject.Children.Add(children[1].Object);
+                Subject.Children.Add(children[2].Object);
+                Subject.Children.Add(children[3].Object);
+            };
+
+        private Because of = () => Subject.Measure(AvailableSize);
+
+        private It should_give_row_1_the_correct_amount_of_space =
+            () => children[0].Object.DesiredSize.Height.ShouldEqual(Row1PixelHeight);
+
+        private It should_give_row_2_the_correct_amount_of_space =
+            () => children[1].Object.DesiredSize.Height.ShouldEqual(Row2ChildHeight);
+
+        private It should_give_row_3_the_correct_amount_of_space =
+            () => children[2].Object.DesiredSize.Height.ShouldEqual(expectedProportionalHeight);
+
+        private It should_give_row_4_the_correct_amount_of_space =
+            () => children[3].Object.DesiredSize.Height.ShouldEqual(expectedProportionalHeight);
     }
 }

@@ -20,7 +20,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Auto
     using Vector = RedBadger.Xpf.Presentation.Vector;
 
     [Subject(typeof(Grid), "Arrange")]
-    public class when_there_are_two_rows_and_two_columns_of_type_auto : an_Auto_Grid_with_two_rows_and_two_columns
+    public class when_arranging_two_rows_and_two_columns : an_Auto_Grid_with_two_rows_and_two_columns
     {
         private Establish context = () => Subject.Measure(AvailableSize);
 
@@ -40,35 +40,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Auto
     }
 
     [Subject(typeof(Grid), "Arrange")]
-    public class when_there_are_two_rows_and_two_columns_of_type_pixel : an_Auto_Grid_with_two_rows_and_two_columns
-    {
-        private Establish context = () =>
-            {
-                ColumnOneDefinition.Width = new GridLength(5);
-                ColumnTwoDefinition.Width = new GridLength(6);
-                RowOneDefinition.Height = new GridLength(7);
-                RowTwoDefinition.Height = new GridLength(8);
-
-                Subject.Measure(AvailableSize);
-            };
-
-        private Because of = () => Subject.Arrange(new Rect(AvailableSize));
-
-        private It should_layout_the_bottom_left_child_correctly =
-            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, 7));
-
-        private It should_layout_the_bottom_right_child_correctly =
-            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector(5, 7));
-
-        private It should_layout_the_top_left_child_correctly =
-            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector.Zero);
-
-        private It should_layout_the_top_right_child_correctly =
-            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector(5, 0));
-    }
-
-    [Subject(typeof(Grid), "Arrange")]
-    public class when_there_are_two_rows_and_two_columns_with_minimum_values_which_are_greater_than_their_children :
+    public class when_arranging_two_rows_and_two_columns_with_minimum_values_which_are_greater_than_their_children :
         an_Auto_Grid_with_two_rows_and_two_columns
     {
         private const double MinHeight = 90;
@@ -102,7 +74,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Auto
     }
 
     [Subject(typeof(Grid), "Arrange")]
-    public class when_there_are_two_rows_and_two_columns_with_maximum_values_which_are_less_than_their_children :
+    public class when_arranging_two_rows_and_two_columns_with_maximum_values_which_are_less_than_their_children :
         an_Auto_Grid_with_two_rows_and_two_columns
     {
         private const double MaxHeight = 9;
