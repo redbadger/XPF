@@ -2,14 +2,15 @@
 {
     public class RowDefinition : DefinitionBase
     {
-        public static readonly DependencyProperty HeightProperty = DependencyProperty.Register(
-            "Height", typeof(GridLength), typeof(RowDefinition), new PropertyMetadata(new GridLength()));
+        public static readonly IDependencyProperty HeightProperty =
+            DependencyProperty<GridLength, RowDefinition>.Register("Height", new PropertyMetadata(new GridLength()));
 
-        public static readonly DependencyProperty MaxHeightProperty = DependencyProperty.Register(
-            "MaxHeight", typeof(double), typeof(RowDefinition), new PropertyMetadata(double.PositiveInfinity));
+        public static readonly IDependencyProperty MaxHeightProperty =
+            DependencyProperty<double, RowDefinition>.Register(
+                "MaxHeight", new PropertyMetadata(double.PositiveInfinity));
 
-        public static readonly DependencyProperty MinHeightProperty = DependencyProperty.Register(
-            "MinHeight", typeof(double), typeof(RowDefinition), new PropertyMetadata(0d));
+        public static readonly IDependencyProperty MinHeightProperty =
+            DependencyProperty<double, RowDefinition>.Register("MinHeight", new PropertyMetadata(0d));
 
         public RowDefinition()
             : base(DefinitionType.Row)
@@ -20,7 +21,7 @@
         {
             get
             {
-                return (GridLength)this.GetValue(HeightProperty);
+                return this.GetValue<GridLength>(HeightProperty);
             }
 
             set
@@ -33,7 +34,7 @@
         {
             get
             {
-                return (double)this.GetValue(MaxHeightProperty);
+                return this.GetValue<double>(MaxHeightProperty);
             }
 
             set
@@ -46,7 +47,7 @@
         {
             get
             {
-                return (double)this.GetValue(MinHeightProperty);
+                return this.GetValue<double>(MinHeightProperty);
             }
 
             set

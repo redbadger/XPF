@@ -14,64 +14,54 @@
 
     public abstract class UIElement : DependencyObject, IElement
     {
-        public static readonly DependencyProperty DataContextProperty = DependencyProperty.Register(
-            "DataContext", typeof(object), typeof(UIElement), new PropertyMetadata(null, DataContextChanged));
+        public static readonly IDependencyProperty DataContextProperty =
+            DependencyProperty<object, UIElement>.Register(
+                "DataContext", new PropertyMetadata(null, DataContextChanged));
 
-        public static readonly DependencyProperty HeightProperty = DependencyProperty.Register(
-            "Height", 
-            typeof(double), 
-            typeof(UIElement), 
-            new PropertyMetadata(double.NaN, InvalidateMeasureIfDoubleChanged));
+        public static readonly IDependencyProperty HeightProperty =
+            DependencyProperty<double, UIElement>.Register(
+                "Height", new PropertyMetadata(double.NaN, InvalidateMeasureIfDoubleChanged));
 
-        public static readonly DependencyProperty HorizontalAlignmentProperty =
-            DependencyProperty.Register(
+        public static readonly IDependencyProperty HorizontalAlignmentProperty =
+            DependencyProperty<HorizontalAlignment, UIElement>.Register(
                 "HorizontalAlignment", 
-                typeof(HorizontalAlignment), 
-                typeof(UIElement), 
                 new PropertyMetadata(HorizontalAlignment.Stretch, InvalidateArrangeIfHorizontalAlignmentChanged));
 
-        public static readonly DependencyProperty IsMouseCapturedProperty =
-            DependencyProperty.Register("IsMouseCaptured", typeof(bool), typeof(UIElement), new PropertyMetadata(false));
+        public static readonly IDependencyProperty IsMouseCapturedProperty =
+            DependencyProperty<bool, UIElement>.Register("IsMouseCaptured", new PropertyMetadata(false));
 
-        public static readonly DependencyProperty MarginProperty = DependencyProperty.Register(
-            "Margin", 
-            typeof(Thickness), 
-            typeof(UIElement), 
-            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
+        public static readonly IDependencyProperty MarginProperty =
+            DependencyProperty<Thickness, UIElement>.Register(
+                "Margin", 
+                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
 
-        public static readonly DependencyProperty MaxHeightProperty = DependencyProperty.Register(
-            "MaxHeight", 
-            typeof(double), 
-            typeof(UIElement), 
-            new PropertyMetadata(double.PositiveInfinity, InvalidateMeasureIfDoubleChanged));
+        public static readonly IDependencyProperty MaxHeightProperty =
+            DependencyProperty<double, UIElement>.Register(
+                "MaxHeight", new PropertyMetadata(double.PositiveInfinity, InvalidateMeasureIfDoubleChanged));
 
-        public static readonly DependencyProperty MaxWidthProperty = DependencyProperty.Register(
-            "MaxWidth", 
-            typeof(double), 
-            typeof(UIElement), 
-            new PropertyMetadata(double.PositiveInfinity, InvalidateMeasureIfDoubleChanged));
+        public static readonly IDependencyProperty MaxWidthProperty =
+            DependencyProperty<double, UIElement>.Register(
+                "MaxWidth", new PropertyMetadata(double.PositiveInfinity, InvalidateMeasureIfDoubleChanged));
 
-        public static readonly DependencyProperty MinHeightProperty = DependencyProperty.Register(
-            "MinHeight", typeof(double), typeof(UIElement), new PropertyMetadata(0d, InvalidateMeasureIfDoubleChanged));
+        public static readonly IDependencyProperty MinHeightProperty =
+            DependencyProperty<double, UIElement>.Register(
+                "MinHeight", new PropertyMetadata(0d, InvalidateMeasureIfDoubleChanged));
 
-        public static readonly DependencyProperty MinWidthProperty = DependencyProperty.Register(
-            "MinWidth", typeof(double), typeof(UIElement), new PropertyMetadata(0d, InvalidateMeasureIfDoubleChanged));
+        public static readonly IDependencyProperty MinWidthProperty =
+            DependencyProperty<double, UIElement>.Register(
+                "MinWidth", new PropertyMetadata(0d, InvalidateMeasureIfDoubleChanged));
 
-        public static readonly DependencyProperty VerticalAlignmentProperty =
-            DependencyProperty.Register(
+        public static readonly IDependencyProperty VerticalAlignmentProperty =
+            DependencyProperty<VerticalAlignment, UIElement>.Register(
                 "VerticalAlignment", 
-                typeof(VerticalAlignment), 
-                typeof(UIElement), 
                 new PropertyMetadata(VerticalAlignment.Stretch, InvalidateArrangeIfVerticalAlignmentChanged));
 
-        public static readonly DependencyProperty WidthProperty = DependencyProperty.Register(
-            "Width", 
-            typeof(double), 
-            typeof(UIElement), 
-            new PropertyMetadata(double.NaN, InvalidateMeasureIfDoubleChanged));
+        public static readonly IDependencyProperty WidthProperty =
+            DependencyProperty<double, UIElement>.Register(
+                "Width", new PropertyMetadata(double.NaN, InvalidateMeasureIfDoubleChanged));
 
-        private readonly Dictionary<DependencyProperty, BindingExpression> bindings =
-            new Dictionary<DependencyProperty, BindingExpression>();
+        private readonly Dictionary<IDependencyProperty, BindingExpression> bindings =
+            new Dictionary<IDependencyProperty, BindingExpression>();
 
         private readonly Subject<Gesture> gestures = new Subject<Gesture>();
 
@@ -106,7 +96,7 @@
         {
             get
             {
-                return this.GetValue(DataContextProperty);
+                return this.GetValue<object>(DataContextProperty);
             }
 
             set
@@ -129,7 +119,7 @@
         {
             get
             {
-                return (double)this.GetValue(HeightProperty);
+                return this.GetValue<double>(HeightProperty);
             }
 
             set
@@ -142,7 +132,7 @@
         {
             get
             {
-                return (HorizontalAlignment)this.GetValue(HorizontalAlignmentProperty);
+                return this.GetValue<HorizontalAlignment>(HorizontalAlignmentProperty);
             }
 
             set
@@ -165,7 +155,7 @@
         {
             get
             {
-                return (bool)this.GetValue(IsMouseCapturedProperty);
+                return this.GetValue<bool>(IsMouseCapturedProperty);
             }
 
             private set
@@ -178,7 +168,7 @@
         {
             get
             {
-                return (Thickness)this.GetValue(MarginProperty);
+                return this.GetValue<Thickness>(MarginProperty);
             }
 
             set
@@ -191,7 +181,7 @@
         {
             get
             {
-                return (double)this.GetValue(MaxHeightProperty);
+                return this.GetValue<double>(MaxHeightProperty);
             }
 
             set
@@ -204,7 +194,7 @@
         {
             get
             {
-                return (double)this.GetValue(MaxWidthProperty);
+                return this.GetValue<double>(MaxWidthProperty);
             }
 
             set
@@ -217,7 +207,7 @@
         {
             get
             {
-                return (double)this.GetValue(MinHeightProperty);
+                return this.GetValue<double>(MinHeightProperty);
             }
 
             set
@@ -230,7 +220,7 @@
         {
             get
             {
-                return (double)this.GetValue(MinWidthProperty);
+                return this.GetValue<double>(MinWidthProperty);
             }
 
             set
@@ -245,7 +235,7 @@
         {
             get
             {
-                return (VerticalAlignment)this.GetValue(VerticalAlignmentProperty);
+                return this.GetValue<VerticalAlignment>(VerticalAlignmentProperty);
             }
 
             set
@@ -260,7 +250,7 @@
         {
             get
             {
-                return (double)this.GetValue(WidthProperty);
+                return this.GetValue<double>(WidthProperty);
             }
 
             set

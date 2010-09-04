@@ -2,12 +2,12 @@ namespace RedBadger.Xpf.Presentation
 {
     public interface IDependencyObject
     {
-        void ClearBinding(DependencyProperty dependencyProperty);
+        void ClearBinding(IDependencyProperty dependencyProperty);
 
-        object GetValue(DependencyProperty dependencyProperty);
+        T GetValue<T>(IDependencyProperty dependencyProperty);
 
-        BindingExpression SetBinding(DependencyProperty dependencyProperty, Binding binding);
+        BindingExpression SetBinding(IDependencyProperty dependencyProperty, Binding binding);
 
-        void SetValue(DependencyProperty dependencyProperty, object value);
+        void SetValue<T>(IDependencyProperty dependencyProperty, T value);
     }
 }

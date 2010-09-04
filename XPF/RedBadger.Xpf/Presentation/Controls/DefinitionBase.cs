@@ -32,8 +32,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             get
             {
                 return
-                    (GridLength)
-                    this.GetValue(
+                    this.GetValue<GridLength>(
                         this.definitionType == DefinitionType.Column
                             ? ColumnDefinition.WidthProperty
                             : RowDefinition.HeightProperty);
@@ -45,8 +44,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             get
             {
                 return
-                    (double)
-                    this.GetValue(
+                    this.GetValue<double>(
                         this.definitionType == DefinitionType.Column
                             ? ColumnDefinition.MaxWidthProperty
                             : RowDefinition.MaxHeightProperty);
@@ -58,8 +56,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             get
             {
                 return
-                    (double)
-                    this.GetValue(
+                    this.GetValue<double>(
                         this.definitionType == DefinitionType.Column
                             ? ColumnDefinition.MinWidthProperty
                             : RowDefinition.MinHeightProperty);

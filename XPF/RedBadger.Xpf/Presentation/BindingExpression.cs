@@ -7,7 +7,7 @@ namespace RedBadger.Xpf.Presentation
 
     public class BindingExpression
     {
-        private readonly DependencyProperty dependencyProperty;
+        private readonly IDependencyProperty dependencyProperty;
 
         private readonly FrameworkElement frameworkElement;
 
@@ -15,7 +15,7 @@ namespace RedBadger.Xpf.Presentation
 
         private PropertyChangedNotifier propertyChangedNotifier;
 
-        public BindingExpression(DependencyObject uiElement, DependencyProperty dependencyProperty)
+        public BindingExpression(DependencyObject uiElement, IDependencyProperty dependencyProperty)
         {
             if (uiElement == null)
             {
@@ -94,31 +94,29 @@ namespace RedBadger.Xpf.Presentation
 
         public class BindingFrameworkElement : FrameworkElement
         {
-            public static readonly DependencyProperty DependencyProperty;
+            public static readonly IDependencyProperty DependencyProperty;
 
             private static readonly Guid defaultValue = Guid.NewGuid();
 
             private readonly DependencyObject targetDependencyObject;
 
-            private readonly DependencyProperty targetDependencyProperty;
+            private readonly IDependencyProperty targetDependencyProperty;
 
             static BindingFrameworkElement()
             {
-                DependencyProperty = DependencyProperty.Register(
+                DependencyProperty = DependencyProperty<object, BindingFrameworkElement>.Register(
                     "Dependency", 
-                    typeof(object), 
-                    typeof(BindingFrameworkElement), 
                     new PropertyMetadata(defaultValue, DependencyPropertyChangedCallback));
             }
 
             public BindingFrameworkElement(
-                DependencyObject targetDependencyObject, DependencyProperty targetDependencyProperty)
+                DependencyObject targetDependencyObject, IDependencyProperty targetDependencyProperty)
             {
                 this.targetDependencyObject = targetDependencyObject;
                 this.targetDependencyProperty = targetDependencyProperty;
             }
 
-            public static void SetValue(DependencyObject dependencyObject, DependencyProperty property, object value)
+            public static void SetValue(DependencyObject dependencyObject, IDependencyProperty property, object value)
             {
                 if (value != null && !property.PropertyType.IsAssignableFrom(value.GetType()))
                 {

@@ -211,6 +211,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\DependencyPropertyChangedEventArgs.cs">
       <Link>Presentation\DependencyPropertyChangedEventArgs.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\DependencyPropertyStore.cs">
+      <Link>Presentation\DependencyPropertyStore.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\ElementCollection.cs">
       <Link>Presentation\ElementCollection.cs</Link>
     </Compile>
@@ -225,6 +228,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IDependencyObject.cs">
       <Link>Presentation\IDependencyObject.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\IDependencyProperty.cs">
+      <Link>Presentation\IDependencyProperty.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IElement.cs">
       <Link>Presentation\IElement.cs</Link>

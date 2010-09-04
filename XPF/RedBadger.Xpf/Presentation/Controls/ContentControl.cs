@@ -7,17 +7,15 @@ namespace RedBadger.Xpf.Presentation.Controls
     /// </summary>
     public class ContentControl : Control
     {
-        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
-            "Content", 
-            typeof(IElement), 
-            typeof(ContentControl), 
-            new PropertyMetadata(null, ContentPropertyChangedCallback));
+        public static readonly IDependencyProperty ContentProperty =
+            DependencyProperty<IElement, ContentControl>.Register(
+                "Content", new PropertyMetadata(null, ContentPropertyChangedCallback));
 
         public IElement Content
         {
             get
             {
-                return (IElement)this.GetValue(ContentProperty);
+                return this.GetValue<IElement>(ContentProperty);
             }
 
             set

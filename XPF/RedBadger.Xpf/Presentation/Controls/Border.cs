@@ -8,31 +8,25 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class Border : UIElement
     {
-        public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
-            "Background", typeof(Brush), typeof(Border), new PropertyMetadata(null));
+        public static readonly IDependencyProperty BackgroundProperty =
+            DependencyProperty<Brush, Border>.Register("Background", new PropertyMetadata(null));
 
-        public static readonly DependencyProperty BorderBrushProperty = DependencyProperty.Register(
-            "BorderBrush", 
-            typeof(Brush), 
-            typeof(Border), 
-            new PropertyMetadata(null, (o, args) => ((IElement)o).InvalidateArrange()));
+        public static readonly IDependencyProperty BorderBrushProperty =
+            DependencyProperty<Brush, Border>.Register(
+                "BorderBrush", new PropertyMetadata(null, (o, args) => ((IElement)o).InvalidateArrange()));
 
-        public static readonly DependencyProperty BorderThicknessProperty =
-            DependencyProperty.Register(
+        public static readonly IDependencyProperty BorderThicknessProperty =
+            DependencyProperty<Thickness, Border>.Register(
                 "BorderThickness", 
-                typeof(Thickness), 
-                typeof(Border), 
-                new PropertyMetadata(
-                    new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
+                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
 
-        public static readonly DependencyProperty ChildProperty = DependencyProperty.Register(
-            "Child", typeof(IElement), typeof(Border), new PropertyMetadata(null, ChildPropertyChangedCallback));
+        public static readonly IDependencyProperty ChildProperty = DependencyProperty<IElement, Border>.Register(
+            "Child", new PropertyMetadata(null, ChildPropertyChangedCallback));
 
-        public static readonly DependencyProperty PaddingProperty = DependencyProperty.Register(
-            "Padding", 
-            typeof(Thickness), 
-            typeof(Border), 
-            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
+        public static readonly IDependencyProperty PaddingProperty =
+            DependencyProperty<Thickness, Border>.Register(
+                "Padding", 
+                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
 
         private readonly IList<Rect> borders = new List<Rect>();
 
@@ -42,7 +36,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Brush)this.GetValue(BackgroundProperty);
+                return this.GetValue<Brush>(BackgroundProperty);
             }
 
             set
@@ -55,7 +49,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Brush)this.GetValue(BorderBrushProperty);
+                return this.GetValue<Brush>(BorderBrushProperty);
             }
 
             set
@@ -68,7 +62,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Thickness)this.GetValue(BorderThicknessProperty);
+                return this.GetValue<Thickness>(BorderThicknessProperty);
             }
 
             set
@@ -81,7 +75,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (UIElement)this.GetValue(ChildProperty);
+                return this.GetValue<IElement>(ChildProperty);
             }
 
             set
@@ -94,7 +88,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Thickness)this.GetValue(PaddingProperty);
+                return this.GetValue<Thickness>(PaddingProperty);
             }
 
             set

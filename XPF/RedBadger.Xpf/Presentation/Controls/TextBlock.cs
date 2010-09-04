@@ -9,26 +9,23 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class TextBlock : UIElement
     {
-        public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
-            "Background", typeof(Brush), typeof(TextBlock), new PropertyMetadata(null));
+        public static readonly IDependencyProperty BackgroundProperty =
+            DependencyProperty<Brush, TextBlock>.Register("Background", new PropertyMetadata(null));
 
-        public static readonly DependencyProperty ForegroundProperty = DependencyProperty.Register(
-            "Foreground", typeof(Brush), typeof(TextBlock), new PropertyMetadata(null));
+        public static readonly IDependencyProperty ForegroundProperty =
+            DependencyProperty<Brush, TextBlock>.Register("Foreground", new PropertyMetadata(null));
 
-        public static readonly DependencyProperty PaddingProperty = DependencyProperty.Register(
-            "Padding", 
-            typeof(Thickness), 
-            typeof(TextBlock), 
-            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
+        public static readonly IDependencyProperty PaddingProperty =
+            DependencyProperty<Thickness, TextBlock>.Register(
+                "Padding", 
+                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
 
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-            "Text", typeof(string), typeof(TextBlock), new PropertyMetadata(string.Empty, TextPropertyChangedCallback));
+        public static readonly IDependencyProperty TextProperty = DependencyProperty<string, TextBlock>.Register(
+            "Text", new PropertyMetadata(string.Empty, TextPropertyChangedCallback));
 
-        public static readonly DependencyProperty WrappingProperty = DependencyProperty.Register(
-            "Wrapping", 
-            typeof(TextWrapping), 
-            typeof(TextBlock), 
-            new PropertyMetadata(TextWrapping.NoWrap, TextWrappingPropertyChangedCallback));
+        public static readonly IDependencyProperty WrappingProperty =
+            DependencyProperty<TextWrapping, TextBlock>.Register(
+                "Wrapping", new PropertyMetadata(TextWrapping.NoWrap, TextWrappingPropertyChangedCallback));
 
         private static readonly Regex whiteSpaceRegEx = new Regex(@"\s+", RegexOptions.Compiled);
 
@@ -45,7 +42,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Brush)this.GetValue(BackgroundProperty);
+                return this.GetValue<Brush>(BackgroundProperty);
             }
 
             set
@@ -58,7 +55,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Brush)this.GetValue(ForegroundProperty);
+                return this.GetValue<Brush>(ForegroundProperty);
             }
 
             set
@@ -71,7 +68,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Thickness)this.GetValue(PaddingProperty);
+                return this.GetValue<Thickness>(PaddingProperty);
             }
 
             set
@@ -84,7 +81,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (string)this.GetValue(TextProperty);
+                return this.GetValue<string>(TextProperty);
             }
 
             set
@@ -97,7 +94,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (TextWrapping)this.GetValue(WrappingProperty);
+                return this.GetValue<TextWrapping>(WrappingProperty);
             }
 
             set

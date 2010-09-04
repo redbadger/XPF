@@ -12,14 +12,16 @@
 
     public class ItemsControl : Control
     {
-        public static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register(
-            "ItemTemplate", typeof(Func<IElement>), typeof(ItemsControl), new PropertyMetadata(null));
+        public static readonly IDependencyProperty ItemTemplateProperty =
+            DependencyProperty<Func<IElement>, ItemsControl>.Register("ItemTemplate", new PropertyMetadata(null));
 
-        public static readonly DependencyProperty ItemsPanelProperty = DependencyProperty.Register(
-            "ItemsPanel", typeof(Panel), typeof(ItemsControl), new PropertyMetadata(null, ItemsPanelChanged));
+        public static readonly IDependencyProperty ItemsPanelProperty =
+            DependencyProperty<Panel, ItemsControl>.Register(
+                "ItemsPanel", new PropertyMetadata(null, ItemsPanelChanged));
 
-        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
-            "ItemsSource", typeof(IEnumerable), typeof(ItemsControl), new PropertyMetadata(null, ItemsSourceChanged));
+        public static readonly IDependencyProperty ItemsSourceProperty =
+            DependencyProperty<IEnumerable, ItemsControl>.Register(
+                "ItemsSource", new PropertyMetadata(null, ItemsSourceChanged));
 
         private readonly ScrollViewer scrollViewer;
 
@@ -37,7 +39,7 @@
         {
             get
             {
-                return (Func<IElement>)this.GetValue(ItemTemplateProperty);
+                return this.GetValue<Func<IElement>>(ItemTemplateProperty);
             }
 
             set
@@ -50,7 +52,7 @@
         {
             get
             {
-                return (Panel)this.GetValue(ItemsPanelProperty);
+                return this.GetValue<Panel>(ItemsPanelProperty);
             }
 
             set
@@ -63,7 +65,7 @@
         {
             get
             {
-                return (IEnumerable)this.GetValue(ItemsSourceProperty);
+                return this.GetValue<IEnumerable>(ItemsSourceProperty);
             }
 
             set

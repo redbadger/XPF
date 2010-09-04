@@ -4,17 +4,15 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class StackPanel : Panel
     {
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
-            "Orientation", 
-            typeof(Orientation), 
-            typeof(StackPanel), 
-            new PropertyMetadata(Orientation.Vertical, OrientationPropertyChangedCallback));
+        public static readonly IDependencyProperty OrientationProperty =
+            DependencyProperty<Orientation, StackPanel>.Register(
+                "Orientation", new PropertyMetadata(Orientation.Vertical, OrientationPropertyChangedCallback));
 
         public Orientation Orientation
         {
             get
             {
-                return (Orientation)this.GetValue(OrientationProperty);
+                return this.GetValue<Orientation>(OrientationProperty);
             }
 
             set

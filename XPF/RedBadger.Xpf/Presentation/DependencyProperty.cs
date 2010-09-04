@@ -3,35 +3,29 @@
     using System;
     using System.Collections.Generic;
 
-    public class DependencyProperty
+    public class DependencyProperty<TProperty, TOwner> : IDependencyProperty
     {
         public static readonly object UnsetValue = new object();
 
-        private static readonly Dictionary<Type, Dictionary<string, DependencyProperty>> registeredProperties =
-            new Dictionary<Type, Dictionary<string, DependencyProperty>>();
+        private static readonly DependencyPropertyStore<TProperty, TOwner> registeredProperties =
+            new DependencyPropertyStore<TProperty, TOwner>();
 
         private readonly string name;
-
-        private readonly Type ownerType;
-
-        private readonly Type propertyType;
 
         private object defaultValue;
 
         private Action<DependencyObject, DependencyPropertyChangedEventArgs> propertyChangedCallback;
 
-        private DependencyProperty(string name, Type propertyType, Type ownerType)
+        private DependencyProperty(string name)
         {
             this.name = name;
-            this.propertyType = propertyType;
-            this.ownerType = ownerType;
         }
 
-        public Action<DependencyObject, DependencyPropertyChangedEventArgs> PropertyChangedCallback
+        public object DefaultValue
         {
             get
             {
-                return this.propertyChangedCallback;
+                return this.defaultValue;
             }
         }
 
@@ -43,11 +37,11 @@
             }
         }
 
-        public Type OwnerType
+        public Action<DependencyObject, DependencyPropertyChangedEventArgs> PropertyChangedCallback
         {
             get
             {
-                return this.ownerType;
+                return this.propertyChangedCallback;
             }
         }
 
@@ -55,37 +49,29 @@
         {
             get
             {
-                return this.propertyType;
+                return typeof(TProperty);
             }
         }
 
-        public object DefaultValue
+        public static DependencyProperty<TProperty, TOwner> Register(string name, PropertyMetadata propertyMetadata)
         {
-            get
+            return Register(false, name, propertyMetadata);
+        }
+
+        public static DependencyProperty<TProperty, TOwner> RegisterAttached(
+            string name, PropertyMetadata propertyMetadata)
+        {
+            return Register(true, name, propertyMetadata);
+        }
+
+        internal static void StoreRegisteredProperty(
+            string name, DependencyProperty<TProperty, TOwner> dependencyProperty)
+        {
+            Dictionary<string, DependencyProperty<TProperty, TOwner>> properties;
+            if (!registeredProperties.TryGetValue(typeof(TOwner), out properties))
             {
-                return this.defaultValue;
-            }
-        }
-
-        public static DependencyProperty Register(
-            string name, Type propertyType, Type ownerType, PropertyMetadata propertyMetadata)
-        {
-            return Register(false, name, propertyType, ownerType, propertyMetadata);
-        }
-
-        public static DependencyProperty RegisterAttached(
-            string name, Type propertyType, Type ownerType, PropertyMetadata propertyMetadata)
-        {
-            return Register(true, name, propertyType, ownerType, propertyMetadata);
-        }
-
-        internal static void StoreRegisteredProperty(string name, Type ownerType, DependencyProperty dependencyProperty)
-        {
-            Dictionary<string, DependencyProperty> properties;
-            if (!registeredProperties.TryGetValue(ownerType, out properties))
-            {
-                properties = new Dictionary<string, DependencyProperty>();
-                registeredProperties[ownerType] = properties;
+                properties = new Dictionary<string, DependencyProperty<TProperty, TOwner>>();
+                registeredProperties[typeof(TOwner)] = properties;
             }
 
             properties[name] = dependencyProperty;
@@ -95,14 +81,14 @@
         {
             if (value == null)
             {
-                if (this.propertyType.IsValueType &&
-                    (!this.propertyType.IsGenericType ||
-                     (this.propertyType.GetGenericTypeDefinition() != typeof(Nullable<>))))
+                if (typeof(TProperty).IsValueType &&
+                    (!typeof(TProperty).IsGenericType ||
+                     (typeof(TProperty).GetGenericTypeDefinition() != typeof(Nullable<>))))
                 {
                     return false;
                 }
             }
-            else if (!this.propertyType.IsInstanceOfType(value))
+            else if (!typeof(TProperty).IsInstanceOfType(value))
             {
                 return false;
             }
@@ -110,8 +96,8 @@
             return true;
         }
 
-        private static DependencyProperty Register(
-            bool isAttached, string name, Type propertyType, Type ownerType, PropertyMetadata propertyMetadata)
+        private static DependencyProperty<TProperty, TOwner> Register(
+            bool isAttached, string name, PropertyMetadata propertyMetadata)
         {
             if (name == null)
             {
@@ -123,17 +109,7 @@
                 throw new ArgumentException("name cannot be an empty string");
             }
 
-            if (propertyType == null)
-            {
-                throw new ArgumentNullException("propertyType");
-            }
-
-            if (ownerType == null)
-            {
-                throw new ArgumentNullException("ownerType");
-            }
-
-            var property = new DependencyProperty(name, propertyType, ownerType);
+            var property = new DependencyProperty<TProperty, TOwner>(name);
 
             if (propertyMetadata != null)
             {
@@ -149,12 +125,12 @@
 
                 property.defaultValue = propertyMetadata.DefaultValue;
             }
-            else if (propertyType.IsValueType)
+            else if (typeof(TProperty).IsValueType)
             {
-                property.defaultValue = Activator.CreateInstance(propertyType);
+                property.defaultValue = default(TProperty);
             }
 
-            StoreRegisteredProperty(name, ownerType, property);
+            StoreRegisteredProperty(name, property);
             return property;
         }
     }

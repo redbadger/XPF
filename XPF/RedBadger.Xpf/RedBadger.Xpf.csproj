@@ -96,6 +96,8 @@
     <Compile Include="Internal\IEnumerableExtensions.cs" />
     <Compile Include="License.cs" />
     <Compile Include="Presentation\Binding.cs" />
+    <Compile Include="Presentation\DependencyPropertyStore.cs" />
+    <Compile Include="Presentation\IDependencyProperty.cs" />
     <Compile Include="Presentation\Point.cs" />
     <Compile Include="Presentation\Data\BindingMode.cs" />
     <Compile Include="Presentation\Media\Color.cs" />

@@ -2,21 +2,21 @@
 {
     public class DependencyPropertyChangedEventArgs
     {
-        private readonly DependencyProperty dependencyProperty;
+        private readonly IDependencyProperty dependencyProperty;
 
         private readonly object newValue;
 
         private readonly object oldValue;
 
         public DependencyPropertyChangedEventArgs(
-            DependencyProperty dependencyProperty, object oldValue, object newValue)
+            IDependencyProperty dependencyProperty, object oldValue, object newValue)
         {
             this.dependencyProperty = dependencyProperty;
             this.oldValue = oldValue;
             this.newValue = newValue;
         }
 
-        public DependencyProperty DependencyProperty
+        public IDependencyProperty DependencyProperty
         {
             get
             {

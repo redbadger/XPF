@@ -2,14 +2,15 @@
 {
     public class ColumnDefinition : DefinitionBase
     {
-        public static readonly DependencyProperty MaxWidthProperty = DependencyProperty.Register(
-            "MaxWidth", typeof(double), typeof(ColumnDefinition), new PropertyMetadata(double.PositiveInfinity));
+        public static readonly IDependencyProperty MaxWidthProperty =
+            DependencyProperty<double, ColumnDefinition>.Register(
+                "MaxWidth", new PropertyMetadata(double.PositiveInfinity));
 
-        public static readonly DependencyProperty MinWidthProperty = DependencyProperty.Register(
-            "MinWidth", typeof(double), typeof(ColumnDefinition), new PropertyMetadata(0d));
+        public static readonly IDependencyProperty MinWidthProperty =
+            DependencyProperty<double, ColumnDefinition>.Register("MinWidth", new PropertyMetadata(0d));
 
-        public static readonly DependencyProperty WidthProperty = DependencyProperty.Register(
-            "Width", typeof(GridLength), typeof(ColumnDefinition), new PropertyMetadata(new GridLength()));
+        public static readonly IDependencyProperty WidthProperty =
+            DependencyProperty<GridLength, ColumnDefinition>.Register("Width", new PropertyMetadata(new GridLength()));
 
         public ColumnDefinition()
             : base(DefinitionType.Column)
@@ -20,7 +21,7 @@
         {
             get
             {
-                return (double)this.GetValue(MaxWidthProperty);
+                return this.GetValue<double>(MaxWidthProperty);
             }
 
             set
@@ -33,7 +34,7 @@
         {
             get
             {
-                return (double)this.GetValue(MinWidthProperty);
+                return this.GetValue<double>(MinWidthProperty);
             }
 
             set
@@ -46,7 +47,7 @@
         {
             get
             {
-                return (GridLength)this.GetValue(WidthProperty);
+                return this.GetValue<GridLength>(WidthProperty);
             }
 
             set

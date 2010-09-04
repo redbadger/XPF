@@ -5,27 +5,23 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class Image : UIElement
     {
-        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
-            "Source", typeof(ImageSource), typeof(Image), new PropertyMetadata(null, SourcePropertyChangedCallback));
+        public static readonly IDependencyProperty SourceProperty = DependencyProperty<ImageSource, Image>.Register(
+            "Source", new PropertyMetadata(null, SourcePropertyChangedCallback));
 
-        public static readonly DependencyProperty StretchDirectionProperty =
-            DependencyProperty.Register(
+        public static readonly IDependencyProperty StretchDirectionProperty =
+            DependencyProperty<StretchDirection, Image>.Register(
                 "StretchDirection", 
-                typeof(StretchDirection), 
-                typeof(Image), 
                 new PropertyMetadata(StretchDirection.Both, StretchDirectionPropertyChangedCallback));
 
-        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(
+        public static readonly IDependencyProperty StretchProperty = DependencyProperty<Stretch, Image>.Register(
             "Stretch", 
-            typeof(Stretch), 
-            typeof(Image), 
             new PropertyMetadata(Stretch.Uniform, StretchPropertyChangedCallback));
 
         public ImageSource Source
         {
             get
             {
-                return (ImageSource)this.GetValue(SourceProperty);
+                return this.GetValue<ImageSource>(SourceProperty);
             }
 
             set
@@ -38,7 +34,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Stretch)this.GetValue(StretchProperty);
+                return this.GetValue<Stretch>(StretchProperty);
             }
 
             set
@@ -51,7 +47,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (StretchDirection)this.GetValue(StretchDirectionProperty);
+                return this.GetValue<StretchDirection>(StretchDirectionProperty);
             }
 
             set
