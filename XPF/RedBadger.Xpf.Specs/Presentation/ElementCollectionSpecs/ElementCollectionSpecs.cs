@@ -11,13 +11,9 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
     using RedBadger.Xpf.Presentation;
-
-    using It = Machine.Specifications.It;
 
     [Subject(typeof(ElementCollection), "Visual Parent")]
     public class when_adding_an_element_to : an_ElementCollection

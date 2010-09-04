@@ -11,20 +11,15 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 {
-    using System.Windows;
-    using System.Windows.Media;
-
     using Machine.Specifications;
 
     using Moq;
 
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media;
 
-    using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using It = Machine.Specifications.It;
-    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
-    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     [Subject(typeof(Border))]
     public class when_initialized : a_Border
@@ -282,7 +277,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     {
         private Establish context = () => RootElement.Object.Update();
 
-        private Because of = () => Border.BorderBrush = new SolidColorBrush(Colors.AliceBlue);
+        private Because of = () => Border.BorderBrush = new SolidColorBrush(Colors.Blue);
 
         private It should_invalidate_arrange = () => Border.IsArrangeValid.ShouldBeFalse();
     }

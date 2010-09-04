@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -25,10 +24,9 @@ using System.Runtime.InteropServices;
 [assembly: Guid("13ee22fd-3627-4489-b95b-daf7ca315a34")]
 
 // Version information for an assembly consists of the following four values:
-//
 //      Major Version
 //      Minor Version 
 //      Build Number
 //      Revision
-//
+
 [assembly: AssemblyVersion("1.0.0.0")]

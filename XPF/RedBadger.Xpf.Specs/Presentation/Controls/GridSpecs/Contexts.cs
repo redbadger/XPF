@@ -11,15 +11,12 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
     using Moq;
 
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
-
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_Grid
     {

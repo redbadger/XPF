@@ -2,12 +2,9 @@ namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
     using System.Linq;
-    using System.Windows;
 
     using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
-
-    using IInputElement = RedBadger.Xpf.Presentation.Input.IInputElement;
 
     public class RootElement : ContentControl, IRootElement
     {

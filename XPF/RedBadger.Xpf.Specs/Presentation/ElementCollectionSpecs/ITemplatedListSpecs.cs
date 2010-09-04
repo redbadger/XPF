@@ -12,7 +12,6 @@
 namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
 {
     using System.Collections.Generic;
-    using System.Windows;
 
     using Machine.Specifications;
 
@@ -21,7 +20,6 @@ namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
     using RedBadger.Xpf.Presentation;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     [Subject(typeof(ElementCollection), "Visual Parent")]
     public class when_adding_an_element_via_a_TemplatedList_reference : an_ElementCollection_as_a_Templated_List

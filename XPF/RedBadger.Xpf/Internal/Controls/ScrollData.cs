@@ -1,8 +1,6 @@
 namespace RedBadger.Xpf.Internal.Controls
 {
-    using System.Windows;
-
-    using Vector = RedBadger.Xpf.Presentation.Vector;
+    using RedBadger.Xpf.Presentation;
 
     internal struct ScrollData
     {

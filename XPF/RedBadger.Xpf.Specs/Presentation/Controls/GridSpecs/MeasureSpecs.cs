@@ -11,16 +11,14 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
     using Moq;
 
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     [Subject(typeof(Grid), "Measure")]
     public class when_an_element_is_added : a_Grid
@@ -168,9 +166,12 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     }
 
     [Subject(typeof(Grid), "Measure - Auto")]
-    public class when_a_grid_has_auto_columns_and_rows_defined_and_a_child_element_gets_bigger :
-        a_Grid
+    public class when_a_grid_has_auto_columns_and_rows_defined_and_a_child_element_gets_bigger : a_Grid
     {
+        private static readonly Size availableSize = new Size(100, 100);
+
+        private static Mock<UIElement> child;
+
         private Establish context = () =>
             {
                 child = new Mock<UIElement> { CallBase = true };
@@ -193,16 +194,15 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
             };
 
         private It should_adjust_its_desired_size_accordingly = () => Grid.DesiredSize.ShouldEqual(new Size(30, 40));
-
-        private static Mock<UIElement> child;
-
-        private static readonly Size availableSize = new Size(100, 100);
     }
 
     [Subject(typeof(Grid), "Measure - Auto")]
-    public class when_a_grid_has_auto_columns_and_rows_defined_and_a_child_element_gets_smaller :
-        a_Grid
+    public class when_a_grid_has_auto_columns_and_rows_defined_and_a_child_element_gets_smaller : a_Grid
     {
+        private static readonly Size availableSize = new Size(100, 100);
+
+        private static Mock<UIElement> child;
+
         private Establish context = () =>
             {
                 child = new Mock<UIElement> { CallBase = true };
@@ -225,10 +225,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
             };
 
         private It should_adjust_its_desired_size_accordingly = () => Grid.DesiredSize.ShouldEqual(new Size(10, 20));
-
-        private static Mock<UIElement> child;
-
-        private static readonly Size availableSize = new Size(100, 100);
     }
 
     [Subject(typeof(Grid), "Measure - Pixel")]

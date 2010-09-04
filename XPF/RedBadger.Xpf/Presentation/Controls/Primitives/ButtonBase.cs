@@ -1,15 +1,12 @@
 namespace RedBadger.Xpf.Presentation.Controls.Primitives
 {
     using System;
-    using System.Windows;
 
     using RedBadger.Xpf.Presentation.Input;
 
-    using IInputElement = RedBadger.Xpf.Presentation.Input.IInputElement;
-
     public abstract class ButtonBase : ContentControl, IInputElement
     {
-        public static readonly XpfDependencyProperty IsPressedProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty IsPressedProperty = DependencyProperty.Register(
             "IsPressed", typeof(bool), typeof(ButtonBase), new PropertyMetadata(false));
 
         private bool isLeftButtonDown;
@@ -20,18 +17,18 @@ namespace RedBadger.Xpf.Presentation.Controls.Primitives
         {
             get
             {
-                return (bool)this.GetValue(IsPressedProperty.Value);
+                return (bool)this.GetValue(IsPressedProperty);
             }
 
             protected internal set
             {
-                this.SetValue(IsPressedProperty.Value, value);
+                this.SetValue(IsPressedProperty, value);
             }
         }
 
         protected virtual void OnClick()
         {
-            var handler = this.Click;
+            EventHandler<EventArgs> handler = this.Click;
             if (handler != null)
             {
                 handler(this, new EventArgs());

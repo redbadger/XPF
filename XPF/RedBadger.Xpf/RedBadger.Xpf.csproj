@@ -71,8 +71,6 @@
     <Reference Include="Microsoft.Xna.Framework" />
     <Reference Include="Microsoft.Xna.Framework.Graphics" />
     <Reference Include="Microsoft.Xna.Framework.Input.Touch" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -83,7 +81,6 @@
     <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graphics\IPrimitivesService.cs" />
@@ -98,8 +95,22 @@
     <Compile Include="Internal\Controls\ScrollData.cs" />
     <Compile Include="Internal\IEnumerableExtensions.cs" />
     <Compile Include="License.cs" />
+    <Compile Include="Presentation\Binding.cs" />
+    <Compile Include="Presentation\Point.cs" />
+    <Compile Include="Presentation\Data\BindingMode.cs" />
+    <Compile Include="Presentation\Media\Color.cs" />
+    <Compile Include="Presentation\Media\Colors.cs" />
+    <Compile Include="Presentation\Size.cs" />
+    <Compile Include="Presentation\Rect.cs" />
+    <Compile Include="Presentation\Thickness.cs" />
+    <Compile Include="Presentation\GridUnitType.cs" />
+    <Compile Include="Presentation\GridLength.cs" />
+    <Compile Include="Presentation\VerticalAlignment.cs" />
+    <Compile Include="Presentation\HorizontalAlignment.cs" />
     <Compile Include="Presentation\Controls\ItemsControl.cs" />
     <Compile Include="Presentation\Controls\Primitives\IScrollInfo.cs" />
+    <Compile Include="Presentation\DependencyObject.cs" />
+    <Compile Include="Presentation\DependencyPropertyChangedEventArgs.cs" />
     <Compile Include="Presentation\ITemplatedList.cs" />
     <Compile Include="Presentation\Controls\ScrollContentPresenter.cs" />
     <Compile Include="Presentation\Controls\ScrollViewer.cs" />
@@ -124,6 +135,8 @@
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Presentation\Input\GestureType.cs" />
     <Compile Include="Presentation\Input\Gesture.cs" />
+    <Compile Include="Presentation\Media\Stretch.cs" />
+    <Compile Include="Presentation\PropertyMetadata.cs" />
     <Compile Include="Presentation\Vector.cs" />
     <Compile Include="Presentation\IRootElement.cs" />
     <Compile Include="Presentation\Media\Brush.cs" />
@@ -153,7 +166,7 @@
     <Compile Include="Presentation\Controls\TextBlock.cs" />
     <Compile Include="Presentation\IElement.cs" />
     <Compile Include="Presentation\VirtualizingElementCollection.cs" />
-    <Compile Include="Presentation\XpfDependencyProperty.cs" />
+    <Compile Include="Presentation\DependencyProperty.cs" />
     <Compile Include="Presentation\PropertyChangedEventArgs.cs" />
     <Compile Include="Presentation\PropertyChangedNotifier.cs" />
     <Compile Include="Presentation\TextWrapping.cs" />

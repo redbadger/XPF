@@ -1,16 +1,14 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls
 {
-    using System.Windows;
-
     public class ColumnDefinition : DefinitionBase
     {
-        public static readonly XpfDependencyProperty MaxWidthProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty MaxWidthProperty = DependencyProperty.Register(
             "MaxWidth", typeof(double), typeof(ColumnDefinition), new PropertyMetadata(double.PositiveInfinity));
 
-        public static readonly XpfDependencyProperty MinWidthProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty MinWidthProperty = DependencyProperty.Register(
             "MinWidth", typeof(double), typeof(ColumnDefinition), new PropertyMetadata(0d));
 
-        public static readonly XpfDependencyProperty WidthProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty WidthProperty = DependencyProperty.Register(
             "Width", typeof(GridLength), typeof(ColumnDefinition), new PropertyMetadata(new GridLength()));
 
         public ColumnDefinition()
@@ -22,12 +20,12 @@
         {
             get
             {
-                return (double)this.GetValue(MaxWidthProperty.Value);
+                return (double)this.GetValue(MaxWidthProperty);
             }
 
             set
             {
-                this.SetValue(MaxWidthProperty.Value, value);
+                this.SetValue(MaxWidthProperty, value);
             }
         }
 
@@ -35,12 +33,12 @@
         {
             get
             {
-                return (double)this.GetValue(MinWidthProperty.Value);
+                return (double)this.GetValue(MinWidthProperty);
             }
 
             set
             {
-                this.SetValue(MinWidthProperty.Value, value);
+                this.SetValue(MinWidthProperty, value);
             }
         }
 
@@ -48,12 +46,12 @@
         {
             get
             {
-                return (GridLength)this.GetValue(WidthProperty.Value);
+                return (GridLength)this.GetValue(WidthProperty);
             }
 
             set
             {
-                this.SetValue(WidthProperty.Value, value);
+                this.SetValue(WidthProperty, value);
             }
         }
     }

@@ -3,16 +3,15 @@ namespace RedBadger.Xpf.Presentation.Controls
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows;
 
     using RedBadger.Xpf.Internal;
 
     public class Grid : Panel
     {
-        public static readonly XpfDependencyProperty ColumnProperty = XpfDependencyProperty.RegisterAttached(
+        public static readonly DependencyProperty ColumnProperty = DependencyProperty.RegisterAttached(
             "Column", typeof(int), typeof(Grid), new PropertyMetadata(0));
 
-        public static readonly XpfDependencyProperty RowProperty = XpfDependencyProperty.RegisterAttached(
+        public static readonly DependencyProperty RowProperty = DependencyProperty.RegisterAttached(
             "Row", typeof(int), typeof(Grid), new PropertyMetadata(0));
 
         private readonly IList<ColumnDefinition> columnDefinitions = new List<ColumnDefinition>();
@@ -56,7 +55,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 throw new ArgumentNullException("dependencyObject");
             }
 
-            return (int)dependencyObject.GetValue(ColumnProperty.Value);
+            return (int)dependencyObject.GetValue(ColumnProperty);
         }
 
         public static int GetRow(IDependencyObject dependencyObject)
@@ -66,7 +65,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 throw new ArgumentNullException("dependencyObject");
             }
 
-            return (int)dependencyObject.GetValue(RowProperty.Value);
+            return (int)dependencyObject.GetValue(RowProperty);
         }
 
         public static void SetColumn(IDependencyObject dependencyObject, int value)
@@ -76,7 +75,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 throw new ArgumentNullException("dependencyObject");
             }
 
-            dependencyObject.SetValue(ColumnProperty.Value, value);
+            dependencyObject.SetValue(ColumnProperty, value);
         }
 
         public static void SetRow(IDependencyObject dependencyObject, int value)
@@ -86,7 +85,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 throw new ArgumentNullException("dependencyObject");
             }
 
-            dependencyObject.SetValue(RowProperty.Value, value);
+            dependencyObject.SetValue(RowProperty, value);
         }
 
         protected override Size ArrangeOverride(Size finalSize)
@@ -192,7 +191,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             definitions[0].FinalOffset = 0.0;
             for (int i = 1; i < definitions.Length; i++)
             {
-                var previousDefinition = definitions[i - 1];
+                DefinitionBase previousDefinition = definitions[i - 1];
                 definitions[i].FinalOffset = previousDefinition.FinalOffset + previousDefinition.FinalLength;
             }
         }
@@ -258,12 +257,12 @@ namespace RedBadger.Xpf.Presentation.Controls
                 Cell cell = this.cells[cellIndex];
 
                 double x = cell.WidthType == GridUnitType.Auto
-                              ? double.PositiveInfinity
-                              : this.widthDefinitions[cell.ColumnIndex].AvailableLength;
+                               ? double.PositiveInfinity
+                               : this.widthDefinitions[cell.ColumnIndex].AvailableLength;
 
                 double y = cell.HeightType == GridUnitType.Auto
-                              ? double.PositiveInfinity
-                              : this.heightDefinitions[cell.RowIndex].AvailableLength;
+                               ? double.PositiveInfinity
+                               : this.heightDefinitions[cell.RowIndex].AvailableLength;
 
                 child.Measure(new Size(x, y));
             }

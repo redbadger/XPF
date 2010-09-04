@@ -14,15 +14,15 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Windows;
-    using System.Windows.Media;
 
     using Machine.Specifications;
 
     using Moq;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
 

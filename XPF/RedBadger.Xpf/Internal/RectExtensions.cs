@@ -1,16 +1,17 @@
 namespace RedBadger.Xpf.Internal
 {
     using System;
-    using System.Windows;
+
+    using RedBadger.Xpf.Presentation;
 
     internal static class RectExtensions
     {
         public static Rect Deflate(this Rect rect, Thickness thickness)
         {
             return new Rect(
-                rect.X + thickness.Left,
-                rect.Y + thickness.Top,
-                Math.Max(0, rect.Width - (thickness.Left + thickness.Right)),
+                rect.X + thickness.Left, 
+                rect.Y + thickness.Top, 
+                Math.Max(0, rect.Width - (thickness.Left + thickness.Right)), 
                 Math.Max(0, rect.Height - (thickness.Top + thickness.Bottom)));
         }
 

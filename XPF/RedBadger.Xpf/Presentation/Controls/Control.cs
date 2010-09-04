@@ -1,24 +1,20 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
-    using System.Windows;
-
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-
     public class Control : UIElement
     {
-        public static readonly XpfDependencyProperty IsEnabledProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.Register(
             "IsEnabled", typeof(bool), typeof(Control), new PropertyMetadata(true));
 
         public bool IsEnabled
         {
             get
             {
-                return (bool)this.GetValue(IsEnabledProperty.Value);
+                return (bool)this.GetValue(IsEnabledProperty);
             }
 
             set
             {
-                this.SetValue(IsEnabledProperty.Value, value);
+                this.SetValue(IsEnabledProperty, value);
             }
         }
     }

@@ -1,7 +1,5 @@
 ﻿namespace RedBadger.Xpf.Presentation.Media
 {
-    using System.Windows.Media;
-
     using RedBadger.Xpf.Graphics;
 
     internal struct SpriteFontJob : ISpriteJob
@@ -25,16 +23,19 @@
             this.absoluteOffset = Vector.Zero;
         }
 
-        public void SetAbsoluteOffset(Vector offset)
-        {
-            this.absoluteOffset = offset;
-        }
-
         public void Draw(ISpriteBatch spriteBatch)
         {
             var solidColorBrush = this.brush as SolidColorBrush;
             spriteBatch.DrawString(
-                this.spriteFont, this.text, this.position + this.absoluteOffset, solidColorBrush != null ? solidColorBrush.Color : Colors.Magenta);
+                this.spriteFont, 
+                this.text, 
+                this.position + this.absoluteOffset, 
+                solidColorBrush != null ? solidColorBrush.Color : Colors.Magenta);
+        }
+
+        public void SetAbsoluteOffset(Vector offset)
+        {
+            this.absoluteOffset = offset;
         }
     }
 }

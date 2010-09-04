@@ -12,16 +12,15 @@
 namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 {
     using System;
-    using System.Windows;
 
     using Machine.Specifications;
 
     using Moq;
     using Moq.Protected;
 
+    using RedBadger.Xpf.Presentation;
+
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     [Subject(typeof(UIElement), "Arrange")]
     public class when_the_width_of_the_supplied_available_space_is_not_a_number : a_Measured_UIElement

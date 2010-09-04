@@ -1,14 +1,13 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
     using System.Collections.Generic;
-    using System.Windows;
 
     /// <summary>
     ///     Represents a control with a single piece of content.
     /// </summary>
     public class ContentControl : Control
     {
-        public static readonly XpfDependencyProperty ContentProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
             "Content", 
             typeof(IElement), 
             typeof(ContentControl), 
@@ -18,18 +17,18 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (IElement)this.GetValue(ContentProperty.Value);
+                return (IElement)this.GetValue(ContentProperty);
             }
 
             set
             {
-                this.SetValue(ContentProperty.Value, value);
+                this.SetValue(ContentProperty, value);
             }
         }
 
         public override IEnumerable<IElement> GetVisualChildren()
         {
-            var content = this.Content;
+            IElement content = this.Content;
             if (content != null)
             {
                 yield return content;
@@ -40,7 +39,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            var content = this.Content;
+            IElement content = this.Content;
             if (content != null)
             {
                 content.Arrange(new Rect(new Point(), finalSize));
@@ -51,7 +50,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            var content = this.Content;
+            IElement content = this.Content;
             if (content == null)
             {
                 return Size.Empty;

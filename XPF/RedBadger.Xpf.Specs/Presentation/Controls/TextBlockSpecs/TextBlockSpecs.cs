@@ -11,9 +11,6 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
 {
-    using System.Windows;
-    using System.Windows.Media;
-
     using Machine.Specifications;
 
     using Moq;
@@ -23,11 +20,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.TextBlockSpecs
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
-    using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using It = Machine.Specifications.It;
-    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
-    using TextWrapping = RedBadger.Xpf.Presentation.TextWrapping;
-    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public abstract class a_TextBlock
     {

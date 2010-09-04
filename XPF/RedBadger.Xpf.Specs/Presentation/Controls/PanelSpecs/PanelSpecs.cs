@@ -13,8 +13,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows;
-    using System.Windows.Media;
 
     using Machine.Specifications;
 
@@ -24,10 +22,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.PanelSpecs
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
-    using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using It = Machine.Specifications.It;
-    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_Panel
     {

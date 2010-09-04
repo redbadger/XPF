@@ -1,16 +1,6 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Windows;
-
-    using RedBadger.Xpf.Internal;
-    using RedBadger.Xpf.Internal.Controls;
-    using RedBadger.Xpf.Presentation.Controls.Primitives;
-
-    using Vector = RedBadger.Xpf.Presentation.Vector;
-
-/*
+    /*
     public class VirtualizingStackPanel : StackPanel, IScrollInfo
     {
         private VirtualizingElementCollection children;

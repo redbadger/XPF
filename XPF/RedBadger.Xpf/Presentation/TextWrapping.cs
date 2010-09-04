@@ -2,7 +2,7 @@ namespace RedBadger.Xpf.Presentation
 {
     public enum TextWrapping
     {
-        NoWrap,
+        NoWrap, 
         Wrap
     }
 }

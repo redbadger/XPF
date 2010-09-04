@@ -1,13 +1,10 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
-    using System.Windows;
 
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Internal.Controls;
     using RedBadger.Xpf.Presentation.Controls.Primitives;
-
-    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public class ScrollContentPresenter : ContentControl, IScrollInfo
     {
@@ -113,7 +110,7 @@
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            var content = this.Content;
+            IElement content = this.Content;
 
             this.UpdateScrollData(finalSize, this.scrollData.Extent);
 
@@ -135,13 +132,13 @@
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            var content = this.Content;
+            IElement content = this.Content;
             var desiredSize = new Size();
             var extent = new Size();
 
             if (content != null)
             {
-                var availableSizeForContent = availableSize;
+                Size availableSizeForContent = availableSize;
                 if (this.scrollData.CanHorizontallyScroll)
                 {
                     availableSizeForContent.Width = double.PositiveInfinity;

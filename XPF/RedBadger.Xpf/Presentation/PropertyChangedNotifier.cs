@@ -1,12 +1,12 @@
 namespace RedBadger.Xpf.Presentation
 {
     using System;
-    using System.Windows;
-    using System.Windows.Data;
+
+    using RedBadger.Xpf.Presentation.Data;
 
     internal sealed class PropertyChangedNotifier : DependencyObject, IDisposable
     {
-        public static readonly XpfDependencyProperty ValueProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
             "Value", typeof(object), typeof(PropertyChangedNotifier), new PropertyMetadata(null, OnPropertyChanged));
 
         private readonly BindingExpression bindingExpression;
@@ -15,8 +15,7 @@ namespace RedBadger.Xpf.Presentation
 
         private bool isDisposed;
 
-        public PropertyChangedNotifier(
-            DependencyObject propertySource, XpfDependencyProperty property)
+        public PropertyChangedNotifier(DependencyObject propertySource, DependencyProperty property)
         {
             if (null == propertySource)
             {
@@ -63,12 +62,12 @@ namespace RedBadger.Xpf.Presentation
         {
             get
             {
-                return this.GetValue(ValueProperty.Value);
+                return this.GetValue(ValueProperty);
             }
 
             set
             {
-                this.SetValue(ValueProperty.Value, value);
+                this.SetValue(ValueProperty, value);
             }
         }
 
@@ -93,7 +92,7 @@ namespace RedBadger.Xpf.Presentation
             {
                 if (disposing)
                 {
-                    this.ClearValue(ValueProperty.Value);
+                    this.ClearValue(ValueProperty);
                 }
 
                 this.isDisposed = true;

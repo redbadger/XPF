@@ -2,37 +2,29 @@ namespace RedBadger.Xpf.Presentation.Controls
 {
     using System.Text;
     using System.Text.RegularExpressions;
-    using System.Windows;
-    using System.Windows.Media;
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Presentation.Media;
 
-    using Brush = RedBadger.Xpf.Presentation.Media.Brush;
-    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
-    using TextWrapping = RedBadger.Xpf.Presentation.TextWrapping;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-    using Vector = RedBadger.Xpf.Presentation.Vector;
-
     public class TextBlock : UIElement
     {
-        public static readonly XpfDependencyProperty BackgroundProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
             "Background", typeof(Brush), typeof(TextBlock), new PropertyMetadata(null));
 
-        public static readonly XpfDependencyProperty ForegroundProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty ForegroundProperty = DependencyProperty.Register(
             "Foreground", typeof(Brush), typeof(TextBlock), new PropertyMetadata(null));
 
-        public static readonly XpfDependencyProperty PaddingProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty PaddingProperty = DependencyProperty.Register(
             "Padding", 
             typeof(Thickness), 
             typeof(TextBlock), 
             new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
 
-        public static readonly XpfDependencyProperty TextProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text", typeof(string), typeof(TextBlock), new PropertyMetadata(string.Empty, TextPropertyChangedCallback));
 
-        public static readonly XpfDependencyProperty WrappingProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty WrappingProperty = DependencyProperty.Register(
             "Wrapping", 
             typeof(TextWrapping), 
             typeof(TextBlock), 
@@ -53,12 +45,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Brush)this.GetValue(BackgroundProperty.Value);
+                return (Brush)this.GetValue(BackgroundProperty);
             }
 
             set
             {
-                this.SetValue(BackgroundProperty.Value, value);
+                this.SetValue(BackgroundProperty, value);
             }
         }
 
@@ -66,12 +58,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Brush)this.GetValue(ForegroundProperty.Value);
+                return (Brush)this.GetValue(ForegroundProperty);
             }
 
             set
             {
-                this.SetValue(ForegroundProperty.Value, value);
+                this.SetValue(ForegroundProperty, value);
             }
         }
 
@@ -79,12 +71,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Thickness)this.GetValue(PaddingProperty.Value);
+                return (Thickness)this.GetValue(PaddingProperty);
             }
 
             set
             {
-                this.SetValue(PaddingProperty.Value, value);
+                this.SetValue(PaddingProperty, value);
             }
         }
 
@@ -92,12 +84,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (string)this.GetValue(TextProperty.Value);
+                return (string)this.GetValue(TextProperty);
             }
 
             set
             {
-                this.SetValue(TextProperty.Value, value);
+                this.SetValue(TextProperty, value);
             }
         }
 
@@ -105,12 +97,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (TextWrapping)this.GetValue(WrappingProperty.Value);
+                return (TextWrapping)this.GetValue(WrappingProperty);
             }
 
             set
             {
-                this.SetValue(WrappingProperty.Value, value);
+                this.SetValue(WrappingProperty, value);
             }
         }
 

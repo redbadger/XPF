@@ -6,8 +6,8 @@ namespace RedBadger.Xpf.Graphics
     {
         int Height { get; }
 
-        int Width { get; }
-
         Texture2D Value { get; }
+
+        int Width { get; }
     }
 }

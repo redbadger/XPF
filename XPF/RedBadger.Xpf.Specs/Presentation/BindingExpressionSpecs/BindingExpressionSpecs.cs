@@ -12,8 +12,6 @@
 namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
 {
     using System;
-    using System.Windows.Data;
-    using System.Windows.Media;
 
     using Machine.Specifications;
 
@@ -22,10 +20,10 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Data;
+    using RedBadger.Xpf.Presentation.Media;
 
-    using BindingExpression = RedBadger.Xpf.Presentation.BindingExpression;
     using It = Machine.Specifications.It;
-    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     [Subject(typeof(BindingExpression), "Binding")]
     public class when_the_width_of_a_textblock_is_set_through_a_binding
@@ -195,7 +193,7 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
                 border.SetBinding(Border.BorderBrushProperty, new Binding("Brush") { Source = myBindingObject });
             };
 
-        private Because of = () => myBindingObject.Brush = new SolidColorBrush(Colors.AliceBlue);
+        private Because of = () => myBindingObject.Brush = new SolidColorBrush(Colors.Blue);
 
         private It should_bind_the_value_of_the_derived_type =
             () => border.BorderBrush.ShouldBeOfType<SolidColorBrush>();
@@ -204,12 +202,13 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
     [Subject(typeof(BindingExpression), "Type Conversion")]
     public class when_the_property_value_is_of_a_type_that_doesnt_implement_IConvertible
     {
+        private static TextBlock textBlock;
+
         private Establish context = () => textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
 
         private Because of = () => textBlock.SetBinding(TextBlock.TextProperty, new Binding { Source = Colors.Red });
 
-        private It should_convert_the_value_to_a_string_representation = () => textBlock.Text.ShouldEqual(Colors.Red.ToString());
-
-        private static TextBlock textBlock;
+        private It should_convert_the_value_to_a_string_representation =
+            () => textBlock.Text.ShouldEqual(Colors.Red.ToString());
     }
 }

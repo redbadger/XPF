@@ -2,15 +2,12 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows;
 
     using RedBadger.Xpf.Presentation.Media;
 
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-
     public abstract class Panel : UIElement
     {
-        public static readonly XpfDependencyProperty BackgroundProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
             "Background", typeof(Brush), typeof(Panel), new PropertyMetadata(null));
 
         private IList<IElement> children;
@@ -19,12 +16,12 @@
         {
             get
             {
-                return (Brush)this.GetValue(BackgroundProperty.Value);
+                return (Brush)this.GetValue(BackgroundProperty);
             }
 
             set
             {
-                this.SetValue(BackgroundProperty.Value, value);
+                this.SetValue(BackgroundProperty, value);
             }
         }
 

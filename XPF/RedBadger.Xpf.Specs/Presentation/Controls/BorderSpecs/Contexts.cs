@@ -11,8 +11,6 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
     using Moq;
@@ -22,7 +20,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     using RedBadger.Xpf.Presentation.Media;
 
     using It = Moq.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_Border
     {

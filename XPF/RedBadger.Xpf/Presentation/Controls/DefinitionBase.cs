@@ -1,7 +1,6 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
-    using System.Windows;
 
     public abstract class DefinitionBase : DependencyObject
     {
@@ -36,8 +35,8 @@ namespace RedBadger.Xpf.Presentation.Controls
                     (GridLength)
                     this.GetValue(
                         this.definitionType == DefinitionType.Column
-                            ? ColumnDefinition.WidthProperty.Value
-                            : RowDefinition.HeightProperty.Value);
+                            ? ColumnDefinition.WidthProperty
+                            : RowDefinition.HeightProperty);
             }
         }
 
@@ -49,8 +48,8 @@ namespace RedBadger.Xpf.Presentation.Controls
                     (double)
                     this.GetValue(
                         this.definitionType == DefinitionType.Column
-                            ? ColumnDefinition.MaxWidthProperty.Value
-                            : RowDefinition.MaxHeightProperty.Value);
+                            ? ColumnDefinition.MaxWidthProperty
+                            : RowDefinition.MaxHeightProperty);
             }
         }
 
@@ -62,8 +61,8 @@ namespace RedBadger.Xpf.Presentation.Controls
                     (double)
                     this.GetValue(
                         this.definitionType == DefinitionType.Column
-                            ? ColumnDefinition.MinWidthProperty.Value
-                            : RowDefinition.MinHeightProperty.Value);
+                            ? ColumnDefinition.MinWidthProperty
+                            : RowDefinition.MinHeightProperty);
             }
         }
 

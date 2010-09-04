@@ -14,9 +14,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Windows;
-    using System.Windows.Data;
-    using System.Windows.Media;
 
     using Machine.Specifications;
 
@@ -25,6 +22,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
 
@@ -305,7 +303,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 
         private Because of = () =>
             {
-                ItemsControl.ItemsSource = new List<Color> { Colors.Pink };
+                ItemsControl.ItemsSource = new List<Color> { Colors.Blue };
                 items.Add(Colors.Yellow);
 
                 ItemsControl.Measure(new Size());
@@ -314,6 +312,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private It should_not_observe_the_old_source = () => ItemsControl.ItemsPanel.Children.Count.ShouldEqual(1);
 
         private It should_use_the_new_source =
-            () => ItemsControl.ItemsPanel.Children[0].DataContext.ShouldEqual(Colors.Pink);
+            () => ItemsControl.ItemsPanel.Children[0].DataContext.ShouldEqual(Colors.Blue);
     }
 }

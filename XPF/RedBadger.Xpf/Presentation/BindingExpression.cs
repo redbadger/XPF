@@ -2,12 +2,12 @@ namespace RedBadger.Xpf.Presentation
 {
     using System;
     using System.Globalization;
-    using System.Windows;
-    using System.Windows.Data;
+
+    using RedBadger.Xpf.Presentation.Data;
 
     public class BindingExpression
     {
-        private readonly XpfDependencyProperty dependencyProperty;
+        private readonly DependencyProperty dependencyProperty;
 
         private readonly FrameworkElement frameworkElement;
 
@@ -15,7 +15,7 @@ namespace RedBadger.Xpf.Presentation
 
         private PropertyChangedNotifier propertyChangedNotifier;
 
-        public BindingExpression(DependencyObject uiElement, XpfDependencyProperty dependencyProperty)
+        public BindingExpression(DependencyObject uiElement, DependencyProperty dependencyProperty)
         {
             if (uiElement == null)
             {
@@ -35,7 +35,7 @@ namespace RedBadger.Xpf.Presentation
 
         public void ClearBinding()
         {
-            this.frameworkElement.ClearValue(BindingFrameworkElement.DependencyProperty.Value);
+            this.frameworkElement.ClearValue(BindingFrameworkElement.DependencyProperty);
 
             if (this.propertyChangedNotifier != null)
             {
@@ -60,7 +60,7 @@ namespace RedBadger.Xpf.Presentation
 
 #endif
             this.frameworkElement.DataContext = this.GetDefaultDataContext();
-            this.frameworkElement.SetBinding(BindingFrameworkElement.DependencyProperty.Value, binding);
+            this.frameworkElement.SetBinding(BindingFrameworkElement.DependencyProperty, binding);
 
             if (this.propertyChangedNotifier != null)
             {
@@ -94,17 +94,17 @@ namespace RedBadger.Xpf.Presentation
 
         public class BindingFrameworkElement : FrameworkElement
         {
-            public static readonly XpfDependencyProperty DependencyProperty;
+            public static readonly DependencyProperty DependencyProperty;
 
             private static readonly Guid defaultValue = Guid.NewGuid();
 
             private readonly DependencyObject targetDependencyObject;
 
-            private readonly XpfDependencyProperty targetDependencyProperty;
+            private readonly DependencyProperty targetDependencyProperty;
 
             static BindingFrameworkElement()
             {
-                DependencyProperty = XpfDependencyProperty.Register(
+                DependencyProperty = DependencyProperty.Register(
                     "Dependency", 
                     typeof(object), 
                     typeof(BindingFrameworkElement), 
@@ -112,13 +112,13 @@ namespace RedBadger.Xpf.Presentation
             }
 
             public BindingFrameworkElement(
-                DependencyObject targetDependencyObject, XpfDependencyProperty targetDependencyProperty)
+                DependencyObject targetDependencyObject, DependencyProperty targetDependencyProperty)
             {
                 this.targetDependencyObject = targetDependencyObject;
                 this.targetDependencyProperty = targetDependencyProperty;
             }
 
-            public static void SetValue(DependencyObject dependencyObject, XpfDependencyProperty property, object value)
+            public static void SetValue(DependencyObject dependencyObject, DependencyProperty property, object value)
             {
                 if (value != null && !property.PropertyType.IsAssignableFrom(value.GetType()))
                 {
@@ -133,7 +133,7 @@ namespace RedBadger.Xpf.Presentation
                     }
                 }
 
-                dependencyObject.SetValue(property.Value, value);
+                dependencyObject.SetValue(property, value);
             }
 
             private static void DependencyPropertyChangedCallback(
@@ -143,7 +143,7 @@ namespace RedBadger.Xpf.Presentation
                 if (args.NewValue is Guid && (Guid)args.NewValue == defaultValue)
                 {
                     bindingFrameworkElement.targetDependencyObject.ClearValue(
-                        bindingFrameworkElement.targetDependencyProperty.Value);
+                        bindingFrameworkElement.targetDependencyProperty);
                 }
                 else
                 {
@@ -154,5 +154,9 @@ namespace RedBadger.Xpf.Presentation
                 }
             }
         }
+    }
+
+    public class FrameworkElement : UIElement
+    {
     }
 }

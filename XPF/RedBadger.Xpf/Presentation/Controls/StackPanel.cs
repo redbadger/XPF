@@ -1,13 +1,10 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
-    using System.Windows;
-
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public class StackPanel : Panel
     {
-        public static readonly XpfDependencyProperty OrientationProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
             "Orientation", 
             typeof(Orientation), 
             typeof(StackPanel), 
@@ -17,19 +14,19 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Orientation)this.GetValue(OrientationProperty.Value);
+                return (Orientation)this.GetValue(OrientationProperty);
             }
 
             set
             {
-                this.SetValue(OrientationProperty.Value, value);
+                this.SetValue(OrientationProperty, value);
             }
         }
 
         protected override Size ArrangeOverride(Size arrangeSize)
         {
             bool isHorizontalOrientation = this.Orientation == Orientation.Horizontal;
-            var finalRect = new Rect(new Point(),  arrangeSize);
+            var finalRect = new Rect(new Point(), arrangeSize);
             double width = 0;
             double height = 0;
             foreach (UIElement child in this.GetVisualChildren())

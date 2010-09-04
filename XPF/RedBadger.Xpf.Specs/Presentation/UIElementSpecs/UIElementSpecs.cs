@@ -13,13 +13,10 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows;
 
     using Machine.Specifications;
 
     using RedBadger.Xpf.Presentation;
-
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     [Subject(typeof(UIElement), "Children")]
     public class when_children_are_requested : a_UIElement

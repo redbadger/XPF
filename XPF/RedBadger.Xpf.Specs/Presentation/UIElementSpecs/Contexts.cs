@@ -11,18 +11,15 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
     using Moq;
     using Moq.Protected;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
-
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_UIElement
     {

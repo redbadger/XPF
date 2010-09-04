@@ -18,12 +18,7 @@
         private static Texture2D CreateSinglePixel(GraphicsDevice graphicsDevice, int width, int height, Color color)
         {
             // create the rectangle texture without colors
-            var texture = new Texture2D(
-                graphicsDevice,
-                width,
-                height,
-                false,
-                SurfaceFormat.Color);
+            var texture = new Texture2D(graphicsDevice, width, height, false, SurfaceFormat.Color);
 
             // Create a color array for the pixels
             var colors = new Color[width * height];

@@ -1,11 +1,7 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls
 {
-    using System.Windows;
-
     using RedBadger.Xpf.Presentation.Controls.Primitives;
     using RedBadger.Xpf.Presentation.Input;
-
-    using IInputElement = RedBadger.Xpf.Presentation.Input.IInputElement;
 
     public class ScrollViewer : ContentControl, IInputElement
     {

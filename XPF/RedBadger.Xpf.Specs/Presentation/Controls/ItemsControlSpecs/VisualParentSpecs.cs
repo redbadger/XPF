@@ -12,12 +12,12 @@
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 {
     using System.Linq;
-    using System.Windows;
 
     using Machine.Specifications;
 
     using Moq;
 
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
     using It = Machine.Specifications.It;
@@ -37,7 +37,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 
         private It should_add_the_panel_as_a_descendant_in_its_visual_tree = () =>
             {
-                var ancestor = ItemsControl.ItemsPanel.VisualParent;
+                IElement ancestor = ItemsControl.ItemsPanel.VisualParent;
                 while (ancestor != null && !(ancestor is ItemsControl))
                 {
                     ancestor = ancestor.VisualParent;
@@ -79,7 +79,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
     {
         private It should_have_added_a_panel_as_a_descendant_in_its_visual_tree = () =>
             {
-                var ancestor = ItemsControl.ItemsPanel.VisualParent;
+                IElement ancestor = ItemsControl.ItemsPanel.VisualParent;
                 while (ancestor != null && !(ancestor is ItemsControl))
                 {
                     ancestor = ancestor.VisualParent;

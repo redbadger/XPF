@@ -1,5 +1,3 @@
-using System;
-
 namespace RedBadger.PocketMechanic.Phone
 {
 #if WINDOWS || XBOX
@@ -18,4 +16,3 @@ namespace RedBadger.PocketMechanic.Phone
     }
 #endif
 }
-

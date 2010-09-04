@@ -2,9 +2,6 @@ namespace RedBadger.PocketMechanic.Phone
 {
     using System;
     using System.Collections.ObjectModel;
-    using System.Windows;
-    using System.Windows.Data;
-    using System.Windows.Media;
 
     using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
@@ -12,12 +9,11 @@ namespace RedBadger.PocketMechanic.Phone
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
-    using Color = System.Windows.Media.Color;
-    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
-    using TextWrapping = RedBadger.Xpf.Presentation.TextWrapping;
+    using Color = RedBadger.Xpf.Presentation.Media.Color;
 
     public class ScrollTest : DrawableGameComponent
     {
@@ -84,7 +80,7 @@ namespace RedBadger.PocketMechanic.Phone
 
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(
                 l => items.Add(DateTime.Now.ToString()));
-            
+
             /*var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
 
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());

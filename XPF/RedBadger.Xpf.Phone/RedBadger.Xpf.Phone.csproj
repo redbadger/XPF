@@ -60,11 +60,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Observable, Version=2.0.5.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e, processorArchitecture=MSIL" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\RedBadger.Xpf\Graphics\IPrimitivesService.cs">
@@ -129,6 +129,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\License.cs">
       <Link>License.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Binding.cs">
+      <Link>Presentation\Binding.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\BindingExpression.cs">
       <Link>Presentation\BindingExpression.cs</Link>
@@ -196,8 +199,29 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\VirtualizingStackPanel.cs">
       <Link>Presentation\Controls\VirtualizingStackPanel.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\BindingMode.cs">
+      <Link>Presentation\Data\BindingMode.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\DependencyObject.cs">
+      <Link>Presentation\DependencyObject.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\DependencyProperty.cs">
+      <Link>Presentation\DependencyProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\DependencyPropertyChangedEventArgs.cs">
+      <Link>Presentation\DependencyPropertyChangedEventArgs.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\ElementCollection.cs">
       <Link>Presentation\ElementCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\GridLength.cs">
+      <Link>Presentation\GridLength.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\GridUnitType.cs">
+      <Link>Presentation\GridUnitType.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\HorizontalAlignment.cs">
+      <Link>Presentation\HorizontalAlignment.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IDependencyObject.cs">
       <Link>Presentation\IDependencyObject.cs</Link>
@@ -225,6 +249,12 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\Brush.cs">
       <Link>Presentation\Media\Brush.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Color.cs">
+      <Link>Presentation\Media\Color.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Colors.cs">
+      <Link>Presentation\Media\Colors.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\DrawingContext.cs">
       <Link>Presentation\Media\DrawingContext.cs</Link>
@@ -265,14 +295,32 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\SpriteTextureJob.cs">
       <Link>Presentation\Media\SpriteTextureJob.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Stretch.cs">
+      <Link>Presentation\Media\Stretch.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Point.cs">
+      <Link>Presentation\Point.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChangedEventArgs.cs">
       <Link>Presentation\PropertyChangedEventArgs.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChangedNotifier.cs">
       <Link>Presentation\PropertyChangedNotifier.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\PropertyMetadata.cs">
+      <Link>Presentation\PropertyMetadata.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Rect.cs">
+      <Link>Presentation\Rect.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Size.cs">
+      <Link>Presentation\Size.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\TextWrapping.cs">
       <Link>Presentation\TextWrapping.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Thickness.cs">
+      <Link>Presentation\Thickness.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\UIElement.cs">
       <Link>Presentation\UIElement.cs</Link>
@@ -280,11 +328,11 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Vector.cs">
       <Link>Presentation\Vector.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\VerticalAlignment.cs">
+      <Link>Presentation\VerticalAlignment.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\VirtualizingElementCollection.cs">
       <Link>Presentation\VirtualizingElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\XpfDependencyProperty.cs">
-      <Link>Presentation\XpfDependencyProperty.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

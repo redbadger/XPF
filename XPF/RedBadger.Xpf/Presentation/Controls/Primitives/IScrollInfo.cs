@@ -1,9 +1,5 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls.Primitives
 {
-    using System.Windows;
-
-    using Vector = RedBadger.Xpf.Presentation.Vector;
-
     public interface IScrollInfo
     {
         bool CanHorizontallyScroll { get; set; }

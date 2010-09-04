@@ -11,9 +11,6 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 {
-    using System.Windows.Data;
-    using System.Windows.Media;
-
     using Machine.Specifications;
 
     using Moq;
@@ -21,10 +18,9 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media;
 
-    using Brush = RedBadger.Xpf.Presentation.Media.Brush;
     using It = Machine.Specifications.It;
-    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     [Subject(typeof(UIElement), "Data Context")]
     public class when_a_data_context_exists_and_a_value_type_binding_with_no_source_is_set : a_UIElement
@@ -41,7 +37,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     [Subject(typeof(UIElement), "Data Context")]
     public class when_a_data_context_exists_and_a_reference_type_binding_with_no_source_is_set
     {
-        private static readonly Brush DataContext = new SolidColorBrush(Colors.AliceBlue);
+        private static readonly Brush DataContext = new SolidColorBrush(Colors.Blue);
 
         private static TextBlock textBlock;
 
@@ -81,7 +77,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     [Subject(typeof(UIElement), "Data Context")]
     public class when_a_reference_type_binding_with_no_source_exists_and_the_data_context_is_set
     {
-        private static readonly Brush DataContext = new SolidColorBrush(Colors.AliceBlue);
+        private static readonly Brush DataContext = new SolidColorBrush(Colors.Blue);
 
         private static TextBlock textBlock;
 

@@ -11,21 +11,16 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 {
-    using System.Windows;
-    using System.Windows.Media;
-
     using Machine.Specifications;
 
     using Moq;
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
+    using RedBadger.Xpf.Presentation.Media;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
-    using DrawingContext = RedBadger.Xpf.Presentation.Media.DrawingContext;
     using It = Machine.Specifications.It;
-    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
-    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     [Subject(typeof(DrawingContext), "Text")]
     public class when_drawing_text : a_DrawingContext
@@ -52,7 +47,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
     [Subject(typeof(DrawingContext), "Rectangle")]
     public class when_drawing_a_rectangle : a_DrawingContext
     {
-        private static readonly SolidColorBrush expectedBrush = new SolidColorBrush(Colors.AliceBlue);
+        private static readonly SolidColorBrush expectedBrush = new SolidColorBrush(Colors.Blue);
 
         private static readonly Rect expectedRect = new Rect(10, 20, 30, 40);
 
@@ -98,7 +93,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private Because of = () =>
             {
-                DrawingContext.DrawRectangle(rect, new SolidColorBrush(Colors.AliceBlue));
+                DrawingContext.DrawRectangle(rect, new SolidColorBrush(Colors.Blue));
                 Renderer.PreDraw();
                 Renderer.Draw();
             };
@@ -125,8 +120,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private Because of = () =>
             {
-                DrawingContext.DrawText(
-                    SpriteFont.Object, string.Empty, textOffset, new SolidColorBrush(Colors.AliceBlue));
+                DrawingContext.DrawText(SpriteFont.Object, string.Empty, textOffset, new SolidColorBrush(Colors.Blue));
                 Renderer.PreDraw();
                 Renderer.Draw();
             };
@@ -187,7 +181,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
                 UiElement.Setup(element => element.CalculateAbsoluteOffset()).Returns(
                     () =>
                         {
-                            var absoluteOffset = isFirst ? absoluteOffset1 : absoluteOffset2;
+                            Vector absoluteOffset = isFirst ? absoluteOffset1 : absoluteOffset2;
                             isFirst = false;
                             return absoluteOffset;
                         });
@@ -195,7 +189,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
         private Because of = () =>
             {
-                DrawingContext.DrawRectangle(rect, new SolidColorBrush(Colors.AliceBlue));
+                DrawingContext.DrawRectangle(rect, new SolidColorBrush(Colors.Blue));
                 Renderer.PreDraw();
 
                 // Call GetDrawingContext again on *another* element - this forces PreDraw to reoccur,

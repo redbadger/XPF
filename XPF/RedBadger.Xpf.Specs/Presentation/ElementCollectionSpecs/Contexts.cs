@@ -39,9 +39,9 @@ namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
 
     public abstract class an_ElementCollection_as_a_Templated_List
     {
-        protected static ITemplatedList<IElement> Subject;
-
         protected static Mock<UIElement> Owner;
+
+        protected static ITemplatedList<IElement> Subject;
 
         private Establish context = () =>
             {

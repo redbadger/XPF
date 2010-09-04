@@ -47,7 +47,7 @@
         {
             get
             {
-                var memento = this.items[index];
+                Memento memento = this.items[index];
                 return memento.IsReal ? memento.Element : memento.Create();
             }
 
@@ -130,7 +130,7 @@
 
         public virtual void Move(int oldIndex, int newIndex)
         {
-            var memento = this.items[oldIndex];
+            Memento memento = this.items[oldIndex];
             this.items.RemoveAt(oldIndex);
             this.items.Insert(newIndex, memento);
         }
@@ -163,13 +163,13 @@
             public void Dispose(bool isDisposing)
             {
                 this.isDisposed = true;
-                foreach (var memento in this.previousRealizedMementoes.Except(this.currentRealizedMementoes))
+                foreach (Memento memento in this.previousRealizedMementoes.Except(this.currentRealizedMementoes))
                 {
                     memento.Virtualize();
                 }
 
                 this.previousRealizedMementoes.Clear();
-                var newCurrent = this.previousRealizedMementoes;
+                LinkedList<Memento> newCurrent = this.previousRealizedMementoes;
                 this.previousRealizedMementoes = this.currentRealizedMementoes;
                 this.currentRealizedMementoes = newCurrent;
             }
@@ -198,8 +198,8 @@
             {
                 for (int i = this.firstMemento; i < this.mementoes.Count; i++)
                 {
-                    var memento = this.mementoes[i];
-                    var element = memento.IsReal ? memento.Element : memento.Realize();
+                    Memento memento = this.mementoes[i];
+                    IElement element = memento.IsReal ? memento.Element : memento.Realize();
 
                     this.currentRealizedMementoes.AddLast(memento);
                     yield return element;
@@ -249,7 +249,7 @@
 
             public IElement Create()
             {
-                var newElement = this.template();
+                IElement newElement = this.template();
                 newElement.DataContext = this.item;
                 return newElement;
             }

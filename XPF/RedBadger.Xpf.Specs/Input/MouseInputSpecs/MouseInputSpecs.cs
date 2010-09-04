@@ -12,7 +12,6 @@
 namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
 {
     using System.Collections.Generic;
-    using System.Windows;
 
     using Machine.Specifications;
 
@@ -20,6 +19,7 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
     using Moq.Protected;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Controls.Primitives;
     using RedBadger.Xpf.Presentation.Input;

@@ -11,16 +11,14 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
     using Moq;
     using Moq.Protected;
 
+    using RedBadger.Xpf.Presentation;
+
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]
     public class when_an_explicit_size_is_set_and_the_children_want_less_space : a_UIElement

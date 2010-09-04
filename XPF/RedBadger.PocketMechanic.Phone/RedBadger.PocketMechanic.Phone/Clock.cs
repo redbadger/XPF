@@ -13,11 +13,15 @@
 
         public Clock()
         {
-            this.timer.ObserveOnDispatcher().Subscribe(Observer.Create<long>(l =>
-                {
-                    DateTime dateTime = DateTime.Now;
-                    this.Time = dateTime.Second % 2 == 0 ? dateTime.ToLongTimeString() : dateTime.ToShortTimeString();
-                }));
+            this.timer.ObserveOnDispatcher().Subscribe(
+                Observer.Create<long>(
+                    l =>
+                        {
+                            DateTime dateTime = DateTime.Now;
+                            this.Time = dateTime.Second % 2 == 0
+                                            ? dateTime.ToLongTimeString()
+                                            : dateTime.ToShortTimeString();
+                        }));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

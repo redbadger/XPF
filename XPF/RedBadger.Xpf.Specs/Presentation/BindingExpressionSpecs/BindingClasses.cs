@@ -37,7 +37,7 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
 
         public void InvokePropertyChanged(PropertyChangedEventArgs e)
         {
-            var handler = this.PropertyChanged;
+            PropertyChangedEventHandler handler = this.PropertyChanged;
             if (handler != null)
             {
                 handler(this, e);
@@ -67,7 +67,7 @@ namespace RedBadger.Xpf.Specs.Presentation.BindingExpressionSpecs
 
         public void InvokePropertyChanged(PropertyChangedEventArgs e)
         {
-            var handler = this.PropertyChanged;
+            PropertyChangedEventHandler handler = this.PropertyChanged;
             if (handler != null)
             {
                 handler(this, e);

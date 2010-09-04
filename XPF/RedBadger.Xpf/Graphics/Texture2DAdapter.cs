@@ -19,19 +19,19 @@
             }
         }
 
-        public int Width
-        {
-            get
-            {
-                return this.texture2D.Width;
-            }
-        }
-
         public Texture2D Value
         {
             get
             {
                 return this.texture2D;
+            }
+        }
+
+        public int Width
+        {
+            get
+            {
+                return this.texture2D.Width;
             }
         }
     }

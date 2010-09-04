@@ -12,17 +12,15 @@
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ScrollContentPresenterSpecs
 {
     using System;
-    using System.Windows;
 
     using Machine.Specifications;
 
     using Moq;
 
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public abstract class a_ScrollContentPresenter
     {
@@ -171,10 +169,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ScrollContentPresenterSpecs
                 ScrollContentPresenter.Arrange(new Rect(0, 0, 100, 100));
             };
 
-        private It should_coerce_the_child_visual_offset_to_keep_it_inside_the_extent =
-            () => content.Object.VisualOffset.ShouldEqual(new Vector(-100, -100));
-
         private It should_coerce_its_own_offset_to_keep_it_inside_the_extent =
             () => ScrollContentPresenter.Offset.ShouldEqual(new Vector(100, 100));
+
+        private It should_coerce_the_child_visual_offset_to_keep_it_inside_the_extent =
+            () => content.Object.VisualOffset.ShouldEqual(new Vector(-100, -100));
     }
 }

@@ -1,11 +1,8 @@
 namespace RedBadger.Xpf.Presentation.Media
 {
-    using System.Windows;
-    using System.Windows.Media;
-
     public class SolidColorBrush : Brush
     {
-        public static readonly XpfDependencyProperty ColorProperty = XpfDependencyProperty.Register(
+        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
             "Color", typeof(Color), typeof(SolidColorBrush), new PropertyMetadata(Colors.White));
 
         public SolidColorBrush(Color color)
@@ -17,12 +14,12 @@ namespace RedBadger.Xpf.Presentation.Media
         {
             get
             {
-                return (Color)this.GetValue(ColorProperty.Value);
+                return (Color)this.GetValue(ColorProperty);
             }
 
             set
             {
-                this.SetValue(ColorProperty.Value, value);
+                this.SetValue(ColorProperty, value);
             }
         }
     }

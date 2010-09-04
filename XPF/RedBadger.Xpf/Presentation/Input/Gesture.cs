@@ -1,20 +1,18 @@
 ﻿namespace RedBadger.Xpf.Presentation.Input
 {
     using System.Diagnostics;
-    using System.Windows;
-
-    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     [DebuggerDisplay("{Type} @ P:{Point} D:{Delta}")]
     public struct Gesture
     {
-        public GestureType Type;
+        public Vector Delta;
 
         public Point Point;
 
-        public Vector Delta;
+        public GestureType Type;
 
-        public Gesture(GestureType type, Point point) : this(type, point, Vector.Zero)
+        public Gesture(GestureType type, Point point)
+            : this(type, point, Vector.Zero)
         {
         }
 
