@@ -57,80 +57,17 @@ namespace RedBadger.PocketMechanic.Phone
 
             var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
 
+            var canvas = new Canvas();
+
+            var textBlock = new TextBlock(this.font) { Text = "Test", Background = new SolidColorBrush(Colors.Red) };
+            Canvas.SetLeft(textBlock, 50);
+            Canvas.SetTop(textBlock, 200);
+            canvas.Children.Add(textBlock);
+
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager())
                 {
-                    Content =
-                        new Grid
-                            {
-                                HorizontalAlignment = HorizontalAlignment.Center, 
-                                ColumnDefinitions =
-                                    {
-                                        new ColumnDefinition { Width = new GridLength(25, GridUnitType.Pixel), }, 
-                                        new ColumnDefinition { Width = new GridLength(50, GridUnitType.Pixel), }, 
-                                        new ColumnDefinition
-                                            {
-                                               Width = new GridLength(1024 - (50 * 2) - (25 * 2), GridUnitType.Pixel), 
-                                            }, 
-                                        new ColumnDefinition { Width = new GridLength(50, GridUnitType.Pixel), }, 
-                                        new ColumnDefinition { Width = new GridLength(25, GridUnitType.Pixel), }, 
-                                    }, 
-                                RowDefinitions =
-                                    {
-                                        new RowDefinition { Height = new GridLength(25, GridUnitType.Pixel), }, 
-                                        new RowDefinition { Height = new GridLength(760 - 25, GridUnitType.Pixel), }
-                                    }
-                            }
+                    Content = canvas 
                 };
-
-            /*Image team1Bubble = new Image() { Source = new XnaImage(new Texture2DAdapter(Content.Load<Texture2D>("bulb"))) }; // todo need a way to tint these.
-            Image team2Bubble = new Image() { Source = new XnaImage(new Texture2DAdapter(Content.Load<Texture2D>("bulb"))) }; // todo image brush would be useful, could make this the background for the text.*/
-            TextBlock team1 = new TextBlock(this.font) { Foreground = new SolidColorBrush(Colors.Red), Text = "Red" };
-            TextBlock team2 = new TextBlock(this.font) { Foreground = new SolidColorBrush(Colors.Blue), Text = "Blue" };
-
-            /*Grid.SetColumn(team1, 1); Grid.SetColumn(team1Bubble, 1);
-            Grid.SetColumn(team2Bubble, 3); Grid.SetColumn(team2, 3);*/
-            (this.rootElement.Content as Grid).Children.Add(team1);
-
-            /*(this.rootElement.Content as Grid).Children.Add(team1Bubble);// note adding things to a grid cell does not have any impact on the layout order (text goes first on both sides, dispite the image being added first for the right hand UI side here)
-            (this.rootElement.Content as Grid).Children.Add(team2Bubble);*/
-            (this.rootElement.Content as Grid).Children.Add(team2);
-
-            this.commentaryBox = new StackPanel
-                {
-                    HorizontalAlignment = HorizontalAlignment.Center, 
-                    VerticalAlignment = VerticalAlignment.Bottom, 
-                    Orientation = Orientation.Vertical, 
-                };
-            Grid.SetColumn(this.commentaryBox, 2);
-            Grid.SetRow(this.commentaryBox, 1);
-            (this.rootElement.Content as Grid).Children.Add(this.commentaryBox);
-
-            Button resetButton = new Button
-                {
-                    Content =
-                        /*new Border()
-                                                       {
-                                                           BorderBrush = new SolidColorBrush(Colors.Black),
-                                                           BorderThickness = new Thickness(2),
-                                                           Child = */
-                        new TextBlock(this.font)
-                            {
-                                Text = "Reset", 
-                                Background = new SolidColorBrush(Colors.Green), 
-                                Foreground = new SolidColorBrush(Colors.Blue), 
-                                Padding = new Thickness(10), 
-                                // bug add padding here and the background draws in the wrong location.
-                            }, 
-                    // },
-                    // Padding = new Thickness(10), // bug Add padding here and the text block's background collapses.
-                    HorizontalAlignment = HorizontalAlignment.Center, 
-                    VerticalAlignment = VerticalAlignment.Center, 
-                };
-
-            // resetButton.Click += (sender, args) => ((Ball)this.Components.First(component => component is Ball)).Reset();
-            Grid.SetColumn(resetButton, 2);
-            Grid.SetRow(resetButton, 0);
-            (this.rootElement.Content as Grid).Children.Add(resetButton);
         }
 
         public class BorderBrushConverter : INotifyPropertyChanged
