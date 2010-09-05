@@ -1,4 +1,4 @@
-namespace RedBadger.PocketMechanic.Phone
+﻿/*namespace RedBadger.PocketMechanic.Phone
 {
     using System.ComponentModel;
 
@@ -80,16 +80,16 @@ namespace RedBadger.PocketMechanic.Phone
                 };
 
             /*Image team1Bubble = new Image() { Source = new XnaImage(new Texture2DAdapter(Content.Load<Texture2D>("bulb"))) }; // todo need a way to tint these.
-            Image team2Bubble = new Image() { Source = new XnaImage(new Texture2DAdapter(Content.Load<Texture2D>("bulb"))) }; // todo image brush would be useful, could make this the background for the text.*/
+            Image team2Bubble = new Image() { Source = new XnaImage(new Texture2DAdapter(Content.Load<Texture2D>("bulb"))) }; // todo image brush would be useful, could make this the background for the text.♥1♥
             var team1 = new TextBlock(this.font) { Foreground = new SolidColorBrush(Colors.Red), Text = "Red" };
             var team2 = new TextBlock(this.font) { Foreground = new SolidColorBrush(Colors.Blue), Text = "Blue" };
 
             /*Grid.SetColumn(team1, 1); Grid.SetColumn(team1Bubble, 1);
-            Grid.SetColumn(team2Bubble, 3); Grid.SetColumn(team2, 3);*/
+            Grid.SetColumn(team2Bubble, 3); Grid.SetColumn(team2, 3);♥1♥
             (this.rootElement.Content as Grid).Children.Add(team1);
 
             /*(this.rootElement.Content as Grid).Children.Add(team1Bubble);// note adding things to a grid cell does not have any impact on the layout order (text goes first on both sides, dispite the image being added first for the right hand UI side here)
-            (this.rootElement.Content as Grid).Children.Add(team2Bubble);*/
+            (this.rootElement.Content as Grid).Children.Add(team2Bubble);♥1♥
             (this.rootElement.Content as Grid).Children.Add(team2);
 
             this.commentaryBox = new StackPanel
@@ -109,7 +109,7 @@ namespace RedBadger.PocketMechanic.Phone
                                                        {
                                                            BorderBrush = new SolidColorBrush(Colors.Black),
                                                            BorderThickness = new Thickness(2),
-                                                           Child = */
+                                                           Child = ♥1♥
                         new TextBlock(this.font)
                             {
                                 Text = "Reset", 
@@ -148,7 +148,7 @@ namespace RedBadger.PocketMechanic.Phone
                 set
                 {
                     this.brush = value;
-                    this.InvokePropertyChanged(new PropertyChangedEventArgs("Brush"));
+                    this.InvokePropertyChanged(new PropertyChangedEventArgs<TProperty, TOwner>("Brush"));
                 }
             }
 
@@ -166,7 +166,7 @@ namespace RedBadger.PocketMechanic.Phone
                 }
             }
 
-            public void InvokePropertyChanged(PropertyChangedEventArgs e)
+            public void InvokePropertyChanged(PropertyChangedEventArgs<TProperty, TOwner> e)
             {
                 PropertyChangedEventHandler handler = this.PropertyChanged;
                 if (handler != null)
@@ -192,11 +192,11 @@ namespace RedBadger.PocketMechanic.Phone
                 set
                 {
                     this.myWidth = value;
-                    this.InvokePropertyChanged(new PropertyChangedEventArgs("MyWidth"));
+                    this.InvokePropertyChanged(new PropertyChangedEventArgs<TProperty, TOwner>("MyWidth"));
                 }
             }
 
-            public void InvokePropertyChanged(PropertyChangedEventArgs e)
+            public void InvokePropertyChanged(PropertyChangedEventArgs<TProperty, TOwner> e)
             {
                 PropertyChangedEventHandler handler = this.PropertyChanged;
                 if (handler != null)
@@ -206,4 +206,4 @@ namespace RedBadger.PocketMechanic.Phone
             }
         }
     }
-}
+}*/

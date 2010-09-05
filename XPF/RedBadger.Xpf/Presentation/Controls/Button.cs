@@ -5,16 +5,15 @@
 
     public class Button : ButtonBase
     {
-        public static readonly IDependencyProperty PaddingProperty =
-            DependencyProperty<Thickness, Button>.Register(
-                "Padding", 
-                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
+        public static readonly Property<Thickness, Button> PaddingProperty =
+            Property<Thickness, Button>.Register(
+                "Padding", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
 
         public Thickness Padding
         {
             get
             {
-                return this.GetValue<Thickness>(PaddingProperty);
+                return this.GetValue(PaddingProperty);
             }
 
             set

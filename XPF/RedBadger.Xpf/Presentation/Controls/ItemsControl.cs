@@ -12,16 +12,14 @@
 
     public class ItemsControl : Control
     {
-        public static readonly IDependencyProperty ItemTemplateProperty =
-            DependencyProperty<Func<IElement>, ItemsControl>.Register("ItemTemplate", new PropertyMetadata(null));
+        public static readonly Property<Func<IElement>, ItemsControl> ItemTemplateProperty =
+            Property<Func<IElement>, ItemsControl>.Register("ItemTemplate", null);
 
-        public static readonly IDependencyProperty ItemsPanelProperty =
-            DependencyProperty<Panel, ItemsControl>.Register(
-                "ItemsPanel", new PropertyMetadata(null, ItemsPanelChanged));
+        public static readonly Property<Panel, ItemsControl> ItemsPanelProperty =
+            Property<Panel, ItemsControl>.Register("ItemsPanel", null, ItemsPanelChanged);
 
-        public static readonly IDependencyProperty ItemsSourceProperty =
-            DependencyProperty<IEnumerable, ItemsControl>.Register(
-                "ItemsSource", new PropertyMetadata(null, ItemsSourceChanged));
+        public static readonly Property<IEnumerable, ItemsControl> ItemsSourceProperty =
+            Property<IEnumerable, ItemsControl>.Register("ItemsSource", null, ItemsSourceChanged);
 
         private readonly ScrollViewer scrollViewer;
 
@@ -39,7 +37,7 @@
         {
             get
             {
-                return this.GetValue<Func<IElement>>(ItemTemplateProperty);
+                return this.GetValue(ItemTemplateProperty);
             }
 
             set
@@ -52,7 +50,7 @@
         {
             get
             {
-                return this.GetValue<Panel>(ItemsPanelProperty);
+                return this.GetValue(ItemsPanelProperty);
             }
 
             set
@@ -65,7 +63,7 @@
         {
             get
             {
-                return this.GetValue<IEnumerable>(ItemsSourceProperty);
+                return this.GetValue(ItemsSourceProperty);
             }
 
             set
@@ -118,28 +116,20 @@
         }
 
         private static void ItemsPanelChanged(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+            ItemsControl itemsControl, PropertyChangedEventArgs<Panel, ItemsControl> args)
         {
-            var itemsControl = dependencyObject as ItemsControl;
-            if (itemsControl != null)
-            {
-                itemsControl.ItemsPanelChanged(args.NewValue);
-            }
+            itemsControl.ItemsPanelChanged(args.NewValue);
         }
 
         private static void ItemsSourceChanged(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+            ItemsControl itemsControl, PropertyChangedEventArgs<IEnumerable, ItemsControl> args)
         {
-            var itemsControl = dependencyObject as ItemsControl;
-            if (itemsControl != null)
-            {
-                itemsControl.ItemsSourceChanged(args.OldValue, args.NewValue);
-            }
+            itemsControl.ItemsSourceChanged(args.OldValue, args.NewValue);
         }
 
-        private void ItemsPanelChanged(object newValue)
+        private void ItemsPanelChanged(Panel newPanel)
         {
-            if (!(((Panel)newValue).Children is ITemplatedList<IElement>))
+            if (!(newPanel.Children is ITemplatedList<IElement>))
             {
                 throw new NotSupportedException(
                     "ItemsControl requires a panel whose Children collection implements ITemplatedList<IElement>");
@@ -147,14 +137,10 @@
 
             this.InvalidateMeasure();
 
-            var newPanel = newValue as IElement;
-            if (newPanel != null)
-            {
-                this.scrollViewer.Content = newPanel;
-            }
+            this.scrollViewer.Content = newPanel;
         }
 
-        private void ItemsSourceChanged(object oldValue, object newValue)
+        private void ItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
         {
             if (oldValue is INotifyCollectionChanged)
             {

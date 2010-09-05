@@ -14,54 +14,43 @@
 
     public abstract class UIElement : DependencyObject, IElement
     {
-        public static readonly IDependencyProperty DataContextProperty =
-            DependencyProperty<object, UIElement>.Register(
-                "DataContext", new PropertyMetadata(null, DataContextChanged));
+        public static readonly Property<object, UIElement> DataContextProperty =
+            Property<object, UIElement>.Register("DataContext", null);
 
-        public static readonly IDependencyProperty HeightProperty =
-            DependencyProperty<double, UIElement>.Register(
-                "Height", new PropertyMetadata(double.NaN, InvalidateMeasureIfDoubleChanged));
+        public static readonly Property<double, UIElement> HeightProperty =
+            Property<double, UIElement>.Register("Height", double.NaN, PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly IDependencyProperty HorizontalAlignmentProperty =
-            DependencyProperty<HorizontalAlignment, UIElement>.Register(
-                "HorizontalAlignment", 
-                new PropertyMetadata(HorizontalAlignment.Stretch, InvalidateArrangeIfHorizontalAlignmentChanged));
+        public static readonly Property<HorizontalAlignment, UIElement> HorizontalAlignmentProperty =
+            Property<HorizontalAlignment, UIElement>.Register(
+                "HorizontalAlignment", HorizontalAlignment.Stretch, PropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly IDependencyProperty IsMouseCapturedProperty =
-            DependencyProperty<bool, UIElement>.Register("IsMouseCaptured", new PropertyMetadata(false));
+        public static readonly Property<bool, UIElement> IsMouseCapturedProperty =
+            Property<bool, UIElement>.Register("IsMouseCaptured", false);
 
-        public static readonly IDependencyProperty MarginProperty =
-            DependencyProperty<Thickness, UIElement>.Register(
-                "Margin", 
-                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
+        public static readonly Property<Thickness, UIElement> MarginProperty =
+            Property<Thickness, UIElement>.Register(
+                "Margin", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly IDependencyProperty MaxHeightProperty =
-            DependencyProperty<double, UIElement>.Register(
-                "MaxHeight", new PropertyMetadata(double.PositiveInfinity, InvalidateMeasureIfDoubleChanged));
+        public static readonly Property<double, UIElement> MaxHeightProperty =
+            Property<double, UIElement>.Register(
+                "MaxHeight", double.PositiveInfinity, PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly IDependencyProperty MaxWidthProperty =
-            DependencyProperty<double, UIElement>.Register(
-                "MaxWidth", new PropertyMetadata(double.PositiveInfinity, InvalidateMeasureIfDoubleChanged));
+        public static readonly Property<double, UIElement> MaxWidthProperty =
+            Property<double, UIElement>.Register(
+                "MaxWidth", double.PositiveInfinity, PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly IDependencyProperty MinHeightProperty =
-            DependencyProperty<double, UIElement>.Register(
-                "MinHeight", new PropertyMetadata(0d, InvalidateMeasureIfDoubleChanged));
+        public static readonly Property<double, UIElement> MinHeightProperty =
+            Property<double, UIElement>.Register("MinHeight", 0d, PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly IDependencyProperty MinWidthProperty =
-            DependencyProperty<double, UIElement>.Register(
-                "MinWidth", new PropertyMetadata(0d, InvalidateMeasureIfDoubleChanged));
+        public static readonly Property<double, UIElement> MinWidthProperty =
+            Property<double, UIElement>.Register("MinWidth", 0d, PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly IDependencyProperty VerticalAlignmentProperty =
-            DependencyProperty<VerticalAlignment, UIElement>.Register(
-                "VerticalAlignment", 
-                new PropertyMetadata(VerticalAlignment.Stretch, InvalidateArrangeIfVerticalAlignmentChanged));
+        public static readonly Property<VerticalAlignment, UIElement> VerticalAlignmentProperty =
+            Property<VerticalAlignment, UIElement>.Register(
+                "VerticalAlignment", VerticalAlignment.Stretch, PropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly IDependencyProperty WidthProperty =
-            DependencyProperty<double, UIElement>.Register(
-                "Width", new PropertyMetadata(double.NaN, InvalidateMeasureIfDoubleChanged));
-
-        private readonly Dictionary<IDependencyProperty, BindingExpression> bindings =
-            new Dictionary<IDependencyProperty, BindingExpression>();
+        public static readonly Property<double, UIElement> WidthProperty = Property<double, UIElement>.Register(
+            "Width", double.NaN, PropertyChangedCallbacks.InvalidateMeasure);
 
         private readonly Subject<Gesture> gestures = new Subject<Gesture>();
 
@@ -96,7 +85,7 @@
         {
             get
             {
-                return this.GetValue<object>(DataContextProperty);
+                return this.GetValue(DataContextProperty);
             }
 
             set
@@ -119,7 +108,7 @@
         {
             get
             {
-                return this.GetValue<double>(HeightProperty);
+                return this.GetValue(HeightProperty);
             }
 
             set
@@ -132,7 +121,7 @@
         {
             get
             {
-                return this.GetValue<HorizontalAlignment>(HorizontalAlignmentProperty);
+                return this.GetValue(HorizontalAlignmentProperty);
             }
 
             set
@@ -155,7 +144,7 @@
         {
             get
             {
-                return this.GetValue<bool>(IsMouseCapturedProperty);
+                return this.GetValue(IsMouseCapturedProperty);
             }
 
             private set
@@ -168,7 +157,7 @@
         {
             get
             {
-                return this.GetValue<Thickness>(MarginProperty);
+                return this.GetValue(MarginProperty);
             }
 
             set
@@ -181,7 +170,7 @@
         {
             get
             {
-                return this.GetValue<double>(MaxHeightProperty);
+                return this.GetValue(MaxHeightProperty);
             }
 
             set
@@ -194,7 +183,7 @@
         {
             get
             {
-                return this.GetValue<double>(MaxWidthProperty);
+                return this.GetValue(MaxWidthProperty);
             }
 
             set
@@ -207,7 +196,7 @@
         {
             get
             {
-                return this.GetValue<double>(MinHeightProperty);
+                return this.GetValue(MinHeightProperty);
             }
 
             set
@@ -220,7 +209,7 @@
         {
             get
             {
-                return this.GetValue<double>(MinWidthProperty);
+                return this.GetValue(MinWidthProperty);
             }
 
             set
@@ -235,7 +224,7 @@
         {
             get
             {
-                return this.GetValue<VerticalAlignment>(VerticalAlignmentProperty);
+                return this.GetValue(VerticalAlignmentProperty);
             }
 
             set
@@ -250,7 +239,7 @@
         {
             get
             {
-                return this.GetValue<double>(WidthProperty);
+                return this.GetValue(WidthProperty);
             }
 
             set
@@ -289,34 +278,6 @@
                 this.IsMouseCaptured = false;
             }
         }
-
-        /*
-        public void ClearBinding(DependencyProperty dependencyProperty)
-        {
-            BindingExpression bindingExpression;
-            if (this.bindings.TryGetValue(dependencyProperty, out bindingExpression))
-            {
-                bindingExpression.ClearBinding();
-                this.bindings.Remove(dependencyProperty);
-            }
-        }
-*/
-
-        /*
-        public BindingExpression SetBinding(DependencyProperty dependencyProperty, Binding binding)
-        {
-            BindingExpression bindingExpression;
-            if (!this.bindings.TryGetValue(dependencyProperty, out bindingExpression))
-            {
-                bindingExpression = new BindingExpression(this, dependencyProperty);
-                this.bindings.Add(dependencyProperty, bindingExpression);
-            }
-
-            bindingExpression.SetBinding(binding);
-            bindingExpression.SetDataContext(this.DataContext);
-            return bindingExpression;
-        }
-*/
 
         /// <summary>
         ///     Positions child elements and determines a size for a UIElement.
@@ -510,64 +471,6 @@
         {
         }
 
-        private static void DataContextChanged(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var element = dependencyObject as UIElement;
-            if (element != null)
-            {
-                element.DataContextChanged(args.NewValue);
-            }
-        }
-
-        private static void InvalidateArrangeIfHorizontalAlignmentChanged(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var newValue = (HorizontalAlignment)args.NewValue;
-            var oldValue = (HorizontalAlignment)args.OldValue;
-
-            if (newValue != oldValue)
-            {
-                var uiElement = dependencyObject as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.InvalidateArrange();
-                }
-            }
-        }
-
-        private static void InvalidateArrangeIfVerticalAlignmentChanged(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var newValue = (VerticalAlignment)args.NewValue;
-            var oldValue = (VerticalAlignment)args.OldValue;
-
-            if (newValue != oldValue)
-            {
-                var uiElement = dependencyObject as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.InvalidateArrange();
-                }
-            }
-        }
-
-        private static void InvalidateMeasureIfDoubleChanged(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var newValue = (double)args.NewValue;
-            var oldValue = (double)args.OldValue;
-
-            if (newValue.IsDifferentFrom(oldValue))
-            {
-                var uiElement = dependencyObject as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.InvalidateMeasure();
-                }
-            }
-        }
-
         /// <summary>
         ///     Defines the template for core-level arrange layout definition.
         /// </summary>
@@ -686,14 +589,6 @@
             }
 
             return vector;
-        }
-
-        private void DataContextChanged(object newValue)
-        {
-            foreach (BindingExpression bindingExpression in this.bindings.Values)
-            {
-                bindingExpression.SetDataContext(newValue);
-            }
         }
 
         /// <summary>

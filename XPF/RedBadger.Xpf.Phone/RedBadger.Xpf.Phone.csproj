@@ -112,6 +112,9 @@
     <Compile Include="..\RedBadger.Xpf\Internal\MinMax.cs">
       <Link>Internal\MinMax.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\PropertyChangedCallbacks.cs">
+      <Link>Internal\PropertyChangedCallbacks.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\RectExtensions.cs">
       <Link>Internal\RectExtensions.cs</Link>
     </Compile>
@@ -120,9 +123,6 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\ThicknessExtensions.cs">
       <Link>Internal\ThicknessExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Internal\UIElementPropertyChangedCallbacks.cs">
-      <Link>Internal\UIElementPropertyChangedCallbacks.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\VectorExtensions.cs">
       <Link>Internal\VectorExtensions.cs</Link>
@@ -205,12 +205,6 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\DependencyObject.cs">
       <Link>Presentation\DependencyObject.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\DependencyProperty.cs">
-      <Link>Presentation\DependencyProperty.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\DependencyPropertyChangedEventArgs.cs">
-      <Link>Presentation\DependencyPropertyChangedEventArgs.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\DependencyPropertyStore.cs">
       <Link>Presentation\DependencyPropertyStore.cs</Link>
     </Compile>
@@ -229,9 +223,6 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\IDependencyObject.cs">
       <Link>Presentation\IDependencyObject.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\IDependencyProperty.cs">
-      <Link>Presentation\IDependencyProperty.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IElement.cs">
       <Link>Presentation\IElement.cs</Link>
     </Compile>
@@ -246,6 +237,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Input\IInputManager.cs">
       <Link>Presentation\Input\IInputManager.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\IProperty.cs">
+      <Link>Presentation\IProperty.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IRootElement.cs">
       <Link>Presentation\IRootElement.cs</Link>
@@ -307,14 +301,14 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Point.cs">
       <Link>Presentation\Point.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Property.cs">
+      <Link>Presentation\Property.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChangedEventArgs.cs">
       <Link>Presentation\PropertyChangedEventArgs.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChangedNotifier.cs">
       <Link>Presentation\PropertyChangedNotifier.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\PropertyMetadata.cs">
-      <Link>Presentation\PropertyMetadata.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Rect.cs">
       <Link>Presentation\Rect.cs</Link>

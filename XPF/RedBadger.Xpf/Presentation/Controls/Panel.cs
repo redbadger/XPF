@@ -7,8 +7,8 @@
 
     public abstract class Panel : UIElement
     {
-        public static readonly IDependencyProperty BackgroundProperty =
-            DependencyProperty<Brush, Panel>.Register("Background", new PropertyMetadata(null));
+        public static readonly Property<Brush, Panel> BackgroundProperty =
+            Property<Brush, Panel>.Register("Background", null);
 
         private IList<IElement> children;
 
@@ -16,7 +16,7 @@
         {
             get
             {
-                return this.GetValue<Brush>(BackgroundProperty);
+                return this.GetValue(BackgroundProperty);
             }
 
             set

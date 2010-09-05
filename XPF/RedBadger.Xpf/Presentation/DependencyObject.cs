@@ -5,84 +5,65 @@ namespace RedBadger.Xpf.Presentation
 
     public class DependencyObject : IDependencyObject
     {
-        private readonly Dictionary<IDependencyProperty, object> propertyValues =
-            new Dictionary<IDependencyProperty, object>();
+        private readonly Dictionary<IProperty, object> propertyValues = new Dictionary<IProperty, object>();
 
-        public void ClearValue(IDependencyProperty dependencyProperty)
+        public void ClearValue(IProperty property)
         {
-            if (dependencyProperty == null)
+            if (property == null)
             {
-                throw new ArgumentNullException("dependencyProperty");
+                throw new ArgumentNullException("property");
             }
 
-            this.propertyValues.Remove(dependencyProperty);
+            this.propertyValues.Remove(property);
         }
 
-        public void ClearBinding(IDependencyProperty dependencyProperty)
+        public TProperty GetValue<TProperty, TOwner>(Property<TProperty, TOwner> property) where TOwner : class
         {
-            throw new NotImplementedException();
-        }
-
-        public T GetValue<T>(IDependencyProperty dependencyProperty)
-        {
-            if (dependencyProperty == null)
+            if (property == null)
             {
-                throw new ArgumentNullException("dependencyProperty");
-            }
-
-            if (!typeof(T).IsAssignableFrom(dependencyProperty.PropertyType))
-            {
-                throw new ArgumentException("Incorrect Type for this DependencyProperty");
+                throw new ArgumentNullException("property");
             }
 
             object value;
-            if (this.propertyValues.TryGetValue(dependencyProperty, out value))
+            if (this.propertyValues.TryGetValue(property, out value))
             {
-                return (T)value;
+                return (TProperty)value;
             }
 
-            return (T)dependencyProperty.DefaultValue;
+            return (TProperty)property.DefaultValue;
         }
 
-        public BindingExpression SetBinding(IDependencyProperty dependencyProperty, Binding binding)
+        public void SetValue<TProperty, TOwner>(Property<TProperty, TOwner> property, TProperty value)
+            where TOwner : class
         {
-            throw new NotImplementedException();
-        }
-
-        public void SetValue<T>(IDependencyProperty dependencyProperty, T value)
-        {
-            if (dependencyProperty == null)
+            if (property == null)
             {
-                throw new ArgumentNullException("dependencyProperty");
+                throw new ArgumentNullException("property");
             }
 
-            if (dependencyProperty.PropertyType != typeof(T))
+            if (Equals(value, Property<TProperty, TOwner>.UnsetValue))
             {
-                throw new ArgumentException("value is not of the correct Type for this DependencyProperty");
-            }
-
-            if (Equals(value, DependencyProperty<object, object>.UnsetValue))
-            {
-                this.ClearValue(dependencyProperty);
+                this.ClearValue(property);
             }
             else
             {
-                var oldValue = this.GetValue<object>(dependencyProperty);
-                if (!ArePropertyValuesEqual(dependencyProperty, oldValue, value))
+                TProperty oldValue = this.GetValue(property);
+                if (!ArePropertyValuesEqual(property, oldValue, value))
                 {
-                    this.propertyValues[dependencyProperty] = value;
-                    if (dependencyProperty.PropertyChangedCallback != null)
+                    this.propertyValues[property] = value;
+                    if (property.ChangedCallback != null)
                     {
-                        dependencyProperty.PropertyChangedCallback(
-                            this, new DependencyPropertyChangedEventArgs(dependencyProperty, oldValue, value));
+                        property.ChangedCallback(
+                            this as TOwner, new PropertyChangedEventArgs<TProperty, TOwner>(property, oldValue, value));
                     }
                 }
             }
         }
 
-        private static bool ArePropertyValuesEqual(IDependencyProperty dependencyProperty, object value1, object value2)
+        private static bool ArePropertyValuesEqual<TProperty, TOwner>(
+            Property<TProperty, TOwner> property, TProperty value1, TProperty value2) where TOwner : class
         {
-            if (!dependencyProperty.PropertyType.IsValueType && dependencyProperty.PropertyType != typeof(string))
+            if (!property.PropertyType.IsValueType && property.PropertyType != typeof(string))
             {
                 return ReferenceEquals(value1, value2);
             }

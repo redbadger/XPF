@@ -133,7 +133,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private Establish context = () =>
             {
                 items = new ObservableCollection<Color>();
+/*
                 ItemsControl.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = items });
+*/
 
                 ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 

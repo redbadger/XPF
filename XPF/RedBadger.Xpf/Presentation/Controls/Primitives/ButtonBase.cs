@@ -6,8 +6,8 @@ namespace RedBadger.Xpf.Presentation.Controls.Primitives
 
     public abstract class ButtonBase : ContentControl, IInputElement
     {
-        public static readonly IDependencyProperty IsPressedProperty =
-            DependencyProperty<bool, ButtonBase>.Register("IsPressed", new PropertyMetadata(false));
+        public static readonly Property<bool, ButtonBase> IsPressedProperty =
+            Property<bool, ButtonBase>.Register("IsPressed", false);
 
         private bool isLeftButtonDown;
 
@@ -17,7 +17,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Primitives
         {
             get
             {
-                return this.GetValue<bool>(IsPressedProperty);
+                return this.GetValue(IsPressedProperty);
             }
 
             protected internal set

@@ -8,11 +8,9 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class Grid : Panel
     {
-        public static readonly IDependencyProperty ColumnProperty = DependencyProperty<int, Grid>.RegisterAttached(
-            "Column", new PropertyMetadata(0));
+        public static readonly Property<int, Grid> ColumnProperty = Property<int, Grid>.Register("Column", 0);
 
-        public static readonly IDependencyProperty RowProperty = DependencyProperty<int, Grid>.RegisterAttached(
-            "Row", new PropertyMetadata(0));
+        public static readonly Property<int, Grid> RowProperty = Property<int, Grid>.Register("Row", 0);
 
         private readonly IList<ColumnDefinition> columnDefinitions = new List<ColumnDefinition>();
 
@@ -55,7 +53,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 throw new ArgumentNullException("dependencyObject");
             }
 
-            return dependencyObject.GetValue<int>(ColumnProperty);
+            return dependencyObject.GetValue(ColumnProperty);
         }
 
         public static int GetRow(IDependencyObject dependencyObject)
@@ -65,7 +63,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 throw new ArgumentNullException("dependencyObject");
             }
 
-            return dependencyObject.GetValue<int>(RowProperty);
+            return dependencyObject.GetValue(RowProperty);
         }
 
         public static void SetColumn(IDependencyObject dependencyObject, int value)

@@ -31,11 +31,9 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return
-                    this.GetValue<GridLength>(
-                        this.definitionType == DefinitionType.Column
-                            ? ColumnDefinition.WidthProperty
-                            : RowDefinition.HeightProperty);
+                return this.definitionType == DefinitionType.Column
+                           ? this.GetValue(ColumnDefinition.WidthProperty)
+                           : this.GetValue(RowDefinition.HeightProperty);
             }
         }
 
@@ -43,11 +41,9 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return
-                    this.GetValue<double>(
-                        this.definitionType == DefinitionType.Column
-                            ? ColumnDefinition.MaxWidthProperty
-                            : RowDefinition.MaxHeightProperty);
+                return this.definitionType == DefinitionType.Column
+                           ? this.GetValue(ColumnDefinition.MaxWidthProperty)
+                           : this.GetValue(RowDefinition.MaxHeightProperty);
             }
         }
 
@@ -55,11 +51,9 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return
-                    this.GetValue<double>(
-                        this.definitionType == DefinitionType.Column
-                            ? ColumnDefinition.MinWidthProperty
-                            : RowDefinition.MinHeightProperty);
+                return this.definitionType == DefinitionType.Column
+                           ? this.GetValue(ColumnDefinition.MinWidthProperty)
+                           : this.GetValue(RowDefinition.MinHeightProperty);
             }
         }
 

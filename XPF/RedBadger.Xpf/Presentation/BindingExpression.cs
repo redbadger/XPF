@@ -1,4 +1,4 @@
-namespace RedBadger.Xpf.Presentation
+/*namespace RedBadger.Xpf.Presentation
 {
     using System;
     using System.Globalization;
@@ -7,7 +7,7 @@ namespace RedBadger.Xpf.Presentation
 
     public class BindingExpression
     {
-        private readonly IDependencyProperty dependencyProperty;
+        private readonly IProperty dependencyProperty;
 
         private readonly FrameworkElement frameworkElement;
 
@@ -15,7 +15,7 @@ namespace RedBadger.Xpf.Presentation
 
         private PropertyChangedNotifier propertyChangedNotifier;
 
-        public BindingExpression(DependencyObject uiElement, IDependencyProperty dependencyProperty)
+        public BindingExpression(DependencyObject uiElement, IProperty dependencyProperty)
         {
             if (uiElement == null)
             {
@@ -94,13 +94,13 @@ namespace RedBadger.Xpf.Presentation
 
         public class BindingFrameworkElement : FrameworkElement
         {
-            public static readonly IDependencyProperty DependencyProperty;
+            public static readonly IProperty DependencyProperty;
 
             private static readonly Guid defaultValue = Guid.NewGuid();
 
             private readonly DependencyObject targetDependencyObject;
 
-            private readonly IDependencyProperty targetDependencyProperty;
+            private readonly IProperty targetDependencyProperty;
 
             static BindingFrameworkElement()
             {
@@ -110,13 +110,13 @@ namespace RedBadger.Xpf.Presentation
             }
 
             public BindingFrameworkElement(
-                DependencyObject targetDependencyObject, IDependencyProperty targetDependencyProperty)
+                DependencyObject targetDependencyObject, IProperty targetDependencyProperty)
             {
                 this.targetDependencyObject = targetDependencyObject;
                 this.targetDependencyProperty = targetDependencyProperty;
             }
 
-            public static void SetValue(DependencyObject dependencyObject, IDependencyProperty property, object value)
+            public static void SetValue(DependencyObject dependencyObject, IProperty property, object value)
             {
                 if (value != null && !property.PropertyType.IsAssignableFrom(value.GetType()))
                 {
@@ -157,4 +157,4 @@ namespace RedBadger.Xpf.Presentation
     public class FrameworkElement : UIElement
     {
     }
-}
+}*/

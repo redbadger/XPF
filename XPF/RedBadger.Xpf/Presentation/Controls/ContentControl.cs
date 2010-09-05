@@ -7,15 +7,15 @@ namespace RedBadger.Xpf.Presentation.Controls
     /// </summary>
     public class ContentControl : Control
     {
-        public static readonly IDependencyProperty ContentProperty =
-            DependencyProperty<IElement, ContentControl>.Register(
-                "Content", new PropertyMetadata(null, ContentPropertyChangedCallback));
+        public static readonly Property<IElement, ContentControl> ContentProperty =
+            Property<IElement, ContentControl>.Register(
+                "Content", null, ContentPropertyChangedCallback);
 
         public IElement Content
         {
             get
             {
-                return this.GetValue<IElement>(ContentProperty);
+                return this.GetValue(ContentProperty);
             }
 
             set
@@ -63,25 +63,21 @@ namespace RedBadger.Xpf.Presentation.Controls
         }
 
         private static void ContentPropertyChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+            ContentControl contentControl, PropertyChangedEventArgs<IElement, ContentControl> args)
         {
-            var oldContent = args.OldValue as IElement;
-            var newContent = args.NewValue as IElement;
-            var contentControl = (ContentControl)dependencyObject;
-
             contentControl.InvalidateMeasure();
 
-            if (oldContent != null)
+            if (args.OldValue != null)
             {
-                oldContent.VisualParent = null;
+                args.OldValue.VisualParent = null;
             }
 
-            if (newContent != null)
+            if (args.NewValue != null)
             {
-                newContent.VisualParent = contentControl;
+                args.NewValue.VisualParent = contentControl;
             }
 
-            contentControl.OnContentChanged(oldContent, newContent);
+            contentControl.OnContentChanged(args.OldValue, args.NewValue);
         }
     }
 }

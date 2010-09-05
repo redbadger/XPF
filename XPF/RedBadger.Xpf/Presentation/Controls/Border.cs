@@ -8,25 +8,21 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class Border : UIElement
     {
-        public static readonly IDependencyProperty BackgroundProperty =
-            DependencyProperty<Brush, Border>.Register("Background", new PropertyMetadata(null));
+        public static readonly Property<Brush, Border> BackgroundProperty =
+            Property<Brush, Border>.Register("Background", null);
 
-        public static readonly IDependencyProperty BorderBrushProperty =
-            DependencyProperty<Brush, Border>.Register(
-                "BorderBrush", new PropertyMetadata(null, (o, args) => ((IElement)o).InvalidateArrange()));
+        public static readonly Property<Brush, Border> BorderBrushProperty =
+            Property<Brush, Border>.Register("BorderBrush", null, PropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly IDependencyProperty BorderThicknessProperty =
-            DependencyProperty<Thickness, Border>.Register(
-                "BorderThickness", 
-                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
+        public static readonly Property<Thickness, Border> BorderThicknessProperty =
+            Property<Thickness, Border>.Register(
+                "BorderThickness", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly IDependencyProperty ChildProperty = DependencyProperty<IElement, Border>.Register(
-            "Child", new PropertyMetadata(null, ChildPropertyChangedCallback));
+        public static readonly Property<IElement, Border> ChildProperty = Property<IElement, Border>.Register(
+            "Child", null, ChildPropertyChangedCallback);
 
-        public static readonly IDependencyProperty PaddingProperty =
-            DependencyProperty<Thickness, Border>.Register(
-                "Padding", 
-                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
+        public static readonly Property<Thickness, Border> PaddingProperty =
+            Property<Thickness, Border>.Register("Padding", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
 
         private readonly IList<Rect> borders = new List<Rect>();
 
@@ -36,7 +32,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return this.GetValue<Brush>(BackgroundProperty);
+                return this.GetValue(BackgroundProperty);
             }
 
             set
@@ -49,7 +45,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return this.GetValue<Brush>(BorderBrushProperty);
+                return this.GetValue(BorderBrushProperty);
             }
 
             set
@@ -62,7 +58,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return this.GetValue<Thickness>(BorderThicknessProperty);
+                return this.GetValue(BorderThicknessProperty);
             }
 
             set
@@ -75,7 +71,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return this.GetValue<IElement>(ChildProperty);
+                return this.GetValue(ChildProperty);
             }
 
             set
@@ -88,7 +84,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return this.GetValue<Thickness>(PaddingProperty);
+                return this.GetValue(PaddingProperty);
             }
 
             set
@@ -163,23 +159,18 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private static void ChildPropertyChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        private static void ChildPropertyChangedCallback(Border border, PropertyChangedEventArgs<IElement, Border> args)
         {
-            var oldChild = args.OldValue as IElement;
-            var newChild = args.NewValue as IElement;
-            var border = (IElement)dependencyObject;
-
             border.InvalidateMeasure();
 
-            if (oldChild != null)
+            if (args.OldValue != null)
             {
-                oldChild.VisualParent = null;
+                args.OldValue.VisualParent = null;
             }
 
-            if (newChild != null)
+            if (args.NewValue != null)
             {
-                newChild.VisualParent = border;
+                args.NewValue.VisualParent = border;
             }
         }
 

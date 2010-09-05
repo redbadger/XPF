@@ -10,6 +10,8 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.SizeSpecs
 {
+    using System;
+
     using Machine.Specifications;
 
     using RedBadger.Xpf.Presentation;
@@ -41,10 +43,10 @@ namespace RedBadger.Xpf.Specs.Presentation.SizeSpecs
 
         private Because of = () => size = Size.Empty;
 
-        private It should_return_an_instance_with_zeroed_values = () =>
+        private It should_return_an_instance_with_negative_infinity_values = () =>
             {
-                size.Width.ShouldEqual(0.0);
-                size.Height.ShouldEqual(0.0);
+                size.Width.ShouldEqual(Double.NegativeInfinity);
+                size.Height.ShouldEqual(Double.NegativeInfinity);
             };
     }
 }

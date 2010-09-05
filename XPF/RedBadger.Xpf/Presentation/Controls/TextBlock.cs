@@ -9,23 +9,22 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class TextBlock : UIElement
     {
-        public static readonly IDependencyProperty BackgroundProperty =
-            DependencyProperty<Brush, TextBlock>.Register("Background", new PropertyMetadata(null));
+        public static readonly Property<Brush, TextBlock> BackgroundProperty =
+            Property<Brush, TextBlock>.Register("Background", null);
 
-        public static readonly IDependencyProperty ForegroundProperty =
-            DependencyProperty<Brush, TextBlock>.Register("Foreground", new PropertyMetadata(null));
+        public static readonly Property<Brush, TextBlock> ForegroundProperty =
+            Property<Brush, TextBlock>.Register("Foreground", null);
 
-        public static readonly IDependencyProperty PaddingProperty =
-            DependencyProperty<Thickness, TextBlock>.Register(
-                "Padding", 
-                new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
+        public static readonly Property<Thickness, TextBlock> PaddingProperty =
+            Property<Thickness, TextBlock>.Register(
+                "Padding", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly IDependencyProperty TextProperty = DependencyProperty<string, TextBlock>.Register(
-            "Text", new PropertyMetadata(string.Empty, TextPropertyChangedCallback));
+        public static readonly Property<string, TextBlock> TextProperty = Property<string, TextBlock>.Register(
+            "Text", string.Empty, PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly IDependencyProperty WrappingProperty =
-            DependencyProperty<TextWrapping, TextBlock>.Register(
-                "Wrapping", new PropertyMetadata(TextWrapping.NoWrap, TextWrappingPropertyChangedCallback));
+        public static readonly Property<TextWrapping, TextBlock> WrappingProperty =
+            Property<TextWrapping, TextBlock>.Register(
+                "Wrapping", TextWrapping.NoWrap, PropertyChangedCallbacks.InvalidateMeasure);
 
         private static readonly Regex whiteSpaceRegEx = new Regex(@"\s+", RegexOptions.Compiled);
 
@@ -42,7 +41,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return this.GetValue<Brush>(BackgroundProperty);
+                return this.GetValue(BackgroundProperty);
             }
 
             set
@@ -55,7 +54,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return this.GetValue<Brush>(ForegroundProperty);
+                return this.GetValue(ForegroundProperty);
             }
 
             set
@@ -68,7 +67,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return this.GetValue<Thickness>(PaddingProperty);
+                return this.GetValue(PaddingProperty);
             }
 
             set
@@ -81,7 +80,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return this.GetValue<string>(TextProperty);
+                return this.GetValue(TextProperty);
             }
 
             set
@@ -94,7 +93,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return this.GetValue<TextWrapping>(WrappingProperty);
+                return this.GetValue(WrappingProperty);
             }
 
             set
@@ -136,38 +135,6 @@ namespace RedBadger.Xpf.Presentation.Controls
                 this.formattedText, 
                 new Vector(this.Padding.Left, this.Padding.Top), 
                 this.Foreground ?? new SolidColorBrush(Colors.Black));
-        }
-
-        private static void TextPropertyChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var newValue = (string)args.NewValue;
-            var oldValue = (string)args.OldValue;
-
-            if (newValue != oldValue)
-            {
-                var uiElement = dependencyObject as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.InvalidateMeasure();
-                }
-            }
-        }
-
-        private static void TextWrappingPropertyChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var newValue = (TextWrapping)args.NewValue;
-            var oldValue = (TextWrapping)args.OldValue;
-
-            if (newValue != oldValue)
-            {
-                var uiElement = dependencyObject as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.InvalidateMeasure();
-                }
-            }
         }
 
         private static string WrapText(ISpriteFont font, string text, double maxLineWidth)

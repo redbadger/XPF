@@ -2,12 +2,8 @@ namespace RedBadger.Xpf.Presentation
 {
     public interface IDependencyObject
     {
-        void ClearBinding(IDependencyProperty dependencyProperty);
+        TProperty GetValue<TProperty, TOwner>(Property<TProperty, TOwner> property) where TOwner : class;
 
-        T GetValue<T>(IDependencyProperty dependencyProperty);
-
-        BindingExpression SetBinding(IDependencyProperty dependencyProperty, Binding binding);
-
-        void SetValue<T>(IDependencyProperty dependencyProperty, T value);
+        void SetValue<TProperty, TOwner>(Property<TProperty, TOwner> property, TProperty value) where TOwner : class;
     }
 }

@@ -2,17 +2,19 @@ namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
 
+    using RedBadger.Xpf.Internal;
+
     public class StackPanel : Panel
     {
-        public static readonly IDependencyProperty OrientationProperty =
-            DependencyProperty<Orientation, StackPanel>.Register(
-                "Orientation", new PropertyMetadata(Orientation.Vertical, OrientationPropertyChangedCallback));
+        public static readonly Property<Orientation, StackPanel> OrientationProperty =
+            Property<Orientation, StackPanel>.Register(
+                "Orientation", Orientation.Vertical, PropertyChangedCallbacks.InvalidateMeasure);
 
         public Orientation Orientation
         {
             get
             {
-                return this.GetValue<Orientation>(OrientationProperty);
+                return this.GetValue(OrientationProperty);
             }
 
             set
@@ -88,22 +90,6 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
 
             return size;
-        }
-
-        private static void OrientationPropertyChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var newValue = (Orientation)args.NewValue;
-            var oldValue = (Orientation)args.OldValue;
-
-            if (newValue != oldValue)
-            {
-                var uiElement = dependencyObject as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.InvalidateMeasure();
-                }
-            }
         }
     }
 }

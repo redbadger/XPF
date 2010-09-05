@@ -1,4 +1,4 @@
-namespace RedBadger.Xpf.Presentation
+/*namespace RedBadger.Xpf.Presentation
 {
     using System;
 
@@ -6,9 +6,9 @@ namespace RedBadger.Xpf.Presentation
 
     internal sealed class PropertyChangedNotifier : DependencyObject, IDisposable
     {
-        public static readonly IDependencyProperty ValueProperty =
-            DependencyProperty<object, PropertyChangedNotifier>.Register(
-                "Value", new PropertyMetadata(null, OnPropertyChanged));
+        public static readonly Property<object, PropertyChangedNotifier> ValueProperty =
+            Property<object, PropertyChangedNotifier>.Register(
+                "Value", null, OnPropertyChanged);
 
         private readonly BindingExpression bindingExpression;
 
@@ -16,7 +16,7 @@ namespace RedBadger.Xpf.Presentation
 
         private bool isDisposed;
 
-        public PropertyChangedNotifier(DependencyObject propertySource, IDependencyProperty property)
+        public PropertyChangedNotifier(DependencyObject propertySource, IProperty property)
         {
             if (null == propertySource)
             {
@@ -42,7 +42,7 @@ namespace RedBadger.Xpf.Presentation
             this.Dispose(false);
         }
 
-        public event EventHandler<PropertyChangedEventArgs> ValueChanged;
+        public event EventHandler<PropertyChangedEventArgs<TProperty, TOwner>> ValueChanged;
 
         public DependencyObject PropertySource
         {
@@ -63,7 +63,7 @@ namespace RedBadger.Xpf.Presentation
         {
             get
             {
-                return this.GetValue<object>(ValueProperty);
+                return this.GetValue(ValueProperty);
             }
 
             set
@@ -78,12 +78,12 @@ namespace RedBadger.Xpf.Presentation
             GC.SuppressFinalize(this);
         }
 
-        private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnPropertyChanged(DependencyObject d, PropertyChangedEventArgs<TProperty, TOwner> e)
         {
             var notifier = (PropertyChangedNotifier)d;
             if (null != notifier.ValueChanged)
             {
-                notifier.ValueChanged(notifier, new PropertyChangedEventArgs(e.OldValue, e.NewValue));
+                notifier.ValueChanged(notifier, new PropertyChangedEventArgs<TProperty, TOwner>(, e.OldValue, e.NewValue));
             }
         }
 
@@ -100,4 +100,4 @@ namespace RedBadger.Xpf.Presentation
             }
         }
     }
-}
+}*/

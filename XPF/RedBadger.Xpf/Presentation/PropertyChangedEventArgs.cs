@@ -1,17 +1,43 @@
 ﻿namespace RedBadger.Xpf.Presentation
 {
-    using System;
-
-    internal class PropertyChangedEventArgs : EventArgs
+    public class PropertyChangedEventArgs<TProperty, TOwner> where TOwner : class
     {
-        public PropertyChangedEventArgs(object oldValue, object newValue)
+        private readonly Property<TProperty, TOwner> dependencyProperty;
+
+        private readonly TProperty newValue;
+
+        private readonly TProperty oldValue;
+
+        public PropertyChangedEventArgs(
+            Property<TProperty, TOwner> dependencyProperty, TProperty oldValue, TProperty newValue)
         {
-            this.OldValue = oldValue;
-            this.NewValue = newValue;
+            this.dependencyProperty = dependencyProperty;
+            this.oldValue = oldValue;
+            this.newValue = newValue;
         }
 
-        public object NewValue { get; private set; }
+        public Property<TProperty, TOwner> DependencyProperty
+        {
+            get
+            {
+                return this.dependencyProperty;
+            }
+        }
 
-        public object OldValue { get; private set; }
+        public TProperty NewValue
+        {
+            get
+            {
+                return this.newValue;
+            }
+        }
+
+        public TProperty OldValue
+        {
+            get
+            {
+                return this.oldValue;
+            }
+        }
     }
 }

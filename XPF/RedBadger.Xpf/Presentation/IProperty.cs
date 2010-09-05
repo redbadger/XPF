@@ -2,13 +2,11 @@
 {
     using System;
 
-    public interface IDependencyProperty
+    public interface IProperty
     {
         object DefaultValue { get; }
 
         string Name { get; }
-
-        Action<DependencyObject, DependencyPropertyChangedEventArgs> PropertyChangedCallback { get; }
 
         Type PropertyType { get; }
     }

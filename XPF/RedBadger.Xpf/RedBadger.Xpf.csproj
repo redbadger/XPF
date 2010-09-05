@@ -97,7 +97,7 @@
     <Compile Include="License.cs" />
     <Compile Include="Presentation\Binding.cs" />
     <Compile Include="Presentation\DependencyPropertyStore.cs" />
-    <Compile Include="Presentation\IDependencyProperty.cs" />
+    <Compile Include="Presentation\IProperty.cs" />
     <Compile Include="Presentation\Point.cs" />
     <Compile Include="Presentation\Data\BindingMode.cs" />
     <Compile Include="Presentation\Media\Color.cs" />
@@ -112,7 +112,7 @@
     <Compile Include="Presentation\Controls\ItemsControl.cs" />
     <Compile Include="Presentation\Controls\Primitives\IScrollInfo.cs" />
     <Compile Include="Presentation\DependencyObject.cs" />
-    <Compile Include="Presentation\DependencyPropertyChangedEventArgs.cs" />
+    <Compile Include="Presentation\PropertyChangedEventArgs.cs" />
     <Compile Include="Presentation\ITemplatedList.cs" />
     <Compile Include="Presentation\Controls\ScrollContentPresenter.cs" />
     <Compile Include="Presentation\Controls\ScrollViewer.cs" />
@@ -124,7 +124,7 @@
     <Compile Include="Internal\RectExtensions.cs" />
     <Compile Include="Internal\SizeExtensions.cs" />
     <Compile Include="Internal\ThicknessExtensions.cs" />
-    <Compile Include="Internal\UIElementPropertyChangedCallbacks.cs" />
+    <Compile Include="Internal\PropertyChangedCallbacks.cs" />
     <Compile Include="Internal\VectorExtensions.cs" />
     <Compile Include="Presentation\BindingExpression.cs" />
     <Compile Include="Presentation\Controls\Button.cs" />
@@ -138,7 +138,6 @@
     <Compile Include="Presentation\Input\GestureType.cs" />
     <Compile Include="Presentation\Input\Gesture.cs" />
     <Compile Include="Presentation\Media\Stretch.cs" />
-    <Compile Include="Presentation\PropertyMetadata.cs" />
     <Compile Include="Presentation\Vector.cs" />
     <Compile Include="Presentation\IRootElement.cs" />
     <Compile Include="Presentation\Media\Brush.cs" />
@@ -168,8 +167,7 @@
     <Compile Include="Presentation\Controls\TextBlock.cs" />
     <Compile Include="Presentation\IElement.cs" />
     <Compile Include="Presentation\VirtualizingElementCollection.cs" />
-    <Compile Include="Presentation\DependencyProperty.cs" />
-    <Compile Include="Presentation\PropertyChangedEventArgs.cs" />
+    <Compile Include="Presentation\Property.cs" />
     <Compile Include="Presentation\PropertyChangedNotifier.cs" />
     <Compile Include="Presentation\TextWrapping.cs" />
     <Compile Include="Presentation\UIElement.cs" />
