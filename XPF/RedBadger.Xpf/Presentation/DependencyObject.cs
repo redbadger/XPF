@@ -48,7 +48,7 @@ namespace RedBadger.Xpf.Presentation
             else
             {
                 TProperty oldValue = this.GetValue(property);
-                if (!ArePropertyValuesEqual(property, oldValue, value))
+                if (!Equals(value, oldValue))
                 {
                     this.propertyValues[property] = value;
                     if (property.ChangedCallback != null)
@@ -58,17 +58,6 @@ namespace RedBadger.Xpf.Presentation
                     }
                 }
             }
-        }
-
-        private static bool ArePropertyValuesEqual<TProperty, TOwner>(
-            Property<TProperty, TOwner> property, TProperty value1, TProperty value2) where TOwner : class
-        {
-            if (!property.PropertyType.IsValueType && property.PropertyType != typeof(string))
-            {
-                return ReferenceEquals(value1, value2);
-            }
-
-            return Equals(value1, value2);
         }
     }
 }

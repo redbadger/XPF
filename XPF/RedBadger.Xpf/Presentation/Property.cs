@@ -3,12 +3,14 @@
     using System;
     using System.Collections.Generic;
 
+    using RedBadger.Xpf.Internal;
+
     public class Property<TProperty, TOwner> : IProperty where TOwner : class
     {
         public static readonly object UnsetValue = new object();
 
-        private static readonly DependencyPropertyStore<TProperty, TOwner> registeredProperties =
-            new DependencyPropertyStore<TProperty, TOwner>();
+        private static readonly PropertyStore<TProperty, TOwner> registeredProperties =
+            new PropertyStore<TProperty, TOwner>();
 
         private readonly string name;
 
@@ -42,14 +44,6 @@
             get
             {
                 return this.name;
-            }
-        }
-
-        public Type PropertyType
-        {
-            get
-            {
-                return typeof(TProperty);
             }
         }
 

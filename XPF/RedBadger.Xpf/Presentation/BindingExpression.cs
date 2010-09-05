@@ -35,7 +35,7 @@
 
         public void ClearBinding()
         {
-            this.frameworkElement.ClearValue(BindingFrameworkElement.DependencyProperty);
+            this.frameworkElement.ClearValue(BindingFrameworkElement.Property);
 
             if (this.propertyChangedNotifier != null)
             {
@@ -60,7 +60,7 @@
 
 #endif
             this.frameworkElement.DataContext = this.GetDefaultDataContext();
-            this.frameworkElement.SetBinding(BindingFrameworkElement.DependencyProperty, binding);
+            this.frameworkElement.SetBinding(BindingFrameworkElement.Property, binding);
 
             if (this.propertyChangedNotifier != null)
             {
@@ -89,12 +89,12 @@
             object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             BindingFrameworkElement.SetValue(
-                this.frameworkElement, BindingFrameworkElement.DependencyProperty, propertyChangedEventArgs.NewValue);
+                this.frameworkElement, BindingFrameworkElement.Property, propertyChangedEventArgs.NewValue);
         }
 
         public class BindingFrameworkElement : FrameworkElement
         {
-            public static readonly IProperty DependencyProperty;
+            public static readonly IProperty Property;
 
             private static readonly Guid defaultValue = Guid.NewGuid();
 
@@ -104,7 +104,7 @@
 
             static BindingFrameworkElement()
             {
-                DependencyProperty = DependencyProperty<object, BindingFrameworkElement>.Register(
+                Property = Property<object, BindingFrameworkElement>.Register(
                     "Dependency", 
                     new PropertyMetadata(defaultValue, DependencyPropertyChangedCallback));
             }

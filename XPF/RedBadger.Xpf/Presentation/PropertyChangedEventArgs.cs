@@ -2,25 +2,25 @@
 {
     public class PropertyChangedEventArgs<TProperty, TOwner> where TOwner : class
     {
-        private readonly Property<TProperty, TOwner> dependencyProperty;
+        private readonly Property<TProperty, TOwner> property;
 
         private readonly TProperty newValue;
 
         private readonly TProperty oldValue;
 
         public PropertyChangedEventArgs(
-            Property<TProperty, TOwner> dependencyProperty, TProperty oldValue, TProperty newValue)
+            Property<TProperty, TOwner> property, TProperty oldValue, TProperty newValue)
         {
-            this.dependencyProperty = dependencyProperty;
+            this.property = property;
             this.oldValue = oldValue;
             this.newValue = newValue;
         }
 
-        public Property<TProperty, TOwner> DependencyProperty
+        public Property<TProperty, TOwner> Property
         {
             get
             {
-                return this.dependencyProperty;
+                return this.property;
             }
         }
 
