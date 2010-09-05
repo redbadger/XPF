@@ -5,22 +5,28 @@
 
     using RedBadger.Xpf.Internal;
 
-    public class Property<TProperty, TOwner> : IProperty where TOwner : class
+    public class Property<TProperty, TOwner> : IProperty
+        where TOwner : class
     {
         public static readonly object UnsetValue = new object();
 
         private static readonly PropertyStore<TProperty, TOwner> registeredProperties =
             new PropertyStore<TProperty, TOwner>();
 
+        private readonly Action<TOwner, PropertyChangedEventArgs<TProperty, TOwner>> changedCallback;
+
+        private readonly TProperty defaultValue;
+
         private readonly string name;
 
-        private Action<TOwner, PropertyChangedEventArgs<TProperty, TOwner>> changedCallback;
-
-        private object defaultValue;
-
-        private Property(string name)
+        private Property(
+            string name, 
+            TProperty defaultValue, 
+            Action<TOwner, PropertyChangedEventArgs<TProperty, TOwner>> changedCallback)
         {
             this.name = name;
+            this.defaultValue = defaultValue;
+            this.changedCallback = changedCallback;
         }
 
         public Action<TOwner, PropertyChangedEventArgs<TProperty, TOwner>> ChangedCallback
@@ -31,7 +37,7 @@
             }
         }
 
-        public object DefaultValue
+        public TProperty DefaultValue
         {
             get
             {
@@ -54,18 +60,15 @@
 
         public static Property<TProperty, TOwner> Register(
             string name, 
-            TProperty defaultValue,
+            TProperty defaultValue, 
             Action<TOwner, PropertyChangedEventArgs<TProperty, TOwner>> changedCallback)
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("name cannot be an empty string");
+                throw new ArgumentException("name cannot be null or an empty string");
             }
 
-            var property = new Property<TProperty, TOwner>(name)
-                {
-                   defaultValue = defaultValue, changedCallback = changedCallback 
-                };
+            var property = new Property<TProperty, TOwner>(name, defaultValue, changedCallback);
 
             StoreRegisteredProperty(name, property);
             return property;
