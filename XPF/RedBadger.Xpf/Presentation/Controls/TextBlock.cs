@@ -1,5 +1,6 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
+    using System;
     using System.Text;
     using System.Text.RegularExpressions;
 

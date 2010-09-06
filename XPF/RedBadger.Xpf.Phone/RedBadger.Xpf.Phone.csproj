@@ -196,9 +196,6 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\VirtualizingStackPanel.cs">
       <Link>Presentation\Controls\VirtualizingStackPanel.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\BindingMode.cs">
-      <Link>Presentation\Data\BindingMode.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\DependencyObject.cs">
       <Link>Presentation\DependencyObject.cs</Link>
     </Compile>

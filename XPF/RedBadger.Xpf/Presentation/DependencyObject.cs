@@ -10,8 +10,19 @@ namespace RedBadger.Xpf.Presentation
 
     public class DependencyObject : IDependencyObject
     {
-        private readonly Dictionary<IProperty, ISubject<object>> propertyValues =
-            new Dictionary<IProperty, ISubject<object>>();
+        private readonly Dictionary<IProperty, object> propertyValues = new Dictionary<IProperty, object>();
+
+        public IDisposable Bind<TProperty, TOwner>(
+            Property<TProperty, TOwner> property, IObservable<TProperty> observable) where TOwner : class
+        {
+            return observable.Subscribe(this.GetSubject(property));
+        }
+
+        public IDisposable Bind<TProperty, TOwner>(
+            Property<TProperty, TOwner> property, IObserver<TProperty> observable) where TOwner : class
+        {
+            return this.GetSubject(property).Subscribe(observable);
+        }
 
         public void ClearValue(IProperty property)
         {
@@ -30,7 +41,7 @@ namespace RedBadger.Xpf.Presentation
                 throw new ArgumentNullException("property");
             }
 
-            return (TProperty)this.GetSubject(property).First();
+            return this.GetSubject(property).First();
         }
 
         public void SetValue<TProperty, TOwner>(Property<TProperty, TOwner> property, TProperty newValue)
@@ -50,21 +61,21 @@ namespace RedBadger.Xpf.Presentation
             }
             else if (!Equals(newValue, oldValue))
             {
-                this.propertyValues[property].OnNext(newValue);
+                this.GetSubject(property).OnNext(newValue);
                 this.RaiseChanged(property, oldValue, newValue);
             }
         }
 
-        private ISubject<object> GetSubject<TProperty, TOwner>(Property<TProperty, TOwner> property)
+        private ISubject<TProperty> GetSubject<TProperty, TOwner>(Property<TProperty, TOwner> property)
             where TOwner : class
         {
-            ISubject<object> value;
+            object value;
             if (this.propertyValues.TryGetValue(property, out value))
             {
-                return value;
+                return (ISubject<TProperty>)value;
             }
 
-            var subject = new BehaviorSubject<object>(property.DefaultValue);
+            var subject = new BehaviorSubject<TProperty>(property.DefaultValue);
             this.propertyValues.Add(property, subject);
             return subject;
         }

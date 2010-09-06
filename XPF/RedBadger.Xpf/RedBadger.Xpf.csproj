@@ -98,7 +98,6 @@
     <Compile Include="Internal\PropertyStore.cs" />
     <Compile Include="Presentation\IProperty.cs" />
     <Compile Include="Presentation\Point.cs" />
-    <Compile Include="Presentation\Data\BindingMode.cs" />
     <Compile Include="Presentation\Media\Color.cs" />
     <Compile Include="Presentation\Media\Colors.cs" />
     <Compile Include="Presentation\PropertyChange.cs" />
