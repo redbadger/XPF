@@ -255,7 +255,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private static void ResolveStar(IEnumerable<DefinitionBase> definitions, double availableSize)
+        private static void ResolveStar(IEnumerable<DefinitionBase> definitions, double availableLength)
         {
             double occupiedSpace = 0.0;
 
@@ -295,11 +295,11 @@ namespace RedBadger.Xpf.Presentation.Controls
             {
                 stars.Sort(compareDefinitionByFinalLengths);
 
-                double cumulativeMeasureSize = 0.0;
+                double cumulativeDivisor = 0.0;
                 foreach (DefinitionBase definition in Enumerable.Reverse(stars))
                 {
-                    cumulativeMeasureSize += definition.AvailableLength;
-                    definition.FinalLength = cumulativeMeasureSize;
+                    cumulativeDivisor += definition.AvailableLength;
+                    definition.FinalLength = cumulativeDivisor;
                 }
 
                 foreach (DefinitionBase definition in stars)
@@ -312,7 +312,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                     }
                     else
                     {
-                        size = Math.Max(availableSize - occupiedSpace, 0.0) * (divisor / definition.FinalLength);
+                        size = (availableLength - occupiedSpace).EnsurePositive() * (divisor / definition.FinalLength);
                         size = Math.Max(definition.MinLength, Math.Min(size, definition.UserMaxLength));
                     }
 
@@ -417,7 +417,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private void MeasureCell(int cellIndex, bool shouldForceInfinityHeight)
+        private void MeasureCell(int cellIndex, bool shouldChildBeMeasuredWithInfiniteHeight)
         {
             IElement child = this.Children[cellIndex];
             if (child != null)
@@ -428,7 +428,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                                ? double.PositiveInfinity
                                : this.widthDefinitions[cell.ColumnIndex].AvailableLength;
 
-                double y = cell.HeightType == GridUnitType.Auto || shouldForceInfinityHeight
+                double y = cell.HeightType == GridUnitType.Auto || shouldChildBeMeasuredWithInfiniteHeight
                                ? double.PositiveInfinity
                                : this.heightDefinitions[cell.RowIndex].AvailableLength;
 
@@ -444,8 +444,8 @@ namespace RedBadger.Xpf.Presentation.Controls
 
                 do
                 {
-                    bool shouldForceInfinityHeight = skipUpdateMinHeight;
-                    this.MeasureCell(currentCellIndex, shouldForceInfinityHeight);
+                    bool shouldChildBeMeasuredWithInfiniteHeight = skipUpdateMinHeight;
+                    this.MeasureCell(currentCellIndex, shouldChildBeMeasuredWithInfiniteHeight);
 
                     Cell cell = this.cells[currentCellIndex];
                     IElement child = this.Children[currentCellIndex];
@@ -453,15 +453,13 @@ namespace RedBadger.Xpf.Presentation.Controls
                     if (!skipUpdateMinWidth)
                     {
                         DefinitionBase widthDefinition = this.widthDefinitions[cell.ColumnIndex];
-                        widthDefinition.UpdateMinLength(
-                            Math.Min(child.DesiredSize.Width, widthDefinition.UserMaxLength));
+                        widthDefinition.UpdateMinLength(Math.Min(child.DesiredSize.Width, widthDefinition.UserMaxLength));
                     }
 
                     if (!skipUpdateMinHeight)
                     {
                         DefinitionBase heightDefinition = this.heightDefinitions[cell.RowIndex];
-                        heightDefinition.UpdateMinLength(
-                            Math.Min(child.DesiredSize.Height, heightDefinition.UserMaxLength));
+                        heightDefinition.UpdateMinLength(Math.Min(child.DesiredSize.Height, heightDefinition.UserMaxLength));
                     }
 
                     currentCellIndex = cell.Next;
