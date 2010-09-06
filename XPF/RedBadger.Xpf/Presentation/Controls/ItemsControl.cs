@@ -115,50 +115,41 @@
             return child.DesiredSize;
         }
 
-        private static void ItemsPanelChanged(
-            ItemsControl itemsControl, PropertyChangedEventArgs<Panel, ItemsControl> args)
+        private static void ItemsPanelChanged(PropertyChange<Panel, ItemsControl> change)
         {
-            itemsControl.ItemsPanelChanged(args.NewValue);
-        }
-
-        private static void ItemsSourceChanged(
-            ItemsControl itemsControl, PropertyChangedEventArgs<IEnumerable, ItemsControl> args)
-        {
-            itemsControl.ItemsSourceChanged(args.OldValue, args.NewValue);
-        }
-
-        private void ItemsPanelChanged(Panel newPanel)
-        {
-            if (!(newPanel.Children is ITemplatedList<IElement>))
+            Panel panel = change.NewValue;
+            if (!(panel.Children is ITemplatedList<IElement>))
             {
                 throw new NotSupportedException(
                     "ItemsControl requires a panel whose Children collection implements ITemplatedList<IElement>");
             }
 
-            this.InvalidateMeasure();
-
-            this.scrollViewer.Content = newPanel;
+            ItemsControl itemsControl = change.Owner;
+            itemsControl.InvalidateMeasure();
+            itemsControl.scrollViewer.Content = panel;
         }
 
-        private void ItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
+        private static void ItemsSourceChanged(PropertyChange<IEnumerable, ItemsControl> change)
         {
-            if (oldValue is INotifyCollectionChanged)
+            ItemsControl itemsControl = change.Owner;
+            if (change.OldValue is INotifyCollectionChanged)
             {
-                this.changingItems.Dispose();
+                itemsControl.changingItems.Dispose();
             }
 
-            var observableCollection = newValue as INotifyCollectionChanged;
+            var observableCollection = change.NewValue as INotifyCollectionChanged;
             if (observableCollection != null)
             {
-                this.changingItems =
+                itemsControl.changingItems =
                     Observable.FromEvent<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
                         handler => new NotifyCollectionChangedEventHandler(handler), 
                         handler => observableCollection.CollectionChanged += handler, 
-                        handler => observableCollection.CollectionChanged -= handler).Subscribe(this.OnNextItemChange);
+                        handler => observableCollection.CollectionChanged -= handler).Subscribe(
+                            itemsControl.OnNextItemChange);
             }
 
-            this.isItemsSourceNew = true;
-            this.InvalidateMeasure();
+            itemsControl.isItemsSourceNew = true;
+            itemsControl.InvalidateMeasure();
         }
 
         private void OnNextItemChange(IEvent<NotifyCollectionChangedEventArgs> eventData)

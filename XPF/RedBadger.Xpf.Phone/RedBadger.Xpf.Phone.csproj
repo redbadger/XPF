@@ -133,12 +133,6 @@
     <Compile Include="..\RedBadger.Xpf\License.cs">
       <Link>License.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Binding.cs">
-      <Link>Presentation\Binding.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\BindingExpression.cs">
-      <Link>Presentation\BindingExpression.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Border.cs">
       <Link>Presentation\Controls\Border.cs</Link>
     </Compile>
@@ -304,11 +298,8 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Property.cs">
       <Link>Presentation\Property.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChangedEventArgs.cs">
-      <Link>Presentation\PropertyChangedEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChangedNotifier.cs">
-      <Link>Presentation\PropertyChangedNotifier.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChange.cs">
+      <Link>Presentation\PropertyChange.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Rect.cs">
       <Link>Presentation\Rect.cs</Link>

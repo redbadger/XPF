@@ -4,6 +4,6 @@ namespace RedBadger.Xpf.Presentation
     {
         TProperty GetValue<TProperty, TOwner>(Property<TProperty, TOwner> property) where TOwner : class;
 
-        void SetValue<TProperty, TOwner>(Property<TProperty, TOwner> property, TProperty value) where TOwner : class;
+        void SetValue<TProperty, TOwner>(Property<TProperty, TOwner> property, TProperty newValue) where TOwner : class;
     }
 }

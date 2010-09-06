@@ -13,7 +13,7 @@
         private static readonly PropertyStore<TProperty, TOwner> registeredProperties =
             new PropertyStore<TProperty, TOwner>();
 
-        private readonly Action<TOwner, PropertyChangedEventArgs<TProperty, TOwner>> changedCallback;
+        private readonly Action<PropertyChange<TProperty, TOwner>> changedCallback;
 
         private readonly TProperty defaultValue;
 
@@ -21,15 +21,15 @@
 
         private Property(
             string name, 
-            TProperty defaultValue, 
-            Action<TOwner, PropertyChangedEventArgs<TProperty, TOwner>> changedCallback)
+            TProperty defaultValue,
+            Action<PropertyChange<TProperty, TOwner>> changedCallback)
         {
             this.name = name;
             this.defaultValue = defaultValue;
             this.changedCallback = changedCallback;
         }
 
-        public Action<TOwner, PropertyChangedEventArgs<TProperty, TOwner>> ChangedCallback
+        public Action<PropertyChange<TProperty, TOwner>> ChangedCallback
         {
             get
             {
@@ -61,7 +61,7 @@
         public static Property<TProperty, TOwner> Register(
             string name, 
             TProperty defaultValue, 
-            Action<TOwner, PropertyChangedEventArgs<TProperty, TOwner>> changedCallback)
+            Action<PropertyChange<TProperty, TOwner>> changedCallback)
         {
             if (string.IsNullOrEmpty(name))
             {

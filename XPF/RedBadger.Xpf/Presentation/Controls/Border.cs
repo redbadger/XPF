@@ -159,18 +159,20 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private static void ChildPropertyChangedCallback(Border border, PropertyChangedEventArgs<IElement, Border> args)
+        private static void ChildPropertyChangedCallback(PropertyChange<IElement, Border> change)
         {
-            border.InvalidateMeasure();
+            change.Owner.InvalidateMeasure();
 
-            if (args.OldValue != null)
+            IElement oldChild = change.OldValue;
+            if (oldChild != null)
             {
-                args.OldValue.VisualParent = null;
+                oldChild.VisualParent = null;
             }
 
-            if (args.NewValue != null)
+            IElement newChild = change.NewValue;
+            if (newChild != null)
             {
-                args.NewValue.VisualParent = border;
+                newChild.VisualParent = change.Owner;
             }
         }
 

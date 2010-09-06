@@ -95,13 +95,13 @@
     <Compile Include="Internal\Controls\ScrollData.cs" />
     <Compile Include="Internal\IEnumerableExtensions.cs" />
     <Compile Include="License.cs" />
-    <Compile Include="Presentation\Binding.cs" />
     <Compile Include="Internal\PropertyStore.cs" />
     <Compile Include="Presentation\IProperty.cs" />
     <Compile Include="Presentation\Point.cs" />
     <Compile Include="Presentation\Data\BindingMode.cs" />
     <Compile Include="Presentation\Media\Color.cs" />
     <Compile Include="Presentation\Media\Colors.cs" />
+    <Compile Include="Presentation\PropertyChange.cs" />
     <Compile Include="Presentation\Size.cs" />
     <Compile Include="Presentation\Rect.cs" />
     <Compile Include="Presentation\Thickness.cs" />
@@ -112,7 +112,6 @@
     <Compile Include="Presentation\Controls\ItemsControl.cs" />
     <Compile Include="Presentation\Controls\Primitives\IScrollInfo.cs" />
     <Compile Include="Presentation\DependencyObject.cs" />
-    <Compile Include="Presentation\PropertyChangedEventArgs.cs" />
     <Compile Include="Presentation\ITemplatedList.cs" />
     <Compile Include="Presentation\Controls\ScrollContentPresenter.cs" />
     <Compile Include="Presentation\Controls\ScrollViewer.cs" />
@@ -126,7 +125,6 @@
     <Compile Include="Internal\ThicknessExtensions.cs" />
     <Compile Include="Internal\PropertyChangedCallbacks.cs" />
     <Compile Include="Internal\VectorExtensions.cs" />
-    <Compile Include="Presentation\BindingExpression.cs" />
     <Compile Include="Presentation\Controls\Button.cs" />
     <Compile Include="Presentation\Controls\Primitives\ButtonBase.cs" />
     <Compile Include="Presentation\Controls\Control.cs" />
@@ -168,7 +166,6 @@
     <Compile Include="Presentation\IElement.cs" />
     <Compile Include="Presentation\VirtualizingElementCollection.cs" />
     <Compile Include="Presentation\Property.cs" />
-    <Compile Include="Presentation\PropertyChangedNotifier.cs" />
     <Compile Include="Presentation\TextWrapping.cs" />
     <Compile Include="Presentation\UIElement.cs" />
     <Compile Include="Presentation\ElementCollection.cs" />

@@ -63,21 +63,23 @@ namespace RedBadger.Xpf.Presentation.Controls
         }
 
         private static void ContentPropertyChangedCallback(
-            ContentControl contentControl, PropertyChangedEventArgs<IElement, ContentControl> args)
+            PropertyChange<IElement, ContentControl> change)
         {
-            contentControl.InvalidateMeasure();
+            change.Owner.InvalidateMeasure();
 
-            if (args.OldValue != null)
+            var oldContent = change.OldValue;
+            if (oldContent != null)
             {
-                args.OldValue.VisualParent = null;
+                oldContent.VisualParent = null;
             }
 
-            if (args.NewValue != null)
+            var newContent = change.NewValue;
+            if (newContent != null)
             {
-                args.NewValue.VisualParent = contentControl;
+                newContent.VisualParent = change.Owner;
             }
 
-            contentControl.OnContentChanged(args.OldValue, args.NewValue);
+            change.Owner.OnContentChanged(oldContent, newContent);
         }
     }
 }
