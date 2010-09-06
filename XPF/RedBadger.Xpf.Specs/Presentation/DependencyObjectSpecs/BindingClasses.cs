@@ -15,30 +15,71 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
     using System.Collections.Generic;
     using System.Linq;
 
+    using RedBadger.Xpf.Presentation.Data;
     using RedBadger.Xpf.Presentation.Media;
 
-    public class BorderBrushBindingObject
+    public class BorderBrushBindingObject : INotifyPropertyChanged
     {
-        private readonly BehaviorSubject<SolidColorBrush> brushProperty = new BehaviorSubject<SolidColorBrush>(null);
+        private SolidColorBrush brush;
+
+        public event EventHandler<PropertyChangedEventArgs> PropertyChanged;
 
         public SolidColorBrush Brush
         {
             get
             {
-                return this.brushProperty.First();
+                return this.brush;
             }
 
             set
             {
-                this.brushProperty.OnNext(value);
+                if (this.brush != value)
+                {
+                    this.brush = value;
+                    this.OnPropertyChanged("Brush");
+                }
             }
         }
 
-        public BehaviorSubject<SolidColorBrush> BrushProperty
+        public void OnPropertyChanged(string propertyName)
+        {
+            EventHandler<PropertyChangedEventArgs> handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+
+    public class BindingObjectWithDouble : INotifyPropertyChanged
+    {
+        private double value;
+
+        public event EventHandler<PropertyChangedEventArgs> PropertyChanged;
+
+        public double Value
         {
             get
             {
-                return this.brushProperty;
+                return this.value;
+            }
+
+            set
+            {
+                if (this.value != value)
+                {
+                    this.value = value;
+                    this.OnPropertyChanged("Value");
+                }
+            }
+        }
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            EventHandler<PropertyChangedEventArgs> handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }
@@ -60,7 +101,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
             }
         }
 
-        public IObservable<double> MyWidthOut
+        public IObserver<double> MyWidthIn
         {
             get
             {
@@ -68,7 +109,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
             }
         }
 
-        public IObserver<double> MyWidthIn
+        public IObservable<double> MyWidthOut
         {
             get
             {

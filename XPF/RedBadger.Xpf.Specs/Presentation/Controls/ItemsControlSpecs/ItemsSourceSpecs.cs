@@ -12,6 +12,7 @@
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
@@ -23,6 +24,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Data;
     using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
@@ -134,7 +136,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private Establish context = () =>
             {
                 items = new ObservableCollection<Color>();
-                ItemsControl.Bind(ItemsControl.ItemsSourceProperty, Observable.Return(items));
+                ItemsControl.Bind(ItemsControl.ItemsSourceProperty, new BehaviorSubject<IEnumerable>(items).AsObservable());
 
                 ItemsControl.ItemTemplate = () => new TextBlock(new Mock<ISpriteFont>().Object);
 

@@ -21,6 +21,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Data;
     using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
@@ -28,43 +29,107 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
     [Subject(typeof(DependencyObject), "Binding")]
     public class when_a_binding_is_one_way_from_source
     {
-        private const double ExpectedWidth = 100;
+        private static readonly SolidColorBrush expectedBrush = new SolidColorBrush(Colors.Brown);
 
-        private static MyBindingObject myBindingObject;
+        private static Border border;
 
-        private static TextBlock textBlock;
+        private static BorderBrushBindingObject myBindingObject;
 
         private Establish context = () =>
             {
-                myBindingObject = new MyBindingObject();
-                textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
-                textBlock.Bind(UIElement.WidthProperty, myBindingObject.MyWidthOut);
+                myBindingObject = new BorderBrushBindingObject();
+                border = new Border();
+
+                border.Bind(Border.BorderBrushProperty, BindingFactory.CreateOneWay(myBindingObject, o => o.Brush));
             };
 
-        private Because of = () => myBindingObject.MyWidth = ExpectedWidth;
+        private Because of = () => myBindingObject.Brush = expectedBrush;
 
-        private It should_have_the_correct_width = () => textBlock.Width.ShouldEqual(ExpectedWidth);
+        private It should_have_the_correct_brush = () => border.BorderBrush.ShouldEqual(expectedBrush);
     }
 
     [Subject(typeof(DependencyObject), "Binding")]
     public class when_a_binding_is_one_way_to_source
     {
-        private const double ExpectedWidth = 100;
+        private const double ExpectedWidth = 100d;
 
-        private static MyBindingObject myBindingObject;
+        private static Border border;
 
-        private static TextBlock textBlock;
+        private static BindingObjectWithDouble myBindingObject;
 
         private Establish context = () =>
             {
-                myBindingObject = new MyBindingObject();
-                textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
-                textBlock.Bind(UIElement.WidthProperty, myBindingObject.MyWidthIn);
+                myBindingObject = new BindingObjectWithDouble();
+                border = new Border();
+
+                var binding = BindingFactory.CreateOneWayToSource(myBindingObject, o => o.Value);
+                border.Bind(UIElement.WidthProperty, binding);
             };
 
-        private Because of = () => textBlock.Width = ExpectedWidth;
+        private Because of = () => border.Width = ExpectedWidth;
 
-        private It should_update_the_bound_property = () => myBindingObject.MyWidth.ShouldEqual(ExpectedWidth);
+        private It should_have_the_correct_width = () => myBindingObject.Value.ShouldEqual(ExpectedWidth);
+    }
+
+    [Subject(typeof(DependencyObject), "Binding")]
+    public class when_a_binding_is_one_way_to_source_and_property_types_are_covariant
+    {
+        private static readonly SolidColorBrush expectedBrush = new SolidColorBrush(Colors.Brown);
+
+        private static Border border;
+
+        private static BorderBrushBindingObject myBindingObject;
+
+        private Establish context = () =>
+            {
+                myBindingObject = new BorderBrushBindingObject();
+                border = new Border();
+
+                var binding = BindingFactory.CreateOneWayToSource<BorderBrushBindingObject, Brush>(myBindingObject, o => o.Brush);
+                border.Bind(Border.BorderBrushProperty, binding);
+            };
+
+        private Because of = () => border.BorderBrush = expectedBrush;
+
+        private It should_have_the_correct_brush = () => myBindingObject.Brush.ShouldEqual(expectedBrush);
+    }
+
+    [Subject(typeof(DependencyObject), "Binding")]
+    public class when_a_binding_is_two_way
+    {
+        private static readonly SolidColorBrush expectedSourceBrush = new SolidColorBrush(Colors.Blue);
+
+        private static readonly SolidColorBrush expectedTargetBrush = new SolidColorBrush(Colors.Red);
+
+        private static Brush actualBrushOnTarget;
+
+        private static SolidColorBrush actualBrushOnSource;
+
+        private static Border border;
+
+        private static BorderBrushBindingObject myBindingObject;
+
+        private Establish context = () =>
+            {
+                myBindingObject = new BorderBrushBindingObject();
+                border = new Border();
+
+                var binding = BindingFactory.CreateTwoWay<BorderBrushBindingObject, Brush>(myBindingObject, o => o.Brush);
+                border.Bind(Border.BorderBrushProperty, binding);
+            };
+
+        private Because of = () =>
+            {
+                border.BorderBrush = expectedTargetBrush;
+                actualBrushOnSource = myBindingObject.Brush;
+
+                myBindingObject.Brush = expectedSourceBrush;
+                actualBrushOnTarget = border.BorderBrush;
+            };
+
+        private It should_have_the_correct_brush_on_the_source = () => actualBrushOnSource.ShouldEqual(expectedTargetBrush);
+
+        private It should_have_the_correct_brush_on_the_target = () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
     }
 
     [Subject(typeof(DependencyObject), "Binding")]
@@ -125,26 +190,6 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
         private It should_not_use_the_binding = () => textBlock.Width.ShouldEqual(ExpectedWidth);
     }
 
-    [Subject(typeof(DependencyObject), "Type Conversion")]
-    public class when_the_property_value_is_of_a_type_derived_from_the_property_type
-    {
-        private static Border border;
-
-        private static BorderBrushBindingObject myBindingObject;
-
-        private Establish context = () =>
-            {
-                myBindingObject = new BorderBrushBindingObject();
-                border = new Border();
-                border.Bind(Border.BorderBrushProperty, myBindingObject.BrushProperty);
-            };
-
-        private Because of = () => myBindingObject.Brush = new SolidColorBrush(Colors.Blue);
-
-        private It should_bind_the_value_of_the_derived_type =
-            () => border.BorderBrush.ShouldBeOfType<SolidColorBrush>();
-    }
-/*
 
     [Subject(typeof(DependencyObject), "Object Binding")]
     public class when_binding_to_an_object
@@ -158,5 +203,4 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
         private It should_convert_the_value_to_a_string_representation =
             () => textBlock.Text.ShouldEqual(Colors.Red.ToString());
     }
-*/
 }

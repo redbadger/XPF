@@ -4,6 +4,9 @@ namespace RedBadger.Xpf.Presentation
     using System.Collections.Generic;
     using System.Linq;
 
+    using RedBadger.Xpf.Internal;
+    using RedBadger.Xpf.Presentation.Data;
+
 #if WINDOWS_PHONE
     using Microsoft.Phone.Reactive;
 #endif
@@ -12,16 +15,35 @@ namespace RedBadger.Xpf.Presentation
     {
         private readonly Dictionary<IProperty, object> propertyValues = new Dictionary<IProperty, object>();
 
-        public IDisposable Bind<TProperty, TOwner>(
-            Property<TProperty, TOwner> property, IObservable<TProperty> observable) where TOwner : class
+        public IDisposable Bind<TProperty, TOwner>(Property<TProperty, TOwner> property, IObservable<TProperty> source)
+            where TOwner : class
         {
-            return observable.Subscribe(this.GetSubject(property));
+            return source.Subscribe(this.GetSubject(property));
+        }
+
+        public IDisposable Bind<TProperty, TOwner>(Property<TProperty, TOwner> property, IObserver<TProperty> source)
+            where TOwner : class
+        {
+            return this.GetSubject(property).Subscribe(source);
         }
 
         public IDisposable Bind<TProperty, TOwner>(
-            Property<TProperty, TOwner> property, IObserver<TProperty> observable) where TOwner : class
+            Property<TProperty, TOwner> property, TwoWayBinding<TProperty> source) where TOwner : class
         {
-            return this.GetSubject(property).Subscribe(observable);
+            return this.Bind(property, source.Observable, source.Observer);
+        }
+
+        public IDisposable Bind<TProperty, TOwner>(
+            Property<TProperty, TOwner> property, 
+            IObservable<TProperty> sourceToTarget, 
+            IObserver<TProperty> targetToSource) where TOwner : class
+        {
+            var target = this.GetSubject(property);
+
+            var firstDisposable = sourceToTarget.Subscribe(target);
+            var secondDisposable = target.Subscribe(targetToSource);
+
+            return new DualDisposable(firstDisposable, secondDisposable);
         }
 
         public void ClearValue(IProperty property)
@@ -52,7 +74,8 @@ namespace RedBadger.Xpf.Presentation
                 throw new ArgumentNullException("property");
             }
 
-            TProperty oldValue = this.GetValue(property);
+            var subject = this.GetSubject(property);
+            TProperty oldValue = subject.First();
 
             if (Equals(newValue, Property<TProperty, TOwner>.UnsetValue))
             {
@@ -61,7 +84,7 @@ namespace RedBadger.Xpf.Presentation
             }
             else if (!Equals(newValue, oldValue))
             {
-                this.GetSubject(property).OnNext(newValue);
+                subject.OnNext(newValue);
                 this.RaiseChanged(property, oldValue, newValue);
             }
         }

@@ -53,28 +53,28 @@
             }
         }
 
-        public static Property<TProperty, TOwner> Register(string name, TProperty defaultValue)
+        public static Property<TProperty, TOwner> Register(string propertyName, TProperty defaultValue)
         {
-            return Register(name, defaultValue, null);
+            return Register(propertyName, defaultValue, null);
         }
 
         public static Property<TProperty, TOwner> Register(
-            string name, 
+            string propertyName, 
             TProperty defaultValue, 
             Action<PropertyChange<TProperty, TOwner>> changedCallback)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(propertyName))
             {
-                throw new ArgumentException("name cannot be null or an empty string");
+                throw new ArgumentException("propertyName cannot be null or an empty string");
             }
 
-            var property = new Property<TProperty, TOwner>(name, defaultValue, changedCallback);
+            var property = new Property<TProperty, TOwner>(propertyName, defaultValue, changedCallback);
 
-            StoreRegisteredProperty(name, property);
+            StoreRegisteredProperty(propertyName, property);
             return property;
         }
 
-        internal static void StoreRegisteredProperty(string name, Property<TProperty, TOwner> property)
+        internal static void StoreRegisteredProperty(string propertyName, Property<TProperty, TOwner> property)
         {
             Dictionary<string, Property<TProperty, TOwner>> properties;
             if (!registeredProperties.TryGetValue(typeof(TOwner), out properties))
@@ -83,7 +83,7 @@
                 registeredProperties[typeof(TOwner)] = properties;
             }
 
-            properties[name] = property;
+            properties[propertyName] = property;
         }
     }
 }

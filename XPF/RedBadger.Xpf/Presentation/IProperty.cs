@@ -2,6 +2,5 @@
 {
     public interface IProperty
     {
-        string Name { get; }
     }
 }

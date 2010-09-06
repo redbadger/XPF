@@ -106,6 +106,9 @@
     <Compile Include="..\RedBadger.Xpf\Internal\DoubleExtensions.cs">
       <Link>Internal\DoubleExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\DualDisposable.cs">
+      <Link>Internal\DualDisposable.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\IEnumerableExtensions.cs">
       <Link>Internal\IEnumerableExtensions.cs</Link>
     </Compile>
@@ -195,6 +198,18 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\VirtualizingStackPanel.cs">
       <Link>Presentation\Controls\VirtualizingStackPanel.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\BindingFactory.cs">
+      <Link>Presentation\Data\BindingFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\INotifyPropertyChanged.cs">
+      <Link>Presentation\Data\INotifyPropertyChanged.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\PropertyChangedEventArgs.cs">
+      <Link>Presentation\Data\PropertyChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\TwoWayBinding.cs">
+      <Link>Presentation\Data\TwoWayBinding.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\DependencyObject.cs">
       <Link>Presentation\DependencyObject.cs</Link>
