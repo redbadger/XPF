@@ -1,17 +1,14 @@
 namespace Xpf.Samples.S01GettingStarted
 {
-    using System.Windows;
-    using System.Windows.Media;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
-    using Color = System.Windows.Media.Color;
-    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
+    using Color = RedBadger.Xpf.Presentation.Media.Color;
 
     public class MyComponent : DrawableGameComponent
     {
@@ -52,16 +49,16 @@ namespace Xpf.Samples.S01GettingStarted
 
             var grid = new Grid
                 {
-                    Background = new SolidColorBrush(Colors.White),
+                    Background = new SolidColorBrush(Colors.White), 
                     RowDefinitions =
                         {
-                            new RowDefinition(),
-                            new RowDefinition { Height = new GridLength(320) },
-                            new RowDefinition()
-                        },
+                           new RowDefinition(),
+                           new RowDefinition { Height = new GridLength(320) },
+                           new RowDefinition() 
+                        }, 
                     ColumnDefinitions =
                         {
-                            new ColumnDefinition { Width = new GridLength(200) },
+                            new ColumnDefinition { Width = new GridLength(200) }, 
                             new ColumnDefinition { Width = new GridLength(200) }
                         }
                 };
@@ -70,8 +67,8 @@ namespace Xpf.Samples.S01GettingStarted
 
             var topLeftBorder = new Border
                 {
-                    BorderBrush = new SolidColorBrush(Colors.Black),
-                    BorderThickness = new Thickness(0, 0, 0, 2),
+                    BorderBrush = new SolidColorBrush(Colors.Black), 
+                    BorderThickness = new Thickness(0, 0, 0, 2), 
                     Child = new TextBlock(spriteFontAdapter)
                         {
                             Text = "Score: 5483",
@@ -83,42 +80,43 @@ namespace Xpf.Samples.S01GettingStarted
             grid.Children.Add(topLeftBorder);
 
             var topRightBorder = new Border
-            {
-                BorderBrush = new SolidColorBrush(Colors.Black),
-                BorderThickness = new Thickness(0, 0, 0, 2),
-                Child = new TextBlock(spriteFontAdapter)
                 {
-                    Text = "High: 9999",
-                    Margin = new Thickness(10),
-                    HorizontalAlignment = HorizontalAlignment.Right
-                }
-            };
+                    BorderBrush = new SolidColorBrush(Colors.Black),
+                    BorderThickness = new Thickness(0, 0, 0, 2),
+                    Child = new TextBlock(spriteFontAdapter)
+                            {
+                                Text = "High: 9999",
+                                Margin = new Thickness(10),
+                                HorizontalAlignment = HorizontalAlignment.Right
+                            }
+                };
             Grid.SetRow(topRightBorder, 0);
             Grid.SetColumn(topRightBorder, 1);
             grid.Children.Add(topRightBorder);
 
             var bottomLeftBorder = new Border
-            {
-                BorderBrush = new SolidColorBrush(Colors.Black),
-                BorderThickness = new Thickness(0, 2, 0, 0),
-                Background = new SolidColorBrush(Color.FromRgb(106, 168, 79)),
-                Child = new TextBlock(spriteFontAdapter)
                 {
-                    Text = "Lives: 3",
-                    Margin = new Thickness(10),
-                    VerticalAlignment = VerticalAlignment.Bottom
-                }
-            };
+                    BorderBrush = new SolidColorBrush(Colors.Black), 
+                    BorderThickness = new Thickness(0, 2, 0, 0), 
+                    Background = new SolidColorBrush(new Color(106, 168, 79, 1)), 
+                    Child =
+                        new TextBlock(spriteFontAdapter)
+                            {
+                                Text = "Lives: 3", 
+                                Margin = new Thickness(10), 
+                                VerticalAlignment = VerticalAlignment.Bottom
+                            }
+                };
             Grid.SetRow(bottomLeftBorder, 2);
             Grid.SetColumn(bottomLeftBorder, 0);
             grid.Children.Add(bottomLeftBorder);
 
             var bottomRightBorder = new Border
-            {
-                BorderBrush = new SolidColorBrush(Colors.Black),
-                BorderThickness = new Thickness(0, 2, 0, 0),
-                Background = new SolidColorBrush(Color.FromRgb(106, 168, 79))
-            };
+                {
+                    BorderBrush = new SolidColorBrush(Colors.Black), 
+                    BorderThickness = new Thickness(0, 2, 0, 0), 
+                    Background = new SolidColorBrush(new Color(106, 168, 79, 1))
+                };
             Grid.SetRow(bottomRightBorder, 2);
             Grid.SetColumn(bottomRightBorder, 1);
             grid.Children.Add(bottomRightBorder);
