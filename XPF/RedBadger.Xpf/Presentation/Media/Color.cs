@@ -70,6 +70,11 @@ namespace RedBadger.Xpf.Presentation.Media
             }
         }
 
+        public override string ToString()
+        {
+            return string.Format("R: {3}, G: {2}, B: {1}, A: {0}", this.R, this.G, this.B, this.A);
+        }
+
         public bool Equals(Color other)
         {
             return other.A == this.A && other.B == this.B && other.G == this.G && other.R == this.R;

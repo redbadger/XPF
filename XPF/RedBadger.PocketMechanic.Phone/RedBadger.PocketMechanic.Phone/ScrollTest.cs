@@ -11,6 +11,7 @@ namespace RedBadger.PocketMechanic.Phone
     using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Data;
     using RedBadger.Xpf.Presentation.Media;
 
     using Color = RedBadger.Xpf.Presentation.Media.Color;
@@ -65,9 +66,7 @@ namespace RedBadger.PocketMechanic.Phone
                                     Margin = new Thickness(0, 0, 0, 50), 
                                     Background = new SolidColorBrush(GetRandomColor(this.random))
                                 };
-/*
-                            textBlock.SetBinding(TextBlock.TextProperty, new Binding());
-*/
+                            textBlock.Bind(TextBlock.TextProperty);
                             return textBlock;
                         }, 
                     ItemsSource = items

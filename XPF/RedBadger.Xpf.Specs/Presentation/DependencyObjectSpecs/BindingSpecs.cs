@@ -12,7 +12,6 @@
 namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
 {
     using System;
-    using System.Linq;
 
     using Machine.Specifications;
 
@@ -62,7 +61,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
                 myBindingObject = new BindingObjectWithDouble();
                 border = new Border();
 
-                var binding = BindingFactory.CreateOneWayToSource(myBindingObject, o => o.Value);
+                IObserver<double> binding = BindingFactory.CreateOneWayToSource(myBindingObject, o => o.Value);
                 border.Bind(UIElement.WidthProperty, binding);
             };
 
@@ -85,7 +84,8 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
                 myBindingObject = new BorderBrushBindingObject();
                 border = new Border();
 
-                var binding = BindingFactory.CreateOneWayToSource<BorderBrushBindingObject, Brush>(myBindingObject, o => o.Brush);
+                IObserver<Brush> binding =
+                    BindingFactory.CreateOneWayToSource<BorderBrushBindingObject, Brush>(myBindingObject, o => o.Brush);
                 border.Bind(Border.BorderBrushProperty, binding);
             };
 
@@ -101,9 +101,9 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
 
         private static readonly SolidColorBrush expectedTargetBrush = new SolidColorBrush(Colors.Red);
 
-        private static Brush actualBrushOnTarget;
-
         private static SolidColorBrush actualBrushOnSource;
+
+        private static Brush actualBrushOnTarget;
 
         private static Border border;
 
@@ -114,7 +114,8 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
                 myBindingObject = new BorderBrushBindingObject();
                 border = new Border();
 
-                var binding = BindingFactory.CreateTwoWay<BorderBrushBindingObject, Brush>(myBindingObject, o => o.Brush);
+                TwoWayBinding<Brush> binding =
+                    BindingFactory.CreateTwoWay<BorderBrushBindingObject, Brush>(myBindingObject, o => o.Brush);
                 border.Bind(Border.BorderBrushProperty, binding);
             };
 
@@ -127,9 +128,11 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
                 actualBrushOnTarget = border.BorderBrush;
             };
 
-        private It should_have_the_correct_brush_on_the_source = () => actualBrushOnSource.ShouldEqual(expectedTargetBrush);
+        private It should_have_the_correct_brush_on_the_source =
+            () => actualBrushOnSource.ShouldEqual(expectedTargetBrush);
 
-        private It should_have_the_correct_brush_on_the_target = () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
+        private It should_have_the_correct_brush_on_the_target =
+            () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
     }
 
     [Subject(typeof(DependencyObject), "Binding")]
@@ -190,17 +193,50 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
         private It should_not_use_the_binding = () => textBlock.Width.ShouldEqual(ExpectedWidth);
     }
 
-
     [Subject(typeof(DependencyObject), "Object Binding")]
     public class when_binding_to_an_object
     {
+        private const string ExpectedValue = "Value";
+
         private static TextBlock textBlock;
 
         private Establish context = () => textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
 
-        private Because of = () => textBlock.Bind(TextBlock.TextProperty, Observable.Return(Colors.Red.ToString()));
+        private Because of = () => textBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay(ExpectedValue));
 
-        private It should_convert_the_value_to_a_string_representation =
-            () => textBlock.Text.ShouldEqual(Colors.Red.ToString());
+        private It should_bind_to_the_object = () => textBlock.Text.ShouldEqual(ExpectedValue);
+    }
+
+    [Subject(typeof(DependencyObject), "Object Binding")]
+    public class when_binding_to_the_data_context
+    {
+        private const string ExpectedValue = "Value";
+
+        private static TextBlock textBlock;
+
+        private Establish context =
+            () => textBlock = new TextBlock(new Mock<ISpriteFont>().Object) { DataContext = ExpectedValue };
+
+        private Because of = () => textBlock.Bind(TextBlock.TextProperty);
+
+        private It should_bind_to_the_object = () => textBlock.Text.ShouldEqual(ExpectedValue);
+    }
+
+    [Subject(typeof(UIElement), "Data Context")]
+    public class when_the_data_context_is_set_after_the_binding_has_been_created
+    {
+        private const string ExpectedValue = "Value";
+
+        private static TextBlock textBlock;
+
+        private Establish context = () =>
+            {
+                textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
+                textBlock.Bind(TextBlock.TextProperty);
+            };
+
+        private Because of = () => textBlock.DataContext = ExpectedValue;
+
+        private It should_bind_to_the_data_context = () => textBlock.Text.ShouldEqual(ExpectedValue);
     }
 }

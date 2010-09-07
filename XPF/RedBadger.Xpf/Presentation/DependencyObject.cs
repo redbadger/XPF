@@ -15,35 +15,108 @@ namespace RedBadger.Xpf.Presentation
     {
         private readonly Dictionary<IProperty, object> propertyValues = new Dictionary<IProperty, object>();
 
-        public IDisposable Bind<TProperty, TOwner>(Property<TProperty, TOwner> property, IObservable<TProperty> source)
-            where TOwner : class
+        /// <summary>
+        ///     Bind One Way (from the Source).
+        /// </summary>
+        /// <typeparam name = "TProperty">Target <see cref = "Property{TProperty,TOwner}">Property</see> <see cref = "Type">Type</see></typeparam>
+        /// <typeparam name = "TOwner">Target <see cref = "Property{TProperty,TOwner}">Property</see>'s owner <see cref = "Type">Type</see></typeparam>
+        /// <param name = "property">Target <see cref = "Property{TProperty,TOwner}">Property</see></param>
+        /// <param name = "fromSource"><see cref = "IObservable{T}">IObservable</see> of updates from the source</param>
+        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
+        public IDisposable Bind<TProperty, TOwner>(
+            Property<TProperty, TOwner> property, IObservable<TProperty> fromSource) where TOwner : class
         {
-            return source.Subscribe(this.GetSubject(property));
+            ISubject<TProperty> target = this.GetSubject(property);
+            TProperty oldValue = target.First();
+            IDisposable sourceSubscription = fromSource.Subscribe(target);
+            TProperty newValue = target.First();
+
+            if (!Equals(newValue, oldValue))
+            {
+                this.RaiseChanged(property, oldValue, newValue);
+            }
+
+            return sourceSubscription;
         }
 
-        public IDisposable Bind<TProperty, TOwner>(Property<TProperty, TOwner> property, IObserver<TProperty> source)
-            where TOwner : class
+        /// <summary>
+        ///     Bind One Way (to the Target's DataContext).
+        /// </summary>
+        /// <typeparam name = "TProperty">Target <see cref = "Property{TProperty,TOwner}">Property</see> <see cref = "Type">Type</see></typeparam>
+        /// <typeparam name = "TOwner">Target <see cref = "Property{TProperty,TOwner}">Property</see>'s owner <see cref = "Type">Type</see></typeparam>
+        /// <param name = "property">Target <see cref = "Property{TProperty,TOwner}">Property</see></param>
+        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
+        public IDisposable Bind<TProperty, TOwner>(Property<TProperty, TOwner> property) where TOwner : class
+            where TProperty : class
         {
-            return this.GetSubject(property).Subscribe(source);
+            ISubject<TProperty> target = this.GetSubject(property);
+            TProperty oldValue = target.First();
+            IDisposable sourceSubscription = BindingFactory.CreateOneWay(this.GetDataContext<TProperty>()).Subscribe(target);
+            TProperty newValue = target.First();
+
+            if (!Equals(newValue, oldValue))
+            {
+                this.RaiseChanged(property, oldValue, newValue);
+            }
+
+            return sourceSubscription;
         }
 
+        /// <summary>
+        ///     Bind One Way (to the Source).
+        /// </summary>
+        /// <typeparam name = "TProperty">Target <see cref = "Property{TProperty,TOwner}">Property</see> <see cref = "Type">Type</see></typeparam>
+        /// <typeparam name = "TOwner">Target <see cref = "Property{TProperty,TOwner}">Property</see>'s owner <see cref = "Type">Type</see></typeparam>
+        /// <param name = "property">Target <see cref = "Property{TProperty,TOwner}">Property</see></param>
+        /// <param name = "toSource"><see cref = "IObserver{T}">IObserver</see> of updates for the Source</param>
+        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
+        public IDisposable Bind<TProperty, TOwner>(Property<TProperty, TOwner> property, IObserver<TProperty> toSource)
+            where TOwner : class
+        {
+            return this.GetSubject(property).Subscribe(toSource);
+        }
+
+        /// <summary>
+        ///     Bind Two Way (from and to the Source)
+        /// </summary>
+        /// <typeparam name = "TProperty">Target <see cref = "Property{TProperty,TOwner}">Property</see> <see cref = "Type">Type</see></typeparam>
+        /// <typeparam name = "TOwner">Target <see cref = "Property{TProperty,TOwner}">Property</see>'s owner <see cref = "Type">Type</see></typeparam>
+        /// <param name = "property">Target <see cref = "Property{TProperty,TOwner}">Property</see></param>
+        /// <param name = "source">A <see cref = "TwoWayBinding{T}">TwoWayBinding</see> containing both an <see cref = "IObservable{T}">IObservable</see> and <see cref = "IObserver{T}">IObserver</see></param>
+        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
         public IDisposable Bind<TProperty, TOwner>(
             Property<TProperty, TOwner> property, TwoWayBinding<TProperty> source) where TOwner : class
         {
             return this.Bind(property, source.Observable, source.Observer);
         }
 
+        /// <summary>
+        ///     Bind Two Way (from and to the Source)
+        /// </summary>
+        /// <typeparam name = "TProperty">Target <see cref = "Property{TProperty,TOwner}">Property</see> <see cref = "Type">Type</see></typeparam>
+        /// <typeparam name = "TOwner">Target <see cref = "Property{TProperty,TOwner}">Property</see>'s owner <see cref = "Type">Type</see></typeparam>
+        /// <param name = "property">Target <see cref = "Property{TProperty,TOwner}">Property</see></param>
+        /// <param name = "fromSource"><see cref = "IObservable{T}">IObservable</see> of updates from the source</param>
+        /// <param name = "toSource"><see cref = "IObserver{T}">IObserver</see> of updates for the Source</param>
+        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
         public IDisposable Bind<TProperty, TOwner>(
-            Property<TProperty, TOwner> property, 
-            IObservable<TProperty> sourceToTarget, 
-            IObserver<TProperty> targetToSource) where TOwner : class
+            Property<TProperty, TOwner> property, IObservable<TProperty> fromSource, IObserver<TProperty> toSource)
+            where TOwner : class
         {
-            var target = this.GetSubject(property);
+            ISubject<TProperty> target = this.GetSubject(property);
 
-            var firstDisposable = sourceToTarget.Subscribe(target);
-            var secondDisposable = target.Subscribe(targetToSource);
+            TProperty oldValue = target.First();
+            IDisposable sourceSubscription = fromSource.Subscribe(target);
+            TProperty newValue = target.First();
 
-            return new DualDisposable(firstDisposable, secondDisposable);
+            if (!Equals(newValue, oldValue))
+            {
+                this.RaiseChanged(property, oldValue, newValue);
+            }
+
+            IDisposable targetSubscription = target.Subscribe(toSource);
+
+            return new DualDisposable(sourceSubscription, targetSubscription);
         }
 
         public void ClearValue(IProperty property)
@@ -74,19 +147,19 @@ namespace RedBadger.Xpf.Presentation
                 throw new ArgumentNullException("property");
             }
 
-            var subject = this.GetSubject(property);
+            ISubject<TProperty> subject = this.GetSubject(property);
             TProperty oldValue = subject.First();
 
-            if (Equals(newValue, Property<TProperty, TOwner>.UnsetValue))
-            {
-                this.ClearValue(property);
-                this.RaiseChanged(property, oldValue, newValue);
-            }
-            else if (!Equals(newValue, oldValue))
+            if (!Equals(newValue, oldValue))
             {
                 subject.OnNext(newValue);
                 this.RaiseChanged(property, oldValue, newValue);
             }
+        }
+
+        protected virtual T GetDataContext<T>() where T : class
+        {
+            return default(T);
         }
 
         private ISubject<TProperty> GetSubject<TProperty, TOwner>(Property<TProperty, TOwner> property)

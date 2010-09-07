@@ -112,6 +112,7 @@
     <Compile Include="Presentation\Controls\PanelSpecs\PanelSpecs.cs" />
     <Compile Include="Presentation\Controls\VirtualizingStackPanelSpecs\VirtualizingStackPanelSpecs.cs" />
     <Compile Include="Presentation\DefinitionBaseSpecs\DefinitionBaseSpecs.cs" />
+    <Compile Include="Presentation\DependencyObjectSpecs\PropertySpecs.cs" />
     <Compile Include="Presentation\ElementCollectionSpecs\Contexts.cs" />
     <Compile Include="Presentation\ElementCollectionSpecs\ITemplatedListSpecs.cs" />
     <Compile Include="Presentation\GridLengthSpecs\GridLengthSpecs.cs" />
@@ -120,12 +121,12 @@
     <Compile Include="Presentation\Media\Imaging\XnaImageSpecs.cs" />
     <Compile Include="Presentation\Media\RendererSpecs\RendererSpecs.cs" />
     <Compile Include="Presentation\ElementCollectionSpecs\ElementCollectionSpecs.cs" />
+    <Compile Include="Presentation\PropertySpecs\PropertySpecs.cs" />
     <Compile Include="Presentation\RectSpecs\RectSpecs.cs" />
     <Compile Include="Presentation\SizeSpecs\SizeSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\ArrangeSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\Contexts.cs" />
-    <Compile Include="Presentation\UIElementSpecs\DataContextSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\MeasureSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\UIElementSpecs.cs" />
     <Compile Include="Presentation\VirtualizingElementCollectionSpecs\VirtualizingElementCollectionSpecs.cs" />

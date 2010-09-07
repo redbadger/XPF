@@ -26,6 +26,11 @@
             return subject.AsObservable();
         }
 
+        public static IObservable<TSource> CreateOneWay<TSource>(TSource source)
+        {
+            return new BehaviorSubject<TSource>(source).AsObservable();
+        }
+
         public static IObserver<TProperty> CreateOneWayToSource<TSource, TProperty>(
             TSource source, Expression<Func<TSource, TProperty>> propertySelector)
         {

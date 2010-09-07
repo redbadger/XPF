@@ -450,6 +450,11 @@
             return finalSize;
         }
 
+        protected override T GetDataContext<T>()
+        {
+            return this.DataContext as T;
+        }
+
         /// <summary>
         ///     When overridden in a derived class, measures the size in layout required for child elements and determines a size for the UIElement-derived class.
         /// </summary>
