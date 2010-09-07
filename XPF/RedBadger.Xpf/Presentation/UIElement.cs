@@ -254,6 +254,32 @@
         /// </remarks>
         internal Vector VisualOffset { get; set; }
 
+        /// <summary>
+        ///     Bind One Way (to the DataContext).
+        /// </summary>
+        /// <typeparam name = "TProperty">Target <see cref = "Property{TProperty,TOwner}">Property</see> <see cref = "Type">Type</see></typeparam>
+        /// <typeparam name = "TOwner">Target <see cref = "Property{TProperty,TOwner}">Property</see>'s owner <see cref = "Type">Type</see></typeparam>
+        /// <param name = "property">Target <see cref = "Property{TProperty,TOwner}">Property</see></param>
+        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
+        public override IDisposable Bind<TProperty, TOwner>(Property<TProperty, TOwner> property)
+        {
+            ISubject<TProperty> target = this.GetSubject(property);
+            IObservable<object> source = this.GetObservable(DataContextProperty);
+
+            TProperty oldValue = target.First();
+
+            IDisposable sourceSubscription = source.Subscribe(o => target.OnNext(o as TProperty));
+
+            TProperty newValue = target.First();
+
+            if (!Equals(newValue, oldValue))
+            {
+                this.RaiseChanged(property, oldValue, newValue);
+            }
+
+            return sourceSubscription;
+        }
+
         public bool CaptureMouse()
         {
             IRootElement rootElement;
@@ -448,11 +474,6 @@
         protected virtual Size ArrangeOverride(Size finalSize)
         {
             return finalSize;
-        }
-
-        protected override T GetDataContext<T>()
-        {
-            return this.DataContext as T;
         }
 
         /// <summary>

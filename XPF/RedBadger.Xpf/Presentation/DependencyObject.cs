@@ -40,26 +40,16 @@ namespace RedBadger.Xpf.Presentation
         }
 
         /// <summary>
-        ///     Bind One Way (to the Target's DataContext).
+        ///     Bind One Way (to a default source eg. the Target's DataContext).
         /// </summary>
         /// <typeparam name = "TProperty">Target <see cref = "Property{TProperty,TOwner}">Property</see> <see cref = "Type">Type</see></typeparam>
         /// <typeparam name = "TOwner">Target <see cref = "Property{TProperty,TOwner}">Property</see>'s owner <see cref = "Type">Type</see></typeparam>
         /// <param name = "property">Target <see cref = "Property{TProperty,TOwner}">Property</see></param>
         /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public IDisposable Bind<TProperty, TOwner>(Property<TProperty, TOwner> property) where TOwner : class
+        public virtual IDisposable Bind<TProperty, TOwner>(Property<TProperty, TOwner> property) where TOwner : class
             where TProperty : class
         {
-            ISubject<TProperty> target = this.GetSubject(property);
-            TProperty oldValue = target.First();
-            IDisposable sourceSubscription = BindingFactory.CreateOneWay(this.GetDataContext<TProperty>()).Subscribe(target);
-            TProperty newValue = target.First();
-
-            if (!Equals(newValue, oldValue))
-            {
-                this.RaiseChanged(property, oldValue, newValue);
-            }
-
-            return sourceSubscription;
+            throw new NotImplementedException("Derrived classes should provide a default implementation.");
         }
 
         /// <summary>
@@ -129,6 +119,12 @@ namespace RedBadger.Xpf.Presentation
             this.propertyValues.Remove(property);
         }
 
+        public IObservable<TProperty> GetObservable<TProperty, TOwner>(Property<TProperty, TOwner> property)
+            where TOwner : class
+        {
+            return this.GetSubject(property).AsObservable();
+        }
+
         public TProperty GetValue<TProperty, TOwner>(Property<TProperty, TOwner> property) where TOwner : class
         {
             if (property == null)
@@ -157,12 +153,13 @@ namespace RedBadger.Xpf.Presentation
             }
         }
 
-        protected virtual T GetDataContext<T>() where T : class
+        protected internal IObserver<TProperty> GetObserver<TProperty, TOwner>(Property<TProperty, TOwner> property)
+            where TOwner : class
         {
-            return default(T);
+            return this.GetSubject(property).AsObserver();
         }
 
-        private ISubject<TProperty> GetSubject<TProperty, TOwner>(Property<TProperty, TOwner> property)
+        protected ISubject<TProperty> GetSubject<TProperty, TOwner>(Property<TProperty, TOwner> property)
             where TOwner : class
         {
             object value;
@@ -176,7 +173,7 @@ namespace RedBadger.Xpf.Presentation
             return subject;
         }
 
-        private void RaiseChanged<TProperty, TOwner>(
+        protected void RaiseChanged<TProperty, TOwner>(
             Property<TProperty, TOwner> property, TProperty oldValue, TProperty newValue) where TOwner : class
         {
             Action<PropertyChange<TProperty, TOwner>> changedCallback = property.ChangedCallback;

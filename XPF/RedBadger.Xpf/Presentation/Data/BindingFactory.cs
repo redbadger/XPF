@@ -19,9 +19,21 @@
             return GetObservable<TProperty>(source, GetPropertyInfo(propertySelector));
         }
 
+        public static IObservable<TProperty> CreateOneWay<TSource, TProperty>(
+            TSource source, Property<TProperty, TSource> property) where TSource : DependencyObject
+        {
+            return source.GetObservable(property);
+        }
+
         public static IObservable<TSource> CreateOneWay<TSource>(TSource source)
         {
             return new BehaviorSubject<TSource>(source).AsObservable();
+        }
+
+        public static IObserver<TProperty> CreateOneWayToSource<TSource, TProperty>(
+            TSource source, Property<TProperty, TSource> property) where TSource : DependencyObject
+        {
+            return source.GetObserver(property);
         }
 
         public static IObserver<TProperty> CreateOneWayToSource<TSource, TProperty>(

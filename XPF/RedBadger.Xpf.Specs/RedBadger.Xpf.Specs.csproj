@@ -88,8 +88,6 @@
   <ItemGroup>
     <Compile Include="Extensions\MSpecExtensions.cs" />
     <Compile Include="Input\MouseInputSpecs\MouseInputSpecs.cs" />
-    <Compile Include="Presentation\DependencyObjectSpecs\BindingClasses.cs" />
-    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs.cs" />
     <Compile Include="Presentation\Controls\BorderSpecs\BorderSpecs.cs" />
     <Compile Include="Presentation\Controls\BorderSpecs\Contexts.cs" />
     <Compile Include="Presentation\Controls\ButtonBaseSpecs\ButtonBaseSpecs.cs" />
@@ -112,6 +110,10 @@
     <Compile Include="Presentation\Controls\PanelSpecs\PanelSpecs.cs" />
     <Compile Include="Presentation\Controls\VirtualizingStackPanelSpecs\VirtualizingStackPanelSpecs.cs" />
     <Compile Include="Presentation\DefinitionBaseSpecs\DefinitionBaseSpecs.cs" />
+    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs\DependencyObjectSpecs\DependencyObjectSpecs.cs" />
+    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs\INotifyPropertyChangedSpecs\INotifyPropertyChangedSpecs.cs" />
+    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs\ObjectSpecs\ObjectSpecs.cs" />
+    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs\ReactiveSpecs\ReactiveSpecs.cs" />
     <Compile Include="Presentation\DependencyObjectSpecs\PropertySpecs.cs" />
     <Compile Include="Presentation\ElementCollectionSpecs\Contexts.cs" />
     <Compile Include="Presentation\ElementCollectionSpecs\ITemplatedListSpecs.cs" />
