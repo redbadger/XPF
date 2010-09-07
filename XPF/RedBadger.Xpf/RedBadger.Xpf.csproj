@@ -97,6 +97,7 @@
     <Compile Include="Internal\IEnumerableExtensions.cs" />
     <Compile Include="License.cs" />
     <Compile Include="Internal\PropertyStore.cs" />
+    <Compile Include="Presentation\Controls\Canvas.cs" />
     <Compile Include="Presentation\Data\BindingFactory.cs" />
     <Compile Include="Presentation\Data\TwoWayBinding.cs" />
     <Compile Include="Presentation\Data\INotifyPropertyChanged.cs" />

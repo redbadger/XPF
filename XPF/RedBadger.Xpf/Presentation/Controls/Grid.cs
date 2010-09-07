@@ -46,44 +46,44 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        public static int GetColumn(IDependencyObject dependencyObject)
+        public static int GetColumn(IElement element)
         {
-            if (dependencyObject == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException("element");
             }
 
-            return dependencyObject.GetValue(ColumnProperty);
+            return element.GetValue(ColumnProperty);
         }
 
-        public static int GetRow(IDependencyObject dependencyObject)
+        public static int GetRow(IElement element)
         {
-            if (dependencyObject == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException("element");
             }
 
-            return dependencyObject.GetValue(RowProperty);
+            return element.GetValue(RowProperty);
         }
 
-        public static void SetColumn(IDependencyObject dependencyObject, int value)
+        public static void SetColumn(IElement element, int value)
         {
-            if (dependencyObject == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException("element");
             }
 
-            dependencyObject.SetValue(ColumnProperty, value);
+            element.SetValue(ColumnProperty, value);
         }
 
-        public static void SetRow(IDependencyObject dependencyObject, int value)
+        public static void SetRow(IElement element, int value)
         {
-            if (dependencyObject == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException("element");
             }
 
-            dependencyObject.SetValue(RowProperty, value);
+            element.SetValue(RowProperty, value);
         }
 
         protected override Size ArrangeOverride(Size finalSize)

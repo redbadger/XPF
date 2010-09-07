@@ -497,6 +497,23 @@
         {
         }
 
+        protected override void RaiseChanged<TProperty, TOwner>(
+            Property<TProperty, TOwner> property, TProperty oldValue, TProperty newValue)
+        {
+            Action<PropertyChange<TProperty, TOwner>> changedCallback = property.ChangedCallback;
+            if (changedCallback != null)
+            {
+                var owner = this as TOwner;
+
+                while (owner == null && this.VisualParent != null)
+                {
+                    owner = this.VisualParent as TOwner;
+                }
+
+                changedCallback(new PropertyChange<TProperty, TOwner>(owner, property, oldValue, newValue));
+            }
+        }
+
         /// <summary>
         ///     Defines the template for core-level arrange layout definition.
         /// </summary>

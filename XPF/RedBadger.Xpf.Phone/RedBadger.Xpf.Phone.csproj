@@ -142,6 +142,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Button.cs">
       <Link>Presentation\Controls\Button.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Canvas.cs">
+      <Link>Presentation\Controls\Canvas.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ColumnDefinition.cs">
       <Link>Presentation\Controls\ColumnDefinition.cs</Link>
     </Compile>

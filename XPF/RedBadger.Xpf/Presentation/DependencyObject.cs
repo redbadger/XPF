@@ -173,14 +173,9 @@ namespace RedBadger.Xpf.Presentation
             return subject;
         }
 
-        protected void RaiseChanged<TProperty, TOwner>(
+        protected virtual void RaiseChanged<TProperty, TOwner>(
             Property<TProperty, TOwner> property, TProperty oldValue, TProperty newValue) where TOwner : class
         {
-            Action<PropertyChange<TProperty, TOwner>> changedCallback = property.ChangedCallback;
-            if (changedCallback != null)
-            {
-                changedCallback(new PropertyChange<TProperty, TOwner>(this as TOwner, property, oldValue, newValue));
-            }
         }
     }
 }
