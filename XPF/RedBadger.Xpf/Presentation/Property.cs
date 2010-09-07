@@ -59,6 +59,12 @@
         }
 
         public static Property<TProperty, TOwner> Register(
+            string propertyName, Action<PropertyChange<TProperty, TOwner>> changedCallback)
+        {
+            return Register(propertyName, default(TProperty), changedCallback);
+        }
+
+        public static Property<TProperty, TOwner> Register(
             string propertyName, TProperty defaultValue, Action<PropertyChange<TProperty, TOwner>> changedCallback)
         {
             if (string.IsNullOrEmpty(propertyName))

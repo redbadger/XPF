@@ -16,14 +16,7 @@
             TSource source, Expression<Func<TSource, TProperty>> propertySelector)
             where TSource : INotifyPropertyChanged
         {
-            PropertyInfo propertyInfo = GetPropertyInfo(propertySelector);
-
-            Func<TProperty> getValue = () => (TProperty)propertyInfo.GetValue(source, null);
-
-            var subject = new BehaviorSubject<TProperty>(getValue());
-
-            GetObservable(source, propertyInfo).Subscribe(data => subject.OnNext(getValue()));
-            return subject.AsObservable();
+            return GetObservable<TProperty>(source, GetPropertyInfo(propertySelector));
         }
 
         public static IObservable<TSource> CreateOneWay<TSource>(TSource source)
@@ -43,27 +36,21 @@
             TSource source, Expression<Func<TSource, TProperty>> propertySelector)
             where TSource : INotifyPropertyChanged
         {
-            PropertyInfo propertyInfo = GetPropertyInfo(propertySelector);
-
-            Func<TProperty> getValue = () => (TProperty)propertyInfo.GetValue(source, null);
-
-            var observable = new BehaviorSubject<TProperty>(getValue());
-            GetObservable(source, propertyInfo).Subscribe(data => observable.OnNext(getValue()));
-
             var observer = new Subject<TProperty>();
             observer.Subscribe(value => GetPropertyInfo(propertySelector).SetValue(source, value, null));
 
-            return new TwoWayBinding<TProperty>(observable.AsObservable(), observer.AsObserver());
+            return new TwoWayBinding<TProperty>(
+                GetObservable<TProperty>(source, GetPropertyInfo(propertySelector)), observer.AsObserver());
         }
 
-        private static IObservable<IEvent<PropertyChangedEventArgs>> GetObservable<TSource>(
-            TSource source, PropertyInfo propertyInfo)
+        private static IObservable<TProperty> GetObservable<TProperty>(
+            INotifyPropertyChanged source, PropertyInfo propertyInfo)
         {
             return
                 Observable.FromEvent<PropertyChangedEventArgs>(
-                    handler => ((INotifyPropertyChanged)source).PropertyChanged += handler, 
-                    handler => ((INotifyPropertyChanged)source).PropertyChanged -= handler).Where(
-                        data => data.EventArgs.PropertyName == propertyInfo.Name);
+                    handler => source.PropertyChanged += handler, handler => source.PropertyChanged -= handler).Where(
+                        data => data.EventArgs.PropertyName == propertyInfo.Name).Select(
+                            e => (TProperty)propertyInfo.GetValue(source, null));
         }
 
         private static PropertyInfo GetPropertyInfo<TSource, TProperty>(

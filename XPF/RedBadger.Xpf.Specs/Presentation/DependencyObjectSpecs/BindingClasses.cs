@@ -15,6 +15,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
     using System.Collections.Generic;
     using System.Linq;
 
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Data;
     using RedBadger.Xpf.Presentation.Media;
 
@@ -114,6 +115,24 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
             get
             {
                 return this.myWidthProperty;
+            }
+        }
+    }
+
+    public class MyDependencyBindingObject : DependencyObject
+    {
+        public static readonly Property<Brush, MyDependencyBindingObject> BrushProperty = Property<Brush, MyDependencyBindingObject>.Register("Brush");
+
+        public Brush Brush
+        {
+            get
+            {
+                return this.GetValue(BrushProperty);
+            }
+
+            set
+            {
+                this.SetValue(BrushProperty, value);
             }
         }
     }

@@ -13,13 +13,13 @@
     public class ItemsControl : Control
     {
         public static readonly Property<Func<IElement>, ItemsControl> ItemTemplateProperty =
-            Property<Func<IElement>, ItemsControl>.Register("ItemTemplate", null);
+            Property<Func<IElement>, ItemsControl>.Register("ItemTemplate");
 
         public static readonly Property<Panel, ItemsControl> ItemsPanelProperty =
-            Property<Panel, ItemsControl>.Register("ItemsPanel", null, ItemsPanelChanged);
+            Property<Panel, ItemsControl>.Register("ItemsPanel", ItemsPanelChanged);
 
         public static readonly Property<IEnumerable, ItemsControl> ItemsSourceProperty =
-            Property<IEnumerable, ItemsControl>.Register("ItemsSource", null, ItemsSourceChanged);
+            Property<IEnumerable, ItemsControl>.Register("ItemsSource", ItemsSourceChanged);
 
         private readonly ScrollViewer scrollViewer;
 

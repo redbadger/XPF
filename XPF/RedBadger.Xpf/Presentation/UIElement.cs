@@ -15,7 +15,7 @@
     public abstract class UIElement : DependencyObject, IElement
     {
         public static readonly Property<object, UIElement> DataContextProperty =
-            Property<object, UIElement>.Register("DataContext", null);
+            Property<object, UIElement>.Register("DataContext");
 
         public static readonly Property<double, UIElement> HeightProperty =
             Property<double, UIElement>.Register("Height", double.NaN, PropertyChangedCallbacks.InvalidateMeasure);
@@ -25,7 +25,7 @@
                 "HorizontalAlignment", HorizontalAlignment.Stretch, PropertyChangedCallbacks.InvalidateArrange);
 
         public static readonly Property<bool, UIElement> IsMouseCapturedProperty =
-            Property<bool, UIElement>.Register("IsMouseCaptured", false);
+            Property<bool, UIElement>.Register("IsMouseCaptured");
 
         public static readonly Property<Thickness, UIElement> MarginProperty =
             Property<Thickness, UIElement>.Register(
@@ -40,10 +40,10 @@
                 "MaxWidth", double.PositiveInfinity, PropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly Property<double, UIElement> MinHeightProperty =
-            Property<double, UIElement>.Register("MinHeight", 0d, PropertyChangedCallbacks.InvalidateMeasure);
+            Property<double, UIElement>.Register("MinHeight", PropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly Property<double, UIElement> MinWidthProperty =
-            Property<double, UIElement>.Register("MinWidth", 0d, PropertyChangedCallbacks.InvalidateMeasure);
+            Property<double, UIElement>.Register("MinWidth", PropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly Property<VerticalAlignment, UIElement> VerticalAlignmentProperty =
             Property<VerticalAlignment, UIElement>.Register(

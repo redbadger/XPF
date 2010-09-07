@@ -239,4 +239,26 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
 
         private It should_bind_to_the_data_context = () => textBlock.Text.ShouldEqual(ExpectedValue);
     }
+
+    /*[Subject(typeof(DependencyObject), "Binding")]
+    public class when_a_binding_is_one_way_from_a_dependency_object_source
+    {
+        private static readonly SolidColorBrush expectedBrush = new SolidColorBrush(Colors.Brown);
+
+        private static Border border;
+
+        private static MyDependencyBindingObject myBindingObject;
+
+        private Establish context = () =>
+        {
+            myBindingObject = new MyDependencyBindingObject();
+            border = new Border();
+
+            border.Bind(Border.BorderBrushProperty, BindingFactory.CreateOneWay<MyDependencyBindingObject, Brush>(myBindingObject, o => o.Brush));
+        };
+
+        private Because of = () => myBindingObject.Brush = expectedBrush;
+
+        private It should_have_the_correct_brush = () => border.BorderBrush.ShouldEqual(expectedBrush);
+    }*/
 }

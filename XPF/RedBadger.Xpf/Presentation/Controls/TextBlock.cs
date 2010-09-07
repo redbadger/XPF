@@ -10,14 +10,13 @@ namespace RedBadger.Xpf.Presentation.Controls
     public class TextBlock : UIElement
     {
         public static readonly Property<Brush, TextBlock> BackgroundProperty =
-            Property<Brush, TextBlock>.Register("Background", null);
+            Property<Brush, TextBlock>.Register("Background");
 
         public static readonly Property<Brush, TextBlock> ForegroundProperty =
-            Property<Brush, TextBlock>.Register("Foreground", null);
+            Property<Brush, TextBlock>.Register("Foreground");
 
         public static readonly Property<Thickness, TextBlock> PaddingProperty =
-            Property<Thickness, TextBlock>.Register(
-                "Padding", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
+            Property<Thickness, TextBlock>.Register("Padding", PropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly Property<string, TextBlock> TextProperty = Property<string, TextBlock>.Register(
             "Text", string.Empty, PropertyChangedCallbacks.InvalidateMeasure);

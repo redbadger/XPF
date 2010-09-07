@@ -9,7 +9,7 @@ namespace RedBadger.Xpf.Presentation.Controls
     public class Border : UIElement
     {
         public static readonly Property<Brush, Border> BackgroundProperty =
-            Property<Brush, Border>.Register("Background", null);
+            Property<Brush, Border>.Register("Background");
 
         public static readonly Property<Brush, Border> BorderBrushProperty =
             Property<Brush, Border>.Register("BorderBrush", null, PropertyChangedCallbacks.InvalidateArrange);
