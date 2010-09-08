@@ -1,6 +1,6 @@
 namespace RedBadger.Xpf.Presentation
 {
-    public struct PropertyChange<TProperty, TOwner>
+    public struct ReactivePropertyChange<TProperty, TOwner>
         where TOwner : class
     {
         public readonly TProperty NewValue;
@@ -9,10 +9,10 @@ namespace RedBadger.Xpf.Presentation
 
         public readonly TOwner Owner;
 
-        public readonly Property<TProperty, TOwner> Property;
+        public readonly ReactiveProperty<TProperty, TOwner> Property;
 
-        public PropertyChange(
-            TOwner owner, Property<TProperty, TOwner> property, TProperty oldValue, TProperty newValue)
+        public ReactivePropertyChange(
+            TOwner owner, ReactiveProperty<TProperty, TOwner> property, TProperty oldValue, TProperty newValue)
         {
             this.Owner = owner;
             this.Property = property;

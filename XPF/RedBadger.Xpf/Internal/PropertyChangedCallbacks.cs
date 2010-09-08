@@ -4,7 +4,7 @@ namespace RedBadger.Xpf.Internal
 
     internal static class PropertyChangedCallbacks
     {
-        public static void InvalidateArrange<TProperty, TOwner>(PropertyChange<TProperty, TOwner> args)
+        public static void InvalidateArrange<TProperty, TOwner>(ReactivePropertyChange<TProperty, TOwner> args)
             where TOwner : class
         {
             var uiElement = args.Owner as UIElement;
@@ -14,7 +14,7 @@ namespace RedBadger.Xpf.Internal
             }
         }
 
-        public static void InvalidateMeasure<TProperty, TOwner>(PropertyChange<TProperty, TOwner> args)
+        public static void InvalidateMeasure<TProperty, TOwner>(ReactivePropertyChange<TProperty, TOwner> args)
             where TOwner : class
         {
             var uiElement = args.Owner as UIElement;

@@ -20,7 +20,7 @@
         }
 
         public static IObservable<TProperty> CreateOneWay<TSource, TProperty>(
-            TSource source, Property<TProperty, TSource> property) where TSource : DependencyObject
+            TSource source, ReactiveProperty<TProperty, TSource> property) where TSource : DependencyObject
         {
             return source.GetObservable(property);
         }
@@ -31,7 +31,7 @@
         }
 
         public static IObserver<TProperty> CreateOneWayToSource<TSource, TProperty>(
-            TSource source, Property<TProperty, TSource> property) where TSource : DependencyObject
+            TSource source, ReactiveProperty<TProperty, TSource> property) where TSource : DependencyObject
         {
             return source.GetObserver(property);
         }

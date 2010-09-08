@@ -8,21 +8,21 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class Border : UIElement
     {
-        public static readonly Property<Brush, Border> BackgroundProperty =
-            Property<Brush, Border>.Register("Background");
+        public static readonly ReactiveProperty<Brush, Border> BackgroundProperty =
+            ReactiveProperty<Brush, Border>.Register("Background");
 
-        public static readonly Property<Brush, Border> BorderBrushProperty =
-            Property<Brush, Border>.Register("BorderBrush", null, PropertyChangedCallbacks.InvalidateArrange);
+        public static readonly ReactiveProperty<Brush, Border> BorderBrushProperty =
+            ReactiveProperty<Brush, Border>.Register("BorderBrush", null, PropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly Property<Thickness, Border> BorderThicknessProperty =
-            Property<Thickness, Border>.Register(
+        public static readonly ReactiveProperty<Thickness, Border> BorderThicknessProperty =
+            ReactiveProperty<Thickness, Border>.Register(
                 "BorderThickness", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly Property<IElement, Border> ChildProperty = Property<IElement, Border>.Register(
+        public static readonly ReactiveProperty<IElement, Border> ChildProperty = ReactiveProperty<IElement, Border>.Register(
             "Child", null, ChildPropertyChangedCallback);
 
-        public static readonly Property<Thickness, Border> PaddingProperty =
-            Property<Thickness, Border>.Register("Padding", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<Thickness, Border> PaddingProperty =
+            ReactiveProperty<Thickness, Border>.Register("Padding", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
 
         private readonly IList<Rect> borders = new List<Rect>();
 
@@ -159,7 +159,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private static void ChildPropertyChangedCallback(PropertyChange<IElement, Border> change)
+        private static void ChildPropertyChangedCallback(ReactivePropertyChange<IElement, Border> change)
         {
             change.Owner.InvalidateMeasure();
 

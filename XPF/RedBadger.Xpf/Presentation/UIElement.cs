@@ -14,42 +14,42 @@
 
     public abstract class UIElement : DependencyObject, IElement
     {
-        public static readonly Property<object, UIElement> DataContextProperty =
-            Property<object, UIElement>.Register("DataContext");
+        public static readonly ReactiveProperty<object, UIElement> DataContextProperty =
+            ReactiveProperty<object, UIElement>.Register("DataContext");
 
-        public static readonly Property<double, UIElement> HeightProperty =
-            Property<double, UIElement>.Register("Height", double.NaN, PropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double, UIElement> HeightProperty =
+            ReactiveProperty<double, UIElement>.Register("Height", double.NaN, PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly Property<HorizontalAlignment, UIElement> HorizontalAlignmentProperty =
-            Property<HorizontalAlignment, UIElement>.Register(
+        public static readonly ReactiveProperty<HorizontalAlignment, UIElement> HorizontalAlignmentProperty =
+            ReactiveProperty<HorizontalAlignment, UIElement>.Register(
                 "HorizontalAlignment", HorizontalAlignment.Stretch, PropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly Property<bool, UIElement> IsMouseCapturedProperty =
-            Property<bool, UIElement>.Register("IsMouseCaptured");
+        public static readonly ReactiveProperty<bool, UIElement> IsMouseCapturedProperty =
+            ReactiveProperty<bool, UIElement>.Register("IsMouseCaptured");
 
-        public static readonly Property<Thickness, UIElement> MarginProperty =
-            Property<Thickness, UIElement>.Register(
+        public static readonly ReactiveProperty<Thickness, UIElement> MarginProperty =
+            ReactiveProperty<Thickness, UIElement>.Register(
                 "Margin", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly Property<double, UIElement> MaxHeightProperty =
-            Property<double, UIElement>.Register(
+        public static readonly ReactiveProperty<double, UIElement> MaxHeightProperty =
+            ReactiveProperty<double, UIElement>.Register(
                 "MaxHeight", double.PositiveInfinity, PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly Property<double, UIElement> MaxWidthProperty =
-            Property<double, UIElement>.Register(
+        public static readonly ReactiveProperty<double, UIElement> MaxWidthProperty =
+            ReactiveProperty<double, UIElement>.Register(
                 "MaxWidth", double.PositiveInfinity, PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly Property<double, UIElement> MinHeightProperty =
-            Property<double, UIElement>.Register("MinHeight", PropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double, UIElement> MinHeightProperty =
+            ReactiveProperty<double, UIElement>.Register("MinHeight", PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly Property<double, UIElement> MinWidthProperty =
-            Property<double, UIElement>.Register("MinWidth", PropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double, UIElement> MinWidthProperty =
+            ReactiveProperty<double, UIElement>.Register("MinWidth", PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly Property<VerticalAlignment, UIElement> VerticalAlignmentProperty =
-            Property<VerticalAlignment, UIElement>.Register(
+        public static readonly ReactiveProperty<VerticalAlignment, UIElement> VerticalAlignmentProperty =
+            ReactiveProperty<VerticalAlignment, UIElement>.Register(
                 "VerticalAlignment", VerticalAlignment.Stretch, PropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly Property<double, UIElement> WidthProperty = Property<double, UIElement>.Register(
+        public static readonly ReactiveProperty<double, UIElement> WidthProperty = ReactiveProperty<double, UIElement>.Register(
             "Width", double.NaN, PropertyChangedCallbacks.InvalidateMeasure);
 
         private readonly Subject<Gesture> gestures = new Subject<Gesture>();
@@ -257,11 +257,11 @@
         /// <summary>
         ///     Bind One Way (to the DataContext).
         /// </summary>
-        /// <typeparam name = "TProperty">Target <see cref = "Property{TProperty,TOwner}">Property</see> <see cref = "Type">Type</see></typeparam>
-        /// <typeparam name = "TOwner">Target <see cref = "Property{TProperty,TOwner}">Property</see>'s owner <see cref = "Type">Type</see></typeparam>
-        /// <param name = "property">Target <see cref = "Property{TProperty,TOwner}">Property</see></param>
+        /// <typeparam name = "TProperty">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> <see cref = "Type">Type</see></typeparam>
+        /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
+        /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public override IDisposable Bind<TProperty, TOwner>(Property<TProperty, TOwner> property)
+        public override IDisposable Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
         {
             ISubject<TProperty> target = this.GetSubject(property);
             IObservable<object> source = this.GetObservable(DataContextProperty);
@@ -498,9 +498,9 @@
         }
 
         protected override void RaiseChanged<TProperty, TOwner>(
-            Property<TProperty, TOwner> property, TProperty oldValue, TProperty newValue)
+            ReactiveProperty<TProperty, TOwner> property, TProperty oldValue, TProperty newValue)
         {
-            Action<PropertyChange<TProperty, TOwner>> changedCallback = property.ChangedCallback;
+            Action<ReactivePropertyChange<TProperty, TOwner>> changedCallback = property.ChangedCallback;
             if (changedCallback != null)
             {
                 var owner = this as TOwner;
@@ -510,7 +510,7 @@
                     owner = this.VisualParent as TOwner;
                 }
 
-                changedCallback(new PropertyChange<TProperty, TOwner>(owner, property, oldValue, newValue));
+                changedCallback(new ReactivePropertyChange<TProperty, TOwner>(owner, property, oldValue, newValue));
             }
         }
 

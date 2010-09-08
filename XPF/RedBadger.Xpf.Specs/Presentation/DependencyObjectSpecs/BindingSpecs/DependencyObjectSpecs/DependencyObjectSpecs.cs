@@ -27,11 +27,11 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
 
     public class TestBindingObject : DependencyObject
     {
-        public static readonly Property<Brush, TestBindingObject> BrushProperty =
-            Property<Brush, TestBindingObject>.Register("Brush");
+        public static readonly ReactiveProperty<Brush, TestBindingObject> BrushProperty =
+            ReactiveProperty<Brush, TestBindingObject>.Register("Brush");
 
-        public static readonly Property<SolidColorBrush, TestBindingObject> SolidColorBrushProperty =
-            Property<SolidColorBrush, TestBindingObject>.Register("SolidColorBrush");
+        public static readonly ReactiveProperty<SolidColorBrush, TestBindingObject> SolidColorBrushProperty =
+            ReactiveProperty<SolidColorBrush, TestBindingObject>.Register("SolidColorBrush");
 
         public Brush Brush
         {
@@ -59,7 +59,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
             }
         }
 
-        public static readonly Property<double, TestBindingObject> WidthProperty = Property<double, TestBindingObject>.Register("Width");
+        public static readonly ReactiveProperty<double, TestBindingObject> WidthProperty = ReactiveProperty<double, TestBindingObject>.Register("Width");
 
         public double Width
         {
@@ -171,6 +171,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
     [Subject(typeof(UIElement))]
     public class when_a_binding_is_two_way
     {
+        private It should;
     }
 
     [Subject(typeof(DependencyObject))]

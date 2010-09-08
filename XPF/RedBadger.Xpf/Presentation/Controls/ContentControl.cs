@@ -7,8 +7,8 @@ namespace RedBadger.Xpf.Presentation.Controls
     /// </summary>
     public class ContentControl : Control
     {
-        public static readonly Property<IElement, ContentControl> ContentProperty =
-            Property<IElement, ContentControl>.Register(
+        public static readonly ReactiveProperty<IElement, ContentControl> ContentProperty =
+            ReactiveProperty<IElement, ContentControl>.Register(
                 "Content", null, ContentPropertyChangedCallback);
 
         public IElement Content
@@ -63,7 +63,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         }
 
         private static void ContentPropertyChangedCallback(
-            PropertyChange<IElement, ContentControl> change)
+            ReactivePropertyChange<IElement, ContentControl> change)
         {
             change.Owner.InvalidateMeasure();
 

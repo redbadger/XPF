@@ -9,20 +9,20 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class TextBlock : UIElement
     {
-        public static readonly Property<Brush, TextBlock> BackgroundProperty =
-            Property<Brush, TextBlock>.Register("Background");
+        public static readonly ReactiveProperty<Brush, TextBlock> BackgroundProperty =
+            ReactiveProperty<Brush, TextBlock>.Register("Background");
 
-        public static readonly Property<Brush, TextBlock> ForegroundProperty =
-            Property<Brush, TextBlock>.Register("Foreground");
+        public static readonly ReactiveProperty<Brush, TextBlock> ForegroundProperty =
+            ReactiveProperty<Brush, TextBlock>.Register("Foreground");
 
-        public static readonly Property<Thickness, TextBlock> PaddingProperty =
-            Property<Thickness, TextBlock>.Register("Padding", PropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<Thickness, TextBlock> PaddingProperty =
+            ReactiveProperty<Thickness, TextBlock>.Register("Padding", PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly Property<string, TextBlock> TextProperty = Property<string, TextBlock>.Register(
+        public static readonly ReactiveProperty<string, TextBlock> TextProperty = ReactiveProperty<string, TextBlock>.Register(
             "Text", string.Empty, PropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly Property<TextWrapping, TextBlock> WrappingProperty =
-            Property<TextWrapping, TextBlock>.Register(
+        public static readonly ReactiveProperty<TextWrapping, TextBlock> WrappingProperty =
+            ReactiveProperty<TextWrapping, TextBlock>.Register(
                 "Wrapping", TextWrapping.NoWrap, PropertyChangedCallbacks.InvalidateMeasure);
 
         private static readonly Regex whiteSpaceRegEx = new Regex(@"\s+", RegexOptions.Compiled);

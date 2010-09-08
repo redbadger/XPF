@@ -2,14 +2,14 @@
 {
     public class RowDefinition : DefinitionBase
     {
-        public static readonly Property<GridLength, RowDefinition> HeightProperty =
-            Property<GridLength, RowDefinition>.Register("Height", new GridLength());
+        public static readonly ReactiveProperty<GridLength, RowDefinition> HeightProperty =
+            ReactiveProperty<GridLength, RowDefinition>.Register("Height", new GridLength());
 
-        public static readonly Property<double, RowDefinition> MaxHeightProperty =
-            Property<double, RowDefinition>.Register("MaxHeight", double.PositiveInfinity);
+        public static readonly ReactiveProperty<double, RowDefinition> MaxHeightProperty =
+            ReactiveProperty<double, RowDefinition>.Register("MaxHeight", double.PositiveInfinity);
 
-        public static readonly Property<double, RowDefinition> MinHeightProperty =
-            Property<double, RowDefinition>.Register("MinHeight", 0d);
+        public static readonly ReactiveProperty<double, RowDefinition> MinHeightProperty =
+            ReactiveProperty<double, RowDefinition>.Register("MinHeight", 0d);
 
         public RowDefinition()
             : base(DefinitionType.Row)

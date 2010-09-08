@@ -12,14 +12,14 @@
 
     public class ItemsControl : Control
     {
-        public static readonly Property<Func<IElement>, ItemsControl> ItemTemplateProperty =
-            Property<Func<IElement>, ItemsControl>.Register("ItemTemplate");
+        public static readonly ReactiveProperty<Func<IElement>, ItemsControl> ItemTemplateProperty =
+            ReactiveProperty<Func<IElement>, ItemsControl>.Register("ItemTemplate");
 
-        public static readonly Property<Panel, ItemsControl> ItemsPanelProperty =
-            Property<Panel, ItemsControl>.Register("ItemsPanel", ItemsPanelChanged);
+        public static readonly ReactiveProperty<Panel, ItemsControl> ItemsPanelProperty =
+            ReactiveProperty<Panel, ItemsControl>.Register("ItemsPanel", ItemsPanelChanged);
 
-        public static readonly Property<IEnumerable, ItemsControl> ItemsSourceProperty =
-            Property<IEnumerable, ItemsControl>.Register("ItemsSource", ItemsSourceChanged);
+        public static readonly ReactiveProperty<IEnumerable, ItemsControl> ItemsSourceProperty =
+            ReactiveProperty<IEnumerable, ItemsControl>.Register("ItemsSource", ItemsSourceChanged);
 
         private readonly ScrollViewer scrollViewer;
 
@@ -115,7 +115,7 @@
             return child.DesiredSize;
         }
 
-        private static void ItemsPanelChanged(PropertyChange<Panel, ItemsControl> change)
+        private static void ItemsPanelChanged(ReactivePropertyChange<Panel, ItemsControl> change)
         {
             Panel panel = change.NewValue;
             if (!(panel.Children is ITemplatedList<IElement>))
@@ -129,7 +129,7 @@
             itemsControl.scrollViewer.Content = panel;
         }
 
-        private static void ItemsSourceChanged(PropertyChange<IEnumerable, ItemsControl> change)
+        private static void ItemsSourceChanged(ReactivePropertyChange<IEnumerable, ItemsControl> change)
         {
             ItemsControl itemsControl = change.Owner;
             if (change.OldValue is INotifyCollectionChanged)

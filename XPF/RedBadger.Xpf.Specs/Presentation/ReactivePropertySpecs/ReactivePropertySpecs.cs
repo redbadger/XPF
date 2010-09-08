@@ -9,32 +9,30 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Presentation.PropertySpecs
+namespace RedBadger.Xpf.Specs.Presentation.ReactivePropertySpecs
 {
-    using Moq;
-
     using Machine.Specifications;
 
     using RedBadger.Xpf.Presentation;
 
     using It = Machine.Specifications.It;
 
-    [Subject(typeof(Property<,>), "Category")]
-    public class when_a_property_of_reference_type_is_registered_with_no_default
+    [Subject(typeof(ReactiveProperty<,>), "Category")]
+    public class when_a_reactive_property_of_reference_type_is_registered_with_no_default
     {
-        private static Property<object, DependencyObject> SubjectProperty;
+        private static ReactiveProperty<object, DependencyObject> SubjectProperty;
 
-        private Because of = () => SubjectProperty = Property<object, DependencyObject>.Register("Subject");
+        private Because of = () => SubjectProperty = ReactiveProperty<object, DependencyObject>.Register("Subject");
 
         private It should_have_a_default_value_of_null = () => SubjectProperty.DefaultValue.ShouldEqual(null);
     }
 
-    [Subject(typeof(Property<,>), "Category")]
-    public class when_a_property_of_value_type_is_registered_with_no_default
+    [Subject(typeof(ReactiveProperty<,>), "Category")]
+    public class when_a_reactive_property_of_value_type_is_registered_with_no_default
     {
-        private static Property<int, DependencyObject> SubjectProperty;
+        private static ReactiveProperty<int, DependencyObject> SubjectProperty;
 
-        private Because of = () => SubjectProperty = Property<int, DependencyObject>.Register("Subject");
+        private Because of = () => SubjectProperty = ReactiveProperty<int, DependencyObject>.Register("Subject");
 
         private It should_have_a_default_value_of_zero = () => SubjectProperty.DefaultValue.ShouldEqual(0);
     }
