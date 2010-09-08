@@ -15,6 +15,13 @@ namespace RedBadger.Xpf.Presentation
     {
         private readonly Dictionary<IProperty, object> propertyValues = new Dictionary<IProperty, object>();
 
+        private readonly Dictionary<IProperty, object> bindings = new Dictionary<IProperty, object>();
+
+        public IEnumerable<IDeferredBinding> GetDeferredBindings()
+        {
+            return this.bindings.Values.OfType<IDeferredBinding>();
+        }
+
         /// <summary>
         ///     Bind One Way (from the Source).
         /// </summary>
@@ -23,10 +30,10 @@ namespace RedBadger.Xpf.Presentation
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "fromSource"><see cref = "IObservable{T}">IObservable</see> of updates from the source</param>
         /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public IDisposable Bind<TProperty, TOwner>(
+        public void Bind<TProperty, TOwner>(
             ReactiveProperty<TProperty, TOwner> property, IObservable<TProperty> fromSource) where TOwner : class
         {
-            return fromSource.Subscribe(this.GetSubject(property));
+            this.bindings[property] = fromSource.Subscribe(this.GetSubject(property);
         }
 
         /// <summary>

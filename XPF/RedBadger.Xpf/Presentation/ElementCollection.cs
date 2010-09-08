@@ -131,14 +131,14 @@
             this.Insert(newIndex, element);
         }
 
-        private static IElement Realize(object item, Func<IElement> template)
+        private static IElement Realize(object item, Func<object, IElement> template)
         {
             if (template == null)
             {
                 throw new InvalidOperationException("An element cannot be created without a template");
             }
 
-            IElement element = template();
+            IElement element = template(item);
             element.DataContext = item;
             return element;
         }

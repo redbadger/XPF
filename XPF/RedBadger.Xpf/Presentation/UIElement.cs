@@ -285,6 +285,7 @@
 
         public virtual void OnApplyTemplate()
         {
+            this.GetDeferredBindings().ForEach(binding => binding.Resolve(this.DataContext));
         }
 
         public void ReleaseMouseCapture()
