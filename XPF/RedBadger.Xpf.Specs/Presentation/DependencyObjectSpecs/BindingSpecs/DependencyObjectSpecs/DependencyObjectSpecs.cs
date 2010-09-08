@@ -205,4 +205,23 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
 
         private It should_bind_to_the_data_context = () => target.Text.ShouldEqual(ExpectedValue);
     }
+
+    [Subject(typeof(DependencyObject))]
+    public class when_binding_to_the_data_context_and_the_data_context_is_changed
+    {
+        private const string NewDataContext = "New Data Context";
+
+        private static TextBlock target;
+
+        private Establish context =
+            () =>
+                {
+                    target = new TextBlock(new Mock<ISpriteFont>().Object) { DataContext = "Old Data Context" };
+                    target.Bind(TextBlock.TextProperty);
+                };
+
+        private Because of = () => target.DataContext = NewDataContext;
+
+        private It should_use_the_new_data_context = () => target.Text.ShouldEqual(NewDataContext);
+    }
 }
