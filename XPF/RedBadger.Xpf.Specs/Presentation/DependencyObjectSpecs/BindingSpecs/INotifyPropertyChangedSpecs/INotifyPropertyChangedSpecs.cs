@@ -196,7 +196,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
                 target = new Border();
 
                 IObservable<Brush> fromSource1 = BindingFactory.CreateOneWay(source1, o => o.Brush);
-                binding1 = target.Bind(Border.BorderBrushProperty, fromSource1);
+                // binding1 = target.Bind(Border.BorderBrushProperty, fromSource1);
             };
 
         private Because of = () =>
@@ -230,7 +230,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
                 target = new Border();
 
                 IObservable<Brush> fromSource = BindingFactory.CreateOneWay(source, o => o.Brush);
-                binding = target.Bind(Border.BorderBrushProperty, fromSource);
+                // binding = target.Bind(Border.BorderBrushProperty, fromSource);
             };
 
         private Because of = () =>

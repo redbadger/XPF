@@ -202,6 +202,12 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\BindingFactory.cs">
       <Link>Presentation\Data\BindingFactory.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\DeferredBinding.cs">
+      <Link>Presentation\Data\DeferredBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\IDeferredBinding.cs">
+      <Link>Presentation\Data\IDeferredBinding.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\INotifyPropertyChanged.cs">
       <Link>Presentation\Data\INotifyPropertyChanged.cs</Link>
     </Compile>

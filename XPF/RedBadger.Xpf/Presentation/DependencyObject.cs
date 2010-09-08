@@ -13,14 +13,9 @@ namespace RedBadger.Xpf.Presentation
 
     public class DependencyObject : IDependencyObject
     {
+        private readonly Dictionary<IProperty, object> propertryBindings = new Dictionary<IProperty, object>();
+
         private readonly Dictionary<IProperty, object> propertyValues = new Dictionary<IProperty, object>();
-
-        private readonly Dictionary<IProperty, object> bindings = new Dictionary<IProperty, object>();
-
-        public IEnumerable<IDeferredBinding> GetDeferredBindings()
-        {
-            return this.bindings.Values.OfType<IDeferredBinding>();
-        }
 
         /// <summary>
         ///     Bind One Way (from the Source).
@@ -33,7 +28,7 @@ namespace RedBadger.Xpf.Presentation
         public void Bind<TProperty, TOwner>(
             ReactiveProperty<TProperty, TOwner> property, IObservable<TProperty> fromSource) where TOwner : class
         {
-            this.bindings[property] = fromSource.Subscribe(this.GetSubject(property);
+            this.propertryBindings[property] = fromSource.Subscribe(this.GetSubject(property));
         }
 
         /// <summary>
@@ -137,6 +132,11 @@ namespace RedBadger.Xpf.Presentation
             ReactiveProperty<TProperty, TOwner> property) where TOwner : class
         {
             return this.GetSubject(property).AsObserver();
+        }
+
+        protected IEnumerable<IDeferredBinding> GetDeferredBindings()
+        {
+            return this.propertryBindings.Values.OfType<IDeferredBinding>();
         }
 
         /// <summary>
