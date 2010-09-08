@@ -22,6 +22,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Data;
     using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
@@ -71,5 +72,30 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 
         private It should_2_use_the_new_item_template_for_items_added_after_the_change =
             () => ItemsControl.ItemsPanel.Children[1].ShouldBeOfType<Border>();
+    }
+
+    [Subject(typeof(ItemsControl), "Item Template")]
+    public class when_item_template_contains_a_binding_a_property_on_the_data_context : an_ItemsControl
+    {
+        private class MyBindingObject
+        {
+            public string Name { get; set; }
+        }
+
+        private Establish context = () =>
+            {
+                ItemsControl.ItemsSource = new [] { new MyBindingObject() { Name = "Name Value" } };
+
+                /*ItemsControl.ItemTemplate = (dataContext) =>
+                    {
+                        var textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
+                        textBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay(dataContext, source => source.Name));
+                        return textBlock;
+                    };*/
+
+            ItemsControl.Measure(new Size());
+        };
+
+        private It should_bind_to_the_data_context;
     }
 }

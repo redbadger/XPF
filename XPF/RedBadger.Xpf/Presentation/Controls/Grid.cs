@@ -8,9 +8,9 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class Grid : Panel
     {
-        public static readonly Property<int, Grid> ColumnProperty = Property<int, Grid>.Register("Column", 0);
+        public static readonly ReactiveProperty<int, Grid> ColumnProperty = ReactiveProperty<int, Grid>.Register("Column", 0);
 
-        public static readonly Property<int, Grid> RowProperty = Property<int, Grid>.Register("Row", 0);
+        public static readonly ReactiveProperty<int, Grid> RowProperty = ReactiveProperty<int, Grid>.Register("Row", 0);
 
         private readonly IList<ColumnDefinition> columnDefinitions = new List<ColumnDefinition>();
 

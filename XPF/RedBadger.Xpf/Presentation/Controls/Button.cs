@@ -5,9 +5,9 @@
 
     public class Button : ButtonBase
     {
-        public static readonly Property<Thickness, Button> PaddingProperty =
-            Property<Thickness, Button>.Register(
-                "Padding", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<Thickness, Button> PaddingProperty =
+            ReactiveProperty<Thickness, Button>.Register(
+                "Padding", new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public Thickness Padding
         {

@@ -27,11 +27,16 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
 
     public class TestBindingObject : DependencyObject
     {
-        public static readonly Property<Brush, TestBindingObject> BrushProperty =
-            Property<Brush, TestBindingObject>.Register("Brush");
+        public static readonly ReactiveProperty<Brush, TestBindingObject> BrushProperty =
+            ReactiveProperty<Brush, TestBindingObject>.Register("Brush");
 
-        public static readonly Property<SolidColorBrush, TestBindingObject> SolidColorBrushProperty =
-            Property<SolidColorBrush, TestBindingObject>.Register("SolidColorBrush");
+        public static readonly ReactiveProperty<SolidColorBrush, TestBindingObject> SolidColorBrushProperty =
+            ReactiveProperty<SolidColorBrush, TestBindingObject>.Register("SolidColorBrush");
+
+        public static readonly ReactiveProperty<double, TestBindingObject> WidthProperty =
+            ReactiveProperty<double, TestBindingObject>.Register("Width", double.NaN, WidthChangedCallback);
+
+        private int widthPropertyChangedCalledbackCount;
 
         public Brush Brush
         {
@@ -59,8 +64,6 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
             }
         }
 
-        public static readonly Property<double, TestBindingObject> WidthProperty = Property<double, TestBindingObject>.Register("Width");
-
         public double Width
         {
             get
@@ -72,6 +75,21 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
             {
                 this.SetValue(WidthProperty, value);
             }
+        }
+
+        public int WidthPropertyChangedCalledbackCount
+        {
+            get
+            {
+                return this.widthPropertyChangedCalledbackCount;
+            }
+        }
+
+        private static void WidthChangedCallback(
+            TestBindingObject testBindingObject, 
+            ReactivePropertyChangeEventArgs<double, TestBindingObject> reactivePropertyChange)
+        {
+            testBindingObject.widthPropertyChangedCalledbackCount++;
         }
     }
 
@@ -99,6 +117,64 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
     }
 
     [Subject(typeof(DependencyObject))]
+    public class when_a_bound_value_is_changed_three_times
+    {
+        private const double ExpectedWidth = 10d;
+
+        private static TestBindingObject source;
+
+        private static TestBindingObject target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new TestBindingObject();
+
+                IObservable<double> fromSource = BindingFactory.CreateOneWay(source, TestBindingObject.WidthProperty);
+                target.Bind(TestBindingObject.WidthProperty, fromSource);
+            };
+
+        private Because of = () =>
+            {
+                source.Width = ExpectedWidth + 1;
+                source.Width = ExpectedWidth + 2;
+                source.Width = ExpectedWidth;
+            };
+
+        private It should_assign_the_source_value_to_the_target_property = () => target.Width.ShouldEqual(ExpectedWidth);
+
+        private It should_call_the_target_property_changed_callback =
+            () => target.WidthPropertyChangedCalledbackCount.ShouldEqual(3);
+    }
+
+    [Subject(typeof(DependencyObject))]
+    public class when_a_target_property_is_first_bound_to_a_source_value_that_is_different
+    {
+        private const double ExpectedWidth = 10d;
+
+        private static TestBindingObject source;
+
+        private static TestBindingObject target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject { Width = ExpectedWidth };
+                target = new TestBindingObject();
+            };
+
+        private Because of = () =>
+            {
+                IObservable<double> fromSource = BindingFactory.CreateOneWay(source, TestBindingObject.WidthProperty);
+                target.Bind(TestBindingObject.WidthProperty, fromSource);
+            };
+
+        private It should_assign_the_source_value_to_the_target_property = () => target.Width.ShouldEqual(ExpectedWidth);
+
+        private It should_call_the_target_property_changed_callback =
+            () => target.WidthPropertyChangedCalledbackCount.ShouldEqual(1);
+    }
+
+    [Subject(typeof(DependencyObject))]
     public class when_a_binding_is_one_way_and_the_source_property_type_is_more_derived
     {
         private static readonly SolidColorBrush expectedBrush = new SolidColorBrush(Colors.Brown);
@@ -112,7 +188,8 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
                 source = new TestBindingObject();
                 target = new Border();
 
-                IObservable<Brush> fromSource = BindingFactory.CreateOneWay(source, TestBindingObject.SolidColorBrushProperty);
+                IObservable<Brush> fromSource = BindingFactory.CreateOneWay(
+                    source, TestBindingObject.SolidColorBrushProperty);
                 target.Bind(Border.BorderBrushProperty, fromSource);
             };
 
@@ -135,8 +212,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
                 source = new TestBindingObject();
                 target = new Border();
 
-                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource(
-                    source, TestBindingObject.BrushProperty);
+                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource(source, TestBindingObject.BrushProperty);
                 target.Bind(Border.BorderBrushProperty, toSource);
             };
 
@@ -171,6 +247,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
     [Subject(typeof(UIElement))]
     public class when_a_binding_is_two_way
     {
+        private It should;
     }
 
     [Subject(typeof(DependencyObject))]
@@ -204,5 +281,23 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
         private Because of = () => target.DataContext = ExpectedValue;
 
         private It should_bind_to_the_data_context = () => target.Text.ShouldEqual(ExpectedValue);
+    }
+
+    [Subject(typeof(DependencyObject))]
+    public class when_binding_to_the_data_context_and_the_data_context_is_changed
+    {
+        private const string NewDataContext = "New Data Context";
+
+        private static TextBlock target;
+
+        private Establish context = () =>
+            {
+                target = new TextBlock(new Mock<ISpriteFont>().Object) { DataContext = "Old Data Context" };
+                target.Bind(TextBlock.TextProperty);
+            };
+
+        private Because of = () => target.DataContext = NewDataContext;
+
+        private It should_use_the_new_data_context = () => target.Text.ShouldEqual(NewDataContext);
     }
 }

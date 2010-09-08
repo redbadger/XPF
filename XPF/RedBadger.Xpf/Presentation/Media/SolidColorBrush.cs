@@ -2,8 +2,8 @@ namespace RedBadger.Xpf.Presentation.Media
 {
     public class SolidColorBrush : Brush
     {
-        public static readonly Property<Color, SolidColorBrush> ColorProperty =
-            Property<Color, SolidColorBrush>.Register("Color", Colors.White);
+        public static readonly ReactiveProperty<Color, SolidColorBrush> ColorProperty =
+            ReactiveProperty<Color, SolidColorBrush>.Register("Color", Colors.White);
 
         public SolidColorBrush(Color color)
         {

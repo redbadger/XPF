@@ -6,11 +6,11 @@
 
     public class Canvas : Panel
     {
-        public static readonly Property<double, Canvas> LeftProperty = Property<double, Canvas>.Register(
-            "Left", double.NaN, PropertyChangedCallbacks.InvalidateArrange);
+        public static readonly ReactiveProperty<double, Canvas> LeftProperty = ReactiveProperty<double, Canvas>.Register(
+            "Left", double.NaN, ReactivePropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly Property<double, Canvas> TopProperty = Property<double, Canvas>.Register(
-            "Top", double.NaN, PropertyChangedCallbacks.InvalidateArrange);
+        public static readonly ReactiveProperty<double, Canvas> TopProperty = ReactiveProperty<double, Canvas>.Register(
+            "Top", double.NaN, ReactivePropertyChangedCallbacks.InvalidateArrange);
 
         public static double GetLeft(IElement element)
         {

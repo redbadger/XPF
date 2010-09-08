@@ -115,9 +115,6 @@
     <Compile Include="..\RedBadger.Xpf\Internal\MinMax.cs">
       <Link>Internal\MinMax.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Internal\PropertyChangedCallbacks.cs">
-      <Link>Internal\PropertyChangedCallbacks.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\PropertyStore.cs">
       <Link>Internal\PropertyStore.cs</Link>
     </Compile>
@@ -310,11 +307,14 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Point.cs">
       <Link>Presentation\Point.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Property.cs">
-      <Link>Presentation\Property.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\ReactiveProperty.cs">
+      <Link>Presentation\ReactiveProperty.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChange.cs">
-      <Link>Presentation\PropertyChange.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\ReactivePropertyChangedCallbacks.cs">
+      <Link>Presentation\ReactivePropertyChangedCallbacks.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\ReactivePropertyChangeEventArgs.cs">
+      <Link>Presentation\ReactivePropertyChangeEventArgs.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Rect.cs">
       <Link>Presentation\Rect.cs</Link>
