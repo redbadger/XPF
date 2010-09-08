@@ -12,17 +12,17 @@ namespace RedBadger.Xpf.Presentation.Controls
             ReactiveProperty<Brush, Border>.Register("Background");
 
         public static readonly ReactiveProperty<Brush, Border> BorderBrushProperty =
-            ReactiveProperty<Brush, Border>.Register("BorderBrush", null, PropertyChangedCallbacks.InvalidateArrange);
+            ReactiveProperty<Brush, Border>.Register("BorderBrush", null, ReactivePropertyChangedCallbacks.InvalidateArrange);
 
         public static readonly ReactiveProperty<Thickness, Border> BorderThicknessProperty =
             ReactiveProperty<Thickness, Border>.Register(
-                "BorderThickness", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
+                "BorderThickness", new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly ReactiveProperty<IElement, Border> ChildProperty = ReactiveProperty<IElement, Border>.Register(
             "Child", null, ChildPropertyChangedCallback);
 
         public static readonly ReactiveProperty<Thickness, Border> PaddingProperty =
-            ReactiveProperty<Thickness, Border>.Register("Padding", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
+            ReactiveProperty<Thickness, Border>.Register("Padding", new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         private readonly IList<Rect> borders = new List<Rect>();
 
@@ -159,9 +159,9 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private static void ChildPropertyChangedCallback(ReactivePropertyChange<IElement, Border> change)
+        private static void ChildPropertyChangedCallback(Border border, ReactivePropertyChangeEventArgs<IElement, Border> change)
         {
-            change.Owner.InvalidateMeasure();
+            border.InvalidateMeasure();
 
             IElement oldChild = change.OldValue;
             if (oldChild != null)
@@ -172,7 +172,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             IElement newChild = change.NewValue;
             if (newChild != null)
             {
-                newChild.VisualParent = change.Owner;
+                newChild.VisualParent = border;
             }
         }
 

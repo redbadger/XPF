@@ -18,39 +18,42 @@
             ReactiveProperty<object, UIElement>.Register("DataContext");
 
         public static readonly ReactiveProperty<double, UIElement> HeightProperty =
-            ReactiveProperty<double, UIElement>.Register("Height", double.NaN, PropertyChangedCallbacks.InvalidateMeasure);
+            ReactiveProperty<double, UIElement>.Register(
+                "Height", double.NaN, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly ReactiveProperty<HorizontalAlignment, UIElement> HorizontalAlignmentProperty =
             ReactiveProperty<HorizontalAlignment, UIElement>.Register(
-                "HorizontalAlignment", HorizontalAlignment.Stretch, PropertyChangedCallbacks.InvalidateArrange);
+                "HorizontalAlignment", HorizontalAlignment.Stretch, ReactivePropertyChangedCallbacks.InvalidateArrange);
 
         public static readonly ReactiveProperty<bool, UIElement> IsMouseCapturedProperty =
             ReactiveProperty<bool, UIElement>.Register("IsMouseCaptured");
 
         public static readonly ReactiveProperty<Thickness, UIElement> MarginProperty =
             ReactiveProperty<Thickness, UIElement>.Register(
-                "Margin", new Thickness(), PropertyChangedCallbacks.InvalidateMeasure);
+                "Margin", new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly ReactiveProperty<double, UIElement> MaxHeightProperty =
             ReactiveProperty<double, UIElement>.Register(
-                "MaxHeight", double.PositiveInfinity, PropertyChangedCallbacks.InvalidateMeasure);
+                "MaxHeight", double.PositiveInfinity, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly ReactiveProperty<double, UIElement> MaxWidthProperty =
             ReactiveProperty<double, UIElement>.Register(
-                "MaxWidth", double.PositiveInfinity, PropertyChangedCallbacks.InvalidateMeasure);
+                "MaxWidth", double.PositiveInfinity, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly ReactiveProperty<double, UIElement> MinHeightProperty =
-            ReactiveProperty<double, UIElement>.Register("MinHeight", PropertyChangedCallbacks.InvalidateMeasure);
+            ReactiveProperty<double, UIElement>.Register(
+                "MinHeight", ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly ReactiveProperty<double, UIElement> MinWidthProperty =
-            ReactiveProperty<double, UIElement>.Register("MinWidth", PropertyChangedCallbacks.InvalidateMeasure);
+            ReactiveProperty<double, UIElement>.Register("MinWidth", ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly ReactiveProperty<VerticalAlignment, UIElement> VerticalAlignmentProperty =
             ReactiveProperty<VerticalAlignment, UIElement>.Register(
-                "VerticalAlignment", VerticalAlignment.Stretch, PropertyChangedCallbacks.InvalidateArrange);
+                "VerticalAlignment", VerticalAlignment.Stretch, ReactivePropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly ReactiveProperty<double, UIElement> WidthProperty = ReactiveProperty<double, UIElement>.Register(
-            "Width", double.NaN, PropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double, UIElement> WidthProperty =
+            ReactiveProperty<double, UIElement>.Register(
+                "Width", double.NaN, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         private readonly Subject<Gesture> gestures = new Subject<Gesture>();
 
@@ -266,18 +269,7 @@
             ISubject<TProperty> target = this.GetSubject(property);
             IObservable<object> source = this.GetObservable(DataContextProperty);
 
-            TProperty oldValue = target.First();
-
-            IDisposable sourceSubscription = source.Subscribe(o => target.OnNext(o as TProperty));
-
-            TProperty newValue = target.First();
-
-            if (!Equals(newValue, oldValue))
-            {
-                this.RaiseChanged(property, oldValue, newValue);
-            }
-
-            return sourceSubscription;
+            return source.Subscribe(o => target.OnNext(o as TProperty));
         }
 
         public bool CaptureMouse()
@@ -477,6 +469,23 @@
         }
 
         /// <summary>
+        ///     Returns the nearest ancestor of the specified type, which maybe itself or null.
+        /// </summary>
+        /// <typeparam name = "T">The <see cref = "Type">Type</see> of the ancestor</typeparam>
+        /// <returns>The nearest ancestor of Type T</returns>
+        protected override T GetNearestAncestorOfType<T>()
+        {
+            var ancestor = this as T;
+
+            while (ancestor == null && this.VisualParent != null)
+            {
+                ancestor = this.VisualParent as T;
+            }
+
+            return ancestor;
+        }
+
+        /// <summary>
         ///     When overridden in a derived class, measures the size in layout required for child elements and determines a size for the UIElement-derived class.
         /// </summary>
         /// <param name = "availableSize">
@@ -495,23 +504,6 @@
 
         protected virtual void OnRender(IDrawingContext drawingContext)
         {
-        }
-
-        protected override void RaiseChanged<TProperty, TOwner>(
-            ReactiveProperty<TProperty, TOwner> property, TProperty oldValue, TProperty newValue)
-        {
-            Action<ReactivePropertyChange<TProperty, TOwner>> changedCallback = property.ChangedCallback;
-            if (changedCallback != null)
-            {
-                var owner = this as TOwner;
-
-                while (owner == null && this.VisualParent != null)
-                {
-                    owner = this.VisualParent as TOwner;
-                }
-
-                changedCallback(new ReactivePropertyChange<TProperty, TOwner>(owner, property, oldValue, newValue));
-            }
         }
 
         /// <summary>

@@ -106,7 +106,7 @@
     <Compile Include="Presentation\Point.cs" />
     <Compile Include="Presentation\Media\Color.cs" />
     <Compile Include="Presentation\Media\Colors.cs" />
-    <Compile Include="Presentation\ReactivePropertyChange.cs" />
+    <Compile Include="Presentation\ReactivePropertyChangeEventArgs.cs" />
     <Compile Include="Presentation\Size.cs" />
     <Compile Include="Presentation\Rect.cs" />
     <Compile Include="Presentation\Thickness.cs" />
@@ -128,7 +128,7 @@
     <Compile Include="Internal\RectExtensions.cs" />
     <Compile Include="Internal\SizeExtensions.cs" />
     <Compile Include="Internal\ThicknessExtensions.cs" />
-    <Compile Include="Internal\PropertyChangedCallbacks.cs" />
+    <Compile Include="Presentation\ReactivePropertyChangedCallbacks.cs" />
     <Compile Include="Internal\VectorExtensions.cs" />
     <Compile Include="Presentation\Controls\Button.cs" />
     <Compile Include="Presentation\Controls\Primitives\ButtonBase.cs" />

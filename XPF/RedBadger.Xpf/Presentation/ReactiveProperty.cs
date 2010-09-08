@@ -11,20 +11,20 @@
         private static readonly PropertyStore<TProperty, TOwner> registeredProperties =
             new PropertyStore<TProperty, TOwner>();
 
-        private readonly Action<ReactivePropertyChange<TProperty, TOwner>> changedCallback;
+        private readonly Action<TOwner, ReactivePropertyChangeEventArgs<TProperty, TOwner>> changedCallback;
 
         private readonly TProperty defaultValue;
 
         private readonly string name;
 
-        private ReactiveProperty(string name, TProperty defaultValue, Action<ReactivePropertyChange<TProperty, TOwner>> changedCallback)
+        private ReactiveProperty(string name, TProperty defaultValue, Action<TOwner, ReactivePropertyChangeEventArgs<TProperty, TOwner>> changedCallback)
         {
             this.name = name;
             this.defaultValue = defaultValue;
             this.changedCallback = changedCallback;
         }
 
-        public Action<ReactivePropertyChange<TProperty, TOwner>> ChangedCallback
+        public Action<TOwner, ReactivePropertyChangeEventArgs<TProperty, TOwner>> ChangedCallback
         {
             get
             {
@@ -59,13 +59,13 @@
         }
 
         public static ReactiveProperty<TProperty, TOwner> Register(
-            string propertyName, Action<ReactivePropertyChange<TProperty, TOwner>> changedCallback)
+            string propertyName, Action<TOwner, ReactivePropertyChangeEventArgs<TProperty, TOwner>> changedCallback)
         {
             return Register(propertyName, default(TProperty), changedCallback);
         }
 
         public static ReactiveProperty<TProperty, TOwner> Register(
-            string propertyName, TProperty defaultValue, Action<ReactivePropertyChange<TProperty, TOwner>> changedCallback)
+            string propertyName, TProperty defaultValue, Action<TOwner, ReactivePropertyChangeEventArgs<TProperty, TOwner>> changedCallback)
         {
             if (string.IsNullOrEmpty(propertyName))
             {

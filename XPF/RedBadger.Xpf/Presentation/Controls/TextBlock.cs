@@ -16,14 +16,14 @@ namespace RedBadger.Xpf.Presentation.Controls
             ReactiveProperty<Brush, TextBlock>.Register("Foreground");
 
         public static readonly ReactiveProperty<Thickness, TextBlock> PaddingProperty =
-            ReactiveProperty<Thickness, TextBlock>.Register("Padding", PropertyChangedCallbacks.InvalidateMeasure);
+            ReactiveProperty<Thickness, TextBlock>.Register("Padding", ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly ReactiveProperty<string, TextBlock> TextProperty = ReactiveProperty<string, TextBlock>.Register(
-            "Text", string.Empty, PropertyChangedCallbacks.InvalidateMeasure);
+            "Text", string.Empty, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly ReactiveProperty<TextWrapping, TextBlock> WrappingProperty =
             ReactiveProperty<TextWrapping, TextBlock>.Register(
-                "Wrapping", TextWrapping.NoWrap, PropertyChangedCallbacks.InvalidateMeasure);
+                "Wrapping", TextWrapping.NoWrap, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         private static readonly Regex whiteSpaceRegEx = new Regex(@"\s+", RegexOptions.Compiled);
 

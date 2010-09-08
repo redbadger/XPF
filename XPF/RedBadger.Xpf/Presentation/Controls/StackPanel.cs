@@ -8,7 +8,7 @@ namespace RedBadger.Xpf.Presentation.Controls
     {
         public static readonly ReactiveProperty<Orientation, StackPanel> OrientationProperty =
             ReactiveProperty<Orientation, StackPanel>.Register(
-                "Orientation", Orientation.Vertical, PropertyChangedCallbacks.InvalidateMeasure);
+                "Orientation", Orientation.Vertical, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public Orientation Orientation
         {

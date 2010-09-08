@@ -7,14 +7,14 @@ namespace RedBadger.Xpf.Presentation.Controls
     public class Image : UIElement
     {
         public static readonly ReactiveProperty<ImageSource, Image> SourceProperty =
-            ReactiveProperty<ImageSource, Image>.Register("Source", null, PropertyChangedCallbacks.InvalidateMeasure);
+            ReactiveProperty<ImageSource, Image>.Register("Source", null, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly ReactiveProperty<StretchDirection, Image> StretchDirectionProperty =
             ReactiveProperty<StretchDirection, Image>.Register(
-                "StretchDirection", StretchDirection.Both, PropertyChangedCallbacks.InvalidateMeasure);
+                "StretchDirection", StretchDirection.Both, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly ReactiveProperty<Stretch, Image> StretchProperty = ReactiveProperty<Stretch, Image>.Register(
-            "Stretch", Stretch.Uniform, PropertyChangedCallbacks.InvalidateMeasure);
+            "Stretch", Stretch.Uniform, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public ImageSource Source
         {

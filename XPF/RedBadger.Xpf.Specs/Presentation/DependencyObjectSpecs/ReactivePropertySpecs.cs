@@ -13,7 +13,41 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
 {
     using Machine.Specifications;
 
+    using Moq;
+
     using RedBadger.Xpf.Presentation;
+
+    using It = Machine.Specifications.It;
+
+    public class TestBindingObject : DependencyObject
+    {
+        public static readonly ReactiveProperty<double, TestBindingObject> WidthProperty =
+            ReactiveProperty<double, TestBindingObject>.Register("Width", double.NaN, WidthChangedCallback);
+
+        public double Width
+        {
+            get
+            {
+                return this.GetValue(WidthProperty);
+            }
+
+            set
+            {
+                this.SetValue(WidthProperty, value);
+            }
+        }
+
+        public virtual void WidthChangedCallback(double testBindingObject, double newValue)
+        {
+        }
+
+        private static void WidthChangedCallback(
+            TestBindingObject testBindingObject, 
+            ReactivePropertyChangeEventArgs<double, TestBindingObject> reactivePropertyChange)
+        {
+            testBindingObject.WidthChangedCallback(reactivePropertyChange.OldValue, reactivePropertyChange.NewValue);
+        }
+    }
 
     public abstract class a_DependencyObject
     {
@@ -61,5 +95,50 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
         {
             TestPropertyProperty = ReactiveProperty<string, DependencyObject>.Register("TestProperty", defaultValue);
         }
+    }
+
+    [Subject(typeof(DependencyObject))]
+    public class when_a_value_is_changed_three_times
+    {
+        private const double ExpectedWidth1 = 1d;
+
+        private const double ExpectedWidth2 = 2d;
+
+        private const double ExpectedWidth3 = 3d;
+
+        private static Mock<TestBindingObject> target;
+
+        private Establish context = () => { target = new Mock<TestBindingObject> { CallBase = true }; };
+
+        private Because of = () =>
+            {
+                target.Object.Width = ExpectedWidth1;
+                target.Object.Width = ExpectedWidth2;
+                target.Object.Width = ExpectedWidth3;
+            };
+
+        private It should_call_the_target_property_changed_callback1 =
+            () =>
+            target.Verify(
+                o =>
+                o.WidthChangedCallback(
+                    Moq.It.Is<double>(d => d.Equals(double.NaN)), Moq.It.Is<double>(d => d.Equals(ExpectedWidth1))), 
+                Times.Once());
+
+        private It should_call_the_target_property_changed_callback2 =
+            () =>
+            target.Verify(
+                o =>
+                o.WidthChangedCallback(
+                    Moq.It.Is<double>(d => d.Equals(ExpectedWidth1)), Moq.It.Is<double>(d => d.Equals(ExpectedWidth2))), 
+                Times.Once());
+
+        private It should_call_the_target_property_changed_callback3 =
+            () =>
+            target.Verify(
+                o =>
+                o.WidthChangedCallback(
+                    Moq.It.Is<double>(d => d.Equals(ExpectedWidth2)), Moq.It.Is<double>(d => d.Equals(ExpectedWidth3))), 
+                Times.Once());
     }
 }

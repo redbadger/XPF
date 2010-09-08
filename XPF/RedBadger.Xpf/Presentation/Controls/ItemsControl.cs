@@ -115,7 +115,7 @@
             return child.DesiredSize;
         }
 
-        private static void ItemsPanelChanged(ReactivePropertyChange<Panel, ItemsControl> change)
+        private static void ItemsPanelChanged(ItemsControl itemsControl, ReactivePropertyChangeEventArgs<Panel, ItemsControl> change)
         {
             Panel panel = change.NewValue;
             if (!(panel.Children is ITemplatedList<IElement>))
@@ -124,14 +124,12 @@
                     "ItemsControl requires a panel whose Children collection implements ITemplatedList<IElement>");
             }
 
-            ItemsControl itemsControl = change.Owner;
             itemsControl.InvalidateMeasure();
             itemsControl.scrollViewer.Content = panel;
         }
 
-        private static void ItemsSourceChanged(ReactivePropertyChange<IEnumerable, ItemsControl> change)
+        private static void ItemsSourceChanged(ItemsControl itemsControl, ReactivePropertyChangeEventArgs<IEnumerable, ItemsControl> change)
         {
-            ItemsControl itemsControl = change.Owner;
             if (change.OldValue is INotifyCollectionChanged)
             {
                 itemsControl.changingItems.Dispose();

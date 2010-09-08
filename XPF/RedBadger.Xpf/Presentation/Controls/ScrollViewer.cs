@@ -7,6 +7,8 @@
     {
         private IScrollInfo scrollInfo;
 
+        private bool isInsertingScrollContentPresenter;
+
         public bool CanHorizontallyScroll
         {
             get
@@ -67,15 +69,18 @@
             if (newScrollInfo != null)
             {
                 this.scrollInfo = newScrollInfo;
+
+                if (oldContent != null && this.isInsertingScrollContentPresenter)
+                {
+                    ((ScrollContentPresenter)newContent).Content = oldContent;
+                }
+
+                this.isInsertingScrollContentPresenter = false;
             }
             else
             {
-                var scrollContentPresenter = new ScrollContentPresenter();
-
-                this.Content = scrollContentPresenter;
-                scrollContentPresenter.Content = newContent;
-
-                this.scrollInfo = scrollContentPresenter;
+                this.isInsertingScrollContentPresenter = true;
+                this.Content = new ScrollContentPresenter();
             }
         }
 

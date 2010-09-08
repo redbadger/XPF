@@ -8,8 +8,7 @@ namespace RedBadger.Xpf.Presentation.Controls
     public class ContentControl : Control
     {
         public static readonly ReactiveProperty<IElement, ContentControl> ContentProperty =
-            ReactiveProperty<IElement, ContentControl>.Register(
-                "Content", null, ContentPropertyChangedCallback);
+            ReactiveProperty<IElement, ContentControl>.Register("Content", null, ContentPropertyChangedCallback);
 
         public IElement Content
         {
@@ -63,9 +62,9 @@ namespace RedBadger.Xpf.Presentation.Controls
         }
 
         private static void ContentPropertyChangedCallback(
-            ReactivePropertyChange<IElement, ContentControl> change)
+            ContentControl contentControl, ReactivePropertyChangeEventArgs<IElement, ContentControl> change)
         {
-            change.Owner.InvalidateMeasure();
+            contentControl.InvalidateMeasure();
 
             var oldContent = change.OldValue;
             if (oldContent != null)
@@ -76,10 +75,10 @@ namespace RedBadger.Xpf.Presentation.Controls
             var newContent = change.NewValue;
             if (newContent != null)
             {
-                newContent.VisualParent = change.Owner;
+                newContent.VisualParent = contentControl;
             }
 
-            change.Owner.OnContentChanged(oldContent, newContent);
+            contentControl.OnContentChanged(oldContent, newContent);
         }
     }
 }
