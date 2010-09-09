@@ -285,7 +285,6 @@
 
         public virtual void OnApplyTemplate()
         {
-            this.GetDeferredBindings().ForEach(binding => binding.Resolve(this.DataContext));
         }
 
         public void ReleaseMouseCapture()
@@ -639,6 +638,7 @@
         /// <returns>The desired size of this element in layout.</returns>
         private Size MeasureCore(Size availableSize)
         {
+            this.ResolveDeferredBindings();
             this.OnApplyTemplate();
 
             Thickness margin = this.Margin;
@@ -678,6 +678,11 @@
             }
 
             return new Size(Math.Max(0, desiredWidth), Math.Max(0, desiredHeight));
+        }
+
+        private void ResolveDeferredBindings()
+        {
+            this.GetDeferredBindings().ForEach(binding => binding.Resolve(this.DataContext));
         }
     }
 }

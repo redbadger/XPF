@@ -104,7 +104,7 @@
     <Compile Include="Presentation\Data\TwoWayBinding.cs" />
     <Compile Include="Presentation\Data\INotifyPropertyChanged.cs" />
     <Compile Include="Presentation\Data\PropertyChangedEventArgs.cs" />
-    <Compile Include="Presentation\IProperty.cs" />
+    <Compile Include="Presentation\IReactiveProperty.cs" />
     <Compile Include="Presentation\Point.cs" />
     <Compile Include="Presentation\Media\Color.cs" />
     <Compile Include="Presentation\Media\Colors.cs" />

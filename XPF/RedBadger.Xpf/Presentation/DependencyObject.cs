@@ -13,10 +13,11 @@ namespace RedBadger.Xpf.Presentation
 
     public class DependencyObject : IDependencyObject
     {
-        // contains disposables - due to dual binding.
-        private readonly Dictionary<IProperty, IDisposable> propertryBindings = new Dictionary<IProperty, IDisposable>();
+        private readonly Dictionary<IReactiveProperty, IDisposable> propertryBindings =
+            new Dictionary<IReactiveProperty, IDisposable>();
 
-        private readonly Dictionary<IProperty, object> propertyValues = new Dictionary<IProperty, object>();
+        private readonly Dictionary<IReactiveProperty, object> propertyValues =
+            new Dictionary<IReactiveProperty, object>();
 
         /// <summary>
         ///     Bind One Way (from the Source).
@@ -25,7 +26,6 @@ namespace RedBadger.Xpf.Presentation
         /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "fromSource"><see cref = "IObservable{T}">IObservable</see> of updates from the source</param>
-        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
         public void Bind<TProperty, TOwner>(
             ReactiveProperty<TProperty, TOwner> property, IObservable<TProperty> fromSource) where TOwner : class
         {
@@ -38,7 +38,6 @@ namespace RedBadger.Xpf.Presentation
         /// <typeparam name = "TProperty">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> <see cref = "Type">Type</see></typeparam>
         /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
-        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
         public virtual void Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property) where TOwner : class
             where TProperty : class
         {
@@ -52,7 +51,6 @@ namespace RedBadger.Xpf.Presentation
         /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "toSource"><see cref = "IObserver{T}">IObserver</see> of updates for the Source</param>
-        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
         public void Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, IObserver<TProperty> toSource)
             where TOwner : class
         {
@@ -66,7 +64,6 @@ namespace RedBadger.Xpf.Presentation
         /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "source">A <see cref = "TwoWayBinding{T}">TwoWayBinding</see> containing both an <see cref = "IObservable{T}">IObservable</see> and <see cref = "IObserver{T}">IObserver</see></param>
-        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
         public void Bind<TProperty, TOwner>(
             ReactiveProperty<TProperty, TOwner> property, TwoWayBinding<TProperty> source) where TOwner : class
         {
@@ -81,7 +78,6 @@ namespace RedBadger.Xpf.Presentation
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "fromSource"><see cref = "IObservable{T}">IObservable</see> of updates from the source</param>
         /// <param name = "toSource"><see cref = "IObserver{T}">IObserver</see> of updates for the Source</param>
-        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
         public void Bind<TProperty, TOwner>(
             ReactiveProperty<TProperty, TOwner> property, 
             IObservable<TProperty> fromSource, 
@@ -107,7 +103,7 @@ namespace RedBadger.Xpf.Presentation
             }
         }
 
-        public void ClearValue(IProperty property)
+        public void ClearValue(IReactiveProperty property)
         {
             if (property == null)
             {
@@ -150,9 +146,12 @@ namespace RedBadger.Xpf.Presentation
             return this.GetSubject(property).AsObserver();
         }
 
+        /// <summary>
+        ///     Gets all bindings for this object that implement <see cref = "IDeferredBinding">IDeferredBinding</see>.
+        /// </summary>
+        /// <returns>An Enumerable of <see cref = "IDeferredBinding">IDeferredBinding</see>.</returns>
         protected IEnumerable<IDeferredBinding> GetDeferredBindings()
         {
-            // will this work with a dictionary of IDisposable?
             return this.propertryBindings.Values.OfType<IDeferredBinding>();
         }
 

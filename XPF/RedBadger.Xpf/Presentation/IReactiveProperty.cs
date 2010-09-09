@@ -1,6 +1,6 @@
 ﻿namespace RedBadger.Xpf.Presentation
 {
-    public interface IProperty
+    public interface IReactiveProperty
     {
     }
 }
