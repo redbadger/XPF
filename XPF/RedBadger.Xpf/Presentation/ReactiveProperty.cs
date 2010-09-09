@@ -5,7 +5,7 @@
 
     using RedBadger.Xpf.Internal;
 
-    public class ReactiveProperty<TProperty, TOwner> : IProperty
+    public class ReactiveProperty<TProperty, TOwner> : IReactiveProperty
         where TOwner : class
     {
         private static readonly PropertyStore<TProperty, TOwner> registeredProperties =

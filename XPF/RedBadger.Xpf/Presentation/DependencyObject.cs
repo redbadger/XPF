@@ -13,7 +13,11 @@ namespace RedBadger.Xpf.Presentation
 
     public class DependencyObject : IDependencyObject
     {
-        private readonly Dictionary<IProperty, object> propertyValues = new Dictionary<IProperty, object>();
+        private readonly Dictionary<IReactiveProperty, IDisposable> propertryBindings =
+            new Dictionary<IReactiveProperty, IDisposable>();
+
+        private readonly Dictionary<IReactiveProperty, object> propertyValues =
+            new Dictionary<IReactiveProperty, object>();
 
         /// <summary>
         ///     Bind One Way (from the Source).
@@ -22,11 +26,10 @@ namespace RedBadger.Xpf.Presentation
         /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "fromSource"><see cref = "IObservable{T}">IObservable</see> of updates from the source</param>
-        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public IDisposable Bind<TProperty, TOwner>(
+        public void Bind<TProperty, TOwner>(
             ReactiveProperty<TProperty, TOwner> property, IObservable<TProperty> fromSource) where TOwner : class
         {
-            return fromSource.Subscribe(this.GetSubject(property));
+            this.SetBinding(property, fromSource.Subscribe(this.GetSubject(property)));
         }
 
         /// <summary>
@@ -35,9 +38,8 @@ namespace RedBadger.Xpf.Presentation
         /// <typeparam name = "TProperty">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> <see cref = "Type">Type</see></typeparam>
         /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
-        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public virtual IDisposable Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
-            where TOwner : class where TProperty : class
+        public virtual void Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property) where TOwner : class
+            where TProperty : class
         {
             throw new NotImplementedException("Derrived classes should provide a default implementation.");
         }
@@ -49,11 +51,10 @@ namespace RedBadger.Xpf.Presentation
         /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "toSource"><see cref = "IObserver{T}">IObserver</see> of updates for the Source</param>
-        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public IDisposable Bind<TProperty, TOwner>(
-            ReactiveProperty<TProperty, TOwner> property, IObserver<TProperty> toSource) where TOwner : class
+        public void Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, IObserver<TProperty> toSource)
+            where TOwner : class
         {
-            return this.GetSubject(property).Subscribe(toSource);
+            this.SetBinding(property, this.GetSubject(property).Subscribe(toSource));
         }
 
         /// <summary>
@@ -63,11 +64,10 @@ namespace RedBadger.Xpf.Presentation
         /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "source">A <see cref = "TwoWayBinding{T}">TwoWayBinding</see> containing both an <see cref = "IObservable{T}">IObservable</see> and <see cref = "IObserver{T}">IObserver</see></param>
-        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public IDisposable Bind<TProperty, TOwner>(
+        public void Bind<TProperty, TOwner>(
             ReactiveProperty<TProperty, TOwner> property, TwoWayBinding<TProperty> source) where TOwner : class
         {
-            return this.Bind(property, source.Observable, source.Observer);
+            this.Bind(property, source.Observable, source.Observer);
         }
 
         /// <summary>
@@ -78,18 +78,32 @@ namespace RedBadger.Xpf.Presentation
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "fromSource"><see cref = "IObservable{T}">IObservable</see> of updates from the source</param>
         /// <param name = "toSource"><see cref = "IObserver{T}">IObserver</see> of updates for the Source</param>
-        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public IDisposable Bind<TProperty, TOwner>(
+        public void Bind<TProperty, TOwner>(
             ReactiveProperty<TProperty, TOwner> property, 
             IObservable<TProperty> fromSource, 
             IObserver<TProperty> toSource) where TOwner : class
         {
             ISubject<TProperty> target = this.GetSubject(property);
-
-            return new DualDisposable(fromSource.Subscribe(target), target.Subscribe(toSource));
+            this.SetBinding(property, new DualDisposable(fromSource.Subscribe(target), target.Subscribe(toSource)));
         }
 
-        public void ClearValue(IProperty property)
+        /// <summary>
+        ///     Clears the binding on the specified property.
+        /// </summary>
+        /// <typeparam name = "TProperty">The type of the property.</typeparam>
+        /// <typeparam name = "TOwner">The type of the owner.</typeparam>
+        /// <param name = "property">The property who's binding you want to clear.</param>
+        public void ClearBinding<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property) where TOwner : class
+        {
+            IDisposable binding;
+            if (this.propertryBindings.TryGetValue(property, out binding))
+            {
+                this.propertryBindings.Remove(property);
+                binding.Dispose();
+            }
+        }
+
+        public void ClearValue(IReactiveProperty property)
         {
             if (property == null)
             {
@@ -133,6 +147,15 @@ namespace RedBadger.Xpf.Presentation
         }
 
         /// <summary>
+        ///     Gets all bindings for this object that implement <see cref = "IDeferredBinding">IDeferredBinding</see>.
+        /// </summary>
+        /// <returns>An Enumerable of <see cref = "IDeferredBinding">IDeferredBinding</see>.</returns>
+        protected IEnumerable<IDeferredBinding> GetDeferredBindings()
+        {
+            return this.propertryBindings.Values.OfType<IDeferredBinding>();
+        }
+
+        /// <summary>
         ///     Returns the nearest ancestor of the specified type, which maybe itself or null.
         /// </summary>
         /// <typeparam name = "T">The <see cref = "Type">Type</see> of the ancestor</typeparam>
@@ -162,6 +185,13 @@ namespace RedBadger.Xpf.Presentation
 
             this.propertyValues.Add(property, subject);
             return subject;
+        }
+
+        protected void SetBinding<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, IDisposable binding)
+            where TOwner : class
+        {
+            this.ClearBinding(property);
+            this.propertryBindings[property] = binding;
         }
 
         private void RaiseChanged<TProperty, TOwner>(

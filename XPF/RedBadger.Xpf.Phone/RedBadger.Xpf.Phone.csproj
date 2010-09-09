@@ -203,6 +203,12 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\BindingFactory.cs">
       <Link>Presentation\Data\BindingFactory.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\DeferredBinding.cs">
+      <Link>Presentation\Data\DeferredBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\IDeferredBinding.cs">
+      <Link>Presentation\Data\IDeferredBinding.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\INotifyPropertyChanged.cs">
       <Link>Presentation\Data\INotifyPropertyChanged.cs</Link>
     </Compile>
@@ -245,8 +251,8 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Input\IInputManager.cs">
       <Link>Presentation\Input\IInputManager.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\IProperty.cs">
-      <Link>Presentation\IProperty.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\IReactiveProperty.cs">
+      <Link>Presentation\IReactiveProperty.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IRootElement.cs">
       <Link>Presentation\IRootElement.cs</Link>
