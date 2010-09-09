@@ -23,13 +23,13 @@
             TSource source, Expression<Func<TSource, TProperty>> propertySelector)
             where TSource : INotifyPropertyChanged
         {
-            return GetObservable<TProperty>(source, GetPropertyInfo(propertySelector));
+            return new DualBinding<TProperty>(GetObservable<TProperty>(source, GetPropertyInfo(propertySelector))).AsObservable();
         }
 
         public static IObservable<TProperty> CreateOneWay<TSource, TProperty>(
             TSource source, ReactiveProperty<TProperty, TSource> property) where TSource : DependencyObject
         {
-            return source.GetObservable(property);
+            return new DualBinding<TProperty>(source.GetObservable(property)).AsObservable();
         }
 
         public static IObservable<TSource> CreateOneWay<TSource>(TSource source)

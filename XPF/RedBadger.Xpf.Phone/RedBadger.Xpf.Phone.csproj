@@ -205,6 +205,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\DeferredBinding.cs">
       <Link>Presentation\Data\DeferredBinding.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\DualBinding.cs">
+      <Link>Presentation\Data\DualBinding.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\IDeferredBinding.cs">
       <Link>Presentation\Data\IDeferredBinding.cs</Link>
     </Compile>
