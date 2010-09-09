@@ -183,8 +183,6 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
 
-        private static IDisposable binding1;
-
         private static TestBindingObject source1;
 
         private static TestBindingObject source2;
@@ -198,14 +196,11 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
                 target = new Border();
 
                 IObservable<Brush> fromSource1 = BindingFactory.CreateOneWay(source1, o => o.Brush);
-
-                // binding1 = target.Bind(Border.BorderBrushProperty, fromSource1);
+                target.Bind(Border.BorderBrushProperty, fromSource1);
             };
 
         private Because of = () =>
             {
-                binding1.Dispose();
-
                 IObservable<Brush> fromSource2 = BindingFactory.CreateOneWay(source2, o => o.Brush);
                 target.Bind(Border.BorderBrushProperty, fromSource2);
 
@@ -221,8 +216,6 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
 
-        private static IDisposable binding;
-
         private static TestBindingObject source;
 
         private static Border target;
@@ -233,14 +226,13 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
                 target = new Border();
 
                 IObservable<Brush> fromSource = BindingFactory.CreateOneWay(source, o => o.Brush);
-
-                // binding = target.Bind(Border.BorderBrushProperty, fromSource);
+                target.Bind(Border.BorderBrushProperty, fromSource);
             };
 
         private Because of = () =>
             {
                 source.Brush = expectedBrush;
-                binding.Dispose();
+                target.ClearBinding(Border.BorderBrushProperty);
 
                 source.Brush = new SolidColorBrush(Colors.Black);
             };
