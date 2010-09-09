@@ -140,8 +140,8 @@ Global
 		{225BC32F-B88C-4EA2-B4D9-F094C28B4D81}.Release|Windows Phone.ActiveCfg = Release|x86
 		{225BC32F-B88C-4EA2-B4D9-F094C28B4D81}.Release|x86.ActiveCfg = Release|x86
 		{545640ED-7CE0-4DBE-A060-251C61F3AEF6}.Build|Any CPU.ActiveCfg = Release|Windows Phone
-		{545640ED-7CE0-4DBE-A060-251C61F3AEF6}.Build|Mixed Platforms.ActiveCfg = Release|Windows Phone
-		{545640ED-7CE0-4DBE-A060-251C61F3AEF6}.Build|Mixed Platforms.Build.0 = Release|Windows Phone
+		{545640ED-7CE0-4DBE-A060-251C61F3AEF6}.Build|Mixed Platforms.ActiveCfg = Debug|Windows Phone
+		{545640ED-7CE0-4DBE-A060-251C61F3AEF6}.Build|Mixed Platforms.Build.0 = Debug|Windows Phone
 		{545640ED-7CE0-4DBE-A060-251C61F3AEF6}.Build|Windows Phone.ActiveCfg = Release|Windows Phone
 		{545640ED-7CE0-4DBE-A060-251C61F3AEF6}.Build|Windows Phone.Build.0 = Release|Windows Phone
 		{545640ED-7CE0-4DBE-A060-251C61F3AEF6}.Build|x86.ActiveCfg = Release|Windows Phone
