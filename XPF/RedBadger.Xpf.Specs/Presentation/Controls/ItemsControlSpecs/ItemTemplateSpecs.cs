@@ -77,30 +77,34 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
     [Subject(typeof(ItemsControl), "Item Template")]
     public class when_item_template_contains_a_binding_a_property_on_the_data_context : an_ItemsControl
     {
-        private class MyBindingObject : INotifyPropertyChanged
-        {
-            public string Name { get; set; }
-
-            public event EventHandler<PropertyChangedEventArgs> PropertyChanged;
-        }
+        private static MyBindingObject source;
 
         private Establish context = () =>
             {
-                ItemsControl.ItemsSource = new [] { new MyBindingObject() { Name = "Name Value" } };
+                source = new MyBindingObject { Name = "Name Value" };
+                ItemsControl.ItemsSource = new[] { source };
 
                 ItemsControl.ItemTemplate = () =>
                     {
                         var textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
 
-                        var fromSource = BindingFactory.CreateOneWay<MyBindingObject, string>(source => source.Name);
+                        var fromSource = BindingFactory.CreateOneWay<MyBindingObject, string>(s => s.Name);
                         textBlock.Bind(TextBlock.TextProperty, fromSource);
 
                         return textBlock;
                     };
 
-            ItemsControl.Measure(new Size());
-        };
+                ItemsControl.Measure(new Size());
+            };
 
-        private It should_bind_to_the_data_context;
+        private It should_bind_to_the_data_context =
+            () => ((TextBlock)ItemsControl.ItemsPanel.Children[0]).Text.ShouldEqual(source.Name);
+
+        private class MyBindingObject : INotifyPropertyChanged
+        {
+            public event EventHandler<PropertyChangedEventArgs> PropertyChanged;
+
+            public string Name { get; set; }
+        }
     }
 }

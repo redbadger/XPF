@@ -264,12 +264,12 @@
         /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public override IDisposable Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
+        public override void Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
         {
             ISubject<TProperty> target = this.GetSubject(property);
             IObservable<object> source = this.GetObservable(DataContextProperty);
 
-            return source.Subscribe(o => target.OnNext(o as TProperty));
+            this.SetBinding(property, source.Subscribe(o => target.OnNext(o as TProperty)));
         }
 
         public bool CaptureMouse()

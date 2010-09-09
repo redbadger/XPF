@@ -13,7 +13,8 @@ namespace RedBadger.Xpf.Presentation
 
     public class DependencyObject : IDependencyObject
     {
-        private readonly Dictionary<IProperty, object> propertryBindings = new Dictionary<IProperty, object>();
+        // contains disposables - due to dual binding.
+        private readonly Dictionary<IProperty, IDisposable> propertryBindings = new Dictionary<IProperty, IDisposable>();
 
         private readonly Dictionary<IProperty, object> propertyValues = new Dictionary<IProperty, object>();
 
@@ -28,7 +29,7 @@ namespace RedBadger.Xpf.Presentation
         public void Bind<TProperty, TOwner>(
             ReactiveProperty<TProperty, TOwner> property, IObservable<TProperty> fromSource) where TOwner : class
         {
-            this.propertryBindings[property] = fromSource.Subscribe(this.GetSubject(property));
+            this.SetBinding(property, fromSource.Subscribe(this.GetSubject(property)));
         }
 
         /// <summary>
@@ -38,8 +39,8 @@ namespace RedBadger.Xpf.Presentation
         /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public virtual IDisposable Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
-            where TOwner : class where TProperty : class
+        public virtual void Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property) where TOwner : class
+            where TProperty : class
         {
             throw new NotImplementedException("Derrived classes should provide a default implementation.");
         }
@@ -52,10 +53,10 @@ namespace RedBadger.Xpf.Presentation
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "toSource"><see cref = "IObserver{T}">IObserver</see> of updates for the Source</param>
         /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public IDisposable Bind<TProperty, TOwner>(
-            ReactiveProperty<TProperty, TOwner> property, IObserver<TProperty> toSource) where TOwner : class
+        public void Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, IObserver<TProperty> toSource)
+            where TOwner : class
         {
-            return this.GetSubject(property).Subscribe(toSource);
+            this.SetBinding(property, this.GetSubject(property).Subscribe(toSource));
         }
 
         /// <summary>
@@ -66,10 +67,10 @@ namespace RedBadger.Xpf.Presentation
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "source">A <see cref = "TwoWayBinding{T}">TwoWayBinding</see> containing both an <see cref = "IObservable{T}">IObservable</see> and <see cref = "IObserver{T}">IObserver</see></param>
         /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public IDisposable Bind<TProperty, TOwner>(
+        public void Bind<TProperty, TOwner>(
             ReactiveProperty<TProperty, TOwner> property, TwoWayBinding<TProperty> source) where TOwner : class
         {
-            return this.Bind(property, source.Observable, source.Observer);
+            this.Bind(property, source.Observable, source.Observer);
         }
 
         /// <summary>
@@ -81,14 +82,29 @@ namespace RedBadger.Xpf.Presentation
         /// <param name = "fromSource"><see cref = "IObservable{T}">IObservable</see> of updates from the source</param>
         /// <param name = "toSource"><see cref = "IObserver{T}">IObserver</see> of updates for the Source</param>
         /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public IDisposable Bind<TProperty, TOwner>(
+        public void Bind<TProperty, TOwner>(
             ReactiveProperty<TProperty, TOwner> property, 
             IObservable<TProperty> fromSource, 
             IObserver<TProperty> toSource) where TOwner : class
         {
             ISubject<TProperty> target = this.GetSubject(property);
+            this.SetBinding(property, new DualDisposable(fromSource.Subscribe(target), target.Subscribe(toSource)));
+        }
 
-            return new DualDisposable(fromSource.Subscribe(target), target.Subscribe(toSource));
+        /// <summary>
+        ///     Clears the binding on the specified property.
+        /// </summary>
+        /// <typeparam name = "TProperty">The type of the property.</typeparam>
+        /// <typeparam name = "TOwner">The type of the owner.</typeparam>
+        /// <param name = "property">The property who's binding you want to clear.</param>
+        public void ClearBinding<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property) where TOwner : class
+        {
+            IDisposable binding;
+            if (this.propertryBindings.TryGetValue(property, out binding))
+            {
+                this.propertryBindings.Remove(property);
+                binding.Dispose();
+            }
         }
 
         public void ClearValue(IProperty property)
@@ -136,6 +152,7 @@ namespace RedBadger.Xpf.Presentation
 
         protected IEnumerable<IDeferredBinding> GetDeferredBindings()
         {
+            // will this work with a dictionary of IDisposable?
             return this.propertryBindings.Values.OfType<IDeferredBinding>();
         }
 
@@ -169,6 +186,13 @@ namespace RedBadger.Xpf.Presentation
 
             this.propertyValues.Add(property, subject);
             return subject;
+        }
+
+        protected void SetBinding<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, IDisposable binding)
+            where TOwner : class
+        {
+            this.ClearBinding(property);
+            this.propertryBindings[property] = binding;
         }
 
         private void RaiseChanged<TProperty, TOwner>(
