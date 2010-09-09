@@ -13,6 +13,13 @@
     public static class BindingFactory
     {
         public static IObservable<TProperty> CreateOneWay<TSource, TProperty>(
+            Expression<Func<TSource, TProperty>> propertySelector)
+            where TSource : INotifyPropertyChanged
+        {
+            return new DeferredBinding<TProperty>(GetPropertyInfo(propertySelector));
+        }
+
+        public static IObservable<TProperty> CreateOneWay<TSource, TProperty>(
             TSource source, Expression<Func<TSource, TProperty>> propertySelector)
             where TSource : INotifyPropertyChanged
         {
@@ -20,7 +27,7 @@
         }
 
         public static IObservable<TProperty> CreateOneWay<TSource, TProperty>(
-            TSource source, Property<TProperty, TSource> property) where TSource : DependencyObject
+            TSource source, ReactiveProperty<TProperty, TSource> property) where TSource : DependencyObject
         {
             return source.GetObservable(property);
         }
@@ -31,7 +38,7 @@
         }
 
         public static IObserver<TProperty> CreateOneWayToSource<TSource, TProperty>(
-            TSource source, Property<TProperty, TSource> property) where TSource : DependencyObject
+            TSource source, ReactiveProperty<TProperty, TSource> property) where TSource : DependencyObject
         {
             return source.GetObserver(property);
         }
@@ -55,7 +62,7 @@
                 GetObservable<TProperty>(source, GetPropertyInfo(propertySelector)), observer.AsObserver());
         }
 
-        private static IObservable<TProperty> GetObservable<TProperty>(
+        public static IObservable<TProperty> GetObservable<TProperty>(
             INotifyPropertyChanged source, PropertyInfo propertyInfo)
         {
             return

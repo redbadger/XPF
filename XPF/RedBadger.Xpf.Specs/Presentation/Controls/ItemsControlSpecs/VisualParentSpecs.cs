@@ -80,6 +80,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private It should_have_added_a_panel_as_a_descendant_in_its_visual_tree = () =>
             {
                 IElement ancestor = ItemsControl.ItemsPanel.VisualParent;
+
                 while (ancestor != null && !(ancestor is ItemsControl))
                 {
                     ancestor = ancestor.VisualParent;

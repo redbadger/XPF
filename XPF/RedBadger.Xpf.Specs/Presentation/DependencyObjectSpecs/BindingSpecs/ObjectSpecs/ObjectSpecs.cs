@@ -29,8 +29,8 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.Ob
 
     public class TestBindingDependencyObject : DependencyObject
     {
-        public static readonly Property<SolidColorBrush, TestBindingObject> SolidColorBrushProperty =
-            Property<SolidColorBrush, TestBindingObject>.Register("SolidColorBrush");
+        public static readonly ReactiveProperty<SolidColorBrush, TestBindingObject> SolidColorBrushProperty =
+            ReactiveProperty<SolidColorBrush, TestBindingObject>.Register("SolidColorBrush");
 
         public SolidColorBrush SolidColorBrush
         {

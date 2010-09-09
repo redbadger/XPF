@@ -28,6 +28,7 @@
     <NoStdLib>true</NoStdLib>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <XnaCompressContent>false</XnaCompressContent>
+    <DocumentationFile>bin\Windows Phone\Debug\RedBadger.Xpf.Phone.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Windows Phone' ">
     <DebugType>pdbonly</DebugType>
@@ -114,9 +115,6 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\MinMax.cs">
       <Link>Internal\MinMax.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Internal\PropertyChangedCallbacks.cs">
-      <Link>Internal\PropertyChangedCallbacks.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\PropertyStore.cs">
       <Link>Internal\PropertyStore.cs</Link>
@@ -205,6 +203,12 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\BindingFactory.cs">
       <Link>Presentation\Data\BindingFactory.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\DeferredBinding.cs">
+      <Link>Presentation\Data\DeferredBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\IDeferredBinding.cs">
+      <Link>Presentation\Data\IDeferredBinding.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\INotifyPropertyChanged.cs">
       <Link>Presentation\Data\INotifyPropertyChanged.cs</Link>
     </Compile>
@@ -247,8 +251,8 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Input\IInputManager.cs">
       <Link>Presentation\Input\IInputManager.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\IProperty.cs">
-      <Link>Presentation\IProperty.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\IReactiveProperty.cs">
+      <Link>Presentation\IReactiveProperty.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IRootElement.cs">
       <Link>Presentation\IRootElement.cs</Link>
@@ -310,11 +314,14 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Point.cs">
       <Link>Presentation\Point.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Property.cs">
-      <Link>Presentation\Property.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\ReactiveProperty.cs">
+      <Link>Presentation\ReactiveProperty.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\PropertyChange.cs">
-      <Link>Presentation\PropertyChange.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\ReactivePropertyChangedCallbacks.cs">
+      <Link>Presentation\ReactivePropertyChangedCallbacks.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\ReactivePropertyChangeEventArgs.cs">
+      <Link>Presentation\ReactivePropertyChangeEventArgs.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Rect.cs">
       <Link>Presentation\Rect.cs</Link>
