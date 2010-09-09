@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationBar.cs" />
+    <Compile Include="ApplicationBarIconButton.cs" />
     <Compile Include="MyComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Properties\AppManifest.xml">

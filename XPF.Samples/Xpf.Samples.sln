@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XpfSamples.S02ApplicationBar", "XpfSamples.S02ApplicationBar\XpfSamples.S02ApplicationBar\XpfSamples.S02ApplicationBar.csproj", "{E71B6040-CB83-433D-BA01-065A69622921}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "XpfSamples.S02ApplicationBarContent", "XpfSamples.S02ApplicationBar\XpfSamples.S02ApplicationBarContent\XpfSamples.S02ApplicationBarContent.contentproj", "{F9C715C6-DAF5-431B-8405-316C8E4E1A22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XpfSamples.S02ApplicationBarContent", "XpfSamples.S02ApplicationBar\XpfSamples.S02ApplicationBarContent\XpfSamples.S02ApplicationBarContent.contentproj", "{F9C715C6-DAF5-431B-8405-316C8E4E1A22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +39,7 @@ Global
 		{3BDD472B-EA2B-465E-B156-F112684D5739}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{3BDD472B-EA2B-465E-B156-F112684D5739}.Debug|Windows Phone.ActiveCfg = Debug|x86
 		{3BDD472B-EA2B-465E-B156-F112684D5739}.Debug|x86.ActiveCfg = Debug|x86
+		{3BDD472B-EA2B-465E-B156-F112684D5739}.Debug|x86.Build.0 = Debug|x86
 		{3BDD472B-EA2B-465E-B156-F112684D5739}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{3BDD472B-EA2B-465E-B156-F112684D5739}.Release|Windows Phone.ActiveCfg = Release|x86
 		{3BDD472B-EA2B-465E-B156-F112684D5739}.Release|x86.ActiveCfg = Release|x86
@@ -49,6 +50,8 @@ Global
 		{E71B6040-CB83-433D-BA01-065A69622921}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
 		{E71B6040-CB83-433D-BA01-065A69622921}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
 		{E71B6040-CB83-433D-BA01-065A69622921}.Debug|x86.ActiveCfg = Debug|Windows Phone
+		{E71B6040-CB83-433D-BA01-065A69622921}.Debug|x86.Build.0 = Debug|Windows Phone
+		{E71B6040-CB83-433D-BA01-065A69622921}.Debug|x86.Deploy.0 = Debug|Windows Phone
 		{E71B6040-CB83-433D-BA01-065A69622921}.Release|Mixed Platforms.ActiveCfg = Release|Windows Phone
 		{E71B6040-CB83-433D-BA01-065A69622921}.Release|Mixed Platforms.Build.0 = Release|Windows Phone
 		{E71B6040-CB83-433D-BA01-065A69622921}.Release|Mixed Platforms.Deploy.0 = Release|Windows Phone

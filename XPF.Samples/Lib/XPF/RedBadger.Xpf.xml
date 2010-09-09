@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RedBadger.Xpf</name>
+    </assembly>
+    <members>
+        <member name="M:RedBadger.Xpf.Presentation.DependencyObject.Bind``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1},System.IObservable{``0})">
+            <summary>
+                Bind One Way (from the Source).
+            </summary>
+            <typeparam name="TProperty">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
+            <typeparam name="TOwner">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
+            <param name="fromSource"><see cref="T:System.IObservable`1">IObservable</see> of updates from the source</param>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.DependencyObject.Bind``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1})">
+            <summary>
+                Bind One Way (to a default source eg. the Target's DataContext).
+            </summary>
+            <typeparam name="TProperty">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
+            <typeparam name="TOwner">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.DependencyObject.Bind``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1},System.IObserver{``0})">
+            <summary>
+                Bind One Way (to the Source).
+            </summary>
+            <typeparam name="TProperty">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
+            <typeparam name="TOwner">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
+            <param name="toSource"><see cref="T:System.IObserver`1">IObserver</see> of updates for the Source</param>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.DependencyObject.Bind``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1},RedBadger.Xpf.Presentation.Data.TwoWayBinding{``0})">
+            <summary>
+                Bind Two Way (from and to the Source)
+            </summary>
+            <typeparam name="TProperty">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
+            <typeparam name="TOwner">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
+            <param name="source">A <see cref="T:RedBadger.Xpf.Presentation.Data.TwoWayBinding`1">TwoWayBinding</see> containing both an <see cref="T:System.IObservable`1">IObservable</see> and <see cref="T:System.IObserver`1">IObserver</see></param>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.DependencyObject.Bind``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1},System.IObservable{``0},System.IObserver{``0})">
+            <summary>
+                Bind Two Way (from and to the Source)
+            </summary>
+            <typeparam name="TProperty">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
+            <typeparam name="TOwner">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
+            <param name="fromSource"><see cref="T:System.IObservable`1">IObservable</see> of updates from the source</param>
+            <param name="toSource"><see cref="T:System.IObserver`1">IObserver</see> of updates for the Source</param>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.DependencyObject.ClearBinding``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1})">
+            <summary>
+                Clears the binding on the specified property.
+            </summary>
+            <typeparam name = "TProperty">The type of the property.</typeparam>
+            <typeparam name = "TOwner">The type of the owner.</typeparam>
+            <param name = "property">The property who's binding you want to clear.</param>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.DependencyObject.GetDeferredBindings">
+            <summary>
+                Gets all bindings for this object that implement <see cref="T:RedBadger.Xpf.Presentation.Data.IDeferredBinding">IDeferredBinding</see>.
+            </summary>
+            <returns>An Enumerable of <see cref="T:RedBadger.Xpf.Presentation.Data.IDeferredBinding">IDeferredBinding</see>.</returns>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.DependencyObject.GetNearestAncestorOfType``1">
+            <summary>
+                Returns the nearest ancestor of the specified type, which maybe itself or null.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.Type">Type</see> of the ancestor</typeparam>
+            <returns>The nearest ancestor of Type T</returns>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.IElement.Arrange(RedBadger.Xpf.Presentation.Rect)">
+            <summary>
+                Positions child elements and determines a size for a UIElement.
+                Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
+                This method constitutes the second pass of a layout update.
+            </summary>
+            <param name = "finalRect">The final size that the parent computes for the child element, provided as a Rect instance.</param>
+        </member>
+        <member name="P:RedBadger.Xpf.Presentation.IElement.IsArrangeValid">
+            <summary>
+                Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
+            </summary>
+            <value>
+                <c>true</c> if the size and position of layout are valid; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.UIElement.Bind``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1})">
+            <summary>
+                Bind One Way (to the DataContext).
+            </summary>
+            <typeparam name="TProperty">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
+            <typeparam name="TOwner">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
+            <returns>A <see cref="T:System.IDisposable">Disposable</see> subscription.</returns>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.UIElement.Arrange(RedBadger.Xpf.Presentation.Rect)">
+            <summary>
+                Positions child elements and determines a size for a UIElement.
+                Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
+                This method constitutes the second pass of a layout update.
+            </summary>
+            <param name = "finalRect">The final size that the parent computes for the child element, provided as a Rect instance.</param>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.UIElement.Measure(RedBadger.Xpf.Presentation.Size)">
+            <summary>
+                Updates the DesiredSize of a UIElement.
+                Derrived elements call this method from their own MeasureOverride implementations to form a recursive layout update.
+                Calling this method constitutes the first pass (the "Measure" pass) of a layout update.
+            </summary>
+            <param name = "availableSize">
+                The available space that a parent element can allocate a child element.
+                A child element can request a larger space than what is available; the provided size might be accommodated.
+            </param>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.UIElement.ArrangeOverride(RedBadger.Xpf.Presentation.Size)">
+            <summary>
+                When overridden in a derived class, positions child elements and determines a size for a UIElement derived class.
+            </summary>
+            <param name = "finalSize">The final area within the parent that this element should use to arrange itself and its children.</param>
+            <returns>The actual size used.</returns>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.UIElement.GetNearestAncestorOfType``1">
+            <summary>
+                Returns the nearest ancestor of the specified type, which maybe itself or null.
+            </summary>
+            <typeparam name="T">The <see cref="T:System.Type">Type</see> of the ancestor</typeparam>
+            <returns>The nearest ancestor of Type T</returns>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.UIElement.MeasureOverride(RedBadger.Xpf.Presentation.Size)">
+            <summary>
+                When overridden in a derived class, measures the size in layout required for child elements and determines a size for the UIElement-derived class.
+            </summary>
+            <param name = "availableSize">
+                The available size that this element can give to child elements.
+                Infinity can be specified as a value to indicate that the element will size to whatever content is available.
+            </param>
+            <returns>The size that this element determines it needs during layout, based on its calculations of child element sizes.</returns>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.UIElement.ArrangeCore(RedBadger.Xpf.Presentation.Rect)">
+            <summary>
+                Defines the template for core-level arrange layout definition.
+            </summary>
+            <remarks>
+                In WPF this method is defined on UIElement as protected virtual and has a base implementation.
+                FrameworkElement (which derrives from UIElement) creates a sealed implemention, similar to the below,
+                which discards UIElement's base implementation.
+            </remarks>
+            <param name = "finalRect">The final area within the parent that element should use to arrange itself and its child elements.</param>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.UIElement.MeasureCore(RedBadger.Xpf.Presentation.Size)">
+            <summary>
+                Implements basic measure-pass layout system behavior.
+            </summary>
+            <remarks>
+                In WPF this method is definded on UIElement as protected virtual and returns an empty Size.
+                FrameworkElement (which derrives from UIElement) then creates a sealed implementation similar to the below.
+                In XPF UIElement and FrameworkElement have been collapsed into a single class.
+            </remarks>
+            <param name = "availableSize">The available size that the parent element can give to the child elements.</param>
+            <returns>The desired size of this element in layout.</returns>
+        </member>
+        <member name="P:RedBadger.Xpf.Presentation.UIElement.IsArrangeValid">
+            <summary>
+                Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
+            </summary>
+            <value>
+                <c>true</c> if the size and position of layout are valid; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:RedBadger.Xpf.Presentation.UIElement.VisualOffset">
+            <remarks>
+                In WPF this is protected internal.  For the purposes of unit testing we've not made this protected.
+                TODO: implement a reflection based mechanism (for Moq?) to get back values from protected properties
+            </remarks>
+        </member>
+        <member name="T:RedBadger.Xpf.Presentation.Controls.RootElement">
+            <summary>
+            RootElement is the main host for all your controls, it manages the renderer, user input and is the target for Update/Draw calls.
+            </summary>
+        </member>
+        <member name="T:RedBadger.Xpf.Presentation.Controls.ContentControl">
+            <summary>
+                Represents a control with a single piece of content.
+            </summary>
+        </member>
+    </members>
+</doc>
