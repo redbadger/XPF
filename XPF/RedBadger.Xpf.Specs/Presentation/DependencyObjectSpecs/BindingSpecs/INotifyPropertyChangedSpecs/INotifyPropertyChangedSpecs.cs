@@ -70,6 +70,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
             {
                 return this.width;
             }
+
             set
             {
                 if (this.width != value)
@@ -110,7 +111,8 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
 
         private Because of = () => source.Width = ExpectedWidth;
 
-        private It should_have_the_correct_brush = () => target.Width.ShouldEqual(ExpectedWidth);
+        private It should_update_the_target_property_with_the_correct_value =
+            () => target.Width.ShouldEqual(ExpectedWidth);
     }
 
     [Subject(typeof(DependencyObject))]
@@ -196,6 +198,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
                 target = new Border();
 
                 IObservable<Brush> fromSource1 = BindingFactory.CreateOneWay(source1, o => o.Brush);
+
                 // binding1 = target.Bind(Border.BorderBrushProperty, fromSource1);
             };
 
@@ -230,6 +233,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
                 target = new Border();
 
                 IObservable<Brush> fromSource = BindingFactory.CreateOneWay(source, o => o.Brush);
+
                 // binding = target.Bind(Border.BorderBrushProperty, fromSource);
             };
 
