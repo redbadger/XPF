@@ -33,18 +33,6 @@ namespace RedBadger.Xpf.Presentation
         }
 
         /// <summary>
-        ///     Bind One Way (to a default source eg. the Target's DataContext).
-        /// </summary>
-        /// <typeparam name = "TProperty">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> <see cref = "Type">Type</see></typeparam>
-        /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
-        /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
-        public virtual void Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property) where TOwner : class
-            where TProperty : class
-        {
-            throw new NotImplementedException("Derrived classes should provide a default implementation.");
-        }
-
-        /// <summary>
         ///     Bind One Way (to the Source).
         /// </summary>
         /// <typeparam name = "TProperty">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> <see cref = "Type">Type</see></typeparam>
@@ -147,15 +135,6 @@ namespace RedBadger.Xpf.Presentation
         }
 
         /// <summary>
-        ///     Gets all bindings for this object that implement <see cref = "IDeferredBinding">IDeferredBinding</see>.
-        /// </summary>
-        /// <returns>An Enumerable of <see cref = "IDeferredBinding">IDeferredBinding</see>.</returns>
-        protected IEnumerable<IDeferredBinding> GetDeferredBindings()
-        {
-            return this.propertryBindings.Values.OfType<IDeferredBinding>();
-        }
-
-        /// <summary>
         ///     Returns the nearest ancestor of the specified type, which maybe itself or null.
         /// </summary>
         /// <typeparam name = "T">The <see cref = "Type">Type</see> of the ancestor</typeparam>
@@ -165,7 +144,25 @@ namespace RedBadger.Xpf.Presentation
             return this as T;
         }
 
-        protected ISubject<TProperty> GetSubject<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
+        /// <summary>
+        ///     Resolves all the deferred bindingss for this object using the Data Context.
+        /// </summary>
+        /// <param name = "dataContext">The Data Context against which the binding should be resolved.</param>
+        protected void ResolveDeferredBindings(object dataContext)
+        {
+            this.propertryBindings.Values.OfType<IBinding>().Where(
+                binding => binding.ResolutionMode == BindingResolutionMode.Deferred).ForEach(
+                    deferredBinding => deferredBinding.Resolve(dataContext));
+        }
+
+        protected void SetBinding<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, IDisposable binding)
+            where TOwner : class
+        {
+            this.ClearBinding(property);
+            this.propertryBindings[property] = binding;
+        }
+
+        private ISubject<TProperty> GetSubject<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
             where TOwner : class
         {
             object value;
@@ -176,8 +173,8 @@ namespace RedBadger.Xpf.Presentation
 
             var subject = new BehaviorSubject<TProperty>(property.DefaultValue);
 
-            var leftSource = subject.StartWith(property.DefaultValue);
-            var rightSource = leftSource.Skip(1);
+            IObservable<TProperty> leftSource = subject.StartWith(property.DefaultValue);
+            IObservable<TProperty> rightSource = leftSource.Skip(1);
 
             leftSource.Zip(
                 rightSource, 
@@ -188,13 +185,6 @@ namespace RedBadger.Xpf.Presentation
 
             this.propertyValues.Add(property, subject);
             return subject;
-        }
-
-        protected void SetBinding<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, IDisposable binding)
-            where TOwner : class
-        {
-            this.ClearBinding(property);
-            this.propertryBindings[property] = binding;
         }
 
         private void RaiseChanged<TProperty, TOwner>(

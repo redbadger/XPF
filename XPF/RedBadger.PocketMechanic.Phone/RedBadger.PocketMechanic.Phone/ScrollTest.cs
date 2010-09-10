@@ -66,7 +66,7 @@ namespace RedBadger.PocketMechanic.Phone
                                     Margin = new Thickness(0, 0, 0, 50), 
                                     Background = new SolidColorBrush(GetRandomColor(this.random))
                                 };
-                            textBlock.Bind(TextBlock.TextProperty);
+                            textBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay<string>());
                             return textBlock;
                         }, 
                     ItemsSource = items

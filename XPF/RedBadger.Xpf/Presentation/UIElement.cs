@@ -257,21 +257,6 @@
         /// </remarks>
         internal Vector VisualOffset { get; set; }
 
-        /// <summary>
-        ///     Bind One Way (to the DataContext).
-        /// </summary>
-        /// <typeparam name = "TProperty">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> <see cref = "Type">Type</see></typeparam>
-        /// <typeparam name = "TOwner">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
-        /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
-        /// <returns>A <see cref = "IDisposable">Disposable</see> subscription.</returns>
-        public override void Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
-        {
-            ISubject<TProperty> target = this.GetSubject(property);
-            IObservable<object> source = this.GetObservable(DataContextProperty);
-
-            this.SetBinding(property, source.Subscribe(o => target.OnNext(o as TProperty)));
-        }
-
         public bool CaptureMouse()
         {
             IRootElement rootElement;
@@ -638,7 +623,7 @@
         /// <returns>The desired size of this element in layout.</returns>
         private Size MeasureCore(Size availableSize)
         {
-            this.ResolveDeferredBindings();
+            this.ResolveDeferredBindings(this.DataContext);
             this.OnApplyTemplate();
 
             Thickness margin = this.Margin;
@@ -678,11 +663,6 @@
             }
 
             return new Size(Math.Max(0, desiredWidth), Math.Max(0, desiredHeight));
-        }
-
-        private void ResolveDeferredBindings()
-        {
-            this.GetDeferredBindings().ForEach(binding => binding.Resolve(this.DataContext));
         }
     }
 }
