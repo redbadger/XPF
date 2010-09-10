@@ -35,6 +35,12 @@
             this.propertyInfo = propertyInfo;
         }
 
+        public Binding(T source)
+            : this(BindingResolutionMode.Immediate)
+        {
+            this.observable = new BehaviorSubject<T>(source);
+        }
+
         public Binding(object source, PropertyInfo propertyInfo)
             : this(BindingResolutionMode.Immediate)
         {

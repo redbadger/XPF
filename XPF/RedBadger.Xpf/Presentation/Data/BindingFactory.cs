@@ -68,7 +68,7 @@
         /// <returns></returns>
         public static IObservable<TSource> CreateOneWay<TSource>(TSource source)
         {
-            return new BehaviorSubject<TSource>(source).AsObservable();
+            return new Binding<TSource>(source);
         }
 
         /// <summary>
