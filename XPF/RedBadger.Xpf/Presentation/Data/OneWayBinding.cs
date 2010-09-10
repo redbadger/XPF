@@ -8,7 +8,7 @@
     using Microsoft.Phone.Reactive;
 #endif
 
-    internal class Binding<T> : IObservable<T>, IBinding, IDisposable
+    internal class OneWayBinding<T> : IObservable<T>, IBinding, IDisposable
     {
         private readonly IObservable<T> observable;
 
@@ -16,7 +16,7 @@
 
         private readonly BindingResolutionMode resolutionMode;
 
-        private readonly Subject<T> subject = new Subject<T>();
+        private readonly ISubject<T> subject = new Subject<T>();
 
         private bool isDisposed;
 
@@ -24,24 +24,24 @@
 
         private IDisposable subscription;
 
-        public Binding()
+        public OneWayBinding()
             : this(BindingResolutionMode.Deferred)
         {
         }
 
-        public Binding(PropertyInfo propertyInfo)
+        public OneWayBinding(PropertyInfo propertyInfo)
             : this(BindingResolutionMode.Deferred)
         {
             this.propertyInfo = propertyInfo;
         }
 
-        public Binding(T source)
+        public OneWayBinding(T source)
             : this(BindingResolutionMode.Immediate)
         {
             this.observable = new BehaviorSubject<T>(source);
         }
 
-        public Binding(object source, PropertyInfo propertyInfo)
+        public OneWayBinding(object source, PropertyInfo propertyInfo)
             : this(BindingResolutionMode.Immediate)
         {
             var notifyPropertyChanged = source as INotifyPropertyChanged;
@@ -51,18 +51,18 @@
                                   : new BehaviorSubject<T>((T)propertyInfo.GetValue(source, null));
         }
 
-        protected Binding(BindingResolutionMode resolutionMode)
+        protected OneWayBinding(BindingResolutionMode resolutionMode)
         {
             this.resolutionMode = resolutionMode;
         }
 
-        protected Binding(IObservable<T> observable)
+        protected OneWayBinding(IObservable<T> observable)
             : this(BindingResolutionMode.Immediate)
         {
             this.observable = observable;
         }
 
-        ~Binding()
+        ~OneWayBinding()
         {
             this.Dispose(false);
         }
@@ -75,7 +75,7 @@
             }
         }
 
-        protected Subject<T> Subject
+        protected ISubject<T> Subject
         {
             get
             {
@@ -101,7 +101,7 @@
 
         public virtual void Resolve(object dataContext)
         {
-            this.SubscribeToObserver();
+            this.SubscribeObserverToSubject();
 
             if (this.propertyInfo == null)
             {
@@ -137,7 +137,7 @@
             return this;
         }
 
-        protected void SubscribeToObserver()
+        protected void SubscribeObserverToSubject()
         {
             this.subscription = this.subject.Subscribe(this.observer);
         }

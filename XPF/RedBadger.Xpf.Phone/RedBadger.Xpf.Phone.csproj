@@ -200,9 +200,6 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Controls\VirtualizingStackPanel.cs">
       <Link>Presentation\Controls\VirtualizingStackPanel.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\Binding.cs">
-      <Link>Presentation\Data\Binding.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\BindingFactory.cs">
       <Link>Presentation\Data\BindingFactory.cs</Link>
     </Compile>
@@ -218,11 +215,20 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\INotifyPropertyChanged.cs">
       <Link>Presentation\Data\INotifyPropertyChanged.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\OneWayBinding.cs">
+      <Link>Presentation\Data\OneWayBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\OneWayReactivePropertyBinding.cs">
+      <Link>Presentation\Data\OneWayReactivePropertyBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\OneWayToSourceBinding.cs">
+      <Link>Presentation\Data\OneWayToSourceBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\OneWayToSourceReactivePropertyBinding.cs">
+      <Link>Presentation\Data\OneWayToSourceReactivePropertyBinding.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\PropertyChangedEventArgs.cs">
       <Link>Presentation\Data\PropertyChangedEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\ReactivePropertyBinding.cs">
-      <Link>Presentation\Data\ReactivePropertyBinding.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\TwoWayBinding.cs">
       <Link>Presentation\Data\TwoWayBinding.cs</Link>

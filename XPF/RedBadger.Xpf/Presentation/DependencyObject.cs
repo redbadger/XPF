@@ -42,7 +42,13 @@ namespace RedBadger.Xpf.Presentation
         public void Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, IObserver<TProperty> toSource)
             where TOwner : class
         {
-            this.SetBinding(property, this.GetSubject(property).Subscribe(toSource));
+            var binding = toSource as OneWayToSourceBinding<TProperty>;
+
+            var disposable = binding != null
+                                 ? binding.SubscribeFrom(this.GetSubject(property))
+                                 : this.GetSubject(property).Subscribe(toSource);
+
+            this.SetBinding(property, disposable);
         }
 
         /// <summary>

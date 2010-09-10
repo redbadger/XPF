@@ -15,9 +15,6 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
 
     using Machine.Specifications;
 
-    using Moq;
-
-    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Data;
@@ -94,7 +91,31 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
     }
 
     [Subject(typeof(DependencyObject))]
-    public class when_a_binding_is_one_way
+    public class when_there_is_a_one_way_binding_to_the_data_context
+    {
+        private const double ExpectedWidth = 10d;
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new Border { DataContext = source };
+
+                IObservable<double> fromSource = BindingFactory.CreateOneWay(TestBindingObject.WidthProperty);
+                target.Bind(UIElement.WidthProperty, fromSource);
+                target.Measure(Size.Empty);
+            };
+
+        private Because of = () => source.Width = ExpectedWidth;
+
+        private It should_update_the_target = () => target.Width.ShouldEqual(ExpectedWidth);
+    }
+
+    [Subject(typeof(DependencyObject))]
+    public class when_there_is_a_one_way_binding_to_a_specified_source
     {
         private const double ExpectedWidth = 10d;
 
@@ -113,7 +134,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
 
         private Because of = () => source.Width = ExpectedWidth;
 
-        private It should_have_the_correct_brush = () => target.Width.ShouldEqual(ExpectedWidth);
+        private It should_update_the_target = () => target.Width.ShouldEqual(ExpectedWidth);
     }
 
     [Subject(typeof(DependencyObject))]
@@ -141,7 +162,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
                 source.Width = ExpectedWidth;
             };
 
-        private It should_assign_the_source_value_to_the_target_property = () => target.Width.ShouldEqual(ExpectedWidth);
+        private It should_update_the_target = () => target.Width.ShouldEqual(ExpectedWidth);
 
         private It should_call_the_target_property_changed_callback =
             () => target.WidthPropertyChangedCalledbackCount.ShouldEqual(3);
@@ -168,7 +189,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
                 target.Bind(TestBindingObject.WidthProperty, fromSource);
             };
 
-        private It should_assign_the_source_value_to_the_target_property = () => target.Width.ShouldEqual(ExpectedWidth);
+        private It should_update_the_target = () => target.Width.ShouldEqual(ExpectedWidth);
 
         private It should_call_the_target_property_changed_callback =
             () => target.WidthPropertyChangedCalledbackCount.ShouldEqual(1);
@@ -195,11 +216,11 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
 
         private Because of = () => source.SolidColorBrush = expectedBrush;
 
-        private It should_have_the_correct_brush = () => target.BorderBrush.ShouldEqual(expectedBrush);
+        private It should_update_the_target = () => target.BorderBrush.ShouldEqual(expectedBrush);
     }
 
     [Subject(typeof(DependencyObject))]
-    public class when_a_binding_is_one_way_to_source
+    public class when_there_is_a_one_way_to_source_binding_to_a_specified_source
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
 
@@ -218,7 +239,31 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
 
         private Because of = () => target.BorderBrush = expectedBrush;
 
-        private It should_have_the_correct_brush = () => source.Brush.ShouldEqual(expectedBrush);
+        private It should_update_the_source = () => source.Brush.ShouldEqual(expectedBrush);
+    }
+
+    [Subject(typeof(DependencyObject))]
+    public class when_there_is_a_one_way_to_source_binding_to_the_data_context
+    {
+        private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new Border { DataContext = source };
+
+                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource(TestBindingObject.BrushProperty);
+                target.Bind(Border.BorderBrushProperty, toSource);
+                target.Measure(Size.Empty);
+            };
+
+        private Because of = () => target.BorderBrush = expectedBrush;
+
+        private It should_update_the_source = () => source.Brush.ShouldEqual(expectedBrush);
     }
 
     [Subject(typeof(DependencyObject))]
@@ -241,7 +286,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
 
         private Because of = () => target.SolidColorBrush = expectedBrush;
 
-        private It should_have_the_correct_brush = () => source.BorderBrush.ShouldEqual(expectedBrush);
+        private It should_update_the_source = () => source.BorderBrush.ShouldEqual(expectedBrush);
     }
 
     [Subject(typeof(UIElement))]

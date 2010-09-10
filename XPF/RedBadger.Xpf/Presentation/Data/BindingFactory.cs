@@ -23,7 +23,7 @@
         /// <returns>IObservable around the Data Context.</returns>
         public static IObservable<TSource> CreateOneWay<TSource>()
         {
-            return new Binding<TSource>();
+            return new OneWayBinding<TSource>();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@
         public static IObservable<TProperty> CreateOneWay<TSource, TProperty>(
             Expression<Func<TSource, TProperty>> propertySelector)
         {
-            return new Binding<TProperty>(GetPropertyInfo(propertySelector));
+            return new OneWayBinding<TProperty>(GetPropertyInfo(propertySelector));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@
         public static IObservable<TProperty> CreateOneWay<TSource, TProperty>(
             ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : DependencyObject
         {
-            return new ReactivePropertyBinding<TSource, TProperty>(reactiveProperty);
+            return new OneWayReactivePropertyBinding<TSource, TProperty>(reactiveProperty);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@
         /// <returns></returns>
         public static IObservable<TSource> CreateOneWay<TSource>(TSource source)
         {
-            return new Binding<TSource>(source);
+            return new OneWayBinding<TSource>(source);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@
         public static IObservable<TProperty> CreateOneWay<TSource, TProperty>(
             TSource source, Expression<Func<TSource, TProperty>> propertySelector)
         {
-            return new Binding<TProperty>(source, GetPropertyInfo(propertySelector));
+            return new OneWayBinding<TProperty>(source, GetPropertyInfo(propertySelector));
         }
 
         /// <summary>
@@ -96,21 +96,31 @@
         public static IObservable<TProperty> CreateOneWay<TSource, TProperty>(
             TSource source, ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : DependencyObject
         {
-            return new ReactivePropertyBinding<TSource, TProperty>(source, reactiveProperty);
+            return new OneWayReactivePropertyBinding<TSource, TProperty>(source, reactiveProperty);
         }
 
         public static IObserver<TProperty> CreateOneWayToSource<TSource, TProperty>(
-            TSource source, ReactiveProperty<TProperty, TSource> property) where TSource : DependencyObject
+            Expression<Func<TSource, TProperty>> propertySelector)
         {
-            return source.GetObserver(property);
+            return new OneWayToSourceBinding<TProperty>(GetPropertyInfo(propertySelector));
+        }
+
+        public static IObserver<TProperty> CreateOneWayToSource<TSource, TProperty>(
+            ReactiveProperty<TProperty, TSource> property) where TSource : DependencyObject
+        {
+            return new OneWayToSourceReactivePropertyBinding<TSource, TProperty>(property);
         }
 
         public static IObserver<TProperty> CreateOneWayToSource<TSource, TProperty>(
             TSource source, Expression<Func<TSource, TProperty>> propertySelector)
         {
-            var subject = new Subject<TProperty>();
-            subject.Subscribe(value => GetPropertyInfo(propertySelector).SetValue(source, value, null));
-            return subject.AsObserver();
+            return new OneWayToSourceBinding<TProperty>(source, GetPropertyInfo(propertySelector));
+        }
+
+        public static IObserver<TProperty> CreateOneWayToSource<TSource, TProperty>(
+            TSource source, ReactiveProperty<TProperty, TSource> property) where TSource : DependencyObject
+        {
+            return new OneWayToSourceReactivePropertyBinding<TSource, TProperty>(source, property);
         }
 
         public static TwoWayBinding<TProperty> CreateTwoWay<TSource, TProperty>(
