@@ -28,7 +28,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
         private static Exception exception;
 
         private Because of =
-            () => exception = Catch.Exception(() => UiElement.Object.Arrange(new Rect(new Size(double.NaN, 0))));
+            () => exception = Catch.Exception(() => Subject.Object.Arrange(new Rect(new Size(double.NaN, 0))));
 
         private It should_throw_a_Exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -39,7 +39,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
         private static Exception exception;
 
         private Because of =
-            () => exception = Catch.Exception(() => UiElement.Object.Arrange(new Rect(new Size(0, double.NaN))));
+            () => exception = Catch.Exception(() => Subject.Object.Arrange(new Rect(new Size(0, double.NaN))));
 
         private It should_throw_a_Exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -51,7 +51,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Because of =
             () =>
-            exception = Catch.Exception(() => UiElement.Object.Arrange(new Rect(new Size(double.PositiveInfinity, 0))));
+            exception = Catch.Exception(() => Subject.Object.Arrange(new Rect(new Size(double.PositiveInfinity, 0))));
 
         private It should_throw_a_Exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -63,7 +63,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Because of =
             () =>
-            exception = Catch.Exception(() => UiElement.Object.Arrange(new Rect(new Size(0, double.PositiveInfinity))));
+            exception = Catch.Exception(() => Subject.Object.Arrange(new Rect(new Size(0, double.PositiveInfinity))));
 
         private It should_throw_a_Exception = () => exception.ShouldBeOfType<InvalidOperationException>();
     }
@@ -73,12 +73,12 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Rect finalRect = Rect.Empty;
 
-        private Establish context = () => UiElement.Object.Arrange(finalRect);
+        private Establish context = () => Subject.Object.Arrange(finalRect);
 
-        private Because of = () => UiElement.Object.Arrange(finalRect);
+        private Because of = () => Subject.Object.Arrange(finalRect);
 
         private It should_not_arrange_again =
-            () => UiElement.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.IsAny<Size>());
+            () => Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.IsAny<Size>());
     }
 
     [Subject(typeof(UIElement), "Arrange")]
@@ -87,19 +87,19 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
         private static readonly Size expectedRenderSize = new Size(10, 20);
 
         private Establish context =
-            () => UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(expectedRenderSize);
+            () => Subject.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(expectedRenderSize);
 
-        private Because of = () => UiElement.Object.Arrange(Rect.Empty);
+        private Because of = () => Subject.Object.Arrange(Rect.Empty);
 
-        private It should_be_considered_valid = () => UiElement.Object.IsArrangeValid.ShouldBeTrue();
+        private It should_be_considered_valid = () => Subject.Object.IsArrangeValid.ShouldBeTrue();
 
-        private It should_have_set_a_render_size = () => UiElement.Object.RenderSize.ShouldEqual(expectedRenderSize);
+        private It should_have_set_a_render_size = () => Subject.Object.RenderSize.ShouldEqual(expectedRenderSize);
 
         private It should_have_set_an_actual_height =
-            () => UiElement.Object.ActualHeight.ShouldEqual(expectedRenderSize.Height);
+            () => Subject.Object.ActualHeight.ShouldEqual(expectedRenderSize.Height);
 
         private It should_have_set_an_actual_width =
-            () => UiElement.Object.ActualWidth.ShouldEqual(expectedRenderSize.Width);
+            () => Subject.Object.ActualWidth.ShouldEqual(expectedRenderSize.Width);
     }
 
     [Subject(typeof(UIElement), "Arrange")]
@@ -107,11 +107,11 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Size finalSize = new Size(50, 50);
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(finalSize));
+        private Because of = () => Subject.Object.Arrange(new Rect(finalSize));
 
         private It should_layout_its_children_within_the_desired_size =
             () =>
-            UiElement.Protected().Verify(
+            Subject.Protected().Verify(
                 ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
     }
 
@@ -120,17 +120,17 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Thickness margin = new Thickness(10, 20, 30, 40);
 
-        private Establish context = () => UiElement.Object.Margin = margin;
+        private Establish context = () => Subject.Object.Margin = margin;
 
-        private Because of = () => UiElement.Object.Arrange(Rect.Empty);
+        private Because of = () => Subject.Object.Arrange(Rect.Empty);
 
         private It should_layout_its_children_within_the_desired_size_minus_the_margins = () =>
             {
                 var expectedFinalSize = new Size(
-                    UiElement.Object.DesiredSize.Width - (margin.Left + margin.Right), 
-                    UiElement.Object.DesiredSize.Height - (margin.Top + margin.Bottom));
+                    Subject.Object.DesiredSize.Width - (margin.Left + margin.Right), 
+                    Subject.Object.DesiredSize.Height - (margin.Top + margin.Bottom));
 
-                UiElement.Protected().Verify(
+                Subject.Protected().Verify(
                     ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(expectedFinalSize)));
             };
     }
@@ -140,11 +140,11 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static readonly Size finalSize = new Size(150, 150);
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(finalSize));
+        private Because of = () => Subject.Object.Arrange(new Rect(finalSize));
 
         private It should_layout_its_children_within_the_final_size =
             () =>
-            UiElement.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(finalSize)));
+            Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(finalSize)));
     }
 
     [Subject(typeof(UIElement), "Arrange")]
@@ -154,15 +154,15 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UiElement.Object.HorizontalAlignment = HorizontalAlignment.Left;
-                UiElement.Object.VerticalAlignment = VerticalAlignment.Top;
+                Subject.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                Subject.Object.VerticalAlignment = VerticalAlignment.Top;
             };
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(finalSize));
+        private Because of = () => Subject.Object.Arrange(new Rect(finalSize));
 
         private It should_layout_its_children_within_the_desired_size =
             () =>
-            UiElement.Protected().Verify(
+            Subject.Protected().Verify(
                 ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
     }
 
@@ -176,11 +176,11 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
         private static readonly Size inkSize = new Size(50, 50);
 
         private Establish context =
-            () => UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+            () => Subject.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(clientSize));
+        private Because of = () => Subject.Object.Arrange(new Rect(clientSize));
 
-        private It should_set_the_visual_offset = () => UiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+        private It should_set_the_visual_offset = () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
@@ -194,15 +194,15 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UiElement.Object.HorizontalAlignment = HorizontalAlignment.Left;
-                UiElement.Object.VerticalAlignment = VerticalAlignment.Top;
+                Subject.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                Subject.Object.VerticalAlignment = VerticalAlignment.Top;
 
-                UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+                Subject.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(clientSize));
+        private Because of = () => Subject.Object.Arrange(new Rect(clientSize));
 
-        private It should_set_the_visual_offset = () => UiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+        private It should_set_the_visual_offset = () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
@@ -216,15 +216,15 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UiElement.Object.HorizontalAlignment = HorizontalAlignment.Center;
-                UiElement.Object.VerticalAlignment = VerticalAlignment.Center;
+                Subject.Object.HorizontalAlignment = HorizontalAlignment.Center;
+                Subject.Object.VerticalAlignment = VerticalAlignment.Center;
 
-                UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+                Subject.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(clientSize));
+        private Because of = () => Subject.Object.Arrange(new Rect(clientSize));
 
-        private It should_set_the_visual_offset = () => UiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+        private It should_set_the_visual_offset = () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
@@ -238,15 +238,15 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UiElement.Object.HorizontalAlignment = HorizontalAlignment.Right;
-                UiElement.Object.VerticalAlignment = VerticalAlignment.Bottom;
+                Subject.Object.HorizontalAlignment = HorizontalAlignment.Right;
+                Subject.Object.VerticalAlignment = VerticalAlignment.Bottom;
 
-                UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+                Subject.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(clientSize));
+        private Because of = () => Subject.Object.Arrange(new Rect(clientSize));
 
-        private It should_set_the_visual_offset = () => UiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+        private It should_set_the_visual_offset = () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
@@ -259,11 +259,11 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
         private static readonly Size inkSize = new Size(100, 100);
 
         private Establish context =
-            () => UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+            () => Subject.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(clientSize));
+        private Because of = () => Subject.Object.Arrange(new Rect(clientSize));
 
-        private It should_set_the_visual_offset = () => UiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+        private It should_set_the_visual_offset = () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
@@ -277,15 +277,15 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UiElement.Object.HorizontalAlignment = HorizontalAlignment.Left;
-                UiElement.Object.VerticalAlignment = VerticalAlignment.Top;
+                Subject.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                Subject.Object.VerticalAlignment = VerticalAlignment.Top;
 
-                UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+                Subject.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(clientSize));
+        private Because of = () => Subject.Object.Arrange(new Rect(clientSize));
 
-        private It should_set_the_visual_offset = () => UiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+        private It should_set_the_visual_offset = () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
@@ -299,15 +299,15 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UiElement.Object.HorizontalAlignment = HorizontalAlignment.Center;
-                UiElement.Object.VerticalAlignment = VerticalAlignment.Center;
+                Subject.Object.HorizontalAlignment = HorizontalAlignment.Center;
+                Subject.Object.VerticalAlignment = VerticalAlignment.Center;
 
-                UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+                Subject.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(clientSize));
+        private Because of = () => Subject.Object.Arrange(new Rect(clientSize));
 
-        private It should_set_the_visual_offset = () => UiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+        private It should_set_the_visual_offset = () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
@@ -321,15 +321,15 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UiElement.Object.HorizontalAlignment = HorizontalAlignment.Right;
-                UiElement.Object.VerticalAlignment = VerticalAlignment.Bottom;
+                Subject.Object.HorizontalAlignment = HorizontalAlignment.Right;
+                Subject.Object.VerticalAlignment = VerticalAlignment.Bottom;
 
-                UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+                Subject.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(clientSize));
+        private Because of = () => Subject.Object.Arrange(new Rect(clientSize));
 
-        private It should_set_the_visual_offset = () => UiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+        private It should_set_the_visual_offset = () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
@@ -344,16 +344,16 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UiElement.Object.HorizontalAlignment = HorizontalAlignment.Left;
-                UiElement.Object.VerticalAlignment = VerticalAlignment.Top;
-                UiElement.Object.Margin = new Thickness(10, 20, 30, 40);
+                Subject.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                Subject.Object.VerticalAlignment = VerticalAlignment.Top;
+                Subject.Object.Margin = new Thickness(10, 20, 30, 40);
 
-                UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+                Subject.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(clientSize));
+        private Because of = () => Subject.Object.Arrange(new Rect(clientSize));
 
-        private It should_set_the_visual_offset = () => UiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+        private It should_set_the_visual_offset = () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 
     [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
@@ -368,14 +368,14 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UiElement.Object.HorizontalAlignment = HorizontalAlignment.Left;
-                UiElement.Object.VerticalAlignment = VerticalAlignment.Top;
+                Subject.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                Subject.Object.VerticalAlignment = VerticalAlignment.Top;
 
-                UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
+                Subject.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(inkSize);
             };
 
-        private Because of = () => UiElement.Object.Arrange(new Rect(200, 300, clientSize.Width, clientSize.Height));
+        private Because of = () => Subject.Object.Arrange(new Rect(200, 300, clientSize.Width, clientSize.Height));
 
-        private It should_set_the_visual_offset = () => UiElement.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+        private It should_set_the_visual_offset = () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
     }
 }

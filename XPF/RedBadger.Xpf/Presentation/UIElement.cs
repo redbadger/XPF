@@ -15,7 +15,7 @@
     public abstract class UIElement : DependencyObject, IElement
     {
         public static readonly ReactiveProperty<object, UIElement> DataContextProperty =
-            ReactiveProperty<object, UIElement>.Register("DataContext");
+            ReactiveProperty<object, UIElement>.Register("DataContext", ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public static readonly ReactiveProperty<double, UIElement> HeightProperty =
             ReactiveProperty<double, UIElement>.Register(

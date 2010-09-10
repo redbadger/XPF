@@ -236,7 +236,11 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.Ob
                 target.Measure(Size.Empty);
             };
 
-        private Because of = () => target.DataContext = ExpectedValue;
+        private Because of = () =>
+            {
+                target.DataContext = ExpectedValue;
+                target.Measure(Size.Empty);
+            };
 
         private It should_bind_to_the_data_context = () => target.Text.ShouldEqual(ExpectedValue);
     }
@@ -256,7 +260,11 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.Ob
                 target.Measure(Size.Empty);
             };
 
-        private Because of = () => target.DataContext = NewDataContext;
+        private Because of = () =>
+            {
+                target.DataContext = NewDataContext;
+                target.Measure(Size.Empty);
+            };
 
         private It should_use_the_new_data_context = () => target.Text.ShouldEqual(NewDataContext);
     }
