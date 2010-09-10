@@ -176,8 +176,11 @@ namespace RedBadger.Xpf.Presentation
 
             var subject = new BehaviorSubject<TProperty>(property.DefaultValue);
 
-            subject.StartWith(property.DefaultValue).Zip(
-                subject, 
+            var leftSource = subject.StartWith(property.DefaultValue);
+            var rightSource = leftSource.Skip(1);
+
+            leftSource.Zip(
+                rightSource, 
                 (oldValue, newValue) =>
                 new ReactivePropertyChangeEventArgs<TProperty, TOwner>(property, oldValue, newValue)).Where(
                     propertyChange => !Equals(propertyChange.OldValue, propertyChange.NewValue)).Subscribe(
