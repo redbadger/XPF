@@ -212,7 +212,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
     }
 
     [Subject(typeof(DependencyObject))]
-    public class when_a_binding_is_cleared
+    public class when_a_one_way_binding_to_a_property_on_a_specified_source_is_cleared
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
 
@@ -227,6 +227,36 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
 
                 IObservable<Brush> fromSource = BindingFactory.CreateOneWay(source, o => o.Brush);
                 target.Bind(Border.BorderBrushProperty, fromSource);
+            };
+
+        private Because of = () =>
+            {
+                source.Brush = expectedBrush;
+                target.ClearBinding(Border.BorderBrushProperty);
+
+                source.Brush = new SolidColorBrush(Colors.Black);
+            };
+
+        private It should_not_use_the_binding = () => target.BorderBrush.ShouldEqual(expectedBrush);
+    }
+
+    [Subject(typeof(DependencyObject))]
+    public class when_a_one_way_binding_to_a_property_on_the_data_context_is_cleared
+    {
+        private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new Border { DataContext = source };
+
+                IObservable<Brush> fromSource = BindingFactory.CreateOneWay<TestBindingObject, Brush>(o => o.Brush);
+                target.Bind(Border.BorderBrushProperty, fromSource);
+                target.Measure(Size.Empty);
             };
 
         private Because of = () =>

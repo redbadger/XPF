@@ -176,6 +176,36 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.Ob
     }
 
     [Subject(typeof(DependencyObject), "One Way To Source")]
+    public class when_a_one_way_to_source_binding_to_a_property_on_the_data_context_is_cleared
+    {
+        private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+        {
+            source = new TestBindingObject();
+            target = new Border { DataContext = source };
+
+            IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource<TestBindingObject, Brush>(o => o.Brush);
+            target.Bind(Border.BorderBrushProperty, toSource);
+            target.Measure(Size.Empty);
+        };
+
+        private Because of = () =>
+            {
+                target.BorderBrush = expectedBrush;
+                target.ClearBinding(Border.BorderBrushProperty);
+
+                target.BorderBrush = new SolidColorBrush(Colors.Yellow);
+            };
+
+        private It should_not_update_the_source = () => source.Brush.ShouldEqual(expectedBrush);
+    }
+
+    [Subject(typeof(DependencyObject), "One Way To Source")]
     public class when_there_is_a_one_way_to_source_binding_to_a_property_on_a_specified_source
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
@@ -196,6 +226,35 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.Ob
         private Because of = () => target.BorderBrush = expectedBrush;
 
         private It should_update_the_source = () => source.Brush.ShouldEqual(expectedBrush);
+    }
+
+    [Subject(typeof(DependencyObject), "One Way To Source")]
+    public class when_a_one_way_to_source_binding_to_a_property_on_a_specified_source_is_cleared
+    {
+        private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+        {
+            source = new TestBindingObject();
+            target = new Border();
+
+            IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource(source, o => o.Brush);
+            target.Bind(Border.BorderBrushProperty, toSource);
+        };
+
+        private Because of = () =>
+            {
+                target.BorderBrush = expectedBrush;
+                target.ClearBinding(Border.BorderBrushProperty);
+
+                target.BorderBrush = new SolidColorBrush(Colors.Yellow);
+            };
+
+        private It should_not_update_the_source = () => source.Brush.ShouldEqual(expectedBrush);
     }
 
     [Subject(typeof(DependencyObject), "One Way To Source")]
