@@ -6,6 +6,9 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Presentation.Input;
     using RedBadger.Xpf.Presentation.Media;
 
+    /// <summary>
+    /// RootElement is the main host for all your controls, it manages the renderer, user input and is the target for Update/Draw calls.
+    /// </summary>
     public class RootElement : ContentControl, IRootElement
     {
         private readonly IInputManager inputManager;
