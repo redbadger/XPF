@@ -1,5 +1,7 @@
 ﻿namespace RedBadger.Xpf.Presentation.Data
 {
+    using System;
+
     internal class OneWayReactivePropertyBinding<TSource, TProperty> : OneWayBinding<TProperty>
         where TSource : DependencyObject
     {
@@ -18,12 +20,10 @@
 
         public override void Resolve(object dataContext)
         {
-            this.SubscribeObserverToSubject();
-
             var dependencyObject = dataContext as DependencyObject;
             if (dependencyObject != null)
             {
-                dependencyObject.GetObservable(this.reactiveProperty).Subscribe(this.Subject);
+                this.SubscribeObserver(dependencyObject.GetObservable(this.reactiveProperty));
             }
         }
     }

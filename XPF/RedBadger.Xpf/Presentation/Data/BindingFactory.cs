@@ -171,7 +171,7 @@
                 GetObservable<TProperty>(source, GetPropertyInfo(propertySelector)), observer.AsObserver());
         }
 
-        public static IObservable<TProperty> GetObservable<TProperty>(
+        internal static IObservable<TProperty> GetObservable<TProperty>(
             INotifyPropertyChanged source, PropertyInfo propertyInfo)
         {
             return

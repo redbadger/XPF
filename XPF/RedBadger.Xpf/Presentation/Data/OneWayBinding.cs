@@ -10,15 +10,13 @@
 
     internal class OneWayBinding<T> : IObservable<T>, IBinding, IDisposable
     {
-        private readonly IObservable<T> observable;
-
         private readonly PropertyInfo propertyInfo;
 
         private readonly BindingResolutionMode resolutionMode;
 
-        private readonly ISubject<T> subject = new Subject<T>();
-
         private bool isDisposed;
+
+        private IObservable<T> observable;
 
         private IObserver<T> observer;
 
@@ -75,14 +73,6 @@
             }
         }
 
-        protected ISubject<T> Subject
-        {
-            get
-            {
-                return this.subject;
-            }
-        }
-
         public void Dispose(bool isDisposing)
         {
             if (!this.isDisposed)
@@ -101,20 +91,18 @@
 
         public virtual void Resolve(object dataContext)
         {
-            this.SubscribeObserverToSubject();
-
             if (this.propertyInfo == null)
             {
-                this.subject.OnNext((T)dataContext);
+                this.observer.OnNext((T)dataContext);
             }
             else
             {
-                this.subject.OnNext((T)this.propertyInfo.GetValue(dataContext, null));
+                this.observer.OnNext((T)this.propertyInfo.GetValue(dataContext, null));
 
                 if (dataContext is INotifyPropertyChanged)
                 {
-                    BindingFactory.GetObservable<T>((INotifyPropertyChanged)dataContext, this.propertyInfo).Subscribe(
-                        this.subject);
+                    this.SubscribeObserver(
+                        BindingFactory.GetObservable<T>((INotifyPropertyChanged)dataContext, this.propertyInfo));
                 }
             }
         }
@@ -131,15 +119,21 @@
 
             if (this.resolutionMode == BindingResolutionMode.Immediate)
             {
-                this.subscription = this.observable.Subscribe(this.observer);
+                this.SubscribeObserver();
             }
 
             return this;
         }
 
-        protected void SubscribeObserverToSubject()
+        protected void SubscribeObserver(IObservable<T> observable)
         {
-            this.subscription = this.subject.Subscribe(this.observer);
+            this.observable = observable;
+            this.SubscribeObserver();
+        }
+
+        private void SubscribeObserver()
+        {
+            this.subscription = this.observable.Subscribe(this.observer);
         }
     }
 }
