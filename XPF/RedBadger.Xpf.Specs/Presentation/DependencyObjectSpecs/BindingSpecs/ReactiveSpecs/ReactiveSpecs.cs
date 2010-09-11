@@ -15,38 +15,234 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.Re
     using System.Collections.Generic;
     using System.Linq;
 
-    public class MyBindingObject
-    {
-        private readonly BehaviorSubject<double> myWidthProperty = new BehaviorSubject<double>(Double.NaN);
+    using Machine.Specifications;
 
-        public double MyWidth
+    using RedBadger.Xpf.Presentation;
+    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media;
+
+    public class TestBindingObject
+    {
+        private readonly BehaviorSubject<Brush> brushProperty = new BehaviorSubject<Brush>(null);
+
+        private readonly BehaviorSubject<SolidColorBrush> solidColorBrushProperty =
+            new BehaviorSubject<SolidColorBrush>(null);
+
+        private readonly BehaviorSubject<double> widthProperty = new BehaviorSubject<double>(Double.NaN);
+
+        public Brush Brush
         {
             get
             {
-                return this.myWidthProperty.First();
+                return this.brushProperty.First();
             }
 
             set
             {
-                this.myWidthProperty.OnNext(value);
+                this.brushProperty.OnNext(value);
             }
         }
 
-        public IObserver<double> MyWidthIn
+        public IObservable<Brush> BrushObservable
         {
             get
             {
-                return this.myWidthProperty;
+                return this.brushProperty.AsObservable();
             }
         }
 
-        public IObservable<double> MyWidthOut
+        public IObserver<Brush> BrushObserver
         {
             get
             {
-                return this.myWidthProperty;
+                return this.brushProperty.AsObserver();
+            }
+        }
+
+        public SolidColorBrush SolidColorBrush
+        {
+            get
+            {
+                return this.solidColorBrushProperty.First();
+            }
+
+            set
+            {
+                this.solidColorBrushProperty.OnNext(value);
+            }
+        }
+
+        public IObservable<SolidColorBrush> SolidColorBrushObservable
+        {
+            get
+            {
+                return this.solidColorBrushProperty.AsObservable();
+            }
+        }
+
+        public IObserver<SolidColorBrush> SolidColorBrushObserver
+        {
+            get
+            {
+                return this.solidColorBrushProperty.AsObserver();
+            }
+        }
+
+        public double Width
+        {
+            get
+            {
+                return this.widthProperty.First();
+            }
+
+            set
+            {
+                this.widthProperty.OnNext(value);
+            }
+        }
+
+        public IObservable<double> WidthObservable
+        {
+            get
+            {
+                return this.widthProperty.AsObservable();
+            }
+        }
+
+        public IObserver<double> WidthObserver
+        {
+            get
+            {
+                return this.widthProperty.AsObserver();
             }
         }
     }
 
+    [Subject(typeof(DependencyObject), "One Way")]
+    public class when_there_is_a_one_way_binding_to_a_property_on_a_specified_source
+    {
+        private const double ExpectedWidth = 10d;
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new Border();
+
+                target.Bind(UIElement.WidthProperty, source.WidthObservable);
+            };
+
+        private Because of = () => source.Width = ExpectedWidth;
+
+        private It should_update_the_target = () => target.Width.ShouldEqual(ExpectedWidth);
+    }
+
+    [Subject(typeof(DependencyObject), "One Way")]
+    public class when_a_binding_is_one_way_and_the_source_property_type_is_more_derived
+    {
+        private static readonly SolidColorBrush expectedBrush = new SolidColorBrush(Colors.Brown);
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new Border();
+
+                target.Bind(Border.BorderBrushProperty, source.SolidColorBrushObservable);
+            };
+
+        private Because of = () => source.SolidColorBrush = expectedBrush;
+
+        private It should_update_the_target = () => target.BorderBrush.ShouldEqual(expectedBrush);
+    }
+
+    [Subject(typeof(DependencyObject), "One Way")]
+    public class when_a_one_way_binding_to_a_property_on_a_specified_source_is_cleared
+    {
+        private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new Border();
+
+                target.Bind(Border.BorderBrushProperty, source.BrushObservable);
+            };
+
+        private Because of = () =>
+            {
+                source.Brush = expectedBrush;
+                target.ClearBinding(Border.BorderBrushProperty);
+
+                source.Brush = new SolidColorBrush(Colors.Black);
+            };
+
+        private It should_not_use_the_binding = () => target.BorderBrush.ShouldEqual(expectedBrush);
+    }
+
+    [Subject(typeof(DependencyObject), "One Way To Source")]
+    public class when_there_is_a_one_way_to_source_binding_to_a_specified_source
+    {
+        private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new Border();
+
+                target.Bind(Border.BorderBrushProperty, source.BrushObserver);
+            };
+
+        private Because of = () => target.BorderBrush = expectedBrush;
+
+        private It should_update_the_source = () => source.Brush.ShouldEqual(expectedBrush);
+    }
+
+    [Subject(typeof(DependencyObject), "One Way To Source")]
+    public class when_a_one_way_to_source_binding_to_a_specified_source_is_cleared
+    {
+        private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new Border();
+
+                target.Bind(Border.BorderBrushProperty, source.BrushObserver);
+            };
+
+        private Because of = () =>
+            {
+                target.BorderBrush = expectedBrush;
+                target.ClearBinding(Border.BorderBrushProperty);
+
+                target.BorderBrush = new SolidColorBrush(Colors.Yellow);
+            };
+
+        private It should_not_update_the_source = () => source.Brush.ShouldEqual(expectedBrush);
+    }
+
+    [Subject(typeof(DependencyObject), "Two Way")]
+    public class when_a_binding_is_two_way
+    {
+        private It should;
+    }
 }

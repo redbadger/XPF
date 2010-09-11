@@ -91,7 +91,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
     }
 
     [Subject(typeof(DependencyObject), "One Way")]
-    public class when_there_is_a_one_way_binding_to_the_data_context
+    public class when_there_is_a_one_way_binding_to_a_property_on_the_data_context
     {
         private const double ExpectedWidth = 10d;
 
@@ -115,7 +115,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.De
     }
 
     [Subject(typeof(DependencyObject), "One Way")]
-    public class when_there_is_a_one_way_binding_to_a_specified_source
+    public class when_there_is_a_one_way_binding_to_a_property_on_a_specified_source
     {
         private const double ExpectedWidth = 10d;
 
