@@ -124,7 +124,7 @@
     <Compile Include="Presentation\HorizontalAlignment.cs" />
     <Compile Include="Presentation\Controls\ItemsControl.cs" />
     <Compile Include="Presentation\Controls\Primitives\IScrollInfo.cs" />
-    <Compile Include="Presentation\DependencyObject.cs" />
+    <Compile Include="Presentation\ReactiveObject.cs" />
     <Compile Include="Presentation\ITemplatedList.cs" />
     <Compile Include="Presentation\Controls\ScrollContentPresenter.cs" />
     <Compile Include="Presentation\Controls\ScrollViewer.cs" />
@@ -144,7 +144,7 @@
     <Compile Include="Presentation\Controls\StretchDirection.cs" />
     <Compile Include="Internal\Controls\Viewbox.cs" />
     <Compile Include="Presentation\Controls\Orientation.cs" />
-    <Compile Include="Presentation\IDependencyObject.cs" />
+    <Compile Include="Presentation\IReactiveObject.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Presentation\Input\GestureType.cs" />
     <Compile Include="Presentation\Input\Gesture.cs" />

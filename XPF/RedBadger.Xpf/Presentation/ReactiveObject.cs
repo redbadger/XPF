@@ -11,7 +11,7 @@ namespace RedBadger.Xpf.Presentation
     using Microsoft.Phone.Reactive;
 #endif
 
-    public class DependencyObject : IDependencyObject
+    public class ReactiveObject : IReactiveObject
     {
         private readonly Dictionary<IReactiveProperty, IDisposable> propertryBindings =
             new Dictionary<IReactiveProperty, IDisposable>();

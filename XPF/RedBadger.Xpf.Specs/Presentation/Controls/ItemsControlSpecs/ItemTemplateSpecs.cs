@@ -198,7 +198,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private It should_update_the_bound_property_when_the_source_value_changes =
             () => updatedValue.ShouldEqual(ExpectedChangedValue);
 
-        private class MyBindingObject : DependencyObject
+        private class MyBindingObject : ReactiveObject
         {
             public static readonly ReactiveProperty<string, MyBindingObject> NameProperty =
                 ReactiveProperty<string, MyBindingObject>.Register("Name");

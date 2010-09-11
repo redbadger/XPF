@@ -111,11 +111,11 @@
     <Compile Include="Presentation\Controls\PanelSpecs\PanelSpecs.cs" />
     <Compile Include="Presentation\Controls\VirtualizingStackPanelSpecs\VirtualizingStackPanelSpecs.cs" />
     <Compile Include="Presentation\DefinitionBaseSpecs\DefinitionBaseSpecs.cs" />
-    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs\DependencyObjectSpecs\DependencyObjectSpecs.cs" />
-    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs\INotifyPropertyChangedSpecs\INotifyPropertyChangedSpecs.cs" />
-    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs\ObjectSpecs\ObjectSpecs.cs" />
-    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs\ReactiveSpecs\ReactiveSpecs.cs" />
-    <Compile Include="Presentation\DependencyObjectSpecs\ReactivePropertySpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\ReactiveObjectSpecs\ReactiveObjectSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\INotifyPropertyChangedSpecs\INotifyPropertyChangedSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\ObjectSpecs\ObjectSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\ReactiveSpecs\ReactiveSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\ReactivePropertySpecs.cs" />
     <Compile Include="Presentation\ElementCollectionSpecs\Contexts.cs" />
     <Compile Include="Presentation\ElementCollectionSpecs\ITemplatedListSpecs.cs" />
     <Compile Include="Presentation\GridLengthSpecs\GridLengthSpecs.cs" />

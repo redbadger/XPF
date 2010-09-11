@@ -9,7 +9,7 @@
     using Microsoft.Phone.Reactive;
 #endif
 
-    public interface IElement : IDependencyObject
+    public interface IElement : IReactiveObject
     {
         object DataContext { get; set; }
 

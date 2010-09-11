@@ -9,7 +9,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.ReactiveSpecs
+namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.ReactiveSpecs
 {
     using System;
     using System.Collections.Generic;
@@ -118,7 +118,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.Re
         }
     }
 
-    [Subject(typeof(DependencyObject), "One Way")]
+    [Subject(typeof(ReactiveObject), "One Way")]
     public class when_there_is_a_one_way_binding_to_a_property_on_a_specified_source
     {
         private const double ExpectedWidth = 10d;
@@ -140,7 +140,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.Re
         private It should_update_the_target = () => target.Width.ShouldEqual(ExpectedWidth);
     }
 
-    [Subject(typeof(DependencyObject), "One Way")]
+    [Subject(typeof(ReactiveObject), "One Way")]
     public class when_a_binding_is_one_way_and_the_source_property_type_is_more_derived
     {
         private static readonly SolidColorBrush expectedBrush = new SolidColorBrush(Colors.Brown);
@@ -162,7 +162,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.Re
         private It should_update_the_target = () => target.BorderBrush.ShouldEqual(expectedBrush);
     }
 
-    [Subject(typeof(DependencyObject), "One Way")]
+    [Subject(typeof(ReactiveObject), "One Way")]
     public class when_a_one_way_binding_to_a_property_on_a_specified_source_is_cleared
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
@@ -190,7 +190,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.Re
         private It should_not_use_the_binding = () => target.BorderBrush.ShouldEqual(expectedBrush);
     }
 
-    [Subject(typeof(DependencyObject), "One Way To Source")]
+    [Subject(typeof(ReactiveObject), "One Way To Source")]
     public class when_there_is_a_one_way_to_source_binding_to_a_specified_source
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
@@ -212,7 +212,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.Re
         private It should_update_the_source = () => source.Brush.ShouldEqual(expectedBrush);
     }
 
-    [Subject(typeof(DependencyObject), "One Way To Source")]
+    [Subject(typeof(ReactiveObject), "One Way To Source")]
     public class when_a_one_way_to_source_binding_to_a_specified_source_is_cleared
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
@@ -240,7 +240,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.Re
         private It should_not_update_the_source = () => source.Brush.ShouldEqual(expectedBrush);
     }
 
-    [Subject(typeof(DependencyObject), "Two Way")]
+    [Subject(typeof(ReactiveObject), "Two Way")]
     public class when_a_binding_is_two_way
     {
         private It should;

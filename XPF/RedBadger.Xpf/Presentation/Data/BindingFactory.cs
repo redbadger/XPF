@@ -58,7 +58,7 @@
         /// <param name = "reactiveProperty">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> you're binding to.</param>
         /// <returns><see cref = "IObservable{T}">IObservable</see> around the property on the Data Context.</returns>
         public static IObservable<TProperty> CreateOneWay<TSource, TProperty>(
-            ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : DependencyObject
+            ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : ReactiveObject
         {
             return new OneWayReactivePropertyBinding<TSource, TProperty>(reactiveProperty);
         }
@@ -97,7 +97,7 @@
         /// <param name = "reactiveProperty">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> on the source.</param>
         /// <returns><see cref = "IObservable{T}">IObservable</see> around the property on the source.</returns>
         public static IObservable<TProperty> CreateOneWay<TSource, TProperty>(
-            TSource source, ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : DependencyObject
+            TSource source, ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : ReactiveObject
         {
             return new OneWayReactivePropertyBinding<TSource, TProperty>(source, reactiveProperty);
         }
@@ -127,7 +127,7 @@
         /// <param name = "reactiveProperty">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> you're binding to.</param>
         /// <returns><see cref = "IObserver{T}">IObserver</see> around the property on the Data Context.</returns>
         public static IObserver<TProperty> CreateOneWayToSource<TSource, TProperty>(
-            ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : DependencyObject
+            ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : ReactiveObject
         {
             return new OneWayToSourceReactivePropertyBinding<TSource, TProperty>(reactiveProperty);
         }
@@ -155,7 +155,7 @@
         /// <param name = "reactiveProperty">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> on the source.</param>
         /// <returns><see cref = "IObserver{T}">IObserver</see> around the property on the source.</returns>
         public static IObserver<TProperty> CreateOneWayToSource<TSource, TProperty>(
-            TSource source, ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : DependencyObject
+            TSource source, ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : ReactiveObject
         {
             return new OneWayToSourceReactivePropertyBinding<TSource, TProperty>(source, reactiveProperty);
         }

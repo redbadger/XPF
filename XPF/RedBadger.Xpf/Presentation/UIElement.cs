@@ -12,7 +12,7 @@
     using Microsoft.Phone.Reactive;
 #endif
 
-    public abstract class UIElement : DependencyObject, IElement
+    public abstract class UIElement : ReactiveObject, IElement
     {
         public static readonly ReactiveProperty<object, UIElement> DataContextProperty =
             ReactiveProperty<object, UIElement>.Register("DataContext", ReactivePropertyChangedCallbacks.InvalidateMeasure);

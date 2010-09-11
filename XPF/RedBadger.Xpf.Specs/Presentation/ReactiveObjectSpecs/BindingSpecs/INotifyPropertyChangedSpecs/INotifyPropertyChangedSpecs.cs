@@ -9,7 +9,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.INotifyPropertyChangedSpecs
+namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.INotifyPropertyChangedSpecs
 {
     using System;
 
@@ -91,7 +91,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
         }
     }
 
-    [Subject(typeof(DependencyObject))]
+    [Subject(typeof(ReactiveObject))]
     public class when_a_binding_is_one_way
     {
         private const double ExpectedWidth = 10d;
@@ -115,7 +115,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
             () => target.Width.ShouldEqual(ExpectedWidth);
     }
 
-    [Subject(typeof(DependencyObject))]
+    [Subject(typeof(ReactiveObject))]
     public class when_a_binding_is_one_way_and_the_source_property_type_is_more_derived
     {
         private static readonly SolidColorBrush expectedBrush = new SolidColorBrush(Colors.Brown);
@@ -138,7 +138,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
         private It should_have_the_correct_brush = () => target.BorderBrush.ShouldEqual(expectedBrush);
     }
 
-    [Subject(typeof(DependencyObject))]
+    [Subject(typeof(ReactiveObject))]
     public class when_a_binding_is_two_way
     {
         private static readonly Brush expectedSourceBrush = new SolidColorBrush(Colors.Blue);
@@ -178,7 +178,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
             () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
     }
 
-    [Subject(typeof(DependencyObject))]
+    [Subject(typeof(ReactiveObject))]
     public class when_a_binding_is_changed
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
@@ -211,7 +211,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
         private It should_use_the_new_binding = () => target.BorderBrush.ShouldEqual(expectedBrush);
     }
 
-    [Subject(typeof(DependencyObject))]
+    [Subject(typeof(ReactiveObject))]
     public class when_a_one_way_binding_to_a_property_on_a_specified_source_is_cleared
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
@@ -240,7 +240,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs.BindingSpecs.IN
         private It should_not_use_the_binding = () => target.BorderBrush.ShouldEqual(expectedBrush);
     }
 
-    [Subject(typeof(DependencyObject))]
+    [Subject(typeof(ReactiveObject))]
     public class when_a_one_way_binding_to_a_property_on_the_data_context_is_cleared
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);

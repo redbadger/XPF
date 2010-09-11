@@ -2,7 +2,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
 
-    public abstract class DefinitionBase : DependencyObject
+    public abstract class DefinitionBase : ReactiveObject
     {
         private readonly DefinitionType definitionType;
 

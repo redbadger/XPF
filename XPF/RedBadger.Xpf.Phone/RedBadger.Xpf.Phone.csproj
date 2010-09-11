@@ -233,9 +233,6 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\TwoWayBinding.cs">
       <Link>Presentation\Data\TwoWayBinding.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\DependencyObject.cs">
-      <Link>Presentation\DependencyObject.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\ElementCollection.cs">
       <Link>Presentation\ElementCollection.cs</Link>
     </Compile>
@@ -247,9 +244,6 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\HorizontalAlignment.cs">
       <Link>Presentation\HorizontalAlignment.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\IDependencyObject.cs">
-      <Link>Presentation\IDependencyObject.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IElement.cs">
       <Link>Presentation\IElement.cs</Link>
@@ -265,6 +259,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Input\IInputManager.cs">
       <Link>Presentation\Input\IInputManager.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\IReactiveObject.cs">
+      <Link>Presentation\IReactiveObject.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IReactiveProperty.cs">
       <Link>Presentation\IReactiveProperty.cs</Link>
@@ -329,6 +326,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Point.cs">
       <Link>Presentation\Point.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\ReactiveObject.cs">
+      <Link>Presentation\ReactiveObject.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\ReactiveProperty.cs">
       <Link>Presentation\ReactiveProperty.cs</Link>
     </Compile>
@@ -367,6 +367,11 @@
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!--
       To modify your build process, add your task inside one of the targets below and uncomment it. 
       Other similar extension points exist, see Microsoft.Common.targets.
