@@ -11,6 +11,9 @@ namespace RedBadger.Xpf.Presentation
     using Microsoft.Phone.Reactive;
 #endif
 
+    /// <summary>
+    ///     Represents an object that participates in the Reactive Property system.
+    /// </summary>
     public class ReactiveObject : IReactiveObject
     {
         private readonly Dictionary<IReactiveProperty, IDisposable> propertryBindings =
@@ -44,9 +47,9 @@ namespace RedBadger.Xpf.Presentation
         {
             var binding = toSource as OneWayToSourceBinding<TProperty>;
 
-            var disposable = binding != null
-                                 ? binding.SubscribeFrom(this.GetSubject(property))
-                                 : this.GetSubject(property).Subscribe(toSource);
+            IDisposable disposable = binding != null
+                                         ? binding.SubscribeFrom(this.GetSubject(property))
+                                         : this.GetSubject(property).Subscribe(toSource);
 
             this.SetBinding(property, disposable);
         }
@@ -97,6 +100,19 @@ namespace RedBadger.Xpf.Presentation
             }
         }
 
+        /// <summary>
+        ///     Gets an underlying <see cref = "IObservable{T}">IObservable</see> for a <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> for this instance of <see cref = "ReactiveObject">ReactiveObject</see>.
+        /// </summary>
+        /// <typeparam name = "TProperty">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s <see cref = "Type">Type</see></typeparam>
+        /// <typeparam name = "TOwner">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
+        /// <param name = "property">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> to retrieve a value for.</param>
+        /// <returns></returns>
+        public IObservable<TProperty> GetObservable<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
+            where TOwner : class
+        {
+            return this.GetSubject(property).AsObservable();
+        }
+
         public void ClearValue(IReactiveProperty property)
         {
             if (property == null)
@@ -105,12 +121,6 @@ namespace RedBadger.Xpf.Presentation
             }
 
             this.propertyValues.Remove(property);
-        }
-
-        public IObservable<TProperty> GetObservable<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
-            where TOwner : class
-        {
-            return this.GetSubject(property).AsObservable();
         }
 
         public TProperty GetValue<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property) where TOwner : class
