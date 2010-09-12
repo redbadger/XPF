@@ -97,10 +97,8 @@ namespace RedBadger.Xpf.Presentation
         /// <summary>
         ///     Clears the binding on the specified property.
         /// </summary>
-        /// <typeparam name = "TProperty">The type of the property.</typeparam>
-        /// <typeparam name = "TOwner">The type of the owner.</typeparam>
         /// <param name = "property">The property who's binding you want to clear.</param>
-        public void ClearBinding<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property) where TOwner : class
+        public void ClearBinding(IReactiveProperty property)
         {
             IDisposable binding;
             if (this.propertryBindings.TryGetValue(property, out binding))
@@ -131,6 +129,8 @@ namespace RedBadger.Xpf.Presentation
             }
 
             this.propertyValues.Remove(property);
+
+            this.ClearBinding(property);
         }
 
         public TProperty GetValue<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property) where TOwner : class
@@ -181,13 +181,6 @@ namespace RedBadger.Xpf.Presentation
                     deferredBinding => deferredBinding.Resolve(dataContext));
         }
 
-        protected void SetBinding<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, IDisposable binding)
-            where TOwner : class
-        {
-            this.ClearBinding(property);
-            this.propertryBindings[property] = binding;
-        }
-
         private ISubject<TProperty> GetSubject<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
             where TOwner : class
         {
@@ -223,6 +216,13 @@ namespace RedBadger.Xpf.Presentation
             {
                 changedCallback(this.GetNearestAncestorOfType<TOwner>(), reactivePropertyChange);
             }
+        }
+
+        private void SetBinding<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, IDisposable binding)
+            where TOwner : class
+        {
+            this.ClearBinding(property);
+            this.propertryBindings[property] = binding;
         }
     }
 }

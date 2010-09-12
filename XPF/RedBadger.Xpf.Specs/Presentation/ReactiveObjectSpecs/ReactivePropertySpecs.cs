@@ -8,6 +8,7 @@
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
 {
@@ -21,7 +22,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
 
     public class TestBindingObject : ReactiveObject
     {
-        public static readonly ReactiveProperty<double, TestBindingObject> WidthProperty =
+        private static readonly ReactiveProperty<double, TestBindingObject> WidthProperty =
             ReactiveProperty<double, TestBindingObject>.Register("Width", double.NaN, WidthChangedCallback);
 
         public double Width
@@ -59,7 +60,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
     [Subject(typeof(ReactiveObject))]
     public class when_clearing_a_reactive_property_value : a_ReactiveObject
     {
-        public static readonly ReactiveProperty<string, ReactiveObject> TestPropertyProperty;
+        private static readonly ReactiveProperty<string, ReactiveObject> TestPropertyProperty;
 
         private static readonly string defaultValue = string.Empty;
 
@@ -78,7 +79,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
     [Subject(typeof(ReactiveObject))]
     public class when_changing_a_reactive_property_value : a_ReactiveObject
     {
-        public static readonly ReactiveProperty<string, ReactiveObject> TestPropertyProperty;
+        private static readonly ReactiveProperty<string, ReactiveObject> TestPropertyProperty;
 
         private const string ExpectedFinalValue = "Final Value";
 
