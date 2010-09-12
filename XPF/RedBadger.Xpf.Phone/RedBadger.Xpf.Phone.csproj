@@ -206,11 +206,11 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\BindingResolutionMode.cs">
       <Link>Presentation\Data\BindingResolutionMode.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\DualBinding.cs">
-      <Link>Presentation\Data\DualBinding.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\IBinding.cs">
       <Link>Presentation\Data\IBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\IDualChannel.cs">
+      <Link>Presentation\Data\IDualChannel.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\INotifyPropertyChanged.cs">
       <Link>Presentation\Data\INotifyPropertyChanged.cs</Link>
@@ -232,6 +232,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\TwoWayBinding.cs">
       <Link>Presentation\Data\TwoWayBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\ValueChangedBehaviorSubject.cs">
+      <Link>Presentation\Data\ValueChangedBehaviorSubject.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\ElementCollection.cs">
       <Link>Presentation\ElementCollection.cs</Link>
@@ -369,7 +372,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" />
     </VisualStudio>
   </ProjectExtensions>
   <!--

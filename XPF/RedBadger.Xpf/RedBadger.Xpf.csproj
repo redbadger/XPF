@@ -100,10 +100,11 @@
     <Compile Include="Internal\PropertyStore.cs" />
     <Compile Include="Presentation\Controls\Canvas.cs" />
     <Compile Include="Presentation\Data\BindingFactory.cs" />
+    <Compile Include="Presentation\Data\IDualChannel.cs" />
+    <Compile Include="Presentation\Data\ValueChangedBehaviorSubject.cs" />
     <Compile Include="Presentation\Data\OneWayToSourceReactivePropertyBinding.cs" />
     <Compile Include="Presentation\Data\OneWayBinding.cs" />
     <Compile Include="Presentation\Data\BindingResolutionMode.cs" />
-    <Compile Include="Presentation\Data\DualBinding.cs" />
     <Compile Include="Presentation\Data\IBinding.cs" />
     <Compile Include="Presentation\Data\OneWayReactivePropertyBinding.cs" />
     <Compile Include="Presentation\Data\OneWayToSourceBinding.cs" />

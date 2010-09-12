@@ -1,7 +1,6 @@
 ﻿namespace RedBadger.Xpf.Presentation.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -160,15 +159,80 @@
             return new OneWayToSourceReactivePropertyBinding<TSource, TProperty>(source, reactiveProperty);
         }
 
-        public static TwoWayBinding<TProperty> CreateTwoWay<TSource, TProperty>(
-            TSource source, Expression<Func<TSource, TProperty>> propertySelector)
-            where TSource : INotifyPropertyChanged
+        /// <summary>
+        ///     Creates a Two Way Binding to a property on the element's Data Context.
+        /// </summary>
+        /// <remarks>
+        ///     When binding to the Data Context, the binding returned is not resolved (ie. connected to the source) until the beginning of the Measure phase.
+        ///     This allows for the Data Context to be set after the binding has been created and changed at any time.
+        /// </remarks>
+        /// <typeparam name = "TSource">The Type of the Data Context.</typeparam>
+        /// <typeparam name = "TProperty">The Type of the property on the Data Context.</typeparam>
+        /// <param name = "propertySelector">Lambda expression which returns the property on the Data Context.</param>
+        /// <returns><see cref = "IDualChannel{T}">IDualChannel</see> around the property on the Data Context.</returns>
+        public static IDualChannel<TProperty> CreateTwoWay<TSource, TProperty>(
+            Expression<Func<TSource, TProperty>> propertySelector)
         {
-            var observer = new Subject<TProperty>();
-            observer.Subscribe(value => GetPropertyInfo(propertySelector).SetValue(source, value, null));
+            PropertyInfo propertyInfo = GetPropertyInfo(propertySelector);
 
             return new TwoWayBinding<TProperty>(
-                GetObservable<TProperty>(source, GetPropertyInfo(propertySelector)), observer.AsObserver());
+                new OneWayBinding<TProperty>(propertyInfo), 
+                new OneWayToSourceBinding<TProperty>(propertyInfo));
+        }
+
+        /// <summary>
+        ///     Creates a Two Way Binding to a <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> on the element's Data Context.
+        /// </summary>
+        /// <remarks>
+        ///     When binding to the Data Context, the binding returned is not resolved (ie. connected to the source) until the beginning of the Measure phase.
+        ///     This allows for the Data Context to be set after the binding has been created and changed at any time.
+        /// </remarks>
+        /// <typeparam name = "TSource">The Type of the Data Context.</typeparam>
+        /// <typeparam name = "TProperty">The Type of the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> on the Data Context.</typeparam>
+        /// <param name = "reactiveProperty">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> you're binding to.</param>
+        /// <returns><see cref = "IDualChannel{T}">IDualChannel</see> around the property on the source.</returns>
+        public static IDualChannel<TProperty> CreateTwoWay<TSource, TProperty>(
+            ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : ReactiveObject
+        {
+            return
+                new TwoWayBinding<TProperty>(
+                    new OneWayReactivePropertyBinding<TSource, TProperty>(reactiveProperty), 
+                    new OneWayToSourceReactivePropertyBinding<TSource, TProperty>(reactiveProperty));
+        }
+
+        /// <summary>
+        ///     Creates a Two Way Binding to a property on a source.
+        /// </summary>
+        /// <typeparam name = "TSource">The Type of the source.</typeparam>
+        /// <typeparam name = "TProperty">The Type of the property on the source.</typeparam>
+        /// <param name = "source">The binding source.</param>
+        /// <param name = "propertySelector">Lambda expression which returns the property on the source.</param>
+        /// <returns><see cref = "IDualChannel{T}">IDualChannel</see> around the property on the source.</returns>
+        public static IDualChannel<TProperty> CreateTwoWay<TSource, TProperty>(
+            TSource source, Expression<Func<TSource, TProperty>> propertySelector)
+        {
+            PropertyInfo propertyInfo = GetPropertyInfo(propertySelector);
+
+            return new TwoWayBinding<TProperty>(
+                new OneWayBinding<TProperty>(source, propertyInfo), 
+                new OneWayToSourceBinding<TProperty>(source, propertyInfo));
+        }
+
+        /// <summary>
+        ///     Creates a Two Way Binding to a <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> on a source.
+        /// </summary>
+        /// <typeparam name = "TSource">The Type of the source.</typeparam>
+        /// <typeparam name = "TProperty">The Type of the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> on the source.</typeparam>
+        /// <param name = "source">The binding source.</param>
+        /// <param name = "reactiveProperty">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> on the source.</param>
+        /// <returns><see cref = "IDualChannel{T}">IDualChannel</see> around the property on the source.</returns>
+        public static IDualChannel<TProperty> CreateTwoWay<TSource, TProperty>(
+            TSource source, ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : ReactiveObject
+        {
+            return
+                new TwoWayBinding<TProperty>(
+                    new OneWayReactivePropertyBinding<TSource, TProperty>(source, reactiveProperty), 
+                    new OneWayToSourceReactivePropertyBinding<TSource, TProperty>(source, reactiveProperty));
         }
 
         internal static IObservable<TProperty> GetObservable<TProperty>(

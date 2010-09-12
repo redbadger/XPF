@@ -48,7 +48,7 @@ namespace RedBadger.Xpf.Presentation
             var binding = toSource as OneWayToSourceBinding<TProperty>;
 
             IDisposable disposable = binding != null
-                                         ? binding.SubscribeFrom(this.GetSubject(property))
+                                         ? binding.Initialize(this.GetSubject(property))
                                          : this.GetSubject(property).Subscribe(toSource);
 
             this.SetBinding(property, disposable);
@@ -62,9 +62,19 @@ namespace RedBadger.Xpf.Presentation
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "source">A <see cref = "TwoWayBinding{T}">TwoWayBinding</see> containing both an <see cref = "IObservable{T}">IObservable</see> and <see cref = "IObserver{T}">IObserver</see></param>
         public void Bind<TProperty, TOwner>(
-            ReactiveProperty<TProperty, TOwner> property, TwoWayBinding<TProperty> source) where TOwner : class
+            ReactiveProperty<TProperty, TOwner> property, IDualChannel<TProperty> source) where TOwner : class
         {
-            this.Bind(property, source.Observable, source.Observer);
+            var binding = source as TwoWayBinding<TProperty>;
+
+            if (binding != null)
+            {
+                ISubject<TProperty> target = this.GetSubject(property);
+                this.SetBinding(property, binding.Initialize(target));
+            }
+            else
+            {
+                this.Bind(property, source.Observable, source.Observer);
+            }
         }
 
         /// <summary>
@@ -187,7 +197,7 @@ namespace RedBadger.Xpf.Presentation
                 return (ISubject<TProperty>)value;
             }
 
-            var subject = new BehaviorSubject<TProperty>(property.DefaultValue);
+            var subject = new ValueChangedBehaviorSubject<TProperty>(property.DefaultValue);
 
             IObservable<TProperty> leftSource = subject.StartWith(property.DefaultValue);
             IObservable<TProperty> rightSource = leftSource.Skip(1);

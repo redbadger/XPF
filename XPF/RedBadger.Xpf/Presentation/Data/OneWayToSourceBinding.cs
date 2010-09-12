@@ -72,7 +72,7 @@ namespace RedBadger.Xpf.Presentation.Data
             this.isDisposed = true;
         }
 
-        public IDisposable SubscribeFrom(IObservable<T> observable)
+        public IDisposable Initialize(IObservable<T> observable)
         {
             this.subscription = observable.Subscribe(this);
             return this;

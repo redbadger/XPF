@@ -91,8 +91,35 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.INot
         }
     }
 
-    [Subject(typeof(ReactiveObject))]
-    public class when_a_binding_is_one_way
+    [Subject(typeof(ReactiveObject), "One Way")]
+    public class when_a_binding_is_one_way_to_a_property_on_the_data_context
+    {
+        private const double ExpectedWidth = 10d;
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new Border();
+
+                IObservable<double> fromSource = BindingFactory.CreateOneWay<TestBindingObject, double>(o => o.Width);
+                target.Bind(UIElement.WidthProperty, fromSource);
+
+                target.DataContext = source;
+                target.Measure(Size.Empty);
+            };
+
+        private Because of = () => source.Width = ExpectedWidth;
+
+        private It should_update_the_target_property_with_the_correct_value =
+            () => target.Width.ShouldEqual(ExpectedWidth);
+    }
+
+    [Subject(typeof(ReactiveObject), "One Way")]
+    public class when_a_binding_is_one_way_to_a_property_on_a_specified_source
     {
         private const double ExpectedWidth = 10d;
 
@@ -115,7 +142,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.INot
             () => target.Width.ShouldEqual(ExpectedWidth);
     }
 
-    [Subject(typeof(ReactiveObject))]
+    [Subject(typeof(ReactiveObject), "One Way")]
     public class when_a_binding_is_one_way_and_the_source_property_type_is_more_derived
     {
         private static readonly SolidColorBrush expectedBrush = new SolidColorBrush(Colors.Brown);
@@ -138,8 +165,8 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.INot
         private It should_have_the_correct_brush = () => target.BorderBrush.ShouldEqual(expectedBrush);
     }
 
-    [Subject(typeof(ReactiveObject))]
-    public class when_a_binding_is_two_way
+    [Subject(typeof(ReactiveObject), "Two Way")]
+    public class when_a_binding_is_two_way_to_a_property_on_the_data_context
     {
         private static readonly Brush expectedSourceBrush = new SolidColorBrush(Colors.Blue);
 
@@ -158,7 +185,49 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.INot
                 source = new TestBindingObject();
                 target = new Border();
 
-                TwoWayBinding<Brush> twoWay = BindingFactory.CreateTwoWay(source, o => o.Brush);
+                IDualChannel<Brush> twoWay = BindingFactory.CreateTwoWay<TestBindingObject, Brush>(o => o.Brush);
+                target.Bind(Border.BorderBrushProperty, twoWay);
+
+                target.DataContext = source;
+                target.Measure(Size.Empty);
+            };
+
+        private Because of = () =>
+            {
+                target.BorderBrush = expectedTargetBrush;
+                actualBrushOnSource = source.Brush;
+
+                source.Brush = expectedSourceBrush;
+                actualBrushOnTarget = target.BorderBrush;
+            };
+
+        private It should_have_the_correct_brush_on_the_source =
+            () => actualBrushOnSource.ShouldEqual(expectedTargetBrush);
+
+        private It should_have_the_correct_brush_on_the_target =
+            () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
+    }
+    [Subject(typeof(ReactiveObject), "Two Way")]
+    public class when_a_binding_is_two_way_to_a_property_on_a_specified_source
+    {
+        private static readonly Brush expectedSourceBrush = new SolidColorBrush(Colors.Blue);
+
+        private static readonly Brush expectedTargetBrush = new SolidColorBrush(Colors.Red);
+
+        private static Brush actualBrushOnSource;
+
+        private static Brush actualBrushOnTarget;
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new Border();
+
+                IDualChannel<Brush> twoWay = BindingFactory.CreateTwoWay(source, o => o.Brush);
                 target.Bind(Border.BorderBrushProperty, twoWay);
             };
 
@@ -178,7 +247,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.INot
             () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
     }
 
-    [Subject(typeof(ReactiveObject))]
+    [Subject(typeof(ReactiveObject), "Clear Binding")]
     public class when_a_binding_is_changed
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
@@ -211,7 +280,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.INot
         private It should_use_the_new_binding = () => target.BorderBrush.ShouldEqual(expectedBrush);
     }
 
-    [Subject(typeof(ReactiveObject))]
+    [Subject(typeof(ReactiveObject), "Clear Binding")]
     public class when_a_one_way_binding_to_a_property_on_a_specified_source_is_cleared
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
@@ -240,7 +309,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.INot
         private It should_not_use_the_binding = () => target.BorderBrush.ShouldEqual(expectedBrush);
     }
 
-    [Subject(typeof(ReactiveObject))]
+    [Subject(typeof(ReactiveObject), "Clear Binding")]
     public class when_a_one_way_binding_to_a_property_on_the_data_context_is_cleared
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
