@@ -11,10 +11,9 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
     public abstract class a_Grid

@@ -1,15 +1,12 @@
 ﻿namespace RedBadger.Xpf.Graphics
 {
-    using System.Windows;
-
     using Microsoft.Xna.Framework.Graphics;
+
+    using RedBadger.Xpf.Presentation;
 
     public interface ISpriteFont
     {
-        SpriteFont Value
-        {
-            get;
-        }
+        SpriteFont Value { get; }
 
         Size MeasureString(string text);
     }

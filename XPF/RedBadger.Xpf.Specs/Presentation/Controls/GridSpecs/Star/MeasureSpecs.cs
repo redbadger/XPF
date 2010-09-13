@@ -11,21 +11,16 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
     using Moq;
     using Moq.Protected;
 
+    using RedBadger.Xpf.Internal;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-
-    using RedBadger.Xpf.Internal;
-
-    using System.Linq;
 
     [Subject(typeof(Grid), "Measure - Star")]
     public class when_an_element_is_added : a_Grid
@@ -44,7 +39,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
         private Because of = () => Subject.Measure(AvailableSize);
 
         private It should_have_a_desired_size_equal_to_the_available_size =
-            () => child.Protected().Verify(
+            () =>
+            child.Protected().Verify(
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(value => value.Equals(AvailableSize)));
     }
 
@@ -79,14 +75,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
             () =>
             Subject.DesiredSize.ShouldEqual(
                 new Size(
-                BottomLeftChild.Object.Width + BottomRightChild.Object.Width,
+                BottomLeftChild.Object.Width + BottomRightChild.Object.Width, 
                 TopRightChild.Object.Height + BottomRightChild.Object.Height));
     }
 
     [Subject(typeof(Grid), "Measure - Star")]
     public class when_a_3_x_3_grid_has_differing_cell_sizes : a_Grid
     {
-        private static readonly Mock<UIElement>[,] children = new Mock<UIElement>[3,3];
+        private static readonly Mock<UIElement>[,] children = new Mock<UIElement>[3, 3];
 
         private static readonly double heightUnit = AvailableSize.Height / 6;
 
@@ -189,20 +185,24 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
         private Because of = () => Subject.Measure(AvailableSize);
 
         private It should_1_allocate_more_width_to_that_column =
-            () => child1.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(ColumnMinWidth)));
+            () =>
+            child1.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(ColumnMinWidth)));
 
         private It should_2_allocate_the_available_height_to_that_column =
-            () => child1.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(AvailableSize.Height)));
+            () =>
+            child1.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(AvailableSize.Height)));
 
         private It should_3_allocate_a_proportional_width_that_ignores_the_min_width_to_subsequent_column_1 =
-            () => child2.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.IsCloseTo(expectedProportionalWidth)));
+            () =>
+            child2.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.IsCloseTo(expectedProportionalWidth)));
 
         private It should_4_allocate_a_proportional_width_that_ignores_the_min_width_to_subsequent_column_2 =
-            () => child3.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.IsCloseTo(expectedProportionalWidth)));
+            () =>
+            child3.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.IsCloseTo(expectedProportionalWidth)));
     }
 
     [Subject(typeof(Grid), "Measure Star - Min and Max")]
@@ -240,20 +240,24 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
         private Because of = () => Subject.Measure(AvailableSize);
 
         private It should_1_allocate_less_width_to_that_column =
-            () => child1.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(ColumnMaxWidth)));
+            () =>
+            child1.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(ColumnMaxWidth)));
 
         private It should_2_allocate_the_available_height_to_that_column =
-            () => child1.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(AvailableSize.Height)));
+            () =>
+            child1.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(AvailableSize.Height)));
 
         private It should_3_allocate_more_width_to_subsequent_column_1 =
-            () => child2.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.IsCloseTo(expectedSubsequentWidth)));
+            () =>
+            child2.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.IsCloseTo(expectedSubsequentWidth)));
 
         private It should_4_allocate_more_width_to_subsequent_column_2 =
-            () => child3.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.IsCloseTo(expectedSubsequentWidth)));
+            () =>
+            child3.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.IsCloseTo(expectedSubsequentWidth)));
     }
 
     [Subject(typeof(Grid), "Measure Star - Min and Max")]
@@ -270,41 +274,49 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
         private static Mock<UIElement> child3;
 
         private Establish context = () =>
-        {
-            Subject.RowDefinitions.Add(new RowDefinition { MinHeight = RowMinHeight });
-            Subject.RowDefinitions.Add(new RowDefinition());
-            Subject.RowDefinitions.Add(new RowDefinition());
+            {
+                Subject.RowDefinitions.Add(new RowDefinition { MinHeight = RowMinHeight });
+                Subject.RowDefinitions.Add(new RowDefinition());
+                Subject.RowDefinitions.Add(new RowDefinition());
 
-            child1 = new Mock<UIElement> { CallBase = true };
-            child2 = new Mock<UIElement> { CallBase = true };
-            child3 = new Mock<UIElement> { CallBase = true };
+                child1 = new Mock<UIElement> { CallBase = true };
+                child2 = new Mock<UIElement> { CallBase = true };
+                child3 = new Mock<UIElement> { CallBase = true };
 
-            Grid.SetRow(child1.Object, 0);
-            Grid.SetRow(child2.Object, 1);
-            Grid.SetRow(child3.Object, 2);
+                Grid.SetRow(child1.Object, 0);
+                Grid.SetRow(child2.Object, 1);
+                Grid.SetRow(child3.Object, 2);
 
-            Subject.Children.Add(child1.Object);
-            Subject.Children.Add(child2.Object);
-            Subject.Children.Add(child3.Object);
-        };
+                Subject.Children.Add(child1.Object);
+                Subject.Children.Add(child2.Object);
+                Subject.Children.Add(child3.Object);
+            };
 
         private Because of = () => Subject.Measure(AvailableSize);
 
         private It should_1_allocate_more_height_to_that_row =
-            () => child1.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(RowMinHeight)));
+            () =>
+            child1.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(RowMinHeight)));
 
         private It should_2_allocate_the_available_width_to_that_row =
-            () => child1.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(AvailableSize.Width)));
+            () =>
+            child1.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(AvailableSize.Width)));
 
         private It should_3_allocate_a_proportional_height_that_ignores_the_min_height_to_subsequent_row_1 =
-            () => child2.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.IsCloseTo(expectedProportionalHeight)));
+            () =>
+            child2.Protected().Verify(
+                MeasureOverride, 
+                Times.Once(), 
+                ItExpr.Is<Size>(size => size.Height.IsCloseTo(expectedProportionalHeight)));
 
         private It should_4_allocate_a_proportional_height_that_ignores_the_min_height_to_subsequent_row_2 =
-            () => child3.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.IsCloseTo(expectedProportionalHeight)));
+            () =>
+            child3.Protected().Verify(
+                MeasureOverride, 
+                Times.Once(), 
+                ItExpr.Is<Size>(size => size.Height.IsCloseTo(expectedProportionalHeight)));
     }
 
     [Subject(typeof(Grid), "Measure Star - Min and Max")]
@@ -321,40 +333,44 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
         private static Mock<UIElement> child3;
 
         private Establish context = () =>
-        {
-            Subject.RowDefinitions.Add(new RowDefinition { MaxHeight = RowMaxHeight });
-            Subject.RowDefinitions.Add(new RowDefinition());
-            Subject.RowDefinitions.Add(new RowDefinition());
+            {
+                Subject.RowDefinitions.Add(new RowDefinition { MaxHeight = RowMaxHeight });
+                Subject.RowDefinitions.Add(new RowDefinition());
+                Subject.RowDefinitions.Add(new RowDefinition());
 
-            child1 = new Mock<UIElement> { CallBase = true };
-            child2 = new Mock<UIElement> { CallBase = true };
-            child3 = new Mock<UIElement> { CallBase = true };
+                child1 = new Mock<UIElement> { CallBase = true };
+                child2 = new Mock<UIElement> { CallBase = true };
+                child3 = new Mock<UIElement> { CallBase = true };
 
-            Grid.SetRow(child1.Object, 0);
-            Grid.SetRow(child2.Object, 1);
-            Grid.SetRow(child3.Object, 2);
+                Grid.SetRow(child1.Object, 0);
+                Grid.SetRow(child2.Object, 1);
+                Grid.SetRow(child3.Object, 2);
 
-            Subject.Children.Add(child1.Object);
-            Subject.Children.Add(child2.Object);
-            Subject.Children.Add(child3.Object);
-        };
+                Subject.Children.Add(child1.Object);
+                Subject.Children.Add(child2.Object);
+                Subject.Children.Add(child3.Object);
+            };
 
         private Because of = () => Subject.Measure(AvailableSize);
 
         private It should_1_allocate_less_height_to_that_row =
-            () => child1.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(RowMaxHeight)));
+            () =>
+            child1.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(RowMaxHeight)));
 
         private It should_2_allocate_the_available_width_to_that_row =
-            () => child1.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(AvailableSize.Width)));
+            () =>
+            child1.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(AvailableSize.Width)));
 
         private It should_3_allocate_more_height_to_subsequent_row_1 =
-            () => child2.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.IsCloseTo(expectedSubsequentHeight)));
+            () =>
+            child2.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.IsCloseTo(expectedSubsequentHeight)));
 
         private It should_4_allocate_more_height_to_subsequent_row_2 =
-            () => child3.Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.IsCloseTo(expectedSubsequentHeight)));
+            () =>
+            child3.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.IsCloseTo(expectedSubsequentHeight)));
     }
 }

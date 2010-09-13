@@ -11,19 +11,16 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
     using Moq;
     using Moq.Protected;
 
+    using RedBadger.Xpf.Internal;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-
-    using RedBadger.Xpf.Internal;
 
     [Subject(typeof(Grid), "Measure")]
     public class when_a_column_index_is_specified_greater_than_the_number_of_columns_available : a_Grid
@@ -71,19 +68,23 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
         private Because of = () => Subject.Measure(AvailableSize);
 
         private It should_give_column_1_the_correct_amount_of_space =
-            () => children[0].Protected().Verify(
+            () =>
+            children[0].Protected().Verify(
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(Column1PixelWidth)));
 
         private It should_give_column_2_the_correct_amount_of_space =
-            () => children[1].Protected().Verify(
+            () =>
+            children[1].Protected().Verify(
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(double.PositiveInfinity)));
 
         private It should_give_column_3_the_correct_amount_of_space =
-            () => children[2].Protected().Verify(
+            () =>
+            children[2].Protected().Verify(
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.IsCloseTo(expectedProportionalWidth)));
 
         private It should_give_column_4_the_correct_amount_of_space =
-            () => children[3].Protected().Verify(
+            () =>
+            children[3].Protected().Verify(
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.IsCloseTo(expectedProportionalWidth)));
     }
 
@@ -97,7 +98,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
         private static readonly Mock<UIElement>[] children = new Mock<UIElement>[4];
 
         private static readonly double expectedProportionalHeight = (AvailableSize.Height - Row1PixelHeight -
-                                                                    Row2ChildHeight) / 2;
+                                                                     Row2ChildHeight) / 2;
 
         private Establish context = () =>
             {
@@ -127,19 +128,23 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
         private Because of = () => Subject.Measure(AvailableSize);
 
         private It should_give_row_1_the_correct_amount_of_space =
-            () => children[0].Protected().Verify(
+            () =>
+            children[0].Protected().Verify(
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(Row1PixelHeight)));
 
         private It should_give_row_2_the_correct_amount_of_space =
-            () => children[1].Protected().Verify(
+            () =>
+            children[1].Protected().Verify(
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(double.PositiveInfinity)));
 
         private It should_give_row_3_the_correct_amount_of_space =
-            () => children[2].Protected().Verify(
+            () =>
+            children[2].Protected().Verify(
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(expectedProportionalHeight)));
 
         private It should_give_row_4_the_correct_amount_of_space =
-            () => children[3].Protected().Verify(
+            () =>
+            children[3].Protected().Verify(
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(expectedProportionalHeight)));
     }
 }

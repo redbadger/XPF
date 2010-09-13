@@ -2,40 +2,27 @@ namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
     using System.Collections.Generic;
-    using System.Windows;
 
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Presentation.Media;
 
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-
     public class Border : UIElement
     {
-        public static readonly XpfDependencyProperty BackgroundProperty = XpfDependencyProperty.Register(
-            "Background", typeof(Brush), typeof(Border), new PropertyMetadata(null));
+        public static readonly ReactiveProperty<Brush, Border> BackgroundProperty =
+            ReactiveProperty<Brush, Border>.Register("Background");
 
-        public static readonly XpfDependencyProperty BorderBrushProperty = XpfDependencyProperty.Register(
-            "BorderBrush", 
-            typeof(Brush), 
-            typeof(Border), 
-            new PropertyMetadata(null, (o, args) => ((IElement)o).InvalidateArrange()));
+        public static readonly ReactiveProperty<Brush, Border> BorderBrushProperty =
+            ReactiveProperty<Brush, Border>.Register("BorderBrush", null, ReactivePropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly XpfDependencyProperty BorderThicknessProperty =
-            XpfDependencyProperty.Register(
-                "BorderThickness", 
-                typeof(Thickness), 
-                typeof(Border), 
-                new PropertyMetadata(
-                    new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
+        public static readonly ReactiveProperty<Thickness, Border> BorderThicknessProperty =
+            ReactiveProperty<Thickness, Border>.Register(
+                "BorderThickness", new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly XpfDependencyProperty ChildProperty = XpfDependencyProperty.Register(
-            "Child", typeof(IElement), typeof(Border), new PropertyMetadata(null, ChildPropertyChangedCallback));
+        public static readonly ReactiveProperty<IElement, Border> ChildProperty = ReactiveProperty<IElement, Border>.Register(
+            "Child", null, ChildPropertyChangedCallback);
 
-        public static readonly XpfDependencyProperty PaddingProperty = XpfDependencyProperty.Register(
-            "Padding", 
-            typeof(Thickness), 
-            typeof(Border), 
-            new PropertyMetadata(new Thickness(), UIElementPropertyChangedCallbacks.InvalidateMeasureIfThicknessChanged));
+        public static readonly ReactiveProperty<Thickness, Border> PaddingProperty =
+            ReactiveProperty<Thickness, Border>.Register("Padding", new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         private readonly IList<Rect> borders = new List<Rect>();
 
@@ -45,12 +32,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Brush)this.GetValue(BackgroundProperty.Value);
+                return this.GetValue(BackgroundProperty);
             }
 
             set
             {
-                this.SetValue(BackgroundProperty.Value, value);
+                this.SetValue(BackgroundProperty, value);
             }
         }
 
@@ -58,12 +45,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Brush)this.GetValue(BorderBrushProperty.Value);
+                return this.GetValue(BorderBrushProperty);
             }
 
             set
             {
-                this.SetValue(BorderBrushProperty.Value, value);
+                this.SetValue(BorderBrushProperty, value);
             }
         }
 
@@ -71,12 +58,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Thickness)this.GetValue(BorderThicknessProperty.Value);
+                return this.GetValue(BorderThicknessProperty);
             }
 
             set
             {
-                this.SetValue(BorderThicknessProperty.Value, value);
+                this.SetValue(BorderThicknessProperty, value);
             }
         }
 
@@ -84,12 +71,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (UIElement)this.GetValue(ChildProperty.Value);
+                return this.GetValue(ChildProperty);
             }
 
             set
             {
-                this.SetValue(ChildProperty.Value, value);
+                this.SetValue(ChildProperty, value);
             }
         }
 
@@ -97,18 +84,18 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Thickness)this.GetValue(PaddingProperty.Value);
+                return this.GetValue(PaddingProperty);
             }
 
             set
             {
-                this.SetValue(PaddingProperty.Value, value);
+                this.SetValue(PaddingProperty, value);
             }
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            var child = this.Child;
+            IElement child = this.Child;
 
             if (child != null)
             {
@@ -126,13 +113,13 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             this.isBordersCollectionDirty = true;
 
-            var borderSize = this.BorderThickness.Collapse();
-            var paddingSize = this.Padding.Collapse();
+            Size borderSize = this.BorderThickness.Collapse();
+            Size paddingSize = this.Padding.Collapse();
 
             var borderThicknessAndPaddingSize = new Size(
                 borderSize.Width + paddingSize.Width, borderSize.Height + paddingSize.Height);
 
-            var child = this.Child;
+            IElement child = this.Child;
             if (child != null)
             {
                 var childConstraint = new Size(
@@ -159,7 +146,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                     this.GenerateBorders();
                 }
 
-                foreach (var border in this.borders)
+                foreach (Rect border in this.borders)
                 {
                     drawingContext.DrawRectangle(border, this.BorderBrush);
                 }
@@ -172,20 +159,17 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private static void ChildPropertyChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        private static void ChildPropertyChangedCallback(Border border, ReactivePropertyChangeEventArgs<IElement, Border> change)
         {
-            var oldChild = args.OldValue as IElement;
-            var newChild = args.NewValue as IElement;
-            var border = (IElement)dependencyObject;
-
             border.InvalidateMeasure();
 
+            IElement oldChild = change.OldValue;
             if (oldChild != null)
             {
                 oldChild.VisualParent = null;
             }
 
+            IElement newChild = change.NewValue;
             if (newChild != null)
             {
                 newChild.VisualParent = border;

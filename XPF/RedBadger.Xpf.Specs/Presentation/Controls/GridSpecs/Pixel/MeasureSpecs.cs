@@ -11,16 +11,14 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Pixel
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
     using Moq;
 
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     [Subject(typeof(Grid), "Measure - Pixel")]
     public class when_there_is_a_column_width_defined : a_Grid

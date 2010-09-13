@@ -12,7 +12,6 @@
 namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
 {
     using System.Linq;
-    using System.Windows;
 
     using Machine.Specifications;
 
@@ -21,7 +20,6 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
     using RedBadger.Xpf.Presentation;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_VirtualElementCollection
     {
@@ -95,7 +93,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
 
         private Because of = () =>
             {
-                using (var cursor = Subject.GetCursor(0))
+                using (VirtualizingElementCollection.Cursor cursor = Subject.GetCursor(0))
                 {
                     element = cursor.First();
                 }
@@ -124,7 +122,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
         private Establish context = () =>
             {
                 Subject.Add(new object(), () => new Mock<UIElement> { CallBase = true }.Object);
-                using (var cursor = Subject.GetCursor(0))
+                using (VirtualizingElementCollection.Cursor cursor = Subject.GetCursor(0))
                 {
                     realized1 = cursor.First();
                 }
@@ -135,7 +133,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
 
         private Because of = () =>
             {
-                using (var cursor = Subject.GetCursor(0))
+                using (VirtualizingElementCollection.Cursor cursor = Subject.GetCursor(0))
                 {
                     realized2 = cursor.First();
                 }
@@ -164,7 +162,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
             {
                 Subject.Add(null, () => new Mock<UIElement> { CallBase = true }.Object);
                 Subject.Add(null, () => new Mock<UIElement> { CallBase = true }.Object);
-                using (var cursor = Subject.GetCursor(0))
+                using (VirtualizingElementCollection.Cursor cursor = Subject.GetCursor(0))
                 {
                     element = cursor.First();
                 }
@@ -174,7 +172,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
 
         private Because of = () =>
             {
-                using (var cursor = Subject.GetCursor(1))
+                using (VirtualizingElementCollection.Cursor cursor = Subject.GetCursor(1))
                 {
                     cursor.First();
                 }
@@ -200,7 +198,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
             {
                 Subject.Add(null, () => new Mock<IElement>().Object);
                 Subject.Add(null, () => new Mock<IElement>().Object);
-                using (var cursor = Subject.GetCursor(1))
+                using (VirtualizingElementCollection.Cursor cursor = Subject.GetCursor(1))
                 {
                     cursor.First();
                 }
@@ -264,7 +262,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
             {
                 Subject.Add(null, () => new Mock<IElement>().Object);
                 Subject.Add(null, () => new Mock<IElement>().Object);
-                using (var cursor = Subject.GetCursor(1))
+                using (VirtualizingElementCollection.Cursor cursor = Subject.GetCursor(1))
                 {
                     cursor.First();
                 }

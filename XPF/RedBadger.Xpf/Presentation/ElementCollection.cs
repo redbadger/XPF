@@ -40,8 +40,8 @@
 
             set
             {
-                var oldItem = this.elements[index];
-                var newItem = value;
+                IElement oldItem = this.elements[index];
+                IElement newItem = value;
 
                 this.elements[index] = newItem;
                 this.owner.InvalidateMeasure();
@@ -108,7 +108,7 @@
 
         public void RemoveAt(int index)
         {
-            var oldItem = this.elements[index];
+            IElement oldItem = this.elements[index];
             this.elements.RemoveAt(index);
             this.owner.InvalidateMeasure();
             this.SetParents(oldItem, null);
@@ -126,7 +126,7 @@
 
         public void Move(int oldIndex, int newIndex)
         {
-            var element = this[oldIndex];
+            IElement element = this[oldIndex];
             this.RemoveAt(oldIndex);
             this.Insert(newIndex, element);
         }
@@ -138,7 +138,7 @@
                 throw new InvalidOperationException("An element cannot be created without a template");
             }
 
-            var element = template();
+            IElement element = template();
             element.DataContext = item;
             return element;
         }

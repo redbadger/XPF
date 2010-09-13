@@ -5,7 +5,6 @@
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Linq;
-    using System.Windows;
 
 #if WINDOWS_PHONE
     using Microsoft.Phone.Reactive;
@@ -13,15 +12,14 @@
 
     public class ItemsControl : Control
     {
-        public static readonly XpfDependencyProperty ItemTemplateProperty =
-            XpfDependencyProperty.Register(
-                "ItemTemplate", typeof(Func<IElement>), typeof(ItemsControl), new PropertyMetadata(null));
+        public static readonly ReactiveProperty<Func<IElement>, ItemsControl> ItemTemplateProperty =
+            ReactiveProperty<Func<IElement>, ItemsControl>.Register("ItemTemplate");
 
-        public static readonly XpfDependencyProperty ItemsPanelProperty = XpfDependencyProperty.Register(
-            "ItemsPanel", typeof(Panel), typeof(ItemsControl), new PropertyMetadata(null, ItemsPanelChanged));
+        public static readonly ReactiveProperty<Panel, ItemsControl> ItemsPanelProperty =
+            ReactiveProperty<Panel, ItemsControl>.Register("ItemsPanel", ItemsPanelChanged);
 
-        public static readonly XpfDependencyProperty ItemsSourceProperty = XpfDependencyProperty.Register(
-            "ItemsSource", typeof(IEnumerable), typeof(ItemsControl), new PropertyMetadata(null, ItemsSourceChanged));
+        public static readonly ReactiveProperty<IEnumerable, ItemsControl> ItemsSourceProperty =
+            ReactiveProperty<IEnumerable, ItemsControl>.Register("ItemsSource", ItemsSourceChanged);
 
         private readonly ScrollViewer scrollViewer;
 
@@ -39,12 +37,12 @@
         {
             get
             {
-                return (Func<IElement>)this.GetValue(ItemTemplateProperty.Value);
+                return this.GetValue(ItemTemplateProperty);
             }
 
             set
             {
-                this.SetValue(ItemTemplateProperty.Value, value);
+                this.SetValue(ItemTemplateProperty, value);
             }
         }
 
@@ -52,12 +50,12 @@
         {
             get
             {
-                return (Panel)this.GetValue(ItemsPanelProperty.Value);
+                return this.GetValue(ItemsPanelProperty);
             }
 
             set
             {
-                this.SetValue(ItemsPanelProperty.Value, value);
+                this.SetValue(ItemsPanelProperty, value);
             }
         }
 
@@ -65,18 +63,18 @@
         {
             get
             {
-                return (IEnumerable)this.GetValue(ItemsSourceProperty.Value);
+                return this.GetValue(ItemsSourceProperty);
             }
 
             set
             {
-                this.SetValue(ItemsSourceProperty.Value, value);
+                this.SetValue(ItemsSourceProperty, value);
             }
         }
 
         public override IEnumerable<IElement> GetVisualChildren()
         {
-            var child = this.scrollViewer;
+            ScrollViewer child = this.scrollViewer;
             if (child != null)
             {
                 yield return child;
@@ -96,7 +94,7 @@
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            var child = this.scrollViewer;
+            ScrollViewer child = this.scrollViewer;
             if (child != null)
             {
                 child.Arrange(new Rect(new Point(), finalSize));
@@ -107,7 +105,7 @@
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            var child = this.scrollViewer;
+            ScrollViewer child = this.scrollViewer;
             if (child == null)
             {
                 return Size.Empty;
@@ -117,62 +115,39 @@
             return child.DesiredSize;
         }
 
-        private static void ItemsPanelChanged(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        private static void ItemsPanelChanged(ItemsControl itemsControl, ReactivePropertyChangeEventArgs<Panel, ItemsControl> change)
         {
-            var itemsControl = dependencyObject as ItemsControl;
-            if (itemsControl != null)
-            {
-                itemsControl.ItemsPanelChanged(args.NewValue);
-            }
-        }
-
-        private static void ItemsSourceChanged(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var itemsControl = dependencyObject as ItemsControl;
-            if (itemsControl != null)
-            {
-                itemsControl.ItemsSourceChanged(args.OldValue, args.NewValue);
-            }
-        }
-
-        private void ItemsPanelChanged(object newValue)
-        {
-            if (!(((Panel)newValue).Children is ITemplatedList<IElement>))
+            Panel panel = change.NewValue;
+            if (!(panel.Children is ITemplatedList<IElement>))
             {
                 throw new NotSupportedException(
                     "ItemsControl requires a panel whose Children collection implements ITemplatedList<IElement>");
             }
 
-            this.InvalidateMeasure();
-
-            var newPanel = newValue as IElement;
-            if (newPanel != null)
-            {
-                this.scrollViewer.Content = newPanel;
-            }
+            itemsControl.InvalidateMeasure();
+            itemsControl.scrollViewer.Content = panel;
         }
 
-        private void ItemsSourceChanged(object oldValue, object newValue)
+        private static void ItemsSourceChanged(ItemsControl itemsControl, ReactivePropertyChangeEventArgs<IEnumerable, ItemsControl> change)
         {
-            if (oldValue is INotifyCollectionChanged)
+            if (change.OldValue is INotifyCollectionChanged)
             {
-                this.changingItems.Dispose();
+                itemsControl.changingItems.Dispose();
             }
 
-            var observableCollection = newValue as INotifyCollectionChanged;
+            var observableCollection = change.NewValue as INotifyCollectionChanged;
             if (observableCollection != null)
             {
-                this.changingItems =
+                itemsControl.changingItems =
                     Observable.FromEvent<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
                         handler => new NotifyCollectionChangedEventHandler(handler), 
                         handler => observableCollection.CollectionChanged += handler, 
-                        handler => observableCollection.CollectionChanged -= handler).Subscribe(this.OnNextItemChange);
+                        handler => observableCollection.CollectionChanged -= handler).Subscribe(
+                            itemsControl.OnNextItemChange);
             }
 
-            this.isItemsSourceNew = true;
-            this.InvalidateMeasure();
+            itemsControl.isItemsSourceNew = true;
+            itemsControl.InvalidateMeasure();
         }
 
         private void OnNextItemChange(IEvent<NotifyCollectionChangedEventArgs> eventData)
@@ -181,7 +156,7 @@
             switch (eventData.EventArgs.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    foreach (var newItem in eventData.EventArgs.NewItems)
+                    foreach (object newItem in eventData.EventArgs.NewItems)
                     {
                         children.Add(newItem, this.ItemTemplate);
                     }
@@ -204,7 +179,7 @@
                     {
                         int startingIndex = eventData.EventArgs.NewStartingIndex;
 
-                        foreach (var newItem in eventData.EventArgs.NewItems)
+                        foreach (object newItem in eventData.EventArgs.NewItems)
                         {
                             this.ItemsPanel.Children.RemoveAt(startingIndex);
                             children.Insert(startingIndex, newItem, this.ItemTemplate);
@@ -233,7 +208,7 @@
 
             if (this.ItemsSource != null)
             {
-                foreach (var item in this.ItemsSource)
+                foreach (object item in this.ItemsSource)
                 {
                     children.Add(item, this.ItemTemplate);
                 }

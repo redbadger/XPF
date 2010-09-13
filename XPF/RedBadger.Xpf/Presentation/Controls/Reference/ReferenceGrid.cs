@@ -3,11 +3,8 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows;
 
     using RedBadger.Xpf.Internal;
-
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public enum GridUnitType
     {
@@ -77,11 +74,10 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
     public class Grid : Panel
     {
-        public static readonly DependencyProperty ColumnProperty = DependencyProperty.RegisterAttached(
-            "Column", typeof(int), typeof(Grid), new PropertyMetadata(null));
+        public static readonly ReactiveProperty<int, Grid> ColumnProperty =
+            ReactiveProperty<int, Grid>.Register("Column");
 
-        public static readonly DependencyProperty RowProperty = DependencyProperty.RegisterAttached(
-            "Row", typeof(int), typeof(Grid), new PropertyMetadata(null));
+        public static readonly ReactiveProperty<int, Grid> RowProperty = ReactiveProperty<int, Grid>.Register("Row");
 
         private static readonly StarDistributionComparerBySizeCache compareDefinitionBySizeCache =
             new StarDistributionComparerBySizeCache();
@@ -137,28 +133,28 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
                 return this.rowDefinitions ?? (this.rowDefinitions = new RowDefinitionCollection(this));
             }
         }
-        
-        public static int GetColumn(IDependencyObject element)
+
+        public static int GetColumn(IElement element)
         {
             if (element == null)
             {
                 throw new ArgumentNullException("element");
             }
 
-            return (int)element.GetValue(ColumnProperty);
+            return element.GetValue(ColumnProperty);
         }
 
-        public static int GetRow(IDependencyObject element)
+        public static int GetRow(IElement element)
         {
             if (element == null)
             {
                 throw new ArgumentNullException("element");
             }
 
-            return (int)element.GetValue(RowProperty);
+            return element.GetValue(RowProperty);
         }
 
-        public static void SetColumn(IDependencyObject element, int value)
+        public static void SetColumn(IElement element, int value)
         {
             if (element == null)
             {
@@ -168,7 +164,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
             element.SetValue(ColumnProperty, value);
         }
 
-        public static void SetRow(IDependencyObject element, int value)
+        public static void SetRow(IElement element, int value)
         {
             if (element == null)
             {
@@ -413,12 +409,12 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
                 CellCache cell = this.cellCaches[cellIndex];
 
                 double x = cell.SizeTypeU == GridUnitType.Auto
-                              ? double.PositiveInfinity
-                              : this.definitionsU[cell.ColumnIndex].MeasureSize;
+                               ? double.PositiveInfinity
+                               : this.definitionsU[cell.ColumnIndex].MeasureSize;
 
                 double y = cell.SizeTypeV == GridUnitType.Auto || forceInfinityV
-                              ? double.PositiveInfinity
-                              : this.definitionsV[cell.RowIndex].MeasureSize;
+                               ? double.PositiveInfinity
+                               : this.definitionsV[cell.RowIndex].MeasureSize;
 
                 child.Measure(new Size(x, y));
             }
@@ -527,7 +523,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
                     else
                     {
                         double num14 = Math.Max(finalSize - num3, 0.0) *
-                                      (measureSize / definitions[this.definitionIndices[index]].SizeCache);
+                                       (measureSize / definitions[this.definitionIndices[index]].SizeCache);
                         num12 = Math.Min(num14, definitions[this.definitionIndices[index]].UserMaxSize);
                         num12 = Math.Max(definitions[this.definitionIndices[index]].MinSizeForArrange, num12);
                     }
@@ -541,7 +537,8 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
             if (num3.IsGreaterThan(finalSize))
             {
-                Array.Sort(this.definitionIndices, 0, definitions.Length, new DistributionOrderIndexComparer(definitions));
+                Array.Sort(
+                    this.definitionIndices, 0, definitions.Length, new DistributionOrderIndexComparer(definitions));
                 double num15 = finalSize - num3;
                 for (int k = 0; k < definitions.Length; k++)
                 {
@@ -573,7 +570,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
         }
 
         /// <summary>
-        /// CreateCells
+        ///     CreateCells
         /// </summary>
         private void ValidateCellsCore()
         {
@@ -636,7 +633,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
         }
 
         /// <summary>
-        /// InitializeMeasureData
+        ///     InitializeMeasureData
         /// </summary>
         private void ValidateDefinitionsLayout(IEnumerable<DefinitionBase> definitions, bool treatStarAsAuto)
         {

@@ -13,20 +13,17 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows;
 
     using Machine.Specifications;
 
     using RedBadger.Xpf.Presentation;
-
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     [Subject(typeof(UIElement), "Children")]
     public class when_children_are_requested : a_UIElement
     {
         private static IEnumerable<IElement> enumerable;
 
-        private Because of = () => enumerable = UiElement.Object.GetVisualChildren();
+        private Because of = () => enumerable = Subject.Object.GetVisualChildren();
 
         private It should_not_return_any_children = () => enumerable.Count().ShouldEqual(0);
     }
@@ -36,7 +33,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static bool hitTestResult;
 
-        private Because of = () => hitTestResult = UiElement.Object.HitTest(new Point(40, 50));
+        private Because of = () => hitTestResult = Subject.Object.HitTest(new Point(40, 50));
 
         private It should_return_a_positive_hit_test = () => hitTestResult.ShouldBeTrue();
     }
@@ -46,7 +43,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static bool hitTestResult;
 
-        private Because of = () => hitTestResult = UiElement.Object.HitTest(new Point(20, 30));
+        private Because of = () => hitTestResult = Subject.Object.HitTest(new Point(20, 30));
 
         private It should_return_a_negative_hit_test = () => hitTestResult.ShouldBeFalse();
     }

@@ -3,17 +3,15 @@ namespace RedBadger.Xpf.Presentation.Controls
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Windows;
 
     using RedBadger.Xpf.Internal;
 
     public class Grid : Panel
     {
-        public static readonly XpfDependencyProperty ColumnProperty = XpfDependencyProperty.RegisterAttached(
-            "Column", typeof(int), typeof(Grid), new PropertyMetadata(0));
+        public static readonly ReactiveProperty<int, Grid> ColumnProperty =
+            ReactiveProperty<int, Grid>.Register("Column");
 
-        public static readonly XpfDependencyProperty RowProperty = XpfDependencyProperty.RegisterAttached(
-            "Row", typeof(int), typeof(Grid), new PropertyMetadata(0));
+        public static readonly ReactiveProperty<int, Grid> RowProperty = ReactiveProperty<int, Grid>.Register("Row");
 
         private static readonly StarDistributionComparerByFinalLengths compareDefinitionByFinalLengths =
             new StarDistributionComparerByFinalLengths();
@@ -58,44 +56,44 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        public static int GetColumn(IDependencyObject dependencyObject)
+        public static int GetColumn(IElement element)
         {
-            if (dependencyObject == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException("element");
             }
 
-            return (int)dependencyObject.GetValue(ColumnProperty.Value);
+            return element.GetValue(ColumnProperty);
         }
 
-        public static int GetRow(IDependencyObject dependencyObject)
+        public static int GetRow(IElement element)
         {
-            if (dependencyObject == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException("element");
             }
 
-            return (int)dependencyObject.GetValue(RowProperty.Value);
+            return element.GetValue(RowProperty);
         }
 
-        public static void SetColumn(IDependencyObject dependencyObject, int value)
+        public static void SetColumn(IElement element, int value)
         {
-            if (dependencyObject == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException("element");
             }
 
-            dependencyObject.SetValue(ColumnProperty.Value, value);
+            element.SetValue(ColumnProperty, value);
         }
 
-        public static void SetRow(IDependencyObject dependencyObject, int value)
+        public static void SetRow(IElement element, int value)
         {
-            if (dependencyObject == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("dependencyObject");
+                throw new ArgumentNullException("element");
             }
 
-            dependencyObject.SetValue(RowProperty.Value, value);
+            element.SetValue(RowProperty, value);
         }
 
         internal static bool CompareNullRefs(object x, object y, out int result)
@@ -453,13 +451,15 @@ namespace RedBadger.Xpf.Presentation.Controls
                     if (!skipUpdateMinWidth)
                     {
                         DefinitionBase widthDefinition = this.widthDefinitions[cell.ColumnIndex];
-                        widthDefinition.UpdateMinLength(Math.Min(child.DesiredSize.Width, widthDefinition.UserMaxLength));
+                        widthDefinition.UpdateMinLength(
+                            Math.Min(child.DesiredSize.Width, widthDefinition.UserMaxLength));
                     }
 
                     if (!skipUpdateMinHeight)
                     {
                         DefinitionBase heightDefinition = this.heightDefinitions[cell.RowIndex];
-                        heightDefinition.UpdateMinLength(Math.Min(child.DesiredSize.Height, heightDefinition.UserMaxLength));
+                        heightDefinition.UpdateMinLength(
+                            Math.Min(child.DesiredSize.Height, heightDefinition.UserMaxLength));
                     }
 
                     currentCellIndex = cell.Next;

@@ -1,4 +1,4 @@
-﻿namespace RedBadger.PocketMechanic.Phone
+﻿/*namespace RedBadger.PocketMechanic.Phone
 {
     using System;
     using System.ComponentModel;
@@ -13,11 +13,15 @@
 
         public Clock()
         {
-            this.timer.ObserveOnDispatcher().Subscribe(Observer.Create<long>(l =>
-                {
-                    DateTime dateTime = DateTime.Now;
-                    this.Time = dateTime.Second % 2 == 0 ? dateTime.ToLongTimeString() : dateTime.ToShortTimeString();
-                }));
+            this.timer.ObserveOnDispatcher().Subscribe(
+                Observer.Create<long>(
+                    l =>
+                        {
+                            DateTime dateTime = DateTime.Now;
+                            this.Time = dateTime.Second % 2 == 0
+                                            ? dateTime.ToLongTimeString()
+                                            : dateTime.ToShortTimeString();
+                        }));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -32,11 +36,11 @@
             set
             {
                 this.time = value;
-                this.InvokePropertyChanged(new PropertyChangedEventArgs("Time"));
+                this.InvokePropertyChanged(new PropertyChangedEventArgs<TProperty, TOwner>("Time"));
             }
         }
 
-        public void InvokePropertyChanged(PropertyChangedEventArgs e)
+        public void InvokePropertyChanged(PropertyChangedEventArgs<TProperty, TOwner> e)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
             if (handler != null)
@@ -45,4 +49,4 @@
             }
         }
     }
-}
+}*/

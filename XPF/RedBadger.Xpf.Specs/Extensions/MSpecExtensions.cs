@@ -95,11 +95,11 @@ namespace RedBadger.Xpf.Specs.Extensions
                 return string.Empty;
             }
 
-            var split = str.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            string[] split = str.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
             var sb = new StringBuilder();
 
             sb.Append(" " + split[0]);
-            foreach (var part in split.Skip(1))
+            foreach (string part in split.Skip(1))
             {
                 sb.AppendLine();
                 sb.Append(" " + part);
@@ -130,7 +130,7 @@ namespace RedBadger.Xpf.Specs.Extensions
 
             if (obj is IEnumerable)
             {
-                var enumerable = ((IEnumerable)obj).Cast<object>();
+                IEnumerable<object> enumerable = ((IEnumerable)obj).Cast<object>();
 
                 return obj.GetType() + ":\n" + enumerable.EachToUsefulString();
             }

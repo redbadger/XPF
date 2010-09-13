@@ -12,7 +12,6 @@
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ScrollViewerSpecs
 {
     using System.Collections.Generic;
-    using System.Windows;
 
     using Machine.Specifications;
 
@@ -26,8 +25,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ScrollViewerSpecs
     using RedBadger.Xpf.Specs.Extensions;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public abstract class a_ScrollViewer
     {

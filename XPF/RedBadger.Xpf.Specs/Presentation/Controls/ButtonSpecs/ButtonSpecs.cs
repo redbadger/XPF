@@ -11,8 +11,6 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
     using Moq;
@@ -22,8 +20,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonSpecs
     using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public abstract class a_Button
     {

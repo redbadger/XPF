@@ -11,18 +11,15 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
     using Moq;
     using Moq.Protected;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
-
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_UIElement
     {
@@ -30,9 +27,9 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         protected const string MeasureOverride = "MeasureOverride";
 
-        protected static Mock<UIElement> UiElement;
+        protected static Mock<UIElement> Subject;
 
-        private Establish context = () => UiElement = new Mock<UIElement> { CallBase = true };
+        private Establish context = () => Subject = new Mock<UIElement> { CallBase = true };
     }
 
     public abstract class a_Measured_UIElement : a_UIElement
@@ -45,9 +42,9 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UiElement.Protected().Setup<Size>(MeasureOverride, ItExpr.Is<Size>(size => size.Equals(availableSize))).
+                Subject.Protected().Setup<Size>(MeasureOverride, ItExpr.Is<Size>(size => size.Equals(availableSize))).
                     Returns(desiredSize);
-                UiElement.Object.Measure(availableSize);
+                Subject.Object.Measure(availableSize);
             };
     }
 
@@ -57,8 +54,8 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Establish context = () =>
             {
-                UiElement.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(finalSize);
-                UiElement.Object.Arrange(new Rect(finalSize));
+                Subject.Protected().Setup<Size>(ArrangeOverride, ItExpr.IsAny<Size>()).Returns(finalSize);
+                Subject.Object.Arrange(new Rect(finalSize));
             };
     }
 
@@ -74,7 +71,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
                                                                                             };
                 var rootElement = new Mock<RootElement>(viewPort, renderer.Object) { CallBase = true };
 
-                rootElement.Object.Content = UiElement.Object;
+                rootElement.Object.Content = Subject.Object;
                 rootElement.Object.Update();
             };
     }

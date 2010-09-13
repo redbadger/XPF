@@ -11,9 +11,6 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
 {
-    using System.Windows;
-    using System.Windows.Media;
-
     using Machine.Specifications;
 
     using Moq;
@@ -23,7 +20,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
     using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
-    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     public abstract class a_Renderer
     {
@@ -47,10 +43,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
 
         private Because of = () =>
             {
-                Renderer.GetDrawingContext(element.Object).DrawRectangle(
-                    Rect.Empty, new SolidColorBrush(Colors.AliceBlue));
-                Renderer.GetDrawingContext(element.Object).DrawRectangle(
-                    Rect.Empty, new SolidColorBrush(Colors.AliceBlue));
+                Renderer.GetDrawingContext(element.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.Blue));
+                Renderer.GetDrawingContext(element.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.Blue));
                 Renderer.Draw();
             };
 
@@ -67,7 +61,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
         private Establish context =
             () =>
             Renderer.GetDrawingContext(new Mock<IElement>().Object).DrawRectangle(
-                Rect.Empty, new SolidColorBrush(Colors.AliceBlue));
+                Rect.Empty, new SolidColorBrush(Colors.Blue));
 
         private Because of = () =>
             {
@@ -90,7 +84,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
                 var mock = new Mock<IElement>();
                 mock.SetupGet(element => element.IsArrangeValid).Returns(true);
                 mock.SetupGet(element => element.VisualParent).Returns(new Mock<IElement>().Object);
-                Renderer.GetDrawingContext(mock.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.AliceBlue));
+                Renderer.GetDrawingContext(mock.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.Blue));
             };
 
         private Because of = () =>
@@ -113,7 +107,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
                 var mock = new Mock<IElement>();
                 mock.SetupGet(element => element.IsArrangeValid).Returns(true);
                 mock.SetupGet(element => element.VisualParent).Returns(default(IElement));
-                Renderer.GetDrawingContext(mock.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.AliceBlue));
+                Renderer.GetDrawingContext(mock.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.Blue));
             };
 
         private Because of = () =>

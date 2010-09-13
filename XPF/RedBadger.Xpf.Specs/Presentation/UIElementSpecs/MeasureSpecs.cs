@@ -11,34 +11,34 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
     using Moq;
     using Moq.Protected;
 
+    using RedBadger.Xpf.Presentation;
+
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     [Subject(typeof(UIElement), "Measure")]
     public class after_measure_is_called : a_UIElement
     {
-        private Because of = () => UiElement.Object.Measure(Size.Empty);
+        private Because of = () => Subject.Object.Measure(Size.Empty);
 
-        private It should_apply_the_template = () => UiElement.Verify(element => element.OnApplyTemplate(), Times.Once());
+        private It should_apply_the_template =
+            () => Subject.Verify(element => element.OnApplyTemplate(), Times.Once());
 
-        private It should_be_considered_valid = () => UiElement.Object.IsMeasureValid.ShouldBeTrue();
+        private It should_be_considered_valid = () => Subject.Object.IsMeasureValid.ShouldBeTrue();
     }
 
     [Subject(typeof(UIElement), "Measure")]
     public class after_measure_is_called_a_second_time : a_UIElement
     {
-        private Establish context = () => UiElement.Object.Measure(Size.Empty);
+        private Establish context = () => Subject.Object.Measure(Size.Empty);
 
-        private Because of = () => UiElement.Object.Measure(Size.Empty);
+        private Because of = () => Subject.Object.Measure(Size.Empty);
 
         private It should_not_measure_again =
-            () => UiElement.Protected().Verify(MeasureOverride, Times.Once(), ItExpr.IsAny<Size>());
+            () => Subject.Protected().Verify(MeasureOverride, Times.Once(), ItExpr.IsAny<Size>());
     }
 }

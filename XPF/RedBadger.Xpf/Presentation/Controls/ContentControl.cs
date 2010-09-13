@@ -1,35 +1,31 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
     using System.Collections.Generic;
-    using System.Windows;
 
     /// <summary>
     ///     Represents a control with a single piece of content.
     /// </summary>
     public class ContentControl : Control
     {
-        public static readonly XpfDependencyProperty ContentProperty = XpfDependencyProperty.Register(
-            "Content", 
-            typeof(IElement), 
-            typeof(ContentControl), 
-            new PropertyMetadata(null, ContentPropertyChangedCallback));
+        public static readonly ReactiveProperty<IElement, ContentControl> ContentProperty =
+            ReactiveProperty<IElement, ContentControl>.Register("Content", null, ContentPropertyChangedCallback);
 
         public IElement Content
         {
             get
             {
-                return (IElement)this.GetValue(ContentProperty.Value);
+                return this.GetValue(ContentProperty);
             }
 
             set
             {
-                this.SetValue(ContentProperty.Value, value);
+                this.SetValue(ContentProperty, value);
             }
         }
 
         public override IEnumerable<IElement> GetVisualChildren()
         {
-            var content = this.Content;
+            IElement content = this.Content;
             if (content != null)
             {
                 yield return content;
@@ -40,7 +36,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            var content = this.Content;
+            IElement content = this.Content;
             if (content != null)
             {
                 content.Arrange(new Rect(new Point(), finalSize));
@@ -51,7 +47,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            var content = this.Content;
+            IElement content = this.Content;
             if (content == null)
             {
                 return Size.Empty;
@@ -66,19 +62,17 @@ namespace RedBadger.Xpf.Presentation.Controls
         }
 
         private static void ContentPropertyChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+            ContentControl contentControl, ReactivePropertyChangeEventArgs<IElement, ContentControl> change)
         {
-            var oldContent = args.OldValue as IElement;
-            var newContent = args.NewValue as IElement;
-            var contentControl = (ContentControl)dependencyObject;
-
             contentControl.InvalidateMeasure();
 
+            var oldContent = change.OldValue;
             if (oldContent != null)
             {
                 oldContent.VisualParent = null;
             }
 
+            var newContent = change.NewValue;
             if (newContent != null)
             {
                 newContent.VisualParent = contentControl;

@@ -24,11 +24,11 @@ namespace RedBadger.Xpf.Internal
             this.MaxHeight = Math.Max(Math.Min(explicitHeight, this.MaxHeight), this.MinHeight);
             explicitHeight = double.IsNaN(height) ? 0 : height;
             this.MinHeight = Math.Max(Math.Min(this.MaxHeight, explicitHeight), this.MinHeight);
-            
+
             this.MaxWidth = element.MaxWidth;
             this.MinWidth = element.MinWidth;
             double width = element.Width;
-            
+
             double explicitWidth = double.IsNaN(width) ? double.PositiveInfinity : width;
             this.MaxWidth = Math.Max(Math.Min(explicitWidth, this.MaxWidth), this.MinWidth);
             explicitWidth = double.IsNaN(width) ? 0 : width;

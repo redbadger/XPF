@@ -1,43 +1,31 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
-    using System.Windows;
-    using System.Windows.Media;
-
+    using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Internal.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
-    using ImageSource = RedBadger.Xpf.Presentation.Media.ImageSource;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
-    using Vector = RedBadger.Xpf.Presentation.Vector;
-
     public class Image : UIElement
     {
-        public static readonly XpfDependencyProperty SourceProperty = XpfDependencyProperty.Register(
-            "Source", typeof(ImageSource), typeof(Image), new PropertyMetadata(null, SourcePropertyChangedCallback));
+        public static readonly ReactiveProperty<ImageSource, Image> SourceProperty =
+            ReactiveProperty<ImageSource, Image>.Register("Source", null, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly XpfDependencyProperty StretchDirectionProperty =
-            XpfDependencyProperty.Register(
-                "StretchDirection", 
-                typeof(StretchDirection), 
-                typeof(Image), 
-                new PropertyMetadata(StretchDirection.Both, StretchDirectionPropertyChangedCallback));
+        public static readonly ReactiveProperty<StretchDirection, Image> StretchDirectionProperty =
+            ReactiveProperty<StretchDirection, Image>.Register(
+                "StretchDirection", StretchDirection.Both, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly XpfDependencyProperty StretchProperty = XpfDependencyProperty.Register(
-            "Stretch", 
-            typeof(Stretch), 
-            typeof(Image), 
-            new PropertyMetadata(Stretch.Uniform, StretchPropertyChangedCallback));
+        public static readonly ReactiveProperty<Stretch, Image> StretchProperty = ReactiveProperty<Stretch, Image>.Register(
+            "Stretch", Stretch.Uniform, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public ImageSource Source
         {
             get
             {
-                return (ImageSource)this.GetValue(SourceProperty.Value);
+                return this.GetValue(SourceProperty);
             }
 
             set
             {
-                this.SetValue(SourceProperty.Value, value);
+                this.SetValue(SourceProperty, value);
             }
         }
 
@@ -45,12 +33,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (Stretch)this.GetValue(StretchProperty.Value);
+                return this.GetValue(StretchProperty);
             }
 
             set
             {
-                this.SetValue(StretchProperty.Value, value);
+                this.SetValue(StretchProperty, value);
             }
         }
 
@@ -58,12 +46,12 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return (StretchDirection)this.GetValue(StretchDirectionProperty.Value);
+                return this.GetValue(StretchDirectionProperty);
             }
 
             set
             {
-                this.SetValue(StretchDirectionProperty.Value, value);
+                this.SetValue(StretchDirectionProperty, value);
             }
         }
 
@@ -80,54 +68,6 @@ namespace RedBadger.Xpf.Presentation.Controls
         protected override void OnRender(IDrawingContext drawingContext)
         {
             drawingContext.DrawImage(this.Source, new Rect(new Point(), this.RenderSize));
-        }
-
-        private static void SourcePropertyChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var newValue = (ImageSource)args.NewValue;
-            var oldValue = (ImageSource)args.OldValue;
-
-            if (newValue != oldValue)
-            {
-                var uiElement = dependencyObject as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.InvalidateMeasure();
-                }
-            }
-        }
-
-        private static void StretchDirectionPropertyChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var newValue = (StretchDirection)args.NewValue;
-            var oldValue = (StretchDirection)args.OldValue;
-
-            if (newValue != oldValue)
-            {
-                var uiElement = dependencyObject as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.InvalidateMeasure();
-                }
-            }
-        }
-
-        private static void StretchPropertyChangedCallback(
-            DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var newValue = (Stretch)args.NewValue;
-            var oldValue = (Stretch)args.OldValue;
-
-            if (newValue != oldValue)
-            {
-                var uiElement = dependencyObject as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.InvalidateMeasure();
-                }
-            }
         }
 
         private Size GetScaledImageSize(Size givenSize)

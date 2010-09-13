@@ -12,7 +12,6 @@
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ContentControlSpecs
 {
     using System.Linq;
-    using System.Windows;
 
     using Machine.Specifications;
 
@@ -22,7 +21,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ContentControlSpecs
     using RedBadger.Xpf.Presentation.Controls;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     public abstract class a_ContentControl
     {

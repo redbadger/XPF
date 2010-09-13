@@ -1,17 +1,15 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls
 {
-    using System.Windows;
-
     public class ColumnDefinition : DefinitionBase
     {
-        public static readonly XpfDependencyProperty MaxWidthProperty = XpfDependencyProperty.Register(
-            "MaxWidth", typeof(double), typeof(ColumnDefinition), new PropertyMetadata(double.PositiveInfinity));
+        public static readonly ReactiveProperty<double, ColumnDefinition> MaxWidthProperty =
+            ReactiveProperty<double, ColumnDefinition>.Register("MaxWidth", double.PositiveInfinity);
 
-        public static readonly XpfDependencyProperty MinWidthProperty = XpfDependencyProperty.Register(
-            "MinWidth", typeof(double), typeof(ColumnDefinition), new PropertyMetadata(0d));
+        public static readonly ReactiveProperty<double, ColumnDefinition> MinWidthProperty =
+            ReactiveProperty<double, ColumnDefinition>.Register("MinWidth", 0d);
 
-        public static readonly XpfDependencyProperty WidthProperty = XpfDependencyProperty.Register(
-            "Width", typeof(GridLength), typeof(ColumnDefinition), new PropertyMetadata(new GridLength(1, GridUnitType.Star)));
+        public static readonly ReactiveProperty<GridLength, ColumnDefinition> WidthProperty =
+            ReactiveProperty<GridLength, ColumnDefinition>.Register("Width", new GridLength(1, GridUnitType.Star));
 
         public ColumnDefinition()
             : base(DefinitionType.Column)
@@ -22,12 +20,12 @@
         {
             get
             {
-                return (double)this.GetValue(MaxWidthProperty.Value);
+                return this.GetValue(MaxWidthProperty);
             }
 
             set
             {
-                this.SetValue(MaxWidthProperty.Value, value);
+                this.SetValue(MaxWidthProperty, value);
             }
         }
 
@@ -35,12 +33,12 @@
         {
             get
             {
-                return (double)this.GetValue(MinWidthProperty.Value);
+                return this.GetValue(MinWidthProperty);
             }
 
             set
             {
-                this.SetValue(MinWidthProperty.Value, value);
+                this.SetValue(MinWidthProperty, value);
             }
         }
 
@@ -48,12 +46,12 @@
         {
             get
             {
-                return (GridLength)this.GetValue(WidthProperty.Value);
+                return this.GetValue(WidthProperty);
             }
 
             set
             {
-                this.SetValue(WidthProperty.Value, value);
+                this.SetValue(WidthProperty, value);
             }
         }
     }

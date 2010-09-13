@@ -1,11 +1,6 @@
 ﻿namespace RedBadger.Xpf.Presentation.Media
 {
-    using System.Windows;
-    using System.Windows.Media;
-
     using RedBadger.Xpf.Graphics;
-
-    using Vector = RedBadger.Xpf.Presentation.Vector;
 
     public struct SpriteTextureJob : ISpriteJob
     {
@@ -28,7 +23,7 @@
         public void Draw(ISpriteBatch spriteBatch)
         {
             var solidColorBrush = this.brush as SolidColorBrush;
-            var drawRect = this.rect != Rect.Empty ? this.rect : new Rect();
+            Rect drawRect = this.rect != Rect.Empty ? this.rect : new Rect();
             drawRect.X += this.absoluteOffset.X;
             drawRect.Y += this.absoluteOffset.Y;
 

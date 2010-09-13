@@ -14,15 +14,16 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Windows;
-    using System.Windows.Media;
 
     using Machine.Specifications;
 
     using Moq;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Data;
+    using RedBadger.Xpf.Presentation.Media;
 
     using It = Machine.Specifications.It;
 
@@ -71,5 +72,149 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 
         private It should_2_use_the_new_item_template_for_items_added_after_the_change =
             () => ItemsControl.ItemsPanel.Children[1].ShouldBeOfType<Border>();
+    }
+
+    [Subject(typeof(ItemsControl), "Item Template")]
+    public class when_item_template_contains_a_binding_to_a_property_on_the_data_context : an_ItemsControl
+    {
+        private const string ExpectedChangedValue = "Changed Value";
+
+        private const string ExpectedInitialValue = "Existing Value";
+
+        private static string actualInitialValue;
+
+        private static MyBindingObject source;
+
+        private static string updatedValue;
+
+        private Establish context = () =>
+            {
+                source = new MyBindingObject { Name = ExpectedInitialValue };
+                ItemsControl.ItemsSource = new[] { source };
+
+                ItemsControl.ItemTemplate = () =>
+                    {
+                        var textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
+
+                        IObservable<string> fromSource = BindingFactory.CreateOneWay<MyBindingObject, string>(s => s.Name);
+                        textBlock.Bind(TextBlock.TextProperty, fromSource);
+
+                        return textBlock;
+                    };
+
+                ItemsControl.Measure(new Size());
+            };
+
+        private Because of = () =>
+            {
+                actualInitialValue = ((TextBlock)ItemsControl.ItemsPanel.Children[0]).Text;
+
+                source.Name = ExpectedChangedValue;
+                updatedValue = ((TextBlock)ItemsControl.ItemsPanel.Children[0]).Text;
+            };
+
+        private It should_bind_to_the_data_contexts_initial_value =
+            () => actualInitialValue.ShouldEqual(ExpectedInitialValue);
+
+        private It should_update_the_bound_property_when_the_source_value_changes =
+            () => updatedValue.ShouldEqual(ExpectedChangedValue);
+
+        private class MyBindingObject : INotifyPropertyChanged
+        {
+            private string name;
+
+            public event EventHandler<PropertyChangedEventArgs> PropertyChanged;
+
+            public string Name
+            {
+                get
+                {
+                    return this.name;
+                }
+
+                set
+                {
+                    if (this.name != value)
+                    {
+                        this.name = value;
+                        this.InvokePropertyChanged("Name");
+                    }
+                }
+            }
+
+            public void InvokePropertyChanged(string propertyName)
+            {
+                EventHandler<PropertyChangedEventArgs> handler = this.PropertyChanged;
+                if (handler != null)
+                {
+                    handler(this, new PropertyChangedEventArgs(propertyName));
+                }
+            }
+        }
+    }
+
+    [Subject(typeof(ItemsControl), "Item Template")]
+    public class when_item_template_contains_a_binding_to_a_reactive_property_on_the_data_context : an_ItemsControl
+    {
+        private const string ExpectedChangedValue = "Changed Value";
+
+        private const string ExpectedInitialValue = "Existing Value";
+
+        private static string actualInitialValue;
+
+        private static MyBindingObject source;
+
+        private static string updatedValue;
+
+        private Establish context = () =>
+        {
+            source = new MyBindingObject { Name = ExpectedInitialValue };
+            ItemsControl.ItemsSource = new[] { source };
+
+            ItemsControl.ItemTemplate = () =>
+            {
+                var textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
+
+                IObservable<string> fromSource = BindingFactory.CreateOneWay(MyBindingObject.NameProperty);
+                textBlock.Bind(TextBlock.TextProperty, fromSource);
+
+                return textBlock;
+            };
+
+            ItemsControl.Measure(new Size());
+        };
+
+        private Because of = () =>
+        {
+            actualInitialValue = ((TextBlock)ItemsControl.ItemsPanel.Children[0]).Text;
+
+            source.Name = ExpectedChangedValue;
+            updatedValue = ((TextBlock)ItemsControl.ItemsPanel.Children[0]).Text;
+        };
+
+        private It should_bind_to_the_data_contexts_initial_value =
+            () => actualInitialValue.ShouldEqual(ExpectedInitialValue);
+
+        private It should_update_the_bound_property_when_the_source_value_changes =
+            () => updatedValue.ShouldEqual(ExpectedChangedValue);
+
+        private class MyBindingObject : ReactiveObject
+        {
+            public static readonly ReactiveProperty<string, MyBindingObject> NameProperty =
+                ReactiveProperty<string, MyBindingObject>.Register("Name");
+
+            public string Name
+            {
+                get
+                {
+                    return this.GetValue(NameProperty);
+                }
+
+                set
+                {
+                    this.SetValue(NameProperty, value);
+                }
+            }
+        }
     }
 }

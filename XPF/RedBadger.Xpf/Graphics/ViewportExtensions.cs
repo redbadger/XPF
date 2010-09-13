@@ -1,8 +1,8 @@
 namespace RedBadger.Xpf.Graphics
 {
-    using System.Windows;
-
     using Microsoft.Xna.Framework.Graphics;
+
+    using RedBadger.Xpf.Presentation;
 
     public static class ViewportExtensions
     {

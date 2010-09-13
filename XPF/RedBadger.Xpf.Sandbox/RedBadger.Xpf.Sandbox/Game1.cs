@@ -1,25 +1,19 @@
 namespace RedBadger.Xpf.Sandbox
 {
-    using System.Windows.Media;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Controls.Reference;
     using RedBadger.Xpf.Presentation.Media;
 
     using Color = Microsoft.Xna.Framework.Color;
-    using Grid = RedBadger.Xpf.Presentation.Controls.Grid;
-    using GridLength = System.Windows.GridLength;
-    using GridUnitType = System.Windows.GridUnitType;
-    using SolidColorBrush = RedBadger.Xpf.Presentation.Media.SolidColorBrush;
 
     /// <summary>
-    ///   This is the main type for your game
+    ///     This is the main type for your game
     /// </summary>
     public class Game1 : Game
     {
@@ -29,10 +23,7 @@ namespace RedBadger.Xpf.Sandbox
 
         public Game1()
         {
-            new GraphicsDeviceManager(this)
-                {
-                   PreferredBackBufferWidth = 1024, PreferredBackBufferHeight = 768 
-                };
+            new GraphicsDeviceManager(this) { PreferredBackBufferWidth = 1024, PreferredBackBufferHeight = 768 };
 
             this.Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
@@ -58,8 +49,8 @@ namespace RedBadger.Xpf.Sandbox
                 {
                     ColumnDefinitions =
                         {
-                            new ColumnDefinition(),
-                            new ColumnDefinition() { Width = new GridLength(2, GridUnitType.Star) }
+                            new ColumnDefinition(), 
+                            new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) }
                         }
                 };
 

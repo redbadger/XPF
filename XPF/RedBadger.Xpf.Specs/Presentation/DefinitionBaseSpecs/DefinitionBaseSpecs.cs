@@ -11,10 +11,9 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.DefinitionBaseSpecs
 {
-    using System.Windows;
-
     using Machine.Specifications;
 
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
     [Subject(typeof(DefinitionBase))]
@@ -98,14 +97,14 @@ namespace RedBadger.Xpf.Specs.Presentation.DefinitionBaseSpecs
                     MaxHeight = ExpectedMaxHeight
                 };
 
+        private It should_return_row_height_when_user_length_is_requested =
+            () => rowDefinition.UserLength.Value.ShouldEqual(ExpectedHeight);
+
         private It should_return_row_max_height_when_user_max_length_is_requested =
             () => rowDefinition.UserMaxLength.ShouldEqual(ExpectedMaxHeight);
 
         private It should_return_row_min_height_when_user_min_length_is_requested =
             () => rowDefinition.UserMinLength.ShouldEqual(ExpectedMinHeight);
-
-        private It should_return_row_height_when_user_length_is_requested =
-            () => rowDefinition.UserLength.Value.ShouldEqual(ExpectedHeight);
 
         private It should_return_the_rows_unit_type_when_user_length_is_requested =
             () => rowDefinition.UserLength.GridUnitType.ShouldEqual(ExpectedGridUnitType);

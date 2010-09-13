@@ -71,8 +71,6 @@
     <Reference Include="Moq">
       <HintPath>..\..\Lib\Moq\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="Rhino.Mocks">
       <HintPath>..\..\Lib\RhinoMocks\Rhino.Mocks.dll</HintPath>
     </Reference>
@@ -86,17 +84,15 @@
     <Reference Include="System.CoreEx" />
     <Reference Include="System.Reactive" />
     <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\MSpecExtensions.cs" />
     <Compile Include="Input\MouseInputSpecs\MouseInputSpecs.cs" />
-    <Compile Include="Presentation\BindingExpressionSpecs\BindingClasses.cs" />
-    <Compile Include="Presentation\BindingExpressionSpecs\BindingExpressionSpecs.cs" />
     <Compile Include="Presentation\Controls\BorderSpecs\BorderSpecs.cs" />
     <Compile Include="Presentation\Controls\BorderSpecs\Contexts.cs" />
     <Compile Include="Presentation\Controls\ButtonBaseSpecs\ButtonBaseSpecs.cs" />
     <Compile Include="Presentation\Controls\ButtonSpecs\ButtonSpecs.cs" />
+    <Compile Include="Presentation\Controls\CanvasSpecs\CanvasSpecs.cs" />
     <Compile Include="Presentation\Controls\ContentControlSpecs\ContentControlSpecs.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\Auto\Contexts.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\Auto\MeasureSpecs.cs" />
@@ -122,17 +118,25 @@
     <Compile Include="Presentation\Controls\PanelSpecs\PanelSpecs.cs" />
     <Compile Include="Presentation\Controls\VirtualizingStackPanelSpecs\VirtualizingStackPanelSpecs.cs" />
     <Compile Include="Presentation\DefinitionBaseSpecs\DefinitionBaseSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\ReactiveObjectSpecs\ReactiveObjectSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\INotifyPropertyChangedSpecs\INotifyPropertyChangedSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\ObjectSpecs\ObjectSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\ReactiveSpecs\ReactiveSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\ReactivePropertySpecs.cs" />
     <Compile Include="Presentation\ElementCollectionSpecs\Contexts.cs" />
     <Compile Include="Presentation\ElementCollectionSpecs\ITemplatedListSpecs.cs" />
+    <Compile Include="Presentation\GridLengthSpecs\GridLengthSpecs.cs" />
     <Compile Include="Presentation\Media\DrawingContextSpecs\Contexts.cs" />
     <Compile Include="Presentation\Media\DrawingContextSpecs\DrawingSpecs.cs" />
     <Compile Include="Presentation\Media\Imaging\XnaImageSpecs.cs" />
     <Compile Include="Presentation\Media\RendererSpecs\RendererSpecs.cs" />
     <Compile Include="Presentation\ElementCollectionSpecs\ElementCollectionSpecs.cs" />
+    <Compile Include="Presentation\ReactivePropertySpecs\ReactivePropertySpecs.cs" />
+    <Compile Include="Presentation\RectSpecs\RectSpecs.cs" />
+    <Compile Include="Presentation\SizeSpecs\SizeSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\ArrangeSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\Contexts.cs" />
-    <Compile Include="Presentation\UIElementSpecs\DataContextSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\MeasureSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\UIElementSpecs.cs" />
     <Compile Include="Presentation\VirtualizingElementCollectionSpecs\VirtualizingElementCollectionSpecs.cs" />

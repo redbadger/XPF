@@ -1,11 +1,8 @@
 namespace RedBadger.Xpf.Internal.Controls
 {
-    using System.Windows;
-    using System.Windows.Media;
-
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
-
-    using Vector = RedBadger.Xpf.Presentation.Vector;
+    using RedBadger.Xpf.Presentation.Media;
 
     internal class Viewbox
     {

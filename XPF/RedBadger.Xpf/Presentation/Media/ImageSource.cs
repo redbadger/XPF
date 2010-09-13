@@ -1,8 +1,6 @@
 namespace RedBadger.Xpf.Presentation.Media
 {
-    using System.Windows;
-
-    public abstract class ImageSource : DependencyObject
+    public abstract class ImageSource : ReactiveObject
     {
         public abstract double Height { get; }
 

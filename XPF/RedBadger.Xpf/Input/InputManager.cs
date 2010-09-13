@@ -2,15 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Windows;
 
     using Microsoft.Xna.Framework.Input;
     using Microsoft.Xna.Framework.Input.Touch;
 
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Input;
 
     using GestureType = Microsoft.Xna.Framework.Input.Touch.GestureType;
-    using Vector = RedBadger.Xpf.Presentation.Vector;
 
 #if WINDOWS_PHONE
     using Microsoft.Phone.Reactive;
@@ -37,7 +36,7 @@
 
         public void Update()
         {
-            var currentState = Mouse.GetState();
+            MouseState currentState = Mouse.GetState();
             if (this.previousState.LeftButton == ButtonState.Released && currentState.LeftButton == ButtonState.Pressed)
             {
                 this.gestures.OnNext(

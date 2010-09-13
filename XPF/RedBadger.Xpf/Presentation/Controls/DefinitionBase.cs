@@ -1,9 +1,8 @@
 namespace RedBadger.Xpf.Presentation.Controls
 {
     using System;
-    using System.Windows;
 
-    public abstract class DefinitionBase : DependencyObject
+    public abstract class DefinitionBase : ReactiveObject
     {
         private readonly DefinitionType definitionType;
 
@@ -32,12 +31,9 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return
-                    (GridLength)
-                    this.GetValue(
-                        this.definitionType == DefinitionType.Column
-                            ? ColumnDefinition.WidthProperty.Value
-                            : RowDefinition.HeightProperty.Value);
+                return this.definitionType == DefinitionType.Column
+                           ? this.GetValue(ColumnDefinition.WidthProperty)
+                           : this.GetValue(RowDefinition.HeightProperty);
             }
         }
 
@@ -45,12 +41,9 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return
-                    (double)
-                    this.GetValue(
-                        this.definitionType == DefinitionType.Column
-                            ? ColumnDefinition.MaxWidthProperty.Value
-                            : RowDefinition.MaxHeightProperty.Value);
+                return this.definitionType == DefinitionType.Column
+                           ? this.GetValue(ColumnDefinition.MaxWidthProperty)
+                           : this.GetValue(RowDefinition.MaxHeightProperty);
             }
         }
 
@@ -58,12 +51,9 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             get
             {
-                return
-                    (double)
-                    this.GetValue(
-                        this.definitionType == DefinitionType.Column
-                            ? ColumnDefinition.MinWidthProperty.Value
-                            : RowDefinition.MinHeightProperty.Value);
+                return this.definitionType == DefinitionType.Column
+                           ? this.GetValue(ColumnDefinition.MinWidthProperty)
+                           : this.GetValue(RowDefinition.MinHeightProperty);
             }
         }
 

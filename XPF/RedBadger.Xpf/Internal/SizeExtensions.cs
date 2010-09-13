@@ -1,6 +1,6 @@
 namespace RedBadger.Xpf.Internal
 {
-    using System.Windows;
+    using RedBadger.Xpf.Presentation;
 
     internal static class SizeExtensions
     {

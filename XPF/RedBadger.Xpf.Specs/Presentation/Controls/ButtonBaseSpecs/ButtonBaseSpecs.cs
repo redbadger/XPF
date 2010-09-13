@@ -12,13 +12,13 @@
 namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 {
     using System.Collections.Generic;
-    using System.Windows;
 
     using Machine.Specifications;
 
     using Moq;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Controls.Primitives;
     using RedBadger.Xpf.Presentation.Input;
@@ -62,7 +62,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
     public class when_the_left_mouse_button_is_pressed_within_the_control_boundary :
         a_ButtonBase_inside_a_RootElement_with_input_manager
     {
-
         private Establish context = () => RootElement.Object.Update();
 
         private Because of = () => MouseData.OnNext(new Gesture(GestureType.LeftButtonDown, new Point(0, 0)));
@@ -112,9 +111,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 
         private Because of = () => MouseData.OnNext(new Gesture(GestureType.LeftButtonUp, new Point(0, 0)));
 
-        private It should_raise_the_click_event = () => wasClicked.ShouldBeTrue();
-
         private It should_not_be_pressed = () => ButtonBase.Object.IsPressed.ShouldBeFalse();
+
+        private It should_raise_the_click_event = () => wasClicked.ShouldBeTrue();
     }
 
     [Subject(typeof(ButtonBase), "Disabled")]
@@ -134,9 +133,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ButtonBaseSpecs
 
         private Because of = () => MouseData.OnNext(new Gesture(GestureType.LeftButtonUp, new Point(0, 0)));
 
-        private It should_not_raise_the_click_event = () => wasClicked.ShouldBeFalse();
-
         private It should_be_pressed = () => ButtonBase.Object.IsPressed.ShouldBeTrue();
+
+        private It should_not_raise_the_click_event = () => wasClicked.ShouldBeFalse();
     }
 
     [Subject(typeof(ButtonBase), "Click")]
