@@ -3,7 +3,7 @@ namespace RedBadger.Xpf.Presentation
     public static class ReactivePropertyChangedCallbacks
     {
         public static void InvalidateArrange<TProperty, TOwner>(TOwner owner, ReactivePropertyChangeEventArgs<TProperty, TOwner> args)
-            where TOwner : class
+            where TOwner : class, IReactiveObject
         {
             var uiElement = owner as IElement;
             if (uiElement != null)
@@ -13,7 +13,7 @@ namespace RedBadger.Xpf.Presentation
         }
 
         public static void InvalidateMeasure<TProperty, TOwner>(TOwner owner, ReactivePropertyChangeEventArgs<TProperty, TOwner> args)
-            where TOwner : class
+            where TOwner : class, IReactiveObject
         {
             var uiElement = owner as IElement;
             if (uiElement != null)

@@ -12,7 +12,7 @@
     /// <typeparam name = "TProperty">The <see cref = "Type">Type</see> of the Property</typeparam>
     /// <typeparam name = "TOwner">The <see cref = "Type">Type</see> of the owner of the property</typeparam>
     public class ReactiveProperty<TProperty, TOwner> : IReactiveProperty
-        where TOwner : class
+        where TOwner : class, IReactiveObject
     {
         private static readonly PropertyStore<TProperty, TOwner> registeredProperties =
             new PropertyStore<TProperty, TOwner>();

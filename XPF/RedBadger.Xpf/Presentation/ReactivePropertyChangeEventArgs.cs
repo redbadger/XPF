@@ -1,7 +1,7 @@
 namespace RedBadger.Xpf.Presentation
 {
     public struct ReactivePropertyChangeEventArgs<TProperty, TOwner>
-        where TOwner : class
+        where TOwner : class, IReactiveObject
     {
         public readonly TProperty NewValue;
 

@@ -34,8 +34,8 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Obje
 
     public class TestBindingReactiveObject : ReactiveObject
     {
-        public static readonly ReactiveProperty<SolidColorBrush, TestBindingObject> SolidColorBrushProperty =
-            ReactiveProperty<SolidColorBrush, TestBindingObject>.Register("SolidColorBrush");
+        public static readonly ReactiveProperty<SolidColorBrush, TestBindingReactiveObject> SolidColorBrushProperty =
+            ReactiveProperty<SolidColorBrush, TestBindingReactiveObject>.Register("SolidColorBrush");
 
         public SolidColorBrush SolidColorBrush
         {
@@ -185,14 +185,14 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Obje
         private static Border target;
 
         private Establish context = () =>
-        {
-            source = new TestBindingObject();
-            target = new Border { DataContext = source };
+            {
+                source = new TestBindingObject();
+                target = new Border { DataContext = source };
 
-            IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource<TestBindingObject, Brush>(o => o.Brush);
-            target.Bind(Border.BorderBrushProperty, toSource);
-            target.Measure(Size.Empty);
-        };
+                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource<TestBindingObject, Brush>(o => o.Brush);
+                target.Bind(Border.BorderBrushProperty, toSource);
+                target.Measure(Size.Empty);
+            };
 
         private Because of = () =>
             {
@@ -238,13 +238,13 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Obje
         private static Border target;
 
         private Establish context = () =>
-        {
-            source = new TestBindingObject();
-            target = new Border();
+            {
+                source = new TestBindingObject();
+                target = new Border();
 
-            IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource(source, o => o.Brush);
-            target.Bind(Border.BorderBrushProperty, toSource);
-        };
+                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource(source, o => o.Brush);
+                target.Bind(Border.BorderBrushProperty, toSource);
+            };
 
         private Because of = () =>
             {

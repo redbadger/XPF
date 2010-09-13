@@ -30,7 +30,7 @@ namespace RedBadger.Xpf.Presentation
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "fromSource"><see cref = "IObservable{T}">IObservable</see> of updates from the source</param>
         public void Bind<TProperty, TOwner>(
-            ReactiveProperty<TProperty, TOwner> property, IObservable<TProperty> fromSource) where TOwner : class
+            ReactiveProperty<TProperty, TOwner> property, IObservable<TProperty> fromSource) where TOwner : class, IReactiveObject
         {
             this.SetBinding(property, fromSource.Subscribe(this.GetSubject(property)));
         }
@@ -43,7 +43,7 @@ namespace RedBadger.Xpf.Presentation
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "toSource"><see cref = "IObserver{T}">IObserver</see> of updates for the Source</param>
         public void Bind<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, IObserver<TProperty> toSource)
-            where TOwner : class
+            where TOwner : class, IReactiveObject
         {
             var binding = toSource as OneWayToSourceBinding<TProperty>;
 
@@ -62,7 +62,7 @@ namespace RedBadger.Xpf.Presentation
         /// <param name = "property">Target <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
         /// <param name = "source">A <see cref = "TwoWayBinding{T}">TwoWayBinding</see> containing both an <see cref = "IObservable{T}">IObservable</see> and <see cref = "IObserver{T}">IObserver</see></param>
         public void Bind<TProperty, TOwner>(
-            ReactiveProperty<TProperty, TOwner> property, IDualChannel<TProperty> source) where TOwner : class
+            ReactiveProperty<TProperty, TOwner> property, IDualChannel<TProperty> source) where TOwner : class, IReactiveObject
         {
             var binding = source as TwoWayBinding<TProperty>;
 
@@ -87,8 +87,8 @@ namespace RedBadger.Xpf.Presentation
         /// <param name = "toSource"><see cref = "IObserver{T}">IObserver</see> of updates for the Source</param>
         public void Bind<TProperty, TOwner>(
             ReactiveProperty<TProperty, TOwner> property, 
-            IObservable<TProperty> fromSource, 
-            IObserver<TProperty> toSource) where TOwner : class
+            IObservable<TProperty> fromSource,
+            IObserver<TProperty> toSource) where TOwner : class, IReactiveObject
         {
             ISubject<TProperty> target = this.GetSubject(property);
             this.SetBinding(property, new DualDisposable(fromSource.Subscribe(target), target.Subscribe(toSource)));
@@ -108,15 +108,8 @@ namespace RedBadger.Xpf.Presentation
             }
         }
 
-        /// <summary>
-        ///     Gets an underlying <see cref = "IObservable{T}">IObservable</see> for a <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> for this instance of <see cref = "ReactiveObject">ReactiveObject</see>.
-        /// </summary>
-        /// <typeparam name = "TProperty">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s <see cref = "Type">Type</see></typeparam>
-        /// <typeparam name = "TOwner">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
-        /// <param name = "property">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> to retrieve a value for.</param>
-        /// <returns></returns>
         public IObservable<TProperty> GetObservable<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
-            where TOwner : class
+            where TOwner : class, IReactiveObject
         {
             return this.GetSubject(property).AsObservable();
         }
@@ -133,7 +126,7 @@ namespace RedBadger.Xpf.Presentation
             this.ClearBinding(property);
         }
 
-        public TProperty GetValue<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property) where TOwner : class
+        public TProperty GetValue<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property) where TOwner : class, IReactiveObject
         {
             if (property == null)
             {
@@ -144,7 +137,7 @@ namespace RedBadger.Xpf.Presentation
         }
 
         public void SetValue<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, TProperty newValue)
-            where TOwner : class
+            where TOwner : class, IReactiveObject
         {
             if (property == null)
             {
@@ -155,7 +148,7 @@ namespace RedBadger.Xpf.Presentation
         }
 
         protected internal IObserver<TProperty> GetObserver<TProperty, TOwner>(
-            ReactiveProperty<TProperty, TOwner> property) where TOwner : class
+            ReactiveProperty<TProperty, TOwner> property) where TOwner : class, IReactiveObject
         {
             return this.GetSubject(property).AsObserver();
         }
@@ -165,7 +158,7 @@ namespace RedBadger.Xpf.Presentation
         /// </summary>
         /// <typeparam name = "T">The <see cref = "Type">Type</see> of the ancestor</typeparam>
         /// <returns>The nearest ancestor of Type T</returns>
-        protected virtual T GetNearestAncestorOfType<T>() where T : class
+        protected virtual T GetNearestAncestorOfType<T>() where T : class, IReactiveObject
         {
             return this as T;
         }
@@ -182,7 +175,7 @@ namespace RedBadger.Xpf.Presentation
         }
 
         private ISubject<TProperty> GetSubject<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
-            where TOwner : class
+            where TOwner : class, IReactiveObject
         {
             object value;
             if (this.propertyValues.TryGetValue(property, out value))
@@ -207,7 +200,7 @@ namespace RedBadger.Xpf.Presentation
         }
 
         private void RaiseChanged<TProperty, TOwner>(
-            ReactivePropertyChangeEventArgs<TProperty, TOwner> reactivePropertyChange) where TOwner : class
+            ReactivePropertyChangeEventArgs<TProperty, TOwner> reactivePropertyChange) where TOwner : class, IReactiveObject
         {
             Action<TOwner, ReactivePropertyChangeEventArgs<TProperty, TOwner>> changedCallback =
                 reactivePropertyChange.Property.ChangedCallback;
@@ -218,8 +211,7 @@ namespace RedBadger.Xpf.Presentation
             }
         }
 
-        private void SetBinding<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property, IDisposable binding)
-            where TOwner : class
+        private void SetBinding(IReactiveProperty property, IDisposable binding)
         {
             this.ClearBinding(property);
             this.propertryBindings[property] = binding;

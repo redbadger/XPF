@@ -254,14 +254,14 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
         private static Border target;
 
         private Establish context = () =>
-        {
-            source = new TestBindingObject();
-            target = new Border { DataContext = source };
+            {
+                source = new TestBindingObject();
+                target = new Border { DataContext = source };
 
-            IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource(TestBindingObject.BrushProperty);
-            target.Bind(Border.BorderBrushProperty, toSource);
-            target.Measure(Size.Empty);
-        };
+                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource(TestBindingObject.BrushProperty);
+                target.Bind(Border.BorderBrushProperty, toSource);
+                target.Measure(Size.Empty);
+            };
 
         private Because of = () =>
             {
@@ -307,13 +307,13 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
         private static Border target;
 
         private Establish context = () =>
-        {
-            source = new TestBindingObject();
-            target = new Border();
+            {
+                source = new TestBindingObject();
+                target = new Border();
 
-            IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource(source, TestBindingObject.BrushProperty);
-            target.Bind(Border.BorderBrushProperty, toSource);
-        };
+                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource(source, TestBindingObject.BrushProperty);
+                target.Bind(Border.BorderBrushProperty, toSource);
+            };
 
         private Because of = () =>
             {
@@ -365,32 +365,31 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
         private static Border target;
 
         private Establish context = () =>
-        {
-            source = new TestBindingObject();
-            target = new Border();
+            {
+                source = new TestBindingObject();
+                target = new Border();
 
-            IDualChannel<Brush> twoWay = BindingFactory.CreateTwoWay(TestBindingObject.BrushProperty);
-            target.Bind(Border.BorderBrushProperty, twoWay);
+                IDualChannel<Brush> twoWay = BindingFactory.CreateTwoWay(TestBindingObject.BrushProperty);
+                target.Bind(Border.BorderBrushProperty, twoWay);
 
-            target.DataContext = source;
-            target.Measure(Size.Empty);
-        };
+                target.DataContext = source;
+                target.Measure(Size.Empty);
+            };
 
         private Because of = () =>
-        {
-            target.BorderBrush = expectedTargetBrush;
-            actualBrushOnSource = source.Brush;
+            {
+                target.BorderBrush = expectedTargetBrush;
+                actualBrushOnSource = source.Brush;
 
-            source.Brush = expectedSourceBrush;
-            actualBrushOnTarget = target.BorderBrush;
-        };
+                source.Brush = expectedSourceBrush;
+                actualBrushOnTarget = target.BorderBrush;
+            };
 
-        private It should_update_the_source =
-            () => actualBrushOnSource.ShouldEqual(expectedTargetBrush);
+        private It should_update_the_source = () => actualBrushOnSource.ShouldEqual(expectedTargetBrush);
 
-        private It should_update_the_target =
-            () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
+        private It should_update_the_target = () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
     }
+
     [Subject(typeof(ReactiveObject), "Two Way")]
     public class when_a_binding_is_two_way_to_a_property_on_a_specified_source
     {
@@ -407,28 +406,26 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
         private static Border target;
 
         private Establish context = () =>
-        {
-            source = new TestBindingObject();
-            target = new Border();
+            {
+                source = new TestBindingObject();
+                target = new Border();
 
-            IDualChannel<Brush> twoWay = BindingFactory.CreateTwoWay(source, TestBindingObject.BrushProperty);
-            target.Bind(Border.BorderBrushProperty, twoWay);
-        };
+                IDualChannel<Brush> twoWay = BindingFactory.CreateTwoWay(source, TestBindingObject.BrushProperty);
+                target.Bind(Border.BorderBrushProperty, twoWay);
+            };
 
         private Because of = () =>
-        {
-            target.BorderBrush = expectedTargetBrush;
-            actualBrushOnSource = source.Brush;
+            {
+                target.BorderBrush = expectedTargetBrush;
+                actualBrushOnSource = source.Brush;
 
-            source.Brush = expectedSourceBrush;
-            actualBrushOnTarget = target.BorderBrush;
-        };
+                source.Brush = expectedSourceBrush;
+                actualBrushOnTarget = target.BorderBrush;
+            };
 
-        private It should_update_the_source =
-            () => actualBrushOnSource.ShouldEqual(expectedTargetBrush);
+        private It should_update_the_source = () => actualBrushOnSource.ShouldEqual(expectedTargetBrush);
 
-        private It should_update_the_target =
-            () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
+        private It should_update_the_target = () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
     }
 
     [Subject(typeof(ReactiveObject), "Callback")]
@@ -452,10 +449,10 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
                 target.Bind(TestBindingObject.WidthProperty, fromSource);
             };
 
-        private It should_update_the_target = () => target.Width.ShouldEqual(ExpectedWidth);
-
         private It should_call_the_target_property_changed_callback =
             () => target.WidthPropertyChangedCalledbackCount.ShouldEqual(1);
+
+        private It should_update_the_target = () => target.Width.ShouldEqual(ExpectedWidth);
     }
 
     [Subject(typeof(ReactiveObject), "Callback")]
@@ -483,9 +480,9 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
                 source.Width = ExpectedWidth;
             };
 
-        private It should_update_the_target = () => target.Width.ShouldEqual(ExpectedWidth);
-
         private It should_call_the_target_property_changed_callback =
             () => target.WidthPropertyChangedCalledbackCount.ShouldEqual(3);
+
+        private It should_update_the_target = () => target.Width.ShouldEqual(ExpectedWidth);
     }
 }
