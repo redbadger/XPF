@@ -1,198 +1,214 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RedBadger.Xpf</RootNamespace>
-    <AssemblyName>RedBadger.Xpf</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Debug\RedBadger.Xpf.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-    <DocumentationFile>bin\x86\Debug\RedBadger.Xpf.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Release\RedBadger.Xpf.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-  </PropertyGroup>
-  <ItemGroup>
-    <!--
+<Project ToolsVersion="4.0"
+         DefaultTargets="Build"
+         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProductVersion>8.0.30703</ProductVersion>
+        <SchemaVersion>2.0</SchemaVersion>
+        <ProjectGuid>{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>RedBadger.Xpf</RootNamespace>
+        <AssemblyName>RedBadger.Xpf</AssemblyName>
+        <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+        <DebugSymbols>true</DebugSymbols>
+        <OutputPath>bin\x86\Debug\</OutputPath>
+        <DefineConstants>TRACE;DEBUG</DefineConstants>
+        <DebugType>full</DebugType>
+        <PlatformTarget>x86</PlatformTarget>
+        <CodeAnalysisLogFile>bin\Debug\RedBadger.Xpf.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+        <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+        <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+        <ErrorReport>prompt</ErrorReport>
+        <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+        <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+        <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+        <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+        <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+        <DocumentationFile>bin\x86\Debug\RedBadger.Xpf.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+        <OutputPath>bin\x86\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <Optimize>true</Optimize>
+        <DebugType>pdbonly</DebugType>
+        <PlatformTarget>x86</PlatformTarget>
+        <CodeAnalysisLogFile>bin\Release\RedBadger.Xpf.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+        <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+        <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+        <ErrorReport>prompt</ErrorReport>
+        <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+        <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+        <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+        <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+        <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    </PropertyGroup>
+    <ItemGroup>
+        <!--
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Input.Touch, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
 -->
-    <Reference Include="Microsoft.Xna.Framework" />
-    <Reference Include="Microsoft.Xna.Framework.Graphics" />
-    <Reference Include="Microsoft.Xna.Framework.Input.Touch" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <!--
+        <Reference Include="Microsoft.Xna.Framework" />
+        <Reference Include="Microsoft.Xna.Framework.Graphics" />
+        <Reference Include="Microsoft.Xna.Framework.Input.Touch" />
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="Microsoft.CSharp" />
+        <!--
     <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
 -->
-    <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Graphics\IPrimitivesService.cs" />
-    <Compile Include="Graphics\ISpriteBatch.cs" />
-    <Compile Include="Graphics\ISpriteFont.cs" />
-    <Compile Include="Graphics\ITexture2D.cs" />
-    <Compile Include="Graphics\PrimitivesService.cs" />
-    <Compile Include="Graphics\SpriteBatchAdapter.cs" />
-    <Compile Include="Graphics\SpriteFontAdapter.cs" />
-    <Compile Include="Graphics\Texture2DAdapter.cs" />
-    <Compile Include="Graphics\ViewportExtensions.cs" />
-    <Compile Include="Internal\Controls\ScrollData.cs" />
-    <Compile Include="Internal\DualDisposable.cs" />
-    <Compile Include="Internal\IEnumerableExtensions.cs" />
-    <Compile Include="License.cs" />
-    <Compile Include="Internal\PropertyStore.cs" />
-    <Compile Include="Presentation\Controls\Canvas.cs" />
-    <Compile Include="Presentation\Data\BindingFactory.cs" />
-    <Compile Include="Presentation\Data\TwoWayReactivePropertyBinding.cs" />
-    <Compile Include="Presentation\Data\IDualChannel.cs" />
-    <Compile Include="Presentation\Data\ValueChangedBehaviorSubject.cs" />
-    <Compile Include="Presentation\Data\OneWayToSourceReactivePropertyBinding.cs" />
-    <Compile Include="Presentation\Data\OneWayBinding.cs" />
-    <Compile Include="Presentation\Data\BindingResolutionMode.cs" />
-    <Compile Include="Presentation\Data\IBinding.cs" />
-    <Compile Include="Presentation\Data\OneWayReactivePropertyBinding.cs" />
-    <Compile Include="Presentation\Data\OneWayToSourceBinding.cs" />
-    <Compile Include="Presentation\Data\TwoWayBinding.cs" />
-    <Compile Include="Presentation\Data\INotifyPropertyChanged.cs" />
-    <Compile Include="Presentation\Data\PropertyChangedEventArgs.cs" />
-    <Compile Include="Presentation\IReactiveProperty.cs" />
-    <Compile Include="Presentation\Point.cs" />
-    <Compile Include="Presentation\Media\Color.cs" />
-    <Compile Include="Presentation\Media\Colors.cs" />
-    <Compile Include="Presentation\ReactivePropertyChangeEventArgs.cs" />
-    <Compile Include="Presentation\Size.cs" />
-    <Compile Include="Presentation\Rect.cs" />
-    <Compile Include="Presentation\Thickness.cs" />
-    <Compile Include="Presentation\GridUnitType.cs" />
-    <Compile Include="Presentation\GridLength.cs" />
-    <Compile Include="Presentation\VerticalAlignment.cs" />
-    <Compile Include="Presentation\HorizontalAlignment.cs" />
-    <Compile Include="Presentation\Controls\ItemsControl.cs" />
-    <Compile Include="Presentation\Controls\Primitives\IScrollInfo.cs" />
-    <Compile Include="Presentation\ReactiveObject.cs" />
-    <Compile Include="Presentation\ITemplatedList.cs" />
-    <Compile Include="Presentation\Controls\ScrollContentPresenter.cs" />
-    <Compile Include="Presentation\Controls\ScrollViewer.cs" />
-    <Compile Include="Presentation\Controls\VirtualizingStackPanel.cs" />
-    <Compile Include="Presentation\Input\IInputElement.cs" />
-    <Compile Include="Presentation\Input\IInputManager.cs" />
-    <Compile Include="Internal\DoubleExtensions.cs" />
-    <Compile Include="Internal\MinMax.cs" />
-    <Compile Include="Internal\RectExtensions.cs" />
-    <Compile Include="Internal\SizeExtensions.cs" />
-    <Compile Include="Internal\ThicknessExtensions.cs" />
-    <Compile Include="Presentation\ReactivePropertyChangedCallbacks.cs" />
-    <Compile Include="Internal\VectorExtensions.cs" />
-    <Compile Include="Presentation\Controls\Button.cs" />
-    <Compile Include="Presentation\Controls\Primitives\ButtonBase.cs" />
-    <Compile Include="Presentation\Controls\Control.cs" />
-    <Compile Include="Presentation\Controls\StretchDirection.cs" />
-    <Compile Include="Internal\Controls\Viewbox.cs" />
-    <Compile Include="Presentation\Controls\Orientation.cs" />
-    <Compile Include="Presentation\IReactiveObject.cs" />
-    <Compile Include="Input\InputManager.cs" />
-    <Compile Include="Presentation\Input\GestureType.cs" />
-    <Compile Include="Presentation\Input\Gesture.cs" />
-    <Compile Include="Presentation\Media\Stretch.cs" />
-    <Compile Include="Presentation\Vector.cs" />
-    <Compile Include="Presentation\IRootElement.cs" />
-    <Compile Include="Presentation\Media\Brush.cs" />
-    <Compile Include="Presentation\Media\IRenderer.cs" />
-    <Compile Include="Presentation\Media\Renderer.cs" />
-    <Compile Include="Presentation\Media\DrawingContext.cs" />
-    <Compile Include="Presentation\Media\IDrawingContext.cs" />
-    <Compile Include="Presentation\Media\ISpriteJob.cs" />
-    <Compile Include="Presentation\Media\SpriteFontJob.cs" />
-    <Compile Include="Presentation\Media\SpriteImageJob.cs" />
-    <Compile Include="Presentation\Media\SpriteTextureJob.cs" />
-    <Compile Include="Presentation\Media\ImageSource.cs" />
-    <Compile Include="Presentation\Media\Imaging\BitmapImage.cs" />
-    <Compile Include="Presentation\Media\Imaging\BitmapSource.cs" />
-    <Compile Include="Presentation\Media\Imaging\XnaImage.cs" />
-    <Compile Include="Presentation\Media\SolidColorBrush.cs" />
-    <Compile Include="Presentation\Controls\ColumnDefinition.cs" />
-    <Compile Include="Presentation\Controls\Border.cs" />
-    <Compile Include="Presentation\Controls\ContentControl.cs" />
-    <Compile Include="Presentation\Controls\DefinitionBase.cs" />
-    <Compile Include="Presentation\Controls\Grid.cs" />
-    <Compile Include="Presentation\Controls\Image.cs" />
-    <Compile Include="Presentation\Controls\Panel.cs" />
-    <Compile Include="Presentation\Controls\RootElement.cs" />
-    <Compile Include="Presentation\Controls\RowDefinition.cs" />
-    <Compile Include="Presentation\Controls\StackPanel.cs" />
-    <Compile Include="Presentation\Controls\TextBlock.cs" />
-    <Compile Include="Presentation\IElement.cs" />
-    <Compile Include="Presentation\VirtualizingElementCollection.cs" />
-    <Compile Include="Presentation\ReactiveProperty.cs" />
-    <Compile Include="Presentation\TextWrapping.cs" />
-    <Compile Include="Presentation\UIElement.cs" />
-    <Compile Include="Presentation\ElementCollection.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+        <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+        <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+        <Reference Include="System.Xaml" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Graphics\IPrimitivesService.cs" />
+        <Compile Include="Graphics\ISpriteBatch.cs" />
+        <Compile Include="Graphics\ISpriteFont.cs" />
+        <Compile Include="Graphics\ITexture2D.cs" />
+        <Compile Include="Graphics\PrimitivesService.cs" />
+        <Compile Include="Graphics\SpriteBatchAdapter.cs" />
+        <Compile Include="Graphics\SpriteFontAdapter.cs" />
+        <Compile Include="Graphics\Texture2DAdapter.cs" />
+        <Compile Include="Graphics\ViewportExtensions.cs" />
+        <Compile Include="Internal\Controls\ScrollData.cs" />
+        <Compile Include="Internal\DualDisposable.cs" />
+        <Compile Include="Internal\IEnumerableExtensions.cs" />
+        <Compile Include="License.cs" />
+        <Compile Include="Internal\PropertyStore.cs" />
+        <Compile Include="Presentation\Controls\Canvas.cs" />
+        <Compile Include="Presentation\Data\BindingFactory.cs" />
+        <Compile Include="Presentation\Data\TwoWayReactivePropertyBinding.cs" />
+        <Compile Include="Presentation\Data\IDualChannel.cs" />
+        <Compile Include="Presentation\Data\ValueChangedBehaviorSubject.cs" />
+        <Compile Include="Presentation\Data\OneWayToSourceReactivePropertyBinding.cs" />
+        <Compile Include="Presentation\Data\OneWayBinding.cs" />
+        <Compile Include="Presentation\Data\BindingResolutionMode.cs" />
+        <Compile Include="Presentation\Data\IBinding.cs" />
+        <Compile Include="Presentation\Data\OneWayReactivePropertyBinding.cs" />
+        <Compile Include="Presentation\Data\OneWayToSourceBinding.cs" />
+        <Compile Include="Presentation\Data\TwoWayBinding.cs" />
+        <Compile Include="Presentation\Data\INotifyPropertyChanged.cs" />
+        <Compile Include="Presentation\Data\PropertyChangedEventArgs.cs" />
+        <Compile Include="Presentation\IReactiveProperty.cs" />
+        <Compile Include="Presentation\Point.cs" />
+        <Compile Include="Presentation\Media\Color.cs" />
+        <Compile Include="Presentation\Media\Colors.cs" />
+        <Compile Include="Presentation\ReactivePropertyChangeEventArgs.cs" />
+        <Compile Include="Presentation\Size.cs" />
+        <Compile Include="Presentation\Rect.cs" />
+        <Compile Include="Presentation\Thickness.cs" />
+        <Compile Include="Presentation\GridUnitType.cs" />
+        <Compile Include="Presentation\GridLength.cs" />
+        <Compile Include="Presentation\VerticalAlignment.cs" />
+        <Compile Include="Presentation\HorizontalAlignment.cs" />
+        <Compile Include="Presentation\Controls\ItemsControl.cs" />
+        <Compile Include="Presentation\Controls\Primitives\IScrollInfo.cs" />
+        <Compile Include="Presentation\ReactiveObject.cs" />
+        <Compile Include="Presentation\ITemplatedList.cs" />
+        <Compile Include="Presentation\Controls\ScrollContentPresenter.cs" />
+        <Compile Include="Presentation\Controls\ScrollViewer.cs" />
+        <Compile Include="Presentation\Controls\VirtualizingStackPanel.cs" />
+        <Compile Include="Presentation\Input\IInputElement.cs" />
+        <Compile Include="Presentation\Input\IInputManager.cs" />
+        <Compile Include="Internal\DoubleExtensions.cs" />
+        <Compile Include="Internal\MinMax.cs" />
+        <Compile Include="Internal\RectExtensions.cs" />
+        <Compile Include="Internal\SizeExtensions.cs" />
+        <Compile Include="Internal\ThicknessExtensions.cs" />
+        <Compile Include="Presentation\ReactivePropertyChangedCallbacks.cs" />
+        <Compile Include="Internal\VectorExtensions.cs" />
+        <Compile Include="Presentation\Controls\Button.cs" />
+        <Compile Include="Presentation\Controls\Primitives\ButtonBase.cs" />
+        <Compile Include="Presentation\Controls\Control.cs" />
+        <Compile Include="Presentation\Controls\StretchDirection.cs" />
+        <Compile Include="Internal\Controls\Viewbox.cs" />
+        <Compile Include="Presentation\Controls\Orientation.cs" />
+        <Compile Include="Presentation\IReactiveObject.cs" />
+        <Compile Include="Input\InputManager.cs" />
+        <Compile Include="Presentation\Input\GestureType.cs" />
+        <Compile Include="Presentation\Input\Gesture.cs" />
+        <Compile Include="Presentation\Media\Stretch.cs" />
+        <Compile Include="Presentation\Vector.cs" />
+        <Compile Include="Presentation\IRootElement.cs" />
+        <Compile Include="Presentation\Media\Brush.cs" />
+        <Compile Include="Presentation\Media\IRenderer.cs" />
+        <Compile Include="Presentation\Media\Renderer.cs" />
+        <Compile Include="Presentation\Media\DrawingContext.cs" />
+        <Compile Include="Presentation\Media\IDrawingContext.cs" />
+        <Compile Include="Presentation\Media\ISpriteJob.cs" />
+        <Compile Include="Presentation\Media\SpriteFontJob.cs" />
+        <Compile Include="Presentation\Media\SpriteImageJob.cs" />
+        <Compile Include="Presentation\Media\SpriteTextureJob.cs" />
+        <Compile Include="Presentation\Media\ImageSource.cs" />
+        <Compile Include="Presentation\Media\Imaging\BitmapImage.cs" />
+        <Compile Include="Presentation\Media\Imaging\BitmapSource.cs" />
+        <Compile Include="Presentation\Media\Imaging\XnaImage.cs" />
+        <Compile Include="Presentation\Media\SolidColorBrush.cs" />
+        <Compile Include="Presentation\Controls\ColumnDefinition.cs" />
+        <Compile Include="Presentation\Controls\Border.cs" />
+        <Compile Include="Presentation\Controls\ContentControl.cs" />
+        <Compile Include="Presentation\Controls\DefinitionBase.cs" />
+        <Compile Include="Presentation\Controls\Grid.cs" />
+        <Compile Include="Presentation\Controls\Image.cs" />
+        <Compile Include="Presentation\Controls\Panel.cs" />
+        <Compile Include="Presentation\Controls\RootElement.cs" />
+        <Compile Include="Presentation\Controls\RowDefinition.cs" />
+        <Compile Include="Presentation\Controls\StackPanel.cs" />
+        <Compile Include="Presentation\Controls\TextBlock.cs" />
+        <Compile Include="Presentation\IElement.cs" />
+        <Compile Include="Presentation\VirtualizingElementCollection.cs" />
+        <Compile Include="Presentation\ReactiveProperty.cs" />
+        <Compile Include="Presentation\TextWrapping.cs" />
+        <Compile Include="Presentation\UIElement.cs" />
+        <Compile Include="Presentation\ElementCollection.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+    </ItemGroup>
+    <ItemGroup />
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <PropertyGroup>
+        <PostBuildEvent>copy RedBadger.Xpf.dll $(SolutionDir)..\XPF.Samples\Lib\XPF</PostBuildEvent>
+    </PropertyGroup>
+    <Target Name="AfterBuild">
+        <Exec Condition="!Exists('$(TargetDir)$(TargetName).xml')"
+              Command="copy $(TargetDir)*.tmp $(SolutionDir)..\XPF.Samples\Lib\XPF\$(TargetName).xml" />
+        <Copy Condition="Exists('$(TargetDir)$(TargetName).xml')"
+              SourceFiles="$(TargetDir)$(TargetName).xml"
+              DestinationFolder="$(SolutionDir)..\XPF.Samples\Lib\XPF\" />
+    </Target>
+    <!--
+      To modify your build process, add your task inside one of the targets below and uncomment it. 
+      Other similar extension points exist, see Microsoft.Common.targets.
+      <Target Name="BeforeBuild">
+      </Target>
+      <Target Name="AfterBuild">
+      </Target>
+    -->
 </Project>

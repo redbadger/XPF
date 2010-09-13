@@ -121,8 +121,9 @@
       <Name>RedBadger.Xpf</Name>
     </ProjectReference>
     <ProjectReference Include="..\RedBadger.Xpf.SandboxContent\RedBadger.Xpf.SandboxContent.contentproj">
-      <Name>RedBadger.Xpf.SandboxContent</Name>
+      <Name>RedBadger.Xpf.SandboxContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{225BC32F-B88C-4EA2-B4D9-F094C28B4D81}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
