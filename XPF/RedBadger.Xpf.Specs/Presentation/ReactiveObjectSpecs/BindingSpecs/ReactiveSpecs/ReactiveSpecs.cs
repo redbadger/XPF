@@ -241,8 +241,39 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
     }
 
     [Subject(typeof(ReactiveObject), "Two Way")]
-    public class when_a_binding_is_two_way
+    public class when_a_binding_is_two_way_to_a_property_on_a_specified_source
     {
-        private It should;
+        private static readonly Brush expectedSourceBrush = new SolidColorBrush(Colors.Blue);
+
+        private static readonly Brush expectedTargetBrush = new SolidColorBrush(Colors.Red);
+
+        private static Brush actualBrushOnSource;
+
+        private static Brush actualBrushOnTarget;
+
+        private static TestBindingObject source;
+
+        private static Border target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new Border();
+
+                target.Bind(Border.BorderBrushProperty, source.BrushObservable, source.BrushObserver);
+            };
+
+        private Because of = () =>
+            {
+                target.BorderBrush = expectedTargetBrush;
+                actualBrushOnSource = source.Brush;
+
+                source.Brush = expectedSourceBrush;
+                actualBrushOnTarget = target.BorderBrush;
+            };
+
+        private It should_update_the_source = () => actualBrushOnSource.ShouldEqual(expectedTargetBrush);
+
+        private It should_update_the_target = () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
     }
 }

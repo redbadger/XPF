@@ -1,7 +1,6 @@
 ﻿namespace RedBadger.Xpf.Presentation.Data
 {
     using System;
-    using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
 
@@ -173,11 +172,7 @@
         public static IDualChannel<TProperty> CreateTwoWay<TSource, TProperty>(
             Expression<Func<TSource, TProperty>> propertySelector)
         {
-            PropertyInfo propertyInfo = GetPropertyInfo(propertySelector);
-
-            return new TwoWayBinding<TProperty>(
-                new OneWayBinding<TProperty>(propertyInfo), 
-                new OneWayToSourceBinding<TProperty>(propertyInfo));
+            return new TwoWayBinding<TProperty>(GetPropertyInfo(propertySelector));
         }
 
         /// <summary>
@@ -194,10 +189,7 @@
         public static IDualChannel<TProperty> CreateTwoWay<TSource, TProperty>(
             ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : ReactiveObject
         {
-            return
-                new TwoWayBinding<TProperty>(
-                    new OneWayReactivePropertyBinding<TSource, TProperty>(reactiveProperty), 
-                    new OneWayToSourceReactivePropertyBinding<TSource, TProperty>(reactiveProperty));
+            return new TwoWayReactivePropertyBinding<TSource, TProperty>(reactiveProperty);
         }
 
         /// <summary>
@@ -211,11 +203,7 @@
         public static IDualChannel<TProperty> CreateTwoWay<TSource, TProperty>(
             TSource source, Expression<Func<TSource, TProperty>> propertySelector)
         {
-            PropertyInfo propertyInfo = GetPropertyInfo(propertySelector);
-
-            return new TwoWayBinding<TProperty>(
-                new OneWayBinding<TProperty>(source, propertyInfo), 
-                new OneWayToSourceBinding<TProperty>(source, propertyInfo));
+            return new TwoWayBinding<TProperty>(source, GetPropertyInfo(propertySelector));
         }
 
         /// <summary>
@@ -230,19 +218,7 @@
             TSource source, ReactiveProperty<TProperty, TSource> reactiveProperty) where TSource : ReactiveObject
         {
             return
-                new TwoWayBinding<TProperty>(
-                    new OneWayReactivePropertyBinding<TSource, TProperty>(source, reactiveProperty), 
-                    new OneWayToSourceReactivePropertyBinding<TSource, TProperty>(source, reactiveProperty));
-        }
-
-        internal static IObservable<TProperty> GetObservable<TProperty>(
-            INotifyPropertyChanged source, PropertyInfo propertyInfo)
-        {
-            return
-                Observable.FromEvent<PropertyChangedEventArgs>(
-                    handler => source.PropertyChanged += handler, handler => source.PropertyChanged -= handler).Where(
-                        data => data.EventArgs.PropertyName == propertyInfo.Name).Select(
-                            e => (TProperty)propertyInfo.GetValue(source, null));
+                new TwoWayReactivePropertyBinding<TSource, TProperty>(source, reactiveProperty);
         }
 
         private static PropertyInfo GetPropertyInfo<TSource, TProperty>(

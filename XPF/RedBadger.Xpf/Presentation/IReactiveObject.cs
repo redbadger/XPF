@@ -14,13 +14,23 @@ namespace RedBadger.Xpf.Presentation
         void ClearValue(IReactiveProperty property);
 
         /// <summary>
-        ///     Gets an underlying <see cref = "IObservable{T}">IObservable</see> for a <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> for this instance of <see cref = "ReactiveObject">ReactiveObject</see>.
+        ///     Gets an <see cref = "IObservable{T}">IObservable</see> for a <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> for this instance of <see cref = "ReactiveObject">ReactiveObject</see>.
         /// </summary>
         /// <typeparam name = "TProperty">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s <see cref = "Type">Type</see></typeparam>
         /// <typeparam name = "TOwner">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
         /// <param name = "property">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> to retrieve a value for.</param>
         /// <returns>An <see cref = "IObservable{T}">IObservable</see> around the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>.</returns>
         IObservable<TProperty> GetObservable<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
+            where TOwner : class, IReactiveObject;
+
+        /// <summary>
+        ///     Gets an <see cref = "IObserver{T}">IObserver</see> for a <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> for this instance of <see cref = "ReactiveObject">ReactiveObject</see>.
+        /// </summary>
+        /// <typeparam name = "TProperty">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s <see cref = "Type">Type</see></typeparam>
+        /// <typeparam name = "TOwner">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>'s owner <see cref = "Type">Type</see></typeparam>
+        /// <param name = "property">The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> to retrieve a value for.</param>
+        /// <returns>An <see cref = "IObserver{T}">IObserver</see> around the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>.</returns>
+        IObserver<TProperty> GetObserver<TProperty, TOwner>(ReactiveProperty<TProperty, TOwner> property)
             where TOwner : class, IReactiveObject;
 
         /// <summary>

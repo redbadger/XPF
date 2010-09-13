@@ -1,12 +1,12 @@
 ﻿namespace RedBadger.Xpf.Presentation.Data
 {
     internal class OneWayReactivePropertyBinding<TSource, TProperty> : OneWayBinding<TProperty>
-        where TSource : ReactiveObject
+        where TSource : class, IReactiveObject
     {
         private readonly ReactiveProperty<TProperty, TSource> reactiveProperty;
 
         public OneWayReactivePropertyBinding(
-            ReactiveObject source, ReactiveProperty<TProperty, TSource> reactiveProperty)
+            IReactiveObject source, ReactiveProperty<TProperty, TSource> reactiveProperty)
             : base(source.GetObservable(reactiveProperty))
         {
         }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Reflection;
 
 #if WINDOWS_PHONE
     using Microsoft.Phone.Reactive;
@@ -17,7 +18,25 @@
 
         private bool isDisposed;
 
-        public TwoWayBinding(OneWayBinding<T> oneWayBinding, OneWayToSourceBinding<T> oneWayToSourceBinding)
+        public TwoWayBinding(PropertyInfo propertyInfo)
+            : this(BindingResolutionMode.Deferred)
+        {
+            this.oneWayBinding = new OneWayBinding<T>(propertyInfo);
+            this.oneWayToSourceBinding = new OneWayToSourceBinding<T>(propertyInfo);
+        }
+
+        public TwoWayBinding(object source, PropertyInfo propertyInfo)
+            : this(BindingResolutionMode.Immediate)
+        {
+            this.oneWayBinding = new OneWayBinding<T>(source, propertyInfo);
+            this.oneWayToSourceBinding = new OneWayToSourceBinding<T>(source, propertyInfo);
+        }
+
+        protected TwoWayBinding(
+            OneWayBinding<T> oneWayBinding, 
+            OneWayToSourceBinding<T> oneWayToSourceBinding, 
+            BindingResolutionMode resolutionMode)
+            : this(resolutionMode)
         {
             this.oneWayBinding = oneWayBinding;
             this.oneWayToSourceBinding = oneWayToSourceBinding;
@@ -26,8 +45,11 @@
             {
                 throw new ArgumentException("Both bindings must share the same ResolutionMode");
             }
+        }
 
-            this.resolutionMode = this.oneWayBinding.ResolutionMode;
+        private TwoWayBinding(BindingResolutionMode resolutionMode)
+        {
+            this.resolutionMode = resolutionMode;
         }
 
         ~TwoWayBinding()
@@ -73,6 +95,13 @@
             this.isDisposed = true;
         }
 
+        public IDisposable Initialize(ISubject<T> subject)
+        {
+            this.oneWayBinding.Subscribe(subject);
+            this.oneWayToSourceBinding.Initialize(subject);
+            return this;
+        }
+
         public void Resolve(object dataContext)
         {
             this.oneWayBinding.Resolve(dataContext);
@@ -83,13 +112,6 @@
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        public IDisposable Initialize(ISubject<T> subject)
-        {
-            this.oneWayBinding.Subscribe(subject);
-            this.oneWayToSourceBinding.Initialize(subject);
-            return this;
         }
     }
 }

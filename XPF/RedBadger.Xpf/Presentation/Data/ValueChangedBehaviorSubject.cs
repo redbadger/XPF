@@ -1,27 +1,16 @@
 namespace RedBadger.Xpf.Presentation.Data
 {
-#if WINDOWS_PHONE
-
-    using System;
-
-    using Microsoft.Phone.Reactive;
-
-#else
     using System;
     using System.Collections.Generic;
-    using System.Concurrency;
     using System.Linq;
 
+#if WINDOWS_PHONE
+    using Microsoft.Phone.Reactive;
 #endif
 
     internal class ValueChangedBehaviorSubject<T> : ISubject<T>
     {
         private readonly BehaviorSubject<T> subject;
-
-        public ValueChangedBehaviorSubject(T value, IScheduler scheduler)
-        {
-            this.subject = new BehaviorSubject<T>(value, scheduler);
-        }
 
         public ValueChangedBehaviorSubject(T value)
         {

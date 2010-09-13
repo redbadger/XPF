@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
 
 #if WINDOWS_PHONE
@@ -45,7 +46,7 @@
             var notifyPropertyChanged = source as INotifyPropertyChanged;
 
             this.observable = notifyPropertyChanged != null
-                                  ? BindingFactory.GetObservable<T>(notifyPropertyChanged, propertyInfo)
+                                  ? GetObservable<T>(notifyPropertyChanged, propertyInfo)
                                   : new BehaviorSubject<T>((T)propertyInfo.GetValue(source, null));
         }
 
@@ -101,8 +102,7 @@
 
                 if (dataContext is INotifyPropertyChanged)
                 {
-                    this.SubscribeObserver(
-                        BindingFactory.GetObservable<T>((INotifyPropertyChanged)dataContext, this.propertyInfo));
+                    this.SubscribeObserver(GetObservable<T>((INotifyPropertyChanged)dataContext, this.propertyInfo));
                 }
             }
         }
@@ -129,6 +129,16 @@
         {
             this.observable = observable;
             this.SubscribeObserver();
+        }
+
+        private static IObservable<TProperty> GetObservable<TProperty>(
+            INotifyPropertyChanged source, PropertyInfo propertyInfo)
+        {
+            return
+                Observable.FromEvent<PropertyChangedEventArgs>(
+                    handler => source.PropertyChanged += handler, handler => source.PropertyChanged -= handler).Where(
+                        data => data.EventArgs.PropertyName == propertyInfo.Name).Select(
+                            e => (TProperty)propertyInfo.GetValue(source, null));
         }
 
         private void SubscribeObserver()
