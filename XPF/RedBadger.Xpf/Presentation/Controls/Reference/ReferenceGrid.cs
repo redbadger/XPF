@@ -6,14 +6,14 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
     using RedBadger.Xpf.Internal;
 
-    public enum GridUnitType
+    internal enum GridUnitType
     {
         Auto, 
         Pixel, 
         Star
     }
 
-    public struct GridLength
+    internal struct GridLength
     {
         private static readonly GridLength auto = new GridLength(1.0, GridUnitType.Auto);
 
@@ -72,7 +72,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
         }
     }
 
-    public class Grid : Panel
+    internal class Grid : Panel
     {
         public static readonly ReactiveProperty<int, Grid> ColumnProperty =
             ReactiveProperty<int, Grid>.Register("Column");
@@ -454,7 +454,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
         private void SetFinalSize(DefinitionBase[] definitions, double finalSize)
         {
-            int length = 0;
+            int starCount = 0;
             int num2 = definitions.Length;
             double num3 = 0.0;
 
@@ -475,7 +475,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
                             Math.Max(definitions[i].MinSizeForArrange, definitions[i].UserMaxSize) / divisor;
                     }
 
-                    this.definitionIndices[length++] = i;
+                    this.definitionIndices[starCount++] = i;
                     continue;
                 }
 
@@ -493,6 +493,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
                 double userMaxSize = definitions[i].IsShared ? minSizeForArrange : definitions[i].UserMaxSize;
 
+                // SizeCache = FinalLength
                 definitions[i].SizeCache = Math.Max(
                     definitions[i].MinSizeForArrange, Math.Min(minSizeForArrange, userMaxSize));
 
@@ -500,11 +501,11 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
                 this.definitionIndices[--num2] = i;
             }
 
-            if (length > 0)
+            if (starCount > 0)
             {
-                Array.Sort(this.definitionIndices, 0, length, new StarDistributionOrderIndexComparer(definitions));
+                Array.Sort(this.definitionIndices, 0, starCount, new StarDistributionOrderIndexComparer(definitions));
                 double num10 = 0.0;
-                int index = length - 1;
+                int index = starCount - 1;
                 do
                 {
                     num10 += definitions[this.definitionIndices[index]].MeasureSize;
@@ -532,7 +533,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
 
                     num3 += definitions[this.definitionIndices[index]].SizeCache;
                 }
-                while (++index < length);
+                while (++index < starCount);
             }
 
             if (num3.IsGreaterThan(finalSize))
@@ -805,7 +806,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
     {
     }
 
-    public class RowDefinitionCollection
+    internal class RowDefinitionCollection
     {
         public RowDefinitionCollection(Grid grid)
         {
@@ -820,7 +821,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
         }
     }
 
-    public class ColumnDefinitionCollection
+    internal class ColumnDefinitionCollection
     {
         public ColumnDefinitionCollection(Grid grid)
         {
@@ -839,7 +840,7 @@ namespace RedBadger.Xpf.Presentation.Controls.Reference
     {
     }
 
-    public class DefinitionBase
+    internal class DefinitionBase
     {
         public double FinalOffset { get; set; }
 

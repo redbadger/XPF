@@ -18,6 +18,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 
     public abstract class a_Grid
     {
+        protected const string ArrangeOverride = "ArrangeOverride";
+
         protected const string MeasureOverride = "MeasureOverride";
 
         protected static readonly Size AvailableSize = new Size(200, 200);

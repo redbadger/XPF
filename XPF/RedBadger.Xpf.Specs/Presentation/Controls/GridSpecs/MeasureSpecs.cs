@@ -25,11 +25,59 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     [Subject(typeof(Grid), "Measure")]
     public class when_a_column_index_is_specified_greater_than_the_number_of_columns_available : a_Grid
     {
-        private It should_put_it_in_the_last_column;
+        private const double Column2Width = 20d;
+
+        private static Mock<UIElement> child;
+
+        private Establish context = () =>
+            {
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(10d) });
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(Column2Width) });
+
+                child = new Mock<UIElement> { CallBase = true };
+
+                Grid.SetColumn(child.Object, 2);
+
+                Subject.Children.Add(child.Object);
+            };
+
+        private Because of = () => Subject.Measure(AvailableSize);
+
+        private It should_put_it_in_the_last_column =
+            () =>
+            child.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(Column2Width)));
+    }
+
+    [Subject(typeof(Grid), "Measure")]
+    public class when_a_row_index_is_specified_greater_than_the_number_of_rows_available : a_Grid
+    {
+        private const double Row2Height = 20d;
+
+        private static Mock<UIElement> child;
+
+        private Establish context = () =>
+            {
+                Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(10d) });
+                Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(Row2Height) });
+
+                child = new Mock<UIElement> { CallBase = true };
+
+                Grid.SetRow(child.Object, 2);
+
+                Subject.Children.Add(child.Object);
+            };
+
+        private Because of = () => Subject.Measure(AvailableSize);
+
+        private It should_put_it_in_the_last_row =
+            () =>
+            child.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(Row2Height)));
     }
 
     [Subject(typeof(Grid), "Measure - Pixel/Auto/Star")]
-    public class when_a_grid_has_columns_of_mixed_pixel_auto_and_star : a_Grid
+    public class when_measuring_a_grid_that_has_columns_of_mixed_pixel_auto_and_star : a_Grid
     {
         private const int Column1PixelWidth = 30;
 
@@ -89,7 +137,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
     }
 
     [Subject(typeof(Grid), "Measure - Pixel/Auto/Star")]
-    public class when_a_grid_has_rows_of_mixed_pixel_auto_and_star : a_Grid
+    public class when_measuring_a_grid_that_has_rows_of_mixed_pixel_auto_and_star : a_Grid
     {
         private const int Row1PixelHeight = 30;
 

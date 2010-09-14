@@ -23,17 +23,17 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Auto
 
         private Because of = () => Subject.Arrange(new Rect(AvailableSize));
 
-        private It should_layout_the_bottom_left_child_correctly =
-            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, 80));
-
-        private It should_layout_the_bottom_right_child_correctly =
-            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector(50, 80));
-
-        private It should_layout_the_top_left_child_correctly =
+        private It should_1_layout_the_top_left_child_correctly =
             () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector.Zero);
 
-        private It should_layout_the_top_right_child_correctly =
+        private It should_2_layout_the_top_right_child_correctly =
             () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector(50, 0));
+
+        private It should_3_layout_the_bottom_left_child_correctly =
+            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, 80));
+
+        private It should_4_layout_the_bottom_right_child_correctly =
+            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector(50, 80));
     }
 
     [Subject(typeof(Grid), "Arrange")]

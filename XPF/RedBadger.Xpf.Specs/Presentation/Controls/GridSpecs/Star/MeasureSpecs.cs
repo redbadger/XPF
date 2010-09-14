@@ -22,8 +22,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
 
     using It = Machine.Specifications.It;
 
-    [Subject(typeof(Grid), "Measure - Star")]
-    public class when_an_element_is_added : a_Grid
+    [Subject(typeof(Grid), "Measure")]
+    public class when_measuring_a_grid_with_a_single_element : a_Grid
     {
         private static Mock<UIElement> child;
 
@@ -44,8 +44,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(value => value.Equals(AvailableSize)));
     }
 
-    [Subject(typeof(Grid), "Measure - Star")]
-    public class when_there_are_two_rows_and_two_columns : a_Star_Grid_with_two_rows_and_two_columns
+    [Subject(typeof(Grid), "Measure")]
+    public class when_measuring_a_grid_with_two_rows_and_two_columns : a_Star_Grid_with_two_rows_and_two_columns
     {
         private static readonly Size expectedCellSize = new Size(AvailableSize.Width / 2, AvailableSize.Height / 2);
 
@@ -79,8 +79,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
                 TopRightChild.Object.Height + BottomRightChild.Object.Height));
     }
 
-    [Subject(typeof(Grid), "Measure - Star")]
-    public class when_a_3_x_3_grid_has_differing_cell_sizes : a_Grid
+    [Subject(typeof(Grid), "Measure")]
+    public class when_measuring_a_3_x_3_grid_with_differing_cell_sizes : a_Grid
     {
         private static readonly Mock<UIElement>[,] children = new Mock<UIElement>[3, 3];
 
@@ -118,22 +118,70 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
 
         private Because of = () => Subject.Measure(AvailableSize);
 
-        private It should_give_each_cell_the_correct_space = () =>
-            {
-                for (int row = 0; row < 3; row++)
-                {
-                    for (int col = 0; col < 3; col++)
-                    {
-                        var expectedSize = new Size(widthUnit * (col + 1), heightUnit * (row + 1));
-                        children[row, col].Protected().Verify(
-                            MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => !size.IsDifferentFrom(expectedSize)));
-                    }
-                }
-            };
+        private It should_give_cell_1_the_correct_space =
+            () =>
+            children[0, 0].Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.IsCloseTo(new Size(widthUnit, heightUnit))));
+
+        private It should_give_cell_2_the_correct_space =
+            () =>
+            children[0, 1].Protected().Verify(
+                MeasureOverride, 
+                Times.Once(), 
+                ItExpr.Is<Size>(size => size.IsCloseTo(new Size(widthUnit * 2, heightUnit))));
+
+        private It should_give_cell_3_the_correct_space =
+            () =>
+            children[0, 2].Protected().Verify(
+                MeasureOverride, 
+                Times.Once(), 
+                ItExpr.Is<Size>(size => size.IsCloseTo(new Size(widthUnit * 3, heightUnit))));
+
+        private It should_give_cell_4_the_correct_space =
+            () =>
+            children[1, 0].Protected().Verify(
+                MeasureOverride, 
+                Times.Once(), 
+                ItExpr.Is<Size>(size => size.IsCloseTo(new Size(widthUnit, heightUnit * 2))));
+
+        private It should_give_cell_5_the_correct_space =
+            () =>
+            children[1, 1].Protected().Verify(
+                MeasureOverride, 
+                Times.Once(), 
+                ItExpr.Is<Size>(size => size.IsCloseTo(new Size(widthUnit * 2, heightUnit * 2))));
+
+        private It should_give_cell_6_the_correct_space =
+            () =>
+            children[1, 2].Protected().Verify(
+                MeasureOverride, 
+                Times.Once(), 
+                ItExpr.Is<Size>(size => size.IsCloseTo(new Size(widthUnit * 3, heightUnit * 2))));
+
+        private It should_give_cell_7_the_correct_space =
+            () =>
+            children[2, 0].Protected().Verify(
+                MeasureOverride, 
+                Times.Once(), 
+                ItExpr.Is<Size>(size => size.IsCloseTo(new Size(widthUnit, heightUnit * 3))));
+
+        private It should_give_cell_8_the_correct_space =
+            () =>
+            children[2, 1].Protected().Verify(
+                MeasureOverride, 
+                Times.Once(), 
+                ItExpr.Is<Size>(size => size.IsCloseTo(new Size(widthUnit * 2, heightUnit * 3))));
+
+        private It should_give_cell_9_the_correct_space =
+            () =>
+            children[2, 2].Protected().Verify(
+                MeasureOverride, 
+                Times.Once(), 
+                ItExpr.Is<Size>(size => size.IsCloseTo(new Size(widthUnit * 3, heightUnit * 3))));
     }
 
-    [Subject(typeof(Grid), "Measure - Star")]
-    public class when_a_child_element_is_bigger_than_the_available_size : a_Grid
+    [Subject(typeof(Grid), "Measure")]
+    public class when_measuring_a_grid_with_a_child_element_that_is_bigger_than_the_available_size : a_Grid
     {
         private static Mock<UIElement> child;
 
@@ -150,8 +198,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
         private It should_not_affect_the_desired_size = () => Subject.DesiredSize.ShouldEqual(AvailableSize);
     }
 
-    [Subject(typeof(Grid), "Measure Star - Min and Max")]
-    public class when_there_is_a_column_with_min_width_that_exceeds_its_proportional_allocation : a_Grid
+    [Subject(typeof(Grid), "Measure - Min and Max")]
+    public class when_measuring_a_grid_when_there_is_a_column_with_min_width_that_exceeds_its_proportional_allocation :
+        a_Grid
     {
         private const double ColumnMinWidth = 100;
 
@@ -205,8 +254,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.IsCloseTo(expectedProportionalWidth)));
     }
 
-    [Subject(typeof(Grid), "Measure Star - Min and Max")]
-    public class when_there_is_a_column_with_max_width_that_is_less_than_its_proportional_allocation : a_Grid
+    [Subject(typeof(Grid), "Measure - Min and Max")]
+    public class
+        when_measuring_a_grid_when_there_is_a_column_with_max_width_that_is_less_than_its_proportional_allocation :
+            a_Grid
     {
         private const double ColumnMaxWidth = 50;
 
@@ -260,8 +311,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.IsCloseTo(expectedSubsequentWidth)));
     }
 
-    [Subject(typeof(Grid), "Measure Star - Min and Max")]
-    public class when_there_is_a_row_with_min_height_that_exceeds_its_proportional_allocation : a_Grid
+    [Subject(typeof(Grid), "Measure - Min and Max")]
+    public class when_measuring_a_grid_when_there_is_a_row_with_min_height_that_exceeds_its_proportional_allocation :
+        a_Grid
     {
         private const double RowMinHeight = 100;
 
@@ -319,8 +371,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
                 ItExpr.Is<Size>(size => size.Height.IsCloseTo(expectedProportionalHeight)));
     }
 
-    [Subject(typeof(Grid), "Measure Star - Min and Max")]
-    public class when_there_is_a_row_with_max_height_that_is_less_than_its_proportional_allocation : a_Grid
+    [Subject(typeof(Grid), "Measure - Min and Max")]
+    public class when_measuring_a_grid_when_there_is_a_row_with_max_height_that_is_less_than_its_proportional_allocation :
+        a_Grid
     {
         private const double RowMaxHeight = 50;
 

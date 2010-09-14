@@ -126,9 +126,8 @@
     <Compile Include="Presentation\HorizontalAlignment.cs" />
     <Compile Include="Presentation\Controls\ItemsControl.cs" />
     <Compile Include="Presentation\Controls\Primitives\IScrollInfo.cs" />
-    <Compile Include="Presentation\Controls\Reference\ReferenceGrid.cs"/>
     <Compile Include="Presentation\ReactiveObject.cs" />
-  	<Compile Include="Presentation\ITemplatedList.cs" />
+    <Compile Include="Presentation\ITemplatedList.cs" />
     <Compile Include="Presentation\Controls\ScrollContentPresenter.cs" />
     <Compile Include="Presentation\Controls\ScrollViewer.cs" />
     <Compile Include="Presentation\Controls\VirtualizingStackPanel.cs" />

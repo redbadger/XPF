@@ -8,5 +8,10 @@ namespace RedBadger.Xpf.Internal
         {
             return size1.Width.IsDifferentFrom(size2.Width) || size1.Height.IsDifferentFrom(size2.Height);
         }
+
+        public static bool IsCloseTo(this Size size1, Size size2)
+        {
+            return !size1.IsDifferentFrom(size2);
+        }
     }
 }
