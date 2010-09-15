@@ -6,11 +6,20 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     using RedBadger.Xpf.Internal;
 
+    /// <summary>
+    /// A Grid layout panel consisting of columns and rows.
+    /// </summary>
     public class Grid : Panel
     {
+        /// <summary>
+        /// Column attached property.
+        /// </summary>
         public static readonly ReactiveProperty<int, Grid> ColumnProperty =
             ReactiveProperty<int, Grid>.Register("Column");
 
+        /// <summary>
+        /// Row attached property.
+        /// </summary>
         public static readonly ReactiveProperty<int, Grid> RowProperty = ReactiveProperty<int, Grid>.Register("Row");
 
         private readonly IList<ColumnDefinition> columnDefinitions = new List<ColumnDefinition>();
@@ -37,6 +46,10 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         private DefinitionBase[] widthDefinitions;
 
+        /// <summary>
+        /// Gets the collection of column definitions.
+        /// </summary>
+        /// <value>The column definitions collection.</value>
         public IList<ColumnDefinition> ColumnDefinitions
         {
             get
@@ -45,6 +58,10 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
+        /// <summary>
+        /// Gets the collection of row definitions.
+        /// </summary>
+        /// <value>The row definitions collection.</value>
         public IList<RowDefinition> RowDefinitions
         {
             get
@@ -53,6 +70,11 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
+        /// <summary>
+        /// Gets the value of the Column attached property for the specified element.
+        /// </summary>
+        /// <param name="element">The element for which to read the proerty value.</param>
+        /// <returns>The value of the Column attached property.</returns>
         public static int GetColumn(IElement element)
         {
             if (element == null)
@@ -63,6 +85,11 @@ namespace RedBadger.Xpf.Presentation.Controls
             return element.GetValue(ColumnProperty);
         }
 
+        /// <summary>
+        /// Gets the value of the Row attached property for the specified element.
+        /// </summary>
+        /// <param name="element">The element for which to read the proerty value.</param>
+        /// <returns>The value of the Row attached property.</returns>
         public static int GetRow(IElement element)
         {
             if (element == null)
@@ -73,6 +100,11 @@ namespace RedBadger.Xpf.Presentation.Controls
             return element.GetValue(RowProperty);
         }
 
+        /// <summary>
+        /// Sets the value of the Column attached property for the specified element.
+        /// </summary>
+        /// <param name="element">The element for which to write the proerty value.</param>
+        /// <param name="value">The value of the Column attached property.</param>
         public static void SetColumn(IElement element, int value)
         {
             if (element == null)
@@ -83,6 +115,11 @@ namespace RedBadger.Xpf.Presentation.Controls
             element.SetValue(ColumnProperty, value);
         }
 
+        /// <summary>
+        /// Sets the value of the Row attached property for the specified element.
+        /// </summary>
+        /// <param name="element">The element for which to write the proerty value.</param>
+        /// <param name="value">The value of the Row attached property.</param>
         public static void SetRow(IElement element, int value)
         {
             if (element == null)
@@ -91,28 +128,6 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
 
             element.SetValue(RowProperty, value);
-        }
-
-        internal static bool CompareNullRefs(object x, object y, out int result)
-        {
-            result = 2;
-            if (x == null)
-            {
-                if (y == null)
-                {
-                    result = 0;
-                }
-                else
-                {
-                    result = -1;
-                }
-            }
-            else if (y == null)
-            {
-                result = 1;
-            }
-
-            return result != 2;
         }
 
         protected override Size ArrangeOverride(Size finalSize)
