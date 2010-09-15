@@ -1,17 +1,13 @@
 namespace RedBadger.PocketMechanic.Phone
 {
     using System;
-    using System.Collections.ObjectModel;
 
-    using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Data;
     using RedBadger.Xpf.Presentation.Media;
 
     using Color = RedBadger.Xpf.Presentation.Media.Color;
@@ -56,21 +52,21 @@ namespace RedBadger.PocketMechanic.Phone
             this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
             var spriteFontAdapter = new SpriteFontAdapter(this.spriteFont);
 
-            var grid = new Grid();
+            var grid = new Grid { Width = 200, Height = 200 };
             grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.ColumnDefinitions.Add(new ColumnDefinition { MinWidth = 100 });
             grid.ColumnDefinitions.Add(new ColumnDefinition());
-            grid.RowDefinitions.Add(new RowDefinition());
-            grid.RowDefinitions.Add(new RowDefinition());
 
-            var block = new TextBlock(spriteFontAdapter)
-                {
-                    Text = "Test Grid",
-                    Background = new SolidColorBrush(GetRandomColor(this.random)),
-                };
-            grid.Children.Add(block);
-            Grid.SetColumn(block, 1);
-            Grid.SetRow(block, 1);
-            
+            var child1 = new Border { Background = new SolidColorBrush(Colors.Red) };
+            var child2 = new Border { Background = new SolidColorBrush(Colors.Yellow) };
+            var child3 = new Border { Background = new SolidColorBrush(Colors.Blue) };
+            Grid.SetColumn(child1, 0);
+            Grid.SetColumn(child2, 1);
+            Grid.SetColumn(child3, 2);
+
+            grid.Children.Add(child1);
+            grid.Children.Add(child2);
+            grid.Children.Add(child3);
 
             var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
 

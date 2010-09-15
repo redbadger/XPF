@@ -204,7 +204,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
     {
         private const double ColumnMinWidth = 100;
 
-        private static readonly double expectedProportionalWidth = AvailableSize.Width / 3;
+        private static readonly double expectedProportionalWidth = (AvailableSize.Width - ColumnMinWidth) / 2d;
 
         private static Mock<UIElement> child1;
 
@@ -317,7 +317,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
     {
         private const double RowMinHeight = 100;
 
-        private static readonly double expectedProportionalHeight = AvailableSize.Height / 3;
+        private static readonly double expectedProportionalHeight = (AvailableSize.Height - RowMinHeight) / 2d;
 
         private static Mock<UIElement> child1;
 

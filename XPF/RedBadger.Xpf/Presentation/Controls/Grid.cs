@@ -13,9 +13,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         public static readonly ReactiveProperty<int, Grid> RowProperty = ReactiveProperty<int, Grid>.Register("Row");
 
-        private static readonly StarDistributionComparerByFinalLengths compareDefinitionByFinalLengths =
-            new StarDistributionComparerByFinalLengths();
-
         private readonly IList<ColumnDefinition> columnDefinitions = new List<ColumnDefinition>();
 
         private readonly IList<RowDefinition> rowDefinitions = new List<RowDefinition>();
@@ -257,7 +254,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             double occupiedSpace = 0.0;
 
-            var stars = new List<DefinitionBase>();
+            var stars = new LinkedList<DefinitionBase>();
 
             foreach (DefinitionBase definition in definitions)
             {
@@ -272,7 +269,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                         break;
 
                     case GridUnitType.Star:
-                        stars.Add(definition);
+                        stars.AddLast(definition);
                         double divisor = definition.UserLength.Value;
                         if (divisor.IsCloseTo(0))
                         {
@@ -291,16 +288,16 @@ namespace RedBadger.Xpf.Presentation.Controls
 
             if (stars.Count > 0)
             {
-                stars.Sort(compareDefinitionByFinalLengths);
+                var sortedStars = stars.OrderBy(o => o.FinalLength).ToArray();
 
                 double cumulativeDivisor = 0.0;
-                foreach (DefinitionBase definition in Enumerable.Reverse(stars))
+                foreach (DefinitionBase definition in sortedStars.Reverse())
                 {
                     cumulativeDivisor += definition.AvailableLength;
                     definition.FinalLength = cumulativeDivisor;
                 }
 
-                foreach (DefinitionBase definition in stars)
+                foreach (DefinitionBase definition in sortedStars)
                 {
                     double size;
                     double divisor = definition.AvailableLength;
@@ -324,12 +321,8 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             double cumulativeLength = 0.0;
 
-            int j = 0;
-
-            var definitionIndices = new int[definitions.Length];
-
-            int nonStarIndex = definitionIndices.Length;
-            int starIndex = 0;
+            var starDefinitions = new LinkedList<DefinitionBase>();
+            var nonStarDefinitions = new LinkedList<DefinitionBase>();
 
             foreach (DefinitionBase definition in definitions)
             {
@@ -343,7 +336,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                         definition.FinalLength = minLength.Coerce(definition.MinLength, definition.UserMaxLength);
 
                         cumulativeLength += definition.FinalLength;
-                        definitionIndices[--nonStarIndex] = j;
+                        nonStarDefinitions.AddFirst(definition);
 
                         break;
                     case GridUnitType.Pixel:
@@ -352,7 +345,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                         definition.FinalLength = minLength.Coerce(definition.MinLength, definition.UserMaxLength);
 
                         cumulativeLength += definition.FinalLength;
-                        definitionIndices[--nonStarIndex] = j;
+                        nonStarDefinitions.AddFirst(definition);
 
                         break;
                     case GridUnitType.Star:
@@ -368,35 +361,28 @@ namespace RedBadger.Xpf.Presentation.Controls
                             definition.FinalLength = Math.Max(definition.MinLength, definition.UserMaxLength) / divisor;
                         }
 
-                        definitionIndices[starIndex++] = j;
+                        starDefinitions.AddLast(definition);
 
                         break;
                     default:
                         throw new NotSupportedException("Unsupported GridUnitType");
                 }
-
-                j++;
             }
 
-            int starCount = starIndex;
-            if (starCount > 0)
+            if (starDefinitions.Count > 0)
             {
-                Array.Sort(definitionIndices, 0, starCount, new StarDistributionOrderIndexComparer(definitions));
+                var sortedStars = starDefinitions.OrderBy(o => o.FinalLength).ToArray();
+
                 double cumulativeStarLength = 0d;
-                int index = starCount - 1;
-                do
+                foreach (var definitionBase in sortedStars.Reverse())
                 {
-                    DefinitionBase definitionBase = definitions[definitionIndices[index]];
                     cumulativeStarLength += definitionBase.AvailableLength;
                     definitionBase.FinalLength = cumulativeStarLength;
                 }
-                while (--index >= 0);
 
-                index = 0;
-                do
+                foreach (var definitionBase in sortedStars)
                 {
                     double finalLength;
-                    DefinitionBase definitionBase = definitions[definitionIndices[index]];
                     double measureSize = definitionBase.AvailableLength;
                     if (measureSize.IsCloseTo(0))
                     {
@@ -415,24 +401,24 @@ namespace RedBadger.Xpf.Presentation.Controls
 
                     cumulativeLength += finalLength;
                 }
-                while (++index < starCount);
             }
 
             if (cumulativeLength.IsGreaterThan(gridFinalLength))
             {
-                Array.Sort(definitionIndices, 0, definitions.Length, new DistributionOrderIndexComparer(definitions));
+                var sortedDefinitions = starDefinitions.Concat(nonStarDefinitions).OrderBy(o => o.FinalLength - o.MinLength);
 
                 double excessLength = cumulativeLength - gridFinalLength;
-                for (int k = 0; k < definitions.Length; k++)
+                var i = 0;
+                foreach (var definitionBase in sortedDefinitions)
                 {
-                    DefinitionBase definitionBase = definitions[definitionIndices[k]];
-
-                    double finalLength = definitionBase.FinalLength - (excessLength / (definitions.Length - k));
+                    double finalLength = definitionBase.FinalLength - (excessLength / (definitions.Length - i));
 
                     finalLength = finalLength.Coerce(definitionBase.MinLength, definitionBase.FinalLength);
 
                     excessLength -= definitionBase.FinalLength - finalLength;
                     definitionBase.FinalLength = finalLength;
+
+                    i++;
                 }
             }
 
@@ -567,79 +553,6 @@ namespace RedBadger.Xpf.Presentation.Controls
             public int RowIndex;
 
             public GridUnitType WidthType;
-        }
-
-        internal class DistributionOrderIndexComparer : IComparer<int>
-        {
-            private readonly DefinitionBase[] definitions;
-
-            internal DistributionOrderIndexComparer(DefinitionBase[] definitions)
-            {
-                if (definitions == null)
-                {
-                    throw new ArgumentNullException("definitions");
-                }
-
-                this.definitions = definitions;
-            }
-
-            public int Compare(int x, int y)
-            {
-                int compare;
-                DefinitionBase left = this.definitions[x];
-                DefinitionBase right = this.definitions[y];
-                if (!CompareNullRefs(left, right, out compare))
-                {
-                    double leftRemainderLength = left.FinalLength - left.MinLength;
-                    double rightRemainderLength = right.FinalLength - right.MinLength;
-                    compare = leftRemainderLength.CompareTo(rightRemainderLength);
-                }
-
-                return compare;
-            }
-        }
-
-        private class StarDistributionComparerByFinalLengths : IComparer<DefinitionBase>
-        {
-            public int Compare(DefinitionBase x, DefinitionBase y)
-            {
-                int num;
-                if (!CompareNullRefs(x, y, out num))
-                {
-                    num = x.FinalLength.CompareTo(y.FinalLength);
-                }
-
-                return num;
-            }
-        }
-
-        private class StarDistributionOrderIndexComparer : IComparer<int>
-        {
-            private readonly DefinitionBase[] definitions;
-
-            internal StarDistributionOrderIndexComparer(DefinitionBase[] definitions)
-            {
-                if (definitions == null)
-                {
-                    throw new ArgumentNullException("definitions");
-                }
-
-                this.definitions = definitions;
-            }
-
-            public int Compare(int x, int y)
-            {
-                int num;
-                DefinitionBase left = this.definitions[x];
-                DefinitionBase right = this.definitions[y];
-
-                if (!CompareNullRefs(left, right, out num))
-                {
-                    num = left.FinalLength.CompareTo(right.FinalLength);
-                }
-
-                return num;
-            }
         }
     }
 }
