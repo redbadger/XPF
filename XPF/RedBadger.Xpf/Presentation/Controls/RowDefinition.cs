@@ -3,7 +3,7 @@
     public class RowDefinition : DefinitionBase
     {
         public static readonly ReactiveProperty<GridLength, RowDefinition> HeightProperty =
-            ReactiveProperty<GridLength, RowDefinition>.Register("Height", new GridLength());
+            ReactiveProperty<GridLength, RowDefinition>.Register("Height", new GridLength(1, GridUnitType.Star));
 
         public static readonly ReactiveProperty<double, RowDefinition> MaxHeightProperty =
             ReactiveProperty<double, RowDefinition>.Register("MaxHeight", double.PositiveInfinity);

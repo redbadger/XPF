@@ -8,6 +8,9 @@ namespace RedBadger.Xpf.Specs.Extensions
 
     using Machine.Specifications;
 
+    using RedBadger.Xpf.Internal;
+    using RedBadger.Xpf.Presentation;
+
     public static class MSpecExtensions
     {
         public static IComparable ShouldBeGreaterThanOrEqualTo(this IComparable arg1, IComparable arg2)
@@ -25,6 +28,16 @@ namespace RedBadger.Xpf.Specs.Extensions
             if (arg1.CompareTo(arg2.TryToChangeType(arg1.GetType())) < 0)
             {
                 throw NewException("Should be greater than {0} but is {1}", arg2, arg1);
+            }
+
+            return arg1;
+        }
+
+        public static Vector ShouldBeCloseTo(this Vector arg1, Vector arg2)
+        {
+            if (arg1.IsDifferentFrom(arg2))
+            {
+                throw NewException("Should be close to {0} but is {1}", arg2, arg1);
             }
 
             return arg1;

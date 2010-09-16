@@ -62,12 +62,8 @@
     <Reference Include="Machine.Specifications">
       <HintPath>..\..\Lib\MSpec\Machine.Specifications.dll</HintPath>
     </Reference>
-    <!--
-    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
--->
-    <Reference Include="Microsoft.Xna.Framework" />
-    <Reference Include="Microsoft.Xna.Framework.Graphics" />
     <Reference Include="Moq">
       <HintPath>..\..\Lib\Moq\Moq.dll</HintPath>
     </Reference>
@@ -77,12 +73,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <!--
     <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
--->
-    <Reference Include="System.CoreEx" />
-    <Reference Include="System.Reactive" />
     <Reference Include="System.Xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -94,10 +86,19 @@
     <Compile Include="Presentation\Controls\ButtonSpecs\ButtonSpecs.cs" />
     <Compile Include="Presentation\Controls\CanvasSpecs\CanvasSpecs.cs" />
     <Compile Include="Presentation\Controls\ContentControlSpecs\ContentControlSpecs.cs" />
-    <Compile Include="Presentation\Controls\ImageSpecs\ImageSpecs.cs" />
+    <Compile Include="Presentation\Controls\GridSpecs\Auto\Contexts.cs" />
+    <Compile Include="Presentation\Controls\GridSpecs\Auto\MeasureSpecs.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\ArrangeSpecs.cs" />
-    <Compile Include="Presentation\Controls\GridSpecs\Contexts.cs" />
     <Compile Include="Presentation\Controls\GridSpecs\MeasureSpecs.cs" />
+    <Compile Include="Presentation\Controls\GridSpecs\Pixel\ArrangeSpecs.cs" />
+    <Compile Include="Presentation\Controls\GridSpecs\Pixel\Contexts.cs" />
+    <Compile Include="Presentation\Controls\GridSpecs\Star\ArrangeSpecs.cs" />
+    <Compile Include="Presentation\Controls\GridSpecs\Star\Contexts.cs" />
+    <Compile Include="Presentation\Controls\GridSpecs\Star\MeasureSpecs.cs" />
+    <Compile Include="Presentation\Controls\ImageSpecs\ImageSpecs.cs" />
+    <Compile Include="Presentation\Controls\GridSpecs\Auto\ArrangeSpecs.cs" />
+    <Compile Include="Presentation\Controls\GridSpecs\Contexts.cs" />
+    <Compile Include="Presentation\Controls\GridSpecs\Pixel\MeasureSpecs.cs" />
     <Compile Include="Presentation\Controls\ItemsControlSpecs\Contexts.cs" />
     <Compile Include="Presentation\Controls\ItemsControlSpecs\ItemsSourceSpecs.cs" />
     <Compile Include="Presentation\Controls\ItemsControlSpecs\ItemTemplateSpecs.cs" />
@@ -111,11 +112,11 @@
     <Compile Include="Presentation\Controls\PanelSpecs\PanelSpecs.cs" />
     <Compile Include="Presentation\Controls\VirtualizingStackPanelSpecs\VirtualizingStackPanelSpecs.cs" />
     <Compile Include="Presentation\DefinitionBaseSpecs\DefinitionBaseSpecs.cs" />
-    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs\DependencyObjectSpecs\DependencyObjectSpecs.cs" />
-    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs\INotifyPropertyChangedSpecs\INotifyPropertyChangedSpecs.cs" />
-    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs\ObjectSpecs\ObjectSpecs.cs" />
-    <Compile Include="Presentation\DependencyObjectSpecs\BindingSpecs\ReactiveSpecs\ReactiveSpecs.cs" />
-    <Compile Include="Presentation\DependencyObjectSpecs\ReactivePropertySpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\ReactiveObjectSpecs\ReactiveObjectSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\INotifyPropertyChangedSpecs\INotifyPropertyChangedSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\ObjectSpecs\ObjectSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\ReactiveSpecs\ReactiveSpecs.cs" />
+    <Compile Include="Presentation\ReactiveObjectSpecs\ReactivePropertySpecs.cs" />
     <Compile Include="Presentation\ElementCollectionSpecs\Contexts.cs" />
     <Compile Include="Presentation\ElementCollectionSpecs\ITemplatedListSpecs.cs" />
     <Compile Include="Presentation\GridLengthSpecs\GridLengthSpecs.cs" />
@@ -129,7 +130,6 @@
     <Compile Include="Presentation\SizeSpecs\SizeSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\ArrangeSpecs.cs" />
-    <Compile Include="Presentation\UIElementSpecs\BindingSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\Contexts.cs" />
     <Compile Include="Presentation\UIElementSpecs\MeasureSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\UIElementSpecs.cs" />

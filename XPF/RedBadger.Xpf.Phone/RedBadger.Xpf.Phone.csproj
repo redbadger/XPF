@@ -44,16 +44,9 @@
   <ItemGroup>
     <Reference Include="Microsoft.Phone, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Reactive, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
-    <!--
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Input.Touch, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
--->
-    <Reference Include="Microsoft.Xna.Framework" />
-    <Reference Include="Microsoft.Xna.Framework.Game" />
-    <Reference Include="Microsoft.Xna.Framework.Graphics" />
-    <Reference Include="Microsoft.Xna.Framework.Input.Touch" />
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
@@ -203,14 +196,29 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\BindingFactory.cs">
       <Link>Presentation\Data\BindingFactory.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\DeferredBinding.cs">
-      <Link>Presentation\Data\DeferredBinding.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\BindingResolutionMode.cs">
+      <Link>Presentation\Data\BindingResolutionMode.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\IDeferredBinding.cs">
-      <Link>Presentation\Data\IDeferredBinding.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\IBinding.cs">
+      <Link>Presentation\Data\IBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\IDualChannel.cs">
+      <Link>Presentation\Data\IDualChannel.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\INotifyPropertyChanged.cs">
       <Link>Presentation\Data\INotifyPropertyChanged.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\OneWayBinding.cs">
+      <Link>Presentation\Data\OneWayBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\OneWayReactivePropertyBinding.cs">
+      <Link>Presentation\Data\OneWayReactivePropertyBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\OneWayToSourceBinding.cs">
+      <Link>Presentation\Data\OneWayToSourceBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\OneWayToSourceReactivePropertyBinding.cs">
+      <Link>Presentation\Data\OneWayToSourceReactivePropertyBinding.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\PropertyChangedEventArgs.cs">
       <Link>Presentation\Data\PropertyChangedEventArgs.cs</Link>
@@ -218,8 +226,11 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Data\TwoWayBinding.cs">
       <Link>Presentation\Data\TwoWayBinding.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\DependencyObject.cs">
-      <Link>Presentation\DependencyObject.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\TwoWayReactivePropertyBinding.cs">
+      <Link>Presentation\Data\TwoWayReactivePropertyBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\Data\ValueChangedBehaviorSubject.cs">
+      <Link>Presentation\Data\ValueChangedBehaviorSubject.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\ElementCollection.cs">
       <Link>Presentation\ElementCollection.cs</Link>
@@ -232,9 +243,6 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\HorizontalAlignment.cs">
       <Link>Presentation\HorizontalAlignment.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\IDependencyObject.cs">
-      <Link>Presentation\IDependencyObject.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IElement.cs">
       <Link>Presentation\IElement.cs</Link>
@@ -250,6 +258,9 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Input\IInputManager.cs">
       <Link>Presentation\Input\IInputManager.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\IReactiveObject.cs">
+      <Link>Presentation\IReactiveObject.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\IReactiveProperty.cs">
       <Link>Presentation\IReactiveProperty.cs</Link>
@@ -314,6 +325,9 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Point.cs">
       <Link>Presentation\Point.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Presentation\ReactiveObject.cs">
+      <Link>Presentation\ReactiveObject.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\ReactiveProperty.cs">
       <Link>Presentation\ReactiveProperty.cs</Link>
     </Compile>
@@ -352,6 +366,11 @@
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!--
       To modify your build process, add your task inside one of the targets below and uncomment it. 
       Other similar extension points exist, see Microsoft.Common.targets.

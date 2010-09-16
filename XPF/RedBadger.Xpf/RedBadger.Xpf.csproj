@@ -64,21 +64,12 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <!--
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Input.Touch, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
--->
-    <Reference Include="Microsoft.Xna.Framework" />
-    <Reference Include="Microsoft.Xna.Framework.Graphics" />
-    <Reference Include="Microsoft.Xna.Framework.Input.Touch" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <!--
-    <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
--->
     <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
@@ -100,8 +91,15 @@
     <Compile Include="Internal\PropertyStore.cs" />
     <Compile Include="Presentation\Controls\Canvas.cs" />
     <Compile Include="Presentation\Data\BindingFactory.cs" />
-    <Compile Include="Presentation\Data\DeferredBinding.cs" />
-    <Compile Include="Presentation\Data\IDeferredBinding.cs" />
+    <Compile Include="Presentation\Data\TwoWayReactivePropertyBinding.cs" />
+    <Compile Include="Presentation\Data\IDualChannel.cs" />
+    <Compile Include="Presentation\Data\ValueChangedBehaviorSubject.cs" />
+    <Compile Include="Presentation\Data\OneWayToSourceReactivePropertyBinding.cs" />
+    <Compile Include="Presentation\Data\OneWayBinding.cs" />
+    <Compile Include="Presentation\Data\BindingResolutionMode.cs" />
+    <Compile Include="Presentation\Data\IBinding.cs" />
+    <Compile Include="Presentation\Data\OneWayReactivePropertyBinding.cs" />
+    <Compile Include="Presentation\Data\OneWayToSourceBinding.cs" />
     <Compile Include="Presentation\Data\TwoWayBinding.cs" />
     <Compile Include="Presentation\Data\INotifyPropertyChanged.cs" />
     <Compile Include="Presentation\Data\PropertyChangedEventArgs.cs" />
@@ -119,7 +117,7 @@
     <Compile Include="Presentation\HorizontalAlignment.cs" />
     <Compile Include="Presentation\Controls\ItemsControl.cs" />
     <Compile Include="Presentation\Controls\Primitives\IScrollInfo.cs" />
-    <Compile Include="Presentation\DependencyObject.cs" />
+    <Compile Include="Presentation\ReactiveObject.cs" />
     <Compile Include="Presentation\ITemplatedList.cs" />
     <Compile Include="Presentation\Controls\ScrollContentPresenter.cs" />
     <Compile Include="Presentation\Controls\ScrollViewer.cs" />
@@ -139,7 +137,7 @@
     <Compile Include="Presentation\Controls\StretchDirection.cs" />
     <Compile Include="Internal\Controls\Viewbox.cs" />
     <Compile Include="Presentation\Controls\Orientation.cs" />
-    <Compile Include="Presentation\IDependencyObject.cs" />
+    <Compile Include="Presentation\IReactiveObject.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Presentation\Input\GestureType.cs" />
     <Compile Include="Presentation\Input\Gesture.cs" />

@@ -11,29 +11,55 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.ReactivePropertySpecs
 {
+    using System;
+
     using Machine.Specifications;
 
     using RedBadger.Xpf.Presentation;
 
-    using It = Machine.Specifications.It;
-
-    [Subject(typeof(ReactiveProperty<,>), "Category")]
+    [Subject(typeof(ReactiveProperty<,>), "Default Values")]
     public class when_a_reactive_property_of_reference_type_is_registered_with_no_default
     {
-        private static ReactiveProperty<object, DependencyObject> SubjectProperty;
+        private static ReactiveProperty<object, ReactiveObject> SubjectProperty;
 
-        private Because of = () => SubjectProperty = ReactiveProperty<object, DependencyObject>.Register("Subject");
+        private Because of = () => SubjectProperty = ReactiveProperty<object, ReactiveObject>.Register("Subject");
 
         private It should_have_a_default_value_of_null = () => SubjectProperty.DefaultValue.ShouldEqual(null);
     }
 
-    [Subject(typeof(ReactiveProperty<,>), "Category")]
+    [Subject(typeof(ReactiveProperty<,>), "Default Values")]
     public class when_a_reactive_property_of_value_type_is_registered_with_no_default
     {
-        private static ReactiveProperty<int, DependencyObject> SubjectProperty;
+        private static ReactiveProperty<int, ReactiveObject> SubjectProperty;
 
-        private Because of = () => SubjectProperty = ReactiveProperty<int, DependencyObject>.Register("Subject");
+        private Because of = () => SubjectProperty = ReactiveProperty<int, ReactiveObject>.Register("Subject");
 
         private It should_have_a_default_value_of_zero = () => SubjectProperty.DefaultValue.ShouldEqual(0);
+    }
+
+    [Subject(typeof(ReactiveProperty<,>), "Default Values")]
+    public class when_a_reactive_property_of_reference_type_is_registered_with_a_default_value
+    {
+        private const string DefaultValue = "Default Value";
+
+        private static ReactiveProperty<string, ReactiveObject> SubjectProperty;
+
+        private Because of =
+            () => SubjectProperty = ReactiveProperty<string, ReactiveObject>.Register("Subject", DefaultValue);
+
+        private It should_have_the_registered_default_value =
+            () => SubjectProperty.DefaultValue.ShouldEqual(DefaultValue);
+    }
+
+    [Subject(typeof(ReactiveProperty<,>), "Default Values")]
+    public class when_a_reactive_property_of_value_type_is_registered_with_a_default_value
+    {
+        private static ReactiveProperty<int, ReactiveObject> SubjectProperty;
+
+        private Because of =
+            () => SubjectProperty = ReactiveProperty<int, ReactiveObject>.Register("Subject", Int32.MaxValue);
+
+        private It should_have_the_registered_default_value =
+            () => SubjectProperty.DefaultValue.ShouldEqual(Int32.MaxValue);
     }
 }

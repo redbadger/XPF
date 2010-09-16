@@ -9,6 +9,11 @@
             return Math.Max(Math.Min(offset, max), min);
         }
 
+        public static double EnsurePositive(this double value)
+        {
+            return Math.Max(value, 0.0);
+        }
+
         public static bool IsCloseTo(this double value1, double value2)
         {
             return !value1.IsDifferentFrom(value2);

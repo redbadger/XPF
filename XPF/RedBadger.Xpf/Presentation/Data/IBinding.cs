@@ -1,7 +1,9 @@
 ﻿namespace RedBadger.Xpf.Presentation.Data
 {
-    public interface IDeferredBinding 
+    internal interface IBinding
     {
+        BindingResolutionMode ResolutionMode { get; }
+
         void Resolve(object dataContext);
     }
 }

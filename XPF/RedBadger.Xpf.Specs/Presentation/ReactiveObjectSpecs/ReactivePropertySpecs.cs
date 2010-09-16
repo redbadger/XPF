@@ -8,8 +8,9 @@
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
+// ReSharper disable ClassNeverInstantiated.Global
 
-namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
+namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
 {
     using Machine.Specifications;
 
@@ -19,9 +20,9 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
 
     using It = Machine.Specifications.It;
 
-    public class TestBindingObject : DependencyObject
+    public class TestBindingObject : ReactiveObject
     {
-        public static readonly ReactiveProperty<double, TestBindingObject> WidthProperty =
+        private static readonly ReactiveProperty<double, TestBindingObject> WidthProperty =
             ReactiveProperty<double, TestBindingObject>.Register("Width", double.NaN, WidthChangedCallback);
 
         public double Width
@@ -49,17 +50,17 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
         }
     }
 
-    public abstract class a_DependencyObject
+    public abstract class a_ReactiveObject
     {
-        protected static DependencyObject Subject;
+        protected static ReactiveObject Subject;
 
-        private Establish context = () => Subject = new DependencyObject();
+        private Establish context = () => Subject = new ReactiveObject();
     }
 
-    [Subject(typeof(DependencyObject))]
-    public class when_clearing_a_reactive_property_value : a_DependencyObject
+    [Subject(typeof(ReactiveObject))]
+    public class when_clearing_a_reactive_property_value : a_ReactiveObject
     {
-        public static readonly ReactiveProperty<string, DependencyObject> TestPropertyProperty;
+        private static readonly ReactiveProperty<string, ReactiveObject> TestPropertyProperty;
 
         private static readonly string defaultValue = string.Empty;
 
@@ -71,14 +72,14 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
 
         static when_clearing_a_reactive_property_value()
         {
-            TestPropertyProperty = ReactiveProperty<string, DependencyObject>.Register("TestProperty", defaultValue);
+            TestPropertyProperty = ReactiveProperty<string, ReactiveObject>.Register("TestProperty", defaultValue);
         }
     }
 
-    [Subject(typeof(DependencyObject))]
-    public class when_changing_a_reactive_property_value : a_DependencyObject
+    [Subject(typeof(ReactiveObject))]
+    public class when_changing_a_reactive_property_value : a_ReactiveObject
     {
-        public static readonly ReactiveProperty<string, DependencyObject> TestPropertyProperty;
+        private static readonly ReactiveProperty<string, ReactiveObject> TestPropertyProperty;
 
         private const string ExpectedFinalValue = "Final Value";
 
@@ -93,11 +94,11 @@ namespace RedBadger.Xpf.Specs.Presentation.DependencyObjectSpecs
 
         static when_changing_a_reactive_property_value()
         {
-            TestPropertyProperty = ReactiveProperty<string, DependencyObject>.Register("TestProperty", defaultValue);
+            TestPropertyProperty = ReactiveProperty<string, ReactiveObject>.Register("TestProperty", defaultValue);
         }
     }
 
-    [Subject(typeof(DependencyObject))]
+    [Subject(typeof(ReactiveObject))]
     public class when_a_value_is_changed_three_times
     {
         private const double ExpectedWidth1 = 1d;

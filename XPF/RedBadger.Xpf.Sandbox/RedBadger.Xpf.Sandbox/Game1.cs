@@ -13,26 +13,17 @@ namespace RedBadger.Xpf.Sandbox
     using Color = Microsoft.Xna.Framework.Color;
 
     /// <summary>
-    ///   This is the main type for your game
+    ///     This is the main type for your game
     /// </summary>
     public class Game1 : Game
     {
-        private SpriteFontAdapter font;
-
-        private GraphicsDeviceManager graphics;
-
         private RootElement rootElement;
 
         private SpriteBatchAdapter spriteBatchAdapter;
 
-        private SpriteFontAdapter spriteFontAdapter;
-
         public Game1()
         {
-            this.graphics = new GraphicsDeviceManager(this)
-                {
-                   PreferredBackBufferWidth = 1024, PreferredBackBufferHeight = 768 
-                };
+            new GraphicsDeviceManager(this) { PreferredBackBufferWidth = 1024, PreferredBackBufferHeight = 768 };
 
             this.Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
@@ -50,29 +41,27 @@ namespace RedBadger.Xpf.Sandbox
 
         protected override void LoadContent()
         {
-            this.spriteFontAdapter = new SpriteFontAdapter(this.Content.Load<SpriteFont>("SpriteFont"));
             this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
-
             var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
-
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 
-            var itemsControl = new ItemsControl
+            var grid = new Grid
                 {
-                    ItemsSource = new[] { "", "" },
-                    ItemsPanel = new StackPanel { Orientation = Orientation.Horizontal},
-                    ItemTemplate =
-                        () =>
-                        new Border
-                            {
-                                Background = new SolidColorBrush(Colors.Red),
-                                Width = 100,
-                                Height = 100,
-                                Margin = new Thickness(10)
-                            }
+                    ColumnDefinitions =
+                        {
+                            new ColumnDefinition(), 
+                            new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) }
+                        }
                 };
 
-            this.rootElement.Content = itemsControl;
+            var left = new Border { Background = new SolidColorBrush(Colors.Red) };
+            grid.Children.Add(left);
+
+            var right = new Border { Background = new SolidColorBrush(Colors.Blue) };
+            Grid.SetColumn(right, 1);
+            grid.Children.Add(right);
+
+            this.rootElement.Content = grid;
         }
 
         protected override void Update(GameTime gameTime)

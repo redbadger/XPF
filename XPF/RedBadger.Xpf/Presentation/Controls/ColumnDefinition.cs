@@ -9,7 +9,7 @@
             ReactiveProperty<double, ColumnDefinition>.Register("MinWidth", 0d);
 
         public static readonly ReactiveProperty<GridLength, ColumnDefinition> WidthProperty =
-            ReactiveProperty<GridLength, ColumnDefinition>.Register("Width", new GridLength());
+            ReactiveProperty<GridLength, ColumnDefinition>.Register("Width", new GridLength(1, GridUnitType.Star));
 
         public ColumnDefinition()
             : base(DefinitionType.Column)
