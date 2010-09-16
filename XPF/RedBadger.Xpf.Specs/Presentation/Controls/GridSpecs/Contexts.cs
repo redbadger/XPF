@@ -13,6 +13,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
     using Machine.Specifications;
 
+    using Moq;
+
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
@@ -27,5 +29,16 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
         protected static Grid Subject;
 
         private Establish context = () => Subject = new Grid();
+
+        protected static Mock<UIElement> CreateChild(int row, int column)
+        {
+            var child = new Mock<UIElement> { CallBase = true };
+            child.Object.VerticalAlignment = VerticalAlignment.Top;
+            child.Object.HorizontalAlignment = HorizontalAlignment.Left;
+            Grid.SetRow(child.Object, row);
+            Grid.SetColumn(child.Object, column);
+            Subject.Children.Add(child.Object);
+            return child;
+        }
     }
 }

@@ -22,29 +22,33 @@ namespace RedBadger.Xpf.Presentation.Controls
         /// </summary>
         public static readonly ReactiveProperty<int, Grid> RowProperty = ReactiveProperty<int, Grid>.Register("Row");
 
-        private readonly LinkedList<Cell> cellsWithAllStars = new LinkedList<Cell>();
+        private readonly LinkedList<Cell> allStars = new LinkedList<Cell>();
 
-        private readonly LinkedList<Cell> cellsWithNoStars = new LinkedList<Cell>();
-
-        private readonly LinkedList<Cell> cellsWithoutStarHeights = new LinkedList<Cell>();
-
-        private readonly LinkedList<Cell> cellsWithoutStarWidths = new LinkedList<Cell>();
+        private readonly LinkedList<Cell> autoPixelHeightStarWidth = new LinkedList<Cell>();
 
         private readonly IList<ColumnDefinition> columnDefinitions = new List<ColumnDefinition>();
 
+        private readonly bool[] hasAuto = new bool[2];
+
+        private readonly bool[] hasStar = new bool[2];
+
+        private readonly LinkedList<Cell> noStars = new LinkedList<Cell>();
+
         private readonly IList<RowDefinition> rowDefinitions = new List<RowDefinition>();
 
-        private bool areThereAnyStarHeights;
-
-        private bool areThereAnyStarWidths;
+        private readonly LinkedList<Cell> starHeightAutoPixelWidth = new LinkedList<Cell>();
 
         private Cell[] cells;
 
-        private DefinitionBase[] heightDefinitions;
+        private DefinitionBase[] columns;
 
-        private bool noAutoHeightStarWidthCells;
+        private DefinitionBase[] rows;
 
-        private DefinitionBase[] widthDefinitions;
+        private enum Dimension
+        {
+            Width, 
+            Height
+        }
 
         private enum UpdateMinLengths
         {
@@ -139,8 +143,8 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            SetFinalLength(this.widthDefinitions, finalSize.Width);
-            SetFinalLength(this.heightDefinitions, finalSize.Height);
+            SetFinalLength(this.columns, finalSize.Width);
+            SetFinalLength(this.rows, finalSize.Height);
 
             for (int i = 0; i < this.cells.Length; i++)
             {
@@ -151,10 +155,10 @@ namespace RedBadger.Xpf.Presentation.Controls
                     int rowIndex = this.cells[i].RowIndex;
 
                     var finalRect = new Rect(
-                        this.widthDefinitions[columnIndex].FinalOffset, 
-                        this.heightDefinitions[rowIndex].FinalOffset, 
-                        this.widthDefinitions[columnIndex].FinalLength, 
-                        this.heightDefinitions[rowIndex].FinalLength);
+                        this.columns[columnIndex].FinalOffset, 
+                        this.rows[rowIndex].FinalOffset, 
+                        this.columns[columnIndex].FinalLength, 
+                        this.rows[rowIndex].FinalLength);
 
                     child.Arrange(finalRect);
                 }
@@ -165,117 +169,28 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            this.widthDefinitions = this.columnDefinitions.Count == 0
-                                        ? new DefinitionBase[] { new ColumnDefinition() }
-                                        : this.columnDefinitions.ToArray();
+            this.columns = this.columnDefinitions.Count == 0
+                               ? new DefinitionBase[] { new ColumnDefinition() }
+                               : this.columnDefinitions.ToArray();
 
-            this.heightDefinitions = this.rowDefinitions.Count == 0
-                                         ? new DefinitionBase[] { new RowDefinition() }
-                                         : this.rowDefinitions.ToArray();
+            this.rows = this.rowDefinitions.Count == 0
+                            ? new DefinitionBase[] { new RowDefinition() }
+                            : this.rowDefinitions.ToArray();
 
             bool treatStarAsAutoWidth = double.IsPositiveInfinity(availableSize.Width);
             bool treatStarAsAutoHeight = double.IsPositiveInfinity(availableSize.Height);
 
-            InitializeMeasureData(this.widthDefinitions, treatStarAsAutoWidth);
-            InitializeMeasureData(this.heightDefinitions, treatStarAsAutoHeight);
+            this.InitializeMeasureData(this.columns, treatStarAsAutoWidth, Dimension.Width);
+            this.InitializeMeasureData(this.rows, treatStarAsAutoHeight, Dimension.Height);
 
             this.CreateCells();
-
-            this.MeasureCellGroup(this.cellsWithNoStars, UpdateMinLengths.WidthsAndHeights);
-
-            if (this.noAutoHeightStarWidthCells)
-            {
-                if (this.areThereAnyStarHeights)
-                {
-                    ResolveStar(this.heightDefinitions, availableSize.Height);
-                }
-
-                this.MeasureCellGroup(this.cellsWithoutStarWidths, UpdateMinLengths.WidthsAndHeights);
-
-                if (this.areThereAnyStarWidths)
-                {
-                    ResolveStar(this.widthDefinitions, availableSize.Width);
-                }
-
-                this.MeasureCellGroup(this.cellsWithoutStarHeights, UpdateMinLengths.WidthsAndHeights);
-            }
-            else
-            {
-                if (this.cellsWithoutStarWidths.Count == 0)
-                {
-                    if (this.areThereAnyStarWidths)
-                    {
-                        ResolveStar(this.widthDefinitions, availableSize.Width);
-                    }
-
-                    this.MeasureCellGroup(this.cellsWithoutStarHeights, UpdateMinLengths.WidthsAndHeights);
-
-                    if (this.areThereAnyStarHeights)
-                    {
-                        ResolveStar(this.heightDefinitions, availableSize.Height);
-                    }
-                }
-                else
-                {
-                    this.MeasureCellGroup(this.cellsWithoutStarWidths, UpdateMinLengths.SkipHeights);
-
-                    if (this.areThereAnyStarWidths)
-                    {
-                        ResolveStar(this.widthDefinitions, availableSize.Width);
-                    }
-
-                    this.MeasureCellGroup(this.cellsWithoutStarHeights, UpdateMinLengths.WidthsAndHeights);
-
-                    if (this.areThereAnyStarHeights)
-                    {
-                        ResolveStar(this.heightDefinitions, availableSize.Height);
-                    }
-
-                    this.MeasureCellGroup(this.cellsWithoutStarWidths, UpdateMinLengths.SkipWidths);
-                }
-            }
-
-            this.MeasureCellGroup(this.cellsWithAllStars, UpdateMinLengths.WidthsAndHeights);
+            this.MeasureCells(availableSize);
 
             return new Size(
-                this.widthDefinitions.Sum(definition => definition.MinLength), 
-                this.heightDefinitions.Sum(definition => definition.MinLength));
+                this.columns.Sum(definition => definition.MinLength), this.rows.Sum(definition => definition.MinLength));
         }
 
-        private static void InitializeMeasureData(IEnumerable<DefinitionBase> definitions, bool treatStarAsAuto)
-        {
-            foreach (DefinitionBase definition in definitions)
-            {
-                definition.MinLength = 0d;
-                double availableLength;
-                double userMinLength = definition.UserMinLength;
-                double userMaxLength = definition.UserMaxLength;
-
-                switch (definition.UserLength.GridUnitType)
-                {
-                    case GridUnitType.Auto:
-                        definition.LengthType = GridUnitType.Auto;
-                        availableLength = double.PositiveInfinity;
-                        break;
-                    case GridUnitType.Pixel:
-                        definition.LengthType = GridUnitType.Pixel;
-                        availableLength = definition.UserLength.Value;
-                        userMinLength = Math.Max(userMinLength, Math.Min(availableLength, userMaxLength));
-                        break;
-                    case GridUnitType.Star:
-                        definition.LengthType = treatStarAsAuto ? GridUnitType.Auto : GridUnitType.Star;
-                        availableLength = double.PositiveInfinity;
-                        break;
-                    default:
-                        throw new NotSupportedException("Unsupported GridUnitType");
-                }
-
-                definition.UpdateMinLength(userMinLength);
-                definition.AvailableLength = Math.Max(userMinLength, Math.Min(availableLength, userMaxLength));
-            }
-        }
-
-        private static void ResolveStar(IEnumerable<DefinitionBase> definitions, double availableLength)
+        private static void AllocateProportionalSpace(IEnumerable<DefinitionBase> definitions, double availableLength)
         {
             double occupiedSpace = 0.0;
 
@@ -336,8 +251,8 @@ namespace RedBadger.Xpf.Presentation.Controls
                         size = Math.Max(definition.MinLength, Math.Min(size, definition.UserMaxLength));
                     }
 
-                    definition.AvailableLength = size;
                     occupiedSpace += size;
+                    definition.AvailableLength = size;
                 }
             }
         }
@@ -459,61 +374,91 @@ namespace RedBadger.Xpf.Presentation.Controls
         private void CreateCells()
         {
             this.cells = new Cell[this.Children.Count];
-            this.cellsWithNoStars.Clear();
-            this.cellsWithoutStarHeights.Clear();
-            this.cellsWithoutStarWidths.Clear();
-            this.cellsWithAllStars.Clear();
+            this.noStars.Clear();
+            this.autoPixelHeightStarWidth.Clear();
+            this.starHeightAutoPixelWidth.Clear();
+            this.allStars.Clear();
 
-            this.areThereAnyStarWidths = false;
-            this.areThereAnyStarHeights = false;
-            bool doAnyCellsHaveAutoHeightAndStarWidth = false;
-
-            for (int i = this.cells.Length - 1; i >= 0; i--)
+            int i = 0;
+            foreach (IElement child in this.Children)
             {
-                IElement element = this.Children[i];
-                if (element != null)
+                if (child != null)
                 {
-                    var columnIndex = Math.Min(GetColumn(element), this.widthDefinitions.Length - 1);
-                    var rowIndex = Math.Min(GetRow(element), this.heightDefinitions.Length - 1);
+                    int columnIndex = Math.Min(GetColumn(child), this.columns.Length - 1);
+                    int rowIndex = Math.Min(GetRow(child), this.rows.Length - 1);
                     var cell = new Cell
                         {
-                            ColumnIndex = columnIndex,
-                            RowIndex = rowIndex,
-                            Child = element,
-                            WidthType = this.widthDefinitions[columnIndex].LengthType,
-                            HeightType = this.heightDefinitions[rowIndex].LengthType,
+                            ColumnIndex = columnIndex, 
+                            RowIndex = rowIndex, 
+                            Child = child, 
+                            WidthType = this.columns[columnIndex].LengthType, 
+                            HeightType = this.rows[rowIndex].LengthType, 
                         };
 
-                    this.areThereAnyStarWidths |= cell.WidthType == GridUnitType.Star;
-                    this.areThereAnyStarHeights |= cell.HeightType == GridUnitType.Star;
-
-                    if (cell.HeightType != GridUnitType.Star)
+                    if (cell.HeightType == GridUnitType.Star)
                     {
-                        if (cell.WidthType != GridUnitType.Star)
+                        if (cell.WidthType == GridUnitType.Star)
                         {
-                            this.cellsWithNoStars.AddLast(cell);
+                            this.allStars.AddLast(cell);
                         }
                         else
                         {
-                            this.cellsWithoutStarHeights.AddLast(cell);
-
-                            doAnyCellsHaveAutoHeightAndStarWidth |= cell.HeightType == GridUnitType.Auto;
+                            this.starHeightAutoPixelWidth.AddLast(cell);
                         }
-                    }
-                    else if (cell.WidthType != GridUnitType.Star)
-                    {
-                        this.cellsWithoutStarWidths.AddLast(cell);
                     }
                     else
                     {
-                        this.cellsWithAllStars.AddLast(cell);
+                        if (cell.WidthType == GridUnitType.Star)
+                        {
+                            this.autoPixelHeightStarWidth.AddLast(cell);
+                        }
+                        else
+                        {
+                            this.noStars.AddLast(cell);
+                        }
                     }
 
                     this.cells[i] = cell;
                 }
-            }
 
-            this.noAutoHeightStarWidthCells = !doAnyCellsHaveAutoHeightAndStarWidth;
+                i++;
+            }
+        }
+
+        private void InitializeMeasureData(
+            IEnumerable<DefinitionBase> definitions, bool treatStarAsAuto, Dimension dimension)
+        {
+            foreach (DefinitionBase definition in definitions)
+            {
+                definition.MinLength = 0d;
+                double availableLength;
+                double userMinLength = definition.UserMinLength;
+                double userMaxLength = definition.UserMaxLength;
+
+                switch (definition.UserLength.GridUnitType)
+                {
+                    case GridUnitType.Auto:
+                        definition.LengthType = GridUnitType.Auto;
+                        availableLength = double.PositiveInfinity;
+                        this.hasAuto[(int)dimension] = true;
+                        break;
+                    case GridUnitType.Pixel:
+                        definition.LengthType = GridUnitType.Pixel;
+                        availableLength = definition.UserLength.Value;
+                        userMinLength = Math.Max(userMinLength, Math.Min(availableLength, userMaxLength));
+                        break;
+                    case GridUnitType.Star:
+                        definition.LengthType = treatStarAsAuto ? GridUnitType.Auto : GridUnitType.Star;
+                        availableLength = double.PositiveInfinity;
+                        this.hasStar[(int)dimension] = true;
+                        break;
+                    default:
+                        throw new NotSupportedException("Unsupported GridUnitType");
+                }
+
+                definition.UpdateMinLength(userMinLength);
+                definition.AvailableLength = Math.Max(userMinLength, Math.Min(availableLength, userMaxLength));
+            }
         }
 
         private void MeasureCell(Cell cell, IElement child, bool shouldChildBeMeasuredWithInfiniteHeight)
@@ -522,17 +467,82 @@ namespace RedBadger.Xpf.Presentation.Controls
             {
                 double x = cell.WidthType == GridUnitType.Auto
                                ? double.PositiveInfinity
-                               : this.widthDefinitions[cell.ColumnIndex].AvailableLength;
+                               : this.columns[cell.ColumnIndex].AvailableLength;
 
                 double y = cell.HeightType == GridUnitType.Auto || shouldChildBeMeasuredWithInfiniteHeight
                                ? double.PositiveInfinity
-                               : this.heightDefinitions[cell.RowIndex].AvailableLength;
+                               : this.rows[cell.RowIndex].AvailableLength;
 
                 child.Measure(new Size(x, y));
             }
         }
 
-        private void MeasureCellGroup(IEnumerable<Cell> cells, UpdateMinLengths updateMinLengths)
+        private void MeasureCells(Size availableSize)
+        {
+            if (this.noStars.Count > 0)
+            {
+                this.MeasureCells(this.noStars, UpdateMinLengths.WidthsAndHeights);
+            }
+
+            if (!this.hasAuto[(int)Dimension.Height])
+            {
+                if (this.hasStar[(int)Dimension.Height])
+                {
+                    AllocateProportionalSpace(this.rows, availableSize.Height);
+                }
+
+                this.MeasureCells(this.starHeightAutoPixelWidth, UpdateMinLengths.WidthsAndHeights);
+
+                if (this.hasStar[(int)Dimension.Width])
+                {
+                    AllocateProportionalSpace(this.columns, availableSize.Width);
+                }
+
+                this.MeasureCells(this.autoPixelHeightStarWidth, UpdateMinLengths.WidthsAndHeights);
+            }
+            else if (!this.hasAuto[(int)Dimension.Width])
+            {
+                if (this.hasStar[(int)Dimension.Width])
+                {
+                    AllocateProportionalSpace(this.columns, availableSize.Width);
+                }
+
+                this.MeasureCells(this.autoPixelHeightStarWidth, UpdateMinLengths.WidthsAndHeights);
+
+                if (this.hasStar[(int)Dimension.Height])
+                {
+                    AllocateProportionalSpace(this.rows, availableSize.Height);
+                }
+
+                this.MeasureCells(this.starHeightAutoPixelWidth, UpdateMinLengths.WidthsAndHeights);
+            }
+            else
+            {
+                
+                this.MeasureCells(this.starHeightAutoPixelWidth, UpdateMinLengths.SkipHeights);
+
+                if (this.hasStar[(int)Dimension.Width])
+                {
+                    AllocateProportionalSpace(this.columns, availableSize.Width);
+                }
+
+                this.MeasureCells(this.autoPixelHeightStarWidth, UpdateMinLengths.WidthsAndHeights);
+
+                if (this.hasStar[(int)Dimension.Height])
+                {
+                    AllocateProportionalSpace(this.rows, availableSize.Height);
+                }
+
+                this.MeasureCells(this.starHeightAutoPixelWidth, UpdateMinLengths.SkipWidths);
+            }
+
+            if (this.allStars.Count > 0)
+            {
+                this.MeasureCells(this.allStars, UpdateMinLengths.WidthsAndHeights);
+            }
+        }
+
+        private void MeasureCells(IEnumerable<Cell> cells, UpdateMinLengths updateMinLengths)
         {
             foreach (Cell cell in cells)
             {
@@ -542,14 +552,14 @@ namespace RedBadger.Xpf.Presentation.Controls
 
                 if (updateMinLengths != UpdateMinLengths.SkipWidths)
                 {
-                    DefinitionBase widthDefinition = this.widthDefinitions[cell.ColumnIndex];
+                    DefinitionBase widthDefinition = this.columns[cell.ColumnIndex];
                     widthDefinition.UpdateMinLength(
                         Math.Min(cell.Child.DesiredSize.Width, widthDefinition.UserMaxLength));
                 }
 
                 if (updateMinLengths != UpdateMinLengths.SkipHeights)
                 {
-                    DefinitionBase heightDefinition = this.heightDefinitions[cell.RowIndex];
+                    DefinitionBase heightDefinition = this.rows[cell.RowIndex];
                     heightDefinition.UpdateMinLength(
                         Math.Min(cell.Child.DesiredSize.Height, heightDefinition.UserMaxLength));
                 }
