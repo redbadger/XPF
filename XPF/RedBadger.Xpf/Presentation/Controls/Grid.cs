@@ -192,7 +192,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         private static void AllocateProportionalSpace(IEnumerable<DefinitionBase> definitions, double availableLength)
         {
-            double occupiedSpace = 0.0;
+            double occupiedLength = 0d;
 
             var stars = new LinkedList<DefinitionBase>();
 
@@ -200,68 +200,66 @@ namespace RedBadger.Xpf.Presentation.Controls
             {
                 switch (definition.LengthType)
                 {
-                    case GridUnitType.Pixel:
-                        occupiedSpace += definition.AvailableLength;
-                        break;
-
                     case GridUnitType.Auto:
-                        occupiedSpace += definition.MinLength;
+                        occupiedLength += definition.MinLength;
                         break;
-
+                    case GridUnitType.Pixel:
+                        occupiedLength += definition.AvailableLength;
+                        break;
                     case GridUnitType.Star:
-                        stars.AddLast(definition);
-                        double divisor = definition.UserLength.Value;
-                        if (divisor.IsCloseTo(0))
+                        double numerator = definition.UserLength.Value;
+                        if (numerator.IsCloseTo(0d))
                         {
-                            definition.AvailableLength = 0.0;
-                            definition.FinalLength = 0.0;
+                            definition.Numerator = 0d;
+                            definition.StarAllocationOrder = 0d;
                         }
                         else
                         {
-                            definition.AvailableLength = divisor;
-                            definition.FinalLength = Math.Max(definition.MinLength, definition.UserMaxLength) / divisor;
+                            definition.Numerator = numerator;
+                            definition.StarAllocationOrder = Math.Max(definition.MinLength, definition.UserMaxLength) / numerator;
                         }
 
+                        stars.AddLast(definition);
                         break;
                 }
             }
 
             if (stars.Count > 0)
             {
-                DefinitionBase[] sortedStars = stars.OrderBy(o => o.FinalLength).ToArray();
+                DefinitionBase[] sortedStars = stars.OrderBy(o => o.StarAllocationOrder).ToArray();
 
-                double cumulativeDivisor = 0.0;
+                double denominator = 0d;
                 foreach (DefinitionBase definition in sortedStars.Reverse())
                 {
-                    cumulativeDivisor += definition.AvailableLength;
-                    definition.FinalLength = cumulativeDivisor;
+                    denominator += definition.Numerator;
+                    definition.Denominator = denominator;
                 }
 
                 foreach (DefinitionBase definition in sortedStars)
                 {
-                    double size;
-                    double divisor = definition.AvailableLength;
-                    if (divisor.IsCloseTo(0))
+                    double length;
+                    if (definition.Numerator.IsCloseTo(0d))
                     {
-                        size = definition.MinLength;
+                        length = definition.MinLength;
                     }
                     else
                     {
-                        size = (availableLength - occupiedSpace).EnsurePositive() * (divisor / definition.FinalLength);
-                        size = Math.Max(definition.MinLength, Math.Min(size, definition.UserMaxLength));
+                        var remainingLength = (availableLength - occupiedLength).EnsurePositive();
+                        length = remainingLength  * (definition.Numerator / definition.Denominator);
+                        length = length.Coerce(definition.MinLength, definition.UserMaxLength);
                     }
 
-                    occupiedSpace += size;
-                    definition.AvailableLength = size;
+                    occupiedLength += length;
+                    definition.AvailableLength = length;
                 }
             }
         }
 
         private static void SetFinalLength(DefinitionBase[] definitions, double gridFinalLength)
         {
-            double cumulativeLength = 0.0;
+            double occupiedLength = 0d;
 
-            var starDefinitions = new LinkedList<DefinitionBase>();
+            var stars = new LinkedList<DefinitionBase>();
             var nonStarDefinitions = new LinkedList<DefinitionBase>();
 
             foreach (DefinitionBase definition in definitions)
@@ -275,7 +273,7 @@ namespace RedBadger.Xpf.Presentation.Controls
 
                         definition.FinalLength = minLength.Coerce(definition.MinLength, definition.UserMaxLength);
 
-                        cumulativeLength += definition.FinalLength;
+                        occupiedLength += definition.FinalLength;
                         nonStarDefinitions.AddFirst(definition);
 
                         break;
@@ -284,71 +282,66 @@ namespace RedBadger.Xpf.Presentation.Controls
 
                         definition.FinalLength = minLength.Coerce(definition.MinLength, definition.UserMaxLength);
 
-                        cumulativeLength += definition.FinalLength;
+                        occupiedLength += definition.FinalLength;
                         nonStarDefinitions.AddFirst(definition);
 
                         break;
                     case GridUnitType.Star:
-                        double divisor = definition.UserLength.Value;
-                        if (divisor.IsCloseTo(0))
+                        double numerator = definition.UserLength.Value;
+                        if (numerator.IsCloseTo(0d))
                         {
-                            definition.AvailableLength = 0.0;
-                            definition.FinalLength = 0.0;
+                            definition.Numerator = 0d;
+                            definition.StarAllocationOrder = 0d;
                         }
                         else
                         {
-                            definition.AvailableLength = divisor;
-                            definition.FinalLength = Math.Max(definition.MinLength, definition.UserMaxLength) / divisor;
+                            definition.Numerator = numerator;
+                            definition.StarAllocationOrder = Math.Max(definition.MinLength, definition.UserMaxLength) / numerator;
                         }
 
-                        starDefinitions.AddLast(definition);
-
+                        stars.AddLast(definition);
                         break;
                     default:
                         throw new NotSupportedException("Unsupported GridUnitType");
                 }
             }
 
-            if (starDefinitions.Count > 0)
+            if (stars.Count > 0)
             {
-                DefinitionBase[] sortedStars = starDefinitions.OrderBy(o => o.FinalLength).ToArray();
+                DefinitionBase[] sortedStars = stars.OrderBy(o => o.StarAllocationOrder).ToArray();
 
-                double cumulativeStarLength = 0d;
+                double denominator = 0d;
                 foreach (DefinitionBase definitionBase in sortedStars.Reverse())
                 {
-                    cumulativeStarLength += definitionBase.AvailableLength;
-                    definitionBase.FinalLength = cumulativeStarLength;
+                    denominator += definitionBase.Numerator;
+                    definitionBase.Denominator = denominator;
                 }
 
-                foreach (DefinitionBase definitionBase in sortedStars)
+                foreach (DefinitionBase definition in sortedStars)
                 {
-                    double finalLength;
-                    double measureSize = definitionBase.AvailableLength;
-                    if (measureSize.IsCloseTo(0))
+                    double length;
+                    if (definition.Numerator.IsCloseTo(0d))
                     {
-                        finalLength = definitionBase.MinLength;
+                        length = definition.MinLength;
                     }
                     else
                     {
-                        finalLength = (gridFinalLength - cumulativeLength).EnsurePositive();
-
-                        finalLength *= measureSize / definitionBase.FinalLength;
-
-                        finalLength = finalLength.Coerce(definitionBase.MinLength, definitionBase.UserMaxLength);
+                        var remainingLength = (gridFinalLength - occupiedLength).EnsurePositive();
+                        length = remainingLength * (definition.Numerator / definition.Denominator);
+                        length = length.Coerce(definition.MinLength, definition.UserMaxLength);
                     }
 
-                    definitionBase.FinalLength = finalLength;
-
-                    cumulativeLength += finalLength;
+                    occupiedLength += length;
+                    definition.FinalLength = length;
                 }
             }
 
-            if (cumulativeLength.IsGreaterThan(gridFinalLength))
+            if (occupiedLength.IsGreaterThan(gridFinalLength))
             {
                 IOrderedEnumerable<DefinitionBase> sortedDefinitions =
-                    starDefinitions.Concat(nonStarDefinitions).OrderBy(o => o.FinalLength - o.MinLength);
+                    stars.Concat(nonStarDefinitions).OrderBy(o => o.FinalLength - o.MinLength);
 
-                double excessLength = cumulativeLength - gridFinalLength;
+                double excessLength = occupiedLength - gridFinalLength;
                 int i = 0;
                 foreach (DefinitionBase definitionBase in sortedDefinitions)
                 {
@@ -363,7 +356,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 }
             }
 
-            definitions[0].FinalOffset = 0.0;
+            definitions[0].FinalOffset = 0d;
             for (int i = 1; i < definitions.Length; i++)
             {
                 DefinitionBase previousDefinition = definitions[i - 1];
@@ -457,7 +450,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 }
 
                 definition.UpdateMinLength(userMinLength);
-                definition.AvailableLength = Math.Max(userMinLength, Math.Min(availableLength, userMaxLength));
+                definition.AvailableLength = availableLength.Coerce(userMinLength, userMaxLength);
             }
         }
 

@@ -7,6 +7,7 @@ namespace RedBadger.PocketMechanic.Phone
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
+    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
@@ -53,11 +54,11 @@ namespace RedBadger.PocketMechanic.Phone
             var spriteFontAdapter = new SpriteFontAdapter(this.spriteFont);
 
             var grid = new Grid { Width = 200, Height = 200 };
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
-            grid.ColumnDefinitions.Add(new ColumnDefinition { MinWidth = 100 });
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Star), MaxWidth = 10 });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(20, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(10, GridUnitType.Star) });
 
-            var child1 = new Border { Background = new SolidColorBrush(Colors.Red) };
+            var child1 = new Border { Background = new SolidColorBrush(Colors.Red), Width = 30, Height = 40 };
             var child2 = new Border { Background = new SolidColorBrush(Colors.Yellow) };
             var child3 = new Border { Background = new SolidColorBrush(Colors.Blue) };
             Grid.SetColumn(child1, 0);

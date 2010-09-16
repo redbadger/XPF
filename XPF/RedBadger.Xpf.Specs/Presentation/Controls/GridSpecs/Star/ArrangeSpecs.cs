@@ -62,7 +62,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
     }
 
     [Subject(typeof(Grid), "Arrange")]
-    public class when_arranging_a_3_x_3_grid_with_differing_cell_sizes : a_Grid
+    public class when_arranging_a_3_x_3_grid_with_increasing_star_lengths : a_Grid
     {
         private static readonly Mock<UIElement>[,] children = new Mock<UIElement>[3, 3];
 
@@ -88,12 +88,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
                 {
                     for (int col = 0; col < 3; col++)
                     {
-                        var child = new Mock<UIElement> { CallBase = true };
-                        Subject.Children.Add(child.Object);
-                        Grid.SetColumn(child.Object, col);
-                        Grid.SetRow(child.Object, row);
-
-                        children[row, col] = child;
+                        children[row, col] = CreateChild(row, col);
                     }
                 }
 
@@ -128,6 +123,70 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
 
         private It should_layout_child_9_correctly =
             () => children[2, 2].Object.VisualOffset.ShouldBeCloseTo(new Vector(widthUnit * 3, heightUnit * 3));
+    }
+
+    [Subject(typeof(Grid), "Arrange")]
+    public class when_arranging_a_3_x_3_grid_with_decreasing_star_lengths : a_Grid
+    {
+        private static readonly Mock<UIElement>[,] children = new Mock<UIElement>[3, 3];
+
+        private static readonly double heightUnit = AvailableSize.Height / 6;
+
+        private static readonly double widthUnit = AvailableSize.Width / 6;
+
+        private Establish context = () =>
+        {
+            for (int row = 2; row >= 0; row--)
+            {
+                Subject.RowDefinitions.Add(
+                    new RowDefinition { Height = new GridLength(row + 1, GridUnitType.Star) });
+            }
+
+            for (int col = 2; col >= 0; col--)
+            {
+                Subject.ColumnDefinitions.Add(
+                    new ColumnDefinition { Width = new GridLength(col + 1, GridUnitType.Star) });
+            }
+
+            for (int row = 0; row < 3; row++)
+            {
+                for (int col = 0; col < 3; col++)
+                {
+                    children[row, col] = CreateChild(row, col);
+                }
+            }
+
+            Subject.Measure(AvailableSize);
+        };
+
+        private Because of = () => Subject.Arrange(new Rect(AvailableSize));
+
+        private It should_layout_child_1_correctly =
+            () => children[0, 0].Object.VisualOffset.ShouldBeCloseTo(new Vector(0d, 0d));
+
+        private It should_layout_child_2_correctly =
+            () => children[0, 1].Object.VisualOffset.ShouldBeCloseTo(new Vector(widthUnit * 3, 0d));
+
+        private It should_layout_child_3_correctly =
+            () => children[0, 2].Object.VisualOffset.ShouldBeCloseTo(new Vector(widthUnit * 5, 0d));
+
+        private It should_layout_child_4_correctly =
+            () => children[1, 0].Object.VisualOffset.ShouldBeCloseTo(new Vector(0d, heightUnit * 3));
+
+        private It should_layout_child_5_correctly =
+            () => children[1, 1].Object.VisualOffset.ShouldBeCloseTo(new Vector(widthUnit * 3, heightUnit * 3));
+
+        private It should_layout_child_6_correctly =
+            () => children[1, 2].Object.VisualOffset.ShouldBeCloseTo(new Vector(widthUnit * 5, heightUnit * 3));
+
+        private It should_layout_child_7_correctly =
+            () => children[2, 0].Object.VisualOffset.ShouldBeCloseTo(new Vector(0d, heightUnit * 5));
+
+        private It should_layout_child_8_correctly =
+            () => children[2, 1].Object.VisualOffset.ShouldBeCloseTo(new Vector(widthUnit * 3, heightUnit * 5));
+
+        private It should_layout_child_9_correctly =
+            () => children[2, 2].Object.VisualOffset.ShouldBeCloseTo(new Vector(widthUnit * 5, heightUnit * 5));
     }
 
     [Subject(typeof(Grid), "Arrange")]
