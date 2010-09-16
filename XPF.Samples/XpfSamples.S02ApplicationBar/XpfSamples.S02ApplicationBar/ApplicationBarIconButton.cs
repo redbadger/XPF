@@ -1,27 +1,22 @@
 ﻿namespace XpfSamples.S02ApplicationBar
 {
-    using System;
+    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Media.Imaging;
 
-    using RedBadger.Xpf.Presentation.Data;
-    using RedBadger.Xpf.Presentation.Media;
-
-    public class ApplicationBarIconButton : INotifyPropertyChanged
+    public class ApplicationBarIconButton : Control
     {
-        public ApplicationBarIconButton(SolidColorBrush color)
+        private readonly XnaImage iconImageSource;
+
+        public ApplicationBarIconButton(XnaImage iconImageSource)
         {
-            this.Color = color;
+            this.iconImageSource = iconImageSource;
         }
 
-        public event EventHandler<PropertyChangedEventArgs> PropertyChanged;
-
-        public SolidColorBrush Color { get; set; }
-
-        public void OnPropertyChanged(string propertyName)
+        public XnaImage IconImageSource
         {
-            EventHandler<PropertyChangedEventArgs> handler = this.PropertyChanged;
-            if (handler != null)
+            get
             {
-                handler(this, new PropertyChangedEventArgs(propertyName));
+                return this.iconImageSource;
             }
         }
     }
