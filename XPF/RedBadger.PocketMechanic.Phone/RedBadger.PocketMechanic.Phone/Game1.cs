@@ -21,7 +21,7 @@ namespace RedBadger.PocketMechanic.Phone
             this.graphics.PreferredBackBufferWidth = 480;
             this.graphics.PreferredBackBufferHeight = 800;
 
-            this.Components.Add(new GridTest(this));
+            this.Components.Add(new ScrollTest(this));
         }
 
         protected override void Draw(GameTime gameTime)

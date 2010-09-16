@@ -62,12 +62,8 @@
     <Reference Include="Machine.Specifications">
       <HintPath>..\..\Lib\MSpec\Machine.Specifications.dll</HintPath>
     </Reference>
-    <!--
-    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
--->
-    <Reference Include="Microsoft.Xna.Framework" />
-    <Reference Include="Microsoft.Xna.Framework.Graphics" />
     <Reference Include="Moq">
       <HintPath>..\..\Lib\Moq\Moq.dll</HintPath>
     </Reference>
@@ -77,12 +73,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <!--
     <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
--->
-    <Reference Include="System.CoreEx" />
-    <Reference Include="System.Reactive" />
     <Reference Include="System.Xaml" />
   </ItemGroup>
   <ItemGroup>
