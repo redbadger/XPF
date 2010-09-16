@@ -22,6 +22,14 @@ namespace RedBadger.Xpf.Presentation.Controls
         /// </summary>
         public static readonly ReactiveProperty<int, Grid> RowProperty = ReactiveProperty<int, Grid>.Register("Row");
 
+        private readonly LinkedList<Cell> cellsWithAllStars = new LinkedList<Cell>();
+
+        private readonly LinkedList<Cell> cellsWithNoStars = new LinkedList<Cell>();
+
+        private readonly LinkedList<Cell> cellsWithoutStarHeights = new LinkedList<Cell>();
+
+        private readonly LinkedList<Cell> cellsWithoutStarWidths = new LinkedList<Cell>();
+
         private readonly IList<ColumnDefinition> columnDefinitions = new List<ColumnDefinition>();
 
         private readonly IList<RowDefinition> rowDefinitions = new List<RowDefinition>();
@@ -32,17 +40,9 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         private Cell[] cells;
 
-        private int cellsWithAllStars;
-
-        private int cellsWithNoStars;
-
-        private int cellsWithoutStarHeights;
-
-        private int cellsWithoutStarWidths;
+        private DefinitionBase[] heightDefinitions;
 
         private bool noAutoHeightStarWidthCells;
-
-        private DefinitionBase[] heightDefinitions;
 
         private DefinitionBase[] widthDefinitions;
 
@@ -201,8 +201,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
             else
             {
-                var allCellsHaveStarWidths = this.cellsWithoutStarWidths > this.cells.Length;
-                if (allCellsHaveStarWidths)
+                if (this.cellsWithoutStarWidths.Count == 0)
                 {
                     if (this.areThereAnyStarWidths)
                     {
@@ -460,28 +459,31 @@ namespace RedBadger.Xpf.Presentation.Controls
         private void CreateCells()
         {
             this.cells = new Cell[this.Children.Count];
-            this.cellsWithNoStars = int.MaxValue;
-            this.cellsWithoutStarHeights = int.MaxValue;
-            this.cellsWithoutStarWidths = int.MaxValue;
-            this.cellsWithAllStars = int.MaxValue;
+            this.cellsWithNoStars.Clear();
+            this.cellsWithoutStarHeights.Clear();
+            this.cellsWithoutStarWidths.Clear();
+            this.cellsWithAllStars.Clear();
 
             this.areThereAnyStarWidths = false;
             this.areThereAnyStarHeights = false;
-            var doAnyCellsHaveAutoHeightAndStarWidth = false;
+            bool doAnyCellsHaveAutoHeightAndStarWidth = false;
 
             for (int i = this.cells.Length - 1; i >= 0; i--)
             {
                 IElement element = this.Children[i];
                 if (element != null)
                 {
+                    var columnIndex = Math.Min(GetColumn(element), this.widthDefinitions.Length - 1);
+                    var rowIndex = Math.Min(GetRow(element), this.heightDefinitions.Length - 1);
                     var cell = new Cell
                         {
-                            ColumnIndex = Math.Min(GetColumn(element), this.widthDefinitions.Length - 1), 
-                            RowIndex = Math.Min(GetRow(element), this.heightDefinitions.Length - 1), 
-                            Next = this.cellsWithNoStars
+                            ColumnIndex = columnIndex,
+                            RowIndex = rowIndex,
+                            Child = element,
+                            WidthType = this.widthDefinitions[columnIndex].LengthType,
+                            HeightType = this.heightDefinitions[rowIndex].LengthType,
                         };
-                    cell.WidthType = this.widthDefinitions[cell.ColumnIndex].LengthType;
-                    cell.HeightType = this.heightDefinitions[cell.RowIndex].LengthType;
+
                     this.areThereAnyStarWidths |= cell.WidthType == GridUnitType.Star;
                     this.areThereAnyStarHeights |= cell.HeightType == GridUnitType.Star;
 
@@ -489,26 +491,22 @@ namespace RedBadger.Xpf.Presentation.Controls
                     {
                         if (cell.WidthType != GridUnitType.Star)
                         {
-                            cell.Next = this.cellsWithNoStars;
-                            this.cellsWithNoStars = i;
+                            this.cellsWithNoStars.AddLast(cell);
                         }
                         else
                         {
-                            cell.Next = this.cellsWithoutStarHeights;
-                            this.cellsWithoutStarHeights = i;
+                            this.cellsWithoutStarHeights.AddLast(cell);
 
                             doAnyCellsHaveAutoHeightAndStarWidth |= cell.HeightType == GridUnitType.Auto;
                         }
                     }
                     else if (cell.WidthType != GridUnitType.Star)
                     {
-                        cell.Next = this.cellsWithoutStarWidths;
-                        this.cellsWithoutStarWidths = i;
+                        this.cellsWithoutStarWidths.AddLast(cell);
                     }
                     else
                     {
-                        cell.Next = this.cellsWithAllStars;
-                        this.cellsWithAllStars = i;
+                        this.cellsWithAllStars.AddLast(cell);
                     }
 
                     this.cells[i] = cell;
@@ -518,13 +516,10 @@ namespace RedBadger.Xpf.Presentation.Controls
             this.noAutoHeightStarWidthCells = !doAnyCellsHaveAutoHeightAndStarWidth;
         }
 
-        private void MeasureCell(int cellIndex, bool shouldChildBeMeasuredWithInfiniteHeight)
+        private void MeasureCell(Cell cell, IElement child, bool shouldChildBeMeasuredWithInfiniteHeight)
         {
-            IElement child = this.Children[cellIndex];
             if (child != null)
             {
-                Cell cell = this.cells[cellIndex];
-
                 double x = cell.WidthType == GridUnitType.Auto
                                ? double.PositiveInfinity
                                : this.widthDefinitions[cell.ColumnIndex].AvailableLength;
@@ -537,47 +532,37 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private void MeasureCellGroup(int headCellIndex, UpdateMinLengths updateMinLengths)
+        private void MeasureCellGroup(IEnumerable<Cell> cells, UpdateMinLengths updateMinLengths)
         {
-            if (headCellIndex < this.cells.Length)
+            foreach (Cell cell in cells)
             {
-                int currentCellIndex = headCellIndex;
+                bool shouldChildBeMeasuredWithInfiniteHeight = updateMinLengths == UpdateMinLengths.SkipHeights;
 
-                do
+                this.MeasureCell(cell, cell.Child, shouldChildBeMeasuredWithInfiniteHeight);
+
+                if (updateMinLengths != UpdateMinLengths.SkipWidths)
                 {
-                    bool shouldChildBeMeasuredWithInfiniteHeight = updateMinLengths == UpdateMinLengths.SkipHeights;
-                    this.MeasureCell(currentCellIndex, shouldChildBeMeasuredWithInfiniteHeight);
-
-                    Cell cell = this.cells[currentCellIndex];
-                    IElement child = this.Children[currentCellIndex];
-
-                    if (updateMinLengths != UpdateMinLengths.SkipWidths)
-                    {
-                        DefinitionBase widthDefinition = this.widthDefinitions[cell.ColumnIndex];
-                        widthDefinition.UpdateMinLength(
-                            Math.Min(child.DesiredSize.Width, widthDefinition.UserMaxLength));
-                    }
-
-                    if (updateMinLengths != UpdateMinLengths.SkipHeights)
-                    {
-                        DefinitionBase heightDefinition = this.heightDefinitions[cell.RowIndex];
-                        heightDefinition.UpdateMinLength(
-                            Math.Min(child.DesiredSize.Height, heightDefinition.UserMaxLength));
-                    }
-
-                    currentCellIndex = cell.Next;
+                    DefinitionBase widthDefinition = this.widthDefinitions[cell.ColumnIndex];
+                    widthDefinition.UpdateMinLength(
+                        Math.Min(cell.Child.DesiredSize.Width, widthDefinition.UserMaxLength));
                 }
-                while (currentCellIndex < this.cells.Length);
+
+                if (updateMinLengths != UpdateMinLengths.SkipHeights)
+                {
+                    DefinitionBase heightDefinition = this.heightDefinitions[cell.RowIndex];
+                    heightDefinition.UpdateMinLength(
+                        Math.Min(cell.Child.DesiredSize.Height, heightDefinition.UserMaxLength));
+                }
             }
         }
 
         private struct Cell
         {
+            public IElement Child;
+
             public int ColumnIndex;
 
             public GridUnitType HeightType;
-
-            public int Next;
 
             public int RowIndex;
 
