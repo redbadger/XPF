@@ -80,7 +80,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
     }
 
     [Subject(typeof(Grid), "Measure")]
-    public class when_measuring_a_3_x_3_grid_with_differing_cell_sizes : a_Grid
+    public class when_measuring_a_3_x_3_grid_with_increasing_star_lengths : a_Grid
     {
         private static readonly Mock<UIElement>[,] children = new Mock<UIElement>[3, 3];
 
