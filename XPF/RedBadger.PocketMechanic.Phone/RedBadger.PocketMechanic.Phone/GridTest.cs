@@ -54,11 +54,11 @@ namespace RedBadger.PocketMechanic.Phone
             var spriteFontAdapter = new SpriteFontAdapter(this.spriteFont);
 
             var grid = new Grid { Width = 200, Height = 200 };
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Star), MaxWidth = 10 });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(20, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(10, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { MinWidth = 30d });
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 100d });
 
-            var child1 = new Border { Background = new SolidColorBrush(Colors.Red), Width = 30, Height = 40 };
+            var child1 = new Border { Background = new SolidColorBrush(Colors.Red) };
             var child2 = new Border { Background = new SolidColorBrush(Colors.Yellow) };
             var child3 = new Border { Background = new SolidColorBrush(Colors.Blue) };
             Grid.SetColumn(child1, 0);
@@ -68,6 +68,8 @@ namespace RedBadger.PocketMechanic.Phone
             grid.Children.Add(child1);
             grid.Children.Add(child2);
             grid.Children.Add(child3);
+
+            child2.Width = 100d;
 
             var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
 

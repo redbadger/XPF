@@ -392,4 +392,43 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
             child3.Object.VisualOffset.ShouldBeCloseTo(
                 new Vector(0d, RowMaxHeight + ((AvailableSize.Height - RowMaxHeight) / 2)));
     }
+
+
+    [Subject(typeof(Grid), "Arrange - Excess Allocation")]
+    public class when_arranging_a_grid_and_the_columns_are_over_allocated : a_Grid
+    {
+        private const double ChildWidth = 100d;
+
+        private const double Column0Min = 20d;
+
+        private const double Column2Min = 100d;
+
+        private static readonly Mock<UIElement>[] children = new Mock<UIElement>[3];
+
+        private Establish context = () =>
+        {
+            Subject.ColumnDefinitions.Add(new ColumnDefinition { MinWidth = Column0Min });
+            Subject.ColumnDefinitions.Add(new ColumnDefinition());
+            Subject.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = Column2Min });
+
+            children[0] = CreateChild(0, 0);
+            children[1] = CreateChild(0, 1);
+            children[2] = CreateChild(0, 2);
+
+            children[1].Object.Width = ChildWidth;
+
+            Subject.Measure(AvailableSize);
+        };
+
+        private Because of = () => Subject.Arrange(new Rect(AvailableSize));
+
+        private It should_layout_child_1_correctly =
+            () => children[0].Object.VisualOffset.ShouldEqual(new Vector(0d, 0d));
+
+        private It should_layout_child_2_correctly =
+            () => children[1].Object.VisualOffset.ShouldBeCloseTo(new Vector((AvailableSize.Width - Column2Min) - AvailableSize.Width / 3, 0d));
+
+        private It should_layout_child_3_correctly =
+            () => children[2].Object.VisualOffset.ShouldBeCloseTo(new Vector(AvailableSize.Width - Column2Min, 0d));
+    }
 }

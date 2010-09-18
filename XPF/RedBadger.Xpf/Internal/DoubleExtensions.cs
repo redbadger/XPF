@@ -26,7 +26,7 @@
                 return false;
             }
 
-            double epsilon = (Math.Abs(value1) + Math.Abs(value2) + 10.0) * 1.1102230246251568E-16;
+            double epsilon = (Math.Abs(value1) + Math.Abs(value2) + 10.0) * 1e-15;
             double difference = value1 - value2;
             return !(-epsilon < difference && difference < epsilon);
         }
