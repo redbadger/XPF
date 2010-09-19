@@ -11,8 +11,6 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 {
-    using System.Collections.Generic;
-
     using Machine.Specifications;
 
     using Moq;
@@ -22,8 +20,6 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     using RedBadger.Xpf.Presentation.Data;
 
     using It = Machine.Specifications.It;
-
-    using System.Linq;
 
     public abstract class a_UIElement_Hierarchy
     {
@@ -45,25 +41,24 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private Because of = () => parent.DataContext = new object();
 
-        private It should_invalidate_measure_on_the_deepest_child = () => deepestChild.Object.IsMeasureValid.ShouldBeFalse();
+        private It should_invalidate_measure_on_the_deepest_child =
+            () => deepestChild.Object.IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(UIElement), "Data Context")]
     public class when_binding_to_an_unset_data_context : a_UIElement_Hierarchy
     {
+        private const double ExpectedDataContext = 10d;
+
         private Establish context = () => parent.DataContext = ExpectedDataContext;
 
-        private Because of =
-            () =>
-                {
-                    var dep = deepestChild.Object.GetVisualChildren().LastOrDefault();
-                    deepestChild.Object.Bind(UIElement.WidthProperty, BindingFactory.CreateOneWay<double>());
-                    parent.Measure(Size.Empty);
-                };
+        private Because of = () =>
+            {
+                deepestChild.Object.Bind(UIElement.WidthProperty, BindingFactory.CreateOneWay<double>());
+                parent.Measure(Size.Empty);
+            };
 
         private It should_search_up_the_visual_tree_to_find_a_valid_data_context =
             () => deepestChild.Object.Width.ShouldEqual(ExpectedDataContext);
-
-        private const double ExpectedDataContext = 10d;
     }
 }

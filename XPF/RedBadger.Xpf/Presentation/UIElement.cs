@@ -623,6 +623,21 @@
             return vector;
         }
 
+        private object GetNearestDataContext()
+        {
+            IElement curentElement = this;
+            object dataContext;
+
+            do
+            {
+                dataContext = curentElement.DataContext;
+                curentElement = curentElement.VisualParent;
+            }
+            while (dataContext == null && curentElement != null);
+
+            return dataContext;
+        }
+
         private void InvalidateMeasureOnChildren()
         {
             IEnumerable<IElement> children = this.GetVisualChildren();
@@ -651,7 +666,7 @@
         /// <returns>The desired size of this element in layout.</returns>
         private Size MeasureCore(Size availableSize)
         {
-            this.ResolveDeferredBindings(this.DataContext);
+            this.ResolveDeferredBindings(this.GetNearestDataContext());
             this.OnApplyTemplate();
 
             Thickness margin = this.Margin;
