@@ -15,8 +15,7 @@
     public abstract class UIElement : ReactiveObject, IElement
     {
         public static readonly ReactiveProperty<object> DataContextProperty =
-            ReactiveProperty<object>.Register(
-                "DataContext", typeof(UIElement), ReactivePropertyChangedCallbacks.InvalidateMeasure);
+            ReactiveProperty<object>.Register("DataContext", typeof(UIElement), DataContextChanged);
 
         public static readonly ReactiveProperty<double> HeightProperty = ReactiveProperty<double>.Register(
             "Height", typeof(UIElement), double.NaN, ReactivePropertyChangedCallbacks.InvalidateMeasure);
@@ -497,6 +496,13 @@
         {
         }
 
+        private static void DataContextChanged(object source, ReactivePropertyChangeEventArgs<object> args)
+        {
+            var element = (UIElement)source;
+
+            element.InvalidateMeasureOnChildren();
+        }
+
         /// <summary>
         ///     Defines the template for core-level arrange layout definition.
         /// </summary>
@@ -615,6 +621,22 @@
             }
 
             return vector;
+        }
+
+        private void InvalidateMeasureOnChildren()
+        {
+            IEnumerable<IElement> children = this.GetVisualChildren();
+            if (children.Count() == 0)
+            {
+                this.InvalidateMeasure();
+            }
+            else
+            {
+                foreach (UIElement element in children.OfType<UIElement>())
+                {
+                    element.InvalidateMeasureOnChildren();
+                }
+            }
         }
 
         /// <summary>
