@@ -83,20 +83,21 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 
         private static string actualInitialValue;
 
-        private static MyBindingObject source;
+        private static TestBindingObject source;
 
         private static string updatedValue;
 
         private Establish context = () =>
             {
-                source = new MyBindingObject { Name = ExpectedInitialValue };
+                source = new TestBindingObject { Name = ExpectedInitialValue };
                 ItemsControl.ItemsSource = new[] { source };
 
                 ItemsControl.ItemTemplate = () =>
                     {
                         var textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
 
-                        IObservable<string> fromSource = BindingFactory.CreateOneWay<MyBindingObject, string>(s => s.Name);
+                        IObservable<string> fromSource =
+                            BindingFactory.CreateOneWay<TestBindingObject, string>(s => s.Name);
                         textBlock.Bind(TextBlock.TextProperty, fromSource);
 
                         return textBlock;
@@ -119,7 +120,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private It should_update_the_bound_property_when_the_source_value_changes =
             () => updatedValue.ShouldEqual(ExpectedChangedValue);
 
-        private class MyBindingObject : INotifyPropertyChanged
+        private class TestBindingObject : INotifyPropertyChanged
         {
             private string name;
 
@@ -162,35 +163,36 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 
         private static string actualInitialValue;
 
-        private static MyBindingObject source;
+        private static TestBindingObject source;
 
         private static string updatedValue;
 
         private Establish context = () =>
-        {
-            source = new MyBindingObject { Name = ExpectedInitialValue };
-            ItemsControl.ItemsSource = new[] { source };
-
-            ItemsControl.ItemTemplate = () =>
             {
-                var textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
+                source = new TestBindingObject { Name = ExpectedInitialValue };
+                ItemsControl.ItemsSource = new[] { source };
 
-                IObservable<string> fromSource = BindingFactory.CreateOneWay(MyBindingObject.NameProperty);
-                textBlock.Bind(TextBlock.TextProperty, fromSource);
+                ItemsControl.ItemTemplate = () =>
+                    {
+                        var textBlock = new TextBlock(new Mock<ISpriteFont>().Object);
 
-                return textBlock;
+                        IObservable<string> fromSource =
+                            BindingFactory.CreateOneWay<TestBindingObject, string>(TestBindingObject.NameProperty);
+                        textBlock.Bind(TextBlock.TextProperty, fromSource);
+
+                        return textBlock;
+                    };
+
+                ItemsControl.Measure(new Size());
             };
 
-            ItemsControl.Measure(new Size());
-        };
-
         private Because of = () =>
-        {
-            actualInitialValue = ((TextBlock)ItemsControl.ItemsPanel.Children[0]).Text;
+            {
+                actualInitialValue = ((TextBlock)ItemsControl.ItemsPanel.Children[0]).Text;
 
-            source.Name = ExpectedChangedValue;
-            updatedValue = ((TextBlock)ItemsControl.ItemsPanel.Children[0]).Text;
-        };
+                source.Name = ExpectedChangedValue;
+                updatedValue = ((TextBlock)ItemsControl.ItemsPanel.Children[0]).Text;
+            };
 
         private It should_bind_to_the_data_contexts_initial_value =
             () => actualInitialValue.ShouldEqual(ExpectedInitialValue);
@@ -198,10 +200,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
         private It should_update_the_bound_property_when_the_source_value_changes =
             () => updatedValue.ShouldEqual(ExpectedChangedValue);
 
-        private class MyBindingObject : ReactiveObject
+        private class TestBindingObject : ReactiveObject
         {
-            public static readonly ReactiveProperty<string, MyBindingObject> NameProperty =
-                ReactiveProperty<string, MyBindingObject>.Register("Name");
+            public static readonly ReactiveProperty<string> NameProperty = ReactiveProperty<string>.Register(
+                "Name", typeof(TestBindingObject));
 
             public string Name
             {

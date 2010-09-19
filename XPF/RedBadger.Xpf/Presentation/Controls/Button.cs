@@ -1,13 +1,12 @@
 ﻿namespace RedBadger.Xpf.Presentation.Controls
 {
-    using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Presentation.Controls.Primitives;
 
     public class Button : ButtonBase
     {
-        public static readonly ReactiveProperty<Thickness, Button> PaddingProperty =
-            ReactiveProperty<Thickness, Button>.Register(
-                "Padding", new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<Thickness> PaddingProperty =
+            ReactiveProperty<Thickness>.Register(
+                "Padding", typeof(Button), new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         public Thickness Padding
         {

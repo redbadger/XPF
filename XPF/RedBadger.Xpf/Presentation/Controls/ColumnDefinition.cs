@@ -2,14 +2,15 @@
 {
     public class ColumnDefinition : DefinitionBase
     {
-        public static readonly ReactiveProperty<double, ColumnDefinition> MaxWidthProperty =
-            ReactiveProperty<double, ColumnDefinition>.Register("MaxWidth", double.PositiveInfinity);
+        public static readonly ReactiveProperty<double> MaxWidthProperty = ReactiveProperty<double>.Register(
+            "MaxWidth", typeof(ColumnDefinition), double.PositiveInfinity);
 
-        public static readonly ReactiveProperty<double, ColumnDefinition> MinWidthProperty =
-            ReactiveProperty<double, ColumnDefinition>.Register("MinWidth", 0d);
+        public static readonly ReactiveProperty<double> MinWidthProperty = ReactiveProperty<double>.Register(
+            "MinWidth", typeof(ColumnDefinition), 0d);
 
-        public static readonly ReactiveProperty<GridLength, ColumnDefinition> WidthProperty =
-            ReactiveProperty<GridLength, ColumnDefinition>.Register("Width", new GridLength(1, GridUnitType.Star));
+        public static readonly ReactiveProperty<GridLength> WidthProperty =
+            ReactiveProperty<GridLength>.Register(
+                "Width", typeof(ColumnDefinition), new GridLength(1, GridUnitType.Star));
 
         public ColumnDefinition()
             : base(DefinitionType.Column)

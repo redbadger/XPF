@@ -14,46 +14,53 @@
 
     public abstract class UIElement : ReactiveObject, IElement
     {
-        public static readonly ReactiveProperty<object, UIElement> DataContextProperty =
-            ReactiveProperty<object, UIElement>.Register("DataContext", ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<object> DataContextProperty =
+            ReactiveProperty<object>.Register(
+                "DataContext", typeof(UIElement), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<double, UIElement> HeightProperty =
-            ReactiveProperty<double, UIElement>.Register(
-                "Height", double.NaN, ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double> HeightProperty = ReactiveProperty<double>.Register(
+            "Height", typeof(UIElement), double.NaN, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<HorizontalAlignment, UIElement> HorizontalAlignmentProperty =
-            ReactiveProperty<HorizontalAlignment, UIElement>.Register(
-                "HorizontalAlignment", HorizontalAlignment.Stretch, ReactivePropertyChangedCallbacks.InvalidateArrange);
+        public static readonly ReactiveProperty<HorizontalAlignment> HorizontalAlignmentProperty =
+            ReactiveProperty<HorizontalAlignment>.Register(
+                "HorizontalAlignment", 
+                typeof(UIElement), 
+                HorizontalAlignment.Stretch, 
+                ReactivePropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly ReactiveProperty<bool, UIElement> IsMouseCapturedProperty =
-            ReactiveProperty<bool, UIElement>.Register("IsMouseCaptured");
+        public static readonly ReactiveProperty<bool> IsMouseCapturedProperty =
+            ReactiveProperty<bool>.Register("IsMouseCaptured", typeof(UIElement));
 
-        public static readonly ReactiveProperty<Thickness, UIElement> MarginProperty =
-            ReactiveProperty<Thickness, UIElement>.Register(
-                "Margin", new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<Thickness> MarginProperty =
+            ReactiveProperty<Thickness>.Register(
+                "Margin", typeof(UIElement), new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<double, UIElement> MaxHeightProperty =
-            ReactiveProperty<double, UIElement>.Register(
-                "MaxHeight", double.PositiveInfinity, ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double> MaxHeightProperty =
+            ReactiveProperty<double>.Register(
+                "MaxHeight", 
+                typeof(UIElement), 
+                double.PositiveInfinity, 
+                ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<double, UIElement> MaxWidthProperty =
-            ReactiveProperty<double, UIElement>.Register(
-                "MaxWidth", double.PositiveInfinity, ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double> MaxWidthProperty = ReactiveProperty<double>.Register(
+            "MaxWidth", typeof(UIElement), double.PositiveInfinity, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<double, UIElement> MinHeightProperty =
-            ReactiveProperty<double, UIElement>.Register(
-                "MinHeight", ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double> MinHeightProperty =
+            ReactiveProperty<double>.Register(
+                "MinHeight", typeof(UIElement), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<double, UIElement> MinWidthProperty =
-            ReactiveProperty<double, UIElement>.Register("MinWidth", ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double> MinWidthProperty = ReactiveProperty<double>.Register(
+            "MinWidth", typeof(UIElement), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<VerticalAlignment, UIElement> VerticalAlignmentProperty =
-            ReactiveProperty<VerticalAlignment, UIElement>.Register(
-                "VerticalAlignment", VerticalAlignment.Stretch, ReactivePropertyChangedCallbacks.InvalidateArrange);
+        public static readonly ReactiveProperty<VerticalAlignment> VerticalAlignmentProperty =
+            ReactiveProperty<VerticalAlignment>.Register(
+                "VerticalAlignment", 
+                typeof(UIElement), 
+                VerticalAlignment.Stretch, 
+                ReactivePropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly ReactiveProperty<double, UIElement> WidthProperty =
-            ReactiveProperty<double, UIElement>.Register(
-                "Width", double.NaN, ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double> WidthProperty = ReactiveProperty<double>.Register(
+            "Width", typeof(UIElement), double.NaN, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         private readonly Subject<Gesture> gestures = new Subject<Gesture>();
 
@@ -456,15 +463,14 @@
         /// <summary>
         ///     Returns the nearest ancestor of the specified type, which maybe itself or null.
         /// </summary>
-        /// <typeparam name = "T">The <see cref = "Type">Type</see> of the ancestor</typeparam>
         /// <returns>The nearest ancestor of Type T</returns>
-        protected override T GetNearestAncestorOfType<T>()
+        protected override IReactiveObject GetNearestAncestorOfType(Type type)
         {
-            var ancestor = this as T;
+            IReactiveObject ancestor = this;
 
-            while (ancestor == null && this.VisualParent != null)
+            while (!type.IsAssignableFrom(ancestor.GetType()) && this.VisualParent != null)
             {
-                ancestor = this.VisualParent as T;
+                ancestor = this.VisualParent;
             }
 
             return ancestor;

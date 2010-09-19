@@ -14,13 +14,13 @@ namespace RedBadger.Xpf.Presentation.Controls
         /// <summary>
         ///     Column attached property.
         /// </summary>
-        public static readonly ReactiveProperty<int, Grid> ColumnProperty =
-            ReactiveProperty<int, Grid>.Register("Column");
+        public static readonly ReactiveProperty<int> ColumnProperty =
+            ReactiveProperty<int>.Register("Column", typeof(Grid));
 
         /// <summary>
         ///     Row attached property.
         /// </summary>
-        public static readonly ReactiveProperty<int, Grid> RowProperty = ReactiveProperty<int, Grid>.Register("Row");
+        public static readonly ReactiveProperty<int> RowProperty = ReactiveProperty<int>.Register("Row", typeof(Grid));
 
         private readonly LinkedList<Cell> allStars = new LinkedList<Cell>();
 
