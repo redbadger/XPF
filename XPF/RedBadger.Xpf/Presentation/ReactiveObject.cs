@@ -191,7 +191,7 @@ namespace RedBadger.Xpf.Presentation
             if (changedCallback != null)
             {
                 changedCallback(
-                    this.GetNearestAncestorOfType(reactivePropertyChange.Property.Type), reactivePropertyChange);
+                    this.GetNearestAncestorOfType(reactivePropertyChange.Property.OwnerType), reactivePropertyChange);
             }
         }
 
