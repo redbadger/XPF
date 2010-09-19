@@ -20,76 +20,70 @@
             </summary>
             <param name="property">The <see cref="T:RedBadger.Xpf.Presentation.IReactiveProperty">IReactiveProperty</see> to clear.</param>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.IReactiveObject.GetObservable``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1})">
+        <member name="M:RedBadger.Xpf.Presentation.IReactiveObject.GetObservable``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0})">
             <summary>
-                Gets an <see cref="T:System.IObservable`1">IObservable</see> for a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> for this instance of <see cref="T:RedBadger.Xpf.Presentation.ReactiveObject">ReactiveObject</see>.
+                Gets an <see cref="T:System.IObservable`1">IObservable</see> for a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> for this instance of <see cref="T:RedBadger.Xpf.Presentation.ReactiveObject">ReactiveObject</see>.
             </summary>
-            <typeparam name="TProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s <see cref="T:System.Type">Type</see></typeparam>
-            <typeparam name="TOwner">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
-            <param name="property">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> to retrieve a value for.</param>
-            <returns>An <see cref="T:System.IObservable`1">IObservable</see> around the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>.</returns>
+            <typeparam name="T">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>'s <see cref="T:System.Type">Type</see></typeparam>
+            <typeparam name="TOwner">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> to retrieve a value for.</param>
+            <returns>An <see cref="T:System.IObservable`1">IObservable</see> around the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>.</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.IReactiveObject.GetObserver``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1})">
+        <member name="M:RedBadger.Xpf.Presentation.IReactiveObject.GetObserver``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0})">
             <summary>
-                Gets an <see cref="T:System.IObserver`1">IObserver</see> for a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> for this instance of <see cref="T:RedBadger.Xpf.Presentation.ReactiveObject">ReactiveObject</see>.
+                Gets an <see cref="T:System.IObserver`1">IObserver</see> for a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> for this instance of <see cref="T:RedBadger.Xpf.Presentation.ReactiveObject">ReactiveObject</see>.
             </summary>
-            <typeparam name="TProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s <see cref="T:System.Type">Type</see></typeparam>
-            <typeparam name="TOwner">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
-            <param name="property">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> to retrieve a value for.</param>
-            <returns>An <see cref="T:System.IObserver`1">IObserver</see> around the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>.</returns>
+            <typeparam name="T">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>'s <see cref="T:System.Type">Type</see></typeparam>
+            <typeparam name="TOwner">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> to retrieve a value for.</param>
+            <returns>An <see cref="T:System.IObserver`1">IObserver</see> around the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>.</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.IReactiveObject.GetValue``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1})">
+        <member name="M:RedBadger.Xpf.Presentation.IReactiveObject.GetValue``1(RedBadger.Xpf.Presentation.ReactiveProperty{``0})">
             <summary>
-                Gets the current value of a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on this instance of <see cref="T:RedBadger.Xpf.Presentation.IReactiveObject">IReactiveObject</see>.
+                Gets the current value of a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on this instance of <see cref="T:RedBadger.Xpf.Presentation.IReactiveObject">IReactiveObject</see>.
             </summary>
-            <typeparam name="TProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s <see cref="T:System.Type">Type</see></typeparam>
-            <typeparam name="TOwner">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
-            <param name="property">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> to retrieve a value for.</param>
+            <typeparam name="T">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>'s <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> to retrieve a value for.</param>
             <returns>The current value.</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.IReactiveObject.SetValue``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1},``0)">
+        <member name="M:RedBadger.Xpf.Presentation.IReactiveObject.SetValue``1(RedBadger.Xpf.Presentation.ReactiveProperty{``0},``0)">
             <summary>
-                Sets the value of a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on this instance of <see cref="T:RedBadger.Xpf.Presentation.IReactiveObject">IReactiveObject</see>.
+                Sets the value of a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on this instance of <see cref="T:RedBadger.Xpf.Presentation.IReactiveObject">IReactiveObject</see>.
             </summary>
-            <typeparam name="TProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s <see cref="T:System.Type">Type</see></typeparam>
-            <typeparam name="TOwner">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
-            <param name="property">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> to set.</param>
+            <typeparam name="T">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>'s <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> to set.</param>
             <param name="newValue">The new value.</param>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.ReactiveObject.Bind``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1},System.IObservable{``0})">
+        <member name="M:RedBadger.Xpf.Presentation.ReactiveObject.Bind``1(RedBadger.Xpf.Presentation.ReactiveProperty{``0},System.IObservable{``0})">
             <summary>
                 Bind One Way (from the Source).
             </summary>
-            <typeparam name="TProperty">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
-            <typeparam name="TOwner">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
-            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
+            <typeparam name="T">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
             <param name="fromSource"><see cref="T:System.IObservable`1">IObservable</see> of updates from the source</param>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.ReactiveObject.Bind``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1},System.IObserver{``0})">
+        <member name="M:RedBadger.Xpf.Presentation.ReactiveObject.Bind``1(RedBadger.Xpf.Presentation.ReactiveProperty{``0},System.IObserver{``0})">
             <summary>
                 Bind One Way (to the Source).
             </summary>
-            <typeparam name="TProperty">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
-            <typeparam name="TOwner">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
-            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
+            <typeparam name="T">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
             <param name="toSource"><see cref="T:System.IObserver`1">IObserver</see> of updates for the Source</param>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.ReactiveObject.Bind``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1},RedBadger.Xpf.Presentation.Data.IDualChannel{``0})">
+        <member name="M:RedBadger.Xpf.Presentation.ReactiveObject.Bind``1(RedBadger.Xpf.Presentation.ReactiveProperty{``0},RedBadger.Xpf.Presentation.Data.IDualChannel{``0})">
             <summary>
                 Bind Two Way (from and to the Source)
             </summary>
-            <typeparam name="TProperty">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
-            <typeparam name="TOwner">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
-            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
+            <typeparam name="T">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
             <param name="source">A <see cref="T:RedBadger.Xpf.Presentation.Data.TwoWayBinding`1">TwoWayBinding</see> containing both an <see cref="T:System.IObservable`1">IObservable</see> and <see cref="T:System.IObserver`1">IObserver</see></param>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.ReactiveObject.Bind``2(RedBadger.Xpf.Presentation.ReactiveProperty{``0,``1},System.IObservable{``0},System.IObserver{``0})">
+        <member name="M:RedBadger.Xpf.Presentation.ReactiveObject.Bind``1(RedBadger.Xpf.Presentation.ReactiveProperty{``0},System.IObservable{``0},System.IObserver{``0})">
             <summary>
                 Bind Two Way (from and to the Source)
             </summary>
-            <typeparam name="TProperty">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
-            <typeparam name="TOwner">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>'s owner <see cref="T:System.Type">Type</see></typeparam>
-            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
+            <typeparam name="T">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> <see cref="T:System.Type">Type</see></typeparam>
+            <param name="property">Target <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
             <param name="fromSource"><see cref="T:System.IObservable`1">IObservable</see> of updates from the source</param>
             <param name="toSource"><see cref="T:System.IObserver`1">IObserver</see> of updates for the Source</param>
         </member>
@@ -99,11 +93,10 @@
             </summary>
             <param name = "property">The property who's binding you want to clear.</param>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.ReactiveObject.GetNearestAncestorOfType``1">
+        <member name="M:RedBadger.Xpf.Presentation.ReactiveObject.GetNearestAncestorOfType(System.Type)">
             <summary>
                 Returns the nearest ancestor of the specified type, which maybe itself or null.
             </summary>
-            <typeparam name="T">The <see cref="T:System.Type">Type</see> of the ancestor</typeparam>
             <returns>The nearest ancestor of Type T</returns>
         </member>
         <member name="M:RedBadger.Xpf.Presentation.ReactiveObject.ResolveDeferredBindings(System.Object)">
@@ -154,11 +147,10 @@
             <param name = "finalSize">The final area within the parent that this element should use to arrange itself and its children.</param>
             <returns>The actual size used.</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.UIElement.GetNearestAncestorOfType``1">
+        <member name="M:RedBadger.Xpf.Presentation.UIElement.GetNearestAncestorOfType(System.Type)">
             <summary>
                 Returns the nearest ancestor of the specified type, which maybe itself or null.
             </summary>
-            <typeparam name="T">The <see cref="T:System.Type">Type</see> of the ancestor</typeparam>
             <returns>The nearest ancestor of Type T</returns>
         </member>
         <member name="M:RedBadger.Xpf.Presentation.UIElement.MeasureOverride(RedBadger.Xpf.Presentation.Size)">
@@ -218,6 +210,27 @@
                 Represents a control with a single piece of content.
             </summary>
         </member>
+        <member name="T:RedBadger.Xpf.Presentation.ReactivePropertyChangedCallbacks">
+            <summary>
+            Generic Methods to use as callbacks when a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> value is changed.
+            </summary>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.ReactivePropertyChangedCallbacks.InvalidateArrange``1(System.Object,RedBadger.Xpf.Presentation.ReactivePropertyChangeEventArgs{``0})">
+            <summary>
+            Invalidates the sender's Arrange layout pass when a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> value is changed.
+            </summary>
+            <typeparam name="T">The type of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>.</typeparam>
+            <param name="sender">The ReactiveObject whose <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> has changed.</param>
+            <param name="args">An instance of <see cref="T:RedBadger.Xpf.Presentation.ReactivePropertyChangeEventArgs`1">ReactivePropertyChangeEventArgs</see> that carries information about the change.</param>
+        </member>
+        <member name="M:RedBadger.Xpf.Presentation.ReactivePropertyChangedCallbacks.InvalidateMeasure``1(System.Object,RedBadger.Xpf.Presentation.ReactivePropertyChangeEventArgs{``0})">
+            <summary>
+            Invalidates the sender's Measure layout pass when a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> value is changed.
+            </summary>
+            <typeparam name="T">The type of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>.</typeparam>
+            <param name="sender">The ReactiveObject whose <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> has changed.</param>
+            <param name="args">An instance of <see cref="T:RedBadger.Xpf.Presentation.ReactivePropertyChangeEventArgs`1">ReactivePropertyChangeEventArgs</see> that carries information about the change.</param>
+        </member>
         <member name="T:RedBadger.Xpf.Presentation.Data.PropertyChangedEventArgs">
             <summary>
                 EventArgs used with <see cref="T:RedBadger.Xpf.Presentation.Data.INotifyPropertyChanged">INotifyPropertyChanged</see> to indicate that a property's value has changed.
@@ -234,65 +247,73 @@
                 The name of the property whose value has changed
             </summary>
         </member>
-        <member name="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">
+        <member name="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">
             <summary>
                 Describes a Reactive Property in XPF's Reactive Property System
                 Reactive Properties can participate in data binding and integrate tightly with the Reactive Extensions
             </summary>
-            <typeparam name="TProperty">The <see cref="T:System.Type">Type</see> of the Property</typeparam>
-            <typeparam name="TOwner">The <see cref="T:System.Type">Type</see> of the owner of the property</typeparam>
+            <typeparam name="T">The <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.OwnerType">Type</see> of the Property</typeparam>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.ReactiveProperty`2.Register(System.String)">
+        <member name="M:RedBadger.Xpf.Presentation.ReactiveProperty`1.Register(System.String,System.Type)">
             <summary>
-                Registers a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> with the given <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`2.Name">Name</see>.
+                Registers a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> with the given <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.Name">Name</see>.
             </summary>
-            <param name="propertyName">The name of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>.</param>
-            <returns>The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> that has been registered.</returns>
+            <param name="propertyName">The name of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>.</param>
+            <param name="ownerType">The <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.OwnerType">Type</see> of the owner of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
+            <returns>The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> that has been registered.</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.ReactiveProperty`2.Register(System.String,`0)">
+        <member name="M:RedBadger.Xpf.Presentation.ReactiveProperty`1.Register(System.String,System.Type,`0)">
             <summary>
-                Registers a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> with the given
-                <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`2.Name">Name</see> and default value
+                Registers a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> with the given
+                <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.Name">Name</see> and default value
             </summary>
-            <param name="propertyName">The name of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
-            <param name="defaultValue">A default value for the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
-            <returns>The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> that has been registered</returns>
+            <param name="propertyName">The name of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
+            <param name="ownerType">The <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.OwnerType">Type</see> of the owner of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
+            <param name="defaultValue">A default value for the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
+            <returns>The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> that has been registered</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.ReactiveProperty`2.Register(System.String,System.Action{`1,RedBadger.Xpf.Presentation.ReactivePropertyChangeEventArgs{`0,`1}})">
+        <member name="M:RedBadger.Xpf.Presentation.ReactiveProperty`1.Register(System.String,System.Type,System.Action{System.Object,RedBadger.Xpf.Presentation.ReactivePropertyChangeEventArgs{`0}})">
             <summary>
-                Registers a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> with the given
-                <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`2.Name">Name</see> 
-                and <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`2.ChangedCallback">ChangedCallback</see>
+                Registers a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> with the given
+                <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.Name">Name</see> 
+                and <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.ChangedCallback">ChangedCallback</see>
             </summary>
-            <param name="propertyName">The name of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
-            <param name="changedCallback">A method to call when the value of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> changes.</param>
-            <returns>The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> that has been registered</returns>
+            <param name="propertyName">The name of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
+            <param name="ownerType">The <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.OwnerType">Type</see> of the owner of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
+            <param name="changedCallback">A method to call when the value of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> changes.</param>
+            <returns>The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> that has been registered</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.ReactiveProperty`2.Register(System.String,`0,System.Action{`1,RedBadger.Xpf.Presentation.ReactivePropertyChangeEventArgs{`0,`1}})">
+        <member name="M:RedBadger.Xpf.Presentation.ReactiveProperty`1.Register(System.String,System.Type,`0,System.Action{System.Object,RedBadger.Xpf.Presentation.ReactivePropertyChangeEventArgs{`0}})">
             <summary>
-                Registers a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> with the given
-                <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`2.Name">Name</see>, 
-                <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`2.DefaultValue">DefaultValue</see>
-                and <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`2.ChangedCallback">ChangedCallback</see>
+                Registers a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> with the given
+                <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.Name">Name</see>, 
+                <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.DefaultValue">DefaultValue</see>
+                and <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.ChangedCallback">ChangedCallback</see>
             </summary>
-            <param name="propertyName">The name of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
-            <param name="defaultValue">A default value for the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see></param>
-            <param name="changedCallback">A method to call when the value of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> changes.</param>
-            <returns>The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> that has been registered</returns>
+            <param name="propertyName">The name of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
+            <param name="ownerType">The <see cref="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.OwnerType">Type</see> of the owner of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
+            <param name="defaultValue">A default value for the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see></param>
+            <param name="changedCallback">A method to call when the value of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> changes.</param>
+            <returns>The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> that has been registered</returns>
         </member>
-        <member name="P:RedBadger.Xpf.Presentation.ReactiveProperty`2.ChangedCallback">
+        <member name="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.ChangedCallback">
             <summary>
-                A Call-back that is called whenever the value of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> changes
-            </summary>
-        </member>
-        <member name="P:RedBadger.Xpf.Presentation.ReactiveProperty`2.DefaultValue">
-            <summary>
-                The default value of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>
+                A Call-back that is called whenever the value of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> changes
             </summary>
         </member>
-        <member name="P:RedBadger.Xpf.Presentation.ReactiveProperty`2.Name">
+        <member name="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.DefaultValue">
             <summary>
-                The Name of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see>
+                The default value of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>
+            </summary>
+        </member>
+        <member name="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.Name">
+            <summary>
+                The Name of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>
+            </summary>
+        </member>
+        <member name="P:RedBadger.Xpf.Presentation.ReactiveProperty`1.OwnerType">
+            <summary>
+                The Type of the owner of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see>
             </summary>
         </member>
         <member name="T:RedBadger.Xpf.Presentation.Data.BindingFactory">
@@ -320,21 +341,21 @@
                 This allows for the Data Context to be set after the binding has been created and changed at any time.
             </remarks>
             <typeparam name="TSource">The Type of the Data Context.</typeparam>
-            <typeparam name="TProperty">The Type of the property on the Data Context.</typeparam>
+            <typeparam name="T">The Type of the property on the Data Context.</typeparam>
             <param name="propertySelector">Lambda expression which returns the property on the Data Context.</param>
             <returns><see cref="T:System.IObservable`1">IObservable</see> around the property on the Data Context.</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateOneWay``2(RedBadger.Xpf.Presentation.ReactiveProperty{``1,``0})">
+        <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateOneWay``2(RedBadger.Xpf.Presentation.ReactiveProperty{``1})">
             <summary>
-                Creates a One Way Binding to a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on the element's Data Context.
+                Creates a One Way Binding to a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on the element's Data Context.
             </summary>
             <remarks>
                 When binding to the Data Context, the binding returned is not resolved (ie. connected to the source) until the beginning of the Measure phase.
                 This allows for the Data Context to be set after the binding has been created and changed at any time.
             </remarks>
             <typeparam name="TSource">The Type of the Data Context.</typeparam>
-            <typeparam name="TProperty">The Type of the property on the Data Context.</typeparam>
-            <param name="reactiveProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> you're binding to.</param>
+            <typeparam name="T">The Type of the property on the Data Context.</typeparam>
+            <param name="reactiveProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> you're binding to.</param>
             <returns><see cref="T:System.IObservable`1">IObservable</see> around the property on the Data Context.</returns>
         </member>
         <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateOneWay``1(``0)">
@@ -350,19 +371,19 @@
                 Creates a One Way Binding to a property on a source.
             </summary>
             <typeparam name="TSource">The Type of the source.</typeparam>
-            <typeparam name="TProperty">The Type of the property on the source.</typeparam>
+            <typeparam name="T">The Type of the property on the source.</typeparam>
             <param name="source">The binding source.</param>
             <param name="propertySelector">Lambda expression which returns the property on the source.</param>
             <returns><see cref="T:System.IObservable`1">IObservable</see> around the property on the source.</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateOneWay``2(``0,RedBadger.Xpf.Presentation.ReactiveProperty{``1,``0})">
+        <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateOneWay``2(``0,RedBadger.Xpf.Presentation.ReactiveProperty{``1})">
             <summary>
-                Creates a One Way Binding to a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on a source.
+                Creates a One Way Binding to a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on a source.
             </summary>
             <typeparam name="TSource">The Type of the source.</typeparam>
-            <typeparam name="TProperty">The Type of the property on the source.</typeparam>
+            <typeparam name="T">The Type of the property on the source.</typeparam>
             <param name="source">The binding source.</param>
-            <param name="reactiveProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on the source.</param>
+            <param name="reactiveProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on the source.</param>
             <returns><see cref="T:System.IObservable`1">IObservable</see> around the property on the source.</returns>
         </member>
         <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateOneWayToSource``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
@@ -374,17 +395,17 @@
                 This allows for the Data Context to be set after the binding has been created and changed at any time.
             </remarks>
             <typeparam name="TSource">The Type of the Data Context.</typeparam>
-            <typeparam name="TProperty">The Type of the property on the Data Context.</typeparam>
+            <typeparam name="T">The Type of the property on the Data Context.</typeparam>
             <param name="propertySelector">Lambda expression which returns the property on the Data Context.</param>
             <returns><see cref="T:System.IObserver`1">IObserver</see> around the property on the Data Context.</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateOneWayToSource``2(RedBadger.Xpf.Presentation.ReactiveProperty{``1,``0})">
+        <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateOneWayToSource``2(RedBadger.Xpf.Presentation.ReactiveProperty{``1})">
             <summary>
-                Creates a One Way To Source Binding to a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on the Data Context.
+                Creates a One Way To Source Binding to a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on the Data Context.
             </summary>
             <typeparam name="TSource">The Type of the Data Context.</typeparam>
-            <typeparam name="TProperty">The Type of the property on the Data Context.</typeparam>
-            <param name="reactiveProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> you're binding to.</param>
+            <typeparam name="T">The Type of the property on the Data Context.</typeparam>
+            <param name="reactiveProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> you're binding to.</param>
             <returns><see cref="T:System.IObserver`1">IObserver</see> around the property on the Data Context.</returns>
         </member>
         <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateOneWayToSource``2(``0,System.Linq.Expressions.Expression{System.Func{``0,``1}})">
@@ -392,19 +413,19 @@
                 Creates a One Way To Source Binding to a property on a source.
             </summary>
             <typeparam name="TSource">The Type of the source.</typeparam>
-            <typeparam name="TProperty">The Type of the property on the source.</typeparam>
+            <typeparam name="T">The Type of the property on the source.</typeparam>
             <param name="source">The binding source.</param>
             <param name="propertySelector">Lambda expression which returns the property on the source.</param>
             <returns><see cref="T:System.IObserver`1">IObserver</see> around the property on the source.</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateOneWayToSource``2(``0,RedBadger.Xpf.Presentation.ReactiveProperty{``1,``0})">
+        <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateOneWayToSource``2(``0,RedBadger.Xpf.Presentation.ReactiveProperty{``1})">
             <summary>
-                Creates a One Way To Source Binding to a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on a source.
+                Creates a One Way To Source Binding to a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on a source.
             </summary>
             <typeparam name="TSource">The Type of the source.</typeparam>
-            <typeparam name="TProperty">The Type of the property on the source.</typeparam>
+            <typeparam name="T">The Type of the property on the source.</typeparam>
             <param name="source">The binding source.</param>
-            <param name="reactiveProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on the source.</param>
+            <param name="reactiveProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on the source.</param>
             <returns><see cref="T:System.IObserver`1">IObserver</see> around the property on the source.</returns>
         </member>
         <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateTwoWay``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
@@ -416,21 +437,21 @@
                 This allows for the Data Context to be set after the binding has been created and changed at any time.
             </remarks>
             <typeparam name="TSource">The Type of the Data Context.</typeparam>
-            <typeparam name="TProperty">The Type of the property on the Data Context.</typeparam>
+            <typeparam name="T">The Type of the property on the Data Context.</typeparam>
             <param name="propertySelector">Lambda expression which returns the property on the Data Context.</param>
             <returns><see cref="T:RedBadger.Xpf.Presentation.Data.IDualChannel`1">IDualChannel</see> around the property on the Data Context.</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateTwoWay``2(RedBadger.Xpf.Presentation.ReactiveProperty{``1,``0})">
+        <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateTwoWay``2(RedBadger.Xpf.Presentation.ReactiveProperty{``1})">
             <summary>
-                Creates a Two Way Binding to a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on the element's Data Context.
+                Creates a Two Way Binding to a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on the element's Data Context.
             </summary>
             <remarks>
                 When binding to the Data Context, the binding returned is not resolved (ie. connected to the source) until the beginning of the Measure phase.
                 This allows for the Data Context to be set after the binding has been created and changed at any time.
             </remarks>
             <typeparam name="TSource">The Type of the Data Context.</typeparam>
-            <typeparam name="TProperty">The Type of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on the Data Context.</typeparam>
-            <param name="reactiveProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> you're binding to.</param>
+            <typeparam name="T">The Type of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on the Data Context.</typeparam>
+            <param name="reactiveProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> you're binding to.</param>
             <returns><see cref="T:RedBadger.Xpf.Presentation.Data.IDualChannel`1">IDualChannel</see> around the property on the source.</returns>
         </member>
         <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateTwoWay``2(``0,System.Linq.Expressions.Expression{System.Func{``0,``1}})">
@@ -438,19 +459,19 @@
                 Creates a Two Way Binding to a property on a source.
             </summary>
             <typeparam name="TSource">The Type of the source.</typeparam>
-            <typeparam name="TProperty">The Type of the property on the source.</typeparam>
+            <typeparam name="T">The Type of the property on the source.</typeparam>
             <param name="source">The binding source.</param>
             <param name="propertySelector">Lambda expression which returns the property on the source.</param>
             <returns><see cref="T:RedBadger.Xpf.Presentation.Data.IDualChannel`1">IDualChannel</see> around the property on the source.</returns>
         </member>
-        <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateTwoWay``2(``0,RedBadger.Xpf.Presentation.ReactiveProperty{``1,``0})">
+        <member name="M:RedBadger.Xpf.Presentation.Data.BindingFactory.CreateTwoWay``2(``0,RedBadger.Xpf.Presentation.ReactiveProperty{``1})">
             <summary>
-                Creates a Two Way Binding to a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on a source.
+                Creates a Two Way Binding to a <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on a source.
             </summary>
             <typeparam name="TSource">The Type of the source.</typeparam>
-            <typeparam name="TProperty">The Type of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on the source.</typeparam>
+            <typeparam name="T">The Type of the <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on the source.</typeparam>
             <param name="source">The binding source.</param>
-            <param name="reactiveProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`2">ReactiveProperty</see> on the source.</param>
+            <param name="reactiveProperty">The <see cref="T:RedBadger.Xpf.Presentation.ReactiveProperty`1">ReactiveProperty</see> on the source.</param>
             <returns><see cref="T:RedBadger.Xpf.Presentation.Data.IDualChannel`1">IDualChannel</see> around the property on the source.</returns>
         </member>
         <member name="T:RedBadger.Xpf.Presentation.Data.INotifyPropertyChanged">

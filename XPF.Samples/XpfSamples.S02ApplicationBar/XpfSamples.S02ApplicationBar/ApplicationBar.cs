@@ -40,13 +40,10 @@ namespace XpfSamples.S02ApplicationBar
                             var button = new Button();
                             button.Click += ButtonOnClick;
 
+                            // why doesn't the margin take effect inside the button?
                             var image = new Image { Stretch = Stretch.None, Margin = new Thickness(18, 0, 18, 0) };
-                            image.Bind(DataContextProperty, BindingFactory.CreateOneWay<object>());
 
-                            IObservable<ImageSource> imageBindingSource =
-                                BindingFactory.CreateOneWay<ApplicationBarIconButton, ImageSource>(o => o.IconImageSource);
-
-                            image.Bind(Image.SourceProperty, imageBindingSource);
+                            image.Bind(Image.SourceProperty, BindingFactory.CreateOneWay<ApplicationBarIconButton, ImageSource>(o => o.IconImageSource));
 
                             button.Content = image;
 
