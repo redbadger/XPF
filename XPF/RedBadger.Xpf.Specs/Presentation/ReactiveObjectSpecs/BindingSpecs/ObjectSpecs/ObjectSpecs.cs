@@ -34,8 +34,8 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Obje
 
     public class TestBindingReactiveObject : ReactiveObject
     {
-        public static readonly ReactiveProperty<SolidColorBrush, TestBindingReactiveObject> SolidColorBrushProperty =
-            ReactiveProperty<SolidColorBrush, TestBindingReactiveObject>.Register("SolidColorBrush");
+        public static readonly ReactiveProperty<SolidColorBrush> SolidColorBrushProperty =
+            ReactiveProperty<SolidColorBrush>.Register("SolidColorBrush", typeof(TestBindingReactiveObject));
 
         public SolidColorBrush SolidColorBrush
         {

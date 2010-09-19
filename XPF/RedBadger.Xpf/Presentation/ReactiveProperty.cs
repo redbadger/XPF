@@ -9,34 +9,32 @@
     ///     Describes a Reactive Property in XPF's Reactive Property System
     ///     Reactive Properties can participate in data binding and integrate tightly with the Reactive Extensions
     /// </summary>
-    /// <typeparam name = "TProperty">The <see cref = "Type">Type</see> of the Property</typeparam>
-    /// <typeparam name = "TOwner">The <see cref = "Type">Type</see> of the owner of the property</typeparam>
-    public class ReactiveProperty<TProperty, TOwner> : IReactiveProperty
-        where TOwner : class, IReactiveObject
+    /// <typeparam name = "T">The <see cref = "OwnerType">Type</see> of the Property</typeparam>
+    public class ReactiveProperty<T> : IReactiveProperty
     {
-        private static readonly PropertyStore<TProperty, TOwner> registeredProperties =
-            new PropertyStore<TProperty, TOwner>();
+        private static readonly PropertyStore<T> registeredProperties = new PropertyStore<T>();
 
-        private readonly Action<TOwner, ReactivePropertyChangeEventArgs<TProperty, TOwner>> changedCallback;
+        private readonly Action<object, ReactivePropertyChangeEventArgs<T>> changedCallback;
 
-        private readonly TProperty defaultValue;
+        private readonly T defaultValue;
 
         private readonly string name;
 
+        private readonly Type ownerType;
+
         private ReactiveProperty(
-            string name, 
-            TProperty defaultValue, 
-            Action<TOwner, ReactivePropertyChangeEventArgs<TProperty, TOwner>> changedCallback)
+            string name, Type ownerType, T defaultValue, Action<object, ReactivePropertyChangeEventArgs<T>> changedCallback)
         {
             this.name = name;
+            this.ownerType = ownerType;
             this.defaultValue = defaultValue;
             this.changedCallback = changedCallback;
         }
 
         /// <summary>
-        ///     A Call-back that is called whenever the value of the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> changes
+        ///     A Call-back that is called whenever the value of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see> changes
         /// </summary>
-        public Action<TOwner, ReactivePropertyChangeEventArgs<TProperty, TOwner>> ChangedCallback
+        public Action<object, ReactivePropertyChangeEventArgs<T>> ChangedCallback
         {
             get
             {
@@ -45,9 +43,9 @@
         }
 
         /// <summary>
-        ///     The default value of the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>
+        ///     The default value of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see>
         /// </summary>
-        public TProperty DefaultValue
+        public T DefaultValue
         {
             get
             {
@@ -56,7 +54,7 @@
         }
 
         /// <summary>
-        ///     The Name of the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>
+        ///     The Name of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see>
         /// </summary>
         public string Name
         {
@@ -67,74 +65,90 @@
         }
 
         /// <summary>
-        ///     Registers a <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> with the given <see cref = "ReactiveProperty{TProperty,TOwner}.Name">Name</see>.
+        ///     The Type of the owner of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see>
         /// </summary>
-        /// <param name = "propertyName">The name of the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see>.</param>
-        /// <returns>The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> that has been registered.</returns>
-        public static ReactiveProperty<TProperty, TOwner> Register(string propertyName)
+        public Type OwnerType
         {
-            return Register(propertyName, default(TProperty));
+            get
+            {
+                return this.ownerType;
+            }
         }
 
         /// <summary>
-        ///     Registers a <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> with the given
+        ///     Registers a <see cref = "ReactiveProperty{T}">ReactiveProperty</see> with the given <see cref = "ReactiveProperty{T}.Name">Name</see>.
+        /// </summary>
+        /// <param name = "propertyName">The name of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see>.</param>
+        /// <param name = "ownerType">The <see cref = "OwnerType">Type</see> of the owner of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see></param>
+        /// <returns>The <see cref = "ReactiveProperty{T}">ReactiveProperty</see> that has been registered.</returns>
+        public static ReactiveProperty<T> Register(string propertyName, Type ownerType)
+        {
+            return Register(propertyName, ownerType, default(T));
+        }
+
+        /// <summary>
+        ///     Registers a <see cref = "ReactiveProperty{T}">ReactiveProperty</see> with the given
         ///     <see cref = "Name">Name</see> and default value
         /// </summary>
-        /// <param name = "propertyName">The name of the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
-        /// <param name = "defaultValue">A default value for the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
-        /// <returns>The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> that has been registered</returns>
-        public static ReactiveProperty<TProperty, TOwner> Register(string propertyName, TProperty defaultValue)
+        /// <param name = "propertyName">The name of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see></param>
+        /// <param name = "ownerType">The <see cref = "OwnerType">Type</see> of the owner of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see></param>
+        /// <param name = "defaultValue">A default value for the <see cref = "ReactiveProperty{T}">ReactiveProperty</see></param>
+        /// <returns>The <see cref = "ReactiveProperty{T}">ReactiveProperty</see> that has been registered</returns>
+        public static ReactiveProperty<T> Register(string propertyName, Type ownerType, T defaultValue)
         {
-            return Register(propertyName, defaultValue, null);
+            return Register(propertyName, ownerType, defaultValue, null);
         }
 
         /// <summary>
-        ///     Registers a <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> with the given
+        ///     Registers a <see cref = "ReactiveProperty{T}">ReactiveProperty</see> with the given
         ///     <see cref = "Name">Name</see> 
         ///     and <see cref = "ChangedCallback">ChangedCallback</see>
         /// </summary>
-        /// <param name = "propertyName">The name of the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
-        /// <param name = "changedCallback">A method to call when the value of the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> changes.</param>
-        /// <returns>The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> that has been registered</returns>
-        public static ReactiveProperty<TProperty, TOwner> Register(
-            string propertyName, Action<TOwner, ReactivePropertyChangeEventArgs<TProperty, TOwner>> changedCallback)
+        /// <param name = "propertyName">The name of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see></param>
+        /// <param name = "ownerType">The <see cref = "OwnerType">Type</see> of the owner of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see></param>
+        /// <param name = "changedCallback">A method to call when the value of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see> changes.</param>
+        /// <returns>The <see cref = "ReactiveProperty{T}">ReactiveProperty</see> that has been registered</returns>
+        public static ReactiveProperty<T> Register(
+            string propertyName, Type ownerType, Action<object, ReactivePropertyChangeEventArgs<T>> changedCallback)
         {
-            return Register(propertyName, default(TProperty), changedCallback);
+            return Register(propertyName, ownerType, default(T), changedCallback);
         }
 
         /// <summary>
-        ///     Registers a <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> with the given
+        ///     Registers a <see cref = "ReactiveProperty{T}">ReactiveProperty</see> with the given
         ///     <see cref = "Name">Name</see>, 
         ///     <see cref = "DefaultValue">DefaultValue</see>
         ///     and <see cref = "ChangedCallback">ChangedCallback</see>
         /// </summary>
-        /// <param name = "propertyName">The name of the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
-        /// <param name = "defaultValue">A default value for the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see></param>
-        /// <param name = "changedCallback">A method to call when the value of the <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> changes.</param>
-        /// <returns>The <see cref = "ReactiveProperty{TProperty,TOwner}">ReactiveProperty</see> that has been registered</returns>
-        public static ReactiveProperty<TProperty, TOwner> Register(
+        /// <param name = "propertyName">The name of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see></param>
+        /// <param name = "ownerType">The <see cref = "OwnerType">Type</see> of the owner of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see></param>
+        /// <param name = "defaultValue">A default value for the <see cref = "ReactiveProperty{T}">ReactiveProperty</see></param>
+        /// <param name = "changedCallback">A method to call when the value of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see> changes.</param>
+        /// <returns>The <see cref = "ReactiveProperty{T}">ReactiveProperty</see> that has been registered</returns>
+        public static ReactiveProperty<T> Register(
             string propertyName, 
-            TProperty defaultValue, 
-            Action<TOwner, ReactivePropertyChangeEventArgs<TProperty, TOwner>> changedCallback)
+            Type ownerType, 
+            T defaultValue, 
+            Action<object, ReactivePropertyChangeEventArgs<T>> changedCallback)
         {
             if (string.IsNullOrEmpty(propertyName))
             {
                 throw new ArgumentException("propertyName cannot be null or an empty string");
             }
 
-            var property = new ReactiveProperty<TProperty, TOwner>(propertyName, defaultValue, changedCallback);
+            var property = new ReactiveProperty<T>(propertyName, ownerType, defaultValue, changedCallback);
 
-            StoreRegisteredProperty(propertyName, property);
+            StoreRegisteredProperty(propertyName, ownerType, property);
             return property;
         }
 
-        private static void StoreRegisteredProperty(string propertyName, ReactiveProperty<TProperty, TOwner> property)
+        private static void StoreRegisteredProperty(string propertyName, Type ownerType, ReactiveProperty<T> property)
         {
-            Dictionary<string, ReactiveProperty<TProperty, TOwner>> properties;
-            if (!registeredProperties.TryGetValue(typeof(TOwner), out properties))
+            Dictionary<string, ReactiveProperty<T>> properties;
+            if (!registeredProperties.TryGetValue(ownerType, out properties))
             {
-                properties = new Dictionary<string, ReactiveProperty<TProperty, TOwner>>();
-                registeredProperties[typeof(TOwner)] = properties;
+                properties = new Dictionary<string, ReactiveProperty<T>>();
+                registeredProperties[ownerType] = properties;
             }
 
             properties[propertyName] = property;

@@ -2,15 +2,13 @@
 {
     using System;
 
-    using RedBadger.Xpf.Internal;
-
     public class Canvas : Panel
     {
-        public static readonly ReactiveProperty<double, Canvas> LeftProperty = ReactiveProperty<double, Canvas>.Register(
-            "Left", double.NaN, ReactivePropertyChangedCallbacks.InvalidateArrange);
+        public static readonly ReactiveProperty<double> LeftProperty = ReactiveProperty<double>.Register(
+            "Left", typeof(Canvas), double.NaN, ReactivePropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly ReactiveProperty<double, Canvas> TopProperty = ReactiveProperty<double, Canvas>.Register(
-            "Top", double.NaN, ReactivePropertyChangedCallbacks.InvalidateArrange);
+        public static readonly ReactiveProperty<double> TopProperty = ReactiveProperty<double>.Register(
+            "Top", typeof(Canvas), double.NaN, ReactivePropertyChangedCallbacks.InvalidateArrange);
 
         public static double GetLeft(IElement element)
         {

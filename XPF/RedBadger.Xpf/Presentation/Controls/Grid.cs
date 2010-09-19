@@ -14,13 +14,13 @@ namespace RedBadger.Xpf.Presentation.Controls
         /// <summary>
         ///     Column attached property.
         /// </summary>
-        public static readonly ReactiveProperty<int, Grid> ColumnProperty =
-            ReactiveProperty<int, Grid>.Register("Column");
+        public static readonly ReactiveProperty<int> ColumnProperty =
+            ReactiveProperty<int>.Register("Column", typeof(Grid));
 
         /// <summary>
         ///     Row attached property.
         /// </summary>
-        public static readonly ReactiveProperty<int, Grid> RowProperty = ReactiveProperty<int, Grid>.Register("Row");
+        public static readonly ReactiveProperty<int> RowProperty = ReactiveProperty<int>.Register("Row", typeof(Grid));
 
         private readonly LinkedList<Cell> allStars = new LinkedList<Cell>();
 
@@ -275,7 +275,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 
                         occupiedLength += definition.FinalLength;
                         nonStarDefinitions.AddFirst(definition);
-
                         break;
                     case GridUnitType.Pixel:
                         minLength = definition.UserLength.Value;
@@ -284,7 +283,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 
                         occupiedLength += definition.FinalLength;
                         nonStarDefinitions.AddFirst(definition);
-
                         break;
                     case GridUnitType.Star:
                         double numerator = definition.UserLength.Value;
@@ -301,8 +299,6 @@ namespace RedBadger.Xpf.Presentation.Controls
 
                         stars.AddLast(definition);
                         break;
-                    default:
-                        throw new NotSupportedException("Unsupported GridUnitType");
                 }
             }
 
@@ -346,12 +342,10 @@ namespace RedBadger.Xpf.Presentation.Controls
                 foreach (DefinitionBase definitionBase in sortedDefinitions)
                 {
                     double finalLength = definitionBase.FinalLength - (excessLength / (definitions.Length - i));
-
                     finalLength = finalLength.Coerce(definitionBase.MinLength, definitionBase.FinalLength);
-
                     excessLength -= definitionBase.FinalLength - finalLength;
-                    definitionBase.FinalLength = finalLength;
 
+                    definitionBase.FinalLength = finalLength;
                     i++;
                 }
             }
@@ -424,7 +418,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             foreach (DefinitionBase definition in definitions)
             {
                 definition.MinLength = 0d;
-                double availableLength;
+                double availableLength = 0d;
                 double userMinLength = definition.UserMinLength;
                 double userMaxLength = definition.UserMaxLength;
 
@@ -445,8 +439,6 @@ namespace RedBadger.Xpf.Presentation.Controls
                         availableLength = double.PositiveInfinity;
                         this.hasStar[(int)dimension] = true;
                         break;
-                    default:
-                        throw new NotSupportedException("Unsupported GridUnitType");
                 }
 
                 definition.UpdateMinLength(userMinLength);
@@ -511,7 +503,6 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
             else
             {
-                
                 this.MeasureCells(this.starHeightAutoPixelWidth, UpdateMinLengths.SkipHeights);
 
                 if (this.hasStar[(int)Dimension.Width])

@@ -46,7 +46,7 @@
             var notifyPropertyChanged = source as INotifyPropertyChanged;
 
             this.observable = notifyPropertyChanged != null
-                                  ? GetObservable<T>(notifyPropertyChanged, propertyInfo)
+                                  ? GetObservable(notifyPropertyChanged, propertyInfo)
                                   : new BehaviorSubject<T>((T)propertyInfo.GetValue(source, null));
         }
 
@@ -102,7 +102,7 @@
 
                 if (dataContext is INotifyPropertyChanged)
                 {
-                    this.SubscribeObserver(GetObservable<T>((INotifyPropertyChanged)dataContext, this.propertyInfo));
+                    this.SubscribeObserver(GetObservable((INotifyPropertyChanged)dataContext, this.propertyInfo));
                 }
             }
         }
@@ -131,14 +131,14 @@
             this.SubscribeObserver();
         }
 
-        private static IObservable<TProperty> GetObservable<TProperty>(
+        private static IObservable<T> GetObservable(
             INotifyPropertyChanged source, PropertyInfo propertyInfo)
         {
             return
                 Observable.FromEvent<PropertyChangedEventArgs>(
                     handler => source.PropertyChanged += handler, handler => source.PropertyChanged -= handler).Where(
                         data => data.EventArgs.PropertyName == propertyInfo.Name).Select(
-                            e => (TProperty)propertyInfo.GetValue(source, null));
+                            e => (T)propertyInfo.GetValue(source, null));
         }
 
         private void SubscribeObserver()

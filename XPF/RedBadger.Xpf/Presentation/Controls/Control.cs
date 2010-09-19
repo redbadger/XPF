@@ -2,8 +2,8 @@ namespace RedBadger.Xpf.Presentation.Controls
 {
     public class Control : UIElement
     {
-        public static readonly ReactiveProperty<bool, Control> IsEnabledProperty =
-            ReactiveProperty<bool, Control>.Register("IsEnabled", true);
+        public static readonly ReactiveProperty<bool> IsEnabledProperty =
+            ReactiveProperty<bool>.Register("IsEnabled", typeof(Control), true);
 
         public bool IsEnabled
         {
