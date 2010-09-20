@@ -498,9 +498,7 @@
 
         private static void DataContextChanged(object source, ReactivePropertyChangeEventArgs<object> args)
         {
-            var element = (UIElement)source;
-
-            element.InvalidateMeasureOnChildren();
+            ((UIElement)source).InvalidateMeasureOnDataContextInheritors();
         }
 
         /// <summary>
@@ -638,7 +636,7 @@
             return dataContext;
         }
 
-        private void InvalidateMeasureOnChildren()
+        private void InvalidateMeasureOnDataContextInheritors()
         {
             IEnumerable<IElement> children = this.GetVisualChildren();
             if (children.Count() == 0)
@@ -647,9 +645,12 @@
             }
             else
             {
-                foreach (UIElement element in children.OfType<UIElement>())
+                IEnumerable<UIElement> childrenInheritingDataContext =
+                    children.OfType<UIElement>().Where(element => element.DataContext == null);
+
+                foreach (UIElement element in childrenInheritingDataContext)
                 {
-                    element.InvalidateMeasureOnChildren();
+                    element.InvalidateMeasureOnDataContextInheritors();
                 }
             }
         }
