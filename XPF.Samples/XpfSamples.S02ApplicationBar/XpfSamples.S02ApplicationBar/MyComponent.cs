@@ -4,6 +4,7 @@ namespace XpfSamples.S02ApplicationBar
     using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
@@ -47,7 +48,7 @@ namespace XpfSamples.S02ApplicationBar
             var addButtonImageTexture = new XnaImage(new Texture2DAdapter(this.Game.Content.Load<Texture2D>("AddButton")));
             var trashButtonImageTexture = new XnaImage(new Texture2DAdapter(this.Game.Content.Load<Texture2D>("TrashButton")));
 
-            this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer);
+            this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 
             var grid = new Grid
                 {
