@@ -12,7 +12,8 @@ namespace RedBadger.Xpf.Presentation.Controls
             ReactiveProperty<Brush>.Register("Background", typeof(Border));
 
         public static readonly ReactiveProperty<Brush> BorderBrushProperty =
-            ReactiveProperty<Brush>.Register("BorderBrush", typeof(Border), null, ReactivePropertyChangedCallbacks.InvalidateArrange);
+            ReactiveProperty<Brush>.Register(
+                "BorderBrush", typeof(Border), null, ReactivePropertyChangedCallbacks.InvalidateArrange);
 
         public static readonly ReactiveProperty<Thickness> BorderThicknessProperty =
             ReactiveProperty<Thickness>.Register(
@@ -22,7 +23,8 @@ namespace RedBadger.Xpf.Presentation.Controls
             "Child", typeof(Border), null, ChildPropertyChangedCallback);
 
         public static readonly ReactiveProperty<Thickness> PaddingProperty =
-            ReactiveProperty<Thickness>.Register("Padding", typeof(Border), new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
+            ReactiveProperty<Thickness>.Register(
+                "Padding", typeof(Border), new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         private readonly IList<Rect> borders = new List<Rect>();
 
@@ -93,6 +95,17 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
+        public override IEnumerable<IElement> GetVisualChildren()
+        {
+            IElement child = this.Child;
+            if (child != null)
+            {
+                yield return child;
+            }
+
+            yield break;
+        }
+
         protected override Size ArrangeOverride(Size finalSize)
         {
             IElement child = this.Child;
@@ -159,7 +172,8 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private static void ChildPropertyChangedCallback(IReactiveObject source, ReactivePropertyChangeEventArgs<IElement> change)
+        private static void ChildPropertyChangedCallback(
+            IReactiveObject source, ReactivePropertyChangeEventArgs<IElement> change)
         {
             var border = (Border)source;
             border.InvalidateMeasure();

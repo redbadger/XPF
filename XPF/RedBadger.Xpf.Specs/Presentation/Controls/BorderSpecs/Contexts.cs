@@ -23,9 +23,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
     public abstract class a_Border
     {
-        protected static Border Border;
+        protected static Border Subject;
 
-        private Establish context = () => { Border = new Border(); };
+        private Establish context = () => { Subject = new Border(); };
     }
 
     public abstract class a_Border_with_child : a_Border
@@ -57,9 +57,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 Child.Object.Width = ChildSize.Width;
                 Child.Object.Height = ChildSize.Height;
 
-                Border.Child = Child.Object;
+                Subject.Child = Child.Object;
 
-                RootElement.Object.Content = Border;
+                RootElement.Object.Content = Subject;
             };
     }
 }
