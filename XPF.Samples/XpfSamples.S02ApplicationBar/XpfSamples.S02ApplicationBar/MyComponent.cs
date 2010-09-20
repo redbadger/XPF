@@ -1,5 +1,9 @@
 namespace XpfSamples.S02ApplicationBar
 {
+    using System.Collections.ObjectModel;
+    using System.Diagnostics;
+
+    using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -7,6 +11,7 @@ namespace XpfSamples.S02ApplicationBar
     using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Presentation.Data;
     using RedBadger.Xpf.Presentation.Media;
     using RedBadger.Xpf.Presentation.Media.Imaging;
 
@@ -50,6 +55,8 @@ namespace XpfSamples.S02ApplicationBar
 
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 
+            var buttonClickResults = new ObservableCollection<string>();
+
             var grid = new Grid
                 {
                     Background = new SolidColorBrush(Colors.Black), 
@@ -73,7 +80,17 @@ namespace XpfSamples.S02ApplicationBar
                                     Text = "XNA Application Bar", 
                                     Foreground = new SolidColorBrush(Colors.White), 
                                     Margin = new Thickness(10)
-                                }
+                                },
+                                new ItemsControl
+                                    {
+                                        ItemsSource = buttonClickResults,
+                                        ItemTemplate = () =>
+                                            {
+                                                var textBlock = new TextBlock(spriteFontAdapter) { Foreground = new SolidColorBrush(Colors.White) };
+                                                textBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay<string>());
+                                                return textBlock;
+                                            }
+                                    }
                         }
                 };
             grid.Children.Add(stackPanel);
@@ -82,10 +99,11 @@ namespace XpfSamples.S02ApplicationBar
                 {
                     Buttons =
                         {
-                            new ApplicationBarIconButton(addButtonImageTexture), 
-                            new ApplicationBarIconButton(trashButtonImageTexture)
+                            new ApplicationBarIconButton("Add", addButtonImageTexture), 
+                            new ApplicationBarIconButton("Delete", trashButtonImageTexture)
                         }
                 };
+            applicationBar.Clicks.Subscribe(Observer.Create<ApplicationBarIconButton>(s => buttonClickResults.Add(s.Text)));
 
             Grid.SetRow(applicationBar, 1);
             grid.Children.Add(applicationBar);

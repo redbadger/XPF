@@ -3,6 +3,8 @@ namespace XpfSamples.S02ApplicationBar
     using System;
     using System.Collections.Generic;
 
+    using Microsoft.Phone.Reactive;
+
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Data;
@@ -12,11 +14,21 @@ namespace XpfSamples.S02ApplicationBar
     {
         private readonly IList<ApplicationBarIconButton> buttons = new List<ApplicationBarIconButton>();
 
+        private readonly ISubject<ApplicationBarIconButton> clicks = new Subject<ApplicationBarIconButton>();
+
         public IList<ApplicationBarIconButton> Buttons
         {
             get
             {
                 return this.buttons;
+            }
+        }
+
+        public IObservable<ApplicationBarIconButton> Clicks
+        {
+            get
+            {
+                return this.clicks;
             }
         }
 
@@ -29,7 +41,7 @@ namespace XpfSamples.S02ApplicationBar
 
             this.Height = 70;
 
-            var containingBorder = new Border { Background = new SolidColorBrush(new Color(31, 31, 31, 1)) };
+            var containingBorder = new Border { Background = new SolidColorBrush(new Color(31, 31, 31, 255)) };
 
             var itemsControl = new ItemsControl
                 {
@@ -37,15 +49,16 @@ namespace XpfSamples.S02ApplicationBar
                     ItemsSource = this.buttons, 
                     ItemTemplate = () =>
                         {
-                            var button = new Button();
-                            button.Click += ButtonOnClick;
+                            var image = new Image { Stretch = Stretch.None };
+                            image.Bind(
+                                Image.SourceProperty, 
+                                BindingFactory.CreateOneWay<ApplicationBarIconButton, ImageSource>(iconButton => iconButton.IconImageSource));
+                            
+                            var button = new Button { Content = image, Margin = new Thickness(18, 0, 18, 0) };
 
-                            // why doesn't the margin take effect inside the button?
-                            var image = new Image { Stretch = Stretch.None, Margin = new Thickness(18, 0, 18, 0) };
-
-                            image.Bind(Image.SourceProperty, BindingFactory.CreateOneWay<ApplicationBarIconButton, ImageSource>(o => o.IconImageSource));
-
-                            button.Content = image;
+                            Observable.FromEvent<EventArgs>(handler => button.Click += handler, handler => button.Click -= handler)
+                                      .Select(eventArgs => (ApplicationBarIconButton)((Button)eventArgs.Sender).DataContext)
+                                      .Subscribe(this.clicks);
 
                             return button;
                         }, 
@@ -55,10 +68,6 @@ namespace XpfSamples.S02ApplicationBar
             containingBorder.Child = itemsControl;
 
             this.Content = containingBorder;
-        }
-
-        private void ButtonOnClick(object sender, EventArgs eventArgs)
-        {
         }
     }
 }

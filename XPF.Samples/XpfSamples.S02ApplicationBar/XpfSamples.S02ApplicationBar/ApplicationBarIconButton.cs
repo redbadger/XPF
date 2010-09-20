@@ -1,21 +1,32 @@
 ﻿namespace XpfSamples.S02ApplicationBar
 {
-    using RedBadger.Xpf.Presentation.Media.Imaging;
+    using RedBadger.Xpf.Presentation.Media;
 
     public class ApplicationBarIconButton
     {
-        private readonly XnaImage iconImageSource;
+        private readonly ImageSource iconImageSource;
 
-        public ApplicationBarIconButton(XnaImage iconImageSource)
+        private readonly string text;
+
+        public ApplicationBarIconButton(string text, ImageSource iconImageSource)
         {
+            this.text = text;
             this.iconImageSource = iconImageSource;
         }
 
-        public XnaImage IconImageSource
+        public ImageSource IconImageSource
         {
             get
             {
                 return this.iconImageSource;
+            }
+        }
+
+        public string Text
+        {
+            get
+            {
+                return this.text;
             }
         }
     }
