@@ -159,7 +159,7 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private static void ChildPropertyChangedCallback(object source, ReactivePropertyChangeEventArgs<IElement> change)
+        private static void ChildPropertyChangedCallback(IReactiveObject source, ReactivePropertyChangeEventArgs<IElement> change)
         {
             var border = (Border)source;
             border.InvalidateMeasure();

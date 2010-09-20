@@ -115,7 +115,7 @@
             return child.DesiredSize;
         }
 
-        private static void ItemsPanelChanged(object source, ReactivePropertyChangeEventArgs<Panel> change)
+        private static void ItemsPanelChanged(IReactiveObject source, ReactivePropertyChangeEventArgs<Panel> change)
         {
             var itemsControl = (ItemsControl)source;
             Panel panel = change.NewValue;
@@ -129,7 +129,7 @@
             itemsControl.scrollViewer.Content = panel;
         }
 
-        private static void ItemsSourceChanged(object source, ReactivePropertyChangeEventArgs<IEnumerable> change)
+        private static void ItemsSourceChanged(IReactiveObject source, ReactivePropertyChangeEventArgs<IEnumerable> change)
         {
             var itemsControl = (ItemsControl)source;
             if (change.OldValue is INotifyCollectionChanged)

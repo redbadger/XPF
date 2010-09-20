@@ -14,7 +14,7 @@
     {
         private static readonly PropertyStore<T> registeredProperties = new PropertyStore<T>();
 
-        private readonly Action<object, ReactivePropertyChangeEventArgs<T>> changedCallback;
+        private readonly Action<IReactiveObject, ReactivePropertyChangeEventArgs<T>> changedCallback;
 
         private readonly T defaultValue;
 
@@ -23,7 +23,7 @@
         private readonly Type ownerType;
 
         private ReactiveProperty(
-            string name, Type ownerType, T defaultValue, Action<object, ReactivePropertyChangeEventArgs<T>> changedCallback)
+            string name, Type ownerType, T defaultValue, Action<IReactiveObject, ReactivePropertyChangeEventArgs<T>> changedCallback)
         {
             this.name = name;
             this.ownerType = ownerType;
@@ -34,7 +34,7 @@
         /// <summary>
         ///     A Call-back that is called whenever the value of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see> changes
         /// </summary>
-        public Action<object, ReactivePropertyChangeEventArgs<T>> ChangedCallback
+        public Action<IReactiveObject, ReactivePropertyChangeEventArgs<T>> ChangedCallback
         {
             get
             {
@@ -109,7 +109,7 @@
         /// <param name = "changedCallback">A method to call when the value of the <see cref = "ReactiveProperty{T}">ReactiveProperty</see> changes.</param>
         /// <returns>The <see cref = "ReactiveProperty{T}">ReactiveProperty</see> that has been registered</returns>
         public static ReactiveProperty<T> Register(
-            string propertyName, Type ownerType, Action<object, ReactivePropertyChangeEventArgs<T>> changedCallback)
+            string propertyName, Type ownerType, Action<IReactiveObject, ReactivePropertyChangeEventArgs<T>> changedCallback)
         {
             return Register(propertyName, ownerType, default(T), changedCallback);
         }
@@ -128,8 +128,8 @@
         public static ReactiveProperty<T> Register(
             string propertyName, 
             Type ownerType, 
-            T defaultValue, 
-            Action<object, ReactivePropertyChangeEventArgs<T>> changedCallback)
+            T defaultValue,
+            Action<IReactiveObject, ReactivePropertyChangeEventArgs<T>> changedCallback)
         {
             if (string.IsNullOrEmpty(propertyName))
             {

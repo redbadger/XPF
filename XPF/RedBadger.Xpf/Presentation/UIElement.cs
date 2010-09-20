@@ -460,22 +460,6 @@
         }
 
         /// <summary>
-        ///     Returns the nearest ancestor of the specified type, which maybe itself or null.
-        /// </summary>
-        /// <returns>The nearest ancestor of Type T</returns>
-        protected override IReactiveObject GetNearestAncestorOfType(Type type)
-        {
-            IReactiveObject ancestor = this;
-
-            while (!type.IsAssignableFrom(ancestor.GetType()) && this.VisualParent != null)
-            {
-                ancestor = this.VisualParent;
-            }
-
-            return ancestor;
-        }
-
-        /// <summary>
         ///     When overridden in a derived class, measures the size in layout required for child elements and determines a size for the UIElement-derived class.
         /// </summary>
         /// <param name = "availableSize">
@@ -496,7 +480,7 @@
         {
         }
 
-        private static void DataContextChanged(object source, ReactivePropertyChangeEventArgs<object> args)
+        private static void DataContextChanged(IReactiveObject source, ReactivePropertyChangeEventArgs<object> args)
         {
             ((UIElement)source).InvalidateMeasureOnDataContextInheritors();
         }
