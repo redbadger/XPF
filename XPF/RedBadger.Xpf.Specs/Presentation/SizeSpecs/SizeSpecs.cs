@@ -70,4 +70,40 @@ namespace RedBadger.Xpf.Specs.Presentation.SizeSpecs
         private It should_result_in_a_difference_of_the_2_sizes = () => 
             resultSize.ShouldEqual(new Size(90, 180));
     }
+
+    [Subject(typeof(Size))]
+    public class when_a_size_is_cast_to_a_vector
+    {
+        private static Vector vector;
+
+        private static Size size;
+
+        private Establish context = () =>
+            {
+                size = new Size(10, 20);
+            };
+
+        private Because of = () => vector = (Vector)size;
+
+        private It should_result_in_an_equivalent_vector = () => 
+            vector.ShouldEqual(new Vector(10, 20));
+    }
+
+    [Subject(typeof(Size))]
+    public class when_a_size_is_cast_to_a_point
+    {
+        private static Point point;
+
+        private static Size size;
+
+        private Establish context = () =>
+            {
+                size = new Size(10, 20);
+            };
+
+        private Because of = () => point = (Point)size;
+
+        private It should_result_in_an_equivalent_vector = () => 
+            point.ShouldEqual(new Point(10, 20));
+    }
 }
