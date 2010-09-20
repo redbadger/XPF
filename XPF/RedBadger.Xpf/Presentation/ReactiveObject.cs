@@ -141,15 +141,6 @@ namespace RedBadger.Xpf.Presentation
         }
 
         /// <summary>
-        ///     Returns the nearest ancestor of the specified type, which maybe itself or null.
-        /// </summary>
-        /// <returns>The nearest ancestor of Type T</returns>
-        protected virtual IReactiveObject GetNearestAncestorOfType(Type type)
-        {
-            return this;
-        }
-
-        /// <summary>
         ///     Resolves all the deferred bindingss for this object using the Data Context.
         /// </summary>
         /// <param name = "dataContext">The Data Context against which the binding should be resolved.</param>
@@ -185,13 +176,12 @@ namespace RedBadger.Xpf.Presentation
 
         private void RaiseChanged<T>(ReactivePropertyChangeEventArgs<T> reactivePropertyChange)
         {
-            Action<object, ReactivePropertyChangeEventArgs<T>> changedCallback =
+            Action<IReactiveObject, ReactivePropertyChangeEventArgs<T>> changedCallback =
                 reactivePropertyChange.Property.ChangedCallback;
 
             if (changedCallback != null)
             {
-                changedCallback(
-                    this.GetNearestAncestorOfType(reactivePropertyChange.Property.OwnerType), reactivePropertyChange);
+                changedCallback(this, reactivePropertyChange);
             }
         }
 

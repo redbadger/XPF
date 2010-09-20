@@ -25,12 +25,15 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         protected static Mock<UIElement> deepestChild;
 
+        protected static ContentControl middleChild;
+
         protected static ContentControl parent;
 
         private Establish context = () =>
             {
                 deepestChild = new Mock<UIElement> { CallBase = true };
-                parent = new ContentControl { Content = new ContentControl { Content = deepestChild.Object } };
+                middleChild = new ContentControl { Content = deepestChild.Object };
+                parent = new ContentControl { Content = middleChild };
             };
     }
 
@@ -43,6 +46,25 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private It should_invalidate_measure_on_the_deepest_child =
             () => deepestChild.Object.IsMeasureValid.ShouldBeFalse();
+    }
+
+    [Subject(typeof(UIElement), "Data Context")]
+    public class when_data_context_is_changed_on_an_element_with_children_that_have_their_own_data_context :
+        a_UIElement_Hierarchy
+    {
+        private Establish context = () =>
+            {
+                middleChild.DataContext = new object();
+                parent.Measure(Size.Empty);
+            };
+
+        private Because of = () => parent.DataContext = new object();
+
+        private It should_not_invalidate_measure_on_children_that_have_access_to_an_exisiting_data_context =
+            () => deepestChild.Object.IsMeasureValid.ShouldBeTrue();
+
+        private It should_not_invalidate_measure_on_children_that_have_their_own_data_context =
+            () => middleChild.IsMeasureValid.ShouldBeTrue();
     }
 
     [Subject(typeof(UIElement), "Data Context")]

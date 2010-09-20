@@ -62,7 +62,7 @@ namespace RedBadger.Xpf.Presentation.Controls
         }
 
         private static void ContentPropertyChangedCallback(
-            object source, ReactivePropertyChangeEventArgs<IElement> change)
+            IReactiveObject source, ReactivePropertyChangeEventArgs<IElement> change)
         {
             var contentControl = (ContentControl)source;
             contentControl.InvalidateMeasure();

@@ -43,7 +43,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
         }
 
         private static void WidthChangedCallback(
-            object source, 
+            IReactiveObject source, 
             ReactivePropertyChangeEventArgs<double> reactivePropertyChange)
         {
             ((TestBindingObject)source).WidthChangedCallback(reactivePropertyChange.OldValue, reactivePropertyChange.NewValue);
