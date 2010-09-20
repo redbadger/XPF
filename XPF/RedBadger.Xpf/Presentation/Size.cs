@@ -29,13 +29,26 @@ namespace RedBadger.Xpf.Presentation
             }
         }
 
+        /// <summary>
+        /// Adds the Width and Height of a Size to those of another Size
+        /// </summary>
+        /// <param name="value1">The first Size</param>
+        /// <param name="value2">The second Size</param>
+        /// <returns>A Size whose Width and Height is the sum of the two Size structures supplied</returns>
         public static Size operator +(Size value1, Size value2)
         {
-            Size newSize;
-            newSize.Width = value1.Width + value2.Width;
-            newSize.Height = value1.Height + value2.Height;
+            return new Size(value1.Width + value2.Width, value1.Height + value2.Height);
+        }
 
-            return newSize;
+        /// <summary>
+        /// Subtracts the Width and Height of a Size from those of another Size
+        /// </summary>
+        /// <param name="value1">The first Size</param>
+        /// <param name="value2">The second Size</param>
+        /// <returns>A Size whose Width and Height is the difference of the two Size structures supplied</returns>
+        public static Size operator -(Size value1, Size value2)
+        {
+            return new Size(value1.Width - value2.Width, value1.Height - value2.Height);
         }
 
         public static bool operator ==(Size left, Size right)

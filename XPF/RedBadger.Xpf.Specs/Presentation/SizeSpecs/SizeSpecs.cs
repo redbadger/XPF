@@ -17,6 +17,20 @@ namespace RedBadger.Xpf.Specs.Presentation.SizeSpecs
     using RedBadger.Xpf.Presentation;
 
     [Subject(typeof(Size))]
+    public class requesting_an_empty_size
+    {
+        private static Size size;
+
+        private Because of = () => size = Size.Empty;
+
+        private It should_return_an_instance_with_negative_infinity_values = () =>
+            {
+                size.Width.ShouldEqual(Double.NegativeInfinity);
+                size.Height.ShouldEqual(Double.NegativeInfinity);
+            };
+    }
+
+    [Subject(typeof(Size))]
     public class when_a_size_is_added_to_another_size_using_a_addition_operator
     {
         private static Size resultSize;
@@ -37,16 +51,23 @@ namespace RedBadger.Xpf.Specs.Presentation.SizeSpecs
     }
 
     [Subject(typeof(Size))]
-    public class requesting_an_empty_size
+    public class when_a_size_is_subtracted_from_another_size_using_a_subtraction_operator
     {
-        private static Size size;
+        private static Size resultSize;
 
-        private Because of = () => size = Size.Empty;
+        private static Size size1;
 
-        private It should_return_an_instance_with_negative_infinity_values = () =>
+        private static Size size2;
+
+        private Establish context = () =>
             {
-                size.Width.ShouldEqual(Double.NegativeInfinity);
-                size.Height.ShouldEqual(Double.NegativeInfinity);
+                size1 = new Size(10, 20);
+                size2 = new Size(100, 200);
             };
+
+        private Because of = () => resultSize = size2 - size1;
+
+        private It should_result_in_a_difference_of_the_2_sizes = () => 
+            resultSize.ShouldEqual(new Size(90, 180));
     }
 }
