@@ -9,6 +9,11 @@
             return Math.Max(Math.Min(offset, max), min);
         }
 
+        public static double EnsurePositive(this double value)
+        {
+            return Math.Max(value, 0.0);
+        }
+
         public static bool IsCloseTo(this double value1, double value2)
         {
             return !value1.IsDifferentFrom(value2);
@@ -21,7 +26,7 @@
                 return false;
             }
 
-            double epsilon = (Math.Abs(value1) + Math.Abs(value2) + 10.0) * 1.1102230246251568E-16;
+            double epsilon = (Math.Abs(value1) + Math.Abs(value2) + 10.0) * 1e-15;
             double difference = value1 - value2;
             return !(-epsilon < difference && difference < epsilon);
         }

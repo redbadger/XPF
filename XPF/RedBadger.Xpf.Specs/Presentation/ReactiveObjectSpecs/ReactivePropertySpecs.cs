@@ -22,8 +22,8 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
 
     public class TestBindingObject : ReactiveObject
     {
-        private static readonly ReactiveProperty<double, TestBindingObject> WidthProperty =
-            ReactiveProperty<double, TestBindingObject>.Register("Width", double.NaN, WidthChangedCallback);
+        private static readonly ReactiveProperty<double> WidthProperty =
+            ReactiveProperty<double>.Register("Width", typeof(TestBindingObject), double.NaN, WidthChangedCallback);
 
         public double Width
         {
@@ -43,10 +43,10 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
         }
 
         private static void WidthChangedCallback(
-            TestBindingObject testBindingObject, 
-            ReactivePropertyChangeEventArgs<double, TestBindingObject> reactivePropertyChange)
+            IReactiveObject source, 
+            ReactivePropertyChangeEventArgs<double> reactivePropertyChange)
         {
-            testBindingObject.WidthChangedCallback(reactivePropertyChange.OldValue, reactivePropertyChange.NewValue);
+            ((TestBindingObject)source).WidthChangedCallback(reactivePropertyChange.OldValue, reactivePropertyChange.NewValue);
         }
     }
 
@@ -60,7 +60,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
     [Subject(typeof(ReactiveObject))]
     public class when_clearing_a_reactive_property_value : a_ReactiveObject
     {
-        private static readonly ReactiveProperty<string, ReactiveObject> TestPropertyProperty;
+        private static readonly ReactiveProperty<string> TestPropertyProperty;
 
         private static readonly string defaultValue = string.Empty;
 
@@ -72,14 +72,14 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
 
         static when_clearing_a_reactive_property_value()
         {
-            TestPropertyProperty = ReactiveProperty<string, ReactiveObject>.Register("TestProperty", defaultValue);
+            TestPropertyProperty = ReactiveProperty<string>.Register("TestProperty", typeof(object), defaultValue);
         }
     }
 
     [Subject(typeof(ReactiveObject))]
     public class when_changing_a_reactive_property_value : a_ReactiveObject
     {
-        private static readonly ReactiveProperty<string, ReactiveObject> TestPropertyProperty;
+        private static readonly ReactiveProperty<string> TestPropertyProperty;
 
         private const string ExpectedFinalValue = "Final Value";
 
@@ -94,7 +94,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
 
         static when_changing_a_reactive_property_value()
         {
-            TestPropertyProperty = ReactiveProperty<string, ReactiveObject>.Register("TestProperty", defaultValue);
+            TestPropertyProperty = ReactiveProperty<string>.Register("TestProperty", typeof(object), defaultValue);
         }
     }
 

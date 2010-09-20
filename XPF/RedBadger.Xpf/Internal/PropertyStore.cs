@@ -5,8 +5,7 @@
 
     using RedBadger.Xpf.Presentation;
 
-    internal class PropertyStore<TProperty, TOwner> :
-        Dictionary<Type, Dictionary<string, ReactiveProperty<TProperty, TOwner>>> where TOwner : class, IReactiveObject
+    internal class PropertyStore<T> : Dictionary<Type, Dictionary<string, ReactiveProperty<T>>>
     {
     }
 }

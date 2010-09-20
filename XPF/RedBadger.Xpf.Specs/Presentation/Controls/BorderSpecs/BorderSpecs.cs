@@ -11,6 +11,8 @@
 
 namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 {
+    using System.Linq;
+
     using Machine.Specifications;
 
     using Moq;
@@ -24,13 +26,13 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     [Subject(typeof(Border))]
     public class when_initialized : a_Border
     {
-        private It should_have_no_background = () => Border.Background.ShouldBeNull();
+        private It should_have_no_background = () => Subject.Background.ShouldBeNull();
 
-        private It should_have_no_border_brush = () => Border.BorderBrush.ShouldBeNull();
+        private It should_have_no_border_brush = () => Subject.BorderBrush.ShouldBeNull();
 
-        private It should_have_no_padding = () => Border.Padding.ShouldEqual(new Thickness());
+        private It should_have_no_padding = () => Subject.Padding.ShouldEqual(new Thickness());
 
-        private It should_have_no_thickness = () => Border.BorderThickness.ShouldEqual(new Thickness());
+        private It should_have_no_thickness = () => Subject.BorderThickness.ShouldEqual(new Thickness());
     }
 
     [Subject(typeof(Border))]
@@ -41,13 +43,17 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
         private It should_have_no_effect_on_its_child = () => Child.Object.VisualOffset.ShouldEqual(Vector.Zero);
 
         private It should_set_itself_as_the_visual_parent_on_the_child =
-            () => Child.Object.VisualParent.ShouldEqual(Border);
+            () => Child.Object.VisualParent.ShouldEqual(Subject);
+
+        private It should_contain_the_correct_number_of_children = () => Subject.GetVisualChildren().Count().ShouldEqual(1);
+
+        private It should_return_its_child_when_children_are_requested = () => Subject.GetVisualChildren().First().ShouldBeTheSameAs(Child.Object);
     }
 
     [Subject(typeof(Border))]
     public class when_content_is_changed : a_Border_with_child
     {
-        private Because of = () => Border.Child = new Mock<IElement>().Object;
+        private Because of = () => Subject.Child = new Mock<IElement>().Object;
 
         private It should_unset_itself_as_the_parent_of_the_outgoing_child =
             () => Child.Object.VisualParent.ShouldBeNull();
@@ -60,13 +66,13 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
         private Because of = () =>
             {
-                Border.Padding = padding;
+                Subject.Padding = padding;
                 RootElement.Object.Update();
             };
 
         private It should_increase_the_desired_size =
             () =>
-            Border.DesiredSize.ShouldEqual(
+            Subject.DesiredSize.ShouldEqual(
                 new Size(
                 ChildSize.Width + padding.Left + padding.Right, ChildSize.Height + padding.Top + padding.Bottom));
 
@@ -79,9 +85,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     {
         private Establish context = () => RootElement.Object.Update();
 
-        private Because of = () => Border.Padding = new Thickness(10, 20, 30, 40);
+        private Because of = () => Subject.Padding = new Thickness(10, 20, 30, 40);
 
-        private It should_invalidate_measure = () => Border.IsMeasureValid.ShouldBeFalse();
+        private It should_invalidate_measure = () => Subject.IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(Border), "Padding/Thickness")]
@@ -91,13 +97,13 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
         private Because of = () =>
             {
-                Border.BorderThickness = thickness;
+                Subject.BorderThickness = thickness;
                 RootElement.Object.Update();
             };
 
         private It should_increase_the_desired_size =
             () =>
-            Border.DesiredSize.ShouldEqual(
+            Subject.DesiredSize.ShouldEqual(
                 new Size(
                 ChildSize.Width + thickness.Left + thickness.Right, ChildSize.Height + thickness.Top + thickness.Bottom));
 
@@ -110,9 +116,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     {
         private Establish context = () => RootElement.Object.Update();
 
-        private Because of = () => Border.BorderThickness = new Thickness(1, 2, 3, 4);
+        private Because of = () => Subject.BorderThickness = new Thickness(1, 2, 3, 4);
 
-        private It should_invalidate_measure = () => Border.IsMeasureValid.ShouldBeFalse();
+        private It should_invalidate_measure = () => Subject.IsMeasureValid.ShouldBeFalse();
     }
 
     [Subject(typeof(Border), "Padding/Thickness")]
@@ -124,14 +130,14 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
         private Because of = () =>
             {
-                Border.Padding = padding;
-                Border.BorderThickness = thickness;
+                Subject.Padding = padding;
+                Subject.BorderThickness = thickness;
                 RootElement.Object.Update();
             };
 
         private It should_increase_the_desired_size =
             () =>
-            Border.DesiredSize.ShouldEqual(
+            Subject.DesiredSize.ShouldEqual(
                 new Size(
                 ChildSize.Width + padding.Left + padding.Right + thickness.Left + thickness.Right, 
                 ChildSize.Height + padding.Top + padding.Bottom + thickness.Top + thickness.Bottom));
@@ -159,15 +165,15 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
         private Establish context = () =>
             {
-                Border.HorizontalAlignment = HorizontalAlignment.Left;
-                Border.VerticalAlignment = VerticalAlignment.Top;
+                Subject.HorizontalAlignment = HorizontalAlignment.Left;
+                Subject.VerticalAlignment = VerticalAlignment.Top;
             };
 
         private Because of = () =>
             {
                 expectedBrush = new SolidColorBrush(Colors.Red);
-                Border.BorderBrush = expectedBrush;
-                Border.BorderThickness = thickness;
+                Subject.BorderBrush = expectedBrush;
+                Subject.BorderThickness = thickness;
                 RootElement.Object.Update();
             };
 
@@ -197,7 +203,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     {
         private Because of = () =>
             {
-                Border.BorderThickness = new Thickness(1, 2, 3, 4);
+                Subject.BorderThickness = new Thickness(1, 2, 3, 4);
                 RootElement.Object.Update();
             };
 
@@ -213,7 +219,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     {
         private Because of = () =>
             {
-                Border.BorderBrush = new SolidColorBrush(Colors.Black);
+                Subject.BorderBrush = new SolidColorBrush(Colors.Black);
                 RootElement.Object.Update();
             };
 
@@ -248,18 +254,18 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
                 expectedBackground = new SolidColorBrush(Colors.Blue);
 
                 margin = new Thickness(1, 2, 3, 4);
-                Border.Margin = margin;
+                Subject.Margin = margin;
             };
 
         private Because of = () =>
             {
-                Border.Background = expectedBackground;
+                Subject.Background = expectedBackground;
                 RootElement.Object.Update();
             };
 
         private It should_render_the_background_in_the_right_place = () =>
             {
-                var area = new Rect(0, 0, Border.ActualWidth, Border.ActualHeight);
+                var area = new Rect(0, 0, Subject.ActualWidth, Subject.ActualHeight);
 
                 DrawingContext.Verify(
                     drawingContext =>
@@ -277,8 +283,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     {
         private Establish context = () => RootElement.Object.Update();
 
-        private Because of = () => Border.BorderBrush = new SolidColorBrush(Colors.Blue);
+        private Because of = () => Subject.BorderBrush = new SolidColorBrush(Colors.Blue);
 
-        private It should_invalidate_arrange = () => Border.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => Subject.IsArrangeValid.ShouldBeFalse();
     }
 }

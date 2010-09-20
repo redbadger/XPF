@@ -11,7 +11,7 @@ namespace RedBadger.Xpf.Internal
 
         public static bool IsDifferentFrom(this Vector value1, Vector value2)
         {
-            return value1.X.IsDifferentFrom(value2.X) && value1.Y.IsDifferentFrom(value2.Y);
+            return value1.X.IsDifferentFrom(value2.X) || value1.Y.IsDifferentFrom(value2.Y);
         }
     }
 }

@@ -13,122 +13,198 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
 {
     using Machine.Specifications;
 
+    using Moq;
+
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
 
-    [Subject(typeof(Grid), "Arrange")]
-    public class when_there_are_two_rows_and_two_columns_of_type_auto : a_Grid_with_two_rows_and_two_columns
+    using It = Machine.Specifications.It;
+
+    [Subject(typeof(Grid), "Arrange - Pixel/Auto/Star")]
+    public class when_arranging_a_grid_that_has_columns_of_mixed_pixel_auto_and_star : a_Grid
     {
-        private Establish context = () => Grid.Measure(AvailableSize);
+        private const double Column1PixelWidth = 30d;
 
-        private Because of = () => Grid.Arrange(new Rect(AvailableSize));
+        private const double Column2ChildWidth = 20d;
 
-        private It should_layout_the_bottom_left_child_correctly =
-            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, 80));
+        private static readonly Mock<UIElement>[] children = new Mock<UIElement>[4];
 
-        private It should_layout_the_bottom_right_child_correctly =
-            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector(50, 80));
-
-        private It should_layout_the_top_left_child_correctly =
-            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector.Zero);
-
-        private It should_layout_the_top_right_child_correctly =
-            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector(50, 0));
-    }
-
-    [Subject(typeof(Grid), "Arrange")]
-    public class when_there_are_two_rows_and_two_columns_of_type_pixel : a_Grid_with_two_rows_and_two_columns
-    {
-        private Establish context = () =>
-            {
-                ColumnOneDefinition.Width = new GridLength(5);
-                ColumnTwoDefinition.Width = new GridLength(6);
-                RowOneDefinition.Height = new GridLength(7);
-                RowTwoDefinition.Height = new GridLength(8);
-
-                Grid.Measure(AvailableSize);
-            };
-
-        private Because of = () => Grid.Arrange(new Rect(AvailableSize));
-
-        private It should_layout_the_bottom_left_child_correctly =
-            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, 7));
-
-        private It should_layout_the_bottom_right_child_correctly =
-            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector(5, 7));
-
-        private It should_layout_the_top_left_child_correctly =
-            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector.Zero);
-
-        private It should_layout_the_top_right_child_correctly =
-            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector(5, 0));
-    }
-
-    [Subject(typeof(Grid), "Arrange")]
-    public class when_there_are_two_rows_and_two_columns_with_minimum_values_which_are_greater_than_their_children :
-        a_Grid_with_two_rows_and_two_columns
-    {
-        private const double MinHeight = 90;
-
-        private const double MinWidth = 80;
+        private static readonly double expectedProportionalWidth = (AvailableSize.Width - Column1PixelWidth -
+                                                                    Column2ChildWidth) / 2;
 
         private Establish context = () =>
             {
-                ColumnOneDefinition.MinWidth = MinWidth;
-                ColumnTwoDefinition.MinWidth = MinWidth;
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(Column1PixelWidth) });
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                Subject.ColumnDefinitions.Add(new ColumnDefinition());
+                Subject.ColumnDefinitions.Add(new ColumnDefinition());
 
-                RowOneDefinition.MinHeight = MinHeight;
-                RowTwoDefinition.MinHeight = MinHeight;
+                children[0] = new Mock<UIElement> { CallBase = true };
+                children[1] = new Mock<UIElement> { CallBase = true };
+                children[2] = new Mock<UIElement> { CallBase = true };
+                children[3] = new Mock<UIElement> { CallBase = true };
 
-                Grid.Measure(AvailableSize);
+                Grid.SetColumn(children[0].Object, 0);
+                Grid.SetColumn(children[1].Object, 1);
+                Grid.SetColumn(children[2].Object, 2);
+                Grid.SetColumn(children[3].Object, 3);
+
+                children[1].Object.Width = Column2ChildWidth;
+
+                Subject.Children.Add(children[0].Object);
+                Subject.Children.Add(children[1].Object);
+                Subject.Children.Add(children[2].Object);
+                Subject.Children.Add(children[3].Object);
+
+                Subject.Measure(AvailableSize);
             };
 
-        private Because of = () => Grid.Arrange(new Rect(AvailableSize));
+        private Because of = () => Subject.Arrange(new Rect(AvailableSize));
 
-        private It should_layout_the_bottom_left_child_correctly =
-            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, MinHeight));
+        private It should_layout_child_1_correctly =
+            () => children[0].Object.VisualOffset.ShouldEqual(new Vector(0d, 0d));
 
-        private It should_layout_the_bottom_right_child_correctly =
-            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector(MinWidth, MinHeight));
+        private It should_layout_child_2_correctly =
+            () => children[1].Object.VisualOffset.ShouldEqual(new Vector(Column1PixelWidth, 0d));
 
-        private It should_layout_the_top_left_child_correctly =
-            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector.Zero);
+        private It should_layout_child_3_correctly =
+            () => children[2].Object.VisualOffset.ShouldEqual(new Vector(Column1PixelWidth + Column2ChildWidth, 0d));
 
-        private It should_layout_the_top_right_child_correctly =
-            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector(MinWidth, 0));
+        private It should_layout_child_4_correctly =
+            () =>
+            children[3].Object.VisualOffset.ShouldEqual(
+                new Vector(Column1PixelWidth + Column2ChildWidth + expectedProportionalWidth, 0d));
     }
 
-    [Subject(typeof(Grid), "Arrange")]
-    public class when_there_are_two_rows_and_two_columns_with_maximum_values_which_are_less_than_their_children :
-        a_Grid_with_two_rows_and_two_columns
+    [Subject(typeof(Grid), "Arrange - Pixel/Auto/Star")]
+    public class when_arranging_a_grid_that_has_rows_of_mixed_pixel_auto_and_star : a_Grid
     {
-        private const double MaxHeight = 9;
+        private const double Row1PixelHeight = 30;
 
-        private const double MaxWidth = 8;
+        private const double Row2ChildHeight = 20;
+
+        private static readonly Mock<UIElement>[] children = new Mock<UIElement>[4];
+
+        private static readonly double expectedProportionalHeight = (AvailableSize.Height - Row1PixelHeight -
+                                                                     Row2ChildHeight) / 2;
 
         private Establish context = () =>
             {
-                ColumnOneDefinition.MaxWidth = MaxWidth;
-                ColumnTwoDefinition.MaxWidth = MaxWidth;
+                Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(Row1PixelHeight) });
+                Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                Subject.RowDefinitions.Add(new RowDefinition());
+                Subject.RowDefinitions.Add(new RowDefinition());
 
-                RowOneDefinition.MaxHeight = MaxHeight;
-                RowTwoDefinition.MaxHeight = MaxHeight;
+                children[0] = new Mock<UIElement> { CallBase = true };
+                children[1] = new Mock<UIElement> { CallBase = true };
+                children[2] = new Mock<UIElement> { CallBase = true };
+                children[3] = new Mock<UIElement> { CallBase = true };
 
-                Grid.Measure(AvailableSize);
+                Grid.SetRow(children[0].Object, 0);
+                Grid.SetRow(children[1].Object, 1);
+                Grid.SetRow(children[2].Object, 2);
+                Grid.SetRow(children[3].Object, 3);
+
+                children[1].Object.Height = Row2ChildHeight;
+
+                Subject.Children.Add(children[0].Object);
+                Subject.Children.Add(children[1].Object);
+                Subject.Children.Add(children[2].Object);
+                Subject.Children.Add(children[3].Object);
+
+                Subject.Measure(AvailableSize);
             };
 
-        private Because of = () => Grid.Arrange(new Rect(AvailableSize));
+        private Because of = () => Subject.Arrange(new Rect(AvailableSize));
 
-        private It should_layout_the_bottom_left_child_correctly =
-            () => BottomLeftChild.Object.VisualOffset.ShouldEqual(new Vector(0, MaxHeight));
+        private It should_layout_child_1_correctly =
+            () => children[0].Object.VisualOffset.ShouldEqual(new Vector(0d, 0d));
 
-        private It should_layout_the_bottom_right_child_correctly =
-            () => BottomRightChild.Object.VisualOffset.ShouldEqual(new Vector(MaxWidth, MaxHeight));
+        private It should_layout_child_2_correctly =
+            () => children[1].Object.VisualOffset.ShouldEqual(new Vector(0d, Row1PixelHeight));
 
-        private It should_layout_the_top_left_child_correctly =
-            () => TopLeftChild.Object.VisualOffset.ShouldEqual(Vector.Zero);
+        private It should_layout_child_3_correctly =
+            () => children[2].Object.VisualOffset.ShouldEqual(new Vector(0d, Row1PixelHeight + Row2ChildHeight));
 
-        private It should_layout_the_top_right_child_correctly =
-            () => TopRightChild.Object.VisualOffset.ShouldEqual(new Vector(MaxWidth, 0));
+        private It should_layout_child_4_correctly =
+            () =>
+            children[3].Object.VisualOffset.ShouldEqual(
+                new Vector(0d, Row1PixelHeight + Row2ChildHeight + expectedProportionalHeight));
+    }
+
+    [Subject(typeof(Grid), "Arrange - Pixel/Auto/Star")]
+    public class when_arranging_a_grid_that_has_rows_and_columns_of_mixed_pixel_auto_and_star : a_Grid
+    {
+        private const double AutoColumnWidth = 50;
+
+        private const double AutoRowHeight = 50;
+
+        private const double PixelColumnWidth = 50;
+
+        private const double PixelRowHeight = 50;
+
+        private const double StarColumnWidth = 100;
+
+        private const double StarRowHeight = 100;
+
+        private static readonly Mock<UIElement>[] children = new Mock<UIElement>[9];
+
+        private Establish context = () =>
+            {
+                Subject.RowDefinitions.Add(new RowDefinition());
+                Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                Subject.RowDefinitions.Add(new RowDefinition { Height = new GridLength(PixelRowHeight) });
+                Subject.ColumnDefinitions.Add(new ColumnDefinition());
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(PixelColumnWidth) });
+
+                children[0] = CreateChild(0, 0);
+                children[1] = CreateChild(0, 1);
+                children[2] = CreateChild(0, 2);
+                children[3] = CreateChild(1, 0);
+                children[4] = CreateChild(1, 1);
+                children[5] = CreateChild(1, 2);
+                children[6] = CreateChild(2, 0);
+                children[7] = CreateChild(2, 1);
+                children[8] = CreateChild(2, 2);
+
+                children[1].Object.Width = AutoColumnWidth;
+                children[3].Object.Height = AutoRowHeight;
+
+                Subject.Measure(AvailableSize);
+            };
+
+        private Because of = () => Subject.Arrange(new Rect(AvailableSize));
+
+        private It should_layout_child_1_correctly =
+            () => children[0].Object.VisualOffset.ShouldEqual(new Vector(0d, 0d));
+
+        private It should_layout_child_2_correctly =
+            () => children[1].Object.VisualOffset.ShouldEqual(new Vector(StarColumnWidth, 0d));
+
+        private It should_layout_child_3_correctly =
+            () => children[2].Object.VisualOffset.ShouldEqual(new Vector(StarColumnWidth + AutoColumnWidth, 0d));
+
+        private It should_layout_child_4_correctly =
+            () => children[3].Object.VisualOffset.ShouldEqual(new Vector(0d, StarRowHeight));
+
+        private It should_layout_child_5_correctly =
+            () => children[4].Object.VisualOffset.ShouldEqual(new Vector(StarColumnWidth, StarRowHeight));
+
+        private It should_layout_child_6_correctly =
+            () =>
+            children[5].Object.VisualOffset.ShouldEqual(new Vector(StarColumnWidth + AutoColumnWidth, StarRowHeight));
+
+        private It should_layout_child_7_correctly =
+            () => children[6].Object.VisualOffset.ShouldEqual(new Vector(0d, StarRowHeight + AutoRowHeight));
+
+        private It should_layout_child_8_correctly =
+            () =>
+            children[7].Object.VisualOffset.ShouldEqual(new Vector(StarColumnWidth, StarRowHeight + AutoRowHeight));
+
+        private It should_layout_child_9_correctly =
+            () =>
+            children[8].Object.VisualOffset.ShouldEqual(
+                new Vector(StarColumnWidth + AutoColumnWidth, StarRowHeight + AutoRowHeight));
     }
 }

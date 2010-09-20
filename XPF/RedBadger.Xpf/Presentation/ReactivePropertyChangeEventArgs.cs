@@ -1,15 +1,14 @@
 namespace RedBadger.Xpf.Presentation
 {
-    public struct ReactivePropertyChangeEventArgs<TProperty, TOwner>
-        where TOwner : class, IReactiveObject
+    public struct ReactivePropertyChangeEventArgs<T>
     {
-        public readonly TProperty NewValue;
+        public readonly T NewValue;
 
-        public readonly TProperty OldValue;
+        public readonly T OldValue;
 
-        public readonly ReactiveProperty<TProperty, TOwner> Property;
+        public readonly ReactiveProperty<T> Property;
 
-        public ReactivePropertyChangeEventArgs(ReactiveProperty<TProperty, TOwner> property, TProperty oldValue, TProperty newValue)
+        public ReactivePropertyChangeEventArgs(ReactiveProperty<T> property, T oldValue, T newValue)
         {
             this.Property = property;
             this.OldValue = oldValue;

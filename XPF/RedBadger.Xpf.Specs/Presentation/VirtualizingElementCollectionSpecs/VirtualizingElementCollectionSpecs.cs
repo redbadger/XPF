@@ -33,7 +33,7 @@ namespace RedBadger.Xpf.Specs.Presentation.VirtualizingElementCollectionSpecs
     [Subject(typeof(VirtualizingElementCollection), "Add")]
     public class when_inserting_an_element : a_VirtualElementCollection
     {
-        private Because of = () => Subject.Insert(0, new object(), () => new Mock<UIElement>().Object);
+        private Because of = () => Subject.Insert(0, new object(), () => new Mock<UIElement>{CallBase = true} .Object);
 
         private It should_insert_an_element_of_the_right_type = () => Subject[0].ShouldBeOfType<UIElement>();
     }

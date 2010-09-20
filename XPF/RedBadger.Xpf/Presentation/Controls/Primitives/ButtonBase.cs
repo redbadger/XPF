@@ -6,8 +6,8 @@ namespace RedBadger.Xpf.Presentation.Controls.Primitives
 
     public abstract class ButtonBase : ContentControl, IInputElement
     {
-        public static readonly ReactiveProperty<bool, ButtonBase> IsPressedProperty =
-            ReactiveProperty<bool, ButtonBase>.Register("IsPressed", false);
+        public static readonly ReactiveProperty<bool> IsPressedProperty =
+            ReactiveProperty<bool>.Register("IsPressed", typeof(ButtonBase), false);
 
         private bool isLeftButtonDown;
 

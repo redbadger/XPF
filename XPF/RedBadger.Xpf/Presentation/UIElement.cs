@@ -14,46 +14,52 @@
 
     public abstract class UIElement : ReactiveObject, IElement
     {
-        public static readonly ReactiveProperty<object, UIElement> DataContextProperty =
-            ReactiveProperty<object, UIElement>.Register("DataContext", ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<object> DataContextProperty =
+            ReactiveProperty<object>.Register("DataContext", typeof(UIElement), DataContextChanged);
 
-        public static readonly ReactiveProperty<double, UIElement> HeightProperty =
-            ReactiveProperty<double, UIElement>.Register(
-                "Height", double.NaN, ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double> HeightProperty = ReactiveProperty<double>.Register(
+            "Height", typeof(UIElement), double.NaN, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<HorizontalAlignment, UIElement> HorizontalAlignmentProperty =
-            ReactiveProperty<HorizontalAlignment, UIElement>.Register(
-                "HorizontalAlignment", HorizontalAlignment.Stretch, ReactivePropertyChangedCallbacks.InvalidateArrange);
+        public static readonly ReactiveProperty<HorizontalAlignment> HorizontalAlignmentProperty =
+            ReactiveProperty<HorizontalAlignment>.Register(
+                "HorizontalAlignment", 
+                typeof(UIElement), 
+                HorizontalAlignment.Stretch, 
+                ReactivePropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly ReactiveProperty<bool, UIElement> IsMouseCapturedProperty =
-            ReactiveProperty<bool, UIElement>.Register("IsMouseCaptured");
+        public static readonly ReactiveProperty<bool> IsMouseCapturedProperty =
+            ReactiveProperty<bool>.Register("IsMouseCaptured", typeof(UIElement));
 
-        public static readonly ReactiveProperty<Thickness, UIElement> MarginProperty =
-            ReactiveProperty<Thickness, UIElement>.Register(
-                "Margin", new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<Thickness> MarginProperty =
+            ReactiveProperty<Thickness>.Register(
+                "Margin", typeof(UIElement), new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<double, UIElement> MaxHeightProperty =
-            ReactiveProperty<double, UIElement>.Register(
-                "MaxHeight", double.PositiveInfinity, ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double> MaxHeightProperty =
+            ReactiveProperty<double>.Register(
+                "MaxHeight", 
+                typeof(UIElement), 
+                double.PositiveInfinity, 
+                ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<double, UIElement> MaxWidthProperty =
-            ReactiveProperty<double, UIElement>.Register(
-                "MaxWidth", double.PositiveInfinity, ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double> MaxWidthProperty = ReactiveProperty<double>.Register(
+            "MaxWidth", typeof(UIElement), double.PositiveInfinity, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<double, UIElement> MinHeightProperty =
-            ReactiveProperty<double, UIElement>.Register(
-                "MinHeight", ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double> MinHeightProperty =
+            ReactiveProperty<double>.Register(
+                "MinHeight", typeof(UIElement), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<double, UIElement> MinWidthProperty =
-            ReactiveProperty<double, UIElement>.Register("MinWidth", ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double> MinWidthProperty = ReactiveProperty<double>.Register(
+            "MinWidth", typeof(UIElement), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<VerticalAlignment, UIElement> VerticalAlignmentProperty =
-            ReactiveProperty<VerticalAlignment, UIElement>.Register(
-                "VerticalAlignment", VerticalAlignment.Stretch, ReactivePropertyChangedCallbacks.InvalidateArrange);
+        public static readonly ReactiveProperty<VerticalAlignment> VerticalAlignmentProperty =
+            ReactiveProperty<VerticalAlignment>.Register(
+                "VerticalAlignment", 
+                typeof(UIElement), 
+                VerticalAlignment.Stretch, 
+                ReactivePropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly ReactiveProperty<double, UIElement> WidthProperty =
-            ReactiveProperty<double, UIElement>.Register(
-                "Width", double.NaN, ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<double> WidthProperty = ReactiveProperty<double>.Register(
+            "Width", typeof(UIElement), double.NaN, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         private readonly Subject<Gesture> gestures = new Subject<Gesture>();
 
@@ -454,23 +460,6 @@
         }
 
         /// <summary>
-        ///     Returns the nearest ancestor of the specified type, which maybe itself or null.
-        /// </summary>
-        /// <typeparam name = "T">The <see cref = "Type">Type</see> of the ancestor</typeparam>
-        /// <returns>The nearest ancestor of Type T</returns>
-        protected override T GetNearestAncestorOfType<T>()
-        {
-            var ancestor = this as T;
-
-            while (ancestor == null && this.VisualParent != null)
-            {
-                ancestor = this.VisualParent as T;
-            }
-
-            return ancestor;
-        }
-
-        /// <summary>
         ///     When overridden in a derived class, measures the size in layout required for child elements and determines a size for the UIElement-derived class.
         /// </summary>
         /// <param name = "availableSize">
@@ -489,6 +478,11 @@
 
         protected virtual void OnRender(IDrawingContext drawingContext)
         {
+        }
+
+        private static void DataContextChanged(IReactiveObject source, ReactivePropertyChangeEventArgs<object> args)
+        {
+            ((UIElement)source).InvalidateMeasureOnDataContextInheritors();
         }
 
         /// <summary>
@@ -611,6 +605,40 @@
             return vector;
         }
 
+        private object GetNearestDataContext()
+        {
+            IElement curentElement = this;
+            object dataContext;
+
+            do
+            {
+                dataContext = curentElement.DataContext;
+                curentElement = curentElement.VisualParent;
+            }
+            while (dataContext == null && curentElement != null);
+
+            return dataContext;
+        }
+
+        private void InvalidateMeasureOnDataContextInheritors()
+        {
+            IEnumerable<IElement> children = this.GetVisualChildren();
+            if (children.Count() == 0)
+            {
+                this.InvalidateMeasure();
+            }
+            else
+            {
+                IEnumerable<UIElement> childrenInheritingDataContext =
+                    children.OfType<UIElement>().Where(element => element.DataContext == null);
+
+                foreach (UIElement element in childrenInheritingDataContext)
+                {
+                    element.InvalidateMeasureOnDataContextInheritors();
+                }
+            }
+        }
+
         /// <summary>
         ///     Implements basic measure-pass layout system behavior.
         /// </summary>
@@ -623,7 +651,7 @@
         /// <returns>The desired size of this element in layout.</returns>
         private Size MeasureCore(Size availableSize)
         {
-            this.ResolveDeferredBindings(this.DataContext);
+            this.ResolveDeferredBindings(this.GetNearestDataContext());
             this.OnApplyTemplate();
 
             Thickness margin = this.Margin;

@@ -69,23 +69,14 @@
         <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
-        <!--
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Input.Touch, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
--->
-        <Reference Include="Microsoft.Xna.Framework" />
-        <Reference Include="Microsoft.Xna.Framework.Graphics" />
-        <Reference Include="Microsoft.Xna.Framework.Input.Touch" />
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="Microsoft.CSharp" />
-        <!--
-    <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
--->
-        <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-        <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.CoreEx, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
         <Reference Include="System.Xaml" />
     </ItemGroup>
     <ItemGroup>
@@ -117,6 +108,7 @@
         <Compile Include="Presentation\Data\TwoWayBinding.cs" />
         <Compile Include="Presentation\Data\INotifyPropertyChanged.cs" />
         <Compile Include="Presentation\Data\PropertyChangedEventArgs.cs" />
+    <Compile Include="Presentation\Extensions\IElementExtensions.cs" />
         <Compile Include="Presentation\IReactiveProperty.cs" />
         <Compile Include="Presentation\Point.cs" />
         <Compile Include="Presentation\Media\Color.cs" />

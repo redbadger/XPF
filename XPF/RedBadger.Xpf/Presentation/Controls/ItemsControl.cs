@@ -12,14 +12,14 @@
 
     public class ItemsControl : Control
     {
-        public static readonly ReactiveProperty<Func<IElement>, ItemsControl> ItemTemplateProperty =
-            ReactiveProperty<Func<IElement>, ItemsControl>.Register("ItemTemplate");
+        public static readonly ReactiveProperty<Func<IElement>> ItemTemplateProperty =
+            ReactiveProperty<Func<IElement>>.Register("ItemTemplate", typeof(ItemsControl));
 
-        public static readonly ReactiveProperty<Panel, ItemsControl> ItemsPanelProperty =
-            ReactiveProperty<Panel, ItemsControl>.Register("ItemsPanel", ItemsPanelChanged);
+        public static readonly ReactiveProperty<Panel> ItemsPanelProperty =
+            ReactiveProperty<Panel>.Register("ItemsPanel", typeof(ItemsControl), ItemsPanelChanged);
 
-        public static readonly ReactiveProperty<IEnumerable, ItemsControl> ItemsSourceProperty =
-            ReactiveProperty<IEnumerable, ItemsControl>.Register("ItemsSource", ItemsSourceChanged);
+        public static readonly ReactiveProperty<IEnumerable> ItemsSourceProperty =
+            ReactiveProperty<IEnumerable>.Register("ItemsSource", typeof(ItemsControl), ItemsSourceChanged);
 
         private readonly ScrollViewer scrollViewer;
 
@@ -115,8 +115,9 @@
             return child.DesiredSize;
         }
 
-        private static void ItemsPanelChanged(ItemsControl itemsControl, ReactivePropertyChangeEventArgs<Panel, ItemsControl> change)
+        private static void ItemsPanelChanged(IReactiveObject source, ReactivePropertyChangeEventArgs<Panel> change)
         {
+            var itemsControl = (ItemsControl)source;
             Panel panel = change.NewValue;
             if (!(panel.Children is ITemplatedList<IElement>))
             {
@@ -128,8 +129,9 @@
             itemsControl.scrollViewer.Content = panel;
         }
 
-        private static void ItemsSourceChanged(ItemsControl itemsControl, ReactivePropertyChangeEventArgs<IEnumerable, ItemsControl> change)
+        private static void ItemsSourceChanged(IReactiveObject source, ReactivePropertyChangeEventArgs<IEnumerable> change)
         {
+            var itemsControl = (ItemsControl)source;
             if (change.OldValue is INotifyCollectionChanged)
             {
                 itemsControl.changingItems.Dispose();

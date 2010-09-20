@@ -19,7 +19,7 @@
             if (texture2D != null)
             {
                 var rectangle = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height);
-                this.Draw(texture2D.Value, rectangle, new Microsoft.Xna.Framework.Color(color.R, color.G, color.B));
+                this.Draw(texture2D.Value, rectangle, new Microsoft.Xna.Framework.Color(color.R, color.G, color.B, color.A));
             }
         }
 
@@ -29,7 +29,7 @@
                 spriteFont.Value, 
                 text ?? string.Empty, 
                 new Vector2((float)position.X, (float)position.Y), 
-                new Microsoft.Xna.Framework.Color(color.R, color.G, color.B));
+                new Microsoft.Xna.Framework.Color(color.R, color.G, color.B, color.A));
         }
     }
 }

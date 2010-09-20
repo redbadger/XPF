@@ -19,6 +19,8 @@ namespace RedBadger.Xpf.Presentation.Controls
 
         internal double AvailableLength { get; set; }
 
+        internal double Denominator { get; set; }
+
         internal double FinalLength { get; set; }
 
         internal double FinalOffset { get; set; }
@@ -26,6 +28,10 @@ namespace RedBadger.Xpf.Presentation.Controls
         internal GridUnitType LengthType { get; set; }
 
         internal double MinLength { get; set; }
+
+        internal double Numerator { get; set; }
+
+        internal double StarAllocationOrder { get; set; }
 
         internal GridLength UserLength
         {

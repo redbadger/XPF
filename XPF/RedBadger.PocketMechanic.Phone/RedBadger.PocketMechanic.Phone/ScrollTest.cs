@@ -37,7 +37,7 @@ namespace RedBadger.PocketMechanic.Phone
 
         public override void Draw(GameTime gameTime)
         {
-            this.spriteBatchAdapter.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            this.spriteBatchAdapter.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
             this.rootElement.Draw();
             this.spriteBatchAdapter.End();
 
@@ -135,7 +135,7 @@ namespace RedBadger.PocketMechanic.Phone
             switch (next)
             {
                 case 0:
-                    return Colors.Red;
+                    return new Color(255, 0, 0, 128);
                 case 1:
                     return Colors.Blue;
                 case 2:

@@ -7,8 +7,8 @@
 
     public abstract class Panel : UIElement
     {
-        public static readonly ReactiveProperty<Brush, Panel> BackgroundProperty =
-            ReactiveProperty<Brush, Panel>.Register("Background");
+        public static readonly ReactiveProperty<Brush> BackgroundProperty =
+            ReactiveProperty<Brush>.Register("Background", typeof(Panel));
 
         private IList<IElement> children;
 

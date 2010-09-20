@@ -8,21 +8,23 @@ namespace RedBadger.Xpf.Presentation.Controls
 
     public class Border : UIElement
     {
-        public static readonly ReactiveProperty<Brush, Border> BackgroundProperty =
-            ReactiveProperty<Brush, Border>.Register("Background");
+        public static readonly ReactiveProperty<Brush> BackgroundProperty =
+            ReactiveProperty<Brush>.Register("Background", typeof(Border));
 
-        public static readonly ReactiveProperty<Brush, Border> BorderBrushProperty =
-            ReactiveProperty<Brush, Border>.Register("BorderBrush", null, ReactivePropertyChangedCallbacks.InvalidateArrange);
+        public static readonly ReactiveProperty<Brush> BorderBrushProperty =
+            ReactiveProperty<Brush>.Register(
+                "BorderBrush", typeof(Border), null, ReactivePropertyChangedCallbacks.InvalidateArrange);
 
-        public static readonly ReactiveProperty<Thickness, Border> BorderThicknessProperty =
-            ReactiveProperty<Thickness, Border>.Register(
-                "BorderThickness", new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<Thickness> BorderThicknessProperty =
+            ReactiveProperty<Thickness>.Register(
+                "BorderThickness", typeof(Border), new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        public static readonly ReactiveProperty<IElement, Border> ChildProperty = ReactiveProperty<IElement, Border>.Register(
-            "Child", null, ChildPropertyChangedCallback);
+        public static readonly ReactiveProperty<IElement> ChildProperty = ReactiveProperty<IElement>.Register(
+            "Child", typeof(Border), null, ChildPropertyChangedCallback);
 
-        public static readonly ReactiveProperty<Thickness, Border> PaddingProperty =
-            ReactiveProperty<Thickness, Border>.Register("Padding", new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
+        public static readonly ReactiveProperty<Thickness> PaddingProperty =
+            ReactiveProperty<Thickness>.Register(
+                "Padding", typeof(Border), new Thickness(), ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
         private readonly IList<Rect> borders = new List<Rect>();
 
@@ -93,6 +95,17 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
+        public override IEnumerable<IElement> GetVisualChildren()
+        {
+            IElement child = this.Child;
+            if (child != null)
+            {
+                yield return child;
+            }
+
+            yield break;
+        }
+
         protected override Size ArrangeOverride(Size finalSize)
         {
             IElement child = this.Child;
@@ -159,8 +172,10 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
-        private static void ChildPropertyChangedCallback(Border border, ReactivePropertyChangeEventArgs<IElement, Border> change)
+        private static void ChildPropertyChangedCallback(
+            IReactiveObject source, ReactivePropertyChangeEventArgs<IElement> change)
         {
+            var border = (Border)source;
             border.InvalidateMeasure();
 
             IElement oldChild = change.OldValue;

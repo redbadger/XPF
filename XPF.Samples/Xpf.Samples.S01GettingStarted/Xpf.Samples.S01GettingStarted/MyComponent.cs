@@ -98,7 +98,7 @@ namespace Xpf.Samples.S01GettingStarted
                 {
                     BorderBrush = new SolidColorBrush(Colors.Black), 
                     BorderThickness = new Thickness(0, 2, 0, 0), 
-                    Background = new SolidColorBrush(new Color(106, 168, 79, 1)), 
+                    Background = new SolidColorBrush(new Color(106, 168, 79, 255)), 
                     Child =
                         new TextBlock(spriteFontAdapter)
                             {
@@ -114,8 +114,8 @@ namespace Xpf.Samples.S01GettingStarted
             var bottomRightBorder = new Border
                 {
                     BorderBrush = new SolidColorBrush(Colors.Black), 
-                    BorderThickness = new Thickness(0, 2, 0, 0), 
-                    Background = new SolidColorBrush(new Color(106, 168, 79, 1))
+                    BorderThickness = new Thickness(0, 2, 0, 0),
+                    Background = new SolidColorBrush(new Color(106, 168, 79, 255))
                 };
             Grid.SetRow(bottomRightBorder, 2);
             Grid.SetColumn(bottomRightBorder, 1);
