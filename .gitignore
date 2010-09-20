@@ -16,3 +16,4 @@ _ReSharper.*
 TestResults
 ~$*
 *.cachefile
+/XPF.Samples/Lib/XPF
