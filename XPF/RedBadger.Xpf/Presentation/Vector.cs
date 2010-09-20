@@ -4,26 +4,28 @@ namespace RedBadger.Xpf.Presentation
     using System.Diagnostics;
 
     /// <summary>
-    /// A struct representing a Vector with <see cref="X">X</see> and <see cref="Y">Y</see> components.
+    ///     A struct representing a Vector with <see cref = "X">X</see> and <see cref = "Y">Y</see> components.
     /// </summary>
     [DebuggerDisplay("{X} x {Y}")]
     public struct Vector : IEquatable<Vector>
     {
+        private const double RadiansToDegrees = 57.295779513082323;
+
         /// <summary>
-        /// The X component of the <see cref="Vector">Vector</see>.
+        ///     The X component of the <see cref = "Vector">Vector</see>.
         /// </summary>
         public double X;
 
         /// <summary>
-        /// The Y component of the <see cref="Vector">Vector</see>.
+        ///     The Y component of the <see cref = "Vector">Vector</see>.
         /// </summary>
         public double Y;
 
         /// <summary>
-        /// Constructs a new <see cref="Vector">Vector</see> structure.
+        ///     Constructs a new <see cref = "Vector">Vector</see> structure.
         /// </summary>
-        /// <param name="x"> The <see cref="X">X</see> component of the <see cref="Vector">Vector</see>.</param>
-        /// <param name="y"> The <see cref="Y">Y</see> component of the <see cref="Vector">Vector</see>.</param>
+        /// <param name = "x"> The <see cref = "X">X</see> component of the <see cref = "Vector">Vector</see>.</param>
+        /// <param name = "y"> The <see cref = "Y">Y</see> component of the <see cref = "Vector">Vector</see>.</param>
         public Vector(double x, double y)
         {
             this.X = x;
@@ -31,7 +33,7 @@ namespace RedBadger.Xpf.Presentation
         }
 
         /// <summary>
-        /// Gets a <see cref="Vector">Vector</see> with <see cref="X">X</see> and <see cref="Y">Y</see> of zero.
+        ///     Gets a <see cref = "Vector">Vector</see> with <see cref = "X">X</see> and <see cref = "Y">Y</see> of zero.
         /// </summary>
         public static Vector Zero
         {
@@ -41,9 +43,6 @@ namespace RedBadger.Xpf.Presentation
             }
         }
 
-        /// <summary>
-        ///     Creates a <see cref = "Vector">Vector</see> of unit length in the same direction as the specified Vector.
-        /// </summary>
         /// <summary>
         ///     Gets the length of the <see cref = "Vector">Vector</see>.
         /// </summary>
@@ -67,11 +66,11 @@ namespace RedBadger.Xpf.Presentation
         }
 
         /// <summary>
-        /// Adds a <see cref = "Vector">Vector</see> to another Vector.
+        ///     Adds a <see cref = "Vector">Vector</see> to another Vector.
         /// </summary>
         /// <param name = "vector1">The first <see cref = "Vector">Vector</see>.</param>
         /// <param name = "vector2">The second <see cref = "Vector">Vector</see>.</param>
-        /// <returns>The sum of the two <see cref="Vector">Vector</see>s.</returns>
+        /// <returns>The sum of the two <see cref = "Vector">Vector</see>s.</returns>
         public static Vector operator +(Vector vector1, Vector vector2)
         {
             return new Vector(vector1.X + vector2.X, vector1.Y + vector2.Y);
@@ -122,14 +121,14 @@ namespace RedBadger.Xpf.Presentation
         }
 
         /// <summary>
-        /// Calculates the angle in degrees between two <see cref="Vector">Vector</see>s.
+        ///     Calculates the angle in degrees between two <see cref = "Vector">Vector</see>s.
         /// </summary>
         /// <param name = "vector1">The first <see cref = "Vector">Vector</see>.</param>
         /// <param name = "vector2">The second <see cref = "Vector">Vector</see>.</param>
-        /// <returns>The angle between the two specified <see cref="Vector">Vector</see>s.</returns>
+        /// <returns>The angle between the two specified <see cref = "Vector">Vector</see>s.</returns>
         public static double AngleBetween(Vector vector1, Vector vector2)
         {
-            return Math.Atan2(CrossProduct(vector1, vector2), DotProduct(vector1, vector2)) * 57.295779513082323;
+            return Math.Atan2(CrossProduct(vector1, vector2), DotProduct(vector1, vector2)) * RadiansToDegrees;
         }
 
         /// <summary>
