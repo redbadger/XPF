@@ -1,5 +1,8 @@
 namespace Xpf.Samples.S02Wp7Orientation
 {
+    using System;
+
+    using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -43,7 +46,14 @@ namespace Xpf.Samples.S02Wp7Orientation
             var renderer = new Renderer(this.spriteBatchAdapter, primitivesService);
 
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer);
-            this.Game.Window.OrientationChanged += (sender, args) => this.rootElement.Viewport = this.Game.GraphicsDevice.Viewport.ToRect();
+
+            Observable.FromEvent<EventArgs>(
+                                    handler => this.Game.Window.OrientationChanged += handler,
+                                    handler => this.Game.Window.OrientationChanged -= handler)
+                      .Subscribe(_ => this.rootElement.Viewport = this.Game.GraphicsDevice.Viewport.ToRect());
+
+            //// Alternative mechanism to hook up to the event.  Ensure you manage unhooking the event yourself.
+            //// this.Game.Window.OrientationChanged += (sender, args) => this.rootElement.Viewport = this.Game.GraphicsDevice.Viewport.ToRect();
 
             var spriteFont = this.Game.Content.Load<SpriteFont>("MySpriteFont");
             var spriteFontAdapter = new SpriteFontAdapter(spriteFont);
