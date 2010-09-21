@@ -9,8 +9,6 @@ namespace RedBadger.Xpf.Presentation
     [DebuggerDisplay("{X} x {Y}")]
     public struct Vector : IEquatable<Vector>
     {
-        private const double RadiansToDegrees = 57.295779513082323;
-
         /// <summary>
         ///     The X component of the <see cref = "Vector">Vector</see>.
         /// </summary>
@@ -21,8 +19,10 @@ namespace RedBadger.Xpf.Presentation
         /// </summary>
         public double Y;
 
+        private const double RadiansToDegrees = 57.295779513082323;
+
         /// <summary>
-        ///     Constructs a new <see cref = "Vector">Vector</see> structure.
+        ///     Initializes a new <see cref = "Vector">Vector</see> structure.
         /// </summary>
         /// <param name = "x"> The <see cref = "X">X</see> component of the <see cref = "Vector">Vector</see>.</param>
         /// <param name = "y"> The <see cref = "Y">Y</see> component of the <see cref = "Vector">Vector</see>.</param>

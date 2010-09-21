@@ -25,7 +25,7 @@ namespace RedBadger.Xpf.Presentation
             };
 
         /// <summary>
-        ///     A structure representing a <see cref = "Width">Width</see> and <see cref = "Height">Height</see>.
+        ///     Initializes a <see cref = "Size">Size</see> structure representing a <see cref = "Width">Width</see> and <see cref = "Height">Height</see>.
         /// </summary>
         /// <param name = "width">The <see cref = "Width">Width</see> of the <see cref = "Size">Size</see>.</param>
         /// <param name = "height">The <see cref = "Height">Height</see> of the <see cref = "Size">Size</see>.</param>

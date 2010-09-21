@@ -20,7 +20,7 @@ namespace RedBadger.Xpf.Presentation
         public double Y;
 
         /// <summary>
-        ///     Contructs a Point struct that represents a point in 2D space.
+        ///     Initializes a <see cref = "Point">Point</see> struct that represents a point in 2D space.
         /// </summary>
         /// <param name = "x">The <see cref = "X">X</see> component of the <see cref = "Point">Point</see>.</param>
         /// <param name = "y">The <see cref = "Y">Y</see> component of the <see cref = "Point">Point</see>.</param>
