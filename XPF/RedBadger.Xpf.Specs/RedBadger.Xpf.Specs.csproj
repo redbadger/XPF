@@ -113,6 +113,7 @@
     <Compile Include="Presentation\Controls\VirtualizingStackPanelSpecs\VirtualizingStackPanelSpecs.cs" />
     <Compile Include="Presentation\DefinitionBaseSpecs\DefinitionBaseSpecs.cs" />
     <Compile Include="Presentation\Extensions\IElementExtensionsSpecs.cs" />
+    <Compile Include="Presentation\PointSpecs\PointSpecs.cs" />
     <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\ReactiveObjectSpecs\ReactiveObjectSpecs.cs" />
     <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\INotifyPropertyChangedSpecs\INotifyPropertyChangedSpecs.cs" />
     <Compile Include="Presentation\ReactiveObjectSpecs\BindingSpecs\ObjectSpecs\ObjectSpecs.cs" />

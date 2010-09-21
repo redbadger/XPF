@@ -14,45 +14,170 @@ namespace RedBadger.Xpf.Specs.Presentation.RectSpecs
 
     using RedBadger.Xpf.Presentation;
 
-    public abstract class a_Rect
+    [Subject(typeof(Rect))]
+    public class when_constructed
     {
-        protected const double Height = 10;
+        private static Rect subject;
 
-        protected const double Width = 20;
+        private Establish context = () => subject = new Rect();
 
-        protected const double X = 5;
+        private It should_have_a_position_at_zero_zero = () => subject.Location.ShouldEqual(new Point(0, 0));
 
-        protected const double Y = 15;
+        private It should_have_a_size_of_zero_zero = () => subject.Size.ShouldEqual(new Size(0, 0));
 
-        protected static Rect rect;
+        private It should_not_be_equal_to_an_empty_rect = () => subject.ShouldNotEqual(Rect.Empty);
+
+        private It should_not_say_it_is_empty = () => subject.IsEmpty.ShouldBeFalse();
+    }
+
+    [Subject(typeof(Rect))]
+    public class when_constructed_with_a_size
+    {
+        private static readonly Size size = new Size(10, 20);
+
+        private static Rect subject;
+
+        private Because of = () => subject = new Rect(size);
+
+        private It should_have_a_position_at_zero_zero = () => subject.Location.ShouldEqual(new Point(0, 0));
+
+        private It should_have_a_size_equal_to_the_specified_size = () => subject.Size.ShouldEqual(size);
+    }
+
+    [Subject(typeof(Rect))]
+    public class when_constructed_with_a_position_and_a_size
+    {
+        private static readonly Point location = new Point(10, 20);
+
+        private static readonly Size size = new Size(10, 20);
+
+        private static Rect subject;
+
+        private Because of = () => subject = new Rect(location, size);
+
+        private It should_have_a_location_equal_to_the_specified_location = () => subject.Location.ShouldEqual(location);
+
+        private It should_have_a_size_equal_to_the_specified_size = () => subject.Size.ShouldEqual(size);
+    }
+
+    [Subject(typeof(Rect))]
+    public class when_constructed_with_an_X_a_Y_a_Width_and_a_Height
+    {
+        private const double Height = 10;
+
+        private const double Width = 20;
+
+        private const double X = 5;
+
+        private const double Y = 15;
+
+        private static Rect rect;
 
         private Establish context = () => rect = new Rect(X, Y, Width, Height);
-    }
 
-    public abstract class a_new_Rect
-    {
-        protected static Rect rect;
+        private It should_have_the_expected_location = () => rect.Location.ShouldEqual(new Point(X, Y));
 
-        private Establish context = () => rect = new Rect(0, 0, 0, 0);
+        private It should_have_the_expected_size = () => rect.Size.ShouldEqual(new Size(Width, Height));
     }
 
     [Subject(typeof(Rect))]
-    public class when_initialised_with_values : a_Rect
+    public class when_two_rects_are_equal
     {
-        private It should_have_the_expected_Position = () => rect.Position.ShouldEqual(new Vector(X, Y));
+        private static Rect rect;
 
-        private It should_have_the_expected_Size = () => rect.Size.ShouldEqual(new Size(Width, Height));
+        private static bool result;
+
+        private static Rect subject;
+
+        private Establish context = () =>
+        {
+            subject = new Rect(10, 20, 30, 40);
+            rect = new Rect(10, 20, 30, 40);
+        };
+
+        private Because of = () => result = subject == rect;
+
+        private It should_show_them_as_equal = () => result.ShouldBeTrue();
     }
 
     [Subject(typeof(Rect))]
-    public class when_initialised_without_values : a_new_Rect
+    public class when_two_rects_are_not_equal_in_the_x
     {
-        private It should_have_a_position_at_zero_zero = () => rect.Position.ShouldEqual(new Vector(0, 0));
+        private static Rect rect;
 
-        private It should_have_a_size_of_zero_zero = () => rect.Size.ShouldEqual(new Size(0, 0));
+        private static bool result;
 
-        private It should_not_be_equal_to_an_empty_rect = () => rect.ShouldNotEqual(Rect.Empty);
+        private static Rect subject;
 
-        private It should_not_say_it_is_empty = () => rect.IsEmpty.ShouldBeFalse();
+        private Establish context = () =>
+        {
+            subject = new Rect(10, 20, 30, 40);
+            rect = new Rect(11, 20, 30, 40);
+        };
+
+        private Because of = () => result = subject == rect;
+
+        private It should_show_them_as_not_equal = () => result.ShouldBeFalse();
     }
+
+    [Subject(typeof(Rect))]
+    public class when_two_rects_are_not_equal_in_the_y
+    {
+        private static Rect rect;
+
+        private static bool result;
+
+        private static Rect subject;
+
+        private Establish context = () =>
+        {
+            subject = new Rect(10, 20, 30, 40);
+            rect = new Rect(10, 21, 30, 40);
+        };
+
+        private Because of = () => result = rect == subject;
+
+        private It should_show_them_as_not_equal = () => result.ShouldBeFalse();
+    }
+
+    [Subject(typeof(Rect))]
+    public class when_two_rects_are_not_equal_in_the_width
+    {
+        private static Rect rect;
+
+        private static bool result;
+
+        private static Rect subject;
+
+        private Establish context = () =>
+        {
+            subject = new Rect(10, 20, 30, 40);
+            rect = new Rect(10, 20, 31, 40);
+        };
+
+        private Because of = () => result = rect == subject;
+
+        private It should_show_them_as_not_equal = () => result.ShouldBeFalse();
+    }
+
+    [Subject(typeof(Rect))]
+    public class when_two_rects_are_not_equal_in_the_height
+    {
+        private static Rect rect;
+
+        private static bool result;
+
+        private static Rect subject;
+
+        private Establish context = () =>
+        {
+            subject = new Rect(10, 20, 30, 40);
+            rect = new Rect(10, 20, 30, 41);
+        };
+
+        private Because of = () => result = rect == subject;
+
+        private It should_show_them_as_not_equal = () => result.ShouldBeFalse();
+    }
+
 }
