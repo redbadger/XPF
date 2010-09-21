@@ -7,24 +7,39 @@ namespace RedBadger.Xpf.Presentation.Controls
     using RedBadger.Xpf.Presentation.Media;
 
     /// <summary>
-    /// RootElement is the main host for all your controls, it manages the renderer, user input and is the target for Update/Draw calls.
+    ///     RootElement is the main host for all <see cref = "IElement">IElement</see>s, it manages the renderer, user input and is the target for Update/Draw calls.
     /// </summary>
     public class RootElement : ContentControl, IRootElement
     {
+        /// <summary>
+        ///     <see cref = "Viewport">Viewport</see> Reactive Property.
+        /// </summary>
+        public static readonly ReactiveProperty<Rect> ViewportProperty = ReactiveProperty<Rect>.Register(
+            "Viewport", typeof(RootElement), ReactivePropertyChangedCallbacks.InvalidateMeasure);
+
         private readonly IInputManager inputManager;
 
         private readonly IRenderer renderer;
 
-        private readonly Rect viewPort;
-
         private IElement elementWithMouseCapture;
 
-        public RootElement(Rect viewPort, IRenderer renderer)
-            : this(viewPort, renderer, null)
+        /// <summary>
+        ///     Initializes a new instance of the <see cref = "RootElement">RootElement</see> class.
+        /// </summary>
+        /// <param name = "viewport">The viewport used to layout the <see cref = "RootElement">RootElement</see>'s content.</param>
+        /// <param name = "renderer">An implementation of <see cref = "IRenderer">IRenderer</see> that can be used to render content.</param>
+        public RootElement(Rect viewport, IRenderer renderer)
+            : this(viewport, renderer, null)
         {
         }
 
-        public RootElement(Rect viewPort, IRenderer renderer, IInputManager inputManager)
+        /// <summary>
+        ///     Initializes a new instance of the <see cref = "RootElement">RootElement</see> class.
+        /// </summary>
+        /// <param name = "viewport">The viewport used to layout the <see cref = "RootElement">RootElement</see>'s content.</param>
+        /// <param name = "renderer">An implementation of <see cref = "IRenderer">IRenderer</see> that can be used to render content.</param>
+        /// <param name = "inputManager">An implementation of <see cref = "IInputManager">IInputManager</see> that can be used to respond to user input.</param>
+        public RootElement(Rect viewport, IRenderer renderer, IInputManager inputManager)
         {
             License.Validate();
 
@@ -33,7 +48,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                 throw new ArgumentNullException("renderer");
             }
 
-            this.viewPort = viewPort;
+            this.Viewport = viewport;
             this.renderer = renderer;
             this.inputManager = inputManager;
 
@@ -59,11 +74,33 @@ namespace RedBadger.Xpf.Presentation.Controls
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the viewport used by <see cref = "RootElement">RootElement</see> to layout its content.
+        /// </summary>
+        public Rect Viewport
+        {
+            get
+            {
+                return this.GetValue(ViewportProperty);
+            }
+
+            set
+            {
+                this.SetValue(ViewportProperty, value);
+            }
+        }
+
+        /// <summary>
+        ///     Draws a frame of XPF content.
+        /// </summary>
         public void Draw()
         {
             this.renderer.Draw();
         }
 
+        /// <summary>
+        ///     Updates XPF layout logic.
+        /// </summary>
         public void Update()
         {
             if (!this.IsArrangeValid)
@@ -71,8 +108,9 @@ namespace RedBadger.Xpf.Presentation.Controls
                 this.renderer.ClearInvalidDrawingContexts();
             }
 
-            this.Measure(new Size(this.viewPort.Width, this.viewPort.Height));
-            this.Arrange(this.viewPort);
+            Rect viewport = this.Viewport;
+            this.Measure(new Size(viewport.Width, viewport.Height));
+            this.Arrange(viewport);
             this.renderer.PreDraw();
 
             if (this.inputManager != null)

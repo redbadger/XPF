@@ -35,10 +35,18 @@ namespace RedBadger.PocketMechanic.Phone
         {
         }
 
+        public RootElement RootElement
+        {
+            get
+            {
+                return this.rootElement;
+            }
+        }
+
         public override void Draw(GameTime gameTime)
         {
             this.spriteBatchAdapter.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-            this.rootElement.Draw();
+            this.RootElement.Draw();
             this.spriteBatchAdapter.End();
 
             base.Draw(gameTime);
@@ -46,7 +54,7 @@ namespace RedBadger.PocketMechanic.Phone
 
         public override void Update(GameTime gameTime)
         {
-            this.rootElement.Update();
+            this.RootElement.Update();
             base.Update(gameTime);
         }
 

@@ -25,24 +25,24 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.RootElementSpecs
     {
         protected static Mock<IRenderer> Renderer;
 
-        protected static RootElement RootElement;
+        protected static RootElement Subject;
 
         protected static Rect ViewPort = new Rect(10, 20, 100, 200);
 
         private Establish context = () =>
             {
                 Renderer = new Mock<IRenderer>();
-                RootElement = new RootElement(ViewPort, Renderer.Object);
+                Subject = new RootElement(ViewPort, Renderer.Object);
             };
     }
 
     [Subject(typeof(RootElement))]
     public class after_update : a_RootElement
     {
-        private Because of = () => RootElement.Update();
+        private Because of = () => Subject.Update();
 
         private It should_have_the_correct_visual_offset =
-            () => RootElement.VisualOffset.ShouldEqual(new Vector(ViewPort.X, ViewPort.Y));
+            () => Subject.VisualOffset.ShouldEqual(new Vector(ViewPort.X, ViewPort.Y));
     }
 
     [Subject(typeof(RootElement))]
@@ -50,10 +50,20 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.RootElementSpecs
     {
         private Because of = () =>
             {
-                RootElement.InvalidateArrange();
-                RootElement.Update();
+                Subject.InvalidateArrange();
+                Subject.Update();
             };
 
         private It should_clear_the_renderer = () => Renderer.Verify(renderer => renderer.ClearInvalidDrawingContexts());
+    }
+
+    [Subject(typeof(RootElement))]
+    public class when_the_viewport_is_changed : a_RootElement
+    {
+        private Establish context = () => Subject.Update();
+
+        private Because of = () => Subject.Viewport = new Rect();
+
+        private It should_invalidate_measure = () => Subject.IsMeasureValid.ShouldBeFalse();
     }
 }
