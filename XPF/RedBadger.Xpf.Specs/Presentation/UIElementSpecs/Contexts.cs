@@ -61,18 +61,21 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
     public abstract class a_UIElement_in_a_RootElement : a_UIElement
     {
+        protected static Mock<Renderer> Renderer;
+
+        protected static Mock<RootElement> RootElement;
+
         private Establish context = () =>
             {
                 var viewPort = new Rect(30, 40, 200, 200);
 
-                var renderer = new Mock<Renderer>(
-                    new Mock<ISpriteBatch>().Object, new Mock<IPrimitivesService>().Object) {
-                                                                                               CallBase = true 
-                                                                                            };
-                var rootElement = new Mock<RootElement>(viewPort, renderer.Object) { CallBase = true };
+                Renderer = new Mock<Renderer>(new Mock<ISpriteBatch>().Object, new Mock<IPrimitivesService>().Object)
+                    {
+                       CallBase = true 
+                    };
 
-                rootElement.Object.Content = Subject.Object;
-                rootElement.Object.Update();
+                RootElement = new Mock<RootElement>(viewPort, Renderer.Object) { CallBase = true };
+                RootElement.Object.Content = Subject.Object;
             };
     }
 }

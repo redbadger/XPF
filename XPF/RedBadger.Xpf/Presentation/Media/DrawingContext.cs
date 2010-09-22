@@ -13,6 +13,8 @@
 
         private readonly IPrimitivesService primitivesService;
 
+        private Rect clippingRect = Rect.Empty;
+
         public DrawingContext(IElement element, IPrimitivesService primitivesService)
         {
             if (element == null)
@@ -27,6 +29,19 @@
 
             this.element = element;
             this.primitivesService = primitivesService;
+        }
+
+        public Rect ClippingRect
+        {
+            get
+            {
+                return this.clippingRect;
+            }
+
+            set
+            {
+                this.clippingRect = value;
+            }
         }
 
         public void Clear()

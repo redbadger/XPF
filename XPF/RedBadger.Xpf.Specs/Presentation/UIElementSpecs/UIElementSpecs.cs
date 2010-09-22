@@ -33,6 +33,8 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private static bool hitTestResult;
 
+        private Establish context = () => RootElement.Object.Update();
+
         private Because of = () => hitTestResult = Subject.Object.HitTest(new Point(40, 50));
 
         private It should_return_a_positive_hit_test = () => hitTestResult.ShouldBeTrue();
@@ -42,6 +44,8 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     public class when_a_point_is_outside_an_element : a_UIElement_in_a_RootElement
     {
         private static bool hitTestResult;
+
+        private Establish context = () => RootElement.Object.Update();
 
         private Because of = () => hitTestResult = Subject.Object.HitTest(new Point(20, 30));
 

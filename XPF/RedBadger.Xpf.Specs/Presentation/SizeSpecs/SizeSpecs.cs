@@ -28,6 +28,8 @@ namespace RedBadger.Xpf.Specs.Presentation.SizeSpecs
                 size.Width.ShouldEqual(Double.NegativeInfinity);
                 size.Height.ShouldEqual(Double.NegativeInfinity);
             };
+
+        private It should_report_that_it_is_empty = () => size.IsEmpty.ShouldBeTrue();
     }
 
     [Subject(typeof(Size))]

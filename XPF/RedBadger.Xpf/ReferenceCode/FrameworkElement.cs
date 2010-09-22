@@ -20,7 +20,7 @@ protected sealed override Size MeasureCore(Size availableSize)
     }
 
     size2 = new Size(Math.Max(size2.Width, max.minWidth), Math.Max(size2.Height, max.minHeight));
-    Size size = size2;
+    Size unclippedSize = size2;
 
     bool flag2 = false;
     if (size2.Width > max.maxWidth)
@@ -52,13 +52,13 @@ protected sealed override Size MeasureCore(Size availableSize)
     {
         if (box == null)
         {
-            box = new SizeBox(size);
+            box = new SizeBox(unclippedSize);
             UnclippedDesiredSizeField.SetValue(this, box);
         }
         else
         {
-            box.Width = size.Width;
-            box.Height = size.Height;
+            box.Width = unclippedSize.Width;
+            box.Height = unclippedSize.Height;
         }
     }
     else if (box != null)
@@ -123,18 +123,18 @@ protected sealed override void ArrangeCore(Rect finalRect)
         size.Height = num4;
     }
 
-    Size size8 = this.ArrangeOverride(size);
-    base.RenderSize = size8;
+    Size renderSize = this.ArrangeOverride(size);
+    base.RenderSize = renderSize;
 
-    Size size9 = new Size(Math.Min(size8.Width, max.maxWidth), Math.Min(size8.Height, max.maxHeight));
+    Size inkSize = new Size(Math.Min(renderSize.Width, max.maxWidth), Math.Min(renderSize.Height, max.maxHeight));
 
-    this.NeedsClipBounds |= DoubleUtil.LessThan(size9.Width, size8.Width) || DoubleUtil.LessThan(size9.Height, size8.Height);
+    this.NeedsClipBounds |= DoubleUtil.LessThan(inkSize.Width, renderSize.Width) || DoubleUtil.LessThan(inkSize.Height, renderSize.Height);
 
-    Size size10 = new Size(Math.Max((double) 0.0, (double) (finalRect.Width - num)), Math.Max((double) 0.0, (double) (finalRect.Height - num2)));
+    Size clientSize = new Size(Math.Max((double) 0.0, (double) (finalRect.Width - num)), Math.Max((double) 0.0, (double) (finalRect.Height - num2)));
 
-    this.NeedsClipBounds |= DoubleUtil.LessThan(size10.Width, size9.Width) || DoubleUtil.LessThan(size10.Height, size9.Height);
+    this.NeedsClipBounds |= DoubleUtil.LessThan(clientSize.Width, inkSize.Width) || DoubleUtil.LessThan(clientSize.Height, inkSize.Height);
 
-    Vector offset = this.ComputeAlignmentOffset(size10, size9);
+    Vector offset = this.ComputeAlignmentOffset(clientSize, inkSize);
     offset.X += finalRect.X + margin.Left;
     offset.Y += finalRect.Y + margin.Top;
 
@@ -186,4 +186,61 @@ private Vector ComputeAlignmentOffset(Size clientSize, Size inkSize)
     }
     vector.Y = 0.0;
     return vector;
+}
+
+protected override Geometry GetLayoutClip(Size layoutSlotSize)
+{
+    if (!this.NeedsClipBounds && !base.ClipToBounds)
+    {
+        return base.GetLayoutClip(layoutSlotSize);
+    }
+
+    MinMax max = new MinMax(this);
+    Size renderSize = base.RenderSize;
+
+    double num = double.IsPositiveInfinity(max.maxWidth) ? renderSize.Width : max.maxWidth;
+    double num2 = double.IsPositiveInfinity(max.maxHeight) ? renderSize.Height : max.maxHeight;
+
+    bool flag2 = base.ClipToBounds || (DoubleUtil.LessThan(num, renderSize.Width) || DoubleUtil.LessThan(num2, renderSize.Height));
+
+    renderSize.Width = Math.Min(renderSize.Width, max.maxWidth);
+    renderSize.Height = Math.Min(renderSize.Height, max.maxHeight);
+
+    Rect rect = new Rect();
+
+    Thickness margin = this.Margin;
+    double num3 = margin.Left + margin.Right;
+    double num4 = margin.Top + margin.Bottom;
+
+    Size clientSize = new Size(Math.Max((double) 0.0, (double) (layoutSlotSize.Width - num3)), Math.Max((double) 0.0, (double) (layoutSlotSize.Height - num4)));
+
+    bool flag3 = (base.ClipToBounds || DoubleUtil.LessThan(clientSize.Width, renderSize.Width)) || DoubleUtil.LessThan(clientSize.Height, renderSize.Height);
+    
+    if (flag2 && !flag3)
+    {
+        Rect rect2 = new Rect(0.0, 0.0, num, num2);
+
+        RectangleGeometry geometry = new RectangleGeometry(rect2);
+
+        return geometry;
+    }
+
+    if (!flag3)
+    {
+        return null;
+    }
+
+    Vector vector = this.ComputeAlignmentOffset(clientSize, renderSize);
+
+    Rect rect5 = new Rect(-vector.X + rect.X, -vector.Y + rect.Y, clientSize.Width, clientSize.Height);
+
+    if (flag2)
+    {
+        Rect rect6 = new Rect(0.0, 0.0, num, num2);
+
+        rect5.Intersect(rect6);
+    }
+    RectangleGeometry geometry5 = new RectangleGeometry(rect5);
+
+    return geometry5;
 }

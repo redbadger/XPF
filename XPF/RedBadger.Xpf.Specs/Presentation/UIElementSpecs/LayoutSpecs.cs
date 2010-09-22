@@ -21,7 +21,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     using It = Machine.Specifications.It;
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]
-    public class when_an_explicit_size_is_set_and_the_children_want_less_space : a_UIElement
+    public class when_an_explicit_size_is_set_and_the_children_want_less_space : a_UIElement_in_a_RootElement
     {
         private static readonly Size availableSize = new Size(300, 300);
 
@@ -55,10 +55,13 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private It should_have_the_correct_visual_offset =
             () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+
+        private It should_not_clip =
+            () => Renderer.Object.GetDrawingContext(Subject.Object).ClippingRect.ShouldEqual(Rect.Empty);
     }
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]
-    public class when_an_explicit_width_is_set_and_the_children_want_more_space : a_UIElement
+    public class when_an_explicit_size_is_set_and_the_children_want_more_space : a_UIElement_in_a_RootElement
     {
         private static readonly Size availableSize = new Size(300, 300);
 
@@ -82,10 +85,12 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
                 Subject.Object.Arrange(new Rect(availableSize));
             };
 
-        private It should_arrange_its_children_within_the_explicit_size =
+        private It should_arrange_its_children_within_the_unclipped_desired_size =
             () =>
-            Subject.Protected().Verify(
-                ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(explicitSize)));
+            Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
+
+        private It should_clip =
+            () => Renderer.Object.GetDrawingContext(Subject.Object).ClippingRect.ShouldEqual(new Rect(explicitSize));
 
         private It should_have_a_desired_size_equal_to_the_size_that_was_specified =
             () => Subject.Object.DesiredSize.ShouldEqual(explicitSize);
@@ -95,7 +100,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     }
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]
-    public class when_a_minimum_size_is_set_and_the_children_want_less_space : a_UIElement
+    public class when_a_minimum_size_is_set_and_the_children_want_less_space : a_UIElement_in_a_RootElement
     {
         private static readonly Size availableSize = new Size(300, 300);
 
@@ -129,10 +134,13 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private It should_have_the_correct_visual_offset =
             () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
+
+        private It should_not_clip =
+            () => Renderer.Object.GetDrawingContext(Subject.Object).ClippingRect.ShouldEqual(Rect.Empty);
     }
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]
-    public class when_a_maximum_size_is_set_and_the_children_want_more_space : a_UIElement
+    public class when_a_maximum_size_is_set_and_the_children_want_more_space : a_UIElement_in_a_RootElement
     {
         private static readonly Size availableSize = new Size(300, 300);
 
@@ -156,10 +164,12 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
                 Subject.Object.Arrange(new Rect(availableSize));
             };
 
-        private It should_arrange_its_children_within_the_maximum_size =
+        private It should_arrange_its_children_within_the_unclipped_desired_size =
             () =>
-            Subject.Protected().Verify(
-                ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(maximumSize)));
+            Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
+
+        private It should_clip =
+            () => Renderer.Object.GetDrawingContext(Subject.Object).ClippingRect.ShouldEqual(new Rect(maximumSize));
 
         private It should_have_a_desired_size_equal_to_the_maximum_size_that_was_specified =
             () => Subject.Object.DesiredSize.ShouldEqual(maximumSize);

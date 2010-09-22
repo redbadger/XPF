@@ -36,13 +36,24 @@ namespace RedBadger.Xpf.Presentation
         }
 
         /// <summary>
-        ///     An Empty <see cref = "Size">Size</see> with <see cref = "Width">Width</see> and <see cref = "Height">Height</see> of negative infinity.
+        ///     Gets an Empty <see cref = "Size">Size</see> with <see cref = "Width">Width</see> and <see cref = "Height">Height</see> of negative infinity.
         /// </summary>
         public static Size Empty
         {
             get
             {
                 return empty;
+            }
+        }
+
+        /// <summary>
+        ///     Gets a value indicating whether this <see cref = "Size">Size</see> is empty.
+        /// </summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                return this == empty;
             }
         }
 

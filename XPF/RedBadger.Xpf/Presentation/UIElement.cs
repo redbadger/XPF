@@ -65,9 +65,13 @@
 
         private Rect actualRect = Rect.Empty;
 
+        private bool isClippingRequired;
+
         private Size previousAvailableSize;
 
         private Rect previousFinalRect;
+
+        private Size unclippedSize;
 
         protected UIElement()
         {
@@ -319,8 +323,9 @@
 
                 this.ArrangeCore(finalRect);
 
-                if (hasRenderer)
+                if (hasRenderer && drawingContext != null)
                 {
+                    drawingContext.ClippingRect = this.GetClippingRect(finalRect.Size);
                     this.OnRender(drawingContext);
                 }
 
@@ -496,48 +501,53 @@
         /// <param name = "finalRect">The final area within the parent that element should use to arrange itself and its child elements.</param>
         private void ArrangeCore(Rect finalRect)
         {
+            this.isClippingRequired = false;
             Size finalSize = finalRect != Rect.Empty ? new Size(finalRect.Width, finalRect.Height) : new Size();
 
             Thickness margin = this.Margin;
             double horizontalMargin = margin.Left + margin.Right;
             double verticalMargin = margin.Top + margin.Bottom;
 
-            finalSize.Width = Math.Max(0, finalSize.Width - horizontalMargin);
-            finalSize.Height = Math.Max(0, finalSize.Height - verticalMargin);
+            finalSize.Width = (finalSize.Width - horizontalMargin).EnsurePositive();
+            finalSize.Height = (finalSize.Height - verticalMargin).EnsurePositive();
 
-            var desiredSizeWithoutMargins = new Size(
-                Math.Max(0, this.DesiredSize.Width - horizontalMargin), 
-                Math.Max(0, this.DesiredSize.Height - verticalMargin));
+            Size unclippedDesiredSize = !this.unclippedSize.IsEmpty
+                                            ? this.unclippedSize
+                                            : new Size(
+                                                  (this.DesiredSize.Width - horizontalMargin).EnsurePositive(), 
+                                                  (this.DesiredSize.Height - verticalMargin).EnsurePositive());
 
-            if (finalSize.Width.IsLessThan(desiredSizeWithoutMargins.Width))
+            if (finalSize.Width.IsLessThan(unclippedDesiredSize.Width))
             {
-                finalSize.Width = desiredSizeWithoutMargins.Width;
+                this.isClippingRequired = true;
+                finalSize.Width = unclippedDesiredSize.Width;
             }
 
-            if (finalSize.Height.IsLessThan(desiredSizeWithoutMargins.Height))
+            if (finalSize.Height.IsLessThan(unclippedDesiredSize.Height))
             {
-                finalSize.Height = desiredSizeWithoutMargins.Height;
+                this.isClippingRequired = true;
+                finalSize.Height = unclippedDesiredSize.Height;
             }
 
             if (this.HorizontalAlignment != HorizontalAlignment.Stretch)
             {
-                finalSize.Width = desiredSizeWithoutMargins.Width;
+                finalSize.Width = unclippedDesiredSize.Width;
             }
 
             if (this.VerticalAlignment != VerticalAlignment.Stretch)
             {
-                finalSize.Height = desiredSizeWithoutMargins.Height;
+                finalSize.Height = unclippedDesiredSize.Height;
             }
 
             var minMax = new MinMax(this);
 
-            double largestWidth = Math.Max(desiredSizeWithoutMargins.Width, minMax.MaxWidth);
+            double largestWidth = Math.Max(unclippedDesiredSize.Width, minMax.MaxWidth);
             if (largestWidth.IsLessThan(finalSize.Width))
             {
                 finalSize.Width = largestWidth;
             }
 
-            double largestHeight = Math.Max(desiredSizeWithoutMargins.Height, minMax.MaxHeight);
+            double largestHeight = Math.Max(unclippedDesiredSize.Height, minMax.MaxHeight);
             if (largestHeight.IsLessThan(finalSize.Height))
             {
                 finalSize.Height = largestHeight;
@@ -548,8 +558,15 @@
 
             var inkSize = new Size(
                 Math.Min(renderSize.Width, minMax.MaxWidth), Math.Min(renderSize.Height, minMax.MaxHeight));
+
+            this.isClippingRequired |= inkSize.Width.IsLessThan(renderSize.Width) ||
+                                       inkSize.Height.IsLessThan(renderSize.Height);
+
             var clientSize = new Size(
                 Math.Max(0, finalRect.Width - horizontalMargin), Math.Max(0, finalRect.Height - verticalMargin));
+
+            this.isClippingRequired |= clientSize.Width.IsLessThan(inkSize.Width) ||
+                                       clientSize.Height.IsLessThan(inkSize.Height);
 
             Vector offset = this.ComputeAlignmentOffset(clientSize, inkSize);
             offset.X += finalRect.X + margin.Left;
@@ -603,6 +620,58 @@
             }
 
             return vector;
+        }
+
+        private Rect GetClippingRect(Size finalSize)
+        {
+            if (!this.isClippingRequired)
+            {
+                return Rect.Empty;
+            }
+
+            var max = new MinMax(this);
+            Size renderSize = this.RenderSize;
+
+            double maxWidth = double.IsPositiveInfinity(max.MaxWidth) ? renderSize.Width : max.MaxWidth;
+            double maxHeight = double.IsPositiveInfinity(max.MaxHeight) ? renderSize.Height : max.MaxHeight;
+
+            bool isClippingRequiredDueToMaxSize = maxWidth.IsLessThan(renderSize.Width) ||
+                                                  maxHeight.IsLessThan(renderSize.Height);
+
+            renderSize.Width = Math.Min(renderSize.Width, max.MaxWidth);
+            renderSize.Height = Math.Min(renderSize.Height, max.MaxHeight);
+
+            Thickness margin = this.Margin;
+            double horizontalMargins = margin.Left + margin.Right;
+            double verticalMargins = margin.Top + margin.Bottom;
+
+            var clientSize = new Size(
+                (finalSize.Width - horizontalMargins).EnsurePositive(), 
+                (finalSize.Height - verticalMargins).EnsurePositive());
+
+            bool isClippingRequiredDueToClientSize = clientSize.Width.IsLessThan(renderSize.Width) ||
+                                                     clientSize.Height.IsLessThan(renderSize.Height);
+
+            if (isClippingRequiredDueToMaxSize && !isClippingRequiredDueToClientSize)
+            {
+                return new Rect(0d, 0d, maxWidth, maxHeight);
+            }
+
+            if (!isClippingRequiredDueToClientSize)
+            {
+                return Rect.Empty;
+            }
+
+            Vector offset = this.ComputeAlignmentOffset(clientSize, renderSize);
+
+            var clipRect = new Rect(-offset.X, -offset.Y, clientSize.Width, clientSize.Height);
+
+            if (isClippingRequiredDueToMaxSize)
+            {
+                clipRect.Intersect(new Rect(0d, 0d, maxWidth, maxHeight));
+            }
+
+            return clipRect;
         }
 
         private object GetNearestDataContext()
@@ -666,15 +735,19 @@
             Size size = this.MeasureOverride(availableSizeWithoutMargins);
 
             size = new Size(Math.Max(size.Width, minMax.MinWidth), Math.Max(size.Height, minMax.MinHeight));
+            Size unclippedSize = size;
 
+            bool isClippingRequired = false;
             if (size.Width > minMax.MaxWidth)
             {
                 size.Width = minMax.MaxWidth;
+                isClippingRequired = true;
             }
 
             if (size.Height > minMax.MaxHeight)
             {
                 size.Height = minMax.MaxHeight;
+                isClippingRequired = true;
             }
 
             double desiredWidth = size.Width + horizontalMargin;
@@ -683,12 +756,16 @@
             if (desiredWidth > availableSize.Width)
             {
                 desiredWidth = availableSize.Width;
+                isClippingRequired = true;
             }
 
             if (desiredHeight > availableSize.Height)
             {
                 desiredHeight = availableSize.Height;
+                isClippingRequired = true;
             }
+
+            this.unclippedSize = isClippingRequired ? unclippedSize : Size.Empty;
 
             return new Size(Math.Max(0, desiredWidth), Math.Max(0, desiredHeight));
         }
