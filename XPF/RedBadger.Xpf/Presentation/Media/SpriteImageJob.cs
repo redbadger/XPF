@@ -11,16 +11,13 @@ namespace RedBadger.Xpf.Presentation.Media
 
         private readonly Rect rect;
 
-        private Vector absoluteOffset;
-
         public SpriteImageJob(ImageSource imageSource, Rect rect)
         {
             this.imageSource = imageSource;
             this.rect = rect;
-            this.absoluteOffset = Vector.Zero;
         }
 
-        public void Draw(ISpriteBatch spriteBatch)
+        public void Draw(ISpriteBatch spriteBatch, Vector offset)
         {
             var image = this.imageSource as XnaImage;
             if (image == null)
@@ -29,15 +26,10 @@ namespace RedBadger.Xpf.Presentation.Media
             }
 
             Rect drawRect = this.rect != Rect.Empty ? this.rect : new Rect();
-            drawRect.X += this.absoluteOffset.X;
-            drawRect.Y += this.absoluteOffset.Y;
+            drawRect.X += offset.X;
+            drawRect.Y += offset.Y;
 
             spriteBatch.Draw(image.Texture, drawRect, Colors.White);
-        }
-
-        public void SetAbsoluteOffset(Vector offset)
-        {
-            this.absoluteOffset = offset;
         }
     }
 }

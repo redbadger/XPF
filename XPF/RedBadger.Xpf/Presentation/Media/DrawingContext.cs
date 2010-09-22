@@ -15,6 +15,8 @@
 
         private Rect clippingRect = Rect.Empty;
 
+        private Vector absoluteOffset;
+
         public DrawingContext(IElement element, IPrimitivesService primitivesService)
         {
             if (element == null)
@@ -61,18 +63,13 @@
         {
             foreach (ISpriteJob spriteJob in this.jobs)
             {
-                spriteJob.Draw(spriteBatch);
+                spriteJob.Draw(spriteBatch, this.absoluteOffset);
             }
         }
 
         public void PreDraw()
         {
-            Vector absoluteOffset = this.element.CalculateAbsoluteOffset();
-
-            foreach (ISpriteJob spriteJob in this.jobs)
-            {
-                spriteJob.SetAbsoluteOffset(absoluteOffset);
-            }
+            this.absoluteOffset = this.element.CalculateAbsoluteOffset();
         }
 
         public void DrawImage(ImageSource imageSource, Rect rect)

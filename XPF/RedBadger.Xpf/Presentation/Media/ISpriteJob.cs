@@ -4,8 +4,6 @@
 
     public interface ISpriteJob
     {
-        void Draw(ISpriteBatch spriteBatch);
-
-        void SetAbsoluteOffset(Vector offset);
+        void Draw(ISpriteBatch spriteBatch, Vector offset);
     }
 }

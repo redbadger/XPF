@@ -12,30 +12,22 @@
 
         private readonly string text;
 
-        private Vector absoluteOffset;
-
         public SpriteFontJob(ISpriteFont spriteFont, string text, Vector position, Brush brush)
         {
             this.spriteFont = spriteFont;
             this.text = text;
             this.position = position;
             this.brush = brush;
-            this.absoluteOffset = Vector.Zero;
         }
 
-        public void Draw(ISpriteBatch spriteBatch)
+        public void Draw(ISpriteBatch spriteBatch, Vector offset)
         {
             var solidColorBrush = this.brush as SolidColorBrush;
             spriteBatch.DrawString(
                 this.spriteFont, 
                 this.text, 
-                this.position + this.absoluteOffset, 
+                this.position + offset, 
                 solidColorBrush != null ? solidColorBrush.Color : Colors.Magenta);
-        }
-
-        public void SetAbsoluteOffset(Vector offset)
-        {
-            this.absoluteOffset = offset;
         }
     }
 }
