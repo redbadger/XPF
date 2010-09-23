@@ -15,6 +15,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.DrawingContextSpecs
 
     using Moq;
 
+    using RedBadger.Xpf.Adapters.Xna;
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Media;

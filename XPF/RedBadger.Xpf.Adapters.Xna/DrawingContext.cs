@@ -1,9 +1,11 @@
-﻿namespace RedBadger.Xpf.Presentation.Media
+﻿namespace RedBadger.Xpf.Adapters.Xna
 {
     using System;
     using System.Collections.Generic;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation;
+    using RedBadger.Xpf.Presentation.Media;
 
     public class DrawingContext : IDrawingContext
     {
@@ -13,9 +15,9 @@
 
         private readonly IPrimitivesService primitivesService;
 
-        private Rect clippingRect = Rect.Empty;
-
         private Vector absoluteOffset;
+
+        private Rect clippingRect = Rect.Empty;
 
         public DrawingContext(IElement element, IPrimitivesService primitivesService)
         {

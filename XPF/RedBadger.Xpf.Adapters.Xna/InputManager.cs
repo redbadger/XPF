@@ -1,4 +1,4 @@
-﻿namespace RedBadger.Xpf.Input
+﻿namespace RedBadger.Xpf.Adapters.Xna
 {
     using System;
     using System.Collections.Generic;

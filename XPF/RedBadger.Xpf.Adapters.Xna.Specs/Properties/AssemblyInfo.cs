@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RedBadger.Xpf")]
-[assembly: AssemblyDescription("XPF - An XNA Layout Framework from Red Badger")]
+[assembly: AssemblyTitle("RedBadger.Xpf.Adapters.Xna.Specs")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Red Badger Consulting Limited")]
-[assembly: AssemblyProduct("XPF by Red Badger")]
-[assembly: AssemblyCopyright("Copyright Red Badger Consulting Limited © 2010")]
+[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyProduct("RedBadger.Xpf.Adapters.Xna.Specs")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,15 +20,17 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("8dec77cc-1197-40cd-9d40-5426c49faeb6")]
+[assembly: Guid("d0f25119-1bd7-475e-b4dd-024e5b476c8a")]
 
 // Version information for an assembly consists of the following four values:
+//
 //      Major Version
 //      Minor Version 
 //      Build Number
 //      Revision
+//
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.*")]
-[assembly: InternalsVisibleTo("RedBadger.Xpf.Specs")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

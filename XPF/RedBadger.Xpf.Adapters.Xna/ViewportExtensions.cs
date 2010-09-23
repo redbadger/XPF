@@ -1,4 +1,4 @@
-namespace RedBadger.Xpf.Graphics
+namespace RedBadger.Xpf.Adapters.Xna
 {
     using Microsoft.Xna.Framework.Graphics;
 

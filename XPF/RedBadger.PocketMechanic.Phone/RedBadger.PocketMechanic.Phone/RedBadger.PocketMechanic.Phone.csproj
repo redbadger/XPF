@@ -94,6 +94,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\RedBadger.Xpf.Phone.Adapters.Xna\RedBadger.Xpf.Phone.Adapters.Xna.csproj">
+      <Project>{D2E5904C-222C-47A6-80A5-6E8127FB8A36}</Project>
+      <Name>RedBadger.Xpf.Phone.Adapters.Xna</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\RedBadger.Xpf.Phone\RedBadger.Xpf.Phone.csproj">
       <Project>{545640ED-7CE0-4DBE-A060-251C61F3AEF6}</Project>
       <Name>RedBadger.Xpf.Phone</Name>

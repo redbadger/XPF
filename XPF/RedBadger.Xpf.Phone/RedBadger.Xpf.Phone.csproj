@@ -47,9 +47,6 @@
   <ItemGroup>
     <Reference Include="Microsoft.Phone, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Reactive, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Xna.Framework.Input.Touch, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
@@ -75,24 +72,6 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Graphics\ITexture2D.cs">
       <Link>Graphics\ITexture2D.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Graphics\PrimitivesService.cs">
-      <Link>Graphics\PrimitivesService.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Graphics\SpriteBatchAdapter.cs">
-      <Link>Graphics\SpriteBatchAdapter.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Graphics\SpriteFontAdapter.cs">
-      <Link>Graphics\SpriteFontAdapter.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Graphics\Texture2DAdapter.cs">
-      <Link>Graphics\Texture2DAdapter.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Graphics\ViewportExtensions.cs">
-      <Link>Graphics\ViewportExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Input\InputManager.cs">
-      <Link>Input\InputManager.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\Controls\ScrollData.cs">
       <Link>Internal\Controls\ScrollData.cs</Link>
@@ -286,9 +265,6 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\Colors.cs">
       <Link>Presentation\Media\Colors.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\DrawingContext.cs">
-      <Link>Presentation\Media\DrawingContext.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\IDrawingContext.cs">
       <Link>Presentation\Media\IDrawingContext.cs</Link>
     </Compile>
@@ -310,20 +286,8 @@
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\ISpriteJob.cs">
       <Link>Presentation\Media\ISpriteJob.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Renderer.cs">
-      <Link>Presentation\Media\Renderer.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\SolidColorBrush.cs">
       <Link>Presentation\Media\SolidColorBrush.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\SpriteFontJob.cs">
-      <Link>Presentation\Media\SpriteFontJob.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\SpriteImageJob.cs">
-      <Link>Presentation\Media\SpriteImageJob.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\SpriteTextureJob.cs">
-      <Link>Presentation\Media\SpriteTextureJob.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Presentation\Media\Stretch.cs">
       <Link>Presentation\Media\Stretch.cs</Link>
@@ -369,7 +333,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Input\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>
@@ -380,13 +346,10 @@
   <PropertyGroup>
     <PostBuildEvent>copy RedBadger.Xpf.Phone.dll $(SolutionDir)..\XPF.Samples\Lib\XPF</PostBuildEvent>
   </PropertyGroup>
-    <Target Name="AfterBuild">
-        <Exec Condition="!Exists('$(TargetDir)$(TargetName).xml')"
-              Command="copy &quot;$(TargetDir)*.tmp&quot; $(SolutionDir)..\XPF.Samples\Lib\XPF\$(TargetName).xml" />
-        <Copy Condition="Exists('$(TargetDir)$(TargetName).xml')"
-              SourceFiles="$(TargetDir)$(TargetName).xml"
-              DestinationFolder="$(SolutionDir)..\XPF.Samples\Lib\XPF\" />
-    </Target>
+  <Target Name="AfterBuild">
+    <Exec Condition="!Exists('$(TargetDir)$(TargetName).xml')" Command="copy &quot;$(TargetDir)*.tmp&quot; $(SolutionDir)..\XPF.Samples\Lib\XPF\$(TargetName).xml" />
+    <Copy Condition="Exists('$(TargetDir)$(TargetName).xml')" SourceFiles="$(TargetDir)$(TargetName).xml" DestinationFolder="$(SolutionDir)..\XPF.Samples\Lib\XPF\" />
+  </Target>
   <!--
       To modify your build process, add your task inside one of the targets below and uncomment it. 
       Other similar extension points exist, see Microsoft.Common.targets.

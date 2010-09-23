@@ -6,7 +6,7 @@ namespace Xpf.Samples.S02Wp7Orientation
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Adapters.Xna;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;

@@ -5,9 +5,7 @@ namespace RedBadger.PocketMechanic.Phone
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Input;
-    using RedBadger.Xpf.Presentation;
+    using RedBadger.Xpf.Adapters.Xna;
     using RedBadger.Xpf.Presentation.Controls;
     using RedBadger.Xpf.Presentation.Media;
 
@@ -56,7 +54,7 @@ namespace RedBadger.PocketMechanic.Phone
             var grid = new Grid { Width = 200, Height = 200 };
             grid.ColumnDefinitions.Add(new ColumnDefinition { MinWidth = 30d });
             grid.ColumnDefinitions.Add(new ColumnDefinition());
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = 100d });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { MinWidth = 100d });
 
             var child1 = new Border { Background = new SolidColorBrush(Colors.Red) };
             var child2 = new Border { Background = new SolidColorBrush(Colors.Yellow) };

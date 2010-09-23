@@ -116,6 +116,10 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\RedBadger.Xpf.Adapters.Xna\RedBadger.Xpf.Adapters.Xna.csproj">
+      <Project>{4C0C9785-D77C-4833-8B2F-4C20525D9B2D}</Project>
+      <Name>RedBadger.Xpf.Adapters.Xna</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\RedBadger.Xpf\RedBadger.Xpf.csproj">
       <Project>{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}</Project>
       <Name>RedBadger.Xpf</Name>

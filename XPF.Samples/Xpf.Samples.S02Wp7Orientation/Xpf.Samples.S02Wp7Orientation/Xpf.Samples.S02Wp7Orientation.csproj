@@ -72,6 +72,9 @@
     <Reference Include="RedBadger.Xpf.Phone">
       <HintPath>..\..\Lib\XPF\RedBadger.Xpf.Phone.dll</HintPath>
     </Reference>
+    <Reference Include="RedBadger.Xpf.Phone.Adapters.Xna">
+      <HintPath>..\..\Lib\XPF\RedBadger.Xpf.Phone.Adapters.Xna.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -110,8 +113,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xpf.Samples.S02Wp7OrientationContent\Xpf.Samples.S02Wp7OrientationContent.contentproj">
-      <Name>Xpf.Samples.S02Wp7OrientationContent</Name>
+      <Name>Xpf.Samples.S02Wp7OrientationContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{5918EF3C-412B-422D-8F17-6D0952D21B6B}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

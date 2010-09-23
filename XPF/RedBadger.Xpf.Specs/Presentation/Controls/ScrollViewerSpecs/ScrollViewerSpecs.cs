@@ -17,6 +17,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ScrollViewerSpecs
 
     using Moq;
 
+    using RedBadger.Xpf.Adapters.Xna;
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Presentation.Controls;

@@ -1,6 +1,8 @@
-﻿namespace RedBadger.Xpf.Graphics
+﻿namespace RedBadger.Xpf.Adapters.Xna
 {
     using Microsoft.Xna.Framework.Graphics;
+
+    using RedBadger.Xpf.Graphics;
 
     public class Texture2DAdapter : ITexture2D
     {

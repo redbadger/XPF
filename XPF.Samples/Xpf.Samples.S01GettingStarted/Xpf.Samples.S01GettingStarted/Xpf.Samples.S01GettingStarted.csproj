@@ -94,6 +94,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Lib\XPF\RedBadger.Xpf.dll</HintPath>
     </Reference>
+    <Reference Include="RedBadger.Xpf.Adapters.Xna">
+      <HintPath>..\..\Lib\XPF\RedBadger.Xpf.Adapters.Xna.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -119,8 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xpf.Samples.S01GettingStartedContent\Xpf.Samples.S01GettingStartedContent.contentproj">
-      <Name>Xpf.Samples.S01GettingStartedContent</Name>
+      <Name>Xpf.Samples.S01GettingStartedContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{3BDD472B-EA2B-465E-B156-F112684D5739}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

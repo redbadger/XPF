@@ -1,7 +1,9 @@
-﻿namespace RedBadger.Xpf.Graphics
+﻿namespace RedBadger.Xpf.Adapters.Xna
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+
+    using RedBadger.Xpf.Graphics;
 
     public class PrimitivesService : IPrimitivesService
     {

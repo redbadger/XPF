@@ -1,9 +1,11 @@
-﻿namespace RedBadger.Xpf.Presentation.Media
+﻿namespace RedBadger.Xpf.Adapters.Xna
 {
     using System.Collections.Generic;
     using System.Linq;
 
     using RedBadger.Xpf.Graphics;
+    using RedBadger.Xpf.Presentation;
+    using RedBadger.Xpf.Presentation.Media;
 
     public class Renderer : IRenderer
     {
