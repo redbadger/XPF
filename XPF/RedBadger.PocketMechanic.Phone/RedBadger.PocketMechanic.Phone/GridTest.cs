@@ -66,7 +66,11 @@ namespace RedBadger.PocketMechanic.Phone
                                     Height = 100,
                                     Background = new SolidColorBrush(Colors.Cyan),
                                     Child = new TextBlock(spriteFontAdapter) { Text = "I wonder whether this will clip" }
-                                }
+                                },
+                            new TextBlock(spriteFontAdapter)
+                            {
+                                Text = "this can't all fit in the space sadsjds sd sd asd as das das da sd asd as dasd "
+                            }
                         }
                     }
                 };

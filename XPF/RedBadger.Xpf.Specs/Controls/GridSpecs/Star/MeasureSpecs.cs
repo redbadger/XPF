@@ -29,15 +29,13 @@ namespace RedBadger.Xpf.Specs.Controls.GridSpecs.Star
         private Establish context = () =>
             {
                 child = new Mock<UIElement> { CallBase = true };
-                child.Object.Width = 50;
-                child.Object.Height = 60;
 
                 Subject.Children.Add(child.Object);
             };
 
         private Because of = () => Subject.Measure(AvailableSize);
 
-        private It should_have_a_desired_size_equal_to_the_available_size =
+        private It should_measure_its_child_with_the_available_size =
             () =>
             child.Protected().Verify(
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(value => value.Equals(AvailableSize)));
@@ -71,11 +69,7 @@ namespace RedBadger.Xpf.Specs.Controls.GridSpecs.Star
                 MeasureOverride, Times.Once(), ItExpr.Is<Size>(value => value.Equals(expectedCellSize)));
 
         private It should_have_a_desired_size_equal_to_the_sum_of_the_largest_children_in_each_row_and_column =
-            () =>
-            Subject.DesiredSize.ShouldEqual(
-                new Size(
-                BottomLeftChild.Object.Width + BottomRightChild.Object.Width, 
-                TopRightChild.Object.Height + BottomRightChild.Object.Height));
+            () => Subject.DesiredSize.ShouldEqual(new Size());
     }
 
     [Subject(typeof(Grid), "Measure")]

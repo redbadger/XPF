@@ -722,6 +722,9 @@
 
             var minMax = new MinMax(this);
 
+            availableSizeWithoutMargins.Width = availableSizeWithoutMargins.Width.Coerce(minMax.MinWidth, minMax.MaxWidth);
+            availableSizeWithoutMargins.Height = availableSizeWithoutMargins.Height.Coerce(minMax.MinHeight, minMax.MaxHeight);
+
             Size size = this.MeasureOverride(availableSizeWithoutMargins);
 
             size = new Size(Math.Max(size.Width, minMax.MinWidth), Math.Max(size.Height, minMax.MinHeight));

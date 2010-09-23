@@ -7,7 +7,7 @@ namespace Xpf.Samples.S02Wp7Orientation
     using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf;
-    using RedBadger.Xpf.Adapters.Xna;
+    using RedBadger.Xpf.Adapters.Xna.Graphics;
     using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Media;
 
@@ -26,9 +26,7 @@ namespace Xpf.Samples.S02Wp7Orientation
 
         public override void Draw(GameTime gameTime)
         {
-            this.spriteBatchAdapter.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             this.rootElement.Draw();
-            this.spriteBatchAdapter.End();
 
             base.Draw(gameTime);
         }
@@ -41,7 +39,7 @@ namespace Xpf.Samples.S02Wp7Orientation
 
         protected override void LoadContent()
         {
-            this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
+            this.spriteBatchAdapter = new SpriteBatchAdapter(new SpriteBatch(this.GraphicsDevice));
             var primitivesService = new PrimitivesService(this.GraphicsDevice);
             var renderer = new Renderer(this.spriteBatchAdapter, primitivesService);
 
