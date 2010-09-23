@@ -16,8 +16,6 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     using Moq;
     using Moq.Protected;
 
-    using RedBadger.Xpf.Presentation;
-
     using It = Machine.Specifications.It;
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]

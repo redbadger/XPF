@@ -13,8 +13,6 @@ namespace RedBadger.Xpf.Specs.Presentation.PointSpecs
 {
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
-
     [Subject(typeof(Point))]
     public class when_two_points_are_equal
     {
@@ -128,8 +126,7 @@ namespace RedBadger.Xpf.Specs.Presentation.PointSpecs
 
         private Because of = () => result = (Size)subject;
 
-        private It should_result_in_an_equivalent_Size = () =>
-            result.ShouldEqual(new Size(10, 20));
+        private It should_result_in_an_equivalent_Size = () => result.ShouldEqual(new Size(10, 20));
     }
 
     [Subject(typeof(Point))]
@@ -143,7 +140,6 @@ namespace RedBadger.Xpf.Specs.Presentation.PointSpecs
 
         private Because of = () => result = (Vector)subject;
 
-        private It should_result_in_an_equivalent_Size = () =>
-            result.ShouldEqual(new Vector(10, 20));
+        private It should_result_in_an_equivalent_Size = () => result.ShouldEqual(new Vector(10, 20));
     }
 }

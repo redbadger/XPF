@@ -15,10 +15,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Pixel
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
-
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
+    using RedBadger.Xpf.Controls;
 
     public abstract class a_Grid_with_4_children : a_Grid
     {
@@ -31,43 +28,43 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Pixel
         protected static Mock<UIElement> TopRightChild;
 
         private Establish context = () =>
-        {
-            TopLeftChild = new Mock<UIElement> { CallBase = true };
-            TopLeftChild.Object.Width = 50;
-            TopLeftChild.Object.Height = 60;
-            TopLeftChild.Object.HorizontalAlignment = HorizontalAlignment.Left;
-            TopLeftChild.Object.VerticalAlignment = VerticalAlignment.Top;
-            Grid.SetColumn(TopLeftChild.Object, 0);
-            Grid.SetRow(TopLeftChild.Object, 0);
+            {
+                TopLeftChild = new Mock<UIElement> { CallBase = true };
+                TopLeftChild.Object.Width = 50;
+                TopLeftChild.Object.Height = 60;
+                TopLeftChild.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                TopLeftChild.Object.VerticalAlignment = VerticalAlignment.Top;
+                Grid.SetColumn(TopLeftChild.Object, 0);
+                Grid.SetRow(TopLeftChild.Object, 0);
 
-            TopRightChild = new Mock<UIElement> { CallBase = true };
-            TopRightChild.Object.Width = 70;
-            TopRightChild.Object.Height = 80;
-            TopRightChild.Object.HorizontalAlignment = HorizontalAlignment.Left;
-            TopRightChild.Object.VerticalAlignment = VerticalAlignment.Top;
-            Grid.SetColumn(TopRightChild.Object, 1);
-            Grid.SetRow(TopRightChild.Object, 0);
+                TopRightChild = new Mock<UIElement> { CallBase = true };
+                TopRightChild.Object.Width = 70;
+                TopRightChild.Object.Height = 80;
+                TopRightChild.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                TopRightChild.Object.VerticalAlignment = VerticalAlignment.Top;
+                Grid.SetColumn(TopRightChild.Object, 1);
+                Grid.SetRow(TopRightChild.Object, 0);
 
-            BottomLeftChild = new Mock<UIElement> { CallBase = true };
-            BottomLeftChild.Object.Width = 10;
-            BottomLeftChild.Object.Height = 20;
-            BottomLeftChild.Object.HorizontalAlignment = HorizontalAlignment.Left;
-            BottomLeftChild.Object.VerticalAlignment = VerticalAlignment.Top;
-            Grid.SetColumn(BottomLeftChild.Object, 0);
-            Grid.SetRow(BottomLeftChild.Object, 1);
+                BottomLeftChild = new Mock<UIElement> { CallBase = true };
+                BottomLeftChild.Object.Width = 10;
+                BottomLeftChild.Object.Height = 20;
+                BottomLeftChild.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                BottomLeftChild.Object.VerticalAlignment = VerticalAlignment.Top;
+                Grid.SetColumn(BottomLeftChild.Object, 0);
+                Grid.SetRow(BottomLeftChild.Object, 1);
 
-            BottomRightChild = new Mock<UIElement> { CallBase = true };
-            BottomRightChild.Object.Width = 30;
-            BottomRightChild.Object.Height = 40;
-            BottomRightChild.Object.HorizontalAlignment = HorizontalAlignment.Left;
-            BottomRightChild.Object.VerticalAlignment = VerticalAlignment.Top;
-            Grid.SetColumn(BottomRightChild.Object, 1);
-            Grid.SetRow(BottomRightChild.Object, 1);
+                BottomRightChild = new Mock<UIElement> { CallBase = true };
+                BottomRightChild.Object.Width = 30;
+                BottomRightChild.Object.Height = 40;
+                BottomRightChild.Object.HorizontalAlignment = HorizontalAlignment.Left;
+                BottomRightChild.Object.VerticalAlignment = VerticalAlignment.Top;
+                Grid.SetColumn(BottomRightChild.Object, 1);
+                Grid.SetRow(BottomRightChild.Object, 1);
 
-            Subject.Children.Add(TopLeftChild.Object);
-            Subject.Children.Add(TopRightChild.Object);
-            Subject.Children.Add(BottomLeftChild.Object);
-            Subject.Children.Add(BottomRightChild.Object);
-        };
+                Subject.Children.Add(TopLeftChild.Object);
+                Subject.Children.Add(TopRightChild.Object);
+                Subject.Children.Add(BottomLeftChild.Object);
+                Subject.Children.Add(BottomRightChild.Object);
+            };
     }
 }

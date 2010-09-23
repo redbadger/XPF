@@ -1,7 +1,5 @@
 namespace RedBadger.Xpf.Internal.Controls
 {
-    using RedBadger.Xpf.Presentation;
-
     internal struct ScrollData
     {
         public bool CanHorizontallyScroll;

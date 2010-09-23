@@ -15,8 +15,6 @@ namespace RedBadger.Xpf.Specs.Presentation.VectorSpecs
 
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
-
     [Subject(typeof(Vector))]
     public class when_a_vector_is_asked_for_its_length
     {

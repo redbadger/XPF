@@ -16,8 +16,6 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
-
     [Subject(typeof(UIElement), "Children")]
     public class when_children_are_requested : a_UIElement
     {

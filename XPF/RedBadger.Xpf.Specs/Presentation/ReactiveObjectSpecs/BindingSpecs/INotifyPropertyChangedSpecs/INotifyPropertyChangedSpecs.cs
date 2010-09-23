@@ -15,10 +15,9 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.INot
 
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Data;
-    using RedBadger.Xpf.Presentation.Media;
+    using RedBadger.Xpf.Controls;
+    using RedBadger.Xpf.Data;
+    using RedBadger.Xpf.Media;
 
     public class TestBindingObject : INotifyPropertyChanged
     {
@@ -207,6 +206,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.INot
         private It should_have_the_correct_brush_on_the_target =
             () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
     }
+
     [Subject(typeof(ReactiveObject), "Two Way")]
     public class when_a_binding_is_two_way_to_a_property_on_a_specified_source
     {

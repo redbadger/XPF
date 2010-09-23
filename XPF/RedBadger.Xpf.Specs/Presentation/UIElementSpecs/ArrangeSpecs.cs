@@ -18,8 +18,6 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     using Moq;
     using Moq.Protected;
 
-    using RedBadger.Xpf.Presentation;
-
     using It = Machine.Specifications.It;
 
     [Subject(typeof(UIElement), "Arrange")]
@@ -111,8 +109,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private It should_layout_its_children_within_the_desired_size =
             () =>
-            Subject.Protected().Verify(
-                ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
+            Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
     }
 
     [Subject(typeof(UIElement), "Arrange")]
@@ -162,8 +159,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private It should_layout_its_children_within_the_desired_size =
             () =>
-            Subject.Protected().Verify(
-                ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
+            Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
     }
 
     [Subject(typeof(UIElement), "Arrange - Offset Calculation")]

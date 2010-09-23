@@ -13,7 +13,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
 {
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Controls;
 
     public abstract class an_ItemsControl
     {

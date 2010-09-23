@@ -15,8 +15,6 @@ namespace RedBadger.Xpf.Specs.Presentation
 
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
-
     using Rhino.Mocks;
 
     public abstract class a_UIElement

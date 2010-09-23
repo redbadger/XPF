@@ -16,14 +16,12 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
-
     using It = Machine.Specifications.It;
 
     public class TestBindingObject : ReactiveObject
     {
-        private static readonly ReactiveProperty<double> WidthProperty =
-            ReactiveProperty<double>.Register("Width", typeof(TestBindingObject), double.NaN, WidthChangedCallback);
+        private static readonly ReactiveProperty<double> WidthProperty = ReactiveProperty<double>.Register(
+            "Width", typeof(TestBindingObject), double.NaN, WidthChangedCallback);
 
         public double Width
         {
@@ -43,10 +41,10 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
         }
 
         private static void WidthChangedCallback(
-            IReactiveObject source, 
-            ReactivePropertyChangeEventArgs<double> reactivePropertyChange)
+            IReactiveObject source, ReactivePropertyChangeEventArgs<double> reactivePropertyChange)
         {
-            ((TestBindingObject)source).WidthChangedCallback(reactivePropertyChange.OldValue, reactivePropertyChange.NewValue);
+            ((TestBindingObject)source).WidthChangedCallback(
+                reactivePropertyChange.OldValue, reactivePropertyChange.NewValue);
         }
     }
 
@@ -79,9 +77,9 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs
     [Subject(typeof(ReactiveObject))]
     public class when_changing_a_reactive_property_value : a_ReactiveObject
     {
-        private static readonly ReactiveProperty<string> TestPropertyProperty;
-
         private const string ExpectedFinalValue = "Final Value";
+
+        private static readonly ReactiveProperty<string> TestPropertyProperty;
 
         private static readonly string defaultValue = string.Empty;
 

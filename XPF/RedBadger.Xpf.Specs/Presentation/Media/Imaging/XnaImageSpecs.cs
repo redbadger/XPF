@@ -16,7 +16,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.Imaging
     using Moq;
 
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation.Media.Imaging;
+    using RedBadger.Xpf.Media.Imaging;
 
     using It = Machine.Specifications.It;
 

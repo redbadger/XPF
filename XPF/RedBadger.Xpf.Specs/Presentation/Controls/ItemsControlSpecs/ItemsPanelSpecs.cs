@@ -19,8 +19,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ItemsControlSpecs
     using Moq;
     using Moq.Protected;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Controls;
 
     using It = Machine.Specifications.It;
 

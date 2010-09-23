@@ -1,7 +1,5 @@
 namespace RedBadger.Xpf.Internal
 {
-    using RedBadger.Xpf.Presentation;
-
     internal static class ThicknessExtensions
     {
         public static Size Collapse(this Thickness thickness)

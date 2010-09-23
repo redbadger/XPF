@@ -3,9 +3,8 @@ namespace RedBadger.Xpf.Adapters.Xna
     using System;
 
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Media;
-    using RedBadger.Xpf.Presentation.Media.Imaging;
+    using RedBadger.Xpf.Media;
+    using RedBadger.Xpf.Media.Imaging;
 
     public struct SpriteImageJob : ISpriteJob
     {

@@ -4,7 +4,6 @@
     using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
 
     public class SpriteFontAdapter : ISpriteFont
     {

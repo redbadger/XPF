@@ -15,9 +15,8 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Data;
+    using RedBadger.Xpf.Controls;
+    using RedBadger.Xpf.Data;
 
     using It = Machine.Specifications.It;
 

@@ -1,8 +1,7 @@
 ﻿namespace RedBadger.Xpf.Adapters.Xna
 {
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Media;
+    using RedBadger.Xpf.Media;
 
     internal struct SpriteFontJob : ISpriteJob
     {

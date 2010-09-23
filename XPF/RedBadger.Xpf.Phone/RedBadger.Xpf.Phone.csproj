@@ -61,6 +61,117 @@
     <Reference Include="System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\RedBadger.Xpf\Controls\Border.cs">
+      <Link>Controls\Border.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Button.cs">
+      <Link>Controls\Button.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Canvas.cs">
+      <Link>Controls\Canvas.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\ColumnDefinition.cs">
+      <Link>Controls\ColumnDefinition.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\ContentControl.cs">
+      <Link>Controls\ContentControl.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Control.cs">
+      <Link>Controls\Control.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\DefinitionBase.cs">
+      <Link>Controls\DefinitionBase.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Grid.cs">
+      <Link>Controls\Grid.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Image.cs">
+      <Link>Controls\Image.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\ItemsControl.cs">
+      <Link>Controls\ItemsControl.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Orientation.cs">
+      <Link>Controls\Orientation.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Panel.cs">
+      <Link>Controls\Panel.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Primitives\ButtonBase.cs">
+      <Link>Controls\Primitives\ButtonBase.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Primitives\IScrollInfo.cs">
+      <Link>Controls\Primitives\IScrollInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\RootElement.cs">
+      <Link>Controls\RootElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\RowDefinition.cs">
+      <Link>Controls\RowDefinition.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\ScrollContentPresenter.cs">
+      <Link>Controls\ScrollContentPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\ScrollViewer.cs">
+      <Link>Controls\ScrollViewer.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\StackPanel.cs">
+      <Link>Controls\StackPanel.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\StretchDirection.cs">
+      <Link>Controls\StretchDirection.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\TextBlock.cs">
+      <Link>Controls\TextBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\VirtualizingStackPanel.cs">
+      <Link>Controls\VirtualizingStackPanel.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\BindingFactory.cs">
+      <Link>Data\BindingFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\BindingResolutionMode.cs">
+      <Link>Data\BindingResolutionMode.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\IBinding.cs">
+      <Link>Data\IBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\IDualChannel.cs">
+      <Link>Data\IDualChannel.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\INotifyPropertyChanged.cs">
+      <Link>Data\INotifyPropertyChanged.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\OneWayBinding.cs">
+      <Link>Data\OneWayBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\OneWayReactivePropertyBinding.cs">
+      <Link>Data\OneWayReactivePropertyBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\OneWayToSourceBinding.cs">
+      <Link>Data\OneWayToSourceBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\OneWayToSourceReactivePropertyBinding.cs">
+      <Link>Data\OneWayToSourceReactivePropertyBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\PropertyChangedEventArgs.cs">
+      <Link>Data\PropertyChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\TwoWayBinding.cs">
+      <Link>Data\TwoWayBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\TwoWayReactivePropertyBinding.cs">
+      <Link>Data\TwoWayReactivePropertyBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\ValueChangedBehaviorSubject.cs">
+      <Link>Data\ValueChangedBehaviorSubject.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\ElementCollection.cs">
+      <Link>ElementCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Extensions\IElementExtensions.cs">
+      <Link>Extensions\IElementExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Graphics\IPrimitivesService.cs">
       <Link>Graphics\IPrimitivesService.cs</Link>
     </Compile>
@@ -72,6 +183,30 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Graphics\ITexture2D.cs">
       <Link>Graphics\ITexture2D.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\GridLength.cs">
+      <Link>GridLength.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\GridUnitType.cs">
+      <Link>GridUnitType.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\HorizontalAlignment.cs">
+      <Link>HorizontalAlignment.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\IElement.cs">
+      <Link>IElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Input\Gesture.cs">
+      <Link>Input\Gesture.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Input\GestureType.cs">
+      <Link>Input\GestureType.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Input\IInputElement.cs">
+      <Link>Input\IInputElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Input\IInputManager.cs">
+      <Link>Input\IInputManager.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Internal\Controls\ScrollData.cs">
       <Link>Internal\Controls\ScrollData.cs</Link>
@@ -106,241 +241,104 @@
     <Compile Include="..\RedBadger.Xpf\Internal\VectorExtensions.cs">
       <Link>Internal\VectorExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\IReactiveObject.cs">
+      <Link>IReactiveObject.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\IReactiveProperty.cs">
+      <Link>IReactiveProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\IRootElement.cs">
+      <Link>IRootElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\ITemplatedList.cs">
+      <Link>ITemplatedList.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\License.cs">
       <Link>License.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Border.cs">
-      <Link>Presentation\Controls\Border.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\Brush.cs">
+      <Link>Media\Brush.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Button.cs">
-      <Link>Presentation\Controls\Button.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\Color.cs">
+      <Link>Media\Color.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Canvas.cs">
-      <Link>Presentation\Controls\Canvas.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\Colors.cs">
+      <Link>Media\Colors.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ColumnDefinition.cs">
-      <Link>Presentation\Controls\ColumnDefinition.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\IDrawingContext.cs">
+      <Link>Media\IDrawingContext.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ContentControl.cs">
-      <Link>Presentation\Controls\ContentControl.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\ImageSource.cs">
+      <Link>Media\ImageSource.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Control.cs">
-      <Link>Presentation\Controls\Control.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\Imaging\BitmapImage.cs">
+      <Link>Media\Imaging\BitmapImage.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\DefinitionBase.cs">
-      <Link>Presentation\Controls\DefinitionBase.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\Imaging\BitmapSource.cs">
+      <Link>Media\Imaging\BitmapSource.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Grid.cs">
-      <Link>Presentation\Controls\Grid.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\Imaging\XnaImage.cs">
+      <Link>Media\Imaging\XnaImage.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Image.cs">
-      <Link>Presentation\Controls\Image.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\IRenderer.cs">
+      <Link>Media\IRenderer.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ItemsControl.cs">
-      <Link>Presentation\Controls\ItemsControl.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\ISpriteJob.cs">
+      <Link>Media\ISpriteJob.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Orientation.cs">
-      <Link>Presentation\Controls\Orientation.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\SolidColorBrush.cs">
+      <Link>Media\SolidColorBrush.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Panel.cs">
-      <Link>Presentation\Controls\Panel.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\Stretch.cs">
+      <Link>Media\Stretch.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Primitives\ButtonBase.cs">
-      <Link>Presentation\Controls\Primitives\ButtonBase.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Point.cs">
+      <Link>Point.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\Primitives\IScrollInfo.cs">
-      <Link>Presentation\Controls\Primitives\IScrollInfo.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\ReactiveObject.cs">
+      <Link>ReactiveObject.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\RootElement.cs">
-      <Link>Presentation\Controls\RootElement.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\ReactiveProperty.cs">
+      <Link>ReactiveProperty.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\RowDefinition.cs">
-      <Link>Presentation\Controls\RowDefinition.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\ReactivePropertyChangedCallbacks.cs">
+      <Link>ReactivePropertyChangedCallbacks.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ScrollContentPresenter.cs">
-      <Link>Presentation\Controls\ScrollContentPresenter.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\ReactivePropertyChangeEventArgs.cs">
+      <Link>ReactivePropertyChangeEventArgs.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\ScrollViewer.cs">
-      <Link>Presentation\Controls\ScrollViewer.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Rect.cs">
+      <Link>Rect.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\StackPanel.cs">
-      <Link>Presentation\Controls\StackPanel.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Size.cs">
+      <Link>Size.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\StretchDirection.cs">
-      <Link>Presentation\Controls\StretchDirection.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\TextWrapping.cs">
+      <Link>TextWrapping.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\TextBlock.cs">
-      <Link>Presentation\Controls\TextBlock.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Thickness.cs">
+      <Link>Thickness.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Controls\VirtualizingStackPanel.cs">
-      <Link>Presentation\Controls\VirtualizingStackPanel.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\UIElement.cs">
+      <Link>UIElement.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\BindingFactory.cs">
-      <Link>Presentation\Data\BindingFactory.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Vector.cs">
+      <Link>Vector.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\BindingResolutionMode.cs">
-      <Link>Presentation\Data\BindingResolutionMode.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\VerticalAlignment.cs">
+      <Link>VerticalAlignment.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\IBinding.cs">
-      <Link>Presentation\Data\IBinding.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\IDualChannel.cs">
-      <Link>Presentation\Data\IDualChannel.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\INotifyPropertyChanged.cs">
-      <Link>Presentation\Data\INotifyPropertyChanged.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\OneWayBinding.cs">
-      <Link>Presentation\Data\OneWayBinding.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\OneWayReactivePropertyBinding.cs">
-      <Link>Presentation\Data\OneWayReactivePropertyBinding.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\OneWayToSourceBinding.cs">
-      <Link>Presentation\Data\OneWayToSourceBinding.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\OneWayToSourceReactivePropertyBinding.cs">
-      <Link>Presentation\Data\OneWayToSourceReactivePropertyBinding.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\PropertyChangedEventArgs.cs">
-      <Link>Presentation\Data\PropertyChangedEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\TwoWayBinding.cs">
-      <Link>Presentation\Data\TwoWayBinding.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\TwoWayReactivePropertyBinding.cs">
-      <Link>Presentation\Data\TwoWayReactivePropertyBinding.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Data\ValueChangedBehaviorSubject.cs">
-      <Link>Presentation\Data\ValueChangedBehaviorSubject.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\ElementCollection.cs">
-      <Link>Presentation\ElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Extensions\IElementExtensions.cs">
-      <Link>Presentation\Extensions\IElementExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\GridLength.cs">
-      <Link>Presentation\GridLength.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\GridUnitType.cs">
-      <Link>Presentation\GridUnitType.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\HorizontalAlignment.cs">
-      <Link>Presentation\HorizontalAlignment.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\IElement.cs">
-      <Link>Presentation\IElement.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Input\Gesture.cs">
-      <Link>Presentation\Input\Gesture.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Input\GestureType.cs">
-      <Link>Presentation\Input\GestureType.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Input\IInputElement.cs">
-      <Link>Presentation\Input\IInputElement.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Input\IInputManager.cs">
-      <Link>Presentation\Input\IInputManager.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\IReactiveObject.cs">
-      <Link>Presentation\IReactiveObject.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\IReactiveProperty.cs">
-      <Link>Presentation\IReactiveProperty.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\IRootElement.cs">
-      <Link>Presentation\IRootElement.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\ITemplatedList.cs">
-      <Link>Presentation\ITemplatedList.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Brush.cs">
-      <Link>Presentation\Media\Brush.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Color.cs">
-      <Link>Presentation\Media\Color.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Colors.cs">
-      <Link>Presentation\Media\Colors.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\IDrawingContext.cs">
-      <Link>Presentation\Media\IDrawingContext.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\ImageSource.cs">
-      <Link>Presentation\Media\ImageSource.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Imaging\BitmapImage.cs">
-      <Link>Presentation\Media\Imaging\BitmapImage.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Imaging\BitmapSource.cs">
-      <Link>Presentation\Media\Imaging\BitmapSource.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Imaging\XnaImage.cs">
-      <Link>Presentation\Media\Imaging\XnaImage.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\IRenderer.cs">
-      <Link>Presentation\Media\IRenderer.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\ISpriteJob.cs">
-      <Link>Presentation\Media\ISpriteJob.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\SolidColorBrush.cs">
-      <Link>Presentation\Media\SolidColorBrush.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Media\Stretch.cs">
-      <Link>Presentation\Media\Stretch.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Point.cs">
-      <Link>Presentation\Point.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\ReactiveObject.cs">
-      <Link>Presentation\ReactiveObject.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\ReactiveProperty.cs">
-      <Link>Presentation\ReactiveProperty.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\ReactivePropertyChangedCallbacks.cs">
-      <Link>Presentation\ReactivePropertyChangedCallbacks.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\ReactivePropertyChangeEventArgs.cs">
-      <Link>Presentation\ReactivePropertyChangeEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Rect.cs">
-      <Link>Presentation\Rect.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Size.cs">
-      <Link>Presentation\Size.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\TextWrapping.cs">
-      <Link>Presentation\TextWrapping.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Thickness.cs">
-      <Link>Presentation\Thickness.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\UIElement.cs">
-      <Link>Presentation\UIElement.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\Vector.cs">
-      <Link>Presentation\Vector.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\VerticalAlignment.cs">
-      <Link>Presentation\VerticalAlignment.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Presentation\VirtualizingElementCollection.cs">
-      <Link>Presentation\VirtualizingElementCollection.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\VirtualizingElementCollection.cs">
+      <Link>VirtualizingElementCollection.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Input\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" />
+      <UserProperties ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

@@ -14,7 +14,6 @@ namespace RedBadger.Xpf.Specs.Presentation.SizeSpecs
 
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Internal;
 
     [Subject(typeof(Size))]

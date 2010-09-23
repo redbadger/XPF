@@ -15,21 +15,20 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
 
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Data;
-    using RedBadger.Xpf.Presentation.Media;
+    using RedBadger.Xpf.Controls;
+    using RedBadger.Xpf.Data;
+    using RedBadger.Xpf.Media;
 
     public class TestBindingObject : ReactiveObject
     {
-        public static readonly ReactiveProperty<Brush> BrushProperty =
-            ReactiveProperty<Brush>.Register("Brush", typeof(TestBindingObject));
+        public static readonly ReactiveProperty<Brush> BrushProperty = ReactiveProperty<Brush>.Register(
+            "Brush", typeof(TestBindingObject));
 
         public static readonly ReactiveProperty<SolidColorBrush> SolidColorBrushProperty =
             ReactiveProperty<SolidColorBrush>.Register("SolidColorBrush", typeof(TestBindingObject));
 
-        public static readonly ReactiveProperty<double> WidthProperty =
-            ReactiveProperty<double>.Register("Width", typeof(TestBindingObject), double.NaN, WidthChangedCallback);
+        public static readonly ReactiveProperty<double> WidthProperty = ReactiveProperty<double>.Register(
+            "Width", typeof(TestBindingObject), double.NaN, WidthChangedCallback);
 
         private int widthPropertyChangedCalledbackCount;
 
@@ -81,8 +80,7 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
         }
 
         private static void WidthChangedCallback(
-            IReactiveObject source, 
-            ReactivePropertyChangeEventArgs<double> reactivePropertyChange)
+            IReactiveObject source, ReactivePropertyChangeEventArgs<double> reactivePropertyChange)
         {
             ((TestBindingObject)source).widthPropertyChangedCalledbackCount++;
         }
@@ -101,7 +99,8 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
             {
                 target = new ContentControl();
 
-                IObservable<double> fromSource = BindingFactory.CreateOneWay<TestBindingObject, double>(TestBindingObject.WidthProperty);
+                IObservable<double> fromSource =
+                    BindingFactory.CreateOneWay<TestBindingObject, double>(TestBindingObject.WidthProperty);
                 target.Bind(UIElement.WidthProperty, fromSource);
 
                 source = new TestBindingObject();
@@ -204,7 +203,8 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
                 source = new TestBindingObject();
                 target = new Border { DataContext = source };
 
-                IObservable<Brush> fromSource = BindingFactory.CreateOneWay<TestBindingObject, Brush>(TestBindingObject.BrushProperty);
+                IObservable<Brush> fromSource =
+                    BindingFactory.CreateOneWay<TestBindingObject, Brush>(TestBindingObject.BrushProperty);
                 target.Bind(Border.BorderBrushProperty, fromSource);
                 target.Measure(Size.Empty);
             };
@@ -234,7 +234,8 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
                 source = new TestBindingObject();
                 target = new Border { DataContext = source };
 
-                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource<TestBindingObject, Brush>(TestBindingObject.BrushProperty);
+                IObserver<Brush> toSource =
+                    BindingFactory.CreateOneWayToSource<TestBindingObject, Brush>(TestBindingObject.BrushProperty);
                 target.Bind(Border.BorderBrushProperty, toSource);
                 target.Measure(Size.Empty);
             };
@@ -258,7 +259,8 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
                 source = new TestBindingObject();
                 target = new Border { DataContext = source };
 
-                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource<TestBindingObject, Brush>(TestBindingObject.BrushProperty);
+                IObserver<Brush> toSource =
+                    BindingFactory.CreateOneWayToSource<TestBindingObject, Brush>(TestBindingObject.BrushProperty);
                 target.Bind(Border.BorderBrushProperty, toSource);
                 target.Measure(Size.Empty);
             };
@@ -369,7 +371,8 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactiveObjectSpecs.BindingSpecs.Reac
                 source = new TestBindingObject();
                 target = new Border();
 
-                IDualChannel<Brush> twoWay = BindingFactory.CreateTwoWay<TestBindingObject, Brush>(TestBindingObject.BrushProperty);
+                IDualChannel<Brush> twoWay =
+                    BindingFactory.CreateTwoWay<TestBindingObject, Brush>(TestBindingObject.BrushProperty);
                 target.Bind(Border.BorderBrushProperty, twoWay);
 
                 target.DataContext = source;

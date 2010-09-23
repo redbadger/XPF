@@ -15,8 +15,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Pixel
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Controls;
 
     using It = Machine.Specifications.It;
 

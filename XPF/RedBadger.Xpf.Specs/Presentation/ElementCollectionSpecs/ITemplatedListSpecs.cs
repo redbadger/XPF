@@ -17,8 +17,6 @@ namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
-
     using It = Machine.Specifications.It;
 
     [Subject(typeof(ElementCollection), "Visual Parent")]

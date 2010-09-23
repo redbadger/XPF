@@ -13,8 +13,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Pixel
 {
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Controls;
 
     [Subject(typeof(Grid), "Arrange")]
     public class when_arranging_two_rows_and_two_columns_of_type_pixel : a_Grid_with_4_children

@@ -18,11 +18,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ScrollViewerSpecs
     using Moq;
 
     using RedBadger.Xpf.Adapters.Xna;
+    using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Input;
-    using RedBadger.Xpf.Presentation.Media;
+    using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Specs.Extensions;
 
     using It = Machine.Specifications.It;

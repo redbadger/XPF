@@ -15,10 +15,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.StackPanelSpecs
 
     using Moq;
 
+    using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Media;
+    using RedBadger.Xpf.Media;
 
     using It = Machine.Specifications.It;
 

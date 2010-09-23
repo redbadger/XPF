@@ -15,8 +15,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Specs.Extensions;
 
     using It = Machine.Specifications.It;
@@ -135,29 +134,29 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
         private static readonly double widthUnit = AvailableSize.Width / 6;
 
         private Establish context = () =>
-        {
-            for (int row = 2; row >= 0; row--)
             {
-                Subject.RowDefinitions.Add(
-                    new RowDefinition { Height = new GridLength(row + 1, GridUnitType.Star) });
-            }
-
-            for (int col = 2; col >= 0; col--)
-            {
-                Subject.ColumnDefinitions.Add(
-                    new ColumnDefinition { Width = new GridLength(col + 1, GridUnitType.Star) });
-            }
-
-            for (int row = 0; row < 3; row++)
-            {
-                for (int col = 0; col < 3; col++)
+                for (int row = 2; row >= 0; row--)
                 {
-                    children[row, col] = CreateChild(row, col);
+                    Subject.RowDefinitions.Add(
+                        new RowDefinition { Height = new GridLength(row + 1, GridUnitType.Star) });
                 }
-            }
 
-            Subject.Measure(AvailableSize);
-        };
+                for (int col = 2; col >= 0; col--)
+                {
+                    Subject.ColumnDefinitions.Add(
+                        new ColumnDefinition { Width = new GridLength(col + 1, GridUnitType.Star) });
+                }
+
+                for (int row = 0; row < 3; row++)
+                {
+                    for (int col = 0; col < 3; col++)
+                    {
+                        children[row, col] = CreateChild(row, col);
+                    }
+                }
+
+                Subject.Measure(AvailableSize);
+            };
 
         private Because of = () => Subject.Arrange(new Rect(AvailableSize));
 
@@ -393,7 +392,6 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
                 new Vector(0d, RowMaxHeight + ((AvailableSize.Height - RowMaxHeight) / 2)));
     }
 
-
     [Subject(typeof(Grid), "Arrange - Excess Allocation")]
     public class when_arranging_a_grid_and_the_columns_are_over_allocated : a_Grid
     {
@@ -406,19 +404,19 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
         private static readonly Mock<UIElement>[] children = new Mock<UIElement>[3];
 
         private Establish context = () =>
-        {
-            Subject.ColumnDefinitions.Add(new ColumnDefinition { MinWidth = Column0Min });
-            Subject.ColumnDefinitions.Add(new ColumnDefinition());
-            Subject.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = Column2Min });
+            {
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { MinWidth = Column0Min });
+                Subject.ColumnDefinitions.Add(new ColumnDefinition());
+                Subject.ColumnDefinitions.Add(new ColumnDefinition { MinWidth = Column2Min });
 
-            children[0] = CreateChild(0, 0);
-            children[1] = CreateChild(0, 1);
-            children[2] = CreateChild(0, 2);
+                children[0] = CreateChild(0, 0);
+                children[1] = CreateChild(0, 1);
+                children[2] = CreateChild(0, 2);
 
-            children[1].Object.Width = ChildWidth;
+                children[1].Object.Width = ChildWidth;
 
-            Subject.Measure(AvailableSize);
-        };
+                Subject.Measure(AvailableSize);
+            };
 
         private Because of = () => Subject.Arrange(new Rect(AvailableSize));
 
@@ -426,7 +424,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
             () => children[0].Object.VisualOffset.ShouldEqual(new Vector(0d, 0d));
 
         private It should_layout_child_2_correctly =
-            () => children[1].Object.VisualOffset.ShouldBeCloseTo(new Vector((AvailableSize.Width - Column2Min) - AvailableSize.Width / 3, 0d));
+            () =>
+            children[1].Object.VisualOffset.ShouldBeCloseTo(
+                new Vector((AvailableSize.Width - Column2Min) - AvailableSize.Width / 3, 0d));
 
         private It should_layout_child_3_correctly =
             () => children[2].Object.VisualOffset.ShouldBeCloseTo(new Vector(AvailableSize.Width - Column2Min, 0d));

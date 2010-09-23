@@ -104,19 +104,16 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkReference="4c0c9785-d77c-4833-8b2f-4c20525d9b2d" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="4c0c9785-d77c-4833-8b2f-4c20525d9b2d" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
     <PostBuildEvent>copy RedBadger.Xpf.Phone.Adapters.Xna.dll $(SolutionDir)..\XPF.Samples\Lib\XPF</PostBuildEvent>
   </PropertyGroup>
-    <Target Name="AfterBuild">
-        <Exec Condition="!Exists('$(TargetDir)$(TargetName).xml')"
-              Command="copy &quot;$(TargetDir)*.tmp&quot; $(SolutionDir)..\XPF.Samples\Lib\XPF\$(TargetName).xml" />
-        <Copy Condition="Exists('$(TargetDir)$(TargetName).xml')"
-              SourceFiles="$(TargetDir)$(TargetName).xml"
-              DestinationFolder="$(SolutionDir)..\XPF.Samples\Lib\XPF\" />
-    </Target>
+  <Target Name="AfterBuild">
+    <Exec Condition="!Exists('$(TargetDir)$(TargetName).xml')" Command="copy &quot;$(TargetDir)*.tmp&quot; $(SolutionDir)..\XPF.Samples\Lib\XPF\$(TargetName).xml" />
+    <Copy Condition="Exists('$(TargetDir)$(TargetName).xml')" SourceFiles="$(TargetDir)$(TargetName).xml" DestinationFolder="$(SolutionDir)..\XPF.Samples\Lib\XPF\" />
+  </Target>
   <!--
       To modify your build process, add your task inside one of the targets below and uncomment it. 
       Other similar extension points exist, see Microsoft.Common.targets.

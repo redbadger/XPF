@@ -15,11 +15,9 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Auto
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Controls;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
 
     [Subject(typeof(Grid), "Measure - Auto")]
     public class when_an_element_is_added : a_Auto_Grid

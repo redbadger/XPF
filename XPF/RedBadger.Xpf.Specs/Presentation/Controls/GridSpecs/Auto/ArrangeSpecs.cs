@@ -13,8 +13,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Auto
 {
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Controls;
 
     [Subject(typeof(Grid), "Arrange")]
     public class when_arranging_two_rows_and_two_columns : an_Auto_Grid_with_two_rows_and_two_columns

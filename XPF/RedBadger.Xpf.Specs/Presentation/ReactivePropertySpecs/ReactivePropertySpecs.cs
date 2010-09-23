@@ -15,8 +15,6 @@ namespace RedBadger.Xpf.Specs.Presentation.ReactivePropertySpecs
 
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
-
     [Subject(typeof(ReactiveProperty<>), "Default Values")]
     public class when_a_reactive_property_of_reference_type_is_registered_with_no_default
     {

@@ -15,8 +15,6 @@ namespace RedBadger.Xpf.Specs.Presentation.GridLengthSpecs
 
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
-
     public abstract class a_GridLength
     {
         protected static GridLength gridLength;

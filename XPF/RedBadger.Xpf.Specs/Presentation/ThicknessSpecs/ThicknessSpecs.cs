@@ -4,7 +4,6 @@
 // </auto-generated>
 //-------------------------------------------------------------------------------------------------
 
-
 #pragma warning disable 169
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
@@ -13,8 +12,6 @@
 namespace RedBadger.Xpf.Specs.Presentation.ThicknessSpecs
 {
     using Machine.Specifications;
-
-    using RedBadger.Xpf.Presentation;
 
     [Subject(typeof(Thickness))]
     public class when_a_thickness_is_added_to_another_thickness
@@ -26,10 +23,10 @@ namespace RedBadger.Xpf.Specs.Presentation.ThicknessSpecs
         private static Thickness thickness2;
 
         private Establish context = () =>
-        {
-            thickness1 = new Thickness(1, 2, 3, 4);
-            thickness2 = new Thickness(10, 20, 30, 40);
-        };
+            {
+                thickness1 = new Thickness(1, 2, 3, 4);
+                thickness2 = new Thickness(10, 20, 30, 40);
+            };
 
         private Because of = () => result = thickness1 + thickness2;
 

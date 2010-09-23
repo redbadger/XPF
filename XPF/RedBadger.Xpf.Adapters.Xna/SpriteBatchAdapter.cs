@@ -4,9 +4,8 @@
     using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
 
-    using Color = RedBadger.Xpf.Presentation.Media.Color;
+    using Color = RedBadger.Xpf.Media.Color;
 
     public class SpriteBatchAdapter : SpriteBatch, ISpriteBatch
     {

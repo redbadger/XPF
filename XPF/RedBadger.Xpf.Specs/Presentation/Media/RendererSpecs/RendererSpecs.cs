@@ -17,8 +17,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Media.RendererSpecs
 
     using RedBadger.Xpf.Adapters.Xna;
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Media;
+    using RedBadger.Xpf.Media;
 
     using It = Machine.Specifications.It;
 

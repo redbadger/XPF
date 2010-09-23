@@ -15,8 +15,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Auto
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Controls;
 
     public abstract class a_Auto_Grid : a_Grid
     {

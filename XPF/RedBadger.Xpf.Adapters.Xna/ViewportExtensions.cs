@@ -2,8 +2,6 @@ namespace RedBadger.Xpf.Adapters.Xna
 {
     using Microsoft.Xna.Framework.Graphics;
 
-    using RedBadger.Xpf.Presentation;
-
     public static class ViewportExtensions
     {
         public static Rect ToRect(this Viewport viewport)

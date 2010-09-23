@@ -15,11 +15,10 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.ImageSpecs
 
     using Moq;
 
+    using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Media;
-    using RedBadger.Xpf.Presentation.Media.Imaging;
+    using RedBadger.Xpf.Media;
+    using RedBadger.Xpf.Media.Imaging;
 
     using It = Machine.Specifications.It;
 

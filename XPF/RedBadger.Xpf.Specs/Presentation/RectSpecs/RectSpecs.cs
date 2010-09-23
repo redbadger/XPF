@@ -14,7 +14,6 @@ namespace RedBadger.Xpf.Specs.Presentation.RectSpecs
 
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
     using RedBadger.Xpf.Internal;
 
     [Subject(typeof(Rect))]
@@ -347,10 +346,10 @@ namespace RedBadger.Xpf.Specs.Presentation.RectSpecs
         private static Rect subject;
 
         private Establish context = () =>
-        {
-            subject = new Rect(10, 20, 30, 40);
-            anotherRect = new Rect(30, 40, 50, 60);
-        };
+            {
+                subject = new Rect(10, 20, 30, 40);
+                anotherRect = new Rect(30, 40, 50, 60);
+            };
 
         private Because of = () => subject.Intersect(anotherRect);
 

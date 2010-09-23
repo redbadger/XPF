@@ -16,9 +16,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
     using Moq;
     using Moq.Protected;
 
+    using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Internal;
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
 
     using It = Machine.Specifications.It;
 

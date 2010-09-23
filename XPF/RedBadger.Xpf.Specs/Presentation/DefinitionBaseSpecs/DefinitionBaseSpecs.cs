@@ -13,8 +13,7 @@ namespace RedBadger.Xpf.Specs.Presentation.DefinitionBaseSpecs
 {
     using Machine.Specifications;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Controls;
 
     [Subject(typeof(DefinitionBase))]
     public class when_a_default_column_definition_is_initialized

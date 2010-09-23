@@ -17,9 +17,8 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Media;
+    using RedBadger.Xpf.Controls;
+    using RedBadger.Xpf.Media;
 
     using It = Machine.Specifications.It;
 
@@ -40,14 +39,16 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.BorderSpecs
     {
         private Because of = () => RootElement.Object.Update();
 
+        private It should_contain_the_correct_number_of_children =
+            () => Subject.GetVisualChildren().Count().ShouldEqual(1);
+
         private It should_have_no_effect_on_its_child = () => Child.Object.VisualOffset.ShouldEqual(Vector.Zero);
+
+        private It should_return_its_child_when_children_are_requested =
+            () => Subject.GetVisualChildren().First().ShouldBeTheSameAs(Child.Object);
 
         private It should_set_itself_as_the_visual_parent_on_the_child =
             () => Child.Object.VisualParent.ShouldEqual(Subject);
-
-        private It should_contain_the_correct_number_of_children = () => Subject.GetVisualChildren().Count().ShouldEqual(1);
-
-        private It should_return_its_child_when_children_are_requested = () => Subject.GetVisualChildren().First().ShouldBeTheSameAs(Child.Object);
     }
 
     [Subject(typeof(Border))]

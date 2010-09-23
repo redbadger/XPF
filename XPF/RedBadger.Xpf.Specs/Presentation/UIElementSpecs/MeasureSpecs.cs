@@ -16,8 +16,6 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     using Moq;
     using Moq.Protected;
 
-    using RedBadger.Xpf.Presentation;
-
     using It = Machine.Specifications.It;
 
     [Subject(typeof(UIElement), "Measure")]
@@ -25,8 +23,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     {
         private Because of = () => Subject.Object.Measure(Size.Empty);
 
-        private It should_apply_the_template =
-            () => Subject.Verify(element => element.OnApplyTemplate(), Times.Once());
+        private It should_apply_the_template = () => Subject.Verify(element => element.OnApplyTemplate(), Times.Once());
 
         private It should_be_considered_valid = () => Subject.Object.IsMeasureValid.ShouldBeTrue();
     }

@@ -15,8 +15,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs.Star
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf.Controls;
 
     public abstract class a_Star_Grid_with_two_rows_and_two_columns : a_Grid
     {

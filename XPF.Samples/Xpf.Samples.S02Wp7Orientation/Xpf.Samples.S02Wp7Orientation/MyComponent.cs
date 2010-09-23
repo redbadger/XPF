@@ -6,12 +6,12 @@ namespace Xpf.Samples.S02Wp7Orientation
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+    using RedBadger.Xpf;
     using RedBadger.Xpf.Adapters.Xna;
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
-    using RedBadger.Xpf.Presentation.Media;
+    using RedBadger.Xpf.Controls;
+    using RedBadger.Xpf.Media;
 
-    using Color = RedBadger.Xpf.Presentation.Media.Color;
+    using Color = RedBadger.Xpf.Media.Color;
 
     public class MyComponent : DrawableGameComponent
     {

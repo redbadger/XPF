@@ -4,8 +4,7 @@
     using System.Collections.Generic;
 
     using RedBadger.Xpf.Graphics;
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Media;
+    using RedBadger.Xpf.Media;
 
     public class DrawingContext : IDrawingContext
     {

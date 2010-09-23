@@ -1,7 +1,5 @@
 namespace RedBadger.Xpf.Internal
 {
-    using RedBadger.Xpf.Presentation;
-
     internal static class SizeExtensions
     {
         public static Size Deflate(this Size size, Thickness thickness)

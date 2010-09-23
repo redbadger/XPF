@@ -15,8 +15,6 @@ namespace RedBadger.Xpf.Specs.Presentation.ElementCollectionSpecs
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
-
     public abstract class an_ElementCollection
     {
         protected static Mock<UIElement> Child1;

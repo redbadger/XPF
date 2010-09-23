@@ -1,7 +1,5 @@
 namespace RedBadger.Xpf.Internal
 {
-    using RedBadger.Xpf.Presentation;
-
     internal struct MinMax
     {
         internal readonly double MaxHeight;
