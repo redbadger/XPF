@@ -23,14 +23,14 @@ namespace RedBadger.Xpf.Specs.Extensions
 
     public abstract class a_Hierarchy_of_elements
     {
-        protected static Button Button;
+        protected static Button Root;
 
         protected static Mock<UIElement> DeepestChild;
 
         private Establish context = () =>
             {
                 DeepestChild = new Mock<UIElement> { CallBase = true };
-                Button = new Button { Content = new ContentControl { Content = DeepestChild.Object } };
+                Root = new Button { Content = new ContentControl { Content = DeepestChild.Object } };
             };
     }
 
@@ -38,7 +38,7 @@ namespace RedBadger.Xpf.Specs.Extensions
     public class when_searching_for_an_ancestor_of_a_specified_type_that_exists_in_the_tree : a_Hierarchy_of_elements
     {
         private It should_return_the_nearest_ancestor_of_the_requested_type =
-            () => DeepestChild.Object.FindNearestAncestorOfType<ButtonBase>().ShouldBeTheSameAs(Button);
+            () => DeepestChild.Object.FindNearestAncestorOfType<ButtonBase>().ShouldBeTheSameAs(Root);
     }
 
     [Subject(typeof(IElementExtensions))]
@@ -47,5 +47,31 @@ namespace RedBadger.Xpf.Specs.Extensions
     {
         private It should_return_the_nearest_ancestor_of_the_requested_type =
             () => DeepestChild.Object.FindNearestAncestorOfType<Image>().ShouldBeNull();
+    }
+
+    [Subject(typeof(IElementExtensions))]
+    public class when_an_element_is_a_descendant_of_another_element_and_that_relationship_is_queried :
+        a_Hierarchy_of_elements
+    {
+        private Because of = () => result = DeepestChild.Object.IsDescendantOf(Root);
+
+        private It should_be_confirmed = () => result.ShouldBeTrue();
+
+        private static bool result;
+    }
+
+    [Subject(typeof(IElementExtensions))]
+    public class when_an_element_is_not_a_descendant_of_another_element_and_that_relationship_is_queried :
+        a_Hierarchy_of_elements
+    {
+        private Establish context = () => orphan = new Mock<UIElement> { CallBase = true };
+
+        private Because of = () => result = orphan.Object.IsDescendantOf(Root);
+
+        private It should_be_denied = () => result.ShouldBeFalse();
+
+        private static bool result;
+
+        private static Mock<UIElement> orphan;
     }
 }

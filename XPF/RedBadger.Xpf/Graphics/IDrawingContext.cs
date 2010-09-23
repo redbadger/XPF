@@ -6,6 +6,10 @@ namespace RedBadger.Xpf.Graphics
     {
         Rect ClippingRect { get; set; }
 
+        IElement Element { get; }
+
+        Vector AbsoluteOffset { get; }
+
         void DrawImage(ImageSource imageSource, Rect rect);
 
         void DrawRectangle(Rect rect, Brush brush);

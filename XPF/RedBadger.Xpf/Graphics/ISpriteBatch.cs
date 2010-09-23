@@ -7,11 +7,13 @@ namespace RedBadger.Xpf.Graphics
     /// </summary>
     public interface ISpriteBatch
     {
+        void Begin(IDrawingContext drawingContext);
+
         /// <summary>
         ///     Adds a <see cref = "ITexture2D">ITexture2D</see> sprite to the batch for rendering.
         /// </summary>
-        /// <param name = "texture2D">The <see cref="ITexture2D">ITexture2D</see> to render.</param>
-        /// <param name = "rect">A <see cref="Rect">Rect</see> defining the destination in pixels for drawing the <see cref = "ITexture2D">ITexture2D</see>.</param>
+        /// <param name = "texture2D">The <see cref = "ITexture2D">ITexture2D</see> to render.</param>
+        /// <param name = "rect">A <see cref = "Rect">Rect</see> defining the destination in pixels for drawing the <see cref = "ITexture2D">ITexture2D</see>.</param>
         /// <param name = "color">The <see cref = "Color">Color</see> to tint the <see cref = "ITexture2D">ITexture2D</see>.</param>
         void Draw(ITexture2D texture2D, Rect rect, Color color);
 
@@ -23,5 +25,7 @@ namespace RedBadger.Xpf.Graphics
         /// <param name = "position">The position in pixels to render the text.</param>
         /// <param name = "color">The <see cref = "Color">Color</see> to tint the <see cref = "ISpriteFont">ISpriteFont</see>.</param>
         void DrawString(ISpriteFont spriteFont, string text, Vector position, Color color);
+
+        void End();
     }
 }

@@ -34,6 +34,14 @@
             this.primitivesService = primitivesService;
         }
 
+        public Vector AbsoluteOffset
+        {
+            get
+            {
+                return this.absoluteOffset;
+            }
+        }
+
         public Rect ClippingRect
         {
             get
@@ -44,6 +52,14 @@
             set
             {
                 this.clippingRect = value;
+            }
+        }
+
+        public IElement Element
+        {
+            get
+            {
+                return this.element;
             }
         }
 
@@ -62,6 +78,8 @@
 
         public void Draw(ISpriteBatch spriteBatch)
         {
+            spriteBatch.Begin(this);
+
             foreach (ISpriteJob spriteJob in this.jobs)
             {
                 spriteJob.Draw(spriteBatch, this.absoluteOffset);

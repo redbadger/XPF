@@ -8,7 +8,7 @@ namespace RedBadger.Xpf
     /// <summary>
     ///     A structure representing a Rectangle in 2D space
     /// </summary>
-    [DebuggerDisplay("{X},{Y}: {Width}x{Height}")]
+    [DebuggerDisplay("{X}, {Y} {Width} x {Height}")]
     public struct Rect : IEquatable<Rect>
     {
         /// <summary>
@@ -237,6 +237,19 @@ namespace RedBadger.Xpf
             return x >= this.X && x - this.Width <= this.X && y >= this.Y && y - this.Height <= this.Y;
         }
 
+        /// <summary>
+        ///     Displaces this instance of the <see cref = "Rect">Rect</see> by the specified <see cref = "Vector">Vector</see>.
+        /// </summary>
+        /// <param name = "vector">The <see cref = "Vector">Vector</see> by which to displace the <see cref = "Rect">Rect</see>.</param>
+        public void Displace(Vector vector)
+        {
+            if (!this.IsEmpty)
+            {
+                this.X += vector.X;
+                this.Y += vector.Y;
+            }
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -308,7 +321,7 @@ namespace RedBadger.Xpf
 
         public override string ToString()
         {
-            return string.Format("{0},{1}: {2}x{3}", this.X, this.Y, this.Width, this.Height);
+            return string.Format("{0}, {1} {2} x {3}", this.X, this.Y, this.Width, this.Height);
         }
 
         /// <summary>

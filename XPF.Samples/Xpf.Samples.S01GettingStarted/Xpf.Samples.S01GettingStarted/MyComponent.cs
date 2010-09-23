@@ -23,10 +23,7 @@ namespace Xpf.Samples.S01GettingStarted
 
         public override void Draw(GameTime gameTime)
         {
-            this.spriteBatchAdapter.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             this.rootElement.Draw();
-            this.spriteBatchAdapter.End();
-
             base.Draw(gameTime);
         }
 
@@ -38,7 +35,7 @@ namespace Xpf.Samples.S01GettingStarted
 
         protected override void LoadContent()
         {
-            this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
+            this.spriteBatchAdapter = new SpriteBatchAdapter(new SpriteBatch(this.GraphicsDevice));
             var primitivesService = new PrimitivesService(this.GraphicsDevice);
             var renderer = new Renderer(this.spriteBatchAdapter, primitivesService);
 

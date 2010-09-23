@@ -38,6 +38,8 @@
             {
                 drawingContext.Draw(this.spriteBatch);
             }
+
+            this.spriteBatch.End();
         }
 
         public IDrawingContext GetDrawingContext(IElement element)

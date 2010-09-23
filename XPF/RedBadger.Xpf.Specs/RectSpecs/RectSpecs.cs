@@ -209,6 +209,42 @@ namespace RedBadger.Xpf.Specs.RectSpecs
     }
 
     [Subject(typeof(Rect))]
+    public class when_a_Rect_is_displaced_by_a_vector
+    {
+        private static Rect subject;
+
+        private static Vector vector;
+
+        private Establish context = () =>
+            {
+                subject = new Rect(10, 20, 30, 40);
+                vector = new Vector(1, 2);
+            };
+
+        private Because of = () => subject.Displace(vector);
+
+        private It should_displace_the_rect_by_the_vector = () => subject.ShouldEqual(new Rect(11, 22, 30, 40));
+    }
+
+    [Subject(typeof(Rect))]
+    public class when_an_empty_Rect_is_displaced_by_a_vector
+    {
+        private static Rect subject;
+
+        private static Vector vector;
+
+        private Establish context = () =>
+            {
+                subject = Rect.Empty;
+                vector = new Vector(1, 2);
+            };
+
+        private Because of = () => subject.Displace(vector);
+
+        private It should_not_displace_the_rect = () => subject.IsEmpty.ShouldBeTrue();
+    }
+
+    [Subject(typeof(Rect))]
     public class when_an_empty_rect_is_requested
     {
         private static Rect subject;

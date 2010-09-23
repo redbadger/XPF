@@ -33,15 +33,13 @@ namespace RedBadger.Xpf.Sandbox
         {
             this.GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            this.spriteBatchAdapter.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             this.rootElement.Draw();
-            this.spriteBatchAdapter.End();
             base.Draw(gameTime);
         }
 
         protected override void LoadContent()
         {
-            this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
+            this.spriteBatchAdapter = new SpriteBatchAdapter(new SpriteBatch(this.GraphicsDevice));
             var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 

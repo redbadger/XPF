@@ -7,7 +7,6 @@
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Internal;
-    using RedBadger.Xpf.Media;
 
 #if WINDOWS_PHONE
     using Microsoft.Phone.Reactive;

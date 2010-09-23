@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graphics\DrawingContext.cs" />
+    <Compile Include="Graphics\RectExtensions.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Graphics\PrimitivesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

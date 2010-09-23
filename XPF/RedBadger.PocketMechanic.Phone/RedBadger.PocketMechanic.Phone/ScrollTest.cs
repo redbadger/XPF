@@ -26,10 +26,6 @@ namespace RedBadger.PocketMechanic.Phone
 
         private SpriteFont spriteFont;
 
-        private StackPanel stackPanel;
-
-        private TextBlock textBlock;
-
         public ScrollTest(Game game)
             : base(game)
         {
@@ -45,10 +41,7 @@ namespace RedBadger.PocketMechanic.Phone
 
         public override void Draw(GameTime gameTime)
         {
-            this.spriteBatchAdapter.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
             this.RootElement.Draw();
-            this.spriteBatchAdapter.End();
-
             base.Draw(gameTime);
         }
 
@@ -61,7 +54,7 @@ namespace RedBadger.PocketMechanic.Phone
         protected override void LoadContent()
         {
             this.spriteFont = this.Game.Content.Load<SpriteFont>("SpriteFont");
-            this.spriteBatchAdapter = new SpriteBatchAdapter(this.GraphicsDevice);
+            this.spriteBatchAdapter = new SpriteBatchAdapter(new SpriteBatch(this.GraphicsDevice));
             var spriteFontAdapter = new SpriteFontAdapter(this.spriteFont);
 
             var items = new ObservableCollection<string>();

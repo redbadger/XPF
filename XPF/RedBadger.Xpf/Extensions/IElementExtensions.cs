@@ -39,5 +39,37 @@ namespace RedBadger.Xpf.Extensions
 
             return ancestor;
         }
+
+        /// <summary>
+        ///     Assert whether this element is a descendant of the specified ancestor.
+        /// </summary>
+        /// <param name = "element">This instance of <see cref = "IElement">IElement</see>.</param>
+        /// <param name = "ancestor">The ancestor to query against.</param>
+        /// <returns>True if this element is a descendant of the ancestor.</returns>
+        public static bool IsDescendantOf(this IElement element, IElement ancestor)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+
+            if (ancestor == null)
+            {
+                throw new ArgumentNullException("ancestor");
+            }
+
+            IElement parent = element.VisualParent;
+            while (parent != null)
+            {
+                if (parent == ancestor)
+                {
+                    return true;
+                }
+
+                parent = parent.VisualParent;
+            }
+
+            return false;
+        }
     }
 }
