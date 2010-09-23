@@ -123,7 +123,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
         private It should_give_column_2_the_correct_amount_of_space =
             () =>
             children[1].Protected().Verify(
-                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(double.PositiveInfinity)));
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Width.Equals(Column2ChildWidth)));
 
         private It should_give_column_3_the_correct_amount_of_space =
             () =>
@@ -183,7 +183,7 @@ namespace RedBadger.Xpf.Specs.Presentation.Controls.GridSpecs
         private It should_give_row_2_the_correct_amount_of_space =
             () =>
             children[1].Protected().Verify(
-                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(double.PositiveInfinity)));
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Height.Equals(Row2ChildHeight)));
 
         private It should_give_row_3_the_correct_amount_of_space =
             () =>

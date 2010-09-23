@@ -21,6 +21,26 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
     using It = Machine.Specifications.It;
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]
+    public class when_an_explicit_size_is_set : a_UIElement
+    {
+        private static readonly Size availableSize = new Size(300, 300);
+
+        private static readonly Size explicitSize = new Size(100, 100);
+
+        private Because of = () =>
+            {
+                Subject.Object.Width = explicitSize.Width;
+                Subject.Object.Height = explicitSize.Height;
+                Subject.Object.Measure(availableSize);
+            };
+
+        private It should_measure_its_children_with_that_size =
+            () =>
+            Subject.Protected().Verify(
+                MeasureOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(explicitSize)));
+    }
+
+    [Subject(typeof(UIElement), "Layout - explicit sizes")]
     public class when_an_explicit_size_is_set_and_the_children_want_less_space : a_UIElement
     {
         private static readonly Size availableSize = new Size(300, 300);
@@ -158,8 +178,7 @@ namespace RedBadger.Xpf.Specs.Presentation.UIElementSpecs
 
         private It should_arrange_its_children_within_the_maximum_size =
             () =>
-            Subject.Protected().Verify(
-                ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(maximumSize)));
+            Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(maximumSize)));
 
         private It should_have_a_desired_size_equal_to_the_maximum_size_that_was_specified =
             () => Subject.Object.DesiredSize.ShouldEqual(maximumSize);
