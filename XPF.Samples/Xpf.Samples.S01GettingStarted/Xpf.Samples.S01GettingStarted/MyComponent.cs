@@ -4,9 +4,8 @@ namespace Xpf.Samples.S01GettingStarted
     using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf;
-    using RedBadger.Xpf.Adapters.Xna;
+    using RedBadger.Xpf.Adapters.Xna.Graphics;
     using RedBadger.Xpf.Controls;
-    using RedBadger.Xpf.Media;
     using RedBadger.Xpf.Media;
 
     using Color = RedBadger.Xpf.Media.Color;
@@ -53,9 +52,7 @@ namespace Xpf.Samples.S01GettingStarted
                     Background = new SolidColorBrush(Colors.White), 
                     RowDefinitions =
                         {
-                           new RowDefinition(),
-                           new RowDefinition { Height = new GridLength(320) },
-                           new RowDefinition() 
+                           new RowDefinition(), new RowDefinition { Height = new GridLength(320) }, new RowDefinition() 
                         }, 
                     ColumnDefinitions =
                         {
@@ -70,11 +67,7 @@ namespace Xpf.Samples.S01GettingStarted
                 {
                     BorderBrush = new SolidColorBrush(Colors.Black), 
                     BorderThickness = new Thickness(0, 0, 0, 2), 
-                    Child = new TextBlock(spriteFontAdapter)
-                        {
-                            Text = "Score: 5483",
-                            Margin = new Thickness(10)
-                        }
+                    Child = new TextBlock(spriteFontAdapter) { Text = "Score: 5483", Margin = new Thickness(10) }
                 };
             Grid.SetRow(topLeftBorder, 0);
             Grid.SetColumn(topLeftBorder, 0);
@@ -82,12 +75,13 @@ namespace Xpf.Samples.S01GettingStarted
 
             var topRightBorder = new Border
                 {
-                    BorderBrush = new SolidColorBrush(Colors.Black),
-                    BorderThickness = new Thickness(0, 0, 0, 2),
-                    Child = new TextBlock(spriteFontAdapter)
+                    BorderBrush = new SolidColorBrush(Colors.Black), 
+                    BorderThickness = new Thickness(0, 0, 0, 2), 
+                    Child =
+                        new TextBlock(spriteFontAdapter)
                             {
-                                Text = "High: 9999",
-                                Margin = new Thickness(10),
+                                Text = "High: 9999", 
+                                Margin = new Thickness(10), 
                                 HorizontalAlignment = HorizontalAlignment.Right
                             }
                 };
@@ -115,7 +109,7 @@ namespace Xpf.Samples.S01GettingStarted
             var bottomRightBorder = new Border
                 {
                     BorderBrush = new SolidColorBrush(Colors.Black), 
-                    BorderThickness = new Thickness(0, 2, 0, 0),
+                    BorderThickness = new Thickness(0, 2, 0, 0), 
                     Background = new SolidColorBrush(new Color(106, 168, 79, 255))
                 };
             Grid.SetRow(bottomRightBorder, 2);

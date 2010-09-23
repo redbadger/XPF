@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Media;

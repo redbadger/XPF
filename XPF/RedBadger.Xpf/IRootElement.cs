@@ -1,5 +1,6 @@
 ﻿namespace RedBadger.Xpf
 {
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Media;
 

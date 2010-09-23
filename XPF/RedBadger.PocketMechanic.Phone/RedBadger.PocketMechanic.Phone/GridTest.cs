@@ -5,7 +5,8 @@ namespace RedBadger.PocketMechanic.Phone
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    using RedBadger.Xpf.Adapters.Xna;
+    using RedBadger.Xpf.Adapters.Xna.Graphics;
+    using RedBadger.Xpf.Adapters.Xna.Input;
     using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Media;
 

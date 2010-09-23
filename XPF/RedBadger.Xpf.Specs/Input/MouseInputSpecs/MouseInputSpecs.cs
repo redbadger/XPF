@@ -19,6 +19,7 @@ namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
     using Moq.Protected;
 
     using RedBadger.Xpf.Adapters.Xna;
+    using RedBadger.Xpf.Adapters.Xna.Graphics;
     using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Controls.Primitives;
     using RedBadger.Xpf.Graphics;

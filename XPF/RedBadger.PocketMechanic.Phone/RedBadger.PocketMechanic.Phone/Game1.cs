@@ -5,7 +5,7 @@ namespace RedBadger.PocketMechanic.Phone
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
-    using RedBadger.Xpf.Adapters.Xna;
+    using RedBadger.Xpf.Adapters.Xna.Graphics;
 
     public class Game1 : Game
     {

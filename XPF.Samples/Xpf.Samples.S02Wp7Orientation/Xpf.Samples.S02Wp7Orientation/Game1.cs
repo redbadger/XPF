@@ -10,11 +10,11 @@ namespace Xpf.Samples.S02Wp7Orientation
         public Game1()
         {
             new GraphicsDeviceManager(this)
-            {
-                SupportedOrientations =
-                    DisplayOrientation.Portrait | DisplayOrientation.LandscapeLeft |
-                    DisplayOrientation.LandscapeRight
-            };
+                {
+                    SupportedOrientations =
+                        DisplayOrientation.Portrait | DisplayOrientation.LandscapeLeft |
+                        DisplayOrientation.LandscapeRight
+                };
 
             this.Content.RootDirectory = "Content";
 

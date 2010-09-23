@@ -1,5 +1,6 @@
 namespace RedBadger.Xpf.Controls
 {
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Internal.Controls;
     using RedBadger.Xpf.Media;
 

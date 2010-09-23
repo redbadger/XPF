@@ -3,6 +3,7 @@ namespace RedBadger.Xpf.Controls
     using System;
     using System.Linq;
 
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Media;
 

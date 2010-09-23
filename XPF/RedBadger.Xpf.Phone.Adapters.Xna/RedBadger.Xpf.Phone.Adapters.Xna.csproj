@@ -59,38 +59,38 @@
     <Reference Include="System.Observable, Version=2.0.5.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\DrawingContext.cs">
-      <Link>DrawingContext.cs</Link>
+    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Graphics\DrawingContext.cs">
+      <Link>Graphics\DrawingContext.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\InputManager.cs">
-      <Link>InputManager.cs</Link>
+    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Graphics\PrimitivesService.cs">
+      <Link>Graphics\PrimitivesService.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\PrimitivesService.cs">
-      <Link>PrimitivesService.cs</Link>
+    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Graphics\Renderer.cs">
+      <Link>Graphics\Renderer.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Renderer.cs">
-      <Link>Renderer.cs</Link>
+    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Graphics\SpriteBatchAdapter.cs">
+      <Link>Graphics\SpriteBatchAdapter.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\SpriteBatchAdapter.cs">
-      <Link>SpriteBatchAdapter.cs</Link>
+    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Graphics\SpriteFontAdapter.cs">
+      <Link>Graphics\SpriteFontAdapter.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\SpriteFontAdapter.cs">
-      <Link>SpriteFontAdapter.cs</Link>
+    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Graphics\SpriteFontJob.cs">
+      <Link>Graphics\SpriteFontJob.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\SpriteFontJob.cs">
-      <Link>SpriteFontJob.cs</Link>
+    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Graphics\SpriteImageJob.cs">
+      <Link>Graphics\SpriteImageJob.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\SpriteImageJob.cs">
-      <Link>SpriteImageJob.cs</Link>
+    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Graphics\SpriteTextureJob.cs">
+      <Link>Graphics\SpriteTextureJob.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\SpriteTextureJob.cs">
-      <Link>SpriteTextureJob.cs</Link>
+    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Graphics\Texture2DAdapter.cs">
+      <Link>Graphics\Texture2DAdapter.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Texture2DAdapter.cs">
-      <Link>Texture2DAdapter.cs</Link>
+    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Graphics\ViewportExtensions.cs">
+      <Link>Graphics\ViewportExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\ViewportExtensions.cs">
-      <Link>ViewportExtensions.cs</Link>
+    <Compile Include="..\RedBadger.Xpf.Adapters.Xna\Input\InputManager.cs">
+      <Link>Input\InputManager.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -104,7 +104,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="4c0c9785-d77c-4833-8b2f-4c20525d9b2d" />
+      <UserProperties ProjectLinkReference="4c0c9785-d77c-4833-8b2f-4c20525d9b2d" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

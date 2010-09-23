@@ -1,11 +1,9 @@
-using System;
-
 namespace Xpf.Samples.S02Wp7Orientation
 {
 #if WINDOWS || XBOX
     static class Program
     {
-        /// <summary>
+        // <summary>
         /// The main entry point for the application.
         /// </summary>
         static void Main(string[] args)
@@ -18,4 +16,3 @@ namespace Xpf.Samples.S02Wp7Orientation
     }
 #endif
 }
-

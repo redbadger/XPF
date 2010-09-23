@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
 
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Media;
 

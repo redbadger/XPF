@@ -5,6 +5,8 @@ namespace RedBadger.Xpf.Sandbox
     using Microsoft.Xna.Framework.Input;
 
     using RedBadger.Xpf.Adapters.Xna;
+    using RedBadger.Xpf.Adapters.Xna.Graphics;
+    using RedBadger.Xpf.Adapters.Xna.Input;
     using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Media;
 

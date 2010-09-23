@@ -60,18 +60,18 @@
     <Reference Include="System.Reactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DrawingContext.cs" />
-    <Compile Include="InputManager.cs" />
-    <Compile Include="PrimitivesService.cs" />
+    <Compile Include="Graphics\DrawingContext.cs" />
+    <Compile Include="Input\InputManager.cs" />
+    <Compile Include="Graphics\PrimitivesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderer.cs" />
-    <Compile Include="SpriteBatchAdapter.cs" />
-    <Compile Include="SpriteFontAdapter.cs" />
-    <Compile Include="SpriteFontJob.cs" />
-    <Compile Include="SpriteImageJob.cs" />
-    <Compile Include="SpriteTextureJob.cs" />
-    <Compile Include="Texture2DAdapter.cs" />
-    <Compile Include="ViewportExtensions.cs" />
+    <Compile Include="Graphics\Renderer.cs" />
+    <Compile Include="Graphics\SpriteBatchAdapter.cs" />
+    <Compile Include="Graphics\SpriteFontAdapter.cs" />
+    <Compile Include="Graphics\SpriteFontJob.cs" />
+    <Compile Include="Graphics\SpriteImageJob.cs" />
+    <Compile Include="Graphics\SpriteTextureJob.cs" />
+    <Compile Include="Graphics\Texture2DAdapter.cs" />
+    <Compile Include="Graphics\ViewportExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RedBadger.Xpf\RedBadger.Xpf.csproj">

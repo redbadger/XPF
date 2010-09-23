@@ -172,14 +172,23 @@
     <Compile Include="..\RedBadger.Xpf\Extensions\IElementExtensions.cs">
       <Link>Extensions\IElementExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\IDrawingContext.cs">
+      <Link>Graphics\IDrawingContext.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Graphics\IPrimitivesService.cs">
       <Link>Graphics\IPrimitivesService.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\IRenderer.cs">
+      <Link>Graphics\IRenderer.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Graphics\ISpriteBatch.cs">
       <Link>Graphics\ISpriteBatch.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Graphics\ISpriteFont.cs">
       <Link>Graphics\ISpriteFont.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\ISpriteJob.cs">
+      <Link>Graphics\ISpriteJob.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Graphics\ITexture2D.cs">
       <Link>Graphics\ITexture2D.cs</Link>
@@ -265,9 +274,6 @@
     <Compile Include="..\RedBadger.Xpf\Media\Colors.cs">
       <Link>Media\Colors.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Media\IDrawingContext.cs">
-      <Link>Media\IDrawingContext.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Media\ImageSource.cs">
       <Link>Media\ImageSource.cs</Link>
     </Compile>
@@ -279,12 +285,6 @@
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Media\Imaging\XnaImage.cs">
       <Link>Media\Imaging\XnaImage.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Media\IRenderer.cs">
-      <Link>Media\IRenderer.cs</Link>
-    </Compile>
-    <Compile Include="..\RedBadger.Xpf\Media\ISpriteJob.cs">
-      <Link>Media\ISpriteJob.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Media\SolidColorBrush.cs">
       <Link>Media\SolidColorBrush.cs</Link>
@@ -338,7 +338,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

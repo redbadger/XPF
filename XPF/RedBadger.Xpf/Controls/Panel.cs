@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Media;
 
     public abstract class Panel : UIElement

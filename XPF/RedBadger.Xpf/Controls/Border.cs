@@ -2,6 +2,7 @@ namespace RedBadger.Xpf.Controls
 {
     using System.Collections.Generic;
 
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Internal;
     using RedBadger.Xpf.Media;
 
