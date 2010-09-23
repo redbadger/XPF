@@ -281,12 +281,12 @@ namespace RedBadger.Xpf.Presentation
             }
             else
             {
-                double num = Math.Max(this.X, rect.X);
-                double num2 = Math.Max(this.Y, rect.Y);
-                this.Width = Math.Max(Math.Min(this.X + this.Width, rect.X + rect.Width) - num, 0.0);
-                this.Height = Math.Max(Math.Min(this.Y + this.Height, rect.Y + rect.Height) - num2, 0.0);
-                this.X = num;
-                this.Y = num2;
+                double x = Math.Max(this.X, rect.X);
+                double y = Math.Max(this.Y, rect.Y);
+                this.Width = (Math.Min(this.X + this.Width, rect.X + rect.Width) - x).EnsurePositive();
+                this.Height = (Math.Min(this.Y + this.Height, rect.Y + rect.Height) - y).EnsurePositive();
+                this.X = x;
+                this.Y = y;
             }
         }
 

@@ -130,6 +130,7 @@
     <Compile Include="Presentation\ReactivePropertySpecs\ReactivePropertySpecs.cs" />
     <Compile Include="Presentation\RectSpecs\RectSpecs.cs" />
     <Compile Include="Presentation\SizeSpecs\SizeSpecs.cs" />
+    <Compile Include="Presentation\ThicknessSpecs\ThicknessSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\ArrangeSpecs.cs" />
     <Compile Include="Presentation\UIElementSpecs\Contexts.cs" />

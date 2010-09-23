@@ -15,6 +15,7 @@ namespace RedBadger.Xpf.Specs.Presentation.RectSpecs
     using Machine.Specifications;
 
     using RedBadger.Xpf.Presentation;
+    using RedBadger.Xpf.Internal;
 
     [Subject(typeof(Rect))]
     public class when_constructed
@@ -354,5 +355,21 @@ namespace RedBadger.Xpf.Specs.Presentation.RectSpecs
         private Because of = () => subject.Intersect(anotherRect);
 
         private It should_return_true = () => subject.ShouldEqual(new Rect(30, 40, 10, 20));
+    }
+
+    [Subject(typeof(Rect))]
+    public class when_a_rect_is_deflated_by_a_thickness
+    {
+        private static readonly Thickness thickness = new Thickness(1, 2, 3, 4);
+
+        private static Rect result;
+
+        private static Rect subject;
+
+        private Establish context = () => subject = new Rect(10, 20, 30, 40);
+
+        private Because of = () => result = subject.Deflate(thickness);
+
+        private It should_reduce_the_rect_by_the_correct_amount = () => result.ShouldEqual(new Rect(11, 22, 26, 34));
     }
 }

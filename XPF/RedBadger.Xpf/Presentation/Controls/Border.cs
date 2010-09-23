@@ -126,28 +126,17 @@ namespace RedBadger.Xpf.Presentation.Controls
         {
             this.isBordersCollectionDirty = true;
 
-            Size borderSize = this.BorderThickness.Collapse();
-            Size paddingSize = this.Padding.Collapse();
-
-            var borderThicknessAndPaddingSize = new Size(
-                borderSize.Width + paddingSize.Width, borderSize.Height + paddingSize.Height);
+            Thickness borderThicknessAndPadding = this.BorderThickness + this.Padding;
 
             IElement child = this.Child;
             if (child != null)
             {
-                var childConstraint = new Size(
-                    Math.Max(0, availableSize.Width - borderThicknessAndPaddingSize.Width), 
-                    Math.Max(0, availableSize.Height - borderThicknessAndPaddingSize.Height));
-                child.Measure(childConstraint);
+                child.Measure(availableSize.Deflate(borderThicknessAndPadding));
 
-                var size = new Size(
-                    child.DesiredSize.Width + borderThicknessAndPaddingSize.Width, 
-                    child.DesiredSize.Height + borderThicknessAndPaddingSize.Height);
-
-                return size;
+                return child.DesiredSize.Inflate(borderThicknessAndPadding);
             }
 
-            return borderThicknessAndPaddingSize;
+            return borderThicknessAndPadding.Collapse();
         }
 
         protected override void OnRender(IDrawingContext drawingContext)

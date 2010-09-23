@@ -432,7 +432,7 @@ namespace RedBadger.Xpf.Presentation.Controls
                     case GridUnitType.Pixel:
                         definition.LengthType = GridUnitType.Pixel;
                         availableLength = definition.UserLength.Value;
-                        userMinLength = Math.Max(userMinLength, Math.Min(availableLength, userMaxLength));
+                        userMinLength = availableLength.Coerce(userMinLength, userMaxLength);
                         break;
                     case GridUnitType.Star:
                         definition.LengthType = treatStarAsAuto ? GridUnitType.Auto : GridUnitType.Star;

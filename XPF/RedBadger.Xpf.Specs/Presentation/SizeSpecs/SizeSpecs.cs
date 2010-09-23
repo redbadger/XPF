@@ -15,6 +15,7 @@ namespace RedBadger.Xpf.Specs.Presentation.SizeSpecs
     using Machine.Specifications;
 
     using RedBadger.Xpf.Presentation;
+    using RedBadger.Xpf.Internal;
 
     [Subject(typeof(Size))]
     public class requesting_an_empty_size
@@ -23,13 +24,13 @@ namespace RedBadger.Xpf.Specs.Presentation.SizeSpecs
 
         private Because of = () => size = Size.Empty;
 
+        private It should_report_that_it_is_empty = () => size.IsEmpty.ShouldBeTrue();
+
         private It should_return_an_instance_with_negative_infinity_values = () =>
             {
                 size.Width.ShouldEqual(Double.NegativeInfinity);
                 size.Height.ShouldEqual(Double.NegativeInfinity);
             };
-
-        private It should_report_that_it_is_empty = () => size.IsEmpty.ShouldBeTrue();
     }
 
     [Subject(typeof(Size))]
@@ -69,26 +70,21 @@ namespace RedBadger.Xpf.Specs.Presentation.SizeSpecs
 
         private Because of = () => resultSize = size2 - size1;
 
-        private It should_result_in_a_difference_of_the_2_sizes = () => 
-            resultSize.ShouldEqual(new Size(90, 180));
+        private It should_result_in_a_difference_of_the_2_sizes = () => resultSize.ShouldEqual(new Size(90, 180));
     }
 
     [Subject(typeof(Size))]
     public class when_a_size_is_cast_to_a_vector
     {
-        private static Vector vector;
-
         private static Size size;
 
-        private Establish context = () =>
-            {
-                size = new Size(10, 20);
-            };
+        private static Vector vector;
+
+        private Establish context = () => { size = new Size(10, 20); };
 
         private Because of = () => vector = (Vector)size;
 
-        private It should_result_in_an_equivalent_vector = () => 
-            vector.ShouldEqual(new Vector(10, 20));
+        private It should_result_in_an_equivalent_vector = () => vector.ShouldEqual(new Vector(10, 20));
     }
 
     [Subject(typeof(Size))]
@@ -98,14 +94,42 @@ namespace RedBadger.Xpf.Specs.Presentation.SizeSpecs
 
         private static Size size;
 
-        private Establish context = () =>
-            {
-                size = new Size(10, 20);
-            };
+        private Establish context = () => { size = new Size(10, 20); };
 
         private Because of = () => point = (Point)size;
 
-        private It should_result_in_an_equivalent_vector = () => 
-            point.ShouldEqual(new Point(10, 20));
+        private It should_result_in_an_equivalent_vector = () => point.ShouldEqual(new Point(10, 20));
+    }
+
+    [Subject(typeof(Size))]
+    public class when_a_size_is_deflated_by_a_thickness
+    {
+        private static readonly Thickness thickness = new Thickness(1, 2, 3, 4);
+
+        private static Size result;
+
+        private static Size subject;
+
+        private Establish context = () => subject = new Size(10, 20);
+
+        private Because of = () => result = subject.Deflate(thickness);
+
+        private It should_reduce_the_size_by_the_correct_amount = () => result.ShouldEqual(new Size(6, 14));
+    }
+
+    [Subject(typeof(Size))]
+    public class when_a_size_is_inflated_by_a_thickness
+    {
+        private static readonly Thickness thickness = new Thickness(1, 2, 3, 4);
+
+        private static Size result;
+
+        private static Size subject;
+
+        private Establish context = () => subject = new Size(10, 20);
+
+        private Because of = () => result = subject.Inflate(thickness);
+
+        private It should_reduce_the_size_by_the_correct_amount = () => result.ShouldEqual(new Size(14, 26));
     }
 }

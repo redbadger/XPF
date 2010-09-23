@@ -34,6 +34,18 @@ namespace RedBadger.Xpf.Presentation
             this.Bottom = bottom;
         }
 
+        /// <summary>
+        ///     Adds two <see cref = "Thickness">Thickness</see> instances together (e.g. adds the two <see cref = "Left">Left</see> components, the two <see cref = "Top">Top</see> components etc).
+        /// </summary>
+        /// <param name = "left">The first <see cref = "Thickness">Thickness</see></param>
+        /// <param name = "right">The second <see cref = "Thickness">Thickness</see></param>
+        /// <returns>A <see cref = "Thickness">Thickness</see> whose components represent the sum of the two <see cref = "Thickness">Thickness</see> instances.</returns>
+        public static Thickness operator +(Thickness left, Thickness right)
+        {
+            return new Thickness(
+                left.Left + right.Left, left.Top + right.Top, left.Right + right.Right, left.Bottom + right.Bottom);
+        }
+
         public static bool operator ==(Thickness left, Thickness right)
         {
             return left.Equals(right);

@@ -1,7 +1,5 @@
 namespace RedBadger.Xpf.Internal
 {
-    using System;
-
     using RedBadger.Xpf.Presentation;
 
     internal struct MinMax
@@ -16,23 +14,17 @@ namespace RedBadger.Xpf.Internal
 
         internal MinMax(UIElement element)
         {
-            this.MaxHeight = element.MaxHeight;
-            this.MinHeight = element.MinHeight;
             double height = element.Height;
+            double minHeight = element.MinHeight;
+            double maxHeight = element.MaxHeight;
+            this.MaxHeight = (double.IsNaN(height) ? double.PositiveInfinity : height).Coerce(minHeight, maxHeight);
+            this.MinHeight = (double.IsNaN(height) ? 0 : height).Coerce(minHeight, maxHeight);
 
-            double explicitHeight = double.IsNaN(height) ? double.PositiveInfinity : height;
-            this.MaxHeight = Math.Max(Math.Min(explicitHeight, this.MaxHeight), this.MinHeight);
-            explicitHeight = double.IsNaN(height) ? 0 : height;
-            this.MinHeight = Math.Max(Math.Min(this.MaxHeight, explicitHeight), this.MinHeight);
-
-            this.MaxWidth = element.MaxWidth;
-            this.MinWidth = element.MinWidth;
             double width = element.Width;
-
-            double explicitWidth = double.IsNaN(width) ? double.PositiveInfinity : width;
-            this.MaxWidth = Math.Max(Math.Min(explicitWidth, this.MaxWidth), this.MinWidth);
-            explicitWidth = double.IsNaN(width) ? 0 : width;
-            this.MinWidth = Math.Max(Math.Min(this.MaxWidth, explicitWidth), this.MinWidth);
+            double minWidth = element.MinWidth;
+            double maxWidth = element.MaxWidth;
+            this.MaxWidth = (double.IsNaN(width) ? double.PositiveInfinity : width).Coerce(minWidth, maxWidth);
+            this.MinWidth = (double.IsNaN(width) ? 0 : width).Coerce(minWidth, maxWidth);
         }
     }
 }

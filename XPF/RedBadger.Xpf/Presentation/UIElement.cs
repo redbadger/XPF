@@ -505,17 +505,12 @@
             Size finalSize = finalRect != Rect.Empty ? new Size(finalRect.Width, finalRect.Height) : new Size();
 
             Thickness margin = this.Margin;
-            double horizontalMargin = margin.Left + margin.Right;
-            double verticalMargin = margin.Top + margin.Bottom;
 
-            finalSize.Width = (finalSize.Width - horizontalMargin).EnsurePositive();
-            finalSize.Height = (finalSize.Height - verticalMargin).EnsurePositive();
+            finalSize = finalSize.Deflate(margin);
 
-            Size unclippedDesiredSize = !this.unclippedSize.IsEmpty
-                                            ? this.unclippedSize
-                                            : new Size(
-                                                  (this.DesiredSize.Width - horizontalMargin).EnsurePositive(), 
-                                                  (this.DesiredSize.Height - verticalMargin).EnsurePositive());
+            Size unclippedDesiredSize = this.unclippedSize.IsEmpty
+                                            ? this.DesiredSize.Deflate(margin)
+                                            : this.unclippedSize;
 
             if (finalSize.Width.IsLessThan(unclippedDesiredSize.Width))
             {
@@ -562,8 +557,7 @@
             this.isClippingRequired |= inkSize.Width.IsLessThan(renderSize.Width) ||
                                        inkSize.Height.IsLessThan(renderSize.Height);
 
-            var clientSize = new Size(
-                Math.Max(0, finalRect.Width - horizontalMargin), Math.Max(0, finalRect.Height - verticalMargin));
+            Size clientSize = finalRect.Size.Deflate(margin);
 
             this.isClippingRequired |= clientSize.Width.IsLessThan(inkSize.Width) ||
                                        clientSize.Height.IsLessThan(inkSize.Height);
@@ -724,11 +718,7 @@
             this.OnApplyTemplate();
 
             Thickness margin = this.Margin;
-            double horizontalMargin = margin.Left + margin.Right;
-            double verticalMargin = margin.Top + margin.Bottom;
-
-            var availableSizeWithoutMargins = new Size(
-                Math.Max(availableSize.Width - horizontalMargin, 0), Math.Max(availableSize.Height - verticalMargin, 0));
+            Size availableSizeWithoutMargins = availableSize.Deflate(margin);
 
             var minMax = new MinMax(this);
 
@@ -750,24 +740,23 @@
                 isClippingRequired = true;
             }
 
-            double desiredWidth = size.Width + horizontalMargin;
-            double desiredHeight = size.Height + verticalMargin;
+            Size desiredSizeWithMargins = size.Inflate(margin);
 
-            if (desiredWidth > availableSize.Width)
+            if (desiredSizeWithMargins.Width > availableSize.Width)
             {
-                desiredWidth = availableSize.Width;
+                desiredSizeWithMargins.Width = availableSize.Width;
                 isClippingRequired = true;
             }
 
-            if (desiredHeight > availableSize.Height)
+            if (desiredSizeWithMargins.Height > availableSize.Height)
             {
-                desiredHeight = availableSize.Height;
+                desiredSizeWithMargins.Height = availableSize.Height;
                 isClippingRequired = true;
             }
 
             this.unclippedSize = isClippingRequired ? unclippedSize : Size.Empty;
 
-            return new Size(Math.Max(0, desiredWidth), Math.Max(0, desiredHeight));
+            return desiredSizeWithMargins;
         }
     }
 }
