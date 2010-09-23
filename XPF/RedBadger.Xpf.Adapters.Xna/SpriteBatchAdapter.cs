@@ -7,8 +7,15 @@
 
     using Color = RedBadger.Xpf.Media.Color;
 
+    /// <summary>
+    /// Adapts an XNA <see cref="SpriteBatch">SpriteBatch</see> to an XPF <see cref="ISpriteBatch">ISpriteBatch</see>.
+    /// </summary>
     public class SpriteBatchAdapter : SpriteBatch, ISpriteBatch
     {
+        /// <summary>
+        /// Initializes a new instance of a <see cref="SpriteBatchAdapter">SpriteBatchAdapter</see>.
+        /// </summary>
+        /// <param name = "graphicsDevice">An XNA <see cref = "GraphicsDevice">GraphicsDevice</see> that can be used to generate primitives.</param>
         public SpriteBatchAdapter(GraphicsDevice graphicsDevice)
             : base(graphicsDevice)
         {

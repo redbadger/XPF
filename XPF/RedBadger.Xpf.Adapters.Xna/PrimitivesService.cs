@@ -5,10 +5,17 @@
 
     using RedBadger.Xpf.Graphics;
 
+    /// <summary>
+    ///     Provides primitives that XPF requires to render correctly.
+    /// </summary>
     public class PrimitivesService : IPrimitivesService
     {
         private readonly GraphicsDevice graphicsDevice;
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref = "PrimitivesService">PrimitivesService</see>.
+        /// </summary>
+        /// <param name = "graphicsDevice">An XNA <see cref = "GraphicsDevice">GraphicsDevice</see> that can be used to generate primitives.</param>
         public PrimitivesService(GraphicsDevice graphicsDevice)
         {
             this.graphicsDevice = graphicsDevice;
