@@ -3,10 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using RedBadger.Xpf.Extensions;
     using RedBadger.Xpf.Graphics;
 
     public class Renderer : IRenderer
     {
+        private readonly Stack<IDrawingContext> clipRegions = new Stack<IDrawingContext>();
+
         private readonly Dictionary<IElement, DrawingContext> drawingContexts =
             new Dictionary<IElement, DrawingContext>();
 
@@ -15,6 +18,8 @@
         private readonly ISpriteBatch spriteBatch;
 
         private bool isPreDrawRequired;
+
+        private IDrawingContext parentContext;
 
         public Renderer(ISpriteBatch spriteBatch, IPrimitivesService primitivesService)
         {
@@ -67,6 +72,39 @@
                 foreach (DrawingContext drawingContext in this.drawingContexts.Values)
                 {
                     drawingContext.PreDraw();
+
+                    while (this.clipRegions.Count > 0 &&
+                           !drawingContext.Element.IsDescendantOf(this.clipRegions.Peek().Element))
+                    {
+                        this.clipRegions.Pop();
+                        this.parentContext = this.clipRegions.Count == 0 ? null : this.clipRegions.Peek();
+                    }
+
+                    if (!drawingContext.ClippingRect.IsEmpty)
+                    {
+                        this.parentContext = this.clipRegions.Count == 0 ? null : this.clipRegions.Peek();
+
+                        var absoluteClippingRect = drawingContext.ClippingRect;
+                        absoluteClippingRect.Displace(drawingContext.AbsoluteOffset);
+
+                        if (this.parentContext != null)
+                        {
+                            absoluteClippingRect.Intersect(this.parentContext.AbsoluteClippingRect);
+                            if (absoluteClippingRect.IsEmpty)
+                            {
+                                absoluteClippingRect = this.parentContext.AbsoluteClippingRect;
+                            }
+                        }
+
+                        drawingContext.AbsoluteClippingRect = absoluteClippingRect;
+                        this.clipRegions.Push(drawingContext);
+                    }
+                    else
+                    {
+                        drawingContext.AbsoluteClippingRect = this.clipRegions.Count > 0
+                                                                  ? this.clipRegions.Peek().AbsoluteClippingRect
+                                                                  : Rect.Empty;
+                    }
                 }
 
                 this.isPreDrawRequired = false;

@@ -92,7 +92,7 @@
 
         public void Draw(ISpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(this);
+            spriteBatch.Begin(this.absoluteClippingRect);
 
             foreach (ISpriteJob spriteJob in this.jobs)
             {

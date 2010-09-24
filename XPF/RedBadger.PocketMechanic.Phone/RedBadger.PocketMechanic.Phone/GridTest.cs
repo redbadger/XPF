@@ -46,7 +46,7 @@ namespace RedBadger.PocketMechanic.Phone
             var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 
-            /*var border = new Border
+            var border = new Border
                 {
                     Width = 300,
                     Height = 300,
@@ -75,10 +75,10 @@ namespace RedBadger.PocketMechanic.Phone
                     }
                 };
 
-            this.rootElement.Content = border;*/
+            this.rootElement.Content = border;
 
 
-            var child_10_StackPanel = new StackPanel { Background = new SolidColorBrush(Colors.Red) };
+            /*var child_10_StackPanel = new StackPanel { Background = new SolidColorBrush(Colors.Red) };
 
             var child_20_Border = new Border { Width = 200, Height = 300, Background = new SolidColorBrush(Colors.Yellow) };
             var child_21_Border = new Border { Width = 100, Height = 100, Background = new SolidColorBrush(Colors.Blue) };
@@ -100,7 +100,7 @@ namespace RedBadger.PocketMechanic.Phone
             child_30_StackPanel.Children.Add(child_40_Border);
             child_30_StackPanel.Children.Add(child_41_Border);
 
-            child_40_Border.Child = child_50_Border;
+            child_40_Border.Child = child_50_Border;*/
         }
 
         private static Color GetRandomColor(Random random)

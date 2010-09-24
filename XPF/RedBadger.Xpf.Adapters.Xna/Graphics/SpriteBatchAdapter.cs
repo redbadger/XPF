@@ -1,11 +1,8 @@
 ﻿namespace RedBadger.Xpf.Adapters.Xna.Graphics
 {
-    using System.Collections.Generic;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    using RedBadger.Xpf.Extensions;
     using RedBadger.Xpf.Graphics;
 
     using Color = RedBadger.Xpf.Media.Color;
@@ -21,15 +18,11 @@
                ScissorTestEnable = true, CullMode = CullMode.None 
             };
 
-        private readonly Stack<IDrawingContext> clipRegions = new Stack<IDrawingContext>();
-
         private readonly SpriteBatch spriteBatch;
 
         private Rect? currentClippingRect;
 
         private bool isBatchOpen;
-
-        private IDrawingContext parentContext;
 
         /// <summary>
         ///     Initializes a new instance of a <see cref = "SpriteBatchAdapter">SpriteBatchAdapter</see>.
@@ -40,38 +33,8 @@
             this.spriteBatch = spriteBatch;
         }
 
-        public void Begin(IDrawingContext drawingContext)
+        public void Begin(Rect clippingRect)
         {
-            while (this.clipRegions.Count > 0 && !drawingContext.Element.IsDescendantOf(this.clipRegions.Peek().Element))
-            {
-                this.clipRegions.Pop();
-                this.parentContext = this.clipRegions.Count == 0 ? null : this.clipRegions.Peek();
-            }
-
-            if (!drawingContext.ClippingRect.IsEmpty)
-            {
-                this.parentContext = this.clipRegions.Count == 0 ? null : this.clipRegions.Peek();
-                this.clipRegions.Push(drawingContext);
-            }
-
-            Rect clippingRect = Rect.Empty;
-            if (this.clipRegions.Count > 0)
-            {
-                IDrawingContext context = this.clipRegions.Peek();
-                clippingRect = context.ClippingRect;
-                clippingRect.Displace(context.AbsoluteOffset);
-                if (this.parentContext != null)
-                {
-                    clippingRect.Intersect(this.parentContext.AbsoluteClippingRect);
-                    if (clippingRect.IsEmpty)
-                    {
-                        clippingRect = this.parentContext.AbsoluteClippingRect;
-                    }
-                }
-
-                context.AbsoluteClippingRect = clippingRect;
-            }
-
             if (this.currentClippingRect != clippingRect)
             {
                 this.currentClippingRect = clippingRect;

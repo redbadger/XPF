@@ -45,8 +45,8 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private It should_create_a_clipping_rect_for_the_child =
             () => Renderer.GetDrawingContext(child.Object).AbsoluteClippingRect.ShouldEqual(viewport);
 
-        private It should_create_a_clipping_rect_for_the_parent =
-            () => Renderer.GetDrawingContext(rootElement.Object).AbsoluteClippingRect.ShouldEqual(viewport);
+        private It should_not_create_a_clipping_rect_for_the_parent =
+            () => Renderer.GetDrawingContext(rootElement.Object).AbsoluteClippingRect.ShouldEqual(Rect.Empty);
     }
 
     [Subject(typeof(Renderer), "Clipping")]
@@ -81,6 +81,8 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
     [Subject(typeof(Renderer), "Clipping")]
     public class when_there_is_a_hierarchy_of_elements_some_of_which_need_clipping : a_Renderer
     {
+        private static double verticalOffset;
+
         private static readonly Rect viewport = new Rect(10, 20, 500, 500);
 
         private static StackPanel child_10_StackPanel;
@@ -96,6 +98,8 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private static Border child_41_Border;
 
         private static Border child_50_Border;
+
+        private static double horizontalOffset;
 
         private static RootElement rootElement;
 
@@ -126,33 +130,36 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
                 child_30_StackPanel.Children.Add(child_41_Border);
 
                 child_40_Border.Child = child_50_Border;
+
+                horizontalOffset = (viewport.Width - child_20_Border.Width) / 2 + viewport.X;
+                verticalOffset = viewport.Y;
             };
 
         private Because of = () => rootElement.Update();
 
         private It should_00_root_element_should_not_have_a_clipping_rect =
-            () => Renderer.GetDrawingContext(rootElement).ClippingRect.IsEmpty.ShouldBeTrue();
+            () => Renderer.GetDrawingContext(rootElement).ClippingRect.ShouldEqual(Rect.Empty);
 
         private It should_00_root_element_should_not_have_an_absolute_clipping_rect =
-            () => Renderer.GetDrawingContext(rootElement).AbsoluteClippingRect.IsEmpty.ShouldBeTrue();
+            () => Renderer.GetDrawingContext(rootElement).AbsoluteClippingRect.ShouldEqual(Rect.Empty);
 
         private It should_child_10_StackPanel_should_not_have_a_clipping_rect =
-            () => Renderer.GetDrawingContext(child_10_StackPanel).ClippingRect.IsEmpty.ShouldBeTrue();
+            () => Renderer.GetDrawingContext(child_10_StackPanel).ClippingRect.ShouldEqual(Rect.Empty);
 
         private It should_child_10_StackPanel_should_not_have_an_absolute_clipping_rect =
-            () => Renderer.GetDrawingContext(child_10_StackPanel).AbsoluteClippingRect.IsEmpty.ShouldBeTrue();
+            () => Renderer.GetDrawingContext(child_10_StackPanel).AbsoluteClippingRect.ShouldEqual(Rect.Empty);
 
         private It should_child_20_Border_should_not_have_a_clipping_rect =
-            () => Renderer.GetDrawingContext(child_20_Border).ClippingRect.IsEmpty.ShouldBeTrue();
+            () => Renderer.GetDrawingContext(child_20_Border).ClippingRect.ShouldEqual(Rect.Empty);
 
         private It should_child_20_Border_should_not_have_an_absolute_clipping_rect =
-            () => Renderer.GetDrawingContext(child_20_Border).AbsoluteClippingRect.IsEmpty.ShouldBeTrue();
+            () => Renderer.GetDrawingContext(child_20_Border).AbsoluteClippingRect.ShouldEqual(Rect.Empty);
 
         private It should_child_21_Border_should_not_have_a_clipping_rect =
-            () => Renderer.GetDrawingContext(child_21_Border).ClippingRect.IsEmpty.ShouldBeTrue();
+            () => Renderer.GetDrawingContext(child_21_Border).ClippingRect.ShouldEqual(Rect.Empty);
 
         private It should_child_21_Border_should_not_have_an_absolute_clipping_rect =
-            () => Renderer.GetDrawingContext(child_21_Border).AbsoluteClippingRect.IsEmpty.ShouldBeTrue();
+            () => Renderer.GetDrawingContext(child_21_Border).AbsoluteClippingRect.ShouldEqual(Rect.Empty);
 
         private It should_child_30_StackPanel_should_have_a_clipping_rect =
             () =>
@@ -162,7 +169,7 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private It should_child_30_StackPanel_should_have_an_absolute_clipping_rect =
             () =>
             Renderer.GetDrawingContext(child_30_StackPanel).AbsoluteClippingRect.ShouldEqual(
-                new Rect(10, 20, child_20_Border.Width, child_20_Border.Height));
+                new Rect(horizontalOffset, verticalOffset, child_20_Border.Width, child_20_Border.Height));
 
         private It should_child_40_Border_should_have_a_clipping_rect =
             () =>
@@ -172,7 +179,7 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private It should_child_40_Border_should_have_an_absolute_clipping_rect =
             () =>
             Renderer.GetDrawingContext(child_40_Border).AbsoluteClippingRect.ShouldEqual(
-                new Rect(10, 20, child_20_Border.Width, child_20_Border.Height));
+                new Rect(horizontalOffset, verticalOffset, child_20_Border.Width, child_20_Border.Height));
 
         private It should_child_41_Border_should_have_a_clipping_rect =
             () =>
@@ -182,7 +189,7 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private It should_child_41_Border_should_have_an_absolute_clipping_rect =
             () =>
             Renderer.GetDrawingContext(child_41_Border).AbsoluteClippingRect.ShouldEqual(
-                new Rect(10, 20, child_20_Border.Width, child_20_Border.Height));
+                new Rect(horizontalOffset, verticalOffset, child_20_Border.Width, child_20_Border.Height));
 
         private It should_child_50_Border_should_have_a_clipping_rect =
             () =>
@@ -192,6 +199,6 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private It should_child_50_Border_should_have_an_absolute_clipping_rect =
             () =>
             Renderer.GetDrawingContext(child_50_Border).AbsoluteClippingRect.ShouldEqual(
-                new Rect(10, 20, child_20_Border.Width, child_20_Border.Height));
+                new Rect(horizontalOffset, verticalOffset, child_20_Border.Width, child_20_Border.Height));
     }
 }

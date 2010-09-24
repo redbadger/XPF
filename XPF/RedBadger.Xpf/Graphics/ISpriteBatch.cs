@@ -7,7 +7,7 @@ namespace RedBadger.Xpf.Graphics
     /// </summary>
     public interface ISpriteBatch
     {
-        void Begin(IDrawingContext drawingContext);
+        void Begin(Rect clippingRect);
 
         /// <summary>
         ///     Adds a <see cref = "ITexture">ITexture</see> sprite to the batch for rendering.
