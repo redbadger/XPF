@@ -9,11 +9,11 @@
 
         private readonly Rect rect;
 
-        private readonly ITexture2D texture2D;
+        private readonly ITexture texture;
 
-        public SpriteTextureJob(ITexture2D texture2D, Rect rect, Brush brush)
+        public SpriteTextureJob(ITexture texture, Rect rect, Brush brush)
         {
-            this.texture2D = texture2D;
+            this.texture = texture;
             this.rect = rect;
             this.brush = brush;
         }
@@ -24,7 +24,7 @@
             drawRect.Displace(offset);
 
             var solidColorBrush = this.brush as SolidColorBrush;
-            spriteBatch.Draw(this.texture2D, drawRect, solidColorBrush != null ? solidColorBrush.Color : Colors.Magenta);
+            spriteBatch.Draw(this.texture, drawRect, solidColorBrush != null ? solidColorBrush.Color : Colors.Magenta);
         }
     }
 }

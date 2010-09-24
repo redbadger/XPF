@@ -77,7 +77,7 @@
     <Compile Include="Graphics\IPrimitivesService.cs" />
     <Compile Include="Graphics\ISpriteBatch.cs" />
     <Compile Include="Graphics\ISpriteFont.cs" />
-    <Compile Include="Graphics\ITexture2D.cs" />
+    <Compile Include="Graphics\ITexture.cs" />
     <Compile Include="Internal\Controls\ScrollData.cs" />
     <Compile Include="Internal\DualDisposable.cs" />
     <Compile Include="Internal\IEnumerableExtensions.cs" />
@@ -143,9 +143,8 @@
     <Compile Include="Graphics\IDrawingContext.cs" />
     <Compile Include="Graphics\ISpriteJob.cs" />
     <Compile Include="Media\ImageSource.cs" />
-    <Compile Include="Media\Imaging\BitmapImage.cs" />
     <Compile Include="Media\Imaging\BitmapSource.cs" />
-    <Compile Include="Media\Imaging\XnaImage.cs" />
+    <Compile Include="Media\Imaging\TextureImage.cs" />
     <Compile Include="Media\SolidColorBrush.cs" />
     <Compile Include="Controls\ColumnDefinition.cs" />
     <Compile Include="Controls\Border.cs" />

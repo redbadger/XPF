@@ -22,26 +22,26 @@ namespace RedBadger.Xpf.Specs.Media.Imaging
 
     public class a_context_for_an_xna_image
     {
-        protected static int ExpectedHeight = 120;
+        protected const int ExpectedHeight = 120;
 
-        protected static int ExpectedWidth = 80;
+        protected const int ExpectedWidth = 80;
 
-        protected static XnaImage Image;
+        protected static TextureImage Image;
 
-        protected static Mock<ITexture2D> Texture;
+        protected static Mock<ITexture> Texture;
 
         private Establish context = () =>
             {
-                Texture = new Mock<ITexture2D>();
+                Texture = new Mock<ITexture>();
                 Texture.Setup(d => d.Height).Returns(ExpectedHeight);
                 Texture.Setup(d => d.Width).Returns(ExpectedWidth);
             };
     }
 
-    [Subject(typeof(XnaImage))]
+    [Subject(typeof(TextureImage))]
     public class when_an_Xna_image_is_instantiated : a_context_for_an_xna_image
     {
-        private Because of = () => Image = new XnaImage(Texture.Object);
+        private Because of = () => Image = new TextureImage(Texture.Object);
 
         private It should_have_a_Height_set = () => Image.Height.ShouldEqual(ExpectedHeight);
 

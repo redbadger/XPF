@@ -22,7 +22,7 @@
             this.SinglePixel = new Texture2DAdapter(CreateSinglePixel(this.graphicsDevice, 1, 1, Color.White));
         }
 
-        public ITexture2D SinglePixel { get; private set; }
+        public ITexture SinglePixel { get; private set; }
 
         private static Texture2D CreateSinglePixel(GraphicsDevice graphicsDevice, int width, int height, Color color)
         {

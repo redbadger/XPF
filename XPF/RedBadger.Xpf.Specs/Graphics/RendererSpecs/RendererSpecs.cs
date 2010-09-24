@@ -51,7 +51,7 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private It should_only_draw_the_element_once =
             () =>
             SpriteBatch.Verify(
-                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
+                batch => batch.Draw(Moq.It.IsAny<ITexture>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
                 Times.Once());
     }
 
@@ -72,7 +72,7 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private It should_not_draw_anything =
             () =>
             SpriteBatch.Verify(
-                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
+                batch => batch.Draw(Moq.It.IsAny<ITexture>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
                 Times.Never());
     }
 
@@ -96,7 +96,7 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private It should_still_draw =
             () =>
             SpriteBatch.Verify(
-                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()));
+                batch => batch.Draw(Moq.It.IsAny<ITexture>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()));
     }
 
     [Subject(typeof(Renderer))]
@@ -119,7 +119,7 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private It should_not_draw_the_orphaned_element =
             () =>
             SpriteBatch.Verify(
-                batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
+                batch => batch.Draw(Moq.It.IsAny<ITexture>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
                 Times.Never());
     }
 }

@@ -5,9 +5,9 @@
     using RedBadger.Xpf.Graphics;
 
     /// <summary>
-    ///     Adapts an XNA <see cref = "Texture2D">Texture2D</see> to an XPF <see cref = "ITexture2D">ITexture2D</see>.
+    ///     Adapts an XNA <see cref = "Texture2D">Texture2D</see> to an XPF <see cref = "ITexture">ITexture</see>.
     /// </summary>
-    public class Texture2DAdapter : ITexture2D
+    public class Texture2DAdapter : ITexture
     {
         private readonly Texture2D texture2D;
 

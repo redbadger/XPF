@@ -58,7 +58,7 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
             };
 
         private It should_render_a_rectangle =
-            () => SpriteBatch.Verify(batch => batch.Draw(Moq.It.IsAny<ITexture2D>(), expectedRect, expectedBrush.Color));
+            () => SpriteBatch.Verify(batch => batch.Draw(Moq.It.IsAny<ITexture>(), expectedRect, expectedBrush.Color));
     }
 
     [Subject(typeof(DrawingContext), "Image")]
@@ -68,12 +68,12 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
 
         private static readonly Rect expectedRect = new Rect(10, 20, 30, 40);
 
-        private static Mock<ITexture2D> expectedTexture;
+        private static Mock<ITexture> expectedTexture;
 
         private Because of = () =>
             {
-                expectedTexture = new Mock<ITexture2D>();
-                DrawingContext.DrawImage(new Mock<XnaImage>(expectedTexture.Object).Object, expectedRect);
+                expectedTexture = new Mock<ITexture>();
+                DrawingContext.DrawImage(new Mock<TextureImage>(expectedTexture.Object).Object, expectedRect);
                 Renderer.Draw();
             };
 
@@ -103,7 +103,7 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
             SpriteBatch.Verify(
                 batch =>
                 batch.Draw(
-                    Moq.It.IsAny<ITexture2D>(), 
+                    Moq.It.IsAny<ITexture>(), 
                     new Rect(absoluteOffset.X + rect.X, absoluteOffset.Y + rect.Y, rect.Width, rect.Height), 
                     Moq.It.IsAny<Color>()));
     }
@@ -148,7 +148,7 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
 
         private Because of = () =>
             {
-                DrawingContext.DrawImage(new Mock<XnaImage>(new Mock<ITexture2D>().Object).Object, rect);
+                DrawingContext.DrawImage(new Mock<TextureImage>(new Mock<ITexture>().Object).Object, rect);
                 Renderer.PreDraw();
                 Renderer.Draw();
             };
@@ -158,7 +158,7 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
             SpriteBatch.Verify(
                 batch =>
                 batch.Draw(
-                    Moq.It.IsAny<ITexture2D>(), 
+                    Moq.It.IsAny<ITexture>(), 
                     new Rect(absoluteOffset.X + rect.X, absoluteOffset.Y + rect.Y, rect.Width, rect.Height), 
                     Moq.It.IsAny<Color>()));
     }
@@ -205,7 +205,7 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
             SpriteBatch.Verify(
                 batch =>
                 batch.Draw(
-                    Moq.It.IsAny<ITexture2D>(), 
+                    Moq.It.IsAny<ITexture>(), 
                     new Rect(absoluteOffset2.X + rect.X, absoluteOffset2.Y + rect.Y, rect.Width, rect.Height), 
                     Moq.It.IsAny<Color>()));
     }

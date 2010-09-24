@@ -51,14 +51,14 @@ namespace RedBadger.Xpf.Specs.Controls.ImageSpecs
 
         protected static Image Image;
 
-        protected static Mock<ITexture2D> Texture;
+        protected static Mock<ITexture> Texture;
 
         private Establish context = () =>
             {
-                Texture = new Mock<ITexture2D>();
+                Texture = new Mock<ITexture>();
                 Texture.Setup(d => d.Width).Returns((int)ImageSize.Width);
                 Texture.Setup(d => d.Height).Returns((int)ImageSize.Height);
-                Image = new Image { Source = new XnaImage(Texture.Object) };
+                Image = new Image { Source = new TextureImage(Texture.Object) };
             };
     }
 
@@ -70,14 +70,14 @@ namespace RedBadger.Xpf.Specs.Controls.ImageSpecs
 
         protected static Image Image;
 
-        protected static Mock<ITexture2D> Texture;
+        protected static Mock<ITexture> Texture;
 
         private Establish context = () =>
             {
-                Texture = new Mock<ITexture2D>();
+                Texture = new Mock<ITexture>();
                 Texture.Setup(d => d.Width).Returns((int)ImageSize.Width);
                 Texture.Setup(d => d.Height).Returns((int)ImageSize.Height);
-                Image = new Image { Source = new XnaImage(Texture.Object) };
+                Image = new Image { Source = new TextureImage(Texture.Object) };
             };
     }
 
@@ -388,7 +388,7 @@ namespace RedBadger.Xpf.Specs.Controls.ImageSpecs
     [Subject(typeof(Image), "Stretch")]
     public class when_image_source_is_changed : a_measured_and_arranged_Image
     {
-        private Because of = () => Image.Source = new XnaImage(new Mock<ITexture2D>().Object);
+        private Because of = () => Image.Source = new TextureImage(new Mock<ITexture>().Object);
 
         private It should_invalidate_arrange = () => Image.IsArrangeValid.ShouldBeFalse();
 
@@ -398,11 +398,11 @@ namespace RedBadger.Xpf.Specs.Controls.ImageSpecs
     [Subject(typeof(Image), "Stretch")]
     public class when_an_image_source_is_specified : an_image
     {
-        private static XnaImage imageSource;
+        private static TextureImage imageSource;
 
         private Because of = () =>
             {
-                imageSource = new XnaImage(new Mock<ITexture2D>().Object);
+                imageSource = new TextureImage(new Mock<ITexture>().Object);
                 Image.Source = imageSource;
                 RootElement.Object.Update();
                 RootElement.Object.Draw();

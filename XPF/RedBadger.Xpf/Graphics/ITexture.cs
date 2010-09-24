@@ -1,9 +1,9 @@
 namespace RedBadger.Xpf.Graphics
 {
     /// <summary>
-    ///     Represents a 2D Texture.
+    ///     Represents a Texture.
     /// </summary>
-    public interface ITexture2D
+    public interface ITexture
     {
         /// <summary>
         ///     Gets the height of this texture in pixels.

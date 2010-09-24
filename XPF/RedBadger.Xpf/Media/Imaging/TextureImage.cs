@@ -4,11 +4,11 @@ namespace RedBadger.Xpf.Media.Imaging
 
     using RedBadger.Xpf.Graphics;
 
-    public class XnaImage : BitmapImage
+    public class TextureImage : BitmapSource
     {
-        private readonly ITexture2D texture;
+        private readonly ITexture texture;
 
-        public XnaImage(ITexture2D texture)
+        public TextureImage(ITexture texture)
         {
             if (texture == null)
             {
@@ -20,7 +20,7 @@ namespace RedBadger.Xpf.Media.Imaging
             this.PixelWidth = this.Texture.Width;
         }
 
-        public ITexture2D Texture
+        public ITexture Texture
         {
             get
             {

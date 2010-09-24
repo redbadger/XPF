@@ -20,10 +20,10 @@ namespace RedBadger.Xpf.Adapters.Xna.Graphics
 
         public void Draw(ISpriteBatch spriteBatch, Vector offset)
         {
-            var image = this.imageSource as XnaImage;
+            var image = this.imageSource as TextureImage;
             if (image == null)
             {
-                throw new NotImplementedException("Currently an ImageSource must be an XnaImage");
+                throw new NotImplementedException("Currently an ImageSource must be an TextureImage");
             }
 
             Rect drawRect = !this.rect.IsEmpty ? this.rect : new Rect();

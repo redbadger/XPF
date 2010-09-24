@@ -190,8 +190,8 @@
     <Compile Include="..\RedBadger.Xpf\Graphics\ISpriteJob.cs">
       <Link>Graphics\ISpriteJob.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Graphics\ITexture2D.cs">
-      <Link>Graphics\ITexture2D.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Graphics\ITexture.cs">
+      <Link>Graphics\ITexture.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\GridLength.cs">
       <Link>GridLength.cs</Link>
@@ -277,14 +277,11 @@
     <Compile Include="..\RedBadger.Xpf\Media\ImageSource.cs">
       <Link>Media\ImageSource.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Media\Imaging\BitmapImage.cs">
-      <Link>Media\Imaging\BitmapImage.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Media\Imaging\BitmapSource.cs">
       <Link>Media\Imaging\BitmapSource.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\Media\Imaging\XnaImage.cs">
-      <Link>Media\Imaging\XnaImage.cs</Link>
+    <Compile Include="..\RedBadger.Xpf\Media\Imaging\TextureImage.cs">
+      <Link>Media\Imaging\TextureImage.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Media\SolidColorBrush.cs">
       <Link>Media\SolidColorBrush.cs</Link>
@@ -338,7 +335,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" />
+      <UserProperties ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

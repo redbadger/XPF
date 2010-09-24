@@ -93,9 +93,9 @@
             }
         }
 
-        public void Draw(ITexture2D texture2D, Rect rect, Color color)
+        public void Draw(ITexture texture, Rect rect, Color color)
         {
-            var texture2DAdapter = texture2D as Texture2DAdapter;
+            var texture2DAdapter = texture as Texture2DAdapter;
             if (texture2DAdapter != null && texture2DAdapter.Value != null)
             {
                 var rectangle = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height);

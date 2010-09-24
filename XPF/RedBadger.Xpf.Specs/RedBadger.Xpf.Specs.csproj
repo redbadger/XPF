@@ -124,7 +124,7 @@
     <Compile Include="GridLengthSpecs\GridLengthSpecs.cs" />
     <Compile Include="Graphics\DrawingContextSpecs\Contexts.cs" />
     <Compile Include="Graphics\DrawingContextSpecs\DrawingSpecs.cs" />
-    <Compile Include="Media\Imaging\XnaImageSpecs.cs" />
+    <Compile Include="Media\Imaging\TextureImageSpecs.cs" />
     <Compile Include="Graphics\RendererSpecs\RendererSpecs.cs" />
     <Compile Include="ElementCollectionSpecs\ElementCollectionSpecs.cs" />
     <Compile Include="ReactivePropertySpecs\ReactivePropertySpecs.cs" />

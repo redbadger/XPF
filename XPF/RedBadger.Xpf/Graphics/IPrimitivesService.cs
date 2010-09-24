@@ -8,6 +8,6 @@ namespace RedBadger.Xpf.Graphics
         /// <summary>
         ///     A single pixel that XPF can use to draw lines, borders and backgrounds.
         /// </summary>
-        ITexture2D SinglePixel { get; }
+        ITexture SinglePixel { get; }
     }
 }

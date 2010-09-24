@@ -10,12 +10,12 @@ namespace RedBadger.Xpf.Graphics
         void Begin(IDrawingContext drawingContext);
 
         /// <summary>
-        ///     Adds a <see cref = "ITexture2D">ITexture2D</see> sprite to the batch for rendering.
+        ///     Adds a <see cref = "ITexture">ITexture</see> sprite to the batch for rendering.
         /// </summary>
-        /// <param name = "texture2D">The <see cref = "ITexture2D">ITexture2D</see> to render.</param>
-        /// <param name = "rect">A <see cref = "Rect">Rect</see> defining the destination in pixels for drawing the <see cref = "ITexture2D">ITexture2D</see>.</param>
-        /// <param name = "color">The <see cref = "Color">Color</see> to tint the <see cref = "ITexture2D">ITexture2D</see>.</param>
-        void Draw(ITexture2D texture2D, Rect rect, Color color);
+        /// <param name = "texture">The <see cref = "ITexture">ITexture</see> to render.</param>
+        /// <param name = "rect">A <see cref = "Rect">Rect</see> defining the destination in pixels for drawing the <see cref = "ITexture">ITexture</see>.</param>
+        /// <param name = "color">The <see cref = "Color">Color</see> to tint the <see cref = "ITexture">ITexture</see>.</param>
+        void Draw(ITexture texture, Rect rect, Color color);
 
         /// <summary>
         ///     Adds a <see cref = "ISpriteFont">ISpriteFont</see> to the batch for rendering.
