@@ -62,10 +62,14 @@
                 clippingRect.Displace(context.AbsoluteOffset);
                 if (this.parentContext != null)
                 {
-                    var parentClip = this.parentContext.ClippingRect;
-                    parentClip.Displace(this.parentContext.AbsoluteOffset);
-                    clippingRect.Intersect(parentClip);
+                    clippingRect.Intersect(this.parentContext.AbsoluteClippingRect);
+                    if (clippingRect.IsEmpty)
+                    {
+                        clippingRect = this.parentContext.AbsoluteClippingRect;
+                    }
                 }
+
+                context.AbsoluteClippingRect = clippingRect;
             }
 
             if (this.currentClippingRect != clippingRect)

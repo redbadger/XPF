@@ -8,7 +8,7 @@ namespace RedBadger.Xpf
     /// <summary>
     ///     A structure representing a Rectangle in 2D space
     /// </summary>
-    [DebuggerDisplay("{X}, {Y} {Width} x {Height}")]
+    [DebuggerDisplay("{X}, {Y} : {Width} x {Height}")]
     public struct Rect : IEquatable<Rect>
     {
         /// <summary>
@@ -321,7 +321,7 @@ namespace RedBadger.Xpf
 
         public override string ToString()
         {
-            return string.Format("{0}, {1} {2} x {3}", this.X, this.Y, this.Width, this.Height);
+            return string.Format("{0}, {1} : {2} x {3}", this.X, this.Y, this.Width, this.Height);
         }
 
         /// <summary>

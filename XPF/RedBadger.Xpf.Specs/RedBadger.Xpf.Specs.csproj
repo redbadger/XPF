@@ -79,6 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\MSpecExtensions.cs" />
+    <Compile Include="Graphics\RendererSpecs\ClippingSpecs.cs" />
+    <Compile Include="Graphics\RendererSpecs\Contexts.cs" />
     <Compile Include="Input\MouseInputSpecs\MouseInputSpecs.cs" />
     <Compile Include="Controls\BorderSpecs\BorderSpecs.cs" />
     <Compile Include="Controls\BorderSpecs\Contexts.cs" />

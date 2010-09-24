@@ -14,6 +14,8 @@
 
         private readonly IPrimitivesService primitivesService;
 
+        private Rect absoluteClippingRect;
+
         private Vector absoluteOffset;
 
         private Rect clippingRect = Rect.Empty;
@@ -32,6 +34,18 @@
 
             this.element = element;
             this.primitivesService = primitivesService;
+        }
+
+        public Rect AbsoluteClippingRect
+        {
+            get
+            {
+                return this.absoluteClippingRect;
+            }
+            set
+            {
+                this.absoluteClippingRect = value;
+            }
         }
 
         public Vector AbsoluteOffset

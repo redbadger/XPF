@@ -4,11 +4,13 @@ namespace RedBadger.Xpf.Graphics
 
     public interface IDrawingContext
     {
+        Rect AbsoluteClippingRect { get; set; }
+
+        Vector AbsoluteOffset { get; }
+
         Rect ClippingRect { get; set; }
 
         IElement Element { get; }
-
-        Vector AbsoluteOffset { get; }
 
         void DrawImage(ImageSource imageSource, Rect rect);
 

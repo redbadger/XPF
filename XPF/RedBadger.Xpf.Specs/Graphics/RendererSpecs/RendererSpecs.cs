@@ -21,19 +21,6 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
 
     using It = Machine.Specifications.It;
 
-    public abstract class a_Renderer
-    {
-        protected static Renderer Renderer;
-
-        protected static Mock<ISpriteBatch> SpriteBatch;
-
-        private Establish context = () =>
-            {
-                SpriteBatch = new Mock<ISpriteBatch>();
-                Renderer = new Renderer(SpriteBatch.Object, new Mock<IPrimitivesService>().Object);
-            };
-    }
-
     [Subject(typeof(Renderer))]
     public class when_the_same_element_requests_a_drawing_context_more_than_once : a_Renderer
     {
@@ -51,8 +38,7 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private It should_only_draw_the_element_once =
             () =>
             SpriteBatch.Verify(
-                batch => batch.Draw(Moq.It.IsAny<ITexture>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
-                Times.Once());
+                batch => batch.Draw(Moq.It.IsAny<ITexture>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), Times.Once());
     }
 
     [Subject(typeof(Renderer))]
