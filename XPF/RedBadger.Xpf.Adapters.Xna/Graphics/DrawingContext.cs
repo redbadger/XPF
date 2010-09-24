@@ -83,8 +83,6 @@
             }
         }
 
-        public IDrawingContext Next { get; set; }
-
         public void Clear()
         {
             this.jobs.Clear();
@@ -106,11 +104,6 @@
             {
                 spriteJob.Draw(spriteBatch, this.absoluteOffset);
             }
-        }
-
-        public void PreDraw()
-        {
-            this.absoluteOffset = this.element.CalculateAbsoluteOffset();
         }
 
         public void DrawImage(ImageSource imageSource, Rect rect)

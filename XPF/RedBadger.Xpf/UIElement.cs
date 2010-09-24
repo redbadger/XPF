@@ -73,6 +73,8 @@
 
         private Size unclippedSize;
 
+        private Vector visualOffset;
+
         protected UIElement()
         {
             this.Gestures.Subscribe(Observer.Create<Gesture>(this.OnNextGesture));
@@ -143,12 +145,6 @@
             }
         }
 
-        /// <summary>
-        ///     Gets a value indicating whether the computed size and position of child elements in this element's layout are valid.
-        /// </summary>
-        /// <value>
-        ///     <c>true</c> if the size and position of layout are valid; otherwise, <c>false</c>.
-        /// </value>
         public bool IsArrangeValid { get; private set; }
 
         public bool IsMeasureValid { get; private set; }
@@ -246,6 +242,14 @@
             }
         }
 
+        public Vector VisualOffset
+        {
+            get
+            {
+                return this.visualOffset;
+            }
+        }
+
         public IElement VisualParent { get; set; }
 
         public double Width
@@ -260,12 +264,6 @@
                 this.SetValue(WidthProperty, value);
             }
         }
-
-        /// <remarks>
-        ///     In WPF this is protected internal.  For the purposes of unit testing we've not made this protected.
-        ///     TODO: implement a reflection based mechanism (for Moq?) to get back values from protected properties
-        /// </remarks>
-        public Vector VisualOffset { get; set; }
 
         public bool CaptureMouse()
         {
@@ -292,12 +290,6 @@
             }
         }
 
-        /// <summary>
-        ///     Positions child elements and determines a size for a UIElement.
-        ///     Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
-        ///     This method constitutes the second pass of a layout update.
-        /// </summary>
-        /// <param name = "finalRect">The final size that the parent computes for the child element, provided as a Rect instance.</param>
         public void Arrange(Rect finalRect)
         {
             if (double.IsNaN(finalRect.Width) || double.IsNaN(finalRect.Height))
@@ -334,20 +326,6 @@
             }
         }
 
-        public Vector CalculateAbsoluteOffset()
-        {
-            Vector absoluteOffset = this.VisualOffset;
-
-            if (this.VisualParent != null)
-            {
-                absoluteOffset += this.VisualParent.CalculateAbsoluteOffset();
-            }
-
-            this.actualRect = new Rect(absoluteOffset.X, absoluteOffset.Y, this.ActualWidth, this.ActualHeight);
-
-            return absoluteOffset;
-        }
-
         public virtual IEnumerable<IElement> GetVisualChildren()
         {
             yield break;
@@ -355,12 +333,17 @@
 
         public bool HitTest(Point point)
         {
-            if (this.actualRect != Rect.Empty)
+            Vector absoluteOffset = Vector.Zero;
+            IElement currentElement = this;
+
+            while (currentElement != null)
             {
-                return this.actualRect.Contains(point);
+                absoluteOffset += currentElement.VisualOffset;
+                currentElement = currentElement.VisualParent;
             }
 
-            return false;
+            var hitTestRect = new Rect(absoluteOffset.X, absoluteOffset.Y, this.ActualWidth, this.ActualHeight);
+            return hitTestRect.Contains(point);
         }
 
         public void InvalidateArrange()
@@ -387,15 +370,6 @@
             this.InvalidateArrange();
         }
 
-        /// <summary>
-        ///     Updates the DesiredSize of a UIElement.
-        ///     Derrived elements call this method from their own MeasureOverride implementations to form a recursive layout update.
-        ///     Calling this method constitutes the first pass (the "Measure" pass) of a layout update.
-        /// </summary>
-        /// <param name = "availableSize">
-        ///     The available space that a parent element can allocate a child element.
-        ///     A child element can request a larger space than what is available; the provided size might be accommodated.
-        /// </param>
         public void Measure(Size availableSize)
         {
             if (double.IsNaN(availableSize.Width) || double.IsNaN(availableSize.Height))
@@ -566,7 +540,7 @@
             offset.X += finalRect.X + margin.Left;
             offset.Y += finalRect.Y + margin.Top;
 
-            this.VisualOffset = offset;
+            this.visualOffset = offset;
         }
 
         private Vector ComputeAlignmentOffset(Size clientSize, Size inkSize)
@@ -722,8 +696,10 @@
 
             var minMax = new MinMax(this);
 
-            availableSizeWithoutMargins.Width = availableSizeWithoutMargins.Width.Coerce(minMax.MinWidth, minMax.MaxWidth);
-            availableSizeWithoutMargins.Height = availableSizeWithoutMargins.Height.Coerce(minMax.MinHeight, minMax.MaxHeight);
+            availableSizeWithoutMargins.Width = availableSizeWithoutMargins.Width.Coerce(
+                minMax.MinWidth, minMax.MaxWidth);
+            availableSizeWithoutMargins.Height = availableSizeWithoutMargins.Height.Coerce(
+                minMax.MinHeight, minMax.MaxHeight);
 
             Size size = this.MeasureOverride(availableSizeWithoutMargins);
 

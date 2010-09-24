@@ -381,37 +381,4 @@ namespace RedBadger.Xpf.Specs.UIElementSpecs
         private It should_not_arrange_again =
             () => Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.IsAny<Size>());
     }
-
-    [Subject(typeof(UIElement), "Layout - Absolute Offset")]
-    public class when_an_absolute_offset_is_requested
-    {
-        private static Mock<UIElement> element1;
-
-        private static Mock<UIElement> element2;
-
-        private static Mock<UIElement> element3;
-
-        private Establish context = () =>
-            {
-                element1 = new Mock<UIElement> { CallBase = true };
-                element1.Object.VisualOffset = new Vector(10, 20);
-
-                element2 = new Mock<UIElement> { CallBase = true };
-                element2.Object.VisualOffset = new Vector(30, 40);
-                element2.Object.VisualParent = element1.Object;
-
-                element3 = new Mock<UIElement> { CallBase = true };
-                element3.Object.VisualOffset = new Vector(50, 60);
-                element3.Object.VisualParent = element2.Object;
-            };
-
-        private It should_return_a_correct_value_for_element_1 =
-            () => element1.Object.CalculateAbsoluteOffset().ShouldEqual(new Vector(10, 20));
-
-        private It should_return_a_correct_value_for_element_2 =
-            () => element2.Object.CalculateAbsoluteOffset().ShouldEqual(new Vector(40, 60));
-
-        private It should_return_a_correct_value_for_element_3 =
-            () => element3.Object.CalculateAbsoluteOffset().ShouldEqual(new Vector(90, 120));
-    }
 }

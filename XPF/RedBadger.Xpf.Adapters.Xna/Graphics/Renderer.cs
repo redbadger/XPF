@@ -36,9 +36,9 @@
 
         public void Draw()
         {
-            foreach (DrawingContext linkedContext in this.drawList)
+            foreach (DrawingContext drawingContext in this.drawList)
             {
-                linkedContext.Draw(this.spriteBatch);
+                drawingContext.Draw(this.spriteBatch);
             }
 
             this.spriteBatch.End();
@@ -62,12 +62,17 @@
             return node.Value;
         }
 
-        public void PreDraw(IElement rootElement)
+        public void PreDraw()
         {
             if (this.isPreDrawRequired)
             {
                 this.drawList.Clear();
-                this.PreDraw(rootElement, rootElement.VisualOffset, Rect.Empty);
+
+                LinkedListNode<DrawingContext> node = this.drawingContexts.Values.FirstOrDefault();
+                if (node != null)
+                {
+                    this.PreDraw(node.Value.Element, Vector.Zero, Rect.Empty);
+                }
 
                 this.isPreDrawRequired = false;
             }
@@ -88,22 +93,22 @@
                 DrawingContext drawingContext = node.Value;
 
                 absoluteOffset += element.VisualOffset;
-                drawingContext.AbsoluteOffset = absoluteOffset;
 
-                if (!drawingContext.ClippingRect.IsEmpty)
+                Rect clippingRect = drawingContext.ClippingRect;
+                clippingRect.Displace(absoluteOffset);
+
+                if (!absoluteClippingRect.IsEmpty)
                 {
-                    Rect clippingRect = drawingContext.ClippingRect;
-                    clippingRect.Displace(absoluteOffset);
-
                     clippingRect.Intersect(absoluteClippingRect);
                     if (clippingRect.IsEmpty)
                     {
                         clippingRect = absoluteClippingRect;
                     }
-
-                    drawingContext.AbsoluteClippingRect = clippingRect;
-                    this.drawList.AddLast(node);
                 }
+
+                drawingContext.AbsoluteOffset = absoluteOffset;
+                drawingContext.AbsoluteClippingRect = clippingRect;
+                this.drawList.AddLast(node);
 
                 foreach (IElement child in element.GetVisualChildren())
                 {

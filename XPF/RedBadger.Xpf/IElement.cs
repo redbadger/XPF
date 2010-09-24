@@ -4,7 +4,6 @@
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
-    using RedBadger.Xpf.Media;
 
 #if WINDOWS_PHONE
     using Microsoft.Phone.Reactive;
@@ -32,15 +31,11 @@
 
         Thickness Margin { get; set; }
 
+        Vector VisualOffset { get; }
+
         IElement VisualParent { get; set; }
 
         double Width { get; set; }
-
-        /// <remarks>
-        ///     In WPF this is protected internal.  For the purposes of unit testing we've not made this protected.
-        ///     TODO: implement a reflection based mechanism (for Moq?) to get back values from protected properties
-        /// </remarks>
-        Vector VisualOffset { get; set; }
 
         /// <summary>
         ///     Positions child elements and determines a size for a UIElement.
@@ -50,8 +45,6 @@
         /// <param name = "finalRect">The final size that the parent computes for the child element, provided as a Rect instance.</param>
         void Arrange(Rect finalRect);
 
-        Vector CalculateAbsoluteOffset();
-
         IEnumerable<IElement> GetVisualChildren();
 
         bool HitTest(Point point);
@@ -60,6 +53,15 @@
 
         void InvalidateMeasure();
 
+        /// <summary>
+        ///     Updates the DesiredSize of a UIElement.
+        ///     Derrived elements call this method from their own MeasureOverride implementations to form a recursive layout update.
+        ///     Calling this method constitutes the first pass (the "Measure" pass) of a layout update.
+        /// </summary>
+        /// <param name = "availableSize">
+        ///     The available space that a parent element can allocate a child element.
+        ///     A child element can request a larger space than what is available; the provided size might be accommodated.
+        /// </param>
         void Measure(Size availableSize);
 
         bool TryGetRenderer(out IRenderer renderer);

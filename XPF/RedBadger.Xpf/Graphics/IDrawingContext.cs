@@ -6,13 +6,13 @@ namespace RedBadger.Xpf.Graphics
     {
         Rect AbsoluteClippingRect { get; set; }
 
+        // This isn't used via the interface.
         Vector AbsoluteOffset { get; }
 
+        // Should this move onto IElement to mirror Offset?
         Rect ClippingRect { get; set; }
 
         IElement Element { get; }
-
-        IDrawingContext Next { get; set; }
 
         void DrawImage(ImageSource imageSource, Rect rect);
 

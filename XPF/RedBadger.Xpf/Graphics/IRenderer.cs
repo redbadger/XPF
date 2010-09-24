@@ -8,6 +8,6 @@ namespace RedBadger.Xpf.Graphics
 
         IDrawingContext GetDrawingContext(IElement element);
 
-        void PreDraw(IElement rootElement);
+        void PreDraw();
     }
 }

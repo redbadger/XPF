@@ -112,7 +112,7 @@ namespace RedBadger.Xpf.Controls
             Rect viewport = this.Viewport;
             this.Measure(new Size(viewport.Width, viewport.Height));
             this.Arrange(viewport);
-            this.renderer.PreDraw(this);
+            this.renderer.PreDraw();
 
             if (this.inputManager != null)
             {

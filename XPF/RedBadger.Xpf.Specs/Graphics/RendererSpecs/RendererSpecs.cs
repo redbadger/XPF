@@ -33,6 +33,7 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
             {
                 Renderer.GetDrawingContext(element.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.Blue));
                 Renderer.GetDrawingContext(element.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.Blue));
+                Renderer.PreDraw();
                 Renderer.Draw();
             };
 
@@ -82,6 +83,7 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private Because of = () =>
             {
                 Renderer.ClearInvalidDrawingContexts();
+                Renderer.PreDraw();
                 Renderer.Draw();
             };
 
