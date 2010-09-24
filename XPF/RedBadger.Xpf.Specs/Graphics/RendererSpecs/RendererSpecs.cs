@@ -16,6 +16,7 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
     using Moq;
 
     using RedBadger.Xpf.Adapters.Xna.Graphics;
+    using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Media;
 
@@ -44,10 +45,13 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
     [Subject(typeof(Renderer))]
     public class when_a_renderer_contains_an_invalid_context_after_clearing : a_Renderer
     {
-        private Establish context =
-            () =>
-            Renderer.GetDrawingContext(new Mock<IElement>().Object).DrawRectangle(
-                Rect.Empty, new SolidColorBrush(Colors.Blue));
+        private static Mock<IElement> element;
+
+        private Establish context = () =>
+            {
+                element = new Mock<IElement> { CallBase = true };
+                Renderer.GetDrawingContext(element.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.Blue));
+            };
 
         private Because of = () =>
             {
@@ -65,9 +69,11 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
     [Subject(typeof(Renderer))]
     public class when_a_renderer_contains_a_valid_context_after_clearing : a_Renderer
     {
+        private static Mock<IElement> mock;
+
         private Establish context = () =>
             {
-                var mock = new Mock<IElement>();
+                mock = new Mock<IElement> { CallBase = true };
                 mock.SetupGet(element => element.IsArrangeValid).Returns(true);
                 mock.SetupGet(element => element.VisualParent).Returns(new Mock<IElement>().Object);
                 Renderer.GetDrawingContext(mock.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.Blue));
@@ -88,9 +94,11 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
     [Subject(typeof(Renderer))]
     public class when_a_renderer_contains_an_orphaned_element : a_Renderer
     {
+        private static Mock<IElement> mock;
+
         private Establish context = () =>
             {
-                var mock = new Mock<IElement>();
+                mock = new Mock<IElement> { CallBase = true };
                 mock.SetupGet(element => element.IsArrangeValid).Returns(true);
                 mock.SetupGet(element => element.VisualParent).Returns(default(IElement));
                 Renderer.GetDrawingContext(mock.Object).DrawRectangle(Rect.Empty, new SolidColorBrush(Colors.Blue));
@@ -107,5 +115,70 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
             SpriteBatch.Verify(
                 batch => batch.Draw(Moq.It.IsAny<ITexture>(), Moq.It.IsAny<Rect>(), Moq.It.IsAny<Color>()), 
                 Times.Never());
+    }
+
+    [Subject(typeof(Renderer))]
+    public class when_an_element_is_inserted_into_an_existing_tree : a_Renderer
+    {
+        private static int blueCallOrder;
+
+        private static int greenCallOrder;
+
+        private static int i;
+
+        private static int redCallOrder;
+
+        private static RootElement rootElement;
+
+        private static StackPanel stackPanel;
+
+        private Establish context = () =>
+            {
+                rootElement = new RootElement(Rect.Empty, Renderer);
+
+                stackPanel = new StackPanel
+                    {
+                        Children =
+                            {
+                                new Border { Background = new SolidColorBrush(Colors.Red) }, 
+                                new Border { Background = new SolidColorBrush(Colors.Green) }
+                            }
+                    };
+
+                rootElement.Content = stackPanel;
+                rootElement.Update();
+                rootElement.Draw();
+
+                SpriteBatch.Setup(
+                    batch =>
+                    batch.Draw(
+                        Moq.It.IsAny<ITexture>(), Moq.It.IsAny<Rect>(), Moq.It.Is<Color>(value => value == Colors.Red)))
+                    .Callback(() => redCallOrder = i++);
+
+                SpriteBatch.Setup(
+                    batch =>
+                    batch.Draw(
+                        Moq.It.IsAny<ITexture>(), Moq.It.IsAny<Rect>(), Moq.It.Is<Color>(value => value == Colors.Green)))
+                    .Callback(() => greenCallOrder = i++);
+
+                SpriteBatch.Setup(
+                    batch =>
+                    batch.Draw(
+                        Moq.It.IsAny<ITexture>(), Moq.It.IsAny<Rect>(), Moq.It.Is<Color>(value => value == Colors.Blue)))
+                    .Callback(() => blueCallOrder = i++);
+            };
+
+        private Because of = () =>
+            {
+                stackPanel.Children.Insert(1, new Border { Background = new SolidColorBrush(Colors.Blue) });
+                rootElement.Update();
+                rootElement.Draw();
+            };
+
+        private It should_1_draw_the_first_child_first = () => redCallOrder.ShouldEqual(0);
+
+        private It should_2_draw_the_second_child_second = () => blueCallOrder.ShouldEqual(1);
+
+        private It should_3_draw_the_third_child_third = () => greenCallOrder.ShouldEqual(2);
     }
 }

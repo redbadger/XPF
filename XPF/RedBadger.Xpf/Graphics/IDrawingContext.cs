@@ -12,6 +12,8 @@ namespace RedBadger.Xpf.Graphics
 
         IElement Element { get; }
 
+        IDrawingContext Next { get; set; }
+
         void DrawImage(ImageSource imageSource, Rect rect);
 
         void DrawRectangle(Rect rect, Brush brush);

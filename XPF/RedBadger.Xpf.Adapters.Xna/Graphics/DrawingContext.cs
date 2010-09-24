@@ -42,6 +42,7 @@
             {
                 return this.absoluteClippingRect;
             }
+
             set
             {
                 this.absoluteClippingRect = value;
@@ -53,6 +54,11 @@
             get
             {
                 return this.absoluteOffset;
+            }
+
+            set
+            {
+                this.absoluteOffset = value;
             }
         }
 
@@ -76,6 +82,8 @@
                 return this.element;
             }
         }
+
+        public IDrawingContext Next { get; set; }
 
         public void Clear()
         {

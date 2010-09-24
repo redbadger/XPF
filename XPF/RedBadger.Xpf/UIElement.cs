@@ -265,7 +265,7 @@
         ///     In WPF this is protected internal.  For the purposes of unit testing we've not made this protected.
         ///     TODO: implement a reflection based mechanism (for Moq?) to get back values from protected properties
         /// </remarks>
-        internal Vector VisualOffset { get; set; }
+        public Vector VisualOffset { get; set; }
 
         public bool CaptureMouse()
         {

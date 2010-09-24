@@ -34,7 +34,7 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
             {
                 SpriteBatch = new Mock<ISpriteBatch>();
                 Renderer = new Renderer(SpriteBatch.Object, new Mock<IPrimitivesService>().Object);
-                UiElement = new Mock<IElement>();
+                UiElement = new Mock<IElement> { CallBase = true };
                 DrawingContext = Renderer.GetDrawingContext(UiElement.Object);
 
                 SpriteFont = new Mock<ISpriteFont>();

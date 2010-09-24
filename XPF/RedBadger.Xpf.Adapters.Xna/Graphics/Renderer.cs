@@ -3,23 +3,20 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using RedBadger.Xpf.Extensions;
     using RedBadger.Xpf.Graphics;
 
     public class Renderer : IRenderer
     {
-        private readonly Stack<IDrawingContext> clipRegions = new Stack<IDrawingContext>();
+        private readonly LinkedList<DrawingContext> drawList = new LinkedList<DrawingContext>();
 
-        private readonly Dictionary<IElement, DrawingContext> drawingContexts =
-            new Dictionary<IElement, DrawingContext>();
+        private readonly Dictionary<IElement, LinkedListNode<DrawingContext>> drawingContexts =
+            new Dictionary<IElement, LinkedListNode<DrawingContext>>();
 
         private readonly IPrimitivesService primitivesService;
 
         private readonly ISpriteBatch spriteBatch;
 
         private bool isPreDrawRequired;
-
-        private IDrawingContext parentContext;
 
         public Renderer(ISpriteBatch spriteBatch, IPrimitivesService primitivesService)
         {
@@ -31,17 +28,17 @@
         {
             this.ClearContextsWithOrphanedElements();
 
-            foreach (DrawingContext drawingContext in this.drawingContexts.Values)
+            foreach (var drawingContext in this.drawingContexts.Values)
             {
-                drawingContext.ClearIfInvalid();
+                drawingContext.Value.ClearIfInvalid();
             }
         }
 
         public void Draw()
         {
-            foreach (DrawingContext drawingContext in this.drawingContexts.Values)
+            foreach (DrawingContext linkedContext in this.drawList)
             {
-                drawingContext.Draw(this.spriteBatch);
+                linkedContext.Draw(this.spriteBatch);
             }
 
             this.spriteBatch.End();
@@ -49,63 +46,28 @@
 
         public IDrawingContext GetDrawingContext(IElement element)
         {
-            DrawingContext drawingContext;
+            LinkedListNode<DrawingContext> node;
 
-            if (this.drawingContexts.TryGetValue(element, out drawingContext))
+            if (this.drawingContexts.TryGetValue(element, out node))
             {
-                drawingContext.Clear();
+                node.Value.Clear();
             }
             else
             {
-                drawingContext = new DrawingContext(element, this.primitivesService);
-                this.drawingContexts.Add(element, drawingContext);
+                node = new LinkedListNode<DrawingContext>(new DrawingContext(element, this.primitivesService));
+                this.drawingContexts.Add(element, node);
             }
 
             this.isPreDrawRequired = true;
-            return drawingContext;
+            return node.Value;
         }
 
-        public void PreDraw()
+        public void PreDraw(IElement rootElement)
         {
             if (this.isPreDrawRequired)
             {
-                foreach (DrawingContext drawingContext in this.drawingContexts.Values)
-                {
-                    drawingContext.PreDraw();
-
-                    while (this.clipRegions.Count > 0 &&
-                           !drawingContext.Element.IsDescendantOf(this.clipRegions.Peek().Element))
-                    {
-                        this.clipRegions.Pop();
-                        this.parentContext = this.clipRegions.Count == 0 ? null : this.clipRegions.Peek();
-                    }
-
-                    if (!drawingContext.ClippingRect.IsEmpty)
-                    {
-                        this.parentContext = this.clipRegions.Count == 0 ? null : this.clipRegions.Peek();
-
-                        var absoluteClippingRect = drawingContext.ClippingRect;
-                        absoluteClippingRect.Displace(drawingContext.AbsoluteOffset);
-
-                        if (this.parentContext != null)
-                        {
-                            absoluteClippingRect.Intersect(this.parentContext.AbsoluteClippingRect);
-                            if (absoluteClippingRect.IsEmpty)
-                            {
-                                absoluteClippingRect = this.parentContext.AbsoluteClippingRect;
-                            }
-                        }
-
-                        drawingContext.AbsoluteClippingRect = absoluteClippingRect;
-                        this.clipRegions.Push(drawingContext);
-                    }
-                    else
-                    {
-                        drawingContext.AbsoluteClippingRect = this.clipRegions.Count > 0
-                                                                  ? this.clipRegions.Peek().AbsoluteClippingRect
-                                                                  : Rect.Empty;
-                    }
-                }
+                this.drawList.Clear();
+                this.PreDraw(rootElement, rootElement.VisualOffset, Rect.Empty);
 
                 this.isPreDrawRequired = false;
             }
@@ -115,6 +77,39 @@
         {
             this.drawingContexts.Keys.Where(element => element.VisualParent == null).ToList().ForEach(
                 orphan => this.drawingContexts.Remove(orphan));
+        }
+
+        private void PreDraw(
+            IElement element, Vector absoluteOffset, Rect absoluteClippingRect)
+        {
+            LinkedListNode<DrawingContext> node;
+            if (this.drawingContexts.TryGetValue(element, out node))
+            {
+                DrawingContext drawingContext = node.Value;
+
+                absoluteOffset += element.VisualOffset;
+                drawingContext.AbsoluteOffset = absoluteOffset;
+
+                if (!drawingContext.ClippingRect.IsEmpty)
+                {
+                    Rect clippingRect = drawingContext.ClippingRect;
+                    clippingRect.Displace(absoluteOffset);
+
+                    clippingRect.Intersect(absoluteClippingRect);
+                    if (clippingRect.IsEmpty)
+                    {
+                        clippingRect = absoluteClippingRect;
+                    }
+
+                    drawingContext.AbsoluteClippingRect = clippingRect;
+                    this.drawList.AddLast(node);
+                }
+
+                foreach (IElement child in element.GetVisualChildren())
+                {
+                    this.PreDraw(child, absoluteOffset, drawingContext.AbsoluteClippingRect);
+                }
+            }
         }
     }
 }

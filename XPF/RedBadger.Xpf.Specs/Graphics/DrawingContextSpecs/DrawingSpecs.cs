@@ -94,7 +94,7 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
         private Because of = () =>
             {
                 DrawingContext.DrawRectangle(rect, new SolidColorBrush(Colors.Blue));
-                Renderer.PreDraw();
+                Renderer.PreDraw(UiElement.Object);
                 Renderer.Draw();
             };
 
@@ -121,7 +121,7 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
         private Because of = () =>
             {
                 DrawingContext.DrawText(SpriteFont.Object, string.Empty, textPosition, new SolidColorBrush(Colors.Blue));
-                Renderer.PreDraw();
+                Renderer.PreDraw(UiElement.Object);
                 Renderer.Draw();
             };
 
@@ -149,7 +149,7 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
         private Because of = () =>
             {
                 DrawingContext.DrawImage(new Mock<TextureImage>(new Mock<ITexture>().Object).Object, rect);
-                Renderer.PreDraw();
+                Renderer.PreDraw(UiElement.Object);
                 Renderer.Draw();
             };
 
@@ -190,12 +190,12 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
         private Because of = () =>
             {
                 DrawingContext.DrawRectangle(rect, new SolidColorBrush(Colors.Blue));
-                Renderer.PreDraw();
+                Renderer.PreDraw(UiElement.Object);
 
                 // Call GetDrawingContext again on *another* element - this forces PreDraw to reoccur,
                 // but does not clear the DrawingContext of the element we want to re-evaluate on the 2nd PreDraw.
                 Renderer.GetDrawingContext(new Mock<IElement>().Object);
-                Renderer.PreDraw();
+                Renderer.PreDraw(UiElement.Object);
 
                 Renderer.Draw();
             };

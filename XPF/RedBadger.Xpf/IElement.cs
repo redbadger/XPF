@@ -36,6 +36,12 @@
 
         double Width { get; set; }
 
+        /// <remarks>
+        ///     In WPF this is protected internal.  For the purposes of unit testing we've not made this protected.
+        ///     TODO: implement a reflection based mechanism (for Moq?) to get back values from protected properties
+        /// </remarks>
+        Vector VisualOffset { get; set; }
+
         /// <summary>
         ///     Positions child elements and determines a size for a UIElement.
         ///     Parent elements call this method from their ArrangeOverride implementation to form a recursive layout update.
