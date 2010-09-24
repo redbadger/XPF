@@ -101,7 +101,7 @@
             this.jobs.Add(new SpriteTextureJob(this.primitivesService.SinglePixel, rect, brush));
         }
 
-        public void DrawText(ISpriteFont spriteFont, string text, Vector position, Brush brush)
+        public void DrawText(ISpriteFont spriteFont, string text, Point position, Brush brush)
         {
             this.jobs.Add(new SpriteFontJob(spriteFont, text, position, brush));
         }

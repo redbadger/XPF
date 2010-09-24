@@ -22,9 +22,9 @@ namespace RedBadger.Xpf.Graphics
         /// </summary>
         /// <param name = "spriteFont">The <see cref = "ISpriteFont">ISpriteFont</see> to render.</param>
         /// <param name = "text">The text to render.</param>
-        /// <param name = "position">The position in pixels to render the text.</param>
+        /// <param name = "position">A <see cref="Point">Point</see> representing the position in pixels to render the text.</param>
         /// <param name = "color">The <see cref = "Color">Color</see> to tint the <see cref = "ISpriteFont">ISpriteFont</see>.</param>
-        void DrawString(ISpriteFont spriteFont, string text, Vector position, Color color);
+        void DrawString(ISpriteFont spriteFont, string text, Point position, Color color);
 
         void End();
     }

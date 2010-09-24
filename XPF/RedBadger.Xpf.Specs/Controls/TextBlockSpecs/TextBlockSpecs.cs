@@ -61,7 +61,7 @@ namespace RedBadger.Xpf.Specs.Controls.TextBlockSpecs
                 drawingContext.DrawText(
                     SpriteFont.Object, 
                     Moq.It.IsAny<string>(), 
-                    Moq.It.IsAny<Vector>(), 
+                    Moq.It.IsAny<Point>(), 
                     Moq.It.Is<SolidColorBrush>(value => value.Color == Colors.Black)));
     }
 
@@ -82,7 +82,7 @@ namespace RedBadger.Xpf.Specs.Controls.TextBlockSpecs
             DrawingContext.Verify(
                 drawingContext =>
                 drawingContext.DrawText(
-                    SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Vector>(), expectedForeground));
+                    SpriteFont.Object, Moq.It.IsAny<string>(), Moq.It.IsAny<Point>(), expectedForeground));
     }
 
     [Subject(typeof(TextBlock), "Background")]
@@ -145,7 +145,7 @@ namespace RedBadger.Xpf.Specs.Controls.TextBlockSpecs
     {
         private static readonly Size expectedDesiredSize = new Size(50, 70);
 
-        private static readonly Vector expectedDrawPosition = new Vector(10, 20);
+        private static readonly Point expectedDrawPosition = new Point(10, 20);
 
         private static readonly Thickness padding = new Thickness(10, 20, 30, 40);
 

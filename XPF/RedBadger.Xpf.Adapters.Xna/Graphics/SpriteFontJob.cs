@@ -7,13 +7,13 @@
     {
         private readonly Brush brush;
 
-        private readonly Vector position;
+        private readonly Point position;
 
         private readonly ISpriteFont spriteFont;
 
         private readonly string text;
 
-        public SpriteFontJob(ISpriteFont spriteFont, string text, Vector position, Brush brush)
+        public SpriteFontJob(ISpriteFont spriteFont, string text, Point position, Brush brush)
         {
             this.spriteFont = spriteFont;
             this.text = text;

@@ -132,7 +132,7 @@ namespace RedBadger.Xpf.Controls
             drawingContext.DrawText(
                 this.spriteFont, 
                 this.formattedText, 
-                new Vector(this.Padding.Left, this.Padding.Top), 
+                new Point(this.Padding.Left, this.Padding.Top), 
                 this.Foreground ?? new SolidColorBrush(Colors.Black));
         }
 

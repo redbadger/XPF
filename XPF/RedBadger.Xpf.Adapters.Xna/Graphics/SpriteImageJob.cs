@@ -26,9 +26,8 @@ namespace RedBadger.Xpf.Adapters.Xna.Graphics
                 throw new NotImplementedException("Currently an ImageSource must be an XnaImage");
             }
 
-            Rect drawRect = this.rect != Rect.Empty ? this.rect : new Rect();
-            drawRect.X += offset.X;
-            drawRect.Y += offset.Y;
+            Rect drawRect = !this.rect.IsEmpty ? this.rect : new Rect();
+            drawRect.Displace(offset);
 
             spriteBatch.Draw(image.Texture, drawRect, Colors.White);
         }

@@ -9,6 +9,7 @@
     using RedBadger.Xpf.Graphics;
 
     using Color = RedBadger.Xpf.Media.Color;
+    using Point = RedBadger.Xpf.Point;
 
     /// <summary>
     ///     Adapts an XNA <see cref = "SpriteBatch">SpriteBatch</see> to an XPF <see cref = "ISpriteBatch">ISpriteBatch</see>.
@@ -105,7 +106,7 @@
             }
         }
 
-        public void DrawString(ISpriteFont spriteFont, string text, Vector position, Color color)
+        public void DrawString(ISpriteFont spriteFont, string text, Point position, Color color)
         {
             var spriteFontAdapter = spriteFont as SpriteFontAdapter;
             if (spriteFontAdapter != null && spriteFontAdapter.Value != null)

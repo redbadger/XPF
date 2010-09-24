@@ -29,7 +29,7 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
 
         private static readonly Color expectedColor = Colors.Black;
 
-        private static readonly Vector expectedDrawPosition = Vector.Zero;
+        private static readonly Point expectedDrawPosition;
 
         private Because of = () =>
             {
@@ -113,14 +113,14 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
     {
         private static readonly Vector absoluteOffset = new Vector(20, 30);
 
-        private static readonly Vector textOffset = new Vector(10, 20);
+        private static readonly Point textPosition = new Point(10, 20);
 
         private Establish context =
             () => UiElement.Setup(element => element.CalculateAbsoluteOffset()).Returns(absoluteOffset);
 
         private Because of = () =>
             {
-                DrawingContext.DrawText(SpriteFont.Object, string.Empty, textOffset, new SolidColorBrush(Colors.Blue));
+                DrawingContext.DrawText(SpriteFont.Object, string.Empty, textPosition, new SolidColorBrush(Colors.Blue));
                 Renderer.PreDraw();
                 Renderer.Draw();
             };
@@ -132,7 +132,7 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
                 batch.DrawString(
                     Moq.It.IsAny<ISpriteFont>(), 
                     Moq.It.IsAny<string>(), 
-                    absoluteOffset + textOffset, 
+                    textPosition + absoluteOffset, 
                     Moq.It.IsAny<Color>()));
     }
 

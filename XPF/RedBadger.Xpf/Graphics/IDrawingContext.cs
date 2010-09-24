@@ -14,6 +14,6 @@ namespace RedBadger.Xpf.Graphics
 
         void DrawRectangle(Rect rect, Brush brush);
 
-        void DrawText(ISpriteFont spriteFont, string text, Vector position, Brush brush);
+        void DrawText(ISpriteFont spriteFont, string text, Point position, Brush brush);
     }
 }

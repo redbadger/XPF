@@ -20,11 +20,10 @@
 
         public void Draw(ISpriteBatch spriteBatch, Vector offset)
         {
-            var solidColorBrush = this.brush as SolidColorBrush;
-            Rect drawRect = this.rect != Rect.Empty ? this.rect : new Rect();
-            drawRect.X += offset.X;
-            drawRect.Y += offset.Y;
+            Rect drawRect = !this.rect.IsEmpty ? this.rect : new Rect();
+            drawRect.Displace(offset);
 
+            var solidColorBrush = this.brush as SolidColorBrush;
             spriteBatch.Draw(this.texture2D, drawRect, solidColorBrush != null ? solidColorBrush.Color : Colors.Magenta);
         }
     }
