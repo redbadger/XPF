@@ -130,6 +130,11 @@
             return finalSize;
         }
 
+        protected override Rect GetClippingRect(Size finalSize)
+        {
+            return new Rect(this.RenderSize);
+        }
+
         protected override Size MeasureOverride(Size availableSize)
         {
             IElement content = this.Content;

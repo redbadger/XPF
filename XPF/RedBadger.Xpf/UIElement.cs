@@ -446,6 +446,58 @@
             return finalSize;
         }
 
+        protected virtual Rect GetClippingRect(Size finalSize)
+        {
+            if (!this.isClippingRequired)
+            {
+                return Rect.Empty;
+            }
+
+            var max = new MinMax(this);
+            Size renderSize = this.RenderSize;
+
+            double maxWidth = double.IsPositiveInfinity(max.MaxWidth) ? renderSize.Width : max.MaxWidth;
+            double maxHeight = double.IsPositiveInfinity(max.MaxHeight) ? renderSize.Height : max.MaxHeight;
+
+            bool isClippingRequiredDueToMaxSize = maxWidth.IsLessThan(renderSize.Width) ||
+                                                  maxHeight.IsLessThan(renderSize.Height);
+
+            renderSize.Width = Math.Min(renderSize.Width, max.MaxWidth);
+            renderSize.Height = Math.Min(renderSize.Height, max.MaxHeight);
+
+            Thickness margin = this.Margin;
+            double horizontalMargins = margin.Left + margin.Right;
+            double verticalMargins = margin.Top + margin.Bottom;
+
+            var clientSize = new Size(
+                (finalSize.Width - horizontalMargins).EnsurePositive(), 
+                (finalSize.Height - verticalMargins).EnsurePositive());
+
+            bool isClippingRequiredDueToClientSize = clientSize.Width.IsLessThan(renderSize.Width) ||
+                                                     clientSize.Height.IsLessThan(renderSize.Height);
+
+            if (isClippingRequiredDueToMaxSize && !isClippingRequiredDueToClientSize)
+            {
+                return new Rect(0d, 0d, maxWidth, maxHeight);
+            }
+
+            if (!isClippingRequiredDueToClientSize)
+            {
+                return Rect.Empty;
+            }
+
+            Vector offset = this.ComputeAlignmentOffset(clientSize, renderSize);
+
+            var clipRect = new Rect(-offset.X, -offset.Y, clientSize.Width, clientSize.Height);
+
+            if (isClippingRequiredDueToMaxSize)
+            {
+                clipRect.Intersect(new Rect(0d, 0d, maxWidth, maxHeight));
+            }
+
+            return clipRect;
+        }
+
         /// <summary>
         ///     When overridden in a derived class, measures the size in layout required for child elements and determines a size for the UIElement-derived class.
         /// </summary>
@@ -596,58 +648,6 @@
             }
 
             return vector;
-        }
-
-        private Rect GetClippingRect(Size finalSize)
-        {
-            if (!this.isClippingRequired)
-            {
-                return Rect.Empty;
-            }
-
-            var max = new MinMax(this);
-            Size renderSize = this.RenderSize;
-
-            double maxWidth = double.IsPositiveInfinity(max.MaxWidth) ? renderSize.Width : max.MaxWidth;
-            double maxHeight = double.IsPositiveInfinity(max.MaxHeight) ? renderSize.Height : max.MaxHeight;
-
-            bool isClippingRequiredDueToMaxSize = maxWidth.IsLessThan(renderSize.Width) ||
-                                                  maxHeight.IsLessThan(renderSize.Height);
-
-            renderSize.Width = Math.Min(renderSize.Width, max.MaxWidth);
-            renderSize.Height = Math.Min(renderSize.Height, max.MaxHeight);
-
-            Thickness margin = this.Margin;
-            double horizontalMargins = margin.Left + margin.Right;
-            double verticalMargins = margin.Top + margin.Bottom;
-
-            var clientSize = new Size(
-                (finalSize.Width - horizontalMargins).EnsurePositive(), 
-                (finalSize.Height - verticalMargins).EnsurePositive());
-
-            bool isClippingRequiredDueToClientSize = clientSize.Width.IsLessThan(renderSize.Width) ||
-                                                     clientSize.Height.IsLessThan(renderSize.Height);
-
-            if (isClippingRequiredDueToMaxSize && !isClippingRequiredDueToClientSize)
-            {
-                return new Rect(0d, 0d, maxWidth, maxHeight);
-            }
-
-            if (!isClippingRequiredDueToClientSize)
-            {
-                return Rect.Empty;
-            }
-
-            Vector offset = this.ComputeAlignmentOffset(clientSize, renderSize);
-
-            var clipRect = new Rect(-offset.X, -offset.Y, clientSize.Width, clientSize.Height);
-
-            if (isClippingRequiredDueToMaxSize)
-            {
-                clipRect.Intersect(new Rect(0d, 0d, maxWidth, maxHeight));
-            }
-
-            return clipRect;
         }
 
         private object GetNearestDataContext()
