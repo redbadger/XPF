@@ -56,48 +56,32 @@ namespace XpfSamples.S02ApplicationBar
 
             var buttonClickResults = new ObservableCollection<string>();
 
-            var grid = new Grid
+            var header1 = new TextBlock(spriteFontAdapter)
                 {
-                    Background = new SolidColorBrush(Colors.Black), 
-                    RowDefinitions = {
-                                        new RowDefinition(), new RowDefinition { Height = new GridLength(70) } 
-                                     }
+                    Text = "MY APPLICATION", 
+                    Foreground = new SolidColorBrush(Colors.White), 
+                    Margin = new Thickness(10)
                 };
-
-            var stackPanel = new StackPanel
+            var header2 = new TextBlock(largeFont)
                 {
-                    Children =
+                    Text = "XNA Application Bar", 
+                    Foreground = new SolidColorBrush(Colors.White), 
+                    Margin = new Thickness(10)
+                };
+            var itemsControl = new ItemsControl
+                {
+                    ItemsSource = buttonClickResults, 
+                    ItemTemplate = () =>
                         {
-                            new TextBlock(spriteFontAdapter)
+                            var textBlock = new TextBlock(spriteFontAdapter)
                                 {
-                                    Text = "MY APPLICATION", 
-                                    Foreground = new SolidColorBrush(Colors.White), 
-                                    Margin = new Thickness(10)
-                                }, 
-                            new TextBlock(largeFont)
-                                {
-                                    Text = "XNA Application Bar", 
-                                    Foreground = new SolidColorBrush(Colors.White), 
-                                    Margin = new Thickness(10)
-                                }, 
-                            new ItemsControl
-                                {
-                                    ItemsSource = buttonClickResults, 
-                                    ItemTemplate = () =>
-                                        {
-                                            var textBlock = new TextBlock(spriteFontAdapter)
-                                                {
-                                                   Foreground = new SolidColorBrush(Colors.White) 
-                                                };
-                                            textBlock.Bind(
-                                                TextBlock.TextProperty, BindingFactory.CreateOneWay<string>());
-                                            return textBlock;
-                                        }
-                                }
+                                    Foreground = new SolidColorBrush(Colors.White) 
+                                };
+                            textBlock.Bind(
+                                TextBlock.TextProperty, BindingFactory.CreateOneWay<string>());
+                            return textBlock;
                         }
                 };
-            grid.Children.Add(stackPanel);
-
             var applicationBar = new ApplicationBar
                 {
                     Buttons =
@@ -106,11 +90,33 @@ namespace XpfSamples.S02ApplicationBar
                             new ApplicationBarIconButton("Delete", trashButtonImageTexture)
                         }
                 };
+
+            var grid = new Grid
+                {
+                    Background = new SolidColorBrush(Colors.Black), 
+                    RowDefinitions =
+                        {
+                            new RowDefinition { Height = GridLength.Auto }, 
+                            new RowDefinition { Height = GridLength.Auto }, 
+                            new RowDefinition(), 
+                            new RowDefinition { Height = new GridLength(70) }
+                        }, 
+                    Children =
+                        {
+                            header1, 
+                            header2, 
+                            itemsControl,
+                            applicationBar
+                        }
+                };
+
             applicationBar.Clicks.Subscribe(
                 Observer.Create<ApplicationBarIconButton>(s => buttonClickResults.Add(s.Text)));
 
-            Grid.SetRow(applicationBar, 1);
-            grid.Children.Add(applicationBar);
+            Grid.SetRow(header1, 0);
+            Grid.SetRow(header2, 1);
+            Grid.SetRow(itemsControl, 2);
+            Grid.SetRow(applicationBar, 3);
 
             this.rootElement.Content = grid;
         }

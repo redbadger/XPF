@@ -145,6 +145,9 @@
     <Compile Include="UIElementSpecs\LayoutSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Reports\MSpec.html" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\RedBadger.Xpf.Adapters.Xna\RedBadger.Xpf.Adapters.Xna.csproj">
       <Project>{4C0C9785-D77C-4833-8B2F-4C20525D9B2D}</Project>
       <Name>RedBadger.Xpf.Adapters.Xna</Name>
@@ -154,10 +157,6 @@
       <Name>RedBadger.Xpf</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Reports\MSpec.html" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="RunSpecs" Condition=" '$(BuildingInsideVisualStudio)' != 'true' ">
     <PropertyGroup>

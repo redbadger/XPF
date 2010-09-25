@@ -4,6 +4,8 @@ namespace RedBadger.Xpf
 
     public struct GridLength
     {
+        private static readonly GridLength auto = new GridLength(1, GridUnitType.Auto);
+
         private readonly GridUnitType gridUnitType;
 
         private readonly double value;
@@ -27,6 +29,17 @@ namespace RedBadger.Xpf
 
             this.value = gridUnitType == GridUnitType.Auto ? 1 : value;
             this.gridUnitType = gridUnitType;
+        }
+
+        /// <summary>
+        ///     Gets a <see cref = "GridLength">GridLength</see> whose <see cref = "GridUnitType">GridUnitType</see> is set to <see cref = "RedBadger.Xpf.GridUnitType.Auto">GridUnitType.Auto</see>.
+        /// </summary>
+        public static GridLength Auto
+        {
+            get
+            {
+                return auto;
+            }
         }
 
         public GridUnitType GridUnitType

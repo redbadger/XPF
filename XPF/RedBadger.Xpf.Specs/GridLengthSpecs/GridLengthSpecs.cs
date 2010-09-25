@@ -81,4 +81,17 @@ namespace RedBadger.Xpf.Specs.GridLengthSpecs
 
         private It should_have_the_value_of_one = () => gridLength.Value.ShouldEqual(ExpectedValue);
     }
+
+    [Subject(typeof(GridLength))]
+    public class when_asked_for_an_auto_gridlength
+    {
+        private static GridLength gridLength;
+
+        private Because of = () => gridLength = GridLength.Auto;
+
+        private It should_return_a_grid_length_with_GridUnitType_of_auto =
+            () => gridLength.GridUnitType.ShouldEqual(GridUnitType.Auto);
+
+        private It should_return_a_grid_length_with_unit_value = () => gridLength.Value.ShouldEqual(1);
+    }
 }
