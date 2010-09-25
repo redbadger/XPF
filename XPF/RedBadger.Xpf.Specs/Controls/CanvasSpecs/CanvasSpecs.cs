@@ -55,6 +55,26 @@ namespace RedBadger.Xpf.Specs.Controls.CanvasSpecs
         private It should_have_a_desired_size_of_zero = () => Subject.DesiredSize.ShouldEqual(new Size());
     }
 
+    [Subject(typeof(Canvas), "Measure")]
+    public class when_arranging : a_Canvas
+    {
+        private static Size childExpectedSize = new Size(1000, 1500);
+
+        private Establish context = () =>
+            {
+                Child.Object.Width = childExpectedSize.Width;
+                Child.Object.Height = childExpectedSize.Height;
+            };
+
+        private Because of = () =>
+            {
+                Subject.Measure(AvailableSize);
+                Subject.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_not_clip = () => Subject.ClippingRect.ShouldEqual(Rect.Empty);
+    }
+
     [Subject(typeof(Canvas), "Arrange")]
     public class when_a_child_is_positioned : a_Canvas
     {

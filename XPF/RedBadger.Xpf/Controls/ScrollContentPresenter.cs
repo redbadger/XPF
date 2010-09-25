@@ -8,6 +8,8 @@
 
     public class ScrollContentPresenter : ContentControl, IScrollInfo
     {
+        private bool isClippingRequired;
+
         private ScrollData scrollData;
 
         public ScrollContentPresenter()
@@ -116,10 +118,14 @@
 
             if (content != null)
             {
-                var finalRect = new Rect(0.0, 0.0, content.DesiredSize.Width, content.DesiredSize.Height)
-                    {
-                       X = -this.scrollData.Offset.X, Y = -this.scrollData.Offset.Y 
-                    };
+                var finalRect = new Rect(
+                    -this.scrollData.Offset.X, 
+                    -this.scrollData.Offset.Y, 
+                    content.DesiredSize.Width, 
+                    content.DesiredSize.Height);
+
+                this.isClippingRequired = finalSize.Width.IsLessThan(finalRect.Width) ||
+                                          finalSize.Height.IsLessThan(finalRect.Height);
 
                 finalRect.Width = Math.Max(finalRect.Width, finalSize.Width);
                 finalRect.Height = Math.Max(finalRect.Height, finalSize.Height);
@@ -132,7 +138,7 @@
 
         protected override Rect GetClippingRect(Size finalSize)
         {
-            return new Rect(this.RenderSize);
+            return this.isClippingRequired ? new Rect(this.RenderSize) : Rect.Empty;
         }
 
         protected override Size MeasureOverride(Size availableSize)

@@ -80,6 +80,11 @@
             return finalSize;
         }
 
+        protected override Rect GetClippingRect(Size finalSize)
+        {
+            return Rect.Empty;
+        }
+
         protected override Size MeasureOverride(Size availableSize)
         {
             var infiniteAvailableSize = new Size(double.PositiveInfinity, double.PositiveInfinity);

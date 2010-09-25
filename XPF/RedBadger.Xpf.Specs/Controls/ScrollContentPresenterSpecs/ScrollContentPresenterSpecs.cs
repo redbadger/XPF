@@ -23,9 +23,11 @@ namespace RedBadger.Xpf.Specs.Controls.ScrollContentPresenterSpecs
 
     public abstract class a_ScrollContentPresenter
     {
-        protected static ScrollContentPresenter ScrollContentPresenter;
+        protected static readonly Size AvailableSize = new Size(100, 100);
 
-        private Establish context = () => ScrollContentPresenter = new ScrollContentPresenter();
+        protected static ScrollContentPresenter Subject;
+
+        private Establish context = () => Subject = new ScrollContentPresenter();
     }
 
     [Subject(typeof(ScrollContentPresenter), "Horizontal Offset")]
@@ -33,8 +35,7 @@ namespace RedBadger.Xpf.Specs.Controls.ScrollContentPresenterSpecs
     {
         private static Exception exception;
 
-        private Because of =
-            () => exception = Catch.Exception(() => ScrollContentPresenter.SetHorizontalOffset(double.NaN));
+        private Because of = () => exception = Catch.Exception(() => Subject.SetHorizontalOffset(double.NaN));
 
         private It should_throw_an_exception = () => exception.ShouldBeOfType<ArgumentOutOfRangeException>();
     }
@@ -42,21 +43,21 @@ namespace RedBadger.Xpf.Specs.Controls.ScrollContentPresenterSpecs
     [Subject(typeof(ScrollContentPresenter), "Horizontal Offset")]
     public class when_horizontal_offset_is_set_to_a_negative_value : a_ScrollContentPresenter
     {
-        private Establish context = () => ScrollContentPresenter.SetHorizontalOffset(10);
+        private Establish context = () => Subject.SetHorizontalOffset(10);
 
-        private Because of = () => ScrollContentPresenter.SetHorizontalOffset(-10);
+        private Because of = () => Subject.SetHorizontalOffset(-10);
 
-        private It should_set_the_offset_to_zero = () => ScrollContentPresenter.Offset.X.ShouldEqual(0);
+        private It should_set_the_offset_to_zero = () => Subject.Offset.X.ShouldEqual(0);
     }
 
     [Subject(typeof(ScrollContentPresenter), "Horizontal Offset")]
     public class when_horizontal_scrolling_is_disabled_and_an_offset_is_set : a_ScrollContentPresenter
     {
-        private Establish context = () => ScrollContentPresenter.CanHorizontallyScroll = false;
+        private Establish context = () => Subject.CanHorizontallyScroll = false;
 
-        private Because of = () => ScrollContentPresenter.SetHorizontalOffset(10);
+        private Because of = () => Subject.SetHorizontalOffset(10);
 
-        private It should_have_no_effect = () => ScrollContentPresenter.Offset.X.ShouldEqual(0);
+        private It should_have_no_effect = () => Subject.Offset.X.ShouldEqual(0);
     }
 
     [Subject(typeof(ScrollContentPresenter), "Horizontal Offset")]
@@ -64,13 +65,13 @@ namespace RedBadger.Xpf.Specs.Controls.ScrollContentPresenterSpecs
     {
         private Establish context = () =>
             {
-                ScrollContentPresenter.Measure(new Size(100, 100));
-                ScrollContentPresenter.Arrange(new Rect(0, 0, 100, 100));
+                Subject.Measure(AvailableSize);
+                Subject.Arrange(new Rect(AvailableSize));
             };
 
-        private Because of = () => ScrollContentPresenter.SetHorizontalOffset(10);
+        private Because of = () => Subject.SetHorizontalOffset(10);
 
-        private It should_invalidate_arrange = () => ScrollContentPresenter.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => Subject.IsArrangeValid.ShouldBeFalse();
     }
 
     [Subject(typeof(ScrollContentPresenter), "Vertical Offset")]
@@ -78,8 +79,7 @@ namespace RedBadger.Xpf.Specs.Controls.ScrollContentPresenterSpecs
     {
         private static Exception exception;
 
-        private Because of =
-            () => exception = Catch.Exception(() => ScrollContentPresenter.SetVerticalOffset(double.NaN));
+        private Because of = () => exception = Catch.Exception(() => Subject.SetVerticalOffset(double.NaN));
 
         private It should_throw_an_exception = () => exception.ShouldBeOfType<ArgumentOutOfRangeException>();
     }
@@ -87,21 +87,21 @@ namespace RedBadger.Xpf.Specs.Controls.ScrollContentPresenterSpecs
     [Subject(typeof(ScrollContentPresenter), "Vertical Offset")]
     public class when_vertical_offset_is_set_to_a_negative_value : a_ScrollContentPresenter
     {
-        private Establish context = () => ScrollContentPresenter.SetVerticalOffset(10);
+        private Establish context = () => Subject.SetVerticalOffset(10);
 
-        private Because of = () => ScrollContentPresenter.SetVerticalOffset(-10);
+        private Because of = () => Subject.SetVerticalOffset(-10);
 
-        private It should_set_the_offset_to_zero = () => ScrollContentPresenter.Offset.Y.ShouldEqual(0);
+        private It should_set_the_offset_to_zero = () => Subject.Offset.Y.ShouldEqual(0);
     }
 
     [Subject(typeof(ScrollContentPresenter), "Vertical Offset")]
     public class when_vertical_scrolling_is_disabled_and_an_offset_is_set : a_ScrollContentPresenter
     {
-        private Establish context = () => ScrollContentPresenter.CanVerticallyScroll = false;
+        private Establish context = () => Subject.CanVerticallyScroll = false;
 
-        private Because of = () => ScrollContentPresenter.SetVerticalOffset(10);
+        private Because of = () => Subject.SetVerticalOffset(10);
 
-        private It should_have_no_effect = () => ScrollContentPresenter.Offset.Y.ShouldEqual(0);
+        private It should_have_no_effect = () => Subject.Offset.Y.ShouldEqual(0);
     }
 
     [Subject(typeof(ScrollContentPresenter), "Vertical Offset")]
@@ -109,13 +109,13 @@ namespace RedBadger.Xpf.Specs.Controls.ScrollContentPresenterSpecs
     {
         private Establish context = () =>
             {
-                ScrollContentPresenter.Measure(new Size(100, 100));
-                ScrollContentPresenter.Arrange(new Rect(0, 0, 100, 100));
+                Subject.Measure(AvailableSize);
+                Subject.Arrange(new Rect(AvailableSize));
             };
 
-        private Because of = () => ScrollContentPresenter.SetVerticalOffset(10);
+        private Because of = () => Subject.SetVerticalOffset(10);
 
-        private It should_invalidate_arrange = () => ScrollContentPresenter.IsArrangeValid.ShouldBeFalse();
+        private It should_invalidate_arrange = () => Subject.IsArrangeValid.ShouldBeFalse();
     }
 
     [Subject(typeof(ScrollContentPresenter), "Arrange")]
@@ -129,16 +129,16 @@ namespace RedBadger.Xpf.Specs.Controls.ScrollContentPresenterSpecs
                 content.Object.Width = 200;
                 content.Object.Height = 200;
 
-                ScrollContentPresenter.Content = content.Object;
+                Subject.Content = content.Object;
             };
 
         private Because of = () =>
             {
-                ScrollContentPresenter.SetHorizontalOffset(20);
-                ScrollContentPresenter.SetVerticalOffset(30);
+                Subject.SetHorizontalOffset(20);
+                Subject.SetVerticalOffset(30);
 
-                ScrollContentPresenter.Measure(new Size(100, 100));
-                ScrollContentPresenter.Arrange(new Rect(0, 0, 100, 100));
+                Subject.Measure(AvailableSize);
+                Subject.Arrange(new Rect(AvailableSize));
             };
 
         private It should_set_the_child_visual_offset_correctly =
@@ -156,22 +156,68 @@ namespace RedBadger.Xpf.Specs.Controls.ScrollContentPresenterSpecs
                 content.Object.Width = 200;
                 content.Object.Height = 200;
 
-                ScrollContentPresenter.Content = content.Object;
+                Subject.Content = content.Object;
             };
 
         private Because of = () =>
             {
-                ScrollContentPresenter.SetHorizontalOffset(220);
-                ScrollContentPresenter.SetVerticalOffset(230);
+                Subject.SetHorizontalOffset(220);
+                Subject.SetVerticalOffset(230);
 
-                ScrollContentPresenter.Measure(new Size(100, 100));
-                ScrollContentPresenter.Arrange(new Rect(0, 0, 100, 100));
+                Subject.Measure(AvailableSize);
+                Subject.Arrange(new Rect(AvailableSize));
             };
 
         private It should_coerce_its_own_offset_to_keep_it_inside_the_extent =
-            () => ScrollContentPresenter.Offset.ShouldEqual(new Vector(100, 100));
+            () => Subject.Offset.ShouldEqual(new Vector(100, 100));
 
         private It should_coerce_the_child_visual_offset_to_keep_it_inside_the_extent =
             () => content.Object.VisualOffset.ShouldEqual(new Vector(-100, -100));
+    }
+
+    [Subject(typeof(ScrollContentPresenter), "Arrange")]
+    public class when_content_is_larger_than_the_space_available : a_ScrollContentPresenter
+    {
+        private static Mock<UIElement> content;
+
+        private Establish context = () =>
+            {
+                content = new Mock<UIElement> { CallBase = true };
+                content.Object.Width = 200;
+                content.Object.Height = 200;
+
+                Subject.Content = content.Object;
+            };
+
+        private Because of = () =>
+            {
+                Subject.Measure(AvailableSize);
+                Subject.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_clip = () => Subject.ClippingRect.ShouldEqual(new Rect(AvailableSize));
+    }
+
+    [Subject(typeof(ScrollContentPresenter), "Arrange")]
+    public class when_content_is_smaller_than_the_space_available : a_ScrollContentPresenter
+    {
+        private static Mock<UIElement> content;
+
+        private Establish context = () =>
+            {
+                content = new Mock<UIElement> { CallBase = true };
+                content.Object.Width = 20;
+                content.Object.Height = 20;
+
+                Subject.Content = content.Object;
+            };
+
+        private Because of = () =>
+            {
+                Subject.Measure(AvailableSize);
+                Subject.Arrange(new Rect(AvailableSize));
+            };
+
+        private It should_not_clip = () => Subject.ClippingRect.ShouldEqual(Rect.Empty);
     }
 }
