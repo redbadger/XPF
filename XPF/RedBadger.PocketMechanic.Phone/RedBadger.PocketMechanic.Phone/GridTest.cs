@@ -48,35 +48,40 @@ namespace RedBadger.PocketMechanic.Phone
 
             var border = new Border
                 {
-                    Width = 300,
-                    Height = 300,
-                    Background = new SolidColorBrush(Colors.DarkGray),
+                    Width = 300, 
+                    Height = 300, 
+                    Background = new SolidColorBrush(Colors.DarkGray), 
                     Child =
-                    new StackPanel
-                    {
-                        Children = 
-                        {
-                            new TextBlock(spriteFontAdapter)
+                        new StackPanel
                             {
-                                Text = "this can't all fit in the space sadsjds sd sd asd as das das da sd asd as dasd "
-                            },
-                            new Border
-                                {
-                                    Width = 100,
-                                    Height = 100,
-                                    Background = new SolidColorBrush(Colors.Cyan),
-                                    Child = new TextBlock(spriteFontAdapter) { Text = "I wonder whether this will clip" }
-                                },
-                            new TextBlock(spriteFontAdapter)
-                            {
-                                Text = "this can't all fit in the space sadsjds sd sd asd as das das da sd asd as dasd "
+                                Children =
+                                    {
+                                        new TextBlock(spriteFontAdapter)
+                                            {
+                                                Text =
+                                                    "this can't all fit in the space sadsjds sd sd asd as das das da sd asd as dasd "
+                                            }, 
+                                        new Border
+                                            {
+                                                Width = 100, 
+                                                Height = 100, 
+                                                Background = new SolidColorBrush(Colors.Cyan), 
+                                                Child =
+                                                    new TextBlock(spriteFontAdapter)
+                                                        {
+                                                           Text = "I wonder whether this will clip" 
+                                                        }
+                                            }, 
+                                        new TextBlock(spriteFontAdapter)
+                                            {
+                                                Text =
+                                                    "this can't all fit in the space sadsjds sd sd asd as das das da sd asd as dasd "
+                                            }
+                                    }
                             }
-                        }
-                    }
                 };
 
             this.rootElement.Content = border;
-
 
             /*var child_10_StackPanel = new StackPanel { Background = new SolidColorBrush(Colors.Red) };
 

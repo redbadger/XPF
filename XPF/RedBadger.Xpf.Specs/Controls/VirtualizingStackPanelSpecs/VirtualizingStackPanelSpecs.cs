@@ -9,7 +9,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMember.Local
 
-/*namespace RedBadger.Xpf.Specs.Presentation.Controls.VirtualizingStackPanelSpecs
+/*namespace RedBadger.Xpf.Specs.Controls.VirtualizingStackPanelSpecs
 {
     using System.Linq;
     using System.Windows;
@@ -18,11 +18,11 @@
 
     using Moq;
 
-    using RedBadger.Xpf.Presentation;
-    using RedBadger.Xpf.Presentation.Controls;
+    using RedBadger.Xpf;
+    using RedBadger.Xpf.Controls;
 
     using It = Machine.Specifications.It;
-    using UIElement = RedBadger.Xpf.Presentation.UIElement;
+    using UIElement = RedBadger.Xpf.UIElement;
 
     public abstract class a_VirtualizingStackPanel
     {
