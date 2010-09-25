@@ -11,6 +11,8 @@
 
     public interface IElement : IReactiveObject
     {
+        Rect ClippingRect { get; }
+
         object DataContext { get; set; }
 
         Size DesiredSize { get; }

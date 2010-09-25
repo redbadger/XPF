@@ -63,7 +63,7 @@
 
         private readonly Subject<Gesture> gestures = new Subject<Gesture>();
 
-        private Rect actualRect = Rect.Empty;
+        private Rect clippingRect = Rect.Empty;
 
         private bool isClippingRequired;
 
@@ -93,6 +93,14 @@
             get
             {
                 return this.RenderSize.Width;
+            }
+        }
+
+        public Rect ClippingRect
+        {
+            get
+            {
+                return this.clippingRect;
             }
         }
 
@@ -314,10 +322,10 @@
                 }
 
                 this.ArrangeCore(finalRect);
+                this.clippingRect = this.GetClippingRect(finalRect.Size);
 
                 if (hasRenderer && drawingContext != null)
                 {
-                    drawingContext.ClippingRect = this.GetClippingRect(finalRect.Size);
                     this.OnRender(drawingContext);
                 }
 

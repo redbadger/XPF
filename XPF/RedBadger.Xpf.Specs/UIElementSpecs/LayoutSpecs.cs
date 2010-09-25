@@ -75,7 +75,7 @@ namespace RedBadger.Xpf.Specs.UIElementSpecs
             () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
 
         private It should_not_clip =
-            () => Renderer.Object.GetDrawingContext(Subject.Object).ClippingRect.ShouldEqual(Rect.Empty);
+            () => Subject.Object.ClippingRect.ShouldEqual(Rect.Empty);
     }
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]
@@ -108,7 +108,7 @@ namespace RedBadger.Xpf.Specs.UIElementSpecs
             Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
 
         private It should_clip =
-            () => Renderer.Object.GetDrawingContext(Subject.Object).ClippingRect.ShouldEqual(new Rect(explicitSize));
+            () => Subject.Object.ClippingRect.ShouldEqual(new Rect(explicitSize));
 
         private It should_have_a_desired_size_equal_to_the_size_that_was_specified =
             () => Subject.Object.DesiredSize.ShouldEqual(explicitSize);
@@ -154,7 +154,7 @@ namespace RedBadger.Xpf.Specs.UIElementSpecs
             () => Subject.Object.VisualOffset.ShouldEqual(expectedVisualOffset);
 
         private It should_not_clip =
-            () => Renderer.Object.GetDrawingContext(Subject.Object).ClippingRect.ShouldEqual(Rect.Empty);
+            () => Subject.Object.ClippingRect.ShouldEqual(Rect.Empty);
     }
 
     [Subject(typeof(UIElement), "Layout - explicit sizes")]
@@ -187,7 +187,7 @@ namespace RedBadger.Xpf.Specs.UIElementSpecs
             Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
 
         private It should_clip =
-            () => Renderer.Object.GetDrawingContext(Subject.Object).ClippingRect.ShouldEqual(new Rect(maximumSize));
+            () => Subject.Object.ClippingRect.ShouldEqual(new Rect(maximumSize));
 
         private It should_have_a_desired_size_equal_to_the_maximum_size_that_was_specified =
             () => Subject.Object.DesiredSize.ShouldEqual(maximumSize);

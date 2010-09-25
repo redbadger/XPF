@@ -84,8 +84,7 @@
                 orphan => this.drawingContexts.Remove(orphan));
         }
 
-        private void PreDraw(
-            IElement element, Vector absoluteOffset, Rect absoluteClippingRect)
+        private void PreDraw(IElement element, Vector absoluteOffset, Rect absoluteClippingRect)
         {
             LinkedListNode<DrawingContext> node;
             if (this.drawingContexts.TryGetValue(element, out node))
@@ -94,7 +93,7 @@
 
                 absoluteOffset += element.VisualOffset;
 
-                Rect clippingRect = drawingContext.ClippingRect;
+                Rect clippingRect = element.ClippingRect;
                 clippingRect.Displace(absoluteOffset);
 
                 if (!absoluteClippingRect.IsEmpty)

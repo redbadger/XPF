@@ -284,6 +284,7 @@ namespace RedBadger.Xpf
 
         /// <summary>
         ///     Changes this <see cref = "Rect">Rect</see> so that it represents its intersection with the specified Rect.
+        ///     If intersection does not occur, this Rect will become <see cref = "Empty">Empty</see>.
         /// </summary>
         /// <param name = "rect">The <see cref = "Rect">Rect</see> to intersect with.</param>
         public void Intersect(Rect rect)

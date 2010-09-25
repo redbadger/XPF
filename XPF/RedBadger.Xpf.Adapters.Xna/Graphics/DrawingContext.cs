@@ -18,8 +18,6 @@
 
         private Vector absoluteOffset;
 
-        private Rect clippingRect = Rect.Empty;
-
         public DrawingContext(IElement element, IPrimitivesService primitivesService)
         {
             if (element == null)
@@ -59,19 +57,6 @@
             set
             {
                 this.absoluteOffset = value;
-            }
-        }
-
-        public Rect ClippingRect
-        {
-            get
-            {
-                return this.clippingRect;
-            }
-
-            set
-            {
-                this.clippingRect = value;
             }
         }
 
