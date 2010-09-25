@@ -1,67 +1,147 @@
 namespace RedBadger.Xpf.Sandbox
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.IO;
+
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
 
-    using RedBadger.Xpf.Adapters.Xna;
     using RedBadger.Xpf.Adapters.Xna.Graphics;
     using RedBadger.Xpf.Adapters.Xna.Input;
     using RedBadger.Xpf.Controls;
+    using RedBadger.Xpf.Data;
     using RedBadger.Xpf.Media;
+    using RedBadger.Xpf.Media.Imaging;
 
-    using Color = Microsoft.Xna.Framework.Color;
+    using Color = RedBadger.Xpf.Media.Color;
 
-    /// <summary>
-    ///     This is the main type for your game
-    /// </summary>
     public class Game1 : Game
     {
-        private RootElement rootElement;
+        private readonly GraphicsDeviceManager graphics;
 
-        private SpriteBatchAdapter spriteBatchAdapter;
+        private ObservableCollection<Chunk> chunks;
+
+        private SpriteFontAdapter font;
+
+        private RootElement root;
+
+        private SpriteBatchAdapter spriteBatch;
 
         public Game1()
         {
-            new GraphicsDeviceManager(this) { PreferredBackBufferWidth = 1024, PreferredBackBufferHeight = 768 };
-
+            this.graphics = new GraphicsDeviceManager(this);
             this.Content.RootDirectory = "Content";
-            this.IsMouseVisible = true;
+
+            this.graphics.PreferredBackBufferHeight = 600;
+            this.graphics.PreferredBackBufferWidth = 600;
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            this.GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            this.rootElement.Draw();
+            this.GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
+            this.root.Draw();
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        ///     LoadContent will be called once per game and is the place to load
+        ///     all of your content.
+        /// </summary>
         protected override void LoadContent()
         {
-            this.spriteBatchAdapter = new SpriteBatchAdapter(new SpriteBatch(this.GraphicsDevice));
-            var renderer = new Renderer(this.spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
-            this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
+            // Create a new SpriteBatch, which can be used to draw textures.
+            this.spriteBatch = new SpriteBatchAdapter(new SpriteBatch(this.GraphicsDevice));
+            var primitiveService = new PrimitivesService(this.GraphicsDevice);
+            var renderer = new Renderer(this.spriteBatch, primitiveService);
+            var input = new InputManager();
+            this.root = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, input);
+
+            this.font = new SpriteFontAdapter(this.Content.Load<SpriteFont>(@"SpriteFont"));
+            this.chunks = new ObservableCollection<Chunk>();
+
+            string[] files = Directory.GetFiles(Environment.CurrentDirectory + @"\Content\Textures");
+
+            foreach (string file in files)
+            {
+                var chunk = new Chunk
+                    {
+                        Name = Path.GetFileNameWithoutExtension(file), 
+                        Texture = this.Content.Load<Texture2D>(@"Textures/" + Path.GetFileNameWithoutExtension(file))
+                    };
+                this.chunks.Add(chunk);
+            }
+
+            var items = new ItemsControl
+                {
+                    ItemTemplate = () =>
+                        {
+                            var textBlock = new TextBlock(this.font) { Foreground = new SolidColorBrush(Colors.White) };
+                            textBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay<Chunk, string>(o => o.Name));
+
+                            var image = new Image();
+                            image.Bind(Image.SourceProperty, BindingFactory.CreateOneWay<Chunk, ImageSource>(o => o.XnaImage));
+                            var panel = new StackPanel
+                                {
+                                    Orientation = Orientation.Vertical, 
+                                    Background = new SolidColorBrush(new Color(0, 0, 0, 100)), 
+                                };
+
+                            panel.Children.Add(image);
+                            panel.Children.Add(textBlock);
+
+                            var border = new Border
+                                {
+                                    BorderBrush = new SolidColorBrush(Colors.Black), 
+                                    BorderThickness = new Thickness(2, 2, 2, 2), 
+                                    Margin = new Thickness(10, 10, 10, 10), 
+                                    Child = panel
+                                };
+
+                            return border;
+                        }, 
+                    ItemsSource = this.chunks, 
+                };
+
+/*
+            var scroll = new ScrollViewer
+                {
+                    CanHorizontallyScroll = true, 
+                    CanVerticallyScroll = true, 
+                    Margin = new Thickness(0, 0, 25, 0), 
+                    IsEnabled = true, 
+                    Content = items, 
+                    MaxHeight = 600, 
+                    Height = 600
+                };
+*/
 
             var grid = new Grid
                 {
-                    ColumnDefinitions =
-                        {
-                            new ColumnDefinition(), 
-                            new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) }
-                        }
+                    Height = 600, 
+                    MaxHeight = 600, 
+                    Background = new SolidColorBrush(new Color(0, 0, 0, 100)), 
+                    RowDefinitions = {
+                                        new RowDefinition() 
+                                     }, 
+                    ColumnDefinitions = {
+                                           new ColumnDefinition() 
+                                        }, 
+                    HorizontalAlignment = HorizontalAlignment.Left, 
+                    VerticalAlignment = VerticalAlignment.Top
                 };
 
-            var left = new Border { Background = new SolidColorBrush(Colors.Red) };
-            grid.Children.Add(left);
+            grid.Children.Add(items);
 
-            var right = new Border { Background = new SolidColorBrush(Colors.Blue) };
-            Grid.SetColumn(right, 1);
-            grid.Children.Add(right);
-
-            this.rootElement.Content = grid;
+            this.root.Content = grid;
         }
 
+        /// <summary>
+        ///     Allows the game to run logic such as updating the world,
+        ///     checking for collisions, gathering input, and playing audio.
+        /// </summary>
+        /// <param name = "gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
@@ -70,8 +150,29 @@ namespace RedBadger.Xpf.Sandbox
                 this.Exit();
             }
 
-            this.rootElement.Update();
+            this.root.Update();
+
             base.Update(gameTime);
+        }
+
+        public class Chunk
+        {
+            public string Name { get; set; }
+
+            public Texture2D Texture { get; set; }
+
+            public TextureImage XnaImage
+            {
+                get
+                {
+                    return new TextureImage(new Texture2DAdapter(this.Texture));
+                }
+            }
+
+            public override string ToString()
+            {
+                return this.Name;
+            }
         }
     }
 }
