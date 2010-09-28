@@ -43,6 +43,11 @@
             return new OneWayBinding<T>(GetPropertyInfo(propertySelector));
         }
 
+        public static IObservable<T> CreateOneWay<TSource, T, TInput>(Expression<Func<TSource, TInput>> propertySelector)
+        {
+            return new OneWayBinding<T>(GetPropertyInfo(propertySelector));
+        }
+
         /// <summary>
         ///     Creates a One Way Binding to a <see cref = "ReactiveProperty{T}">ReactiveProperty</see> on the element's Data Context.
         /// </summary>

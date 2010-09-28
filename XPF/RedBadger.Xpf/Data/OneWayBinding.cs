@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Reflection;
 
@@ -98,7 +99,8 @@
             }
             else
             {
-                this.observer.OnNext((T)this.propertyInfo.GetValue(dataContext, null));
+
+                this.observer.OnNext((T)Convert.ChangeType(this.propertyInfo.GetValue(dataContext, null), typeof(T), CultureInfo.InvariantCulture));
 
                 if (dataContext is INotifyPropertyChanged)
                 {
