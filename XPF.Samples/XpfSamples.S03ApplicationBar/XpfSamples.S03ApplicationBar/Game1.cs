@@ -1,4 +1,4 @@
-namespace XpfSamples.S02ApplicationBar
+namespace XpfSamples.S03ApplicationBar
 {
     using System;
 

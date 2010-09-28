@@ -5,12 +5,14 @@ namespace RedBadger.PocketMechanic.Phone
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+    using RedBadger.Xpf;
     using RedBadger.Xpf.Adapters.Xna.Graphics;
     using RedBadger.Xpf.Adapters.Xna.Input;
     using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Media;
 
     using Color = RedBadger.Xpf.Media.Color;
+    using Point = Microsoft.Xna.Framework.Point;
 
     public class GridTest : DrawableGameComponent
     {
@@ -48,40 +50,47 @@ namespace RedBadger.PocketMechanic.Phone
 
             var border = new Border
                 {
-                    Width = 300, 
-                    Height = 300, 
-                    Background = new SolidColorBrush(Colors.DarkGray), 
-                    Child =
-                        new StackPanel
-                            {
-                                Children =
-                                    {
-                                        new TextBlock(spriteFontAdapter)
-                                            {
-                                                Text =
-                                                    "this can't all fit in the space sadsjds sd sd asd as das das da sd asd as dasd "
-                                            }, 
-                                        new Border
-                                            {
-                                                Width = 100, 
-                                                Height = 100, 
-                                                Background = new SolidColorBrush(Colors.Cyan), 
-                                                Child =
-                                                    new TextBlock(spriteFontAdapter)
-                                                        {
-                                                           Text = "I wonder whether this will clip" 
-                                                        }
-                                            }, 
-                                        new TextBlock(spriteFontAdapter)
-                                            {
-                                                Text =
-                                                    "this can't all fit in the space sadsjds sd sd asd as das das da sd asd as dasd "
-                                            }
-                                    }
-                            }
+                    Width = 300,
+                    Height = 300,
+                    Background = new SolidColorBrush(Colors.DarkGray),
+                    BorderBrush = new SolidColorBrush(Colors.Black),
+                    BorderThickness = new Thickness(2)
                 };
 
-            this.rootElement.Content = border;
+            var outerBorder = new Border
+                {
+                    Background = new SolidColorBrush(Colors.Yellow),
+                    BorderBrush = new SolidColorBrush(Colors.Red),
+                    BorderThickness = new Thickness(2),
+                    Child = border
+                };
+
+            var button = new Button
+                {
+                    Content = new Border { Background = new SolidColorBrush(Colors.Brown), Width = 100, Height = 50 }
+                };
+            button.Click += (sender, args) =>
+                {
+                    if (border.Width == 300)
+                    {
+                        border.Width = 100;
+                        border.Height = 150;
+                    }
+                    else
+                    {
+                        border.Width = 300;
+                        border.Height = 300;
+                    }
+                };
+
+            var stackPanel = new StackPanel
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Children = { outerBorder, button }
+                };
+
+            this.rootElement.Content = stackPanel;
 
             /*var child_10_StackPanel = new StackPanel { Background = new SolidColorBrush(Colors.Red) };
 
