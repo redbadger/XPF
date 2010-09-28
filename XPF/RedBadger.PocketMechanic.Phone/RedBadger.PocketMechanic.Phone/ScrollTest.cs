@@ -77,7 +77,7 @@ namespace RedBadger.PocketMechanic.Phone
 
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager())
                 {
-                   Content = itemsControl 
+                    Content = new ScrollViewer { Content = itemsControl }
                 };
 
             Observable.Timer(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1)).ObserveOnDispatcher().Subscribe(

@@ -51,9 +51,6 @@ namespace RedBadger.Xpf.Specs.Controls.ItemsControlSpecs
     [Subject(typeof(ItemsControl))]
     public class when_asked_for_its_children : an_ItemsControl
     {
-        private It should_return_a_scroll_viewer =
-            () => ItemsControl.GetVisualChildren().First().ShouldBeOfType<ScrollViewer>();
-
         private It should_return_one_child_only = () => ItemsControl.GetVisualChildren().Count().ShouldEqual(1);
     }
 

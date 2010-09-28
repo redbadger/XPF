@@ -23,7 +23,7 @@ namespace RedBadger.PocketMechanic.Phone
             // Frame rate is 30 fps by default for Windows Phone.
             this.TargetElapsedTime = TimeSpan.FromTicks(333333);
 
-            this.Components.Add(new GridTest(this));
+            this.Components.Add(new ScrollTest(this));
         }
 
         protected override void Draw(GameTime gameTime)

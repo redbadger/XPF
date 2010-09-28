@@ -51,6 +51,18 @@
             if (currentState.X != this.previousState.X || currentState.Y != this.previousState.Y)
             {
                 this.gestures.OnNext(new Gesture(Xpf.Input.GestureType.Move, new Point(currentState.X, currentState.Y)));
+
+#if !WINDOWS_PHONE
+                if (this.previousState.LeftButton == ButtonState.Pressed &&
+                    currentState.LeftButton == ButtonState.Pressed)
+                {
+                    this.gestures.OnNext(
+                        new Gesture(
+                            Xpf.Input.GestureType.FreeDrag, 
+                            new Point(currentState.X, currentState.Y), 
+                            new Vector(currentState.X - this.previousState.X, currentState.Y - this.previousState.Y)));
+                }
+#endif
             }
 
             this.previousState = currentState;

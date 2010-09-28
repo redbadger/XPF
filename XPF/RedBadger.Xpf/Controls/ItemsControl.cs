@@ -21,15 +21,12 @@
         public static readonly ReactiveProperty<IEnumerable> ItemsSourceProperty =
             ReactiveProperty<IEnumerable>.Register("ItemsSource", typeof(ItemsControl), ItemsSourceChanged);
 
-        private readonly ScrollViewer scrollViewer;
-
         private IDisposable changingItems;
 
         private bool isItemsSourceNew;
 
         public ItemsControl()
         {
-            this.scrollViewer = new ScrollViewer { VisualParent = this };
             this.ItemsPanel = new StackPanel();
         }
 
@@ -74,7 +71,7 @@
 
         public override IEnumerable<IElement> GetVisualChildren()
         {
-            ScrollViewer child = this.scrollViewer;
+            Panel child = this.ItemsPanel;
             if (child != null)
             {
                 yield return child;
@@ -94,7 +91,7 @@
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            ScrollViewer child = this.scrollViewer;
+            Panel child = this.ItemsPanel;
             if (child != null)
             {
                 child.Arrange(new Rect(new Point(), finalSize));
@@ -105,7 +102,7 @@
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            ScrollViewer child = this.scrollViewer;
+            Panel child = this.ItemsPanel;
             if (child == null)
             {
                 return Size.Empty;
@@ -118,15 +115,26 @@
         private static void ItemsPanelChanged(IReactiveObject source, ReactivePropertyChangeEventArgs<Panel> change)
         {
             var itemsControl = (ItemsControl)source;
-            Panel panel = change.NewValue;
-            if (!(panel.Children is ITemplatedList<IElement>))
+            Panel newPanel = change.NewValue;
+            Panel oldPanel = change.OldValue;
+
+            if (oldPanel != null)
             {
-                throw new NotSupportedException(
-                    "ItemsControl requires a panel whose Children collection implements ITemplatedList<IElement>");
+                oldPanel.VisualParent = null;
+            }
+
+            if (newPanel != null)
+            {
+                if (!(newPanel.Children is ITemplatedList<IElement>))
+                {
+                    throw new NotSupportedException(
+                        "ItemsControl requires a panel whose Children collection implements ITemplatedList<IElement>");
+                }
+
+                newPanel.VisualParent = itemsControl;
             }
 
             itemsControl.InvalidateMeasure();
-            itemsControl.scrollViewer.Content = panel;
         }
 
         private static void ItemsSourceChanged(

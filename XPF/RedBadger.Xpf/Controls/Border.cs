@@ -28,8 +28,6 @@ namespace RedBadger.Xpf.Controls
 
         private readonly IList<Rect> borders = new List<Rect>();
 
-        private bool isBordersCollectionDirty;
-
         public Brush Background
         {
             get
@@ -124,8 +122,6 @@ namespace RedBadger.Xpf.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            this.isBordersCollectionDirty = true;
-
             Thickness borderThicknessAndPadding = this.BorderThickness + this.Padding;
 
             IElement child = this.Child;
@@ -143,10 +139,7 @@ namespace RedBadger.Xpf.Controls
         {
             if (this.BorderThickness != new Thickness() && this.BorderBrush != null)
             {
-                if (this.isBordersCollectionDirty)
-                {
-                    this.GenerateBorders();
-                }
+                this.GenerateBorders();
 
                 foreach (Rect border in this.borders)
                 {
@@ -218,8 +211,6 @@ namespace RedBadger.Xpf.Controls
                         this.ActualWidth - (this.BorderThickness.Left + this.BorderThickness.Right), 
                         this.BorderThickness.Bottom));
             }
-
-            this.isBordersCollectionDirty = false;
         }
     }
 }

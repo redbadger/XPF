@@ -82,6 +82,9 @@ namespace XpfSamples.S03ApplicationBar
                             return textBlock;
                         }
                 };
+
+            var scrollViewer = new ScrollViewer { Content = itemsControl };
+
             var applicationBar = new ApplicationBar
                 {
                     Buttons =
@@ -105,7 +108,7 @@ namespace XpfSamples.S03ApplicationBar
                         {
                             header1, 
                             header2, 
-                            itemsControl,
+                            scrollViewer,
                             applicationBar
                         }
                 };
@@ -115,7 +118,7 @@ namespace XpfSamples.S03ApplicationBar
 
             Grid.SetRow(header1, 0);
             Grid.SetRow(header2, 1);
-            Grid.SetRow(itemsControl, 2);
+            Grid.SetRow(scrollViewer, 2);
             Grid.SetRow(applicationBar, 3);
 
             this.rootElement.Content = grid;

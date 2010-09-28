@@ -1,12 +1,15 @@
 namespace RedBadger.Xpf.Sandbox
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
+
+    using NekoCake.Crimson.Xpf;
 
     using RedBadger.Xpf.Adapters.Xna.Graphics;
     using RedBadger.Xpf.Adapters.Xna.Input;
@@ -15,11 +18,13 @@ namespace RedBadger.Xpf.Sandbox
     using RedBadger.Xpf.Media;
     using RedBadger.Xpf.Media.Imaging;
 
-    using Color = RedBadger.Xpf.Media.Color;
+    using Color = Microsoft.Xna.Framework.Color;
 
     public class Game1 : Game
     {
         private readonly GraphicsDeviceManager graphics;
+
+        private readonly List<NinePatch> ninePatches = new List<NinePatch>();
 
         private ObservableCollection<Chunk> chunks;
 
@@ -34,13 +39,14 @@ namespace RedBadger.Xpf.Sandbox
             this.graphics = new GraphicsDeviceManager(this);
             this.Content.RootDirectory = "Content";
 
-            this.graphics.PreferredBackBufferHeight = 600;
-            this.graphics.PreferredBackBufferWidth = 600;
+            this.graphics.PreferredBackBufferHeight = 900;
+            this.graphics.PreferredBackBufferWidth = 1400;
+            this.IsMouseVisible = true;
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            this.GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
+            this.GraphicsDevice.Clear(Color.CornflowerBlue);
             this.root.Draw();
             base.Draw(gameTime);
         }
@@ -77,15 +83,18 @@ namespace RedBadger.Xpf.Sandbox
                 {
                     ItemTemplate = () =>
                         {
-                            var textBlock = new TextBlock(this.font) { Foreground = new SolidColorBrush(Colors.White) };
-                            textBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay<Chunk, string>(o => o.Name));
+                            var textBlock = new TextBlock(this.font) { Foreground = new SolidColorBrush(Colors.White), HorizontalAlignment = HorizontalAlignment.Center };
+                            textBlock.Bind(
+                                TextBlock.TextProperty, BindingFactory.CreateOneWay<Chunk, string>(o => o.Name));
 
-                            var image = new Image();
-                            image.Bind(Image.SourceProperty, BindingFactory.CreateOneWay<Chunk, ImageSource>(o => o.XnaImage));
+                            var image = new Image { Stretch = Stretch.Fill, Width = 100, };
+                            image.Bind(
+                                Image.SourceProperty, BindingFactory.CreateOneWay<Chunk, ImageSource>(o => o.XnaImage));
+                            
                             var panel = new StackPanel
                                 {
                                     Orientation = Orientation.Vertical, 
-                                    Background = new SolidColorBrush(new Color(0, 0, 0, 100)), 
+                                    Background = new SolidColorBrush(new Media.Color(0, 0, 0, 100)), 
                                 };
 
                             panel.Children.Add(image);
@@ -95,46 +104,39 @@ namespace RedBadger.Xpf.Sandbox
                                 {
                                     BorderBrush = new SolidColorBrush(Colors.Black), 
                                     BorderThickness = new Thickness(2, 2, 2, 2), 
-                                    Margin = new Thickness(10, 10, 10, 10), 
-                                    Child = panel
+                                    Margin = new Thickness(5, 5, 5, 5), 
+                                    Child = panel, 
                                 };
 
-                            return border;
+                            var button = new Button { Content = border, Margin = new Thickness(5, 5, 5, 5), };
+
+                            return button;
                         }, 
                     ItemsSource = this.chunks, 
                 };
 
-/*
-            var scroll = new ScrollViewer
+            items.ItemsPanel.Margin = new Thickness(0, 0, 25, 0);
+
+            var scrollViewer = new ScrollViewer { Content = items };
+
+            var canvas = new Canvas { };
+
+            var chunkPallet = new NinePatch(this.Content, canvas, "Chunk Pallet", this.font)
                 {
-                    CanHorizontallyScroll = true, 
-                    CanVerticallyScroll = true, 
-                    Margin = new Thickness(0, 0, 25, 0), 
-                    IsEnabled = true, 
-                    Content = items, 
-                    MaxHeight = 600, 
-                    Height = 600
+                   Width = 280, Height = 550, 
                 };
-*/
+            this.ninePatches.Add(chunkPallet);
 
-            var grid = new Grid
-                {
-                    Height = 600, 
-                    MaxHeight = 600, 
-                    Background = new SolidColorBrush(new Color(0, 0, 0, 100)), 
-                    RowDefinitions = {
-                                        new RowDefinition() 
-                                     }, 
-                    ColumnDefinitions = {
-                                           new ColumnDefinition() 
-                                        }, 
-                    HorizontalAlignment = HorizontalAlignment.Left, 
-                    VerticalAlignment = VerticalAlignment.Top
-                };
+            chunkPallet.Children.Add(scrollViewer);
+            canvas.Children.Add(chunkPallet);
 
-            grid.Children.Add(items);
+            Grid.SetColumn(scrollViewer, 1);
+            Grid.SetRow(scrollViewer, 1);
 
-            this.root.Content = grid;
+            Canvas.SetLeft(chunkPallet, 740);
+            Canvas.SetTop(chunkPallet, 20);
+
+            this.root.Content = canvas;
         }
 
         /// <summary>
@@ -151,6 +153,10 @@ namespace RedBadger.Xpf.Sandbox
             }
 
             this.root.Update();
+            foreach (NinePatch a in this.ninePatches)
+            {
+                a.Update();
+            }
 
             base.Update(gameTime);
         }
