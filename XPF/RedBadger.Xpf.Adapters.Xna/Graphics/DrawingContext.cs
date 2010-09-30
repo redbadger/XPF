@@ -14,7 +14,7 @@
 
         private readonly IPrimitivesService primitivesService;
 
-        private Rect absoluteClippingRect;
+        private Rect absoluteClippingRect = Rect.Empty;
 
         private Vector absoluteOffset;
 
@@ -83,11 +83,15 @@
 
         public void Draw(ISpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(this.absoluteClippingRect);
-
-            foreach (ISpriteJob spriteJob in this.jobs)
+            Rect clippingRect = this.absoluteClippingRect;
+            if (spriteBatch.TryIntersectViewport(ref clippingRect))
             {
-                spriteJob.Draw(spriteBatch, this.absoluteOffset);
+                spriteBatch.Begin(clippingRect);
+
+                foreach (ISpriteJob spriteJob in this.jobs)
+                {
+                    spriteJob.Draw(spriteBatch, this.absoluteOffset);
+                }
             }
         }
 

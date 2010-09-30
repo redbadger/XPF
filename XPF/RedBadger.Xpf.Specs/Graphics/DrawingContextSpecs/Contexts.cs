@@ -33,6 +33,13 @@ namespace RedBadger.Xpf.Specs.Graphics.DrawingContextSpecs
         private Establish context = () =>
             {
                 SpriteBatch = new Mock<ISpriteBatch>();
+
+                var newRect = new Rect();
+                SpriteBatch.Setup(batch => batch.TryIntersectViewport(ref newRect)).Returns(true);
+
+                var emptyRect = Rect.Empty;
+                SpriteBatch.Setup(batch => batch.TryIntersectViewport(ref emptyRect)).Returns(true);
+
                 Renderer = new Renderer(SpriteBatch.Object, new Mock<IPrimitivesService>().Object);
                 UiElement = new Mock<IElement> { CallBase = true };
                 DrawingContext = Renderer.GetDrawingContext(UiElement.Object);
