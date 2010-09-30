@@ -11,9 +11,13 @@
 
     internal class OneWayBinding<T> : IObservable<T>, IBinding, IDisposable
     {
+        private readonly T initialValue;
+
         private readonly PropertyInfo propertyInfo;
 
         private readonly BindingResolutionMode resolutionMode;
+
+        private readonly bool shouldPushInitialValueOnSubscribe;
 
         private bool isDisposed;
 
@@ -45,9 +49,17 @@
         {
             var notifyPropertyChanged = source as INotifyPropertyChanged;
 
-            this.observable = notifyPropertyChanged != null
-                                  ? GetObservable(notifyPropertyChanged, propertyInfo)
-                                  : new BehaviorSubject<T>((T)propertyInfo.GetValue(source, null));
+            this.initialValue = (T)propertyInfo.GetValue(source, null);
+
+            if (notifyPropertyChanged != null)
+            {
+                this.observable = GetObservable(notifyPropertyChanged, propertyInfo);
+                this.shouldPushInitialValueOnSubscribe = true;
+            }
+            else
+            {
+                this.observable = new BehaviorSubject<T>(this.initialValue);
+            }
         }
 
         protected OneWayBinding(BindingResolutionMode resolutionMode)
@@ -119,6 +131,11 @@
 
             if (this.resolutionMode == BindingResolutionMode.Immediate)
             {
+                if (this.shouldPushInitialValueOnSubscribe)
+                {
+                    this.observer.OnNext(this.initialValue);
+                }
+
                 this.SubscribeObserver();
             }
 

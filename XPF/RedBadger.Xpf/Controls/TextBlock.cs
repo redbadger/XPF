@@ -1,5 +1,6 @@
 namespace RedBadger.Xpf.Controls
 {
+    using System;
     using System.Text;
     using System.Text.RegularExpressions;
 
@@ -33,6 +34,11 @@ namespace RedBadger.Xpf.Controls
 
         public TextBlock(ISpriteFont spriteFont)
         {
+            if (spriteFont == null)
+            {
+                throw new ArgumentNullException("spriteFont");
+            }
+
             this.spriteFont = spriteFont;
         }
 

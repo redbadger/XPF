@@ -1,11 +1,16 @@
 namespace RedBadger.Xpf.Data
 {
+#if WINDOWS_PHONE
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
-#if WINDOWS_PHONE
     using Microsoft.Phone.Reactive;
+#else
+    using System;
+    using System.Collections.Generic;
+    using System.Concurrency;
+    using System.Linq;
+
 #endif
 
     internal class ValueChangedBehaviorSubject<T> : ISubject<T>
@@ -14,7 +19,7 @@ namespace RedBadger.Xpf.Data
 
         public ValueChangedBehaviorSubject(T value)
         {
-            this.subject = new BehaviorSubject<T>(value);
+            this.subject = new BehaviorSubject<T>(value, Scheduler.Immediate);
         }
 
         public IDisposable Subscribe(IObserver<T> observer)
