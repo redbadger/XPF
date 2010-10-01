@@ -42,5 +42,10 @@ namespace Xpf.Samples.S04BasketballScoreboard.Domain
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public void IncrementScore(int points)
+        {
+            this.Score += points;
+        }
     }
 }

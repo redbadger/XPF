@@ -5,8 +5,16 @@ namespace Xpf.Samples.S04BasketballScoreboard
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
+    using Xpf.Samples.S04BasketballScoreboard.Domain;
+
     public class BasketballGame : Game
     {
+        private Team homeTeam;
+
+        private Team guestTeam;
+
+        private Clock clock;
+
         public BasketballGame()
         {
             new GraphicsDeviceManager(this)
@@ -29,7 +37,11 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
         protected override void Initialize()
         {
-            this.Components.Add(new Scoreboard(this));
+            this.homeTeam = new Team("HOME");
+            this.guestTeam = new Team("GUEST");
+            this.clock = new Clock();
+
+            this.Components.Add(new ScoreboardView(this, this.homeTeam, this.guestTeam, this.clock));
             base.Initialize();
         }
 

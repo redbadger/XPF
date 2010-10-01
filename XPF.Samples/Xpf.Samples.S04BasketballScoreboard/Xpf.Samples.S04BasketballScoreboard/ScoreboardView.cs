@@ -15,11 +15,13 @@
 
     using Xpf.Samples.S04BasketballScoreboard.Domain;
 
-    public class Scoreboard : DrawableGameComponent
+    public class ScoreboardView : DrawableGameComponent
     {
-        private Team guestTeam;
+        private readonly Clock clock;
 
-        private Team homeTeam;
+        private readonly Team guestTeam;
+
+        private readonly Team homeTeam;
 
         private SpriteFontAdapter largeLabel;
 
@@ -29,9 +31,14 @@
 
         private SpriteBatchAdapter spriteBatchAdapter;
 
-        public Scoreboard(BasketballGame game)
+        private SpriteFontAdapter basicFont;
+
+        public ScoreboardView(BasketballGame game, Team homeTeam, Team guestTeam, Clock clock)
             : base(game)
         {
+            this.homeTeam = homeTeam;
+            this.guestTeam = guestTeam;
+            this.clock = clock;
         }
 
         public override void Draw(GameTime gameTime)
@@ -48,15 +55,14 @@
 
         protected override void LoadContent()
         {
-            this.homeTeam = new Team("HOME");
-            this.guestTeam = new Team("GUEST");
-
             this.spriteBatchAdapter = new SpriteBatchAdapter(new SpriteBatch(this.GraphicsDevice));
             var primitivesService = new PrimitivesService(this.GraphicsDevice);
             var renderer = new Renderer(this.spriteBatchAdapter, primitivesService);
 
             var smallLabel = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLabel"));
             this.largeLabel = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLabel"));
+            
+            this.basicFont = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("BasicSpriteFont"));
 
             var smallLed = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLed"));
             this.largeLed = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("LargeLed"));
@@ -67,6 +73,21 @@
                 handler => this.Game.Window.OrientationChanged += handler, 
                 handler => this.Game.Window.OrientationChanged -= handler).Subscribe(
                     _ => this.rootElement.Viewport = this.Game.GraphicsDevice.Viewport.ToRect());
+
+            var timeTextBlock = new TextBlock(this.largeLed)
+                {
+                   Foreground = new SolidColorBrush(Colors.Red),
+                   HorizontalAlignment = HorizontalAlignment.Center
+                };
+
+            timeTextBlock.Bind(TextBlock.TextProperty, this.clock.TimeDisplay);
+
+            var periodTextBlock = new TextBlock(smallLed)
+                {
+                   Foreground = new SolidColorBrush(Colors.Yellow), Padding = new Thickness(10) 
+                };
+            periodTextBlock.Bind(
+                TextBlock.TextProperty, BindingFactory.CreateOneWay<Clock, int, string>(this.clock, c => c.Period));
 
             var clockPanel = new StackPanel
                 {
@@ -79,13 +100,8 @@
                                     BorderThickness = new Thickness(4), 
                                     Padding = new Thickness(10), 
                                     Margin = new Thickness(10), 
-                                    Child =
-                                        new TextBlock(this.largeLed)
-                                            {
-                                                Text = "12:04", 
-                                                Foreground = new SolidColorBrush(Colors.Red), 
-                                                HorizontalAlignment = HorizontalAlignment.Center
-                                            }
+                                    Width = 220,
+                                    Child = timeTextBlock
                                 }, 
                             new StackPanel
                                 {
@@ -99,12 +115,7 @@
                                                     Foreground = new SolidColorBrush(Colors.White), 
                                                     Padding = new Thickness(10)
                                                 }, 
-                                            new TextBlock(smallLed)
-                                                {
-                                                    Text = "4", 
-                                                    Foreground = new SolidColorBrush(Colors.Yellow), 
-                                                    Padding = new Thickness(10)
-                                                }
+                                            periodTextBlock
                                         }
                                 }
                         }
@@ -115,13 +126,14 @@
 
             var grid = new Grid
                 {
-                    Background = new SolidColorBrush(Colors.Black), 
+                    Background = new SolidColorBrush(Colors.Black),
                     ColumnDefinitions =
                         {
-                            new ColumnDefinition { Width = GridLength.Auto }, 
-                            new ColumnDefinition(), 
+                            new ColumnDefinition { Width = GridLength.Auto },
+                            new ColumnDefinition(),
                             new ColumnDefinition { Width = GridLength.Auto }
-                        }, 
+                        },
+                    RowDefinitions = { new RowDefinition(), new RowDefinition() },
                     Children = {
                                   homeTeamPanel, clockPanel, guestTeamPanel 
                                }
@@ -138,6 +150,41 @@
                     Child = grid, 
                 };
 
+            var homeButton = new Button
+                {
+                    Content =
+                        new Border
+                            {
+                                Background = new SolidColorBrush(Colors.Gray),
+                                Child = new TextBlock(this.basicFont) { Text = "Home Score" },
+                            },
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Padding = new Thickness(10)
+                };
+
+            homeButton.Click += (sender, args) => this.homeTeam.IncrementScore(1);
+            grid.Children.Add(homeButton);
+            Grid.SetRow(homeButton, 1);
+
+            var guestButton = new Button
+            {
+                Content =
+                    new Border
+                    {
+                        Background = new SolidColorBrush(Colors.Gray),
+                        Child = new TextBlock(this.basicFont) { Text = "Guest Score" },
+                    },
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Padding = new Thickness(10)
+            };
+
+            guestButton.Click += (sender, args) => this.guestTeam.IncrementScore(1);
+            grid.Children.Add(guestButton);
+            Grid.SetRow(guestButton, 1);
+            Grid.SetColumn(guestButton, 2);
+
             this.rootElement.Content = border;
         }
 
@@ -152,7 +199,6 @@
 
             var scoreTextBlock = new TextBlock(this.largeLed)
                 {
-                    Text = "113", 
                     Foreground = new SolidColorBrush(Colors.Green), 
                     HorizontalAlignment = HorizontalAlignment.Center, 
                     Padding = new Thickness(10)
@@ -161,9 +207,7 @@
             teamNameTextBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay<Team, string>(o => o.Name));
             scoreTextBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay<Team, int, string>(o => o.Score));
 
-            var teamPanel = new StackPanel { Children = { teamNameTextBlock, scoreTextBlock }, DataContext = team };
-
-            return teamPanel;
+            return new StackPanel { Children = { teamNameTextBlock, scoreTextBlock }, DataContext = team };
         }
     }
 }
