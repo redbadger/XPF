@@ -27,6 +27,13 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
         private Establish context = () =>
             {
                 SpriteBatch = new Mock<ISpriteBatch>();
+
+                var newRect = new Rect();
+                SpriteBatch.Setup(batch => batch.TryIntersectViewport(ref newRect)).Returns(true);
+
+                var emptyRect = Rect.Empty;
+                SpriteBatch.Setup(batch => batch.TryIntersectViewport(ref emptyRect)).Returns(true);
+
                 Renderer = new Renderer(SpriteBatch.Object, new Mock<IPrimitivesService>().Object);
             };
     }

@@ -122,22 +122,36 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.INotifyPropertyCh
     {
         private const double ExpectedWidth = 10d;
 
+        private const double InitialWidth = 5d;
+
+        private static IObservable<double> fromSource;
+
+        private static double initialBoundValue;
+
         private static TestBindingObject source;
 
         private static Border target;
 
         private Establish context = () =>
             {
-                source = new TestBindingObject();
+                source = new TestBindingObject { Width = InitialWidth };
                 target = new Border();
 
-                IObservable<double> fromSource = BindingFactory.CreateOneWay(source, o => o.Width);
-                target.Bind(UIElement.WidthProperty, fromSource);
+                fromSource = BindingFactory.CreateOneWay(source, o => o.Width);
             };
 
-        private Because of = () => source.Width = ExpectedWidth;
+        private Because of = () =>
+            {
+                target.Bind(UIElement.WidthProperty, fromSource);
+                initialBoundValue = target.Width;
 
-        private It should_update_the_target_property_with_the_correct_value =
+                source.Width = ExpectedWidth;
+            };
+
+        private It should_1_update_the_target_property_with_the_initial_value_when_the_binding_is_created =
+            () => initialBoundValue.ShouldEqual(InitialWidth);
+
+        private It should_2_update_the_target_property_with_the_correct_value_when_the_source_value_is_changed =
             () => target.Width.ShouldEqual(ExpectedWidth);
     }
 

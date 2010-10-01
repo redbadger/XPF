@@ -109,6 +109,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainGame.cs" />
     <Compile Include="InputManagerWindows.cs" />
     <Compile Include="MapEditor.cs" />
     <Compile Include="NinePatch.cs" />

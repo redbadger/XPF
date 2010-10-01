@@ -44,7 +44,7 @@
                     this.End();
                 }
 
-                if (clippingRect == Rect.Empty)
+                if (clippingRect.IsEmpty)
                 {
                     this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
                 }
@@ -91,6 +91,17 @@
             this.spriteBatch.End();
             this.isBatchOpen = false;
             this.currentClippingRect = null;
+        }
+
+        public bool TryIntersectViewport(ref Rect clippingRect)
+        {
+            if (clippingRect.IsEmpty)
+            {
+                return true;
+            }
+
+            clippingRect.Intersect(this.spriteBatch.GraphicsDevice.Viewport.ToRect());
+            return !clippingRect.IsEmpty;
         }
     }
 }
