@@ -23,6 +23,8 @@
 
         private readonly Team homeTeam;
 
+        private SpriteFontAdapter basicFont;
+
         private SpriteFontAdapter largeLabel;
 
         private SpriteFontAdapter largeLed;
@@ -31,11 +33,10 @@
 
         private SpriteBatchAdapter spriteBatchAdapter;
 
-        private SpriteFontAdapter basicFont;
-
         public ScoreboardView(BasketballGame game, Team homeTeam, Team guestTeam, Clock clock)
             : base(game)
         {
+            this.Visible = false;
             this.homeTeam = homeTeam;
             this.guestTeam = guestTeam;
             this.clock = clock;
@@ -44,13 +45,11 @@
         public override void Draw(GameTime gameTime)
         {
             this.rootElement.Draw();
-            base.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
         {
             this.rootElement.Update();
-            base.Update(gameTime);
         }
 
         protected override void LoadContent()
@@ -61,7 +60,7 @@
 
             var smallLabel = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLabel"));
             this.largeLabel = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLabel"));
-            
+
             this.basicFont = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("BasicSpriteFont"));
 
             var smallLed = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLed"));
@@ -76,8 +75,7 @@
 
             var timeTextBlock = new TextBlock(this.largeLed)
                 {
-                   Foreground = new SolidColorBrush(Colors.Red),
-                   HorizontalAlignment = HorizontalAlignment.Center
+                   Foreground = new SolidColorBrush(Colors.Red), HorizontalAlignment = HorizontalAlignment.Center 
                 };
 
             timeTextBlock.Bind(TextBlock.TextProperty, this.clock.TimeDisplay);
@@ -100,7 +98,7 @@
                                     BorderThickness = new Thickness(4), 
                                     Padding = new Thickness(10), 
                                     Margin = new Thickness(10), 
-                                    Width = 220,
+                                    Width = 220, 
                                     Child = timeTextBlock
                                 }, 
                             new StackPanel
@@ -126,14 +124,17 @@
 
             var grid = new Grid
                 {
-                    Background = new SolidColorBrush(Colors.Black),
+                    Background = new SolidColorBrush(Colors.Black), 
                     ColumnDefinitions =
                         {
-                            new ColumnDefinition { Width = GridLength.Auto },
-                            new ColumnDefinition(),
+                            new ColumnDefinition { Width = GridLength.Auto }, 
+                            new ColumnDefinition(), 
                             new ColumnDefinition { Width = GridLength.Auto }
-                        },
-                    RowDefinitions = { new RowDefinition(), new RowDefinition() },
+                        }, 
+                    RowDefinitions =
+                        {
+                           new RowDefinition { Height = GridLength.Auto }, new RowDefinition { Height = GridLength.Auto } 
+                        }, 
                     Children = {
                                   homeTeamPanel, clockPanel, guestTeamPanel 
                                }
@@ -144,6 +145,7 @@
             Grid.SetColumn(guestTeamPanel, 2);
             var border = new Border
                 {
+                    Height = 350,
                     VerticalAlignment = VerticalAlignment.Top, 
                     BorderBrush = new SolidColorBrush(Colors.White), 
                     BorderThickness = new Thickness(5), 
@@ -155,11 +157,11 @@
                     Content =
                         new Border
                             {
-                                Background = new SolidColorBrush(Colors.Gray),
-                                Child = new TextBlock(this.basicFont) { Text = "Home Score" },
-                            },
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center,
+                                Background = new SolidColorBrush(Colors.Gray), 
+                                Child = new TextBlock(this.basicFont) { Text = "Home Score" }, 
+                            }, 
+                    HorizontalAlignment = HorizontalAlignment.Center, 
+                    VerticalAlignment = VerticalAlignment.Center, 
                     Padding = new Thickness(10)
                 };
 
@@ -168,17 +170,17 @@
             Grid.SetRow(homeButton, 1);
 
             var guestButton = new Button
-            {
-                Content =
-                    new Border
-                    {
-                        Background = new SolidColorBrush(Colors.Gray),
-                        Child = new TextBlock(this.basicFont) { Text = "Guest Score" },
-                    },
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                Padding = new Thickness(10)
-            };
+                {
+                    Content =
+                        new Border
+                            {
+                                Background = new SolidColorBrush(Colors.Gray), 
+                                Child = new TextBlock(this.basicFont) { Text = "Guest Score" }, 
+                            }, 
+                    HorizontalAlignment = HorizontalAlignment.Center, 
+                    VerticalAlignment = VerticalAlignment.Center, 
+                    Padding = new Thickness(10)
+                };
 
             guestButton.Click += (sender, args) => this.guestTeam.IncrementScore(1);
             grid.Children.Add(guestButton);
