@@ -111,6 +111,29 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
     }
 
     [Subject(typeof(ReactiveObject), "One Way")]
+    public class when_there_is_a_one_way_binding_to_a_property_on_the_data_context_and_type_conversion_is_required
+    {
+        private static TestBindingObject bindingObject;
+
+        private static TextBlock target;
+
+        private Establish context = () =>
+            {
+                bindingObject = new TestBindingObject { Brush = new SolidColorBrush(Colors.Blue) };
+                target = new TextBlock(new Mock<ISpriteFont>().Object) { DataContext = bindingObject };
+            };
+
+        private Because of = () =>
+            {
+                IObservable<string> fromSource = BindingFactory.CreateOneWay<TestBindingObject, Brush, string>(o => o.Brush);
+                target.Bind(TextBlock.TextProperty, fromSource);
+                target.Measure(Size.Empty);
+            };
+
+        private It should_update_the_target = () => target.Text.ShouldEqual(bindingObject.Brush.ToString());
+    }
+
+    [Subject(typeof(ReactiveObject), "One Way")]
     public class when_there_is_a_one_way_binding_to_a_property_on_a_specified_source
     {
         private static TestBindingObject bindingObject;
@@ -130,6 +153,28 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
             };
 
         private It should_update_the_target = () => target.BorderBrush.ShouldEqual(bindingObject.Brush);
+    }
+
+    [Subject(typeof(ReactiveObject), "One Way")]
+    public class when_there_is_a_one_way_binding_to_a_property_on_a_specified_source_and_type_conversion_is_required
+    {
+        private static TestBindingObject bindingObject;
+
+        private static TextBlock target;
+
+        private Establish context = () =>
+            {
+                bindingObject = new TestBindingObject { Brush = new SolidColorBrush(Colors.Blue) };
+                target = new TextBlock(new Mock<ISpriteFont>().Object);
+            };
+
+        private Because of = () =>
+            {
+                IObservable<string> fromSource = BindingFactory.CreateOneWay<TestBindingObject, Brush, string>(bindingObject, o => o.Brush);
+                target.Bind(TextBlock.TextProperty, fromSource);
+            };
+
+        private It should_update_the_target = () => target.Text.ShouldEqual(bindingObject.Brush.ToString());
     }
 
     [Subject(typeof(ReactiveObject), "One Way")]

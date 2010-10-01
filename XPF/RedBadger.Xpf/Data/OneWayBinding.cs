@@ -48,10 +48,9 @@
         public OneWayBinding(object source, PropertyInfo propertyInfo)
             : this(BindingResolutionMode.Immediate)
         {
+            this.initialValue = GetValue(source, propertyInfo);
+
             var notifyPropertyChanged = source as INotifyPropertyChanged;
-
-            this.initialValue = (T)propertyInfo.GetValue(source, null);
-
             if (notifyPropertyChanged != null)
             {
                 this.observable = GetObservable(notifyPropertyChanged, propertyInfo);
@@ -111,8 +110,7 @@
             }
             else
             {
-
-                this.observer.OnNext((T)Convert.ChangeType(this.propertyInfo.GetValue(dataContext, null), typeof(T), CultureInfo.InvariantCulture));
+                this.observer.OnNext(GetValue(dataContext, this.propertyInfo));
 
                 if (dataContext is INotifyPropertyChanged)
                 {
@@ -156,7 +154,23 @@
                 Observable.FromEvent<PropertyChangedEventArgs>(
                     handler => source.PropertyChanged += handler, handler => source.PropertyChanged -= handler).Where(
                         data => data.EventArgs.PropertyName == propertyInfo.Name).Select(
-                            e => (T)propertyInfo.GetValue(source, null));
+                            e => GetValue(source, propertyInfo));
+        }
+
+        private static T GetValue(object source, PropertyInfo propertyInfo)
+        {
+            object value = propertyInfo.GetValue(source, null);
+            if (value != null)
+            {
+                var sourceType = value.GetType();
+                var targetType = typeof(T);
+                if (sourceType != targetType && !targetType.IsAssignableFrom(sourceType))
+                {
+                    value = Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
+                }
+            }
+
+            return (T)value;
         }
 
         private void SubscribeObserver()

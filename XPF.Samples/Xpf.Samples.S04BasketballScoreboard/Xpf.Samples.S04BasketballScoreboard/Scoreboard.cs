@@ -159,7 +159,7 @@
                 };
 
             teamNameTextBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay<Team, string>(o => o.Name));
-            scoreTextBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay<Team, string, int>(o => o.Score));
+            scoreTextBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay<Team, int, string>(o => o.Score));
 
             var teamPanel = new StackPanel { Children = { teamNameTextBlock, scoreTextBlock }, DataContext = team };
 

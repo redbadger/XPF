@@ -15,9 +15,14 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.INotifyPropertyCh
 
     using Machine.Specifications;
 
+    using Moq;
+
     using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Data;
+    using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Media;
+
+    using It = Machine.Specifications.It;
 
     public class TestBindingObject : INotifyPropertyChanged
     {
@@ -118,6 +123,33 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.INotifyPropertyCh
     }
 
     [Subject(typeof(ReactiveObject), "One Way")]
+    public class when_a_binding_is_one_way_to_a_property_on_the_data_context_and_type_conversion_is_needed
+    {
+        private const double ExpectedWidth = 10d;
+
+        private static TestBindingObject source;
+
+        private static TextBlock target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new TextBlock(new Mock<ISpriteFont>().Object);
+
+                IObservable<string> fromSource = BindingFactory.CreateOneWay<TestBindingObject, double, string>(o => o.Width);
+                target.Bind(TextBlock.TextProperty, fromSource);
+
+                target.DataContext = source;
+                target.Measure(Size.Empty);
+            };
+
+        private Because of = () => source.Width = ExpectedWidth;
+
+        private It should_update_the_target_property_with_the_correct_value =
+            () => target.Text.ShouldEqual(ExpectedWidth.ToString());
+    }
+
+    [Subject(typeof(ReactiveObject), "One Way")]
     public class when_a_binding_is_one_way_to_a_property_on_a_specified_source
     {
         private const double ExpectedWidth = 10d;
@@ -153,6 +185,44 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.INotifyPropertyCh
 
         private It should_2_update_the_target_property_with_the_correct_value_when_the_source_value_is_changed =
             () => target.Width.ShouldEqual(ExpectedWidth);
+    }
+
+    [Subject(typeof(ReactiveObject), "One Way")]
+    public class when_a_binding_is_one_way_to_a_property_on_a_specified_source_and_type_conversion_is_needed
+    {
+        private const double ExpectedWidth = 10d;
+
+        private const double InitialWidth = 5d;
+
+        private static IObservable<string> fromSource;
+
+        private static string initialBoundValue;
+
+        private static TestBindingObject source;
+
+        private static TextBlock target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject { Width = InitialWidth };
+                target = new TextBlock(new Mock<ISpriteFont>().Object);
+
+                fromSource = BindingFactory.CreateOneWay<TestBindingObject, double, string>(source, o => o.Width);
+            };
+
+        private Because of = () =>
+            {
+                target.Bind(TextBlock.TextProperty, fromSource);
+                initialBoundValue = target.Text;
+
+                source.Width = ExpectedWidth;
+            };
+
+        private It should_1_update_the_target_property_with_the_initial_value_when_the_binding_is_created =
+            () => initialBoundValue.ShouldEqual(InitialWidth.ToString());
+
+        private It should_2_update_the_target_property_with_the_correct_value_when_the_source_value_is_changed =
+            () => target.Text.ShouldEqual(ExpectedWidth.ToString());
     }
 
     [Subject(typeof(ReactiveObject), "One Way")]

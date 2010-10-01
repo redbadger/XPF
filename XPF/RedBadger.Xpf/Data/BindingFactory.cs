@@ -43,9 +43,23 @@
             return new OneWayBinding<T>(GetPropertyInfo(propertySelector));
         }
 
-        public static IObservable<T> CreateOneWay<TSource, T, TInput>(Expression<Func<TSource, TInput>> propertySelector)
+        /// <summary>
+        ///     Creates a One Way Binding to a property on the element's Data Context
+        ///     where the Type of the source property is different from the Type of the target property and requires conversion.
+        /// </summary>
+        /// <remarks>
+        ///     When binding to the Data Context, the binding returned is not resolved (ie. connected to the source) until the beginning of the Measure phase.
+        ///     This allows for the Data Context to be set after the binding has been created and changed at any time.
+        /// </remarks>
+        /// <typeparam name = "TSource">The Type of the Data Context.</typeparam>
+        /// <typeparam name = "TSourceProp">The Type of the property on the Data Context.</typeparam>
+        /// <typeparam name = "TTargetProp">The Type of the property on the target.</typeparam>
+        /// <param name = "propertySelector">Lambda expression which returns the property on the Data Context.</param>
+        /// <returns><see cref = "IObservable{T}">IObservable</see> around the property on the Data Context.</returns>
+        public static IObservable<TTargetProp> CreateOneWay<TSource, TSourceProp, TTargetProp>(
+            Expression<Func<TSource, TSourceProp>> propertySelector)
         {
-            return new OneWayBinding<T>(GetPropertyInfo(propertySelector));
+            return new OneWayBinding<TTargetProp>(GetPropertyInfo(propertySelector));
         }
 
         /// <summary>
@@ -91,6 +105,22 @@
         }
 
         /// <summary>
+        ///     Creates a One Way Binding to a property on a source
+        ///     where the Type of the source property is different from the Type of the target property and requires conversion.
+        /// </summary>
+        /// <typeparam name = "TSource">The Type of the source.</typeparam>
+        /// <typeparam name = "TSourceProp">The Type of the property on the source.</typeparam>
+        /// <typeparam name="TTargetProp">The Type of the property on the target.</typeparam>
+        /// <param name = "source">The binding source.</param>
+        /// <param name = "propertySelector">Lambda expression which returns the property on the source.</param>
+        /// <returns><see cref = "IObservable{T}">IObservable</see> around the property on the source.</returns>
+        public static IObservable<TTargetProp> CreateOneWay<TSource, TSourceProp, TTargetProp>(
+            TSource source, Expression<Func<TSource, TSourceProp>> propertySelector)
+        {
+            return new OneWayBinding<TTargetProp>(source, GetPropertyInfo(propertySelector));
+        }
+
+        /// <summary>
         ///     Creates a One Way Binding to a <see cref = "ReactiveProperty{T}">ReactiveProperty</see> on a source.
         /// </summary>
         /// <typeparam name = "TSource">The Type of the source.</typeparam>
@@ -103,6 +133,25 @@
         {
             return new OneWayReactivePropertyBinding<T, TSource>(source, reactiveProperty);
         }
+
+/*
+        /// <summary>
+        ///     Creates a One Way Binding to a <see cref = "ReactiveProperty{T}">ReactiveProperty</see> on a source
+        ///     where the Type of the source property is different from the Type of the target property and requires conversion.
+        /// </summary>
+        /// <typeparam name = "TSource">The Type of the source.</typeparam>
+        /// <typeparam name = "TSourceProp">The Type of the property on the source.</typeparam>
+        /// <typeparam name = "TTargetProp">The Type of the property on the target.</typeparam>
+        /// <param name = "source">The binding source.</param>
+        /// <param name = "reactiveProperty">The <see cref = "ReactiveProperty{T}">ReactiveProperty</see> on the source.</param>
+        /// <returns><see cref = "IObservable{T}">IObservable</see> around the property on the source.</returns>
+        public static IObservable<TTargetProp> CreateOneWay<TSource, TSourceProp, TTargetProp>(
+            TSource source, ReactiveProperty<TSourceProp> reactiveProperty) where TSource : ReactiveObject
+        {
+            // return new OneWayReactivePropertyBinding<TTargetProp, TSource>(source, reactiveProperty);
+            throw new NotImplementedException();
+        }
+*/
 
         /// <summary>
         ///     Creates a One Way To Source Binding to a property on the Data Context.
