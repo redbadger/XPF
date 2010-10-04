@@ -21,6 +21,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
         {
             foreach (ModelMesh mesh in this.model.Meshes)
             {
+                bool isTextured = mesh.Name == "Plane" || mesh.Name == "Room";
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     Matrix transform = this.boneTransforms[mesh.ParentBone.Index];
@@ -33,13 +34,21 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
                     effect.EnableDefaultLighting();
                     effect.PreferPerPixelLighting = false;
-                    if (mesh.Name == "Plane")
+                    if (isTextured)
                     {
                          effect.TextureEnabled = true;
                     }
                 }
 
-                mesh.Draw();
+                if (isTextured)
+                {
+                    this.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+                    mesh.Draw();
+                }
+                else
+                {
+                    mesh.Draw();
+                }
             }
 
             base.Draw(gameTime);
