@@ -71,9 +71,11 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
         private void ApplyConfiguration()
         {
-            this.LookAt(new Vector3(0, -600, -800), Vector3.Zero, Vector3.Up);
+            /*this.LookAt(new Vector3(0, -600, -800), Vector3.Zero, Vector3.Up);
+            this.Perspective(MathHelper.PiOver4, 800 / 480f, 1, 5000);*/
 
-            this.Perspective(MathHelper.PiOver4, 800 / 480f, 1, 5000);
+            this.LookAt(new Vector3(50, 30, -80), new Vector3(0, 0, 50), Vector3.Up);
+            this.Perspective(MathHelper.PiOver4, 800 / 480f, .01f, 10000);
         }
 
         /// <summary>
