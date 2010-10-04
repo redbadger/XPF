@@ -50,6 +50,7 @@
     <XnaCompressContent>false</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Devices.Sensors, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Reactive, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework">
       <Private>False</Private>
@@ -87,6 +88,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccelerometerHelper\AccelerometerHelper.cs" />
+    <Compile Include="AccelerometerHelper\Simple3DVector.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Court.cs" />
     <Compile Include="Domain\Clock.cs" />
