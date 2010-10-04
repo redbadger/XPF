@@ -1,15 +1,15 @@
 namespace Xpf.Samples.S04BasketballScoreboard
 {
+    using System;
+
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     public class ScoreboardQuad : DrawableGameComponent
     {
-        private readonly Matrix projection;
+        private readonly ICamera camera;
 
         private readonly ScoreboardView scoreboardView;
-
-        private readonly Matrix view;
 
         private Quad quad;
 
@@ -17,11 +17,10 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
         private RenderTarget2D scoreboardTexture;
 
-        public ScoreboardQuad(Game game, Matrix view, Matrix projection, ScoreboardView scoreboardView)
+        public ScoreboardQuad(BasketballGame game, ICamera camera, ScoreboardView scoreboardView)
             : base(game)
         {
-            this.view = view;
-            this.projection = projection;
+            this.camera = camera;
             this.scoreboardView = scoreboardView;
         }
 
@@ -32,6 +31,8 @@ namespace Xpf.Samples.S04BasketballScoreboard
             this.GraphicsDevice.SetRenderTarget(null);
 
             this.quadEffect.Texture = this.scoreboardTexture;
+            this.quadEffect.View = this.camera.ViewMatrix;
+            this.quadEffect.Projection = this.camera.ProjectionMatrix;
 
             foreach (EffectPass pass in this.quadEffect.CurrentTechnique.Passes)
             {
@@ -56,8 +57,6 @@ namespace Xpf.Samples.S04BasketballScoreboard
             this.quadEffect.EnableDefaultLighting();
 
             this.quadEffect.World = Matrix.Identity;
-            this.quadEffect.View = this.view;
-            this.quadEffect.Projection = this.projection;
             this.quadEffect.TextureEnabled = true;
         }
     }

@@ -5,6 +5,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
+    using Microsoft.Xna.Framework.Input.Touch;
 
     using Xpf.Samples.S04BasketballScoreboard.Domain;
 
@@ -19,6 +20,8 @@ namespace Xpf.Samples.S04BasketballScoreboard
         private Matrix projection;
 
         private Matrix view;
+
+        private TouchCamera camera;
 
         public BasketballGame()
         {
@@ -50,14 +53,18 @@ namespace Xpf.Samples.S04BasketballScoreboard
             this.guestTeam = new Team("GUEST");
             this.clock = new Clock();
 
+            this.camera = new TouchCamera(this);
+
             this.view = Matrix.CreateLookAt(new Vector3(0, -600, -800), Vector3.Zero, Vector3.Up);
             this.projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, 800 / 480f, 1, 5000);
 
             var scoreboardView = new ScoreboardView(this, this.homeTeam, this.guestTeam, this.clock);
             this.Components.Add(scoreboardView);
-            this.Components.Add(new ScoreboardQuad(this, this.view, this.projection, scoreboardView));
+            this.Components.Add(new ScoreboardQuad(this, this.camera, scoreboardView));
 
             base.Initialize();
+
+            TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Pinch;
         }
 
         protected override void Update(GameTime gameTime)
@@ -67,6 +74,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
                 this.Exit();
             }
 
+            this.camera.Update(gameTime);
             base.Update(gameTime);
         }
     }
