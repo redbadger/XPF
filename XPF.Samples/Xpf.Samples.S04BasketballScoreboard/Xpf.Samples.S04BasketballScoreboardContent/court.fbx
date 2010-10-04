@@ -11,9 +11,9 @@ FBXHeaderExtension:  {
 		Year: 2010
 		Month: 10
 		Day: 04
-		Hour: 20
-		Minute: 00
-		Second: 20
+		Hour: 23
+		Minute: 04
+		Second: 22
 		Millisecond: 0
 	}
 	Creator: "FBX SDK/FBX Plugins build 20070228"
@@ -21,7 +21,7 @@ FBXHeaderExtension:  {
 		FlagPLE: 0
 	}
 }
-CreationTime: "2010-10-04 20:00:20:000"
+CreationTime: "2010-10-04 23:04:22:000"
 Creator: "Blender3D version 249.00"
 
 ; Object definitions
@@ -732,7 +732,7 @@ Objects:  {
 			Name: "UVTex"
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "IndexToDirect"
-			UV: 0.013936,0.769355,0.015259,0.228717,0.980714,0.228308,0.980788,0.769655
+			UV: 0.214895,0.000792,0.786473,0.000076,0.786288,0.999793,0.215344,0.999656
 			UVIndex: 0,1,2,3
 		}
 		LayerElementTexture: 0 {
@@ -4063,7 +4063,7 @@ Objects:  {
 		AudioColor: 0,1,0
 		CameraOrthoZoom: 1
 	}
-	Material: "Material::Floor__BasketballCourt.jpg", "" {
+	Material: "Material::Floor__Court.png", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -4183,14 +4183,14 @@ Objects:  {
 			Property: "Reflectivity", "double", "",0
 		}
 	}
-	Video: "Video::BasketballCourt.jpg", "Clip" {
+	Video: "Video::Court.png", "Clip" {
 		Type: "Clip"
 		Properties60:  {
 			Property: "FrameRate", "double", "",0
 			Property: "LastFrame", "int", "",0
 			Property: "Width", "int", "",0
 			Property: "Height", "int", "",0
-			Property: "Path", "charptr", "", "BasketballCourt.jpg"
+			Property: "Path", "charptr", "", "Court.png"
 			Property: "StartFrame", "int", "",0
 			Property: "StopFrame", "int", "",0
 			Property: "PlaySpeed", "double", "",1
@@ -4201,8 +4201,8 @@ Objects:  {
 			Property: "AccessMode", "enum", "",0
 		}
 		UseMipMap: 0
-		Filename: "BasketballCourt.jpg"
-		RelativeFilename: ".\BasketballCourt.jpg"
+		Filename: "Court.png"
+		RelativeFilename: ".\Court.png"
 	}
 	Video: "Video::PlasticCarpet.jpg", "Clip" {
 		Type: "Clip"
@@ -4246,10 +4246,10 @@ Objects:  {
 		Filename: "WoodenFloor.jpg"
 		RelativeFilename: ".\WoodenFloor.jpg"
 	}
-	Texture: "Texture::BasketballCourt.jpg", "TextureVideoClip" {
+	Texture: "Texture::Court.png", "TextureVideoClip" {
 		Type: "TextureVideoClip"
 		Version: 202
-		TextureName: "Texture::BasketballCourt.jpg"
+		TextureName: "Texture::Court.png"
 		Properties60:  {
 			Property: "Translation", "Vector", "A+",0,0,0
 			Property: "Rotation", "Vector", "A+",0,0,0
@@ -4267,9 +4267,9 @@ Objects:  {
 			Property: "TextureScalingPivot", "Vector3D", "",0,0,0
 			Property: "VideoProperty", "object", ""
 		}
-		Media: "Video::BasketballCourt.jpg"
-		FileName: "BasketballCourt.jpg"
-		RelativeFilename: ".\BasketballCourt.jpg"
+		Media: "Video::Court.png"
+		FileName: "Court.png"
+		RelativeFilename: ".\Court.png"
 		ModelUVTranslation: 0,0
 		ModelUVScaling: 1,1
 		Texture_Alpha_Source: "None"
@@ -4476,7 +4476,7 @@ Relations:  {
 	}
 	Model: "Model::Camera Switcher", "CameraSwitcher" {
 	}
-	Material: "Material::Floor__BasketballCourt.jpg", "" {
+	Material: "Material::Floor__Court.png", "" {
 	}
 	Material: "Material::PlasticCarpet__PlasticCarpet.jpg", "" {
 	}
@@ -4484,13 +4484,13 @@ Relations:  {
 	}
 	Material: "Material::unnamed", "" {
 	}
-	Texture: "Texture::BasketballCourt.jpg", "TextureVideoClip" {
+	Texture: "Texture::Court.png", "TextureVideoClip" {
 	}
 	Texture: "Texture::PlasticCarpet.jpg", "TextureVideoClip" {
 	}
 	Texture: "Texture::WoodenFloor.jpg", "TextureVideoClip" {
 	}
-	Video: "Video::BasketballCourt.jpg", "Clip" {
+	Video: "Video::Court.png", "Clip" {
 	}
 	Video: "Video::PlasticCarpet.jpg", "Clip" {
 	}
@@ -4521,13 +4521,13 @@ Connections:  {
 	Connect: "OO", "Model::Room", "Model::blend_root"
 	Connect: "OO", "Material::PlasticCarpet__PlasticCarpet.jpg", "Model::Bleachers1.001"
 	Connect: "OO", "Material::PlasticCarpet__PlasticCarpet.jpg", "Model::Bleachers1"
-	Connect: "OO", "Material::Floor__BasketballCourt.jpg", "Model::Plane"
+	Connect: "OO", "Material::Floor__Court.png", "Model::Plane"
 	Connect: "OO", "Material::WoodFloor__WoodenFloor.jpg", "Model::Room"
 	Connect: "OO", "Texture::PlasticCarpet.jpg", "Model::Bleachers1.001"
 	Connect: "OO", "Texture::PlasticCarpet.jpg", "Model::Bleachers1"
-	Connect: "OO", "Texture::BasketballCourt.jpg", "Model::Plane"
+	Connect: "OO", "Texture::Court.png", "Model::Plane"
 	Connect: "OO", "Texture::WoodenFloor.jpg", "Model::Room"
-	Connect: "OO", "Video::BasketballCourt.jpg", "Texture::BasketballCourt.jpg"
+	Connect: "OO", "Video::Court.png", "Texture::Court.png"
 	Connect: "OO", "Video::PlasticCarpet.jpg", "Texture::PlasticCarpet.jpg"
 	Connect: "OO", "Video::WoodenFloor.jpg", "Texture::WoodenFloor.jpg"
 }
