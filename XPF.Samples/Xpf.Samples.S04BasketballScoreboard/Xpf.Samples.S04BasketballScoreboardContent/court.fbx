@@ -11,9 +11,9 @@ FBXHeaderExtension:  {
 		Year: 2010
 		Month: 10
 		Day: 04
-		Hour: 12
-		Minute: 44
-		Second: 42
+		Hour: 16
+		Minute: 15
+		Second: 57
 		Millisecond: 0
 	}
 	Creator: "FBX SDK/FBX Plugins build 20070228"
@@ -21,7 +21,7 @@ FBXHeaderExtension:  {
 		FlagPLE: 0
 	}
 }
-CreationTime: "2010-10-04 12:44:42:000"
+CreationTime: "2010-10-04 16:15:57:000"
 Creator: "Blender3D version 249.00"
 
 ; Object definitions
@@ -29,7 +29,7 @@ Creator: "Blender3D version 249.00"
 
 Definitions:  {
 	Version: 100
-	Count: 28
+	Count: 30
 	ObjectType: "Model" {
 		Count: 25
 	}
@@ -38,6 +38,12 @@ Definitions:  {
 	}
 	ObjectType: "Material" {
 		Count: 2
+	}
+	ObjectType: "Texture" {
+		Count: 1
+	}
+	ObjectType: "Video" {
+		Count: 1
 	}
 	ObjectType: "Pose" {
 		Count: 1
@@ -438,7 +444,7 @@ Objects:  {
 		Culling: "CullingOff"
 		Vertices: 1.000000,1.000000,0.000000,1.000000,-1.000000,0.000000,-1.000000,-1.000000,0.000000,-1.000000,1.000000,0.000000
 		PolygonVertexIndex: 0,3,2,-2
-		Edges: 2,1,0,1,3,0,3,2
+		Edges: 1,2,0,1,0,3,2,3
 		GeometryVersion: 124
 		LayerElementNormal: 0 {
 			Version: 101
@@ -462,6 +468,23 @@ Objects:  {
 			ReferenceInformationType: "Direct"
 			Smoothing: 0,0,0,0
 		}
+		LayerElementUV: 0 {
+			Version: 101
+			Name: "UVTex"
+			MappingInformationType: "ByPolygonVertex"
+			ReferenceInformationType: "IndexToDirect"
+			UV: 0.013936,0.769355,0.015259,0.228717,0.980714,0.228308,0.980788,0.769655
+			UVIndex: 0,1,2,3
+		}
+		LayerElementTexture: 0 {
+			Version: 101
+			Name: "UVTex"
+			MappingInformationType: "AllSame"
+			ReferenceInformationType: "IndexToDirect"
+			BlendMode: "Translucent"
+			TextureAlpha: 1
+			TextureId: 0
+		}
 		LayerElementMaterial: 0 {
 			Version: 101
 			Name: ""
@@ -477,6 +500,14 @@ Objects:  {
 			}
 			LayerElement:  {
 				Type: "LayerElementMaterial"
+				TypedIndex: 0
+			}
+			LayerElement:  {
+				Type: "LayerElementTexture"
+				TypedIndex: 0
+			}
+			LayerElement:  {
+				Type: "LayerElementUV"
 				TypedIndex: 0
 			}
 		}
@@ -3872,7 +3903,7 @@ Objects:  {
 		AudioColor: 0,1,0
 		CameraOrthoZoom: 1
 	}
-	Material: "Material::Floor", "" {
+	Material: "Material::Floor__basketball_court.", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -3931,6 +3962,56 @@ Objects:  {
 			Property: "Opacity", "double", "",1.0
 			Property: "Reflectivity", "double", "",0
 		}
+	}
+	Video: "Video::basketball_court.", "Clip" {
+		Type: "Clip"
+		Properties60:  {
+			Property: "FrameRate", "double", "",0
+			Property: "LastFrame", "int", "",0
+			Property: "Width", "int", "",0
+			Property: "Height", "int", "",0
+			Property: "Path", "charptr", "", "basketball_court.jpg"
+			Property: "StartFrame", "int", "",0
+			Property: "StopFrame", "int", "",0
+			Property: "PlaySpeed", "double", "",1
+			Property: "Offset", "KTime", "",0
+			Property: "InterlaceMode", "enum", "",0
+			Property: "FreeRunning", "bool", "",0
+			Property: "Loop", "bool", "",0
+			Property: "AccessMode", "enum", "",0
+		}
+		UseMipMap: 0
+		Filename: "basketball_court.jpg"
+		RelativeFilename: ".\basketball_court.jpg"
+	}
+	Texture: "Texture::basketball_court.", "TextureVideoClip" {
+		Type: "TextureVideoClip"
+		Version: 202
+		TextureName: "Texture::basketball_court."
+		Properties60:  {
+			Property: "Translation", "Vector", "A+",0,0,0
+			Property: "Rotation", "Vector", "A+",0,0,0
+			Property: "Scaling", "Vector", "A+",1,1,1
+			Property: "Texture alpha", "Number", "A+",0
+			Property: "TextureTypeUse", "enum", "",0
+			Property: "CurrentTextureBlendMode", "enum", "",1
+			Property: "UseMaterial", "bool", "",0
+			Property: "UseMipMap", "bool", "",0
+			Property: "CurrentMappingType", "enum", "",0
+			Property: "UVSwap", "bool", "",0
+			Property: "WrapModeU", "enum", "",0
+			Property: "WrapModeV", "enum", "",0
+			Property: "TextureRotationPivot", "Vector3D", "",0,0,0
+			Property: "TextureScalingPivot", "Vector3D", "",0,0,0
+			Property: "VideoProperty", "object", ""
+		}
+		Media: "Video::basketball_court."
+		FileName: "basketball_court.jpg"
+		RelativeFilename: ".\basketball_court.jpg"
+		ModelUVTranslation: 0,0
+		ModelUVScaling: 1,1
+		Texture_Alpha_Source: "None"
+		Cropping: 0,0,0,0
 	}
 	Pose: "Pose::BIND_POSES", "BindPose" {
 		Type: "BindPose"
@@ -4075,9 +4156,13 @@ Relations:  {
 	}
 	Model: "Model::Camera Switcher", "CameraSwitcher" {
 	}
-	Material: "Material::Floor", "" {
+	Material: "Material::Floor__basketball_court.", "" {
 	}
 	Material: "Material::unnamed", "" {
+	}
+	Texture: "Texture::basketball_court.", "TextureVideoClip" {
+	}
+	Video: "Video::basketball_court.", "Clip" {
 	}
 }
 
@@ -4102,7 +4187,9 @@ Connections:  {
 	Connect: "OO", "Model::Backboard", "Model::blend_root"
 	Connect: "OO", "Model::Cube.002", "Model::blend_root"
 	Connect: "OO", "Model::Cube", "Model::blend_root"
-	Connect: "OO", "Material::Floor", "Model::Plane"
+	Connect: "OO", "Material::Floor__basketball_court.", "Model::Plane"
+	Connect: "OO", "Texture::basketball_court.", "Model::Plane"
+	Connect: "OO", "Video::basketball_court.", "Texture::basketball_court."
 }
 ;Takes and animation section
 ;----------------------------------------------------
