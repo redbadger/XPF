@@ -19,7 +19,6 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
         public override void Draw(GameTime gameTime)
         {
-            this.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
             foreach (ModelMesh mesh in this.model.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)

@@ -1,12 +1,12 @@
 namespace Xpf.Samples.S04BasketballScoreboard
 {
-    using System;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     public class ScoreboardQuad : DrawableGameComponent
     {
+        private readonly BasketballGame basketballGame;
+
         private readonly TouchCamera camera;
 
         private readonly ScoreboardView scoreboardView;
@@ -17,9 +17,10 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
         private RenderTarget2D scoreboardTexture;
 
-        public ScoreboardQuad(BasketballGame game, TouchCamera camera, ScoreboardView scoreboardView)
-            : base(game)
+        public ScoreboardQuad(BasketballGame basketballGame, TouchCamera camera, ScoreboardView scoreboardView)
+            : base(basketballGame)
         {
+            this.basketballGame = basketballGame;
             this.camera = camera;
             this.scoreboardView = scoreboardView;
         }
@@ -29,10 +30,25 @@ namespace Xpf.Samples.S04BasketballScoreboard
             this.GraphicsDevice.SetRenderTarget(this.scoreboardTexture);
             this.scoreboardView.Draw(gameTime);
             this.GraphicsDevice.SetRenderTarget(null);
+            this.basketballGame.ResetGraphicDeviceState();
 
-            this.quadEffect.Texture = this.scoreboardTexture;
             this.quadEffect.View = this.camera.ViewMatrix;
             this.quadEffect.Projection = this.camera.ProjectionMatrix;
+            this.quadEffect.Texture = this.scoreboardTexture;
+
+            this.quadEffect.World = Matrix.CreateRotationY(MathHelper.ToRadians(90)) *
+                                    Matrix.CreateTranslation(198, 50, 0);
+
+            foreach (EffectPass pass in this.quadEffect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+
+                this.GraphicsDevice.DrawUserIndexedPrimitives(
+                    PrimitiveType.TriangleList, this.quad.Vertices, 0, 4, this.quad.Indices, 0, 2);
+            }
+
+            this.quadEffect.World = Matrix.CreateRotationY(MathHelper.ToRadians(-90)) *
+                                    Matrix.CreateTranslation(-198, 50, 0);
 
             foreach (EffectPass pass in this.quadEffect.CurrentTechnique.Passes)
             {
@@ -45,7 +61,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
         public override void Initialize()
         {
-            this.quad = new Quad(Vector3.Zero, Vector3.Forward, Vector3.Up, 800, 350);
+            this.quad = new Quad(Vector3.Zero, Vector3.Forward, Vector3.Up, 80, 35);
             base.Initialize();
         }
 

@@ -5,7 +5,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
     public class TouchCamera : Camera
     {
-        private readonly Vector2 rotationSensitivity = new Vector2(10, 10);
+        private readonly Vector2 rotationSensitivity = new Vector2(5, 5);
 
         private Vector3 direction;
 
