@@ -33,8 +33,10 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
                     effect.EnableDefaultLighting();
                     effect.PreferPerPixelLighting = false;
-
-                    effect.TextureEnabled = false;
+                    if (mesh.Name == "Plane")
+                    {
+                         effect.TextureEnabled = true;
+                    }
                 }
 
                 mesh.Draw();
