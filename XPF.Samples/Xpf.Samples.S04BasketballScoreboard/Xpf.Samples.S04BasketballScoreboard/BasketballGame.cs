@@ -17,10 +17,6 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
         private Team homeTeam;
 
-        private Matrix projection;
-
-        private Matrix view;
-
         private TouchCamera camera;
 
         public BasketballGame()
@@ -53,10 +49,9 @@ namespace Xpf.Samples.S04BasketballScoreboard
             this.guestTeam = new Team("GUEST");
             this.clock = new Clock();
 
-            this.camera = new TouchCamera(this);
-
-            this.view = Matrix.CreateLookAt(new Vector3(0, -600, -800), Vector3.Zero, Vector3.Up);
-            this.projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, 800 / 480f, 1, 5000);
+            this.camera = new TouchCamera { Bounds = new BoundingBox(new Vector3(-100), new Vector3(100)) };
+            this.camera.LookAt(new Vector3(50, 50, -80), new Vector3(0, 0, 50), Vector3.Up);
+            this.camera.Perspective(MathHelper.PiOver4, 800 / 480f, .01f, 10000);
 
 /*
             var scoreboardView = new ScoreboardView(this, this.homeTeam, this.guestTeam, this.clock);

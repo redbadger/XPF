@@ -7,7 +7,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
     public class ScoreboardQuad : DrawableGameComponent
     {
-        private readonly ICamera camera;
+        private readonly TouchCamera camera;
 
         private readonly ScoreboardView scoreboardView;
 
@@ -17,7 +17,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
         private RenderTarget2D scoreboardTexture;
 
-        public ScoreboardQuad(BasketballGame game, ICamera camera, ScoreboardView scoreboardView)
+        public ScoreboardQuad(BasketballGame game, TouchCamera camera, ScoreboardView scoreboardView)
             : base(game)
         {
             this.camera = camera;

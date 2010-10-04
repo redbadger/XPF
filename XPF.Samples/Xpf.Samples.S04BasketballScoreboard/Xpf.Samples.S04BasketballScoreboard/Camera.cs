@@ -4,7 +4,7 @@
 
     using Microsoft.Xna.Framework;
 
-    public class Camera : ICamera
+    public class Camera
     {
         private readonly object syncRoot = new object();
 
@@ -45,7 +45,6 @@
         public Camera(string name)
         {
             this.Name = name;
-            this.IsCollisionEnabled = true;
             this.IsForwardsFixed = true;
         }
 
@@ -123,15 +122,11 @@
 
         public bool IsActive { get; set; }
 
-        public bool IsCollisionEnabled { get; set; }
-
         /// <summary>
         ///     If false the camera's forwards movement is pitch aligned, 
         ///     otherwise it's fixed at right-angles to the world Up vector.
         /// </summary>
         public bool IsForwardsFixed { get; set; }
-
-        public bool IsOnGround { get; private set; }
 
         public float MaxPitch
         {
@@ -270,11 +265,8 @@
             this.position += this.worldYAxis * deltaY;
             this.position += forwards * deltaZ;
 
-            this.IsOnGround = false;
-
             if (this.Bounds != default(BoundingBox) && this.Bounds.Contains(this.position) == ContainmentType.Disjoint)
             {
-                this.IsOnGround = true;
                 this.position = Vector3.Clamp(this.position, this.Bounds.Min, this.Bounds.Max);
             }
 
