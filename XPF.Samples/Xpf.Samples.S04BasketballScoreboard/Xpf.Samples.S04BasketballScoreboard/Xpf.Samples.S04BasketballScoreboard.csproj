@@ -87,6 +87,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Court.cs" />
     <Compile Include="Domain\Clock.cs" />
     <Compile Include="Domain\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

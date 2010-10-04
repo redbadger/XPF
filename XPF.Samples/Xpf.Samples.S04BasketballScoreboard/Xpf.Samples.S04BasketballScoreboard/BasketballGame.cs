@@ -53,9 +53,12 @@ namespace Xpf.Samples.S04BasketballScoreboard
             this.view = Matrix.CreateLookAt(new Vector3(0, -600, -800), Vector3.Zero, Vector3.Up);
             this.projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, 800 / 480f, 1, 5000);
 
+/*
             var scoreboardView = new ScoreboardView(this, this.homeTeam, this.guestTeam, this.clock);
             this.Components.Add(scoreboardView);
             this.Components.Add(new ScoreboardQuad(this, this.view, this.projection, scoreboardView));
+*/
+            this.Components.Add(new Court(this));
 
             base.Initialize();
         }
