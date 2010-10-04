@@ -22,7 +22,7 @@
 
         public InputManager()
         {
-            TouchPanel.EnabledGestures = GestureType.FreeDrag;
+            TouchPanel.EnabledGestures |= GestureType.FreeDrag;
         }
 
         public IObservable<Gesture> Gestures
