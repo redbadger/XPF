@@ -2,6 +2,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
 {
     using System;
 
+    using Microsoft.Phone.Applications.Common;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
@@ -11,21 +12,27 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
     public class BasketballGame : Game
     {
+        private const float ScoreTiltThreshold = 0.4f;
+
+        private readonly object accelerometerLock = new object();
+
+        private double accelerometerY;
+
+        private TouchCamera camera;
+
         private Clock clock;
 
         private Team guestTeam;
 
         private Team homeTeam;
 
-        private TouchCamera camera;
+        private TimeSpan lastScored;
 
         public BasketballGame()
         {
             new GraphicsDeviceManager(this)
                 {
-                    SupportedOrientations =
-                        DisplayOrientation.Portrait | DisplayOrientation.LandscapeLeft |
-                        DisplayOrientation.LandscapeRight
+                   SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight 
                 };
 
             this.Content.RootDirectory = "Content";
@@ -65,6 +72,9 @@ namespace Xpf.Samples.S04BasketballScoreboard
             this.ResetGraphicDeviceState();
             TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Pinch;
 
+            AccelerometerHelper.Instance.ReadingChanged += this.OnAccelerometerHelperReadingChanged;
+            AccelerometerHelper.Instance.Active = true;
+
             base.Initialize();
         }
 
@@ -76,7 +86,39 @@ namespace Xpf.Samples.S04BasketballScoreboard
             }
 
             this.camera.Update(gameTime);
+            this.UpdateScore();
             base.Update(gameTime);
+        }
+
+        private void OnAccelerometerHelperReadingChanged(object sender, AccelerometerHelperReadingEventArgs e)
+        {
+            lock (this.accelerometerLock)
+            {
+                this.accelerometerY = e.AverageAcceleration.Y;
+            }
+        }
+
+        private void UpdateScore()
+        {
+            if (DateTime.Now.TimeOfDay.Subtract(this.lastScored).TotalSeconds > 1)
+            {
+                double y;
+                lock (this.accelerometerLock)
+                {
+                    y = this.accelerometerY;
+                }
+
+                if (y < -ScoreTiltThreshold)
+                {
+                    this.homeTeam.IncrementScore(1);
+                    this.lastScored = DateTime.Now.TimeOfDay;
+                }
+                else if (y > ScoreTiltThreshold)
+                {
+                    this.guestTeam.IncrementScore(1);
+                    this.lastScored = DateTime.Now.TimeOfDay;
+                }
+            }
         }
     }
 }
