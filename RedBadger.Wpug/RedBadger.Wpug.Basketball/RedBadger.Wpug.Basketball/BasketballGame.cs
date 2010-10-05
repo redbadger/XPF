@@ -3,21 +3,17 @@ namespace RedBadger.Wpug.Basketball
     using System;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
 
     public class BasketballGame : Game
     {
-        private GraphicsDeviceManager graphics;
-
         public BasketballGame()
         {
-            this.graphics = new GraphicsDeviceManager(this)
-            {
-                SupportedOrientations =
-                    DisplayOrientation.LandscapeLeft |
-                    DisplayOrientation.LandscapeRight
-            };
+            new GraphicsDeviceManager(this)
+                {
+                    SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight, 
+                    IsFullScreen = true
+                };
 
             this.Content.RootDirectory = "Content";
 

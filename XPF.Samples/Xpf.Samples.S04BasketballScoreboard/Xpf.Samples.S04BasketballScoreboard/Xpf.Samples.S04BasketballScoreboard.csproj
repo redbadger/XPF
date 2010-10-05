@@ -88,8 +88,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccelerometerHelper\AccelerometerHelper.cs" />
-    <Compile Include="AccelerometerHelper\Simple3DVector.cs" />
+    <Compile Include="Accelerometer\AccelerometerHelper.cs" />
+    <Compile Include="Accelerometer\AccelerometerHelperReadingEventArgs.cs" />
+    <Compile Include="Accelerometer\Simple3DVector.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Court.cs" />
     <Compile Include="Domain\Clock.cs" />

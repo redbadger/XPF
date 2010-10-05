@@ -2,12 +2,12 @@ namespace Xpf.Samples.S04BasketballScoreboard
 {
     using System;
 
-    using Microsoft.Phone.Applications.Common;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Microsoft.Xna.Framework.Input.Touch;
 
+    using Xpf.Samples.S04BasketballScoreboard.Accelerometer;
     using Xpf.Samples.S04BasketballScoreboard.Domain;
 
     public class BasketballGame : Game
@@ -32,7 +32,8 @@ namespace Xpf.Samples.S04BasketballScoreboard
         {
             new GraphicsDeviceManager(this)
                 {
-                   SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight 
+                    SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight, 
+                    IsFullScreen = true
                 };
 
             this.Content.RootDirectory = "Content";
@@ -61,7 +62,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
             this.clock = new Clock();
 
             this.camera = new TouchCamera { Bounds = new BoundingBox(new Vector3(-195), new Vector3(195)) };
-            this.camera.LookAt(new Vector3(50, 40, -80), new Vector3(0, 0, 50), Vector3.Up);
+            this.camera.LookAt(new Vector3(135, 40, 0), new Vector3(200, 40, 0), Vector3.Up);
             this.camera.Perspective(MathHelper.PiOver4, 800 / 480f, 1f, 600);
 
             var scoreboardView = new ScoreboardView(this, this.homeTeam, this.guestTeam, this.clock);

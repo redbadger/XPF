@@ -23,8 +23,6 @@
 
         private readonly Team homeTeam;
 
-        private SpriteFontAdapter basicFont;
-
         private SpriteFontAdapter largeLabel;
 
         private SpriteFontAdapter largeLed;
@@ -61,8 +59,6 @@
 
             var smallLed = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLed"));
             this.largeLed = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("LargeLed"));
-
-            this.basicFont = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("BasicSpriteFont"));
 
             Observable.FromEvent<EventArgs>(
                 handler => this.Game.Window.OrientationChanged += handler, 
@@ -128,10 +124,6 @@
                             new ColumnDefinition(), 
                             new ColumnDefinition { Width = GridLength.Auto }
                         }, 
-                    RowDefinitions =
-                        {
-                           new RowDefinition { Height = GridLength.Auto }, new RowDefinition { Height = GridLength.Auto } 
-                        }, 
                     Children = {
                                   homeTeamPanel, clockPanel, guestTeamPanel 
                                }
@@ -142,47 +134,12 @@
             Grid.SetColumn(guestTeamPanel, 2);
             var border = new Border
                 {
-                    Height = 350, 
+                    Height = 280, 
                     VerticalAlignment = VerticalAlignment.Top, 
                     BorderBrush = new SolidColorBrush(Colors.White), 
                     BorderThickness = new Thickness(5), 
                     Child = grid, 
                 };
-
-            var homeButton = new Button
-                {
-                    Content =
-                        new Border
-                            {
-                                Background = new SolidColorBrush(Colors.Gray), 
-                                Child = new TextBlock(this.basicFont) { Text = "Home Score" }, 
-                            }, 
-                    HorizontalAlignment = HorizontalAlignment.Center, 
-                    VerticalAlignment = VerticalAlignment.Center, 
-                    Padding = new Thickness(10)
-                };
-
-            homeButton.Click += (sender, args) => this.homeTeam.IncrementScore(1);
-            grid.Children.Add(homeButton);
-            Grid.SetRow(homeButton, 1);
-
-            var guestButton = new Button
-                {
-                    Content =
-                        new Border
-                            {
-                                Background = new SolidColorBrush(Colors.Gray), 
-                                Child = new TextBlock(this.basicFont) { Text = "Guest Score" }, 
-                            }, 
-                    HorizontalAlignment = HorizontalAlignment.Center, 
-                    VerticalAlignment = VerticalAlignment.Center, 
-                    Padding = new Thickness(10)
-                };
-
-            guestButton.Click += (sender, args) => this.guestTeam.IncrementScore(1);
-            grid.Children.Add(guestButton);
-            Grid.SetRow(guestButton, 1);
-            Grid.SetColumn(guestButton, 2);
 
             this.rootElement.Content = border;
         }

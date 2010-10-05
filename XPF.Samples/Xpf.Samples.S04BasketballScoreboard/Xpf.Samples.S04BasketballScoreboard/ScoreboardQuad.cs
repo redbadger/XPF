@@ -30,6 +30,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
             this.GraphicsDevice.SetRenderTarget(this.scoreboardTexture);
             this.scoreboardView.Draw(gameTime);
             this.GraphicsDevice.SetRenderTarget(null);
+
             this.basketballGame.ResetGraphicDeviceState();
 
             this.quadEffect.View = this.camera.ViewMatrix;
@@ -61,13 +62,13 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
         public override void Initialize()
         {
-            this.quad = new Quad(Vector3.Zero, Vector3.Forward, Vector3.Up, 80, 35);
+            this.quad = new Quad(Vector3.Zero, Vector3.Forward, Vector3.Up, 80, 28);
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            this.scoreboardTexture = new RenderTarget2D(this.GraphicsDevice, 800, 350);
+            this.scoreboardTexture = new RenderTarget2D(this.GraphicsDevice, 800, 280);
 
             this.quadEffect = new BasicEffect(this.GraphicsDevice);
             this.quadEffect.EnableDefaultLighting();

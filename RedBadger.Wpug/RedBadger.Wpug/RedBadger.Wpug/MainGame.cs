@@ -7,15 +7,14 @@ namespace RedBadger.Wpug
 
     public class MainGame : Game
     {
-        private GraphicsDeviceManager graphics;
-
         public MainGame()
         {
-            this.graphics = new GraphicsDeviceManager(this)
+            new GraphicsDeviceManager(this)
                 {
                     SupportedOrientations =
                         DisplayOrientation.Portrait | DisplayOrientation.LandscapeLeft |
-                        DisplayOrientation.LandscapeRight
+                        DisplayOrientation.LandscapeRight, 
+                    IsFullScreen = true
                 };
 
             this.Content.RootDirectory = "Content";

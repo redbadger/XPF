@@ -71,11 +71,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicSpriteFont.spritefont">
-      <Name>BasicSpriteFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
     <None Include="court.blend">
       <Name>court</Name>
     </None>

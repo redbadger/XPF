@@ -10,10 +10,10 @@ namespace RedBadger.Xpf
         {
             Version version = new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version;
 
-            DateTime buildDateTime =
-                new DateTime(2000, 1, 1).Add(
-                    new TimeSpan(
-                        (TimeSpan.TicksPerDay * version.Build) + (TimeSpan.TicksPerSecond * 2 * version.Revision)));
+            var buildTime =
+                new TimeSpan((TimeSpan.TicksPerDay * version.Build) + (TimeSpan.TicksPerSecond * 2 * version.Revision));
+
+            DateTime buildDateTime = new DateTime(2000, 1, 1).Add(buildTime);
 
             DateTime expiryDate = buildDateTime.AddDays(30).Date;
             DateTime nowDate = DateTime.Now.Date;
