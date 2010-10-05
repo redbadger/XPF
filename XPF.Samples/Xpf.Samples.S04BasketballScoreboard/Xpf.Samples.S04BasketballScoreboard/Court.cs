@@ -21,8 +21,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
         {
             foreach (ModelMesh mesh in this.model.Meshes)
             {
-                bool isTextured = mesh.Name == "Plane" || mesh.Name == "Room" || mesh.Name == "Bleachers1" ||
-                                  mesh.Name == "Bleachers2";
+                bool isTextured = mesh.Name.StartsWith("X");
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     Matrix transform = this.boneTransforms[mesh.ParentBone.Index];

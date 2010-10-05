@@ -61,7 +61,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
             this.clock = new Clock();
 
             this.camera = new TouchCamera { Bounds = new BoundingBox(new Vector3(-195), new Vector3(195)) };
-            this.camera.LookAt(new Vector3(50, 50, -80), new Vector3(0, 0, 50), Vector3.Up);
+            this.camera.LookAt(new Vector3(50, 40, -80), new Vector3(0, 0, 50), Vector3.Up);
             this.camera.Perspective(MathHelper.PiOver4, 800 / 480f, 1f, 600);
 
             var scoreboardView = new ScoreboardView(this, this.homeTeam, this.guestTeam, this.clock);
