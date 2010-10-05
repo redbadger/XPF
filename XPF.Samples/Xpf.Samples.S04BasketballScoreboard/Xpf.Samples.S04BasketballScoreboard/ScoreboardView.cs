@@ -23,11 +23,11 @@
 
         private readonly Team homeTeam;
 
-        private SpriteFontAdapter largeLabel;
-
         private SpriteFontAdapter largeLed;
 
         private RootElement rootElement;
+
+        private SpriteFontAdapter smallLed;
 
         public ScoreboardView(BasketballGame game, Team homeTeam, Team guestTeam, Clock clock)
             : base(game)
@@ -54,10 +54,7 @@
             var renderer = new Renderer(spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 
-            var smallLabel = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLabel"));
-            this.largeLabel = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLabel"));
-
-            var smallLed = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLed"));
+            this.smallLed = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLed"));
             this.largeLed = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("LargeLed"));
 
             Observable.FromEvent<EventArgs>(
@@ -72,9 +69,9 @@
 
             timeTextBlock.Bind(TextBlock.TextProperty, this.clock.TimeDisplay);
 
-            var periodTextBlock = new TextBlock(smallLed)
+            var periodTextBlock = new TextBlock(this.largeLed)
                 {
-                   Foreground = new SolidColorBrush(Colors.Yellow), Padding = new Thickness(10) 
+                   Foreground = new SolidColorBrush(Colors.Yellow), Padding = new Thickness(10), VerticalAlignment = VerticalAlignment.Center
                 };
             periodTextBlock.Bind(
                 TextBlock.TextProperty, BindingFactory.CreateOneWay<Clock, int, string>(this.clock, c => c.Period));
@@ -92,7 +89,7 @@
                                     BorderThickness = new Thickness(4), 
                                     Padding = new Thickness(10), 
                                     Margin = new Thickness(10), 
-                                    Width = 220, 
+                                    Width = 280, 
                                     Child = timeTextBlock
                                 }, 
                             new StackPanel
@@ -101,11 +98,12 @@
                                     Orientation = Orientation.Horizontal, 
                                     Children =
                                         {
-                                            new TextBlock(smallLabel)
+                                            new TextBlock(this.smallLed)
                                                 {
-                                                    Text = "PERIOD", 
-                                                    Foreground = new SolidColorBrush(Colors.White), 
-                                                    Padding = new Thickness(10)
+                                                    Text = "PERIOD",
+                                                    Foreground = new SolidColorBrush(Colors.LightGray), 
+                                                    Padding = new Thickness(10),
+                                                    VerticalAlignment = VerticalAlignment.Center
                                                 }, 
                                             periodTextBlock
                                         }
@@ -135,8 +133,8 @@
             var border = new Border
                 {
                     Height = 280, 
-                    VerticalAlignment = VerticalAlignment.Top, 
-                    BorderBrush = new SolidColorBrush(Colors.White), 
+                    VerticalAlignment = VerticalAlignment.Top,
+                    BorderBrush = new SolidColorBrush(Colors.LightGray), 
                     BorderThickness = new Thickness(5), 
                     Child = grid, 
                 };
@@ -146,18 +144,17 @@
 
         private IElement CreateTeamDisplay(Team team)
         {
-            var teamNameTextBlock = new TextBlock(this.largeLabel)
+            var teamNameTextBlock = new TextBlock(this.smallLed)
                 {
-                    Foreground = new SolidColorBrush(Colors.White), 
+                    Foreground = new SolidColorBrush(Colors.LightGray), 
                     HorizontalAlignment = HorizontalAlignment.Center, 
-                    Padding = new Thickness(10)
+                    Padding = new Thickness(25)
                 };
 
             var scoreTextBlock = new TextBlock(this.largeLed)
                 {
                     Foreground = new SolidColorBrush(Colors.Green), 
-                    HorizontalAlignment = HorizontalAlignment.Center, 
-                    Padding = new Thickness(10)
+                    HorizontalAlignment = HorizontalAlignment.Center
                 };
 
             teamNameTextBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay<Team, string>(o => o.Name));
