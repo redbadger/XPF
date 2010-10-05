@@ -1,4 +1,4 @@
-﻿namespace Xpf.Samples.S04BasketballScoreboard
+namespace RedBadger.Wpug.Basketball
 {
     using System;
 
@@ -6,6 +6,7 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
+    using RedBadger.Wpug.Basketball.Domain;
     using RedBadger.Xpf;
     using RedBadger.Xpf.Adapters.Xna.Graphics;
     using RedBadger.Xpf.Adapters.Xna.Input;
@@ -13,31 +14,19 @@
     using RedBadger.Xpf.Data;
     using RedBadger.Xpf.Media;
 
-    using Xpf.Samples.S04BasketballScoreboard.Domain;
-
     public class ScoreboardView : DrawableGameComponent
     {
-        private readonly Clock clock;
-
-        private readonly Team guestTeam;
-
-        private readonly Team homeTeam;
-
-        private SpriteFontAdapter basicFont;
-
         private SpriteFontAdapter largeLabel;
 
         private SpriteFontAdapter largeLed;
 
         private RootElement rootElement;
 
-        public ScoreboardView(BasketballGame game, Team homeTeam, Team guestTeam, Clock clock)
+        private SpriteFontAdapter basicFont;
+
+        public ScoreboardView(BasketballGame game)
             : base(game)
         {
-            this.Visible = false;
-            this.homeTeam = homeTeam;
-            this.guestTeam = guestTeam;
-            this.clock = clock;
         }
 
         public override void Draw(GameTime gameTime)
@@ -65,25 +54,31 @@
             this.basicFont = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("BasicSpriteFont"));
 
             Observable.FromEvent<EventArgs>(
-                handler => this.Game.Window.OrientationChanged += handler, 
+                handler => this.Game.Window.OrientationChanged += handler,
                 handler => this.Game.Window.OrientationChanged -= handler).Subscribe(
                     _ => this.rootElement.Viewport = this.Game.GraphicsDevice.Viewport.ToRect());
 
             var timeTextBlock = new TextBlock(this.largeLed)
                 {
-                   Foreground = new SolidColorBrush(Colors.Red), HorizontalAlignment = HorizontalAlignment.Center 
+                    Foreground = new SolidColorBrush(Colors.Red),
+                    HorizontalAlignment = HorizontalAlignment.Center
                 };
 
-            timeTextBlock.Bind(TextBlock.TextProperty, this.clock.TimeDisplay);
+            var clock = new Clock();
+            var homeTeam = new Team("HOME");
+            var guestTeam = new Team("GUEST");
+
+            timeTextBlock.Bind(TextBlock.TextProperty, clock.TimeDisplay);
 
             var periodTextBlock = new TextBlock(smallLed)
                 {
-                   Foreground = new SolidColorBrush(Colors.Yellow), Padding = new Thickness(10) 
+                    Foreground = new SolidColorBrush(Colors.Yellow),
+                    Padding = new Thickness(10)
                 };
             periodTextBlock.Bind(
-                TextBlock.TextProperty, BindingFactory.CreateOneWay<Clock, int, string>(this.clock, c => c.Period));
+                TextBlock.TextProperty, BindingFactory.CreateOneWay<Clock, int, string>(clock, c => c.Period));
 
-            IElement homeTeamPanel = this.CreateTeamDisplay(this.homeTeam);
+            IElement homeTeamPanel = this.CreateTeamDisplay(homeTeam);
 
             var clockPanel = new StackPanel
                 {
@@ -117,23 +112,24 @@
                         }
                 };
 
-            IElement guestTeamPanel = this.CreateTeamDisplay(this.guestTeam);
+            IElement guestTeamPanel = this.CreateTeamDisplay(guestTeam);
 
             var grid = new Grid
                 {
-                    Background = new SolidColorBrush(Colors.Black), 
+                    Background = new SolidColorBrush(Colors.Black),
                     ColumnDefinitions =
                         {
                             new ColumnDefinition { Width = GridLength.Auto }, 
-                            new ColumnDefinition(), 
+                            new ColumnDefinition(),
                             new ColumnDefinition { Width = GridLength.Auto }
-                        }, 
+                        },
                     RowDefinitions =
                         {
-                           new RowDefinition { Height = GridLength.Auto }, new RowDefinition { Height = GridLength.Auto } 
-                        }, 
+                            new RowDefinition { Height = GridLength.Auto },
+                            new RowDefinition { Height = GridLength.Auto } 
+                        },
                     Children = {
-                                  homeTeamPanel, clockPanel, guestTeamPanel 
+                                   homeTeamPanel, clockPanel, guestTeamPanel 
                                }
                 };
 
@@ -142,11 +138,11 @@
             Grid.SetColumn(guestTeamPanel, 2);
             var border = new Border
                 {
-                    Height = 350, 
-                    VerticalAlignment = VerticalAlignment.Top, 
-                    BorderBrush = new SolidColorBrush(Colors.White), 
-                    BorderThickness = new Thickness(5), 
-                    Child = grid, 
+                    Height = 350,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    BorderBrush = new SolidColorBrush(Colors.White),
+                    BorderThickness = new Thickness(5),
+                    Child = grid,
                 };
 
             var homeButton = new Button
@@ -154,15 +150,15 @@
                     Content =
                         new Border
                             {
-                                Background = new SolidColorBrush(Colors.Gray), 
-                                Child = new TextBlock(this.basicFont) { Text = "Home Score" }, 
-                            }, 
-                    HorizontalAlignment = HorizontalAlignment.Center, 
-                    VerticalAlignment = VerticalAlignment.Center, 
+                                Background = new SolidColorBrush(Colors.Gray),
+                                Child = new TextBlock(this.basicFont) { Text = "Home Score" },
+                            },
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
                     Padding = new Thickness(10)
                 };
 
-            homeButton.Click += (sender, args) => this.homeTeam.IncrementScore(1);
+            homeButton.Click += (sender, args) => homeTeam.IncrementScore(1);
             grid.Children.Add(homeButton);
             Grid.SetRow(homeButton, 1);
 
@@ -171,15 +167,15 @@
                     Content =
                         new Border
                             {
-                                Background = new SolidColorBrush(Colors.Gray), 
-                                Child = new TextBlock(this.basicFont) { Text = "Guest Score" }, 
-                            }, 
-                    HorizontalAlignment = HorizontalAlignment.Center, 
-                    VerticalAlignment = VerticalAlignment.Center, 
+                                Background = new SolidColorBrush(Colors.Gray),
+                                Child = new TextBlock(this.basicFont) { Text = "Guest Score" },
+                            },
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
                     Padding = new Thickness(10)
                 };
 
-            guestButton.Click += (sender, args) => this.guestTeam.IncrementScore(1);
+            guestButton.Click += (sender, args) => guestTeam.IncrementScore(1);
             grid.Children.Add(guestButton);
             Grid.SetRow(guestButton, 1);
             Grid.SetColumn(guestButton, 2);
@@ -191,15 +187,15 @@
         {
             var teamNameTextBlock = new TextBlock(this.largeLabel)
                 {
-                    Foreground = new SolidColorBrush(Colors.White), 
-                    HorizontalAlignment = HorizontalAlignment.Center, 
+                    Foreground = new SolidColorBrush(Colors.White),
+                    HorizontalAlignment = HorizontalAlignment.Center,
                     Padding = new Thickness(10)
                 };
 
             var scoreTextBlock = new TextBlock(this.largeLed)
                 {
-                    Foreground = new SolidColorBrush(Colors.Green), 
-                    HorizontalAlignment = HorizontalAlignment.Center, 
+                    Foreground = new SolidColorBrush(Colors.Green),
+                    HorizontalAlignment = HorizontalAlignment.Center,
                     Padding = new Thickness(10)
                 };
 
