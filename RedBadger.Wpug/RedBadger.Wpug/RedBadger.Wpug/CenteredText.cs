@@ -1,64 +1,44 @@
 namespace RedBadger.Wpug
 {
-    using System;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    using RedBadger.Xpf;
-    using RedBadger.Xpf.Adapters.Xna.Graphics;
-    using RedBadger.Xpf.Controls;
-    using RedBadger.Xpf.Media;
-    using RedBadger.Xpf.Media.Imaging;
-
     public class CenteredText : DrawableGameComponent
     {
-        private RootElement rootElement;
+        private Vector2 drawPosition;
+
+        private SpriteBatch spriteBatch;
+
+        private SpriteFont spriteFont;
+
+        private string text;
 
         public CenteredText(Game game)
             : base(game)
         {
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            this.rootElement.Update();
-        }
-
         public override void Draw(GameTime gameTime)
         {
-            this.rootElement.Draw();
+            this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
+            this.spriteBatch.DrawString(this.spriteFont, this.text, this.drawPosition, Color.Black);
+
+            this.spriteBatch.End();
         }
 
         protected override void LoadContent()
         {
-            var spriteBatchAdapter = new SpriteBatchAdapter(new SpriteBatch(this.GraphicsDevice));
-            var spriteFontAdapter = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SpriteFont"));
+            this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+            this.spriteFont = this.Game.Content.Load<SpriteFont>("SpriteFont");
 
-            var renderer = new Renderer(spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
+            this.text = "Windows Phone User Group";
 
-            this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer);
+            Viewport viewport = this.GraphicsDevice.Viewport;
+            Vector2 measureString = this.spriteFont.MeasureString(this.text);
 
-            var logo = new TextureImage(new Texture2DAdapter(this.Game.Content.Load<Texture2D>("WP7Logos")));
-            var stackPanel = new StackPanel
-                {
-                    Children =
-                        {
-                            new TextBlock(spriteFontAdapter) { Text = "Windows Phone User Group", Margin = new Thickness(20) },
-                            new Image { Source = logo, Stretch = Stretch.None }
-                        },
-                    VerticalAlignment = VerticalAlignment.Center,
-                    HorizontalAlignment = HorizontalAlignment.Center
-                };
-
-            this.rootElement.Content = stackPanel;
-
-            this.Game.Window.OrientationChanged += this.OnOrientationChanged;
-        }
-
-        private void OnOrientationChanged(object sender, EventArgs eventArgs)
-        {
-            this.rootElement.Viewport = this.GraphicsDevice.Viewport.ToRect();
+            this.drawPosition.X = (viewport.Width / 2f) - (measureString.X / 2f);
+            this.drawPosition.Y = (viewport.Height / 2f) - (measureString.Y / 2f);
         }
     }
 }

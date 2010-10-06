@@ -67,8 +67,8 @@ namespace Xpf.Samples.S04BasketballScoreboard
 
             var scoreboardView = new ScoreboardView(this, this.homeTeam, this.guestTeam, this.clock);
             this.Components.Add(scoreboardView);
-            this.Components.Add(new ScoreboardQuad(this, this.camera, scoreboardView));
-            this.Components.Add(new Court(this, this.camera));
+            /*this.Components.Add(new ScoreboardQuad(this, this.camera, scoreboardView));
+            this.Components.Add(new Court(this, this.camera));*/
 
             this.ResetGraphicDeviceState();
             TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Pinch;

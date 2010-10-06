@@ -23,16 +23,16 @@
 
         private readonly Team homeTeam;
 
-        private SpriteFontAdapter largeLed;
+        private SpriteFontAdapter led;
 
         private RootElement rootElement;
 
-        private SpriteFontAdapter smallLed;
+        private SpriteFontAdapter lcd;
 
         public ScoreboardView(BasketballGame game, Team homeTeam, Team guestTeam, Clock clock)
             : base(game)
         {
-            this.Visible = false;
+            // this.Visible = false;
             this.homeTeam = homeTeam;
             this.guestTeam = guestTeam;
             this.clock = clock;
@@ -54,22 +54,22 @@
             var renderer = new Renderer(spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 
-            this.smallLed = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLed"));
-            this.largeLed = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("LargeLed"));
+            this.lcd = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("Lcd"));
+            this.led = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("Led"));
 
             Observable.FromEvent<EventArgs>(
                 handler => this.Game.Window.OrientationChanged += handler, 
                 handler => this.Game.Window.OrientationChanged -= handler).Subscribe(
                     _ => this.rootElement.Viewport = this.Game.GraphicsDevice.Viewport.ToRect());
 
-            var timeTextBlock = new TextBlock(this.largeLed)
+            var timeTextBlock = new TextBlock(this.led)
                 {
                    Foreground = new SolidColorBrush(Colors.Red), HorizontalAlignment = HorizontalAlignment.Center 
                 };
 
             timeTextBlock.Bind(TextBlock.TextProperty, this.clock.TimeDisplay);
 
-            var periodTextBlock = new TextBlock(this.largeLed)
+            var periodTextBlock = new TextBlock(this.led)
                 {
                    Foreground = new SolidColorBrush(Colors.Yellow), Padding = new Thickness(10), VerticalAlignment = VerticalAlignment.Center
                 };
@@ -98,7 +98,7 @@
                                     Orientation = Orientation.Horizontal, 
                                     Children =
                                         {
-                                            new TextBlock(this.smallLed)
+                                            new TextBlock(this.lcd)
                                                 {
                                                     Text = "PERIOD",
                                                     Foreground = new SolidColorBrush(Colors.LightGray), 
@@ -144,14 +144,14 @@
 
         private IElement CreateTeamDisplay(Team team)
         {
-            var teamNameTextBlock = new TextBlock(this.smallLed)
+            var teamNameTextBlock = new TextBlock(this.lcd)
                 {
                     Foreground = new SolidColorBrush(Colors.LightGray), 
                     HorizontalAlignment = HorizontalAlignment.Center, 
                     Padding = new Thickness(25)
                 };
 
-            var scoreTextBlock = new TextBlock(this.largeLed)
+            var scoreTextBlock = new TextBlock(this.led)
                 {
                     Foreground = new SolidColorBrush(Colors.Green), 
                     HorizontalAlignment = HorizontalAlignment.Center

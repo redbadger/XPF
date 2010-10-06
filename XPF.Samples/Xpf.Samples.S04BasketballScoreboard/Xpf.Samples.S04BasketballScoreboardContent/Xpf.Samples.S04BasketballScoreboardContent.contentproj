@@ -42,8 +42,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SmallLed.spritefont">
-      <Name>SmallLed</Name>
+    <Compile Include="Lcd.spritefont">
+      <Name>Lcd</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
@@ -56,8 +56,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LargeLed.bmp">
-      <Name>LargeLed</Name>
+    <Compile Include="Led.bmp">
+      <Name>Led</Name>
       <Importer>TextureImporter</Importer>
       <Processor>FontTextureProcessor</Processor>
     </Compile>

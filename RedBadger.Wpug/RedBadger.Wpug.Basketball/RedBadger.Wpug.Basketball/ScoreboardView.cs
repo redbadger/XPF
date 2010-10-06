@@ -6,23 +6,18 @@ namespace RedBadger.Wpug.Basketball
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    using RedBadger.Wpug.Basketball.Domain;
     using RedBadger.Xpf;
     using RedBadger.Xpf.Adapters.Xna.Graphics;
-    using RedBadger.Xpf.Adapters.Xna.Input;
     using RedBadger.Xpf.Controls;
-    using RedBadger.Xpf.Data;
     using RedBadger.Xpf.Media;
 
     public class ScoreboardView : DrawableGameComponent
     {
-        private SpriteFontAdapter largeLabel;
+        private SpriteFontAdapter lcd;
 
-        private SpriteFontAdapter largeLed;
+        private SpriteFontAdapter led;
 
         private RootElement rootElement;
-
-        private SpriteFontAdapter basicFont;
 
         public ScoreboardView(BasketballGame game)
             : base(game)
@@ -43,42 +38,17 @@ namespace RedBadger.Wpug.Basketball
         {
             var spriteBatchAdapter = new SpriteBatchAdapter(new SpriteBatch(this.GraphicsDevice));
             var renderer = new Renderer(spriteBatchAdapter, new PrimitivesService(this.GraphicsDevice));
-            this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
+            this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer);
 
-            var smallLabel = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLabel"));
-            this.largeLabel = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLabel"));
-
-            var smallLed = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SmallLed"));
-            this.largeLed = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("LargeLed"));
-
-            this.basicFont = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("BasicSpriteFont"));
+            this.lcd = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("Lcd"));
+            this.led = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("Led"));
 
             Observable.FromEvent<EventArgs>(
-                handler => this.Game.Window.OrientationChanged += handler,
+                handler => this.Game.Window.OrientationChanged += handler, 
                 handler => this.Game.Window.OrientationChanged -= handler).Subscribe(
                     _ => this.rootElement.Viewport = this.Game.GraphicsDevice.Viewport.ToRect());
 
-            var timeTextBlock = new TextBlock(this.largeLed)
-                {
-                    Foreground = new SolidColorBrush(Colors.Red),
-                    HorizontalAlignment = HorizontalAlignment.Center
-                };
-
-            var clock = new Clock();
-            var homeTeam = new Team("HOME");
-            var guestTeam = new Team("GUEST");
-
-            timeTextBlock.Bind(TextBlock.TextProperty, clock.TimeDisplay);
-
-            var periodTextBlock = new TextBlock(smallLed)
-                {
-                    Foreground = new SolidColorBrush(Colors.Yellow),
-                    Padding = new Thickness(10)
-                };
-            periodTextBlock.Bind(
-                TextBlock.TextProperty, BindingFactory.CreateOneWay<Clock, int, string>(clock, c => c.Period));
-
-            IElement homeTeamPanel = this.CreateTeamDisplay(homeTeam);
+            IElement homeTeamPanel = this.CreateTeamDisplay();
 
             var clockPanel = new StackPanel
                 {
@@ -91,8 +61,13 @@ namespace RedBadger.Wpug.Basketball
                                     BorderThickness = new Thickness(4), 
                                     Padding = new Thickness(10), 
                                     Margin = new Thickness(10), 
-                                    Width = 220, 
-                                    Child = timeTextBlock
+                                    Child =
+                                        new TextBlock(this.led)
+                                            {
+                                                Text = "00:00", 
+                                                Foreground = new SolidColorBrush(Colors.Red), 
+                                                HorizontalAlignment = HorizontalAlignment.Center
+                                            }
                                 }, 
                             new StackPanel
                                 {
@@ -100,34 +75,36 @@ namespace RedBadger.Wpug.Basketball
                                     Orientation = Orientation.Horizontal, 
                                     Children =
                                         {
-                                            new TextBlock(smallLabel)
+                                            new TextBlock(this.lcd)
                                                 {
                                                     Text = "PERIOD", 
-                                                    Foreground = new SolidColorBrush(Colors.White), 
-                                                    Padding = new Thickness(10)
+                                                    Foreground = new SolidColorBrush(Colors.LightGray), 
+                                                    Padding = new Thickness(10), 
+                                                    VerticalAlignment = VerticalAlignment.Center
                                                 }, 
-                                            periodTextBlock
+                                            new TextBlock(this.led)
+                                                {
+                                                    Text = "0", 
+                                                    Foreground = new SolidColorBrush(Colors.Yellow), 
+                                                    Padding = new Thickness(10), 
+                                                    VerticalAlignment = VerticalAlignment.Center
+                                                }
                                         }
                                 }
                         }
                 };
 
-            IElement guestTeamPanel = this.CreateTeamDisplay(guestTeam);
+            IElement guestTeamPanel = this.CreateTeamDisplay();
 
             var grid = new Grid
                 {
-                    Background = new SolidColorBrush(Colors.Black),
+                    Background = new SolidColorBrush(Colors.Black), 
                     ColumnDefinitions =
                         {
                             new ColumnDefinition { Width = GridLength.Auto }, 
-                            new ColumnDefinition(),
+                            new ColumnDefinition(), 
                             new ColumnDefinition { Width = GridLength.Auto }
-                        },
-                    RowDefinitions =
-                        {
-                            new RowDefinition { Height = GridLength.Auto },
-                            new RowDefinition { Height = GridLength.Auto } 
-                        },
+                        }, 
                     Children = {
                                    homeTeamPanel, clockPanel, guestTeamPanel 
                                }
@@ -138,71 +115,33 @@ namespace RedBadger.Wpug.Basketball
             Grid.SetColumn(guestTeamPanel, 2);
             var border = new Border
                 {
-                    Height = 350,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    BorderBrush = new SolidColorBrush(Colors.White),
-                    BorderThickness = new Thickness(5),
-                    Child = grid,
+                    VerticalAlignment = VerticalAlignment.Top, 
+                    BorderBrush = new SolidColorBrush(Colors.LightGray), 
+                    BorderThickness = new Thickness(5), 
+                    Child = grid, 
                 };
-
-            var homeButton = new Button
-                {
-                    Content =
-                        new Border
-                            {
-                                Background = new SolidColorBrush(Colors.Gray),
-                                Child = new TextBlock(this.basicFont) { Text = "Home Score" },
-                            },
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Padding = new Thickness(10)
-                };
-
-            homeButton.Click += (sender, args) => homeTeam.IncrementScore(1);
-            grid.Children.Add(homeButton);
-            Grid.SetRow(homeButton, 1);
-
-            var guestButton = new Button
-                {
-                    Content =
-                        new Border
-                            {
-                                Background = new SolidColorBrush(Colors.Gray),
-                                Child = new TextBlock(this.basicFont) { Text = "Guest Score" },
-                            },
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Padding = new Thickness(10)
-                };
-
-            guestButton.Click += (sender, args) => guestTeam.IncrementScore(1);
-            grid.Children.Add(guestButton);
-            Grid.SetRow(guestButton, 1);
-            Grid.SetColumn(guestButton, 2);
 
             this.rootElement.Content = border;
         }
 
-        private IElement CreateTeamDisplay(Team team)
+        private IElement CreateTeamDisplay()
         {
-            var teamNameTextBlock = new TextBlock(this.largeLabel)
+            var teamNameTextBlock = new TextBlock(this.lcd)
                 {
-                    Foreground = new SolidColorBrush(Colors.White),
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Padding = new Thickness(10)
+                    Text = "Team", 
+                    Foreground = new SolidColorBrush(Colors.LightGray), 
+                    HorizontalAlignment = HorizontalAlignment.Center, 
+                    Padding = new Thickness(25)
                 };
 
-            var scoreTextBlock = new TextBlock(this.largeLed)
+            var scoreTextBlock = new TextBlock(this.led)
                 {
-                    Foreground = new SolidColorBrush(Colors.Green),
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Padding = new Thickness(10)
+                    Text = "0", 
+                    Foreground = new SolidColorBrush(Colors.Green), 
+                    HorizontalAlignment = HorizontalAlignment.Center
                 };
 
-            teamNameTextBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay<Team, string>(o => o.Name));
-            scoreTextBlock.Bind(TextBlock.TextProperty, BindingFactory.CreateOneWay<Team, int, string>(o => o.Score));
-
-            return new StackPanel { Children = { teamNameTextBlock, scoreTextBlock }, DataContext = team };
+            return new StackPanel { Children = { teamNameTextBlock, scoreTextBlock } };
         }
     }
 }

@@ -42,27 +42,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LargeLed.bmp">
-      <Name>LargeLed</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>FontTextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="BasicSpriteFont.spritefont">
       <Name>BasicSpriteFont</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
-    <Compile Include="SmallLabel.spritefont">
-      <Name>SmallLabel</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Lcd.spritefont">
+      <Name>Lcd</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
-    <Compile Include="SmallLed.spritefont">
-      <Name>SmallLed</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Led.bmp">
+      <Name>Led</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>FontTextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
