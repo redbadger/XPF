@@ -41,7 +41,7 @@ namespace RedBadger.Xpf
         /// <param name = "toSource"><see cref = "IObserver{T}">IObserver</see> of updates for the Source</param>
         public void Bind<T>(ReactiveProperty<T> property, IObserver<T> toSource)
         {
-            var binding = toSource as OneWayToSourceBinding<T>;
+            var binding = toSource as IOneWayToSourceBinding<T>;
 
             IDisposable disposable = binding != null
                                          ? binding.Initialize(this.GetSubject(property))

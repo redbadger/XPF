@@ -21,7 +21,8 @@
             var reactiveObject = dataContext as ReactiveObject;
             if (reactiveObject != null)
             {
-                this.SetObserver(reactiveObject.GetObserver<T, TSource>(this.reactiveProperty));
+                this.TargetObserver = reactiveObject.GetObserver<T, TSource>(this.reactiveProperty);
+                this.OnNext(this.InitialValue);
             }
         }
     }

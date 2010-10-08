@@ -74,6 +74,9 @@
     <Reference Include="System.Reactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\IOneWayToSourceBinding.cs" />
+    <Compile Include="Data\OneWayToSourceReactivePropertyBinding.cs" />
+    <Compile Include="Data\OneWayReactivePropertyBindingWithConversion.cs" />
     <Compile Include="Graphics\IPrimitivesService.cs" />
     <Compile Include="Graphics\ISpriteBatch.cs" />
     <Compile Include="Graphics\ISpriteFont.cs" />
@@ -88,7 +91,7 @@
     <Compile Include="Data\TwoWayReactivePropertyBinding.cs" />
     <Compile Include="Data\IDualChannel.cs" />
     <Compile Include="Data\ValueChangedBehaviorSubject.cs" />
-    <Compile Include="Data\OneWayToSourceReactivePropertyBinding.cs" />
+    <Compile Include="Data\OneWayToSourceReactivePropertyBindingWithConversion.cs" />
     <Compile Include="Data\OneWayBinding.cs" />
     <Compile Include="Data\BindingResolutionMode.cs" />
     <Compile Include="Data\IBinding.cs" />

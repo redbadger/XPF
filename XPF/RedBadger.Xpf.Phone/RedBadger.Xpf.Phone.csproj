@@ -142,17 +142,26 @@
     <Compile Include="..\RedBadger.Xpf\Data\INotifyPropertyChanged.cs">
       <Link>Data\INotifyPropertyChanged.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\IOneWayToSourceBinding.cs">
+      <Link>Data\IOneWayToSourceBinding.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Data\OneWayBinding.cs">
       <Link>Data\OneWayBinding.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Data\OneWayReactivePropertyBinding.cs">
       <Link>Data\OneWayReactivePropertyBinding.cs</Link>
     </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\OneWayReactivePropertyBindingWithConversion.cs">
+      <Link>Data\OneWayReactivePropertyBindingWithConversion.cs</Link>
+    </Compile>
     <Compile Include="..\RedBadger.Xpf\Data\OneWayToSourceBinding.cs">
       <Link>Data\OneWayToSourceBinding.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Data\OneWayToSourceReactivePropertyBinding.cs">
       <Link>Data\OneWayToSourceReactivePropertyBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\OneWayToSourceReactivePropertyBindingWithConversion.cs">
+      <Link>Data\OneWayToSourceReactivePropertyBindingWithConversion.cs</Link>
     </Compile>
     <Compile Include="..\RedBadger.Xpf\Data\PropertyChangedEventArgs.cs">
       <Link>Data\PropertyChangedEventArgs.cs</Link>
@@ -335,7 +344,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

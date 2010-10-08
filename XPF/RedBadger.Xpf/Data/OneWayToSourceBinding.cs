@@ -9,17 +9,13 @@ namespace RedBadger.Xpf.Data
     using Microsoft.Phone.Reactive;
 #endif
 
-    internal class OneWayToSourceBinding<T> : IObserver<T>, IBinding, IDisposable
+    internal class OneWayToSourceBinding<T> : IOneWayToSourceBinding<T>, IBinding, IDisposable
     {
         private readonly PropertyInfo propertyInfo;
 
         private readonly BindingResolutionMode resolutionMode;
 
         private bool isDisposed;
-
-        private IObserver<T> observer;
-
-        private IDisposable subscription;
 
         public OneWayToSourceBinding(PropertyInfo propertyInfo)
             : this(BindingResolutionMode.Deferred)
@@ -40,7 +36,7 @@ namespace RedBadger.Xpf.Data
                 throw new ArgumentNullException("propertyInfo");
             }
 
-            this.observer = Observer.Create<T>(value => SetValue(source, propertyInfo, value));
+            this.TargetObserver = Observer.Create<T>(value => SetValue(source, propertyInfo, value));
         }
 
         protected OneWayToSourceBinding(BindingResolutionMode resolutionMode)
@@ -48,10 +44,10 @@ namespace RedBadger.Xpf.Data
             this.resolutionMode = resolutionMode;
         }
 
-        protected OneWayToSourceBinding(IObserver<T> observer)
+        protected OneWayToSourceBinding(IObserver<T> targetObserver)
             : this(BindingResolutionMode.Immediate)
         {
-            this.observer = observer;
+            this.TargetObserver = targetObserver;
         }
 
         ~OneWayToSourceBinding()
@@ -67,15 +63,21 @@ namespace RedBadger.Xpf.Data
             }
         }
 
+        protected T InitialValue { get; private set; }
+
+        protected IDisposable Subscription { get; set; }
+
+        protected IObserver<T> TargetObserver { get; set; }
+
         public void Dispose(bool isDisposing)
         {
             if (!this.isDisposed)
             {
                 if (isDisposing)
                 {
-                    if (this.subscription != null)
+                    if (this.Subscription != null)
                     {
-                        this.subscription.Dispose();
+                        this.Subscription.Dispose();
                     }
                 }
             }
@@ -83,15 +85,10 @@ namespace RedBadger.Xpf.Data
             this.isDisposed = true;
         }
 
-        public IDisposable Initialize(IObservable<T> observable)
-        {
-            this.subscription = observable.Subscribe(this);
-            return this;
-        }
-
         public virtual void Resolve(object dataContext)
         {
-            this.observer = Observer.Create<T>(value => SetValue(dataContext, this.propertyInfo, value));
+            this.TargetObserver = Observer.Create<T>(value => SetValue(dataContext, this.propertyInfo, value));
+            this.OnNext(this.InitialValue);
         }
 
         public void Dispose()
@@ -102,31 +99,33 @@ namespace RedBadger.Xpf.Data
 
         public void OnCompleted()
         {
-            if (this.observer != null)
+            if (this.TargetObserver != null)
             {
-                this.observer.OnCompleted();
+                this.TargetObserver.OnCompleted();
             }
         }
 
         public void OnError(Exception error)
         {
-            if (this.observer != null)
+            if (this.TargetObserver != null)
             {
-                this.observer.OnError(error);
+                this.TargetObserver.OnError(error);
             }
         }
 
         public void OnNext(T value)
         {
-            if (this.observer != null)
+            if (this.TargetObserver != null)
             {
-                this.observer.OnNext(value);
+                this.TargetObserver.OnNext(value);
             }
         }
 
-        protected void SetObserver(IObserver<T> observer)
+        public virtual IDisposable Initialize(IObservable<T> observable)
         {
-            this.observer = observer;
+            this.Subscription = observable.Subscribe(this);
+            this.InitialValue = observable.FirstOrDefault();
+            return this;
         }
 
         private static void SetValue(object source, PropertyInfo propertyInfo, object value)

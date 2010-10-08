@@ -119,6 +119,33 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ReactiveObjectSpe
     }
 
     [Subject(typeof(ReactiveObject), "One Way")]
+    public class when_there_is_a_one_way_binding_to_a_property_on_the_data_context_and_type_conversion_is_needed
+    {
+        private const double ExpectedWidth = 10d;
+
+        private static TestBindingObject source;
+
+        private static TextBlock target;
+
+        private Establish context = () =>
+            {
+                target = new TextBlock(new Mock<ISpriteFont>().Object);
+
+                IObservable<string> fromSource =
+                    BindingFactory.CreateOneWay<TestBindingObject, double, string>(TestBindingObject.WidthProperty);
+                target.Bind(TextBlock.TextProperty, fromSource);
+
+                source = new TestBindingObject();
+                target.DataContext = source;
+                target.Measure(Size.Empty);
+            };
+
+        private Because of = () => source.Width = ExpectedWidth;
+
+        private It should_update_the_target = () => target.Text.ShouldEqual(ExpectedWidth.ToString());
+    }
+
+    [Subject(typeof(ReactiveObject), "One Way")]
     public class when_there_is_a_one_way_binding_to_a_property_on_a_specified_source
     {
         private const double ExpectedWidth = 10d;
@@ -141,7 +168,7 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ReactiveObjectSpe
         private It should_update_the_target = () => target.Width.ShouldEqual(ExpectedWidth);
     }
 
-    [Subject(typeof(ReactiveObject), "One Way"), Ignore]
+    [Subject(typeof(ReactiveObject), "One Way")]
     public class when_there_is_a_one_way_binding_to_a_property_on_a_specified_source_and_type_conversion_is_needed
     {
         private const double ExpectedWidth = 10d;
@@ -155,11 +182,9 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ReactiveObjectSpe
                 source = new TestBindingObject();
                 target = new TextBlock(new Mock<ISpriteFont>().Object);
 
-/*
                 IObservable<string> fromSource = BindingFactory.CreateOneWay<TestBindingObject, double, string>(
                     source, TestBindingObject.WidthProperty);
                 target.Bind(TextBlock.TextProperty, fromSource);
-*/
             };
 
         private Because of = () => source.Width = ExpectedWidth;
@@ -256,14 +281,19 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ReactiveObjectSpe
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
 
+        private static Brush expectedInitialValue;
+
+        private static Brush initialValue;
+
         private static TestBindingObject source;
 
         private static Border target;
 
         private Establish context = () =>
             {
+                initialValue = new SolidColorBrush(Colors.Blue);
                 source = new TestBindingObject();
-                target = new Border { DataContext = source };
+                target = new Border { DataContext = source, BorderBrush = initialValue };
 
                 IObserver<Brush> toSource =
                     BindingFactory.CreateOneWayToSource<TestBindingObject, Brush>(TestBindingObject.BrushProperty);
@@ -271,9 +301,57 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ReactiveObjectSpe
                 target.Measure(Size.Empty);
             };
 
-        private Because of = () => target.BorderBrush = expectedBrush;
+        private Because of = () =>
+            {
+                expectedInitialValue = source.Brush;
+                target.BorderBrush = expectedBrush;
+            };
 
-        private It should_update_the_source = () => source.Brush.ShouldEqual(expectedBrush);
+        private It should_update_the_source_with_the_initial_value =
+            () => expectedInitialValue.ShouldEqual(initialValue);
+
+        private It should_update_the_source_with_the_updated_value = () => source.Brush.ShouldEqual(expectedBrush);
+    }
+
+    [Subject(typeof(ReactiveObject), "One Way To Source")]
+    public class when_there_is_a_one_way_to_source_binding_to_the_data_context_and_type_conversion_is_required
+    {
+        private const double ExpectedInitialValue = 5d;
+
+        private const double ExpectedWidth = 10d;
+
+        private static double initialValue;
+
+        private static TestBindingObject source;
+
+        private static TextBlock target;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject();
+                target = new TextBlock(new Mock<ISpriteFont>().Object)
+                    {
+                       DataContext = source, Text = ExpectedInitialValue.ToString() 
+                    };
+
+                IObserver<string> toSource =
+                    BindingFactory.CreateOneWayToSource<TestBindingObject, double, string>(
+                        TestBindingObject.WidthProperty);
+
+                target.Bind(TextBlock.TextProperty, toSource);
+                target.Measure(Size.Empty);
+            };
+
+        private Because of = () =>
+            {
+                initialValue = source.Width;
+                target.Text = ExpectedWidth.ToString();
+            };
+
+        private It should_update_the_source_with_the_initial_value =
+            () => initialValue.ShouldEqual(ExpectedInitialValue);
+
+        private It should_update_the_source_with_the_updated_value = () => source.Width.ShouldEqual(ExpectedWidth);
     }
 
     [Subject(typeof(ReactiveObject), "One Way To Source")]
@@ -308,26 +386,29 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ReactiveObjectSpe
     }
 
     [Subject(typeof(ReactiveObject), "One Way To Source")]
-    public class when_there_is_a_one_way_to_source_binding_to_a_specified_source
+    public class
+        when_there_is_a_one_way_to_source_binding_to_a_property_on_a_specified_source_and_type_conversion_is_required
     {
-        private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
+        private const double ExpectedWidth = 10d;
 
         private static TestBindingObject source;
 
-        private static Border target;
+        private static TextBlock target;
 
         private Establish context = () =>
             {
                 source = new TestBindingObject();
-                target = new Border();
+                target = new TextBlock(new Mock<ISpriteFont>().Object) { Text = "0" };
 
-                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource(source, TestBindingObject.BrushProperty);
-                target.Bind(Border.BorderBrushProperty, toSource);
+                IObserver<string> toSource =
+                    BindingFactory.CreateOneWayToSource<TestBindingObject, double, string>(
+                        source, TestBindingObject.WidthProperty);
+                target.Bind(TextBlock.TextProperty, toSource);
             };
 
-        private Because of = () => target.BorderBrush = expectedBrush;
+        private Because of = () => target.Text = ExpectedWidth.ToString();
 
-        private It should_update_the_source = () => source.Brush.ShouldEqual(expectedBrush);
+        private It should_update_the_source = () => source.Width.ShouldEqual(ExpectedWidth);
     }
 
     [Subject(typeof(ReactiveObject), "One Way To Source")]

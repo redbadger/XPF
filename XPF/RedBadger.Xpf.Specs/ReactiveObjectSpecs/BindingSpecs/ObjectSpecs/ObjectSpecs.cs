@@ -28,9 +28,9 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
     {
         public Brush Brush { get; set; }
 
-        public SolidColorBrush SolidColorBrush { get; set; }
-
         public string BrushAsString { get; set; }
+
+        public SolidColorBrush SolidColorBrush { get; set; }
     }
 
     public class TestBindingReactiveObject : ReactiveObject
@@ -127,7 +127,8 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
 
         private Because of = () =>
             {
-                IObservable<string> fromSource = BindingFactory.CreateOneWay<TestBindingObject, Brush, string>(o => o.Brush);
+                IObservable<string> fromSource =
+                    BindingFactory.CreateOneWay<TestBindingObject, Brush, string>(o => o.Brush);
                 target.Bind(TextBlock.TextProperty, fromSource);
                 target.Measure(Size.Empty);
             };
@@ -172,7 +173,8 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
 
         private Because of = () =>
             {
-                IObservable<string> fromSource = BindingFactory.CreateOneWay<TestBindingObject, Brush, string>(bindingObject, o => o.Brush);
+                IObservable<string> fromSource =
+                    BindingFactory.CreateOneWay<TestBindingObject, Brush, string>(bindingObject, o => o.Brush);
                 target.Bind(TextBlock.TextProperty, fromSource);
             };
 
@@ -202,6 +204,10 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
 
+        private static readonly Brush expectedInitialBrush = new SolidColorBrush(Colors.Blue);
+
+        private static Brush initialBrush;
+
         private static TestBindingObject source;
 
         private static Border target;
@@ -209,20 +215,28 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
         private Establish context = () =>
             {
                 source = new TestBindingObject();
-                target = new Border { DataContext = source };
+                target = new Border { DataContext = source, BorderBrush = expectedInitialBrush };
 
                 IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource<TestBindingObject, Brush>(o => o.Brush);
                 target.Bind(Border.BorderBrushProperty, toSource);
                 target.Measure(Size.Empty);
             };
 
-        private Because of = () => target.BorderBrush = expectedBrush;
+        private Because of = () =>
+            {
+                initialBrush = source.Brush;
+                target.BorderBrush = expectedBrush;
+            };
 
-        private It should_update_the_source = () => source.Brush.ShouldEqual(expectedBrush);
+        private It should_update_the_source_with_the_initial_value =
+            () => initialBrush.ShouldEqual(expectedInitialBrush);
+
+        private It should_update_the_source_with_the_updated_value = () => source.Brush.ShouldEqual(expectedBrush);
     }
 
     [Subject(typeof(ReactiveObject), "One Way To Source")]
-    public class when_there_is_a_one_way_to_source_binding_to_a_property_on_the_data_context_and_type_conversion_is_required
+    public class
+        when_there_is_a_one_way_to_source_binding_to_a_property_on_the_data_context_and_type_conversion_is_required
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
 
@@ -235,7 +249,8 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
                 source = new TestBindingObject();
                 target = new Border { DataContext = source };
 
-                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource<TestBindingObject, string, Brush>(o => o.BrushAsString);
+                IObserver<Brush> toSource =
+                    BindingFactory.CreateOneWayToSource<TestBindingObject, string, Brush>(o => o.BrushAsString);
                 target.Bind(Border.BorderBrushProperty, toSource);
                 target.Measure(Size.Empty);
             };
@@ -299,7 +314,8 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
     }
 
     [Subject(typeof(ReactiveObject), "One Way To Source")]
-    public class when_there_is_a_one_way_to_source_binding_to_a_property_on_a_specified_source_and_type_conversion_is_required
+    public class
+        when_there_is_a_one_way_to_source_binding_to_a_property_on_a_specified_source_and_type_conversion_is_required
     {
         private static readonly Brush expectedBrush = new SolidColorBrush(Colors.Brown);
 
@@ -312,7 +328,8 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
                 source = new TestBindingObject();
                 target = new Border();
 
-                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource<TestBindingObject, string, Brush>(source, o => o.BrushAsString);
+                IObserver<Brush> toSource = BindingFactory.CreateOneWayToSource<TestBindingObject, string, Brush>(
+                    source, o => o.BrushAsString);
                 target.Bind(Border.BorderBrushProperty, toSource);
             };
 
