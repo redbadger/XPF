@@ -110,7 +110,7 @@
         /// </summary>
         /// <typeparam name = "TSource">The Type of the source.</typeparam>
         /// <typeparam name = "TSourceProp">The Type of the property on the source.</typeparam>
-        /// <typeparam name="TTargetProp">The Type of the property on the target.</typeparam>
+        /// <typeparam name = "TTargetProp">The Type of the property on the target.</typeparam>
         /// <param name = "source">The binding source.</param>
         /// <param name = "propertySelector">Lambda expression which returns the property on the source.</param>
         /// <returns><see cref = "IObservable{T}">IObservable</see> around the property on the source.</returns>
@@ -134,7 +134,7 @@
             return new OneWayReactivePropertyBinding<T, TSource>(source, reactiveProperty);
         }
 
-/*
+        /*
         /// <summary>
         ///     Creates a One Way Binding to a <see cref = "ReactiveProperty{T}">ReactiveProperty</see> on a source
         ///     where the Type of the source property is different from the Type of the target property and requires conversion.
@@ -170,6 +170,25 @@
         }
 
         /// <summary>
+        ///     Creates a One Way To Source Binding to a property on the Data Context
+        ///     where the Type of the source property is different from the Type of the target property and requires conversion.
+        /// </summary>
+        /// <remarks>
+        ///     When binding to the Data Context, the binding returned is not resolved (ie. connected to the source) until the beginning of the Measure phase.
+        ///     This allows for the Data Context to be set after the binding has been created and changed at any time.
+        /// </remarks>
+        /// <typeparam name = "TSource">The Type of the Data Context.</typeparam>
+        /// <typeparam name = "TSourceProp">The Type of the property on the source Data Context.</typeparam>
+        /// <typeparam name = "TTargetProp">The Type of the property on the target.</typeparam>
+        /// <param name = "propertySelector">Lambda expression which returns the property on the Data Context.</param>
+        /// <returns><see cref = "IObserver{T}">IObserver</see> around the property on the Data Context.</returns>
+        public static IObserver<TTargetProp> CreateOneWayToSource<TSource, TSourceProp, TTargetProp>(
+            Expression<Func<TSource, TSourceProp>> propertySelector)
+        {
+            return new OneWayToSourceBinding<TTargetProp>(GetPropertyInfo(propertySelector));
+        }
+
+        /// <summary>
         ///     Creates a One Way To Source Binding to a <see cref = "ReactiveProperty{T}">ReactiveProperty</see> on the Data Context.
         /// </summary>
         /// <typeparam name = "TSource">The Type of the Data Context.</typeparam>
@@ -194,6 +213,22 @@
             TSource source, Expression<Func<TSource, T>> propertySelector)
         {
             return new OneWayToSourceBinding<T>(source, GetPropertyInfo(propertySelector));
+        }
+
+        /// <summary>
+        ///     Creates a One Way To Source Binding to a property on a source
+        ///     where the Type of the source property is different from the Type of the target property and requires conversion.
+        /// </summary>
+        /// <typeparam name = "TSource">The Type of the source.</typeparam>
+        /// <typeparam name = "TSourceProp">The Type of the property on the source.</typeparam>
+        /// <typeparam name = "TTargetProp">The Type of the property on the target.</typeparam>
+        /// <param name = "source">The binding source.</param>
+        /// <param name = "propertySelector">Lambda expression which returns the property on the source.</param>
+        /// <returns><see cref = "IObserver{T}">IObserver</see> around the property on the source.</returns>
+        public static IObserver<TTargetProp> CreateOneWayToSource<TSource, TSourceProp, TTargetProp>(
+            TSource source, Expression<Func<TSource, TSourceProp>> propertySelector)
+        {
+            return new OneWayToSourceBinding<TTargetProp>(source, GetPropertyInfo(propertySelector));
         }
 
         /// <summary>

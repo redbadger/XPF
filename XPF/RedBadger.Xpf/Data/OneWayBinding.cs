@@ -36,6 +36,11 @@
         public OneWayBinding(PropertyInfo propertyInfo)
             : this(BindingResolutionMode.Deferred)
         {
+            if (propertyInfo == null)
+            {
+                throw new ArgumentNullException("propertyInfo");
+            }
+
             this.propertyInfo = propertyInfo;
         }
 
@@ -48,6 +53,11 @@
         public OneWayBinding(object source, PropertyInfo propertyInfo)
             : this(BindingResolutionMode.Immediate)
         {
+            if (propertyInfo == null)
+            {
+                throw new ArgumentNullException("propertyInfo");
+            }
+
             this.initialValue = GetValue(source, propertyInfo);
 
             var notifyPropertyChanged = source as INotifyPropertyChanged;
@@ -162,7 +172,7 @@
             object value = propertyInfo.GetValue(source, null);
             if (value != null)
             {
-                var sourceType = value.GetType();
+                var sourceType = propertyInfo.PropertyType;
                 var targetType = typeof(T);
                 if (sourceType != targetType && !targetType.IsAssignableFrom(sourceType))
                 {

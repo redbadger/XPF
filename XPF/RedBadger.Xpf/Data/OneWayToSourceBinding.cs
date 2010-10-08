@@ -1,6 +1,7 @@
 namespace RedBadger.Xpf.Data
 {
     using System;
+    using System.Globalization;
     using System.Linq;
     using System.Reflection;
 
@@ -23,13 +24,23 @@ namespace RedBadger.Xpf.Data
         public OneWayToSourceBinding(PropertyInfo propertyInfo)
             : this(BindingResolutionMode.Deferred)
         {
+            if (propertyInfo == null)
+            {
+                throw new ArgumentNullException("propertyInfo");
+            }
+
             this.propertyInfo = propertyInfo;
         }
 
         public OneWayToSourceBinding(object source, PropertyInfo propertyInfo)
             : this(BindingResolutionMode.Immediate)
         {
-            this.observer = Observer.Create<T>(value => propertyInfo.SetValue(source, value, null));
+            if (propertyInfo == null)
+            {
+                throw new ArgumentNullException("propertyInfo");
+            }
+
+            this.observer = Observer.Create<T>(value => SetValue(source, propertyInfo, value));
         }
 
         protected OneWayToSourceBinding(BindingResolutionMode resolutionMode)
@@ -80,10 +91,7 @@ namespace RedBadger.Xpf.Data
 
         public virtual void Resolve(object dataContext)
         {
-            if (this.propertyInfo != null)
-            {
-                this.observer = Observer.Create<T>(value => this.propertyInfo.SetValue(dataContext, value, null));
-            }
+            this.observer = Observer.Create<T>(value => SetValue(dataContext, this.propertyInfo, value));
         }
 
         public void Dispose()
@@ -119,6 +127,21 @@ namespace RedBadger.Xpf.Data
         protected void SetObserver(IObserver<T> observer)
         {
             this.observer = observer;
+        }
+
+        private static void SetValue(object source, PropertyInfo propertyInfo, object value)
+        {
+            if (value != null)
+            {
+                Type sourceType = propertyInfo.PropertyType;
+                Type targetType = typeof(T);
+                if (sourceType != targetType && !targetType.IsAssignableFrom(sourceType))
+                {
+                    value = Convert.ChangeType(value, sourceType, CultureInfo.InvariantCulture);
+                }
+            }
+
+            propertyInfo.SetValue(source, value, null);
         }
     }
 }
