@@ -3,17 +3,39 @@ namespace RedBadger.Xpf.Media
     using System;
     using System.Diagnostics;
 
+    /// <summary>
+    ///     A struct representing a Color with Red (<see cref = "R">R</see>), Green (<see cref = "G">G</see>), Blue (<see cref = "B">B</see>) and Alpha (<see cref = "A">A</see>) channels.
+    /// </summary>
     [DebuggerDisplay("{R},{G},{B},{A}")]
     public struct Color : IEquatable<Color>
     {
+        /// <summary>
+        ///     The Alpha channel of the <see cref = "Color">Color</see>
+        /// </summary>
         public byte A;
 
+        /// <summary>
+        ///     The Blue channel of the <see cref = "Color">Color</see>
+        /// </summary>
         public byte B;
 
+        /// <summary>
+        ///     The Green channel of the <see cref = "Color">Color</see>
+        /// </summary>
         public byte G;
 
+        /// <summary>
+        ///     The Red channel of the <see cref = "Color">Color</see>
+        /// </summary>
         public byte R;
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref = "Color">Color</see> struct.
+        /// </summary>
+        /// <param name = "r">The amount of Red in the <see cref = "Color">Color</see>.</param>
+        /// <param name = "g">The amount of Green in the <see cref = "Color">Color</see>.</param>
+        /// <param name = "b">The amount of Blue in the <see cref = "Color">Color</see>.</param>
+        /// <param name = "a">The amount of Alpha in the <see cref = "Color">Color</see>.</param>
         public Color(byte r, byte g, byte b, byte a)
         {
             this.R = r;
@@ -22,16 +44,33 @@ namespace RedBadger.Xpf.Media
             this.A = a;
         }
 
+        /// <summary>
+        ///     Compares 2 Color instances for equality.
+        /// </summary>
+        /// <param name = "left">The first <see cref = "Color">Color</see> to compare.</param>
+        /// <param name = "right">The second <see cref = "Color">Color</see> to compare.</param>
+        /// <returns>True if both <see cref = "Color">Color</see>s have the same Red, Green, Blue and Alpha channels.</returns>
         public static bool operator ==(Color left, Color right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        ///     Compares 2 Color instances for inequality.
+        /// </summary>
+        /// <param name = "left">The first <see cref = "Color">Color</see> to compare.</param>
+        /// <param name = "right">The second <see cref = "Color">Color</see> to compare.</param>
+        /// <returns>True if the <see cref = "Color">Color</see>s have different Red, Green, Blue or Alpha channels.</returns>
         public static bool operator !=(Color left, Color right)
         {
             return !left.Equals(right);
         }
 
+        /// <summary>
+        ///     Creates a <see cref = "Color">Color</see> instance from an unsigned integer representing the ARGB channels (in order of most-to-least significant bytes).
+        /// </summary>
+        /// <param name = "value"></param>
+        /// <returns></returns>
         public static Color FromUInt32(uint value)
         {
             return new Color
