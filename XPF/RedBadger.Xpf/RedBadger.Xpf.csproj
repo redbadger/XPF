@@ -82,7 +82,6 @@
     <Compile Include="Graphics\ISpriteFont.cs" />
     <Compile Include="Graphics\ITexture.cs" />
     <Compile Include="Internal\Controls\ScrollData.cs" />
-    <Compile Include="Internal\DualDisposable.cs" />
     <Compile Include="Internal\IEnumerableExtensions.cs" />
     <Compile Include="License.cs" />
     <Compile Include="Internal\PropertyStore.cs" />

@@ -543,6 +543,42 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ReactiveObjectSpe
         private It should_update_the_target = () => actualBrushOnTarget.ShouldEqual(expectedSourceBrush);
     }
 
+    [Subject(typeof(ReactiveObject), "Two Way")]
+    public class when_a_binding_is_two_way_to_a_property_on_a_specified_source_and_the_binding_is_cleared
+    {
+        private static TestBindingObject source;
+
+        private static Color sourceColor;
+
+        private static Border target;
+
+        private static Color targetColor;
+
+        private Establish context = () =>
+            {
+                source = new TestBindingObject { Brush = new SolidColorBrush(Colors.Green) };
+                target = new Border();
+
+                IDualChannel<Brush> twoWay = BindingFactory.CreateTwoWay(source, TestBindingObject.BrushProperty);
+                target.Bind(Border.BorderBrushProperty, twoWay);
+            };
+
+        private Because of = () =>
+            {
+                target.ClearBinding(Border.BorderBrushProperty);
+
+                source.Brush = new SolidColorBrush(Colors.Blue);
+                targetColor = ((SolidColorBrush)target.BorderBrush).Color;
+
+                target.BorderBrush = new SolidColorBrush(Colors.Red);
+                sourceColor = ((SolidColorBrush)source.Brush).Color;
+            };
+
+        private It should_stop_updating_the_source = () => sourceColor.ShouldEqual(Colors.Blue);
+
+        private It should_stop_updating_the_target = () => targetColor.ShouldEqual(Colors.Green);
+    }
+
     [Subject(typeof(ReactiveObject), "Callback")]
     public class when_a_target_property_is_first_bound_to_a_source_value_that_is_different
     {

@@ -111,7 +111,7 @@ namespace RedBadger.Xpf.Media
 
         public override string ToString()
         {
-            return string.Format("R: {3}, G: {2}, B: {1}, A: {0}", this.R, this.G, this.B, this.A);
+            return string.Format("R: {0}, G: {1}, B: {2}, A: {3}", this.R, this.G, this.B, this.A);
         }
 
         public bool Equals(Color other)

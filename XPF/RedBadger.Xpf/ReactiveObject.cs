@@ -1,14 +1,24 @@
 namespace RedBadger.Xpf
 {
+#if WINDOWS_PHONE
+
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
+    using Microsoft.Phone.Reactive;
+
     using RedBadger.Xpf.Data;
     using RedBadger.Xpf.Internal;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
+#else
+    using System;
+    using System.Collections.Generic;
+    using System.Disposables;
+    using System.Linq;
+
+    using RedBadger.Xpf.Data;
+    using RedBadger.Xpf.Internal;
 #endif
 
     /// <summary>
@@ -80,7 +90,15 @@ namespace RedBadger.Xpf
         public void Bind<T>(ReactiveProperty<T> property, IObservable<T> fromSource, IObserver<T> toSource)
         {
             ISubject<T> target = this.GetSubject(property);
-            this.SetBinding(property, new DualDisposable(fromSource.Subscribe(target), target.Subscribe(toSource)));
+            IDisposable sourceSubscription = fromSource.Subscribe(target);
+            IDisposable targetSubscription = target.Subscribe(toSource);
+            IDisposable disposable = Disposable.Create(
+                () =>
+                    {
+                        sourceSubscription.Dispose();
+                        targetSubscription.Dispose();
+                    });
+            this.SetBinding(property, disposable);
         }
 
         /// <summary>
