@@ -56,11 +56,6 @@
 
         private static TSourceProp Convert(TTargetProp value)
         {
-            if (Equals(value, default(TTargetProp)))
-            {
-                return default(TSourceProp);
-            }
-
             return (TSourceProp)System.Convert.ChangeType(value, typeof(TSourceProp), CultureInfo.InvariantCulture);
         }
     }

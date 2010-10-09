@@ -43,9 +43,9 @@
             return this.deferredSource.GetObservable<TSourceProp, TSource>(this.deferredProperty);
         }
 
-        private static TTargetProp Convert(TSourceProp o)
+        private static TTargetProp Convert(TSourceProp value)
         {
-            return (TTargetProp)System.Convert.ChangeType(o, typeof(TTargetProp), CultureInfo.InvariantCulture);
+            return (TTargetProp)System.Convert.ChangeType(value, typeof(TTargetProp), CultureInfo.InvariantCulture);
         }
     }
 }
