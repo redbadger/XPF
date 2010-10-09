@@ -35,7 +35,7 @@
             if (reactiveObject != null)
             {
                 this.TargetObserver = reactiveObject.GetObserver<TSourceProp, TSource>(this.reactiveProperty);
-                this.OnNext(initialValue);
+                this.OnNext(this.initialValue);
             }
         }
 

@@ -12,27 +12,36 @@
 
     internal class OneWayBinding<T> : IObservable<T>, IBinding, IDisposable
     {
-        private readonly T initialValue;
+        private readonly PropertyInfo deferredProperty;
 
-        private readonly PropertyInfo propertyInfo;
+        private readonly T initialValue;
 
         private readonly BindingResolutionMode resolutionMode;
 
         private readonly bool shouldPushInitialValueOnSubscribe;
 
-        private bool isDisposed;
+        private INotifyPropertyChanged deferredSource;
 
-        private IObservable<T> observable;
+        private bool isDisposed;
 
         private IObserver<T> observer;
 
+        private IObservable<T> sourceObservable;
+
         private IDisposable subscription;
 
+        /// <summary>
+        ///     A one-way binding to the data context
+        /// </summary>
         public OneWayBinding()
             : this(BindingResolutionMode.Deferred)
         {
         }
 
+        /// <summary>
+        ///     A one-way binding to a property on the data context
+        /// </summary>
+        /// <param name = "propertyInfo"></param>
         public OneWayBinding(PropertyInfo propertyInfo)
             : this(BindingResolutionMode.Deferred)
         {
@@ -41,15 +50,25 @@
                 throw new ArgumentNullException("propertyInfo");
             }
 
-            this.propertyInfo = propertyInfo;
+            this.deferredProperty = propertyInfo;
+            this.sourceObservable = Observable.Defer(this.GetDeferredObservable);
         }
 
+        /// <summary>
+        ///     A one-way binding to a specified source
+        /// </summary>
+        /// <param name = "source"></param>
         public OneWayBinding(T source)
             : this(BindingResolutionMode.Immediate)
         {
-            this.observable = new BehaviorSubject<T>(source);
+            this.sourceObservable = new BehaviorSubject<T>(source);
         }
 
+        /// <summary>
+        ///     A one-way binding to a property on a specified source
+        /// </summary>
+        /// <param name = "source"></param>
+        /// <param name = "propertyInfo"></param>
         public OneWayBinding(object source, PropertyInfo propertyInfo)
             : this(BindingResolutionMode.Immediate)
         {
@@ -63,24 +82,18 @@
             var notifyPropertyChanged = source as INotifyPropertyChanged;
             if (notifyPropertyChanged != null)
             {
-                this.observable = GetObservable(notifyPropertyChanged, propertyInfo);
+                this.sourceObservable = GetObservable(notifyPropertyChanged, propertyInfo);
                 this.shouldPushInitialValueOnSubscribe = true;
             }
             else
             {
-                this.observable = new BehaviorSubject<T>(this.initialValue);
+                this.sourceObservable = new BehaviorSubject<T>(this.initialValue);
             }
         }
 
         protected OneWayBinding(BindingResolutionMode resolutionMode)
         {
             this.resolutionMode = resolutionMode;
-        }
-
-        protected OneWayBinding(IObservable<T> observable)
-            : this(BindingResolutionMode.Immediate)
-        {
-            this.observable = observable;
         }
 
         ~OneWayBinding()
@@ -93,6 +106,35 @@
             get
             {
                 return this.resolutionMode;
+            }
+        }
+
+        protected IObserver<T> Observer
+        {
+            get
+            {
+                return this.observer;
+            }
+        }
+
+        protected IObservable<T> SourceObservable
+        {
+            get
+            {
+                return this.sourceObservable;
+            }
+
+            set
+            {
+                this.sourceObservable = value;
+            }
+        }
+
+        protected IDisposable Subscription
+        {
+            set
+            {
+                this.subscription = value;
             }
         }
 
@@ -114,17 +156,18 @@
 
         public virtual void Resolve(object dataContext)
         {
-            if (this.propertyInfo == null)
+            if (this.sourceObservable == null)
             {
                 this.observer.OnNext((T)dataContext);
             }
             else
             {
-                this.observer.OnNext(GetValue(dataContext, this.propertyInfo));
+                this.observer.OnNext(GetValue(dataContext, this.deferredProperty));
 
                 if (dataContext is INotifyPropertyChanged)
                 {
-                    this.SubscribeObserver(GetObservable((INotifyPropertyChanged)dataContext, this.propertyInfo));
+                    this.deferredSource = (INotifyPropertyChanged)dataContext;
+                    this.subscription = this.sourceObservable.Subscribe(this.observer);
                 }
             }
         }
@@ -146,16 +189,10 @@
                     this.observer.OnNext(this.initialValue);
                 }
 
-                this.SubscribeObserver();
+                this.subscription = this.sourceObservable.Subscribe(this.observer);
             }
 
             return this;
-        }
-
-        protected void SubscribeObserver(IObservable<T> observable)
-        {
-            this.observable = observable;
-            this.SubscribeObserver();
         }
 
         private static IObservable<T> GetObservable(INotifyPropertyChanged source, PropertyInfo propertyInfo)
@@ -172,8 +209,8 @@
             object value = propertyInfo.GetValue(source, null);
             if (value != null)
             {
-                var sourceType = propertyInfo.PropertyType;
-                var targetType = typeof(T);
+                Type sourceType = propertyInfo.PropertyType;
+                Type targetType = typeof(T);
                 if (sourceType != targetType && !targetType.IsAssignableFrom(sourceType))
                 {
                     value = Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
@@ -183,9 +220,9 @@
             return (T)value;
         }
 
-        private void SubscribeObserver()
+        private IObservable<T> GetDeferredObservable()
         {
-            this.subscription = this.observable.Subscribe(this.observer);
+            return GetObservable(this.deferredSource, this.deferredProperty);
         }
     }
 }
