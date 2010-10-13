@@ -18,6 +18,8 @@
 
         private bool isPreDrawRequired;
 
+        private IElement rootElement;
+
         public Renderer(ISpriteBatch spriteBatch, IPrimitivesService primitivesService)
         {
             this.spriteBatch = spriteBatch;
@@ -68,10 +70,14 @@
             {
                 this.drawList.Clear();
 
-                LinkedListNode<DrawingContext> node = this.drawingContexts.Values.FirstOrDefault();
-                if (node != null)
+                if (this.rootElement == null && this.drawingContexts.Count > 0)
                 {
-                    this.PreDraw(node.Value.Element, Vector.Zero, Rect.Empty);
+                    this.rootElement = this.drawingContexts.First().Key;
+                }
+
+                if (this.rootElement != null)
+                {
+                    this.PreDraw(this.rootElement, Vector.Zero, Rect.Empty);
                 }
 
                 this.isPreDrawRequired = false;

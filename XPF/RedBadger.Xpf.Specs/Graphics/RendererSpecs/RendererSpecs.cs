@@ -183,4 +183,39 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
 
         private It should_3_draw_the_third_child_third = () => greenCallOrder.ShouldEqual(2);
     }
+
+    [Subject(typeof(Renderer))]
+    public class when_an_element_replaces_an_existing_element_in_an_existing_tree : a_Renderer
+    {
+        private static ContentControl contentControl;
+
+        private static Border firstBorder;
+
+        private static RootElement rootElement;
+
+        private static Border secondBorder;
+
+        private Establish context = () =>
+            {
+                rootElement = new RootElement(new Rect(0, 0, 300, 300), Renderer);
+                firstBorder = new Border();
+                secondBorder = new Border();
+
+                contentControl = new ContentControl { Width = 10, Height = 10, Content = firstBorder };
+                rootElement.Content = contentControl;
+                rootElement.Update();
+                rootElement.Draw();
+            };
+
+        private Because of = () =>
+            {
+                contentControl.Content = secondBorder;
+                rootElement.Update();
+                rootElement.Draw();
+            };
+
+        private It should_calculate_the_correct_absolute_offset_for_the_second_element =
+            () => ((DrawingContext)Renderer.GetDrawingContext(secondBorder)).AbsoluteOffset.ShouldEqual(
+                new Vector(145, 145));
+    }
 }
