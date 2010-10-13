@@ -1,5 +1,7 @@
 namespace RedBadger.Xpf.Sandbox
 {
+    using System.Collections.Generic;
+
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
@@ -7,7 +9,10 @@ namespace RedBadger.Xpf.Sandbox
     using RedBadger.Xpf.Adapters.Xna.Graphics;
     using RedBadger.Xpf.Adapters.Xna.Input;
     using RedBadger.Xpf.Controls;
+    using RedBadger.Xpf.Media;
     using RedBadger.Xpf.Media.Imaging;
+
+    using Color = Microsoft.Xna.Framework.Color;
 
     public class MainGame : Game
     {
@@ -43,21 +48,40 @@ namespace RedBadger.Xpf.Sandbox
         protected override void LoadContent()
         {
             this.spriteBatch = new SpriteBatchAdapter(new SpriteBatch(this.GraphicsDevice));
-            var primitiveService = new PrimitivesService(this.GraphicsDevice);
-            var renderer = new Renderer(this.spriteBatch, primitiveService);
+            var renderer = new Renderer(this.spriteBatch, new PrimitivesService(this.GraphicsDevice));
+            var spriteFontAdapter = new SpriteFontAdapter(this.Content.Load<SpriteFont>("SpriteFont"));
 
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 
-            this.circularMenu = new CircularMenu(this) { Width = 20, Height = 20 };
+            var subject = new Subject<SolidColorBrush>();
 
-            this.rootElement.Content = this.circularMenu;
+            var firstItem = new Border
+                {
+                    BorderBrush = new SolidColorBrush(Colors.Black), 
+                    BorderThickness = new Thickness(1, 1, 1, 1), 
+                    Child = new TextBlock(spriteFontAdapter) { Text = "Party", Margin = new Thickness(10) }, 
+                    HorizontalAlignment = HorizontalAlignment.Center, 
+                    VerticalAlignment = VerticalAlignment.Center, 
+                    Background = new SolidColorBrush(Colors.White)
+                };
+            firstItem.Bind(Border.BackgroundProperty, subject);
+
+            var button = new Button
+                {
+                    Content =
+                        new Border
+                            {
+                                Background = new SolidColorBrush(Colors.LightGray), 
+                                Child = new TextBlock(spriteFontAdapter) { Text = "Change Color" }
+                            }
+                };
+            button.Click += (sender, args) => subject.OnNext(new SolidColorBrush(Colors.Red));
+
+            var stackPanel = new StackPanel { Children = { firstItem, button } };
+
+            this.rootElement.Content = stackPanel;
         }
 
-        /// <summary>
-        ///     Allows the game to run logic such as updating the world,
-        ///     checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name = "gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
@@ -66,20 +90,7 @@ namespace RedBadger.Xpf.Sandbox
                 this.Exit();
             }
 
-            KeyboardState keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.B) && !this.lastState.IsKeyDown(Keys.B))
-            {
-                this.circularMenu.IsVisible = true;
-            }
-
-            if (!keyboardState.IsKeyDown(Keys.B) && this.lastState.IsKeyDown(Keys.B))
-            {
-                this.circularMenu.IsVisible = false;
-            }
-
-            this.lastState = keyboardState;
             this.rootElement.Update();
-
             base.Update(gameTime);
         }
     }

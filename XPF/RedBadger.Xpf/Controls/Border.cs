@@ -9,7 +9,8 @@ namespace RedBadger.Xpf.Controls
     public class Border : UIElement
     {
         public static readonly ReactiveProperty<Brush> BackgroundProperty =
-            ReactiveProperty<Brush>.Register("Background", typeof(Border));
+            ReactiveProperty<Brush>.Register(
+                "Background", typeof(Border), ReactivePropertyChangedCallbacks.InvalidateArrange);
 
         public static readonly ReactiveProperty<Brush> BorderBrushProperty =
             ReactiveProperty<Brush>.Register(

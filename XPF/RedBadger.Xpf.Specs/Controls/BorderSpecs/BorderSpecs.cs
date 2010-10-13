@@ -279,6 +279,16 @@ namespace RedBadger.Xpf.Specs.Controls.BorderSpecs
                 drawingContext => drawingContext.DrawRectangle(Moq.It.IsAny<Rect>(), expectedBackground));
     }
 
+    [Subject(typeof(Border), "Background")]
+    public class when_background_is_changed : a_Border_with_child
+    {
+        private Establish context = () => RootElement.Object.Update();
+
+        private Because of = () => Subject.Background = new SolidColorBrush(Colors.Red);
+
+        private It should_invalidate_arrange = () => Subject.IsArrangeValid.ShouldBeFalse();
+    }
+
     [Subject(typeof(Border), "BorderBrush")]
     public class when_the_border_brush_is_changed : a_Border_with_child
     {
