@@ -32,7 +32,7 @@
         public ScoreboardView(BasketballGame game, Team homeTeam, Team guestTeam, Clock clock)
             : base(game)
         {
-            // this.Visible = false;
+            this.Visible = false;
             this.homeTeam = homeTeam;
             this.guestTeam = guestTeam;
             this.clock = clock;

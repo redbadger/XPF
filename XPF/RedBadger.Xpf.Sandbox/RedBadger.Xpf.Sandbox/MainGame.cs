@@ -1,36 +1,27 @@
 namespace RedBadger.Xpf.Sandbox
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.IO;
-
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
 
-    using NekoCake.Crimson.Xpf;
-
     using RedBadger.Xpf.Adapters.Xna.Graphics;
     using RedBadger.Xpf.Adapters.Xna.Input;
     using RedBadger.Xpf.Controls;
-    using RedBadger.Xpf.Data;
-    using RedBadger.Xpf.Media;
     using RedBadger.Xpf.Media.Imaging;
-
-    using Color = Microsoft.Xna.Framework.Color;
 
     public class MainGame : Game
     {
         private readonly GraphicsDeviceManager graphics;
 
-        private readonly List<NinePatch> ninePatches = new List<NinePatch>();
+        private CircularMenu circularMenu;
 
-        private SpriteFontAdapter font;
+        private KeyboardState lastState;
 
         private RootElement rootElement;
 
         private SpriteBatchAdapter spriteBatch;
+
+        private TextureImage textureImage;
 
         public MainGame()
         {
@@ -57,23 +48,9 @@ namespace RedBadger.Xpf.Sandbox
 
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 
-            this.font = new SpriteFontAdapter(this.Content.Load<SpriteFont>(@"SpriteFont"));
+            this.circularMenu = new CircularMenu(this) { Width = 20, Height = 20 };
 
-            var border = new Border
-                {
-                    Width = 100,
-                    Height = 100,
-                    Background = new SolidColorBrush(Colors.Brown),
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    Child = new Border { Width = 150 }
-                };
-
-            var stackPanel = new StackPanel { Width = 350, Children = { border } };
-
-            var canvas = new Canvas { Children = { border } };
-            Canvas.SetLeft(border, 250);
-
-            this.rootElement.Content = canvas;
+            this.rootElement.Content = this.circularMenu;
         }
 
         /// <summary>
@@ -89,13 +66,50 @@ namespace RedBadger.Xpf.Sandbox
                 this.Exit();
             }
 
-            this.rootElement.Update();
-            foreach (NinePatch a in this.ninePatches)
+            KeyboardState keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.B) && !this.lastState.IsKeyDown(Keys.B))
             {
-                a.Update();
+                this.circularMenu.IsVisible = true;
             }
 
+            if (!keyboardState.IsKeyDown(Keys.B) && this.lastState.IsKeyDown(Keys.B))
+            {
+                this.circularMenu.IsVisible = false;
+            }
+
+            this.lastState = keyboardState;
+            this.rootElement.Update();
+
             base.Update(gameTime);
+        }
+    }
+
+    public class CircularMenu : ContentControl
+    {
+        private readonly TextureImage textureImage;
+
+        private bool isVisible;
+
+        public CircularMenu(Game game)
+        {
+            this.textureImage = new TextureImage(new Texture2DAdapter(game.Content.Load<Texture2D>("bulb")));
+        }
+
+        public bool IsVisible
+        {
+            get
+            {
+                return this.isVisible;
+            }
+
+            set
+            {
+                if (this.isVisible != value)
+                {
+                    this.isVisible = value;
+                    this.Content = this.isVisible ? new Image { Source = this.textureImage } : null;
+                }
+            }
         }
     }
 }
