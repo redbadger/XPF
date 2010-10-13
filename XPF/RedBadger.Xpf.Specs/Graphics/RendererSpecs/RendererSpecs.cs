@@ -215,7 +215,19 @@ namespace RedBadger.Xpf.Specs.Graphics.RendererSpecs
             };
 
         private It should_calculate_the_correct_absolute_offset_for_the_second_element =
-            () => ((DrawingContext)Renderer.GetDrawingContext(secondBorder)).AbsoluteOffset.ShouldEqual(
-                new Vector(145, 145));
+            () =>
+            ((DrawingContext)Renderer.GetDrawingContext(secondBorder)).AbsoluteOffset.ShouldEqual(new Vector(145, 145));
+    }
+
+    [Subject(typeof(Renderer))]
+    public class when_there_is_nothing_to_draw : a_Renderer
+    {
+        private static RootElement rootElement;
+
+        private Establish context = () => rootElement = new RootElement(Rect.Empty, Renderer);
+
+        private Because of = () => rootElement.Draw();
+
+        private It should_not_call_ISpriteBatch_End = () => SpriteBatch.Verify(batch => batch.End(), Times.Never());
     }
 }

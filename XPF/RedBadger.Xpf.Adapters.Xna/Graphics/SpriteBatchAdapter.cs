@@ -88,9 +88,13 @@
 
         public void End()
         {
-            this.spriteBatch.End();
-            this.isBatchOpen = false;
-            this.currentClippingRect = null;
+            if (this.isBatchOpen)
+            {
+                this.spriteBatch.End();
+                this.currentClippingRect = null;
+
+                this.isBatchOpen = false;
+            }
         }
 
         public bool TryIntersectViewport(ref Rect clippingRect)

@@ -38,12 +38,15 @@
 
         public void Draw()
         {
-            foreach (DrawingContext drawingContext in this.drawList)
+            if (this.drawList.Count != 0)
             {
-                drawingContext.Draw(this.spriteBatch);
-            }
+                foreach (DrawingContext drawingContext in this.drawList)
+                {
+                    drawingContext.Draw(this.spriteBatch);
+                }
 
-            this.spriteBatch.End();
+                this.spriteBatch.End();
+            }
         }
 
         public IDrawingContext GetDrawingContext(IElement element)
