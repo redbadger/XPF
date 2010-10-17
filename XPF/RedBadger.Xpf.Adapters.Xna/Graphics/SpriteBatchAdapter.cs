@@ -81,7 +81,7 @@
                 this.spriteBatch.DrawString(
                     spriteFontAdapter.Value, 
                     text ?? string.Empty, 
-                    new Vector2((float)position.X, (float)position.Y), 
+                    new Vector2((int)position.X, (int)position.Y),
                     new Microsoft.Xna.Framework.Color(color.R, color.G, color.B, color.A));
             }
         }
