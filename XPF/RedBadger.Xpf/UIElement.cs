@@ -58,6 +58,10 @@
                 VerticalAlignment.Stretch, 
                 ReactivePropertyChangedCallbacks.InvalidateArrange);
 
+        public static readonly ReactiveProperty<Visibility> VisibilityProperty =
+            ReactiveProperty<Visibility>.Register(
+                "Visibility", typeof(UIElement), ReactivePropertyChangedCallbacks.InvalidateMeasure);
+
         public static readonly ReactiveProperty<double> WidthProperty = ReactiveProperty<double>.Register(
             "Width", typeof(UIElement), double.NaN, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
@@ -250,6 +254,19 @@
             }
         }
 
+        public Visibility Visibility
+        {
+            get
+            {
+                return this.GetValue(VisibilityProperty);
+            }
+
+            set
+            {
+                this.SetValue(VisibilityProperty, value);
+            }
+        }
+
         public Vector VisualOffset
         {
             get
@@ -310,7 +327,15 @@
                 throw new InvalidOperationException("Width and Height must be less than infinity");
             }
 
-            if (!this.IsArrangeValid || finalRect.IsDifferentFrom(this.previousFinalRect))
+            if (this.Visibility == Visibility.Collapsed)
+            {
+                if (finalRect.IsDifferentFrom(this.previousFinalRect))
+                {
+                    this.IsArrangeValid = false;
+                    this.previousFinalRect = finalRect;
+                }
+            }
+            else if (!this.IsArrangeValid || finalRect.IsDifferentFrom(this.previousFinalRect))
             {
                 IRenderer renderer;
                 IDrawingContext drawingContext = null;
@@ -329,8 +354,8 @@
                     this.OnRender(drawingContext);
                 }
 
-                this.previousFinalRect = finalRect;
                 this.IsArrangeValid = true;
+                this.previousFinalRect = finalRect;
             }
         }
 
@@ -385,7 +410,15 @@
                 throw new InvalidOperationException("AvailableSize Width or Height cannot be NaN");
             }
 
-            if (!this.IsMeasureValid || availableSize.IsDifferentFrom(this.previousAvailableSize))
+            if (this.Visibility == Visibility.Collapsed)
+            {
+                if (availableSize.IsDifferentFrom(this.previousAvailableSize))
+                {
+                    this.IsMeasureValid = false;
+                    this.previousAvailableSize = availableSize;
+                }
+            }
+            else if (!this.IsMeasureValid || availableSize.IsDifferentFrom(this.previousAvailableSize))
             {
                 Size size = this.MeasureCore(availableSize);
 
@@ -399,8 +432,8 @@
                     throw new InvalidOperationException("The implementing element returned NaN");
                 }
 
-                this.previousAvailableSize = availableSize;
                 this.IsMeasureValid = true;
+                this.previousAvailableSize = availableSize;
                 this.DesiredSize = size;
             }
         }

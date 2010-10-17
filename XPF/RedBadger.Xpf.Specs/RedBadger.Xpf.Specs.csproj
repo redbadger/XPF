@@ -139,6 +139,7 @@
     <Compile Include="UIElementSpecs\DataContextSpecs.cs" />
     <Compile Include="UIElementSpecs\MeasureSpecs.cs" />
     <Compile Include="UIElementSpecs\UIElementSpecs.cs" />
+    <Compile Include="UIElementSpecs\VisibilitySpecs.cs" />
     <Compile Include="VectorSpecs\VectorSpecs.cs" />
     <Compile Include="VirtualizingElementCollectionSpecs\VirtualizingElementCollectionSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

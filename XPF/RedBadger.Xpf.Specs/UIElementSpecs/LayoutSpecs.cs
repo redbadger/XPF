@@ -349,7 +349,7 @@ namespace RedBadger.Xpf.Specs.UIElementSpecs
     [Subject(typeof(UIElement), "Layout - Size Change")]
     public class when_the_available_size_changes : a_Measured_UIElement
     {
-        private Because of = () => Subject.Object.Measure(new Size(200, 200));
+        private Because of = () => Subject.Object.Measure(AvailableSize + AvailableSize);
 
         private It should_measure_again =
             () => Subject.Protected().Verify(MeasureOverride, Times.Exactly(2), ItExpr.IsAny<Size>());
@@ -358,7 +358,7 @@ namespace RedBadger.Xpf.Specs.UIElementSpecs
     [Subject(typeof(UIElement), "Layout - Size Change")]
     public class when_the_available_size_doesnt_change_enough : a_Measured_UIElement
     {
-        private Because of = () => Subject.Object.Measure(new Size(100.000001f, 100.000001f));
+        private Because of = () => Subject.Object.Measure(AvailableSize + new Size(1e-13d, 1e-13d));
 
         private It should_not_measure_again =
             () => Subject.Protected().Verify(MeasureOverride, Times.Once(), ItExpr.IsAny<Size>());
@@ -367,7 +367,7 @@ namespace RedBadger.Xpf.Specs.UIElementSpecs
     [Subject(typeof(UIElement), "Layout - Size Change")]
     public class when_the_final_size_changes : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => Subject.Object.Arrange(new Rect(new Size(200, 200)));
+        private Because of = () => Subject.Object.Arrange(new Rect(FinalSize + FinalSize));
 
         private It should_arrange_again =
             () => Subject.Protected().Verify(ArrangeOverride, Times.Exactly(2), ItExpr.IsAny<Size>());
@@ -376,7 +376,7 @@ namespace RedBadger.Xpf.Specs.UIElementSpecs
     [Subject(typeof(UIElement), "Layout - Size Change")]
     public class when_the_final_size_doesnt_change_enough : a_Measured_and_Arranged_UIElement
     {
-        private Because of = () => Subject.Object.Arrange(new Rect(new Size(100.000001f, 100.000001f)));
+        private Because of = () => Subject.Object.Arrange(new Rect(FinalSize + new Size(1e-13d, 1e-13d)));
 
         private It should_not_arrange_again =
             () => Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.IsAny<Size>());

@@ -109,7 +109,7 @@ namespace RedBadger.Xpf.Specs.UIElementSpecs
 
         private It should_layout_its_children_within_the_desired_size =
             () =>
-            Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
+            Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(DesiredSize)));
     }
 
     [Subject(typeof(UIElement), "Arrange")]
@@ -159,7 +159,7 @@ namespace RedBadger.Xpf.Specs.UIElementSpecs
 
         private It should_layout_its_children_within_the_desired_size =
             () =>
-            Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(desiredSize)));
+            Subject.Protected().Verify(ArrangeOverride, Times.Once(), ItExpr.Is<Size>(size => size.Equals(DesiredSize)));
     }
 
     [Subject(typeof(UIElement), "Arrange - Offset Calculation")]
