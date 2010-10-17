@@ -8,11 +8,11 @@
     public interface ITemplatedList<in T>
 #endif
     {
-        void Add(object item, Func<IElement> template);
+        void Add(object item, Func<object, IElement> template);
 
         void Clear();
 
-        void Insert(int index, object item, Func<IElement> template);
+        void Insert(int index, object item, Func<object, IElement> template);
 
         void Move(int oldIndex, int newIndex);
 

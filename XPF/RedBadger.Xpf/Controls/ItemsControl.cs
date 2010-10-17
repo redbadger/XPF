@@ -12,8 +12,8 @@
 
     public class ItemsControl : Control
     {
-        public static readonly ReactiveProperty<Func<IElement>> ItemTemplateProperty =
-            ReactiveProperty<Func<IElement>>.Register("ItemTemplate", typeof(ItemsControl));
+        public static readonly ReactiveProperty<Func<object, IElement>> ItemTemplateProperty =
+            ReactiveProperty<Func<object, IElement>>.Register("ItemTemplate", typeof(ItemsControl));
 
         public static readonly ReactiveProperty<Panel> ItemsPanelProperty =
             ReactiveProperty<Panel>.Register("ItemsPanel", typeof(ItemsControl), ItemsPanelChanged);
@@ -30,7 +30,7 @@
             this.ItemsPanel = new StackPanel();
         }
 
-        public Func<IElement> ItemTemplate
+        public Func<object, IElement> ItemTemplate
         {
             get
             {

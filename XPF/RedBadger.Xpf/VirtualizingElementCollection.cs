@@ -118,12 +118,12 @@
             this.items.RemoveAt(index);
         }
 
-        public virtual void Add(object item, Func<IElement> template)
+        public virtual void Add(object item, Func<object, IElement> template)
         {
             this.items.Add(new Memento(item, template, this.owner));
         }
 
-        public virtual void Insert(int index, object item, Func<IElement> template)
+        public virtual void Insert(int index, object item, Func<object, IElement> template)
         {
             this.items.Insert(index, new Memento(item, template, this.owner));
         }
@@ -213,11 +213,11 @@
 
             private readonly IElement owner;
 
-            private readonly Func<IElement> template;
+            private readonly Func<object, IElement> template;
 
             private IElement element;
 
-            public Memento(object item, Func<IElement> template, IElement owner)
+            public Memento(object item, Func<object, IElement> template, IElement owner)
             {
                 if (template == null)
                 {
@@ -249,7 +249,7 @@
 
             public IElement Create()
             {
-                IElement newElement = this.template();
+                IElement newElement = this.template(this.item);
                 newElement.DataContext = this.item;
                 return newElement;
             }

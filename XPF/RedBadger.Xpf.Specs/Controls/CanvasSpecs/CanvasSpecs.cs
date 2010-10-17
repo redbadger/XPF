@@ -87,7 +87,7 @@ namespace RedBadger.Xpf.Specs.Controls.CanvasSpecs
                 Canvas.SetLeft(Child.Object, left);
                 Canvas.SetTop(Child.Object, top);
                 Subject.Measure(AvailableSize);
-                Subject.Arrange(new Rect(new Point(), AvailableSize));
+                Subject.Arrange(new Rect(AvailableSize));
             };
 
         private It should_be_assigned_the_correct_offset =
@@ -100,7 +100,7 @@ namespace RedBadger.Xpf.Specs.Controls.CanvasSpecs
         private Establish context = () =>
             {
                 Subject.Measure(AvailableSize);
-                Subject.Arrange(new Rect(new Point(), AvailableSize));
+                Subject.Arrange(new Rect(AvailableSize));
             };
 
         private Because of = () => Canvas.SetLeft(Child.Object, 10);
@@ -114,7 +114,7 @@ namespace RedBadger.Xpf.Specs.Controls.CanvasSpecs
         private Establish context = () =>
             {
                 Subject.Measure(AvailableSize);
-                Subject.Arrange(new Rect(new Point(), AvailableSize));
+                Subject.Arrange(new Rect(AvailableSize));
             };
 
         private Because of = () => Canvas.SetTop(Child.Object, 10);

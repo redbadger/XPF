@@ -70,8 +70,8 @@ namespace XpfSamples.S03ApplicationBar
                 };
             var itemsControl = new ItemsControl
                 {
-                    ItemsSource = buttonClickResults, 
-                    ItemTemplate = () =>
+                    ItemsSource = buttonClickResults,
+                    ItemTemplate = _ =>
                         {
                             var textBlock = new TextBlock(spriteFontAdapter)
                                 {
