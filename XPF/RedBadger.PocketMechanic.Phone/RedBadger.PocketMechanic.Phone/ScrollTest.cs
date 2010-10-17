@@ -60,7 +60,7 @@ namespace RedBadger.PocketMechanic.Phone
             var items = new ObservableCollection<string>();
             var itemsControl = new ItemsControl
                 {
-                    ItemTemplate = () =>
+                    ItemTemplate = _ =>
                         {
                             var textBlock = new TextBlock(spriteFontAdapter)
                                 {

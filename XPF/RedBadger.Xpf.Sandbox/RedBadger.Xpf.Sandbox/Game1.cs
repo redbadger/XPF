@@ -81,7 +81,7 @@ namespace RedBadger.Xpf.Sandbox
 
             var items = new ItemsControl
                 {
-                    ItemTemplate = () =>
+                    ItemTemplate = _ =>
                         {
                             var textBlock = new TextBlock(this.font) { Foreground = new SolidColorBrush(Colors.White), HorizontalAlignment = HorizontalAlignment.Center };
                             textBlock.Bind(
