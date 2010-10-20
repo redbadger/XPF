@@ -30,6 +30,11 @@
             this.ItemsPanel = new StackPanel();
         }
 
+        /// <summary>
+        /// Specifies a function that generates the UI for an Item.  The function must return an <see cref="IElement">IElement</see> that
+        /// becomes the root of the UI for each item.
+        /// The function also takes one argument of type object that represents the item's <see cref="UIElement.DataContext">DataContext</see>.
+        /// </summary>
         public Func<object, IElement> ItemTemplate
         {
             get

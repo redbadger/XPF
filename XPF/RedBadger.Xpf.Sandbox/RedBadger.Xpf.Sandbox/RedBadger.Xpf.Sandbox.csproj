@@ -110,7 +110,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clock.cs" />
+    <Compile Include="MyComponent.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="InputManagerWindows.cs" />
     <Compile Include="MapEditor.cs" />

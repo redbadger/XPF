@@ -5,13 +5,13 @@ namespace RedBadger.PocketMechanic.Phone
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
+    using RedBadger.Xpf.Sandbox;
+
     public class Game1 : Game
     {
-        private readonly GraphicsDeviceManager graphics;
-
         public Game1()
         {
-            this.graphics = new GraphicsDeviceManager(this)
+            new GraphicsDeviceManager(this)
                 {
                     SupportedOrientations =
                         DisplayOrientation.Portrait | DisplayOrientation.LandscapeLeft |
@@ -23,7 +23,7 @@ namespace RedBadger.PocketMechanic.Phone
             // Frame rate is 30 fps by default for Windows Phone.
             this.TargetElapsedTime = TimeSpan.FromTicks(333333);
 
-            this.Components.Add(new ScrollTest(this));
+            this.Components.Add(new MyComponent(this));
         }
 
         protected override void Draw(GameTime gameTime)
