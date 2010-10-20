@@ -10,14 +10,26 @@
     using Microsoft.Phone.Reactive;
 #endif
 
+    /// <summary>
+    ///     <see cref = "ItemsControl">ItemsControl</see> allows you to represent a collection of items and provides scaffolding to generate the UI for each item.
+    /// </summary>
     public class ItemsControl : Control
     {
+        /// <summary>
+        ///     <see cref = "ItemTemplate">ItemTemplate</see> Reactive Property.
+        /// </summary>
         public static readonly ReactiveProperty<Func<object, IElement>> ItemTemplateProperty =
             ReactiveProperty<Func<object, IElement>>.Register("ItemTemplate", typeof(ItemsControl));
 
+        /// <summary>
+        ///     <see cref = "ItemsPanel">ItemsPanel</see> Reactive Property.
+        /// </summary>
         public static readonly ReactiveProperty<Panel> ItemsPanelProperty =
             ReactiveProperty<Panel>.Register("ItemsPanel", typeof(ItemsControl), ItemsPanelChanged);
 
+        /// <summary>
+        ///     <see cref = "ItemsSource">ItemsSource</see> Reactive Property.
+        /// </summary>
         public static readonly ReactiveProperty<IEnumerable> ItemsSourceProperty =
             ReactiveProperty<IEnumerable>.Register("ItemsSource", typeof(ItemsControl), ItemsSourceChanged);
 
@@ -25,15 +37,17 @@
 
         private bool isItemsSourceNew;
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref = "ItemsControl">ItemsControl</see> class.
+        /// </summary>
         public ItemsControl()
         {
             this.ItemsPanel = new StackPanel();
         }
 
         /// <summary>
-        /// Specifies a function that generates the UI for an Item.  The function must return an <see cref="IElement">IElement</see> that
-        /// becomes the root of the UI for each item.
-        /// The function also takes one argument of type object that represents the item's <see cref="UIElement.DataContext">DataContext</see>.
+        ///     Gets or sets a function that is used to generate the <see cref = "IElement">IElement</see> for each item in the <see cref = "ItemsSource">ItemsSource</see>.
+        ///     The function takes one argument of type <see cref = "object">object</see> that represents the item's <see cref = "IElement.DataContext">DataContext</see>.
         /// </summary>
         public Func<object, IElement> ItemTemplate
         {
@@ -48,6 +62,9 @@
             }
         }
 
+        /// <summary>
+        ///     Gets of sets the <see cref = "Panel">Panel</see> used to control the layout of items.
+        /// </summary>
         public Panel ItemsPanel
         {
             get
@@ -61,6 +78,9 @@
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the collection of items to be displayed.
+        /// </summary>
         public IEnumerable ItemsSource
         {
             get

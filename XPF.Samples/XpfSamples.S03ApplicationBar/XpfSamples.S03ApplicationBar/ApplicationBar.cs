@@ -47,7 +47,7 @@ namespace XpfSamples.S03ApplicationBar
                 {
                     ItemsPanel = new StackPanel { Orientation = Orientation.Horizontal }, 
                     ItemsSource = this.buttons,
-                    ItemTemplate = _ =>
+                    ItemTemplate = dataContext =>
                         {
                             var image = new Image { Stretch = Stretch.None };
                             image.Bind(

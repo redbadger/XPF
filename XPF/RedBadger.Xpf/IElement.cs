@@ -47,6 +47,10 @@
         /// <param name = "finalRect">The final size that the parent computes for the child element, provided as a Rect instance.</param>
         void Arrange(Rect finalRect);
 
+        /// <summary>
+        ///     Returns the immediate visual children of the current <see cref = "IElement">IElement</see>.
+        /// </summary>
+        /// <returns><see cref = "IEnumerable{T}">IEnumerable</see> of immediate visual children.</returns>
         IEnumerable<IElement> GetVisualChildren();
 
         bool HitTest(Point point);
