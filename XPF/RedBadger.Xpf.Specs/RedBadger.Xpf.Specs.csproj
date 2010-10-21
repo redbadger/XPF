@@ -78,6 +78,7 @@
     <Reference Include="System.Xaml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ToggleButtonSpecs\ToggleButtonSpecs.cs" />
     <Compile Include="Extensions\MSpecExtensions.cs" />
     <Compile Include="Graphics\RendererSpecs\ClippingSpecs.cs" />
     <Compile Include="Graphics\RendererSpecs\Contexts.cs" />
