@@ -68,8 +68,12 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
-    <Reference Include="RedBadger.Xpf.Phone, Version=1.0.3946.28224, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="RedBadger.Xpf.Phone.Adapters.Xna, Version=1.0.3946.28224, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="RedBadger.Xpf.Phone">
+      <HintPath>..\..\Lib\XPF\RedBadger.Xpf.Phone.dll</HintPath>
+    </Reference>
+    <Reference Include="RedBadger.Xpf.Phone.Adapters.Xna">
+      <HintPath>..\..\Lib\XPF\RedBadger.Xpf.Phone.Adapters.Xna.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
