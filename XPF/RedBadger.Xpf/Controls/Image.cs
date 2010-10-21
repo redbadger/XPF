@@ -71,7 +71,10 @@ namespace RedBadger.Xpf.Controls
 
         protected override void OnRender(IDrawingContext drawingContext)
         {
-            drawingContext.DrawImage(this.Source, new Rect(new Point(), this.RenderSize));
+            if (this.Source != null)
+            {
+                drawingContext.DrawImage(this.Source, new Rect(new Point(), this.RenderSize));
+            }
         }
 
         private Size GetScaledImageSize(Size givenSize)
@@ -79,7 +82,7 @@ namespace RedBadger.Xpf.Controls
             ImageSource source = this.Source;
             if (source == null)
             {
-                return Size.Empty;
+                return new Size();
             }
 
             Size contentSize = source.Size;

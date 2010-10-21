@@ -1,12 +1,14 @@
-namespace RedBadger.Xpf.Sandbox
+namespace RedBadger.PocketMechanic.Phone
 {
-    using System.Collections.Generic;
+    using System;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     using RedBadger.Xpf.Adapters.Xna.Graphics;
+    using RedBadger.Xpf.Adapters.Xna.Input;
     using RedBadger.Xpf.Controls;
+    using RedBadger.Xpf.Controls.Primitives;
     using RedBadger.Xpf.Data;
     using RedBadger.Xpf.Media;
 
@@ -34,39 +36,86 @@ namespace RedBadger.Xpf.Sandbox
         protected override void LoadContent()
         {
             var spriteBatchAdapter = new SpriteBatchAdapter(new SpriteBatch(this.GraphicsDevice));
+            var spriteFontAdapter = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("SpriteFont"));
             var primitivesService = new PrimitivesService(this.GraphicsDevice);
             var renderer = new Renderer(spriteBatchAdapter, primitivesService);
 
-            this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer);
+            this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 
-            var colors = new List<SolidColorBrush> {
-                    new SolidColorBrush(Colors.Red), 
-                    new SolidColorBrush(Colors.Blue), 
-                    new SolidColorBrush(Colors.Yellow)
-                };
+            var bindingClass = new BindingClass();
 
-            var itemsControl = new ItemsControl
-            {
-                ItemsPanel = new StackPanel { Orientation = Orientation.Horizontal },
-                ItemsSource = colors,
-                ItemTemplate = _ =>
+            var border = new Border
                 {
-                    var border = new Border
-                    {
-                        Width = 50,
-                        Height = 50,
-                        Margin = new Thickness(10)
-                    };
+                    Background = new SolidColorBrush(Colors.LightGray), 
+                    Child = new TextBlock(spriteFontAdapter) { Text = "Click" }
+                };
+            border.Bind(Border.BackgroundProperty, BindingFactory.CreateOneWay<BindingClass, Brush>(bindingClass, b => b.BackgroundColor));
 
-                    border.Bind(
-                        Border.BackgroundProperty,
-                        BindingFactory.CreateOneWay<Brush>());
+            var toggleButton = new ToggleButton { Content = border };
+            toggleButton.Bind(ToggleButton.IsCheckedProperty, BindingFactory.CreateTwoWay(bindingClass, b => b.IsChecked));
 
-                    return border;
+            this.rootElement.Content = toggleButton;
+        }
+    }
+
+    public class BindingClass : INotifyPropertyChanged
+    {
+        private SolidColorBrush backgroundColor;
+
+        private bool? isChecked = false;
+
+        public event EventHandler<PropertyChangedEventArgs> PropertyChanged;
+
+        public SolidColorBrush BackgroundColor
+        {
+            get
+            {
+                return this.backgroundColor;
+            }
+
+            set
+            {
+                if (this.backgroundColor != value)
+                {
+                    this.backgroundColor = value;
+                    this.OnPropertyChanged("BackgroundColor");
                 }
-            }; 
-            
-            this.rootElement.Content = itemsControl;
+            }
+        }
+
+        public bool? IsChecked
+        {
+            get
+            {
+                return this.isChecked;
+            }
+
+            set
+            {
+                if (this.isChecked != value)
+                {
+                    this.isChecked = value;
+                    this.OnPropertyChanged("IsChecked");
+                    this.OnIsCheckedChanged(value);
+                }
+            }
+        }
+
+        private void OnIsCheckedChanged(bool? value)
+        {
+            if (value.HasValue)
+            {
+                this.BackgroundColor = (bool)value ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.LightGray);
+            }
+        }
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            EventHandler<PropertyChangedEventArgs> handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

@@ -26,7 +26,7 @@ namespace RedBadger.Xpf.Specs.Controls.ImageSpecs
     {
         protected static Mock<IDrawingContext> DrawingContext;
 
-        protected static Image Image;
+        protected static Image Subject;
 
         protected static Mock<RootElement> RootElement;
 
@@ -38,8 +38,8 @@ namespace RedBadger.Xpf.Specs.Controls.ImageSpecs
                 DrawingContext = new Mock<IDrawingContext>();
                 renderer.Setup(r => r.GetDrawingContext(Moq.It.IsAny<IElement>())).Returns(DrawingContext.Object);
                 RootElement = new Mock<RootElement>(new Rect(new Size(100, 100)), renderer.Object) { CallBase = true };
-                Image = new Image();
-                RootElement.Object.Content = Image;
+                Subject = new Image();
+                RootElement.Object.Content = Subject;
             };
     }
 
@@ -403,7 +403,7 @@ namespace RedBadger.Xpf.Specs.Controls.ImageSpecs
         private Because of = () =>
             {
                 imageSource = new TextureImage(new Mock<ITexture>().Object);
-                Image.Source = imageSource;
+                Subject.Source = imageSource;
                 RootElement.Object.Update();
                 RootElement.Object.Draw();
             };
@@ -417,6 +417,21 @@ namespace RedBadger.Xpf.Specs.Controls.ImageSpecs
                 drawingContext =>
                 drawingContext.DrawImage(
                     Moq.It.IsAny<ImageSource>(), 
-                    Moq.It.Is<Rect>(rect => rect.X == 0 && rect.Y == 0 && rect.Size == Image.RenderSize)));
+                    Moq.It.Is<Rect>(rect => rect.X == 0 && rect.Y == 0 && rect.Size == Subject.RenderSize)));
+    }
+
+    [Subject(typeof(Image), "Stretch")]
+    public class when_an_image_source_is_not_specified : an_image
+    {
+        private Because of = () =>
+        {
+            RootElement.Object.Update();
+            RootElement.Object.Draw();
+        };
+
+        private It should_not_occupy_any_space = () => Subject.RenderSize.ShouldEqual(new Size());
+
+        private It should_not_render_the_image =
+            () => DrawingContext.Verify(drawingContext => drawingContext.DrawImage(Moq.It.IsAny<ImageSource>(), Moq.It.IsAny<Rect>()), Times.Never());
     }
 }
