@@ -3,14 +3,11 @@ namespace Xpf.Samples.S05DataBinding101
     using System;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
 
     public class Game1 : Game
     {
         private readonly GraphicsDeviceManager graphics;
-
-        private SpriteBatch spriteBatch;
 
         public Game1()
         {
@@ -32,13 +29,9 @@ namespace Xpf.Samples.S05DataBinding101
 
         protected override void Initialize()
         {
-            this.Components.Add(new MyComponent(this));
+            // this.Components.Add(new WithBindingFactory.MyComponent(this));
+            this.Components.Add(new WithoutBindingFactory.MyComponent(this));
             base.Initialize();
-        }
-
-        protected override void LoadContent()
-        {
-            this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)

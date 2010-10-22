@@ -1,4 +1,4 @@
-﻿namespace Xpf.Samples.S05DataBinding101
+﻿namespace Xpf.Samples.S05DataBinding101.WithBindingFactory
 {
     using System;
 

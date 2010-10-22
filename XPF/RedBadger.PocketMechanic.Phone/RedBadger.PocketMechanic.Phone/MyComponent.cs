@@ -2,6 +2,7 @@ namespace RedBadger.PocketMechanic.Phone
 {
     using System;
 
+    using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
@@ -43,18 +44,58 @@ namespace RedBadger.PocketMechanic.Phone
             this.rootElement = new RootElement(this.GraphicsDevice.Viewport.ToRect(), renderer, new InputManager());
 
             var bindingClass = new BindingClass();
+            var bindingClass2 = new BindingClass2();
 
             var border = new Border
                 {
                     Background = new SolidColorBrush(Colors.LightGray), 
                     Child = new TextBlock(spriteFontAdapter) { Text = "Click" }
                 };
-            border.Bind(Border.BackgroundProperty, BindingFactory.CreateOneWay<BindingClass, Brush>(bindingClass, b => b.BackgroundColor));
 
             var toggleButton = new ToggleButton { Content = border };
-            toggleButton.Bind(ToggleButton.IsCheckedProperty, BindingFactory.CreateTwoWay(bindingClass, b => b.IsChecked));
+
+            border.Bind(Border.BackgroundProperty, bindingClass2.BackgroundColor);
+
+            toggleButton.Bind(ToggleButton.IsCheckedProperty, bindingClass2.IsChecked, bindingClass2.IsChecked);
 
             this.rootElement.Content = toggleButton;
+        }
+    }
+
+    public class BindingClass2
+    {
+        private readonly Subject<Brush> backgroundColor = new Subject<Brush>();
+
+        private Subject<bool?> isChecked = new Subject<bool?>();
+
+        public BindingClass2()
+        {
+            this.isChecked.Subscribe(this.OnNextIsChecked);
+        }
+
+        public IObservable<Brush> BackgroundColor
+        {
+            get
+            {
+                return this.backgroundColor.AsObservable();
+            }
+        }
+
+        public Subject<bool?> IsChecked
+        {
+            get
+            {
+                return this.isChecked;
+            }
+        }
+
+        private void OnNextIsChecked(bool? value)
+        {
+            if (value.HasValue)
+            {
+                this.backgroundColor.OnNext(
+                    (bool)value ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.LightGray));
+            }
         }
     }
 
@@ -101,20 +142,22 @@ namespace RedBadger.PocketMechanic.Phone
             }
         }
 
-        private void OnIsCheckedChanged(bool? value)
-        {
-            if (value.HasValue)
-            {
-                this.BackgroundColor = (bool)value ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.LightGray);
-            }
-        }
-
         public void OnPropertyChanged(string propertyName)
         {
             EventHandler<PropertyChangedEventArgs> handler = this.PropertyChanged;
             if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private void OnIsCheckedChanged(bool? value)
+        {
+            if (value.HasValue)
+            {
+                this.BackgroundColor = (bool)value
+                                           ? new SolidColorBrush(Colors.Red)
+                                           : new SolidColorBrush(Colors.LightGray);
             }
         }
     }
