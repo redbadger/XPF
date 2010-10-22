@@ -117,8 +117,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xpf.Samples.S05DataBinding101Content\Xpf.Samples.S05DataBinding101Content.contentproj">
-      <Name>Xpf.Samples.S05DataBinding101Content</Name>
+      <Name>Xpf.Samples.S05DataBinding101Content %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{72FEE253-D2AC-4775-880C-7571D52D069E}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

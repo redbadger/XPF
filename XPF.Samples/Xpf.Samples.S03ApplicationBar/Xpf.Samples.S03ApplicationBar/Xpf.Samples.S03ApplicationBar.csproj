@@ -112,9 +112,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XpfSamples.S03ApplicationBarContent\XpfSamples.S03ApplicationBarContent.contentproj">
+    <ProjectReference Include="..\Xpf.Samples.S03ApplicationBarContent\Xpf.Samples.S03ApplicationBarContent.contentproj">
       <Project>{F9C715C6-DAF5-431B-8405-316C8E4E1A22}</Project>
-      <Name>XpfSamples.S03ApplicationBarContent %28Content%29</Name>
+      <Name>Xpf.Samples.S03ApplicationBarContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>

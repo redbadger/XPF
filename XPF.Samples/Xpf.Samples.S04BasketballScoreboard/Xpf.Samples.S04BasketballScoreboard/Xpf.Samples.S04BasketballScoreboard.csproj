@@ -125,8 +125,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xpf.Samples.S04BasketballScoreboardContent\Xpf.Samples.S04BasketballScoreboardContent.contentproj">
-      <Name>Xpf.Samples.S04BasketballScoreboardContent</Name>
+      <Name>Xpf.Samples.S04BasketballScoreboardContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{E136BD16-B53F-4149-BEA3-6860F5E72750}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
