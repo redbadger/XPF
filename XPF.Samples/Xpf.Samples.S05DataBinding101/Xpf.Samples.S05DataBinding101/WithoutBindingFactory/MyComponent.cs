@@ -43,7 +43,11 @@ namespace Xpf.Samples.S05DataBinding101.WithoutBindingFactory
             // Setup Layout
             var cardImage = new Image { Stretch = Stretch.None };
 
-            var cardToggleButton = new ToggleButton { Content = cardImage, Margin = new Thickness(10) };
+            var cardToggleButton = new ToggleButton
+                {
+                    Content = cardImage,
+                    Margin = new Thickness(10)
+                };
 
             var resetButton = new Button
                 {
@@ -51,13 +55,24 @@ namespace Xpf.Samples.S05DataBinding101.WithoutBindingFactory
                         new Border
                             {
                                 Background = new SolidColorBrush(Colors.LightGray), 
-                                Child = new TextBlock(spriteFontAdapter) { Text = "Reset", Margin = new Thickness(10) }
+                                Child = new TextBlock(spriteFontAdapter)
+                                    {
+                                        Text = "Reset",
+                                        Margin = new Thickness(10)
+                                    }
                             }, 
                     Margin = new Thickness(10), 
                     HorizontalAlignment = HorizontalAlignment.Center
                 };
 
-            var stackPanel = new StackPanel { Children = { cardToggleButton, resetButton } };
+            var stackPanel = new StackPanel
+                {
+                    Children =
+                        {
+                            cardToggleButton,
+                            resetButton
+                        }
+                };
 
             this.rootElement.Content = stackPanel;
 
@@ -67,10 +82,14 @@ namespace Xpf.Samples.S05DataBinding101.WithoutBindingFactory
 
             var card = new Card(faceDownImage, faceUpImage);
 
-            cardImage.Bind(Image.SourceProperty, card.CardImage);
+            cardImage.Bind(
+                Image.SourceProperty,
+                card.CardImage);
 
             cardToggleButton.Bind(
-                ToggleButton.IsCheckedProperty, card.IsCardFaceUp.AsObservable(), card.IsCardFaceUp.AsObserver());
+                ToggleButton.IsCheckedProperty,
+                card.IsCardFaceUp,
+                card.IsCardFaceUp);
 
             resetButton.Click += (sender, args) => card.Reset();
         }

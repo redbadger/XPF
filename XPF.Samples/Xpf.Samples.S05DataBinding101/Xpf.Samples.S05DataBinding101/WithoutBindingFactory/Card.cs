@@ -13,9 +13,9 @@
 
         private readonly TextureImage faceUpImage;
 
-        private readonly Subject<ImageSource> cardImage = new Subject<ImageSource>();
+        private readonly ISubject<ImageSource> cardImage = new Subject<ImageSource>();
 
-        private readonly Subject<bool?> isCardFaceUp = new Subject<bool?>();
+        private readonly ISubject<bool?> isCardFaceUp = new Subject<bool?>();
 
         public Card(TextureImage faceDownImage, TextureImage faceUpImage)
         {
