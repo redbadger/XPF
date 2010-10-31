@@ -110,6 +110,19 @@
         }
 
         /// <summary>
+        ///     Creates a One Way Binding directly to a source object
+        ///     where the Type of the source is different from the Type of the target property and requires conversion.
+        /// </summary>
+        /// <typeparam name = "TSource">The Type of the source.</typeparam>
+        /// <typeparam name = "TTargetProp">The Type of the property on the target.</typeparam>
+        /// <param name = "source">The binding source.</param>
+        /// <returns>IObservable around the source.</returns>
+        public static IObservable<TTargetProp> CreateOneWay<TSource, TTargetProp>(TSource source)
+        {
+            return new OneWayBinding<TTargetProp>(OneWayBinding<TTargetProp>.Convert(source));
+        }
+
+        /// <summary>
         ///     Creates a One Way Binding to a property on a source.
         /// </summary>
         /// <typeparam name = "TSource">The Type of the source.</typeparam>

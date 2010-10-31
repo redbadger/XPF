@@ -195,7 +195,7 @@
             return this;
         }
 
-        private static T Convert(object value)
+        internal static T Convert(object value)
         {
             if (value != null)
             {

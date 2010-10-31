@@ -109,6 +109,24 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
     }
 
     [Subject(typeof(ReactiveObject), "One Way")]
+    public class when_there_is_a_one_way_binding_to_a_specified_source_which_is_an_object_and_type_conversion_is_required
+    {
+        private const string ExpectedWidth = "10.0";
+
+        private static Border target;
+
+        private Establish context = () => target = new Border();
+
+        private Because of = () =>
+            {
+                IObservable<double> fromSource = BindingFactory.CreateOneWay<string, double>(ExpectedWidth);
+                target.Bind(UIElement.WidthProperty, fromSource);
+            };
+
+        private It should_update_the_target = () => target.Width.ShouldEqual(Convert.ToDouble(ExpectedWidth));
+    }
+
+    [Subject(typeof(ReactiveObject), "One Way")]
     public class when_there_is_a_one_way_binding_to_a_property_on_the_data_context
     {
         private static TestBindingObject bindingObject;
