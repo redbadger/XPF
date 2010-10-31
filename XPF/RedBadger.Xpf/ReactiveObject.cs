@@ -90,15 +90,7 @@ namespace RedBadger.Xpf
         public void Bind<T>(ReactiveProperty<T> property, IObservable<T> fromSource, IObserver<T> toSource)
         {
             ISubject<T> target = this.GetSubject(property);
-            IDisposable sourceSubscription = fromSource.Subscribe(target);
-            IDisposable targetSubscription = target.Subscribe(toSource);
-            IDisposable disposable = Disposable.Create(
-                () =>
-                    {
-                        sourceSubscription.Dispose();
-                        targetSubscription.Dispose();
-                    });
-            this.SetBinding(property, disposable);
+            this.SetBinding(property, new CompositeDisposable(fromSource.Subscribe(target), target.Subscribe(toSource)));
         }
 
         /// <summary>
