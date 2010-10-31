@@ -314,7 +314,7 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ReactiveObjectSpe
     }
 
     [Subject(typeof(ReactiveObject), "One Way To Source")]
-    public class when_there_is_a_one_way_to_source_binding_to_the_data_context_and_type_conversion_is_required
+    public class when_there_is_a_one_way_to_source_binding_to_a_property_on_the_data_context_and_type_conversion_is_required
     {
         private const double ExpectedInitialValue = 5d;
 

@@ -72,6 +72,25 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
     }
 
     [Subject(typeof(ReactiveObject), "One Way")]
+    public class when_there_is_a_one_way_binding_to_the_data_context_which_is_an_object_and_type_conversion_is_required
+    {
+        private const string ExpectedWidth = "10.0";
+
+        private static Border target;
+
+        private Establish context = () => target = new Border { DataContext = ExpectedWidth };
+
+        private Because of = () =>
+            {
+                IObservable<double> fromSource = BindingFactory.CreateOneWay<double>();
+                target.Bind(UIElement.WidthProperty, fromSource);
+                target.Measure(Size.Empty);
+            };
+
+        private It should_update_the_target = () => target.Width.ShouldEqual(Convert.ToDouble(ExpectedWidth));
+    }
+
+    [Subject(typeof(ReactiveObject), "One Way")]
     public class when_there_is_a_one_way_binding_to_a_specified_source_which_is_an_object
     {
         private const double ExpectedWidth = 10d;
@@ -442,6 +461,30 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ObjectSpecs
     public class when_binding_to_the_data_context_and_the_data_context_is_changed
     {
         private const string NewDataContext = "New Data Context";
+
+        private static TextBlock target;
+
+        private Establish context = () =>
+            {
+                target = new TextBlock(new Mock<ISpriteFont>().Object) { DataContext = "Old Data Context" };
+                IObservable<string> fromSource = BindingFactory.CreateOneWay<string>();
+                target.Bind(TextBlock.TextProperty, fromSource);
+                target.Measure(Size.Empty);
+            };
+
+        private Because of = () =>
+            {
+                target.DataContext = NewDataContext;
+                target.Measure(Size.Empty);
+            };
+
+        private It should_use_the_new_data_context = () => target.Text.ShouldEqual(NewDataContext);
+    }
+
+    [Subject(typeof(ReactiveObject))]
+    public class when_binding_to_the_data_context_and_the_data_context_is_changed_to_null
+    {
+        private const string NewDataContext = null;
 
         private static TextBlock target;
 

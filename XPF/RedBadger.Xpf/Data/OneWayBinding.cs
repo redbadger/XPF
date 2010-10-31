@@ -158,7 +158,7 @@
         {
             if (this.sourceObservable == null)
             {
-                this.observer.OnNext((T)dataContext);
+                this.observer.OnNext(Convert(dataContext));
             }
             else
             {
@@ -195,6 +195,21 @@
             return this;
         }
 
+        private static T Convert(object value)
+        {
+            if (value != null)
+            {
+                Type sourceType = value.GetType();
+                Type targetType = typeof(T);
+                if (sourceType != targetType && !targetType.IsAssignableFrom(sourceType))
+                {
+                    value = System.Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
+                }
+            }
+
+            return (T)value;
+        }
+
         private static IObservable<T> GetObservable(INotifyPropertyChanged source, PropertyInfo propertyInfo)
         {
             return
@@ -206,18 +221,7 @@
 
         private static T GetValue(object source, PropertyInfo propertyInfo)
         {
-            object value = propertyInfo.GetValue(source, null);
-            if (value != null)
-            {
-                Type sourceType = propertyInfo.PropertyType;
-                Type targetType = typeof(T);
-                if (sourceType != targetType && !targetType.IsAssignableFrom(sourceType))
-                {
-                    value = Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
-                }
-            }
-
-            return (T)value;
+            return Convert(propertyInfo.GetValue(source, null));
         }
 
         private IObservable<T> GetDeferredObservable()
