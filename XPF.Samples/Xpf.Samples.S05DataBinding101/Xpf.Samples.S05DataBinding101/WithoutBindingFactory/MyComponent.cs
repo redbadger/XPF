@@ -1,6 +1,5 @@
 namespace Xpf.Samples.S05DataBinding101.WithoutBindingFactory
 {
-    using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 

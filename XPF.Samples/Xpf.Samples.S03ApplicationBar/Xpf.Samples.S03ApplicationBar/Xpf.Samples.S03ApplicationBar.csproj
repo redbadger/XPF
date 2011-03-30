@@ -48,7 +48,6 @@
     <XnaCompressContent>false</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Phone.Reactive, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework">
       <Private>False</Private>
     </Reference>
@@ -78,7 +77,13 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.CoreEx">
+      <HintPath>C:\Program Files (x86)\Microsoft Cloud Programmability\Reactive Extensions\v1.0.2856.0\WP7\System.CoreEx.dll</HintPath>
+    </Reference>
     <Reference Include="System.Observable, Version=2.0.5.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive">
+      <HintPath>C:\Program Files (x86)\Microsoft Cloud Programmability\Reactive Extensions\v1.0.2856.0\WP7\System.Reactive.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e, processorArchitecture=MSIL" />
     <Reference Include="System.Xml">
       <Private>False</Private>

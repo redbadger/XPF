@@ -1,17 +1,9 @@
 namespace RedBadger.Xpf.Data
 {
-#if WINDOWS_PHONE
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Microsoft.Phone.Reactive;
-#else
     using System;
     using System.Collections.Generic;
     using System.Concurrency;
     using System.Linq;
-
-#endif
 
     internal class ValueChangedBehaviorSubject<T> : ISubject<T>
     {

@@ -5,10 +5,6 @@ namespace RedBadger.Xpf.Data
     using System.Linq;
     using System.Reflection;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
-
     internal class OneWayToSourceBinding<T> : IOneWayToSourceBinding<T>, IBinding, IDisposable
     {
         private readonly PropertyInfo propertyInfo;

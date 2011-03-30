@@ -4,10 +4,6 @@
     using System.Collections.Generic;
     using System.Reflection;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
-
     internal class TwoWayBinding<T> : IDualChannel<T>, IBinding, IDisposable
     {
         private readonly OneWayBinding<T> oneWayBinding;

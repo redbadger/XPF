@@ -10,10 +10,6 @@
 
     using GestureType = Microsoft.Xna.Framework.Input.Touch.GestureType;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
-
     public class InputManager : IInputManager
     {
         private readonly Subject<Gesture> gestures = new Subject<Gesture>();

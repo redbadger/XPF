@@ -3,10 +3,6 @@
     using System;
     using System.Linq;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
-    
     internal class OneWayReactivePropertyBinding<T, TSource> : OneWayBinding<T>
         where TSource : class, IReactiveObject
     {

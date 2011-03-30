@@ -1,8 +1,8 @@
 ﻿namespace Xpf.Samples.S05DataBinding101.WithoutBindingFactory
 {
     using System;
-
-    using Microsoft.Phone.Reactive;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using RedBadger.Xpf.Media;
     using RedBadger.Xpf.Media.Imaging;

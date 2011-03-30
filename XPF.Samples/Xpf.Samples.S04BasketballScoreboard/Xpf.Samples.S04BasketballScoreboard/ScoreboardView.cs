@@ -1,8 +1,8 @@
 ﻿namespace Xpf.Samples.S04BasketballScoreboard
 {
     using System;
+    using System.Linq;
 
-    using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 

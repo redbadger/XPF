@@ -4,10 +4,6 @@
     using System.Globalization;
     using System.Linq;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
-
     internal class OneWayToSourceReactivePropertyBinding<TTargetProp, TSourceProp, TSource> :
         OneWayToSourceBinding<TSourceProp>, 
         IOneWayToSourceBinding<TTargetProp>

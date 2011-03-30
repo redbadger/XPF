@@ -6,10 +6,6 @@
     using System.Collections.Specialized;
     using System.Linq;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
-
     /// <summary>
     ///     <see cref = "ItemsControl">ItemsControl</see> allows you to represent a collection of items and provides scaffolding to generate the UI for each item.
     /// </summary>

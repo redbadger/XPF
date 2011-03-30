@@ -5,10 +5,6 @@
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
-
     public interface IElement : IReactiveObject
     {
         Rect ClippingRect { get; }

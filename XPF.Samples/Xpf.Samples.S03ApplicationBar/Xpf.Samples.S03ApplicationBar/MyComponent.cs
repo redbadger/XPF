@@ -1,8 +1,8 @@
 namespace XpfSamples.S03ApplicationBar
 {
     using System.Collections.ObjectModel;
+    using System.Linq;
 
-    using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 

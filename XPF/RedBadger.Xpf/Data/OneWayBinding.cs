@@ -6,10 +6,6 @@
     using System.Linq;
     using System.Reflection;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
-
     internal class OneWayBinding<T> : IObservable<T>, IBinding, IDisposable
     {
         private readonly PropertyInfo deferredProperty;

@@ -1,8 +1,7 @@
 namespace Xpf.Samples.S04BasketballScoreboard.Domain
 {
     using System;
-
-    using Microsoft.Phone.Reactive;
+    using System.Linq;
 
     public class Clock
     {

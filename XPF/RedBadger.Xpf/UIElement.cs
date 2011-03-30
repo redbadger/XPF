@@ -8,10 +8,6 @@
     using RedBadger.Xpf.Input;
     using RedBadger.Xpf.Internal;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
-
     public abstract class UIElement : ReactiveObject, IElement
     {
         public static readonly ReactiveProperty<object> DataContextProperty =

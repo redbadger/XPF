@@ -4,10 +4,6 @@
     using System.Linq.Expressions;
     using System.Reflection;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
-
     /// <summary>
     ///     A factory that creates IObservable and IObserver around a variety of sources.
     /// </summary>

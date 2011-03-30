@@ -2,8 +2,7 @@ namespace XpfSamples.S03ApplicationBar
 {
     using System;
     using System.Collections.Generic;
-
-    using Microsoft.Phone.Reactive;
+    using System.Linq;
 
     using RedBadger.Xpf;
     using RedBadger.Xpf.Controls;

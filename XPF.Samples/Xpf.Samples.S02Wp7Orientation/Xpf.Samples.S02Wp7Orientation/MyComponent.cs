@@ -1,8 +1,8 @@
 namespace Xpf.Samples.S02Wp7Orientation
 {
     using System;
+    using System.Linq;
 
-    using Microsoft.Phone.Reactive;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 

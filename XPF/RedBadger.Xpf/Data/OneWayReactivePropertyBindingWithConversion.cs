@@ -4,10 +4,6 @@
     using System.Globalization;
     using System.Linq;
 
-#if WINDOWS_PHONE
-    using Microsoft.Phone.Reactive;
-#endif
-
     internal class OneWayReactivePropertyBinding<TTargetProp, TSourceProp, TSource> : OneWayBinding<TTargetProp>
         where TSource : class, IReactiveObject
     {

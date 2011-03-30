@@ -4,9 +4,9 @@ namespace RedBadger.Xpf
 
     using System;
     using System.Collections.Generic;
+    using System.Disposables;
     using System.Linq;
 
-    using Microsoft.Phone.Reactive;
 
     using RedBadger.Xpf.Data;
     using RedBadger.Xpf.Internal;
