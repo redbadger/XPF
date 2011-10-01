@@ -2,7 +2,8 @@ namespace RedBadger.Xpf.Data
 {
     using System;
     using System.Globalization;
-    using System.Linq;
+    using System.Reactive;
+    using System.Reactive.Linq;
     using System.Reflection;
 
     internal class OneWayToSourceBinding<T> : IOneWayToSourceBinding<T>, IBinding, IDisposable

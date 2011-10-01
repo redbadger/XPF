@@ -11,14 +11,13 @@
 
 namespace RedBadger.Xpf.Specs.Input.MouseInputSpecs
 {
-    using System.Collections.Generic;
+    using System.Reactive.Subjects;
 
     using Machine.Specifications;
 
     using Moq;
     using Moq.Protected;
 
-    using RedBadger.Xpf.Adapters.Xna;
     using RedBadger.Xpf.Adapters.Xna.Graphics;
     using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Controls.Primitives;

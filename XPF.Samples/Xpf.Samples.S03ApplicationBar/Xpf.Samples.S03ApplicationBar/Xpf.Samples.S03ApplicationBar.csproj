@@ -23,6 +23,7 @@
     <TileTitle>XpfSamples.S02ApplicationBar</TileTitle>
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
+    <XnaRefreshLevel>1</XnaRefreshLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Windows Phone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,7 +83,7 @@
     </Reference>
     <Reference Include="System.Observable, Version=2.0.5.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="System.Reactive">
-      <HintPath>C:\Program Files (x86)\Microsoft Cloud Programmability\Reactive Extensions\v1.0.2856.0\WP7\System.Reactive.dll</HintPath>
+      <HintPath>..\..\..\XPF\packages\Rx-Main.1.0.10621\lib\Net4\System.Reactive.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e, processorArchitecture=MSIL" />
     <Reference Include="System.Xml">
@@ -100,6 +101,7 @@
     <Compile Include="ApplicationBarIconButton.cs" />
     <Compile Include="MyComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </None>

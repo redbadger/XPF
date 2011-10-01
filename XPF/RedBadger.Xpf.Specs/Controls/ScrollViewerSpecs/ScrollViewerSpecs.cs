@@ -11,7 +11,7 @@
 
 namespace RedBadger.Xpf.Specs.Controls.ScrollViewerSpecs
 {
-    using System.Collections.Generic;
+    using System.Reactive.Subjects;
 
     using Machine.Specifications;
 
@@ -21,7 +21,6 @@ namespace RedBadger.Xpf.Specs.Controls.ScrollViewerSpecs
     using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
-    using RedBadger.Xpf.Specs.Extensions;
 
     using It = Machine.Specifications.It;
 

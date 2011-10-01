@@ -4,7 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Collections.Specialized;
-    using System.Linq;
+    using System.Reactive.Linq;
 
     /// <summary>
     ///     <see cref = "ItemsControl">ItemsControl</see> allows you to represent a collection of items and provides scaffolding to generate the UI for each item.
@@ -42,8 +42,10 @@
         }
 
         /// <summary>
-        ///     Gets or sets a function that is used to generate the <see cref = "IElement">IElement</see> for each item in the <see cref = "ItemsSource">ItemsSource</see>.
-        ///     The function takes one argument of type <see cref = "object">object</see> that represents the item's <see cref = "IElement.DataContext">DataContext</see>.
+        ///     Gets or sets a function that is used to generate the <see cref = "IElement">IElement</see> for each item in the <see
+        ///      cref = "ItemsSource">ItemsSource</see>.
+        ///     The function takes one argument of type <see cref = "object">object</see> that represents the item's <see
+        ///      cref = "IElement.DataContext">DataContext</see>.
         /// </summary>
         public Func<object, IElement> ItemTemplate
         {
@@ -172,8 +174,7 @@
             {
                 itemsControl.changingItems =
                     Observable.FromEvent<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
-                        handler => new NotifyCollectionChangedEventHandler(handler), 
-                        handler => observableCollection.CollectionChanged += handler, 
+                        handler => observableCollection.CollectionChanged += handler,
                         handler => observableCollection.CollectionChanged -= handler).Subscribe(
                             itemsControl.OnNextItemChange);
             }
@@ -182,13 +183,13 @@
             itemsControl.InvalidateMeasure();
         }
 
-        private void OnNextItemChange(IEvent<NotifyCollectionChangedEventArgs> eventData)
+        private void OnNextItemChange(NotifyCollectionChangedEventArgs eventData)
         {
             var children = (ITemplatedList<IElement>)this.ItemsPanel.Children;
-            switch (eventData.EventArgs.Action)
+            switch (eventData.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    foreach (object newItem in eventData.EventArgs.NewItems)
+                    foreach (object newItem in eventData.NewItems)
                     {
                         children.Add(newItem, this.ItemTemplate);
                     }
@@ -196,10 +197,8 @@
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     {
-                        int startingIndex = eventData.EventArgs.OldStartingIndex;
-                        for (int index = startingIndex;
-                             index < startingIndex + eventData.EventArgs.OldItems.Count;
-                             index++)
+                        int startingIndex = eventData.OldStartingIndex;
+                        for (int index = startingIndex; index < startingIndex + eventData.OldItems.Count; index++)
                         {
                             children.RemoveAt(index);
                         }
@@ -209,9 +208,9 @@
 
                 case NotifyCollectionChangedAction.Replace:
                     {
-                        int startingIndex = eventData.EventArgs.NewStartingIndex;
+                        int startingIndex = eventData.NewStartingIndex;
 
-                        foreach (object newItem in eventData.EventArgs.NewItems)
+                        foreach (object newItem in eventData.NewItems)
                         {
                             this.ItemsPanel.Children.RemoveAt(startingIndex);
                             children.Insert(startingIndex, newItem, this.ItemTemplate);
@@ -223,7 +222,7 @@
 
 #if !WINDOWS_PHONE
                 case NotifyCollectionChangedAction.Move:
-                    children.Move(eventData.EventArgs.OldStartingIndex, eventData.EventArgs.NewStartingIndex);
+                    children.Move(eventData.OldStartingIndex, eventData.NewStartingIndex);
 
                     break;
 #endif

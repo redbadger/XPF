@@ -11,7 +11,7 @@
 
 namespace RedBadger.Xpf.Specs.Controls.ButtonBaseSpecs
 {
-    using System.Collections.Generic;
+    using System.Reactive.Subjects;
 
     using Machine.Specifications;
 

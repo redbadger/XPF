@@ -1,9 +1,8 @@
 namespace RedBadger.Xpf.Data
 {
     using System;
-    using System.Collections.Generic;
-    using System.Concurrency;
-    using System.Linq;
+    using System.Reactive.Linq;
+    using System.Reactive.Subjects;
 
     internal class ValueChangedBehaviorSubject<T> : ISubject<T>
     {
@@ -11,7 +10,7 @@ namespace RedBadger.Xpf.Data
 
         public ValueChangedBehaviorSubject(T value)
         {
-            this.subject = new BehaviorSubject<T>(value, Scheduler.Immediate);
+            this.subject = new BehaviorSubject<T>(value);
         }
 
         public IDisposable Subscribe(IObserver<T> observer)

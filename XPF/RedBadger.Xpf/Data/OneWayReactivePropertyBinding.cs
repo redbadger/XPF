@@ -1,7 +1,7 @@
 ﻿namespace RedBadger.Xpf.Data
 {
     using System;
-    using System.Linq;
+    using System.Reactive.Linq;
 
     internal class OneWayReactivePropertyBinding<T, TSource> : OneWayBinding<T>
         where TSource : class, IReactiveObject

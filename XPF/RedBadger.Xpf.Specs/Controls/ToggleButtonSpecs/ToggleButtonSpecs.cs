@@ -12,6 +12,7 @@
 namespace RedBadger.Xpf.Specs.Controls.ToggleButtonSpecs
 {
     using System.Collections.Generic;
+    using System.Reactive.Subjects;
 
     using Machine.Specifications;
 

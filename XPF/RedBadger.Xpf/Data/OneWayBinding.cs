@@ -1,9 +1,9 @@
 ﻿namespace RedBadger.Xpf.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
-    using System.Linq;
+    using System.Reactive.Linq;
+    using System.Reactive.Subjects;
     using System.Reflection;
 
     internal class OneWayBinding<T> : IObservable<T>, IBinding, IDisposable
@@ -209,10 +209,9 @@
         private static IObservable<T> GetObservable(INotifyPropertyChanged source, PropertyInfo propertyInfo)
         {
             return
-                Observable.FromEvent<PropertyChangedEventArgs>(
+                Observable.FromEvent<EventHandler<PropertyChangedEventArgs>, PropertyChangedEventArgs>(
                     handler => source.PropertyChanged += handler, handler => source.PropertyChanged -= handler).Where(
-                        data => data.EventArgs.PropertyName == propertyInfo.Name).Select(
-                            e => GetValue(source, propertyInfo));
+                        data => data.PropertyName == propertyInfo.Name).Select(e => GetValue(source, propertyInfo));
         }
 
         private static T GetValue(object source, PropertyInfo propertyInfo)

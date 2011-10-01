@@ -1,7 +1,7 @@
 ﻿namespace RedBadger.Xpf.Adapters.Xna.Input
 {
     using System;
-    using System.Collections.Generic;
+    using System.Reactive.Subjects;
 
     using Microsoft.Xna.Framework.Input;
     using Microsoft.Xna.Framework.Input.Touch;
