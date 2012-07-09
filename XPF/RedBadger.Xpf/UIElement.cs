@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reactive;
+    using System.Reactive.Subjects;
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;

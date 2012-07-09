@@ -1,6 +1,8 @@
 ﻿namespace RedBadger.Xpf
 {
     using System.Collections.Generic;
+    
+    using System.Reactive.Subjects;
 
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;

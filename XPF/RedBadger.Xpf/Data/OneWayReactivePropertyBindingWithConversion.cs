@@ -2,7 +2,8 @@
 {
     using System;
     using System.Globalization;
-    using System.Linq;
+    
+    using System.Reactive.Linq;
 
     internal class OneWayReactivePropertyBinding<TTargetProp, TSourceProp, TSource> : OneWayBinding<TTargetProp>
         where TSource : class, IReactiveObject

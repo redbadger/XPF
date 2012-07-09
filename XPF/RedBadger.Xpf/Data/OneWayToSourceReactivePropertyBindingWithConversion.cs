@@ -2,7 +2,8 @@
 {
     using System;
     using System.Globalization;
-    using System.Linq;
+
+    using System.Reactive.Linq;
 
     internal class OneWayToSourceReactivePropertyBinding<TTargetProp, TSourceProp, TSource> :
         OneWayToSourceBinding<TSourceProp>, 

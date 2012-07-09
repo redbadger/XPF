@@ -4,7 +4,9 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Collections.Specialized;
-    using System.Linq;
+
+    using System.Reactive;
+    using System.Reactive.Linq;
 
     /// <summary>
     ///     <see cref = "ItemsControl">ItemsControl</see> allows you to represent a collection of items and provides scaffolding to generate the UI for each item.
@@ -171,7 +173,7 @@
             if (observableCollection != null)
             {
                 itemsControl.changingItems =
-                    Observable.FromEvent<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
+                    Observable.FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
                         handler => new NotifyCollectionChangedEventHandler(handler), 
                         handler => observableCollection.CollectionChanged += handler, 
                         handler => observableCollection.CollectionChanged -= handler).Subscribe(
@@ -182,7 +184,7 @@
             itemsControl.InvalidateMeasure();
         }
 
-        private void OnNextItemChange(IEvent<NotifyCollectionChangedEventArgs> eventData)
+        private void OnNextItemChange(EventPattern<NotifyCollectionChangedEventArgs> eventData)
         {
             var children = (ITemplatedList<IElement>)this.ItemsPanel.Children;
             switch (eventData.EventArgs.Action)
