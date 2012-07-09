@@ -24,6 +24,14 @@
     <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
     <SourceDir>$(MSBuildProjectDirectory)\XPF\</SourceDir>
     <OutputDir>$(MSBuildProjectDirectory)\Bin\</OutputDir>
+
+    <!-- All related to NuGet -->
+    <NuGetDir>$(MSBuildProjectDirectory)\NuGet\</NuGetDir>
+    <NuGetTool>$(NuGetDir)NuGet.exe</NuGetTool>
+    <MainDir>$(NuGetDir)Main\</MainDir>
+    <MainLibDir>$(MainDir)lib\net40\</MainLibDir>
+    <XnaDir>$(NuGetDir)Xna\</XnaDir>
+    <XnaLibDir>$(XnaDir)lib\net40\</XnaLibDir>
   </PropertyGroup>
 
   <!--
@@ -165,6 +173,53 @@
     <Exec Command='$(MSpecCommand) --html "$(OutputDir)%(TestOutput.Filename).htm" %(TestOutput.Identity)' />
 
     <Message Text="=========== Tests Passed ===========" Importance="High" />
+  </Target>
+
+  <!--
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+    NuGet
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+  -->
+
+  <Target Name="NuGet" DependsOnTargets="Test">
+    <Message Text="=========== Making NuGet Packages ===========" Importance="High" />
+
+    <!-- Delete old nupkg files. -->
+
+    <CreateItem Include="$(NuGetDir)*.nupkg">
+      <Output TaskParameter="Include" ItemName="OldPackages" />
+    </CreateItem>
+    <Delete Files="@(OldPackages)" />
+
+    <!-- Copy the files into the locations NuGet.exe requires. -->
+    <MakeDir Directories="$(MainLibDir)" />
+    <MakeDir Directories="$(XnaLibDir)" />
+
+    <Copy SourceFiles="$(OutputDir)RedBadger.Xpf.dll"
+          DestinationFolder="$(MainLibDir)" />
+    <Copy SourceFiles="$(OutputDir)RedBadger.Xpf.Adapters.Xna.dll"
+          DestinationFolder="$(XnaLibDir)" />
+
+    <!-- Make the two packages. -->
+
+    <Exec Command="$(NuGetTool) pack $(MainDir)XPF-Main.nuspec -OutputDirectory $(NuGetDir)" />
+    <Exec Command="$(NuGetTool) pack $(XnaDir)XPF-XNA.nuspec -OutputDirectory $(NuGetDir)" />
+
+    <Message Text="=========== NuGet Packages Ready ===========" Importance="High" />
+  </Target>
+
+  <Target Name="NuGetPush" DependsOnTargets="NuGet">
+    <Message Text="=========== Pushing Packages ===========" Importance="High" />
+    
+    <CreateItem Include="$(NuGetDir)*.nupkg">
+      <Output TaskParameter="Include" ItemName="FinalPackages" />
+    </CreateItem>
+
+    <Exec Command="$(NuGetTool) push %(FinalPackages.Identity)" />
+
+    <Message Text="=========== Packages Pushed ===========" Importance="High" />
   </Target>
 
 </Project>

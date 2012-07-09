@@ -24,3 +24,5 @@ upgradelog.*
 _upgradereport_files
 stylecopviolations.xml
 *.local.sln
+NuGet/*/*/*/*.dll
+*.nupkg
