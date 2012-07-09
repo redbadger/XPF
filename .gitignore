@@ -20,3 +20,6 @@ TestResults
 /XPF.Samples/Lib/XPF/*.xml
 *.ncrunchsolution
 *.ncrunchproject
+upgradelog.*
+_upgradereport_files
+stylecopviolations.xml

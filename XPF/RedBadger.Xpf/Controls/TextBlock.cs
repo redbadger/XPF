@@ -26,7 +26,7 @@ namespace RedBadger.Xpf.Controls
             ReactiveProperty<TextWrapping>.Register(
                 "Wrapping", typeof(TextBlock), TextWrapping.NoWrap, ReactivePropertyChangedCallbacks.InvalidateMeasure);
 
-        private static readonly Regex whiteSpaceRegEx = new Regex(@"\s+", RegexOptions.Compiled);
+        private static readonly Regex WhiteSpaceRegEx = new Regex(@"\s+", RegexOptions.Compiled);
 
         private readonly ISpriteFont spriteFont;
 
@@ -146,7 +146,7 @@ namespace RedBadger.Xpf.Controls
         {
             const string Space = " ";
             var stringBuilder = new StringBuilder();
-            string[] words = whiteSpaceRegEx.Split(text);
+            string[] words = WhiteSpaceRegEx.Split(text);
 
             double lineWidth = 0;
             double spaceWidth = font.MeasureString(Space).Width;

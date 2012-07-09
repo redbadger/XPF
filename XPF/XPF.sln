@@ -1,10 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedBadger.PocketMechanic.Phone", "RedBadger.PocketMechanic.Phone\RedBadger.PocketMechanic.Phone\RedBadger.PocketMechanic.Phone.csproj", "{871FFD48-507B-4784-9501-F56599CB8075}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedBadger.PocketMechanic.PhoneContent", "RedBadger.PocketMechanic.Phone\RedBadger.PocketMechanic.PhoneContent\RedBadger.PocketMechanic.PhoneContent.contentproj", "{D9FEA3BD-E505-4B17-849E-660D2210961C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedBadger.Xpf", "RedBadger.Xpf\RedBadger.Xpf.csproj", "{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedBadger.Xpf.Specs", "RedBadger.Xpf.Specs\RedBadger.Xpf.Specs.csproj", "{B43239E7-0131-4DC9-9BAB-8904293BD869}"
@@ -196,31 +192,6 @@ Global
 		{72FEE253-D2AC-4775-880C-7571D52D069E}.Release|Mixed Platforms.ActiveCfg = Release|Windows Phone
 		{72FEE253-D2AC-4775-880C-7571D52D069E}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
 		{72FEE253-D2AC-4775-880C-7571D52D069E}.Release|x86.ActiveCfg = Release|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Build|Any CPU.ActiveCfg = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Build|Mixed Platforms.ActiveCfg = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Build|Windows Phone.ActiveCfg = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Build|Windows Phone.Build.0 = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Build|Windows Phone.Deploy.0 = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Build|x86.ActiveCfg = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Build|x86.Build.0 = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Debug|Any CPU.ActiveCfg = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Debug|Mixed Platforms.ActiveCfg = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Debug|Mixed Platforms.Build.0 = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Debug|Mixed Platforms.Deploy.0 = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Debug|x86.ActiveCfg = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Debug|x86.Build.0 = Debug|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Release|Any CPU.ActiveCfg = Release|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Release|Mixed Platforms.ActiveCfg = Release|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Release|Mixed Platforms.Build.0 = Release|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Release|Mixed Platforms.Deploy.0 = Release|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Release|Windows Phone.Build.0 = Release|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Release|x86.ActiveCfg = Release|Windows Phone
-		{871FFD48-507B-4784-9501-F56599CB8075}.Release|x86.Build.0 = Release|Windows Phone
 		{8CC86B99-A311-43B5-B99C-6C00286C3CF0}.Build|Any CPU.ActiveCfg = Release|Windows Phone
 		{8CC86B99-A311-43B5-B99C-6C00286C3CF0}.Build|Mixed Platforms.ActiveCfg = Debug|Windows Phone
 		{8CC86B99-A311-43B5-B99C-6C00286C3CF0}.Build|Windows Phone.ActiveCfg = Release|Windows Phone
@@ -319,18 +290,6 @@ Global
 		{D2E5904C-222C-47A6-80A5-6E8127FB8A36}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
 		{D2E5904C-222C-47A6-80A5-6E8127FB8A36}.Release|Windows Phone.Build.0 = Release|Windows Phone
 		{D2E5904C-222C-47A6-80A5-6E8127FB8A36}.Release|x86.ActiveCfg = Release|Windows Phone
-		{D9FEA3BD-E505-4B17-849E-660D2210961C}.Build|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9FEA3BD-E505-4B17-849E-660D2210961C}.Build|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{D9FEA3BD-E505-4B17-849E-660D2210961C}.Build|Windows Phone.ActiveCfg = Debug|Any CPU
-		{D9FEA3BD-E505-4B17-849E-660D2210961C}.Build|x86.ActiveCfg = Debug|Any CPU
-		{D9FEA3BD-E505-4B17-849E-660D2210961C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9FEA3BD-E505-4B17-849E-660D2210961C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{D9FEA3BD-E505-4B17-849E-660D2210961C}.Debug|Windows Phone.ActiveCfg = Debug|Any CPU
-		{D9FEA3BD-E505-4B17-849E-660D2210961C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D9FEA3BD-E505-4B17-849E-660D2210961C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9FEA3BD-E505-4B17-849E-660D2210961C}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{D9FEA3BD-E505-4B17-849E-660D2210961C}.Release|Windows Phone.ActiveCfg = Debug|Any CPU
-		{D9FEA3BD-E505-4B17-849E-660D2210961C}.Release|x86.ActiveCfg = Debug|Any CPU
 		{E136BD16-B53F-4149-BEA3-6860F5E72750}.Build|Any CPU.ActiveCfg = Release|Windows Phone
 		{E136BD16-B53F-4149-BEA3-6860F5E72750}.Build|Mixed Platforms.ActiveCfg = Release|Windows Phone
 		{E136BD16-B53F-4149-BEA3-6860F5E72750}.Build|Windows Phone.ActiveCfg = Release|Windows Phone
@@ -425,11 +384,9 @@ Global
 		{545640ED-7CE0-4DBE-A060-251C61F3AEF6} = {0B9D765F-48ED-4F3D-98C9-9E1607EFBC34}
 		{5918EF3C-412B-422D-8F17-6D0952D21B6B} = {5289CD56-BAC5-4749-B05B-518AB291E442}
 		{72FEE253-D2AC-4775-880C-7571D52D069E} = {5289CD56-BAC5-4749-B05B-518AB291E442}
-		{871FFD48-507B-4784-9501-F56599CB8075} = {4389DD74-37B0-4AA2-AA04-4DE87D46F266}
 		{8CC86B99-A311-43B5-B99C-6C00286C3CF0} = {5289CD56-BAC5-4749-B05B-518AB291E442}
 		{8D211F10-638F-4E04-9B3F-50A957D409C7} = {5289CD56-BAC5-4749-B05B-518AB291E442}
 		{D2E5904C-222C-47A6-80A5-6E8127FB8A36} = {0B9D765F-48ED-4F3D-98C9-9E1607EFBC34}
-		{D9FEA3BD-E505-4B17-849E-660D2210961C} = {4389DD74-37B0-4AA2-AA04-4DE87D46F266}
 		{E136BD16-B53F-4149-BEA3-6860F5E72750} = {5289CD56-BAC5-4749-B05B-518AB291E442}
 		{E71B6040-CB83-433D-BA01-065A69622921} = {5289CD56-BAC5-4749-B05B-518AB291E442}
 		{EDE4B30C-C8EB-47D3-BE57-DE82E68B85D5} = {5289CD56-BAC5-4749-B05B-518AB291E442}

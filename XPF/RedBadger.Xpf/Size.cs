@@ -19,10 +19,14 @@ namespace RedBadger.Xpf
         /// </summary>
         public double Width;
 
-        private static readonly Size empty = new Size
+        static Size()
+        {
+            Empty = new Size
             {
-               Width = double.NegativeInfinity, Height = double.NegativeInfinity 
+                Width = double.NegativeInfinity,
+                Height = double.NegativeInfinity
             };
+        }
 
         /// <summary>
         ///     Initializes a <see cref = "Size">Size</see> structure representing a <see cref = "Width">Width</see> and <see cref = "Height">Height</see>.
@@ -40,10 +44,8 @@ namespace RedBadger.Xpf
         /// </summary>
         public static Size Empty
         {
-            get
-            {
-                return empty;
-            }
+            get;
+            private set;
         }
 
         /// <summary>
@@ -53,7 +55,7 @@ namespace RedBadger.Xpf
         {
             get
             {
-                return this == empty;
+                return this == Empty;
             }
         }
 

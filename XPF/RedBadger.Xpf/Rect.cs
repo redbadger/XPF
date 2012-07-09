@@ -31,13 +31,16 @@ namespace RedBadger.Xpf
         /// </summary>
         public double Y;
 
-        private static readonly Rect empty = new Rect
+        static Rect()
+        {
+            Empty = new Rect
             {
-                X = double.PositiveInfinity, 
-                Y = double.PositiveInfinity, 
-                Width = double.NegativeInfinity, 
+                X = double.PositiveInfinity,
+                Y = double.PositiveInfinity,
+                Width = double.NegativeInfinity,
                 Height = double.NegativeInfinity
             };
+        }
 
         /// <summary>
         ///     Initializes a new <see cref = "Rect">Rect</see> struct from a <see cref = "Size">Size</see>.
@@ -96,10 +99,8 @@ namespace RedBadger.Xpf
         /// </summary>
         public static Rect Empty
         {
-            get
-            {
-                return empty;
-            }
+            get;
+            private set;
         }
 
         /// <summary>
@@ -291,7 +292,7 @@ namespace RedBadger.Xpf
         {
             if (!this.IntersectsWith(rect))
             {
-                this = empty;
+                this = Empty;
             }
             else
             {

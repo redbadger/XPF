@@ -2,10 +2,9 @@
 {
     using System;
     using System.Globalization;
-    using System.Reflection;
-
     using System.Reactive.Linq;
     using System.Reactive.Subjects;
+    using System.Reflection;
 
     internal class OneWayBinding<T> : IObservable<T>, IBinding, IDisposable
     {

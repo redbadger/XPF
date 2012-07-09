@@ -13,7 +13,7 @@
     /// </summary>
     public class SpriteBatchAdapter : ISpriteBatch
     {
-        private static readonly RasterizerState scissorTestingRasterizerState = new RasterizerState
+        private static readonly RasterizerState ScissorTestingRasterizerState = new RasterizerState
             {
                ScissorTestEnable = true, CullMode = CullMode.None 
             };
@@ -53,7 +53,7 @@
                     this.spriteBatch.GraphicsDevice.ScissorRectangle = clippingRect.ToRectangle();
 
                     this.spriteBatch.Begin(
-                        SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, scissorTestingRasterizerState);
+                        SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, ScissorTestingRasterizerState);
                 }
 
                 this.isBatchOpen = true;

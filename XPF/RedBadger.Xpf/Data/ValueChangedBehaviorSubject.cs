@@ -1,10 +1,8 @@
 namespace RedBadger.Xpf.Data
 {
     using System;
-
     using System.Reactive.Linq;
     using System.Reactive.Subjects;
-    using System.Reactive.Concurrency;
 
     internal class ValueChangedBehaviorSubject<T> : ISubject<T>
     {
@@ -32,7 +30,7 @@ namespace RedBadger.Xpf.Data
 
         public void OnNext(T value)
         {
-            if (!Equals(value, this.subject.First()))
+            if (!object.Equals(value, this.subject.First()))
             {
                 this.subject.OnNext(value);
             }

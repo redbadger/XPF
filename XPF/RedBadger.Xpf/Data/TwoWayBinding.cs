@@ -1,9 +1,8 @@
 ﻿namespace RedBadger.Xpf.Data
 {
     using System;
-    using System.Reflection;
-
     using System.Reactive.Subjects;
+    using System.Reflection;
 
     internal class TwoWayBinding<T> : IDualChannel<T>, IBinding, IDisposable
     {

@@ -181,7 +181,7 @@ namespace RedBadger.Xpf
             leftSource.Zip(
                 rightSource, 
                 (oldValue, newValue) => new ReactivePropertyChangeEventArgs<T>(property, oldValue, newValue)).Where(
-                    propertyChange => !Equals(propertyChange.OldValue, propertyChange.NewValue)).Subscribe(
+                    propertyChange => !object.Equals(propertyChange.OldValue, propertyChange.NewValue)).Subscribe(
                         this.RaiseChanged);
 
             this.propertyValues.Add(property, subject);

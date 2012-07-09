@@ -1,0 +1,170 @@
+<Project ToolsVersion="4.0" DefaultTargets="Test" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+    Passable Parameters
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+  -->
+
+  <PropertyGroup>
+    <SampleProjects Condition=" '$(SampleProjects)' == '' ">False</SampleProjects>
+  </PropertyGroup>
+
+  <!--
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+    Convenience Stuff
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+  -->
+
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+    <SourceDir>$(MSBuildProjectDirectory)\XPF\</SourceDir>
+    <OutputDir>$(MSBuildProjectDirectory)\Bin\</OutputDir>
+  </PropertyGroup>
+
+  <!--
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+    Values required by source analysis (StyleCop).
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+  -->
+
+  <PropertyGroup>
+    <SourceAnalysisForceFullAnalysis>true</SourceAnalysisForceFullAnalysis>
+    <SourceAnalysisCacheResults>false</SourceAnalysisCacheResults>
+    <SourceAnalysisTreatErrorsAsWarnings>false</SourceAnalysisTreatErrorsAsWarnings>
+    <SourceAnalysisEnabled>true</SourceAnalysisEnabled>
+    <SourceAnalysisOverrideSettingsFile>$(SourceDir)Settings.StyleCop</SourceAnalysisOverrideSettingsFile>
+  </PropertyGroup>
+
+  <!--
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+    Load StyleCop.
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+  -->
+
+  <UsingTask AssemblyFile="$(MSBuildExtensionsPath)\..\StyleCop 4.7\StyleCop.dll" TaskName="StyleCopTask"/>
+
+  <!--
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+    Core projects only, with infos about whether to run StyleCop against
+    them.
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+  -->
+
+  <ItemGroup>
+    <Project Include="$(SourceDir)RedBadger.Xpf\RedBadger.Xpf.csproj">
+      <StyleCop>True</StyleCop>
+      <CopyOutput>True</CopyOutput>
+      <Specs>False</Specs>
+    </Project>
+    <Project Include="$(SourceDir)RedBadger.Xpf.Specs\RedBadger.Xpf.Specs.csproj">
+      <StyleCop>False</StyleCop>
+      <CopyOutput>False</CopyOutput>
+      <Specs>True</Specs>
+    </Project>
+    <Project Include="$(SourceDir)RedBadger.Xpf.Adapters.Xna\RedBadger.Xpf.Adapters.Xna.csproj">
+      <StyleCop>True</StyleCop>
+      <CopyOutput>True</CopyOutput>
+      <Specs>False</Specs>
+    </Project>
+    <Project Include="$(SourceDir)RedBadger.Xpf.Adapters.Xna.Specs\RedBadger.Xpf.Adapters.Xna.Specs.csproj">
+      <StyleCop>False</StyleCop>
+      <CopyOutput>False</CopyOutput>
+      <Specs>True</Specs>
+    </Project>
+
+    <!-- Samples -->
+    <!-- TODO: Use the solution for now. -->
+    <!-- 
+    <Project Include="$(SourceDir)RedBadger.Xpf.Adapters.Xna.Specs\RedBadger.Xpf.Adapters.Xna.Specs.csproj" Condition=" '$(SampleProjects)' == 'True' ">
+      <StyleCop>False</StyleCop>
+      <CopyOutput>True</CopyOutput>
+      <Specs>False</Specs>
+    </Project>
+    -->
+
+  </ItemGroup>
+
+  <!--
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+    Do the actual build.
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+  -->
+  
+  <!-- 1. Build all projects. -->
+  <Target Name="Compile">
+    <Message Text="=========== Compile ===========" Importance="High" />
+
+    <MSBuild Projects="@(Project)" Properties="Configuration=$(Configuration)" Targets="Clean;Build" />
+    <MakeDir Directories="$(OutputDir)" />
+
+    <CreateItem
+      Include="%(Project.RootDir)%(Project.Directory)bin\$(Configuration)\*"
+      Condition=" '%(Project.CopyOutput)' == 'True' ">
+ 
+      <Output TaskParameter="Include" ItemName="BuildOutput" />
+    </CreateItem>
+
+    <Copy SourceFiles="@(BuildOutput)"
+          DestinationFolder="$(OutputDir)" />
+
+    <Message Text="=========== Compile Done ===========" Importance="High" />
+    <Message Text="Build is available at $(OutputDir)." Importance="High" />
+  </Target>
+
+  <!-- 2. Run StyleCop on all projects that have it enabled. -->
+  <Target Name="RunStyleCop" DependsOnTargets="Compile">
+    <Message Text="=========== Check Style ===========" Importance="High" />
+ 
+    <CreateItem
+      Include="%(Project.RootDir)%(Project.Directory)**\*.cs"
+      Condition=" '%(Project.StyleCop)' == 'True' ">
+ 
+      <Output TaskParameter="Include" ItemName="SourceAnalysisFiles" />
+    </CreateItem>
+ 
+    <StyleCopTask
+        ProjectFullPath="$(MSBuildProjectFile)"
+        SourceFiles="@(SourceAnalysisFiles)"
+        ForceFullAnalysis="$(SourceAnalysisForceFullAnalysis)"
+        DefineConstants="$(DefineConstants)"
+        TreatErrorsAsWarnings="$(SourceAnalysisTreatErrorsAsWarnings)"
+        CacheResults="$(SourceAnalysisCacheResults)"
+        OverrideSettingsFile="$(SourceAnalysisOverrideSettingsFile)" />
+
+    <Message Text="=========== Style Acceptable ===========" Importance="High" />
+  </Target>
+
+  <!-- 3. Run all spec projects. -->
+  <Target Name="Test" DependsOnTargets="RunStyleCop">
+    <Message Text="=========== Run Tests ===========" Importance="High" />
+
+    <CreateItem
+      Include="%(Project.RootDir)%(Project.Directory)bin\$(Configuration)\%(Project.Filename).dll"
+      Condition=" '%(Project.Specs)' == 'True' ">
+
+      <Output TaskParameter="Include" ItemName="TestOutput" />
+    </CreateItem>
+
+    <PropertyGroup>
+      <MSpecCommand>$(SourceDir)packages\Machine.Specifications.0.5.7\tools\mspec-x86-clr4.exe --silent</MSpecCommand>
+    </PropertyGroup>
+
+    <Exec Command='$(MSpecCommand) --html "$(OutputDir)%(TestOutput.Filename).htm" %(TestOutput.Identity)' />
+
+    <Message Text="=========== Tests Passed ===========" Importance="High" />
+  </Target>
+
+</Project>

@@ -12,7 +12,7 @@
     /// <typeparam name = "T">The <see cref = "OwnerType">Type</see> of the Property</typeparam>
     public class ReactiveProperty<T> : IReactiveProperty
     {
-        private static readonly PropertyStore<T> registeredProperties = new PropertyStore<T>();
+        private static readonly PropertyStore<T> RegisteredProperties = new PropertyStore<T>();
 
         private readonly Action<IReactiveObject, ReactivePropertyChangeEventArgs<T>> changedCallback;
 
@@ -150,10 +150,10 @@
         private static void StoreRegisteredProperty(string propertyName, Type ownerType, ReactiveProperty<T> property)
         {
             Dictionary<string, ReactiveProperty<T>> properties;
-            if (!registeredProperties.TryGetValue(ownerType, out properties))
+            if (!RegisteredProperties.TryGetValue(ownerType, out properties))
             {
                 properties = new Dictionary<string, ReactiveProperty<T>>();
-                registeredProperties[ownerType] = properties;
+                RegisteredProperties[ownerType] = properties;
             }
 
             properties[propertyName] = property;

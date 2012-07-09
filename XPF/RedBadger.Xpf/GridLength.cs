@@ -4,11 +4,14 @@ namespace RedBadger.Xpf
 
     public struct GridLength
     {
-        private static readonly GridLength auto = new GridLength(1, GridUnitType.Auto);
-
         private readonly GridUnitType gridUnitType;
 
         private readonly double value;
+
+        static GridLength()
+        {
+            Auto = new GridLength(1, GridUnitType.Auto);
+        }
 
         public GridLength(double value)
             : this(value, GridUnitType.Pixel)
@@ -36,10 +39,8 @@ namespace RedBadger.Xpf
         /// </summary>
         public static GridLength Auto
         {
-            get
-            {
-                return auto;
-            }
+            get;
+            private set;
         }
 
         public GridUnitType GridUnitType
