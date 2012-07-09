@@ -12,17 +12,14 @@
 namespace RedBadger.Xpf.Specs.Controls.ButtonBaseSpecs
 {
     using System.Collections.Generic;
-
+    using System.Reactive.Subjects;
     using Machine.Specifications;
-
     using Moq;
-
     using RedBadger.Xpf.Adapters.Xna.Graphics;
     using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Controls.Primitives;
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
-
     using It = Machine.Specifications.It;
 
     public abstract class a_ButtonBase_inside_a_RootElement_with_input_manager

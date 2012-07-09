@@ -12,17 +12,14 @@
 namespace RedBadger.Xpf.Specs.Controls.ToggleButtonSpecs
 {
     using System.Collections.Generic;
-
+    using System.Reactive.Subjects;
     using Machine.Specifications;
-
     using Moq;
-
     using RedBadger.Xpf.Adapters.Xna.Graphics;
     using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Controls.Primitives;
     using RedBadger.Xpf.Graphics;
     using RedBadger.Xpf.Input;
-
     using It = Machine.Specifications.It;
 
     public abstract class a_ToggleButton

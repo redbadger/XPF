@@ -4,6 +4,7 @@ namespace RedBadger.Xpf.Data
 
     using System.Reactive.Linq;
     using System.Reactive.Subjects;
+    using System.Reactive.Concurrency;
 
     internal class ValueChangedBehaviorSubject<T> : ISubject<T>
     {

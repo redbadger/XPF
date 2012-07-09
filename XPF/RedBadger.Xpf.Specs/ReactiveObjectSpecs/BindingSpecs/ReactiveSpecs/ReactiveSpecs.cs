@@ -14,11 +14,12 @@ namespace RedBadger.Xpf.Specs.ReactiveObjectSpecs.BindingSpecs.ReactiveSpecs
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Reactive.Subjects;
+    using System.Reactive.Linq;
     using Machine.Specifications;
-
     using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Media;
+    using System.Reactive;
 
     public class TestBindingObject
     {

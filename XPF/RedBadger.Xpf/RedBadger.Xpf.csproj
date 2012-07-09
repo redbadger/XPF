@@ -46,7 +46,8 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-    <DocumentationFile>bin\x86\Debug\RedBadger.Xpf.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -174,12 +175,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy RedBadger.Xpf.dll $(SolutionDir)..\XPF.Samples\Lib\XPF</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
-  <Target Name="AfterBuild">
-    <Exec Condition="!Exists('$(TargetDir)$(TargetName).xml')" Command="copy $(TargetDir)*.tmp $(SolutionDir)..\XPF.Samples\Lib\XPF\$(TargetName).xml" />
-    <Copy Condition="Exists('$(TargetDir)$(TargetName).xml')" SourceFiles="$(TargetDir)$(TargetName).xml" DestinationFolder="$(SolutionDir)..\XPF.Samples\Lib\XPF\" />
-  </Target>
   <!--
       To modify your build process, add your task inside one of the targets below and uncomment it. 
       Other similar extension points exist, see Microsoft.Common.targets.

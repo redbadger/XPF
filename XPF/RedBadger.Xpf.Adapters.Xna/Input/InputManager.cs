@@ -2,12 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Reactive.Subjects;
     using Microsoft.Xna.Framework.Input;
     using Microsoft.Xna.Framework.Input.Touch;
-
     using RedBadger.Xpf.Input;
-
     using GestureType = Microsoft.Xna.Framework.Input.Touch.GestureType;
 
     public class InputManager : IInputManager

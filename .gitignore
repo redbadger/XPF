@@ -19,3 +19,4 @@ TestResults
 /XPF.Samples/Lib/XPF/*.dll
 /XPF.Samples/Lib/XPF/*.xml
 *.ncrunchsolution
+*.ncrunchproject
