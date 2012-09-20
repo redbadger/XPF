@@ -1,0 +1,75 @@
+GRID
+----
+CellGroup1 =	Height: Auto | Pixel
+				Width:  Auto | Pixel
+
+CellGroup3 =	Height: Auto | Pixel
+				Width:  Star
+				Flag: HasGroup3CellsInAutoRows (Is Height Auto?)
+				
+CellGroup2 =	Height: Star
+				Width: Auto | Pixel
+				
+CellGroup4 =	Height: Star
+				Width:  Star
+
+
+CellGroup1
+
+If CellGroup3 has no Auto Heights
+	Resolve Height Stars
+	CellGroup2
+	Resolve Width Stars
+	CellGroup3
+
+Else If CellGroup2 has NO data
+	Resolve Width Stars
+	CellGroup3
+	Resolve Height Stars
+	
+Else
+	CellGroup2 (force Infinity Height)
+	Resolve Width Stars
+	CellGroup3
+	Resolve Vertical Stars
+	CellGroup2 (ignore DesiredWidth)
+	
+CellGroup4
+				
+When availbleSize.Width/Height is Positive Infinity, Star behaves the same as Auto
+	because there's no explicit width to divide the space up by
+
+------------------------
+
+when arranging a ui Element
+	It should throw an exception when the 
+		width
+		or heigh of the rect is 
+		PosInfin or 
+		NaN
+
+when arrange has been called
+	it should be valid
+	it shouldn't be called again
+	
+when_arrange_gets_called
+It should pass the desired size to arrange override
+
+when its got margins
+It should pass the desired size minus the margins to arrange override
+
+when the desired size is greater than the available size
+it should make the finalSize equal to the desired size
+
+
+	
+	
+desired size
+if the available < desired
+	available = desired
+
+max = Max(desired, max width)
+
+if the max < available
+	available = max
+

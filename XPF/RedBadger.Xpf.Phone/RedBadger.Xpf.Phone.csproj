@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{545640ED-7CE0-4DBE-A060-251C61F3AEF6}</ProjectGuid>
+    <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Windows Phone</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RedBadger.Xpf</RootNamespace>
+    <AssemblyName>RedBadger.Xpf.Phone</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
+    <XnaPlatform>Windows Phone</XnaPlatform>
+    <XnaProfile>Reach</XnaProfile>
+    <XnaCrossPlatformGroupID>9e45b9f4-c088-4a77-9ba7-d74325299b43</XnaCrossPlatformGroupID>
+    <XnaOutputType>Library</XnaOutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Windows Phone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Windows Phone\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WINDOWS_PHONE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <XnaCompressContent>false</XnaCompressContent>
+    <DocumentationFile>bin\Windows Phone\Debug\RedBadger.Xpf.Phone.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Windows Phone' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Windows Phone\Release</OutputPath>
+    <DefineConstants>TRACE;WINDOWS_PHONE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <XnaCompressContent>false</XnaCompressContent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Phone, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="mscorlib">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Observable, Version=2.0.5.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.0.20823\lib\SL4-WindowsPhone71\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.0.20823\lib\SL4-WindowsPhone71\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.0.20823\lib\SL4-WindowsPhone71\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\RedBadger.Xpf\Controls\Border.cs">
+      <Link>Controls\Border.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Button.cs">
+      <Link>Controls\Button.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Canvas.cs">
+      <Link>Controls\Canvas.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\ColumnDefinition.cs">
+      <Link>Controls\ColumnDefinition.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\ContentControl.cs">
+      <Link>Controls\ContentControl.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Control.cs">
+      <Link>Controls\Control.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\DefinitionBase.cs">
+      <Link>Controls\DefinitionBase.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Grid.cs">
+      <Link>Controls\Grid.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Image.cs">
+      <Link>Controls\Image.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\ItemsControl.cs">
+      <Link>Controls\ItemsControl.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Orientation.cs">
+      <Link>Controls\Orientation.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Panel.cs">
+      <Link>Controls\Panel.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Primitives\ButtonBase.cs">
+      <Link>Controls\Primitives\ButtonBase.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Primitives\IScrollInfo.cs">
+      <Link>Controls\Primitives\IScrollInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\Primitives\ToggleButton.cs">
+      <Link>Controls\Primitives\ToggleButton.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\RootElement.cs">
+      <Link>Controls\RootElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\RowDefinition.cs">
+      <Link>Controls\RowDefinition.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\ScrollContentPresenter.cs">
+      <Link>Controls\ScrollContentPresenter.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\ScrollViewer.cs">
+      <Link>Controls\ScrollViewer.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\StackPanel.cs">
+      <Link>Controls\StackPanel.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\StretchDirection.cs">
+      <Link>Controls\StretchDirection.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\TextBlock.cs">
+      <Link>Controls\TextBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Controls\VirtualizingStackPanel.cs">
+      <Link>Controls\VirtualizingStackPanel.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\BindingFactory.cs">
+      <Link>Data\BindingFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\BindingResolutionMode.cs">
+      <Link>Data\BindingResolutionMode.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\IBinding.cs">
+      <Link>Data\IBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\IDualChannel.cs">
+      <Link>Data\IDualChannel.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\INotifyPropertyChanged.cs">
+      <Link>Data\INotifyPropertyChanged.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\IOneWayToSourceBinding.cs">
+      <Link>Data\IOneWayToSourceBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\OneWayBinding.cs">
+      <Link>Data\OneWayBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\OneWayReactivePropertyBinding.cs">
+      <Link>Data\OneWayReactivePropertyBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\OneWayReactivePropertyBindingWithConversion.cs">
+      <Link>Data\OneWayReactivePropertyBindingWithConversion.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\OneWayToSourceBinding.cs">
+      <Link>Data\OneWayToSourceBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\OneWayToSourceReactivePropertyBinding.cs">
+      <Link>Data\OneWayToSourceReactivePropertyBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\OneWayToSourceReactivePropertyBindingWithConversion.cs">
+      <Link>Data\OneWayToSourceReactivePropertyBindingWithConversion.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\PropertyChangedEventArgs.cs">
+      <Link>Data\PropertyChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\TwoWayBinding.cs">
+      <Link>Data\TwoWayBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\TwoWayReactivePropertyBinding.cs">
+      <Link>Data\TwoWayReactivePropertyBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Data\ValueChangedBehaviorSubject.cs">
+      <Link>Data\ValueChangedBehaviorSubject.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\ElementCollection.cs">
+      <Link>ElementCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Extensions\IElementExtensions.cs">
+      <Link>Extensions\IElementExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\IDrawingContext.cs">
+      <Link>Graphics\IDrawingContext.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\IPrimitivesService.cs">
+      <Link>Graphics\IPrimitivesService.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\IRenderer.cs">
+      <Link>Graphics\IRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\ISpriteBatch.cs">
+      <Link>Graphics\ISpriteBatch.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\ISpriteFont.cs">
+      <Link>Graphics\ISpriteFont.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\ISpriteJob.cs">
+      <Link>Graphics\ISpriteJob.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Graphics\ITexture.cs">
+      <Link>Graphics\ITexture.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\GridLength.cs">
+      <Link>GridLength.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\GridUnitType.cs">
+      <Link>GridUnitType.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\HorizontalAlignment.cs">
+      <Link>HorizontalAlignment.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\IElement.cs">
+      <Link>IElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Input\Gesture.cs">
+      <Link>Input\Gesture.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Input\GestureType.cs">
+      <Link>Input\GestureType.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Input\IInputElement.cs">
+      <Link>Input\IInputElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Input\IInputManager.cs">
+      <Link>Input\IInputManager.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\Controls\ScrollData.cs">
+      <Link>Internal\Controls\ScrollData.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\Controls\Viewbox.cs">
+      <Link>Internal\Controls\Viewbox.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\DoubleExtensions.cs">
+      <Link>Internal\DoubleExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\IEnumerableExtensions.cs">
+      <Link>Internal\IEnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\MinMax.cs">
+      <Link>Internal\MinMax.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\PropertyStore.cs">
+      <Link>Internal\PropertyStore.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\RectExtensions.cs">
+      <Link>Internal\RectExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\SizeExtensions.cs">
+      <Link>Internal\SizeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\ThicknessExtensions.cs">
+      <Link>Internal\ThicknessExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Internal\VectorExtensions.cs">
+      <Link>Internal\VectorExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\IReactiveObject.cs">
+      <Link>IReactiveObject.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\IReactiveProperty.cs">
+      <Link>IReactiveProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\IRootElement.cs">
+      <Link>IRootElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\ITemplatedList.cs">
+      <Link>ITemplatedList.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\License.cs">
+      <Link>License.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Media\Brush.cs">
+      <Link>Media\Brush.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Media\Color.cs">
+      <Link>Media\Color.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Media\Colors.cs">
+      <Link>Media\Colors.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Media\ImageSource.cs">
+      <Link>Media\ImageSource.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Media\Imaging\BitmapSource.cs">
+      <Link>Media\Imaging\BitmapSource.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Media\Imaging\TextureImage.cs">
+      <Link>Media\Imaging\TextureImage.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Media\SolidColorBrush.cs">
+      <Link>Media\SolidColorBrush.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Media\Stretch.cs">
+      <Link>Media\Stretch.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Point.cs">
+      <Link>Point.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\ReactiveObject.cs">
+      <Link>ReactiveObject.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\ReactiveProperty.cs">
+      <Link>ReactiveProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\ReactivePropertyChangedCallbacks.cs">
+      <Link>ReactivePropertyChangedCallbacks.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\ReactivePropertyChangeEventArgs.cs">
+      <Link>ReactivePropertyChangeEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Rect.cs">
+      <Link>Rect.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Size.cs">
+      <Link>Size.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\TextWrapping.cs">
+      <Link>TextWrapping.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Thickness.cs">
+      <Link>Thickness.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\UIElement.cs">
+      <Link>UIElement.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\Vector.cs">
+      <Link>Vector.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\VerticalAlignment.cs">
+      <Link>VerticalAlignment.cs</Link>
+    </Compile>
+    <Compile Include="..\RedBadger.Xpf\VirtualizingElementCollection.cs">
+      <Link>VirtualizingElementCollection.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>copy RedBadger.Xpf.Phone.dll $(SolutionDir)..\XPF.Samples\Lib\XPF</PostBuildEvent>
+  </PropertyGroup>
+  <Target Name="AfterBuild">
+    <Exec Condition="!Exists('$(TargetDir)$(TargetName).xml')" Command="copy &quot;$(TargetDir)*.tmp&quot; $(SolutionDir)..\XPF.Samples\Lib\XPF\$(TargetName).xml" />
+    <Copy Condition="Exists('$(TargetDir)$(TargetName).xml')" SourceFiles="$(TargetDir)$(TargetName).xml" DestinationFolder="$(SolutionDir)..\XPF.Samples\Lib\XPF\" />
+  </Target>
+  <!--
+      To modify your build process, add your task inside one of the targets below and uncomment it. 
+      Other similar extension points exist, see Microsoft.Common.targets.
+      <Target Name="BeforeBuild">
+      </Target>
+      <Target Name="AfterBuild">
+      </Target>
+    -->
+</Project>

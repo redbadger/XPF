@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedBadger.Wpug", "RedBadger.Wpug\RedBadger.Wpug\RedBadger.Wpug.csproj", "{E40844FA-2483-4241-A969-8DFDA6A41522}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "RedBadger.WpugContent", "RedBadger.Wpug\RedBadger.WpugContent\RedBadger.WpugContent.contentproj", "{A699287A-6C09-4BCF-B807-05594BD822C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedBadger.Wpug.Basketball", "RedBadger.Wpug.Basketball\RedBadger.Wpug.Basketball\RedBadger.Wpug.Basketball.csproj", "{4E7760CB-AE68-4823-BDE5-409525626151}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "RedBadger.Wpug.BasketballContent", "RedBadger.Wpug.Basketball\RedBadger.Wpug.BasketballContent\RedBadger.Wpug.BasketballContent.contentproj", "{EAF51E88-9C92-4C6E-A68F-A009891B0BD2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Windows Phone = Debug|Windows Phone
+		Release|Windows Phone = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E40844FA-2483-4241-A969-8DFDA6A41522}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{E40844FA-2483-4241-A969-8DFDA6A41522}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{E40844FA-2483-4241-A969-8DFDA6A41522}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
+		{E40844FA-2483-4241-A969-8DFDA6A41522}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{E40844FA-2483-4241-A969-8DFDA6A41522}.Release|Windows Phone.Build.0 = Release|Windows Phone
+		{E40844FA-2483-4241-A969-8DFDA6A41522}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
+		{A699287A-6C09-4BCF-B807-05594BD822C1}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{A699287A-6C09-4BCF-B807-05594BD822C1}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{4E7760CB-AE68-4823-BDE5-409525626151}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{4E7760CB-AE68-4823-BDE5-409525626151}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{4E7760CB-AE68-4823-BDE5-409525626151}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
+		{4E7760CB-AE68-4823-BDE5-409525626151}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{4E7760CB-AE68-4823-BDE5-409525626151}.Release|Windows Phone.Build.0 = Release|Windows Phone
+		{4E7760CB-AE68-4823-BDE5-409525626151}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
+		{EAF51E88-9C92-4C6E-A68F-A009891B0BD2}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{EAF51E88-9C92-4C6E-A68F-A009891B0BD2}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
