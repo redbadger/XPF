@@ -1,3 +1,28 @@
+#region License
+/* The MIT License
+ *
+ * Copyright (c) 2011 Red Badger Consulting
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+*/
+#endregion
+
 namespace RedBadger.Xpf.Specs.Extensions
 {
     using System;
@@ -37,26 +62,6 @@ namespace RedBadger.Xpf.Specs.Extensions
             if (arg1.CompareTo(arg2.TryToChangeType(arg1.GetType())) < 0)
             {
                 throw NewException("Should be greater than {0} but is {1}", arg2, arg1);
-            }
-
-            return arg1;
-        }
-
-        public static IComparable ShouldBeLessThanOrEqualTo(this IComparable arg1, IComparable arg2)
-        {
-            if (arg2 == null)
-            {
-                throw new ArgumentNullException("arg2");
-            }
-
-            if (arg1 == null)
-            {
-                throw NewException("Should be greater than {0} but is [null]", arg2);
-            }
-
-            if (arg1.CompareTo(arg2.TryToChangeType(arg1.GetType())) > 0)
-            {
-                throw NewException("Should be less than {0} but is {1}", arg2, arg1);
             }
 
             return arg1;

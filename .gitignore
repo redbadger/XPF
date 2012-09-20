@@ -18,3 +18,11 @@ TestResults
 *.cachefile
 /XPF.Samples/Lib/XPF/*.dll
 /XPF.Samples/Lib/XPF/*.xml
+*.ncrunchsolution
+*.ncrunchproject
+upgradelog.*
+_upgradereport_files
+stylecopviolations.xml
+*.local.sln
+NuGet/*/*/*/*.dll
+*.nupkg

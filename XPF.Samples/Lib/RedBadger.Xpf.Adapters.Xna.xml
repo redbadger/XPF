@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RedBadger.Xpf.Adapters.Xna</name>
+    </assembly>
+    <members>
+        <member name="T:RedBadger.Xpf.Adapters.Xna.Graphics.RectExtensions">
+            <summary>
+                Extensions for XPF <see cref="T:RedBadger.Xpf.Rect">Rect</see>
+            </summary>
+        </member>
+        <member name="M:RedBadger.Xpf.Adapters.Xna.Graphics.RectExtensions.ToRectangle(RedBadger.Xpf.Rect)">
+            <summary>
+                Converts an XPF <see cref="T:RedBadger.Xpf.Rect">Rect</see> to an XNA <see cref="T:Microsoft.Xna.Framework.Rectangle">Rectangle</see>.
+            </summary>
+            <param name="rect">The XPF <see cref="T:RedBadger.Xpf.Rect">Rect</see> to convert.</param>
+            <returns>The converted XNA <see cref="T:Microsoft.Xna.Framework.Rectangle">Rectangle</see>.</returns>
+        </member>
+        <member name="T:RedBadger.Xpf.Adapters.Xna.Graphics.PrimitivesService">
+            <summary>
+                Provides primitives that XPF requires to render correctly.
+            </summary>
+        </member>
+        <member name="M:RedBadger.Xpf.Adapters.Xna.Graphics.PrimitivesService.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice)">
+            <summary>
+                Initializes a new instance of the <see cref="T:RedBadger.Xpf.Adapters.Xna.Graphics.PrimitivesService">PrimitivesService</see>.
+            </summary>
+            <param name="graphicsDevice">An XNA <see cref="T:Microsoft.Xna.Framework.Graphics.GraphicsDevice">GraphicsDevice</see> that can be used to generate primitives.</param>
+        </member>
+        <member name="T:RedBadger.Xpf.Adapters.Xna.Graphics.SpriteBatchAdapter">
+            <summary>
+                Adapts an XNA <see cref="T:Microsoft.Xna.Framework.Graphics.SpriteBatch">SpriteBatch</see> to an XPF <see cref="T:RedBadger.Xpf.Graphics.ISpriteBatch">ISpriteBatch</see>.
+            </summary>
+        </member>
+        <member name="M:RedBadger.Xpf.Adapters.Xna.Graphics.SpriteBatchAdapter.#ctor(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+                Initializes a new instance of a <see cref="T:RedBadger.Xpf.Adapters.Xna.Graphics.SpriteBatchAdapter">SpriteBatchAdapter</see>.
+            </summary>
+            <param name="spriteBatch">The XNA <see cref="T:Microsoft.Xna.Framework.Graphics.SpriteBatch">SpriteBatch</see> to adapt.</param>
+        </member>
+        <member name="T:RedBadger.Xpf.Adapters.Xna.Graphics.SpriteFontAdapter">
+            <summary>
+                Adapts an XNA <see cref="T:Microsoft.Xna.Framework.Graphics.SpriteFont">SpriteFont</see> to an XPF <see cref="T:RedBadger.Xpf.Graphics.ISpriteFont">ISpriteFont</see>.
+            </summary>
+        </member>
+        <member name="M:RedBadger.Xpf.Adapters.Xna.Graphics.SpriteFontAdapter.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont)">
+            <summary>
+                Initializes a new instance of a <see cref="T:RedBadger.Xpf.Adapters.Xna.Graphics.SpriteFontAdapter">SpriteFontAdapter</see>.
+            </summary>
+            <param name="spriteFont">The XNA <see cref="T:Microsoft.Xna.Framework.Graphics.SpriteFont">SpriteFont</see> to adapt.</param>
+        </member>
+        <member name="P:RedBadger.Xpf.Adapters.Xna.Graphics.SpriteFontAdapter.Value">
+            <summary>
+                The adapted XNA <see cref="T:Microsoft.Xna.Framework.Graphics.SpriteFont">SpriteFont</see>.
+            </summary>
+        </member>
+        <member name="T:RedBadger.Xpf.Adapters.Xna.Graphics.Texture2DAdapter">
+            <summary>
+                Adapts an XNA <see cref="T:Microsoft.Xna.Framework.Graphics.Texture2D">Texture2D</see> to an XPF <see cref="T:RedBadger.Xpf.Graphics.ITexture">ITexture</see>.
+            </summary>
+        </member>
+        <member name="M:RedBadger.Xpf.Adapters.Xna.Graphics.Texture2DAdapter.#ctor(Microsoft.Xna.Framework.Graphics.Texture2D)">
+            <summary>
+                Initializes a new instance of a <see cref="T:RedBadger.Xpf.Adapters.Xna.Graphics.Texture2DAdapter">Texture2DAdapter</see>.
+            </summary>
+            <param name="texture2D">The XNA <see cref="T:Microsoft.Xna.Framework.Graphics.Texture2D">Texture2D</see> to adapt.</param>
+        </member>
+        <member name="P:RedBadger.Xpf.Adapters.Xna.Graphics.Texture2DAdapter.Value">
+            <summary>
+                The adapted XNA <see cref="T:Microsoft.Xna.Framework.Graphics.Texture2D">Texture2D</see>.
+            </summary>
+        </member>
+    </members>
+</doc>
