@@ -92,11 +92,11 @@
     </Reference>
     <Reference Include="RedBadger.Xpf, Version=1.0.3918.22970, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\XPF\RedBadger.Xpf.dll</HintPath>
+      <HintPath>..\..\..\XPF\RedBadger.Xpf\bin\Debug\RedBadger.Xpf.dll</HintPath>
     </Reference>
     <Reference Include="RedBadger.Xpf.Adapters.Xna, Version=1.0.3918.22971, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\XPF\RedBadger.Xpf.Adapters.Xna.dll</HintPath>
+      <HintPath>..\..\..\XPF\RedBadger.Xpf.Adapters.Xna\bin\Debug\RedBadger.Xpf.Adapters.Xna.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
