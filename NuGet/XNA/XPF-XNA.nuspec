@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>XPF-XNA</id>
+    <version>0.0.1</version>
+    <authors>dwynne StuartHarris jcdickinson codedjinn</authors>
+    <owners>dwynne StuartHarris</owners>
+    <licenseUrl>https://github.com/redbadger/XPF/blob/develop/license.markdown</licenseUrl>
+    <projectUrl>https://github.com/redbadger/XPF</projectUrl>
+    <!-- <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl> -->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A layout framework for XNA from Red Badger Consulting. Inspiration is drawn from the WPF and Silverlight XAML stacks, Reactive Extensions is used to keep things nice and fast.</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2012 Red Badger Consulting</copyright>
+    <tags>XNA XAML Reactive</tags>
+    <dependencies>
+      <dependency id="Rx-Main" version="1.0" />
+      <dependency id="XPF-Main" version="0.0.1" />
+    </dependencies>
+  </metadata>
+</package>

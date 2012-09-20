@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B72C465C-F710-4E8B-A10F-2DA339BE3B0D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RedBadger.Xpf</RootNamespace>
+    <AssemblyName>RedBadger.Xpf</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\RedBadger.Xpf.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\RedBadger.Xpf.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.0.20823\lib\Net40\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.0.20823\lib\Net40\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.0.20823\lib\Net40\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.0.20823\lib\Net40\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\Primitives\ToggleButton.cs" />
+    <Compile Include="Data\IOneWayToSourceBinding.cs" />
+    <Compile Include="Data\OneWayToSourceReactivePropertyBinding.cs" />
+    <Compile Include="Data\OneWayReactivePropertyBindingWithConversion.cs" />
+    <Compile Include="Graphics\IPrimitivesService.cs" />
+    <Compile Include="Graphics\ISpriteBatch.cs" />
+    <Compile Include="Graphics\ISpriteFont.cs" />
+    <Compile Include="Graphics\ITexture.cs" />
+    <Compile Include="Internal\Controls\ScrollData.cs" />
+    <Compile Include="Internal\IEnumerableExtensions.cs" />
+    <Compile Include="License.cs" />
+    <Compile Include="Internal\PropertyStore.cs" />
+    <Compile Include="Controls\Canvas.cs" />
+    <Compile Include="Data\BindingFactory.cs" />
+    <Compile Include="Data\TwoWayReactivePropertyBinding.cs" />
+    <Compile Include="Data\IDualChannel.cs" />
+    <Compile Include="Data\ValueChangedBehaviorSubject.cs" />
+    <Compile Include="Data\OneWayToSourceReactivePropertyBindingWithConversion.cs" />
+    <Compile Include="Data\OneWayBinding.cs" />
+    <Compile Include="Data\BindingResolutionMode.cs" />
+    <Compile Include="Data\IBinding.cs" />
+    <Compile Include="Data\OneWayReactivePropertyBinding.cs" />
+    <Compile Include="Data\OneWayToSourceBinding.cs" />
+    <Compile Include="Data\TwoWayBinding.cs" />
+    <Compile Include="Data\INotifyPropertyChanged.cs" />
+    <Compile Include="Data\PropertyChangedEventArgs.cs" />
+    <Compile Include="Extensions\IElementExtensions.cs" />
+    <Compile Include="IReactiveProperty.cs" />
+    <Compile Include="Point.cs" />
+    <Compile Include="Media\Color.cs" />
+    <Compile Include="Media\Colors.cs" />
+    <Compile Include="ReactivePropertyChangeEventArgs.cs" />
+    <Compile Include="Size.cs" />
+    <Compile Include="Rect.cs" />
+    <Compile Include="Thickness.cs" />
+    <Compile Include="GridUnitType.cs" />
+    <Compile Include="GridLength.cs" />
+    <Compile Include="VerticalAlignment.cs" />
+    <Compile Include="HorizontalAlignment.cs" />
+    <Compile Include="Controls\ItemsControl.cs" />
+    <Compile Include="Controls\Primitives\IScrollInfo.cs" />
+    <Compile Include="ReactiveObject.cs" />
+    <Compile Include="ITemplatedList.cs" />
+    <Compile Include="Controls\ScrollContentPresenter.cs" />
+    <Compile Include="Controls\ScrollViewer.cs" />
+    <Compile Include="Controls\VirtualizingStackPanel.cs" />
+    <Compile Include="Input\IInputElement.cs" />
+    <Compile Include="Input\IInputManager.cs" />
+    <Compile Include="Internal\DoubleExtensions.cs" />
+    <Compile Include="Internal\MinMax.cs" />
+    <Compile Include="Internal\RectExtensions.cs" />
+    <Compile Include="Internal\SizeExtensions.cs" />
+    <Compile Include="Internal\ThicknessExtensions.cs" />
+    <Compile Include="ReactivePropertyChangedCallbacks.cs" />
+    <Compile Include="Internal\VectorExtensions.cs" />
+    <Compile Include="Controls\Button.cs" />
+    <Compile Include="Controls\Primitives\ButtonBase.cs" />
+    <Compile Include="Controls\Control.cs" />
+    <Compile Include="Controls\StretchDirection.cs" />
+    <Compile Include="Internal\Controls\Viewbox.cs" />
+    <Compile Include="Controls\Orientation.cs" />
+    <Compile Include="IReactiveObject.cs" />
+    <Compile Include="Input\GestureType.cs" />
+    <Compile Include="Input\Gesture.cs" />
+    <Compile Include="Media\Stretch.cs" />
+    <Compile Include="Vector.cs" />
+    <Compile Include="IRootElement.cs" />
+    <Compile Include="Media\Brush.cs" />
+    <Compile Include="Graphics\IRenderer.cs" />
+    <Compile Include="Graphics\IDrawingContext.cs" />
+    <Compile Include="Graphics\ISpriteJob.cs" />
+    <Compile Include="Media\ImageSource.cs" />
+    <Compile Include="Media\Imaging\BitmapSource.cs" />
+    <Compile Include="Media\Imaging\TextureImage.cs" />
+    <Compile Include="Media\SolidColorBrush.cs" />
+    <Compile Include="Controls\ColumnDefinition.cs" />
+    <Compile Include="Controls\Border.cs" />
+    <Compile Include="Controls\ContentControl.cs" />
+    <Compile Include="Controls\DefinitionBase.cs" />
+    <Compile Include="Controls\Grid.cs" />
+    <Compile Include="Controls\Image.cs" />
+    <Compile Include="Controls\Panel.cs" />
+    <Compile Include="Controls\RootElement.cs" />
+    <Compile Include="Controls\RowDefinition.cs" />
+    <Compile Include="Controls\StackPanel.cs" />
+    <Compile Include="Controls\TextBlock.cs" />
+    <Compile Include="IElement.cs" />
+    <Compile Include="VirtualizingElementCollection.cs" />
+    <Compile Include="ReactiveProperty.cs" />
+    <Compile Include="TextWrapping.cs" />
+    <Compile Include="UIElement.cs" />
+    <Compile Include="ElementCollection.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!--
+      To modify your build process, add your task inside one of the targets below and uncomment it. 
+      Other similar extension points exist, see Microsoft.Common.targets.
+      <Target Name="BeforeBuild">
+      </Target>
+      <Target Name="AfterBuild">
+      </Target>
+    -->
+</Project>
