@@ -38,6 +38,7 @@ namespace XpfSamples.S03ApplicationBar
     using RedBadger.Xpf.Data;
     using RedBadger.Xpf.Media;
     using RedBadger.Xpf.Media.Imaging;
+	using System.Reactive;
 
     public class MyComponent : DrawableGameComponent
     {

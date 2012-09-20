@@ -27,6 +27,7 @@ namespace Xpf.Samples.S04BasketballScoreboard.Domain
 {
     using System;
     using System.Linq;
+	using System.Reactive.Linq;
 
     public class Clock
     {

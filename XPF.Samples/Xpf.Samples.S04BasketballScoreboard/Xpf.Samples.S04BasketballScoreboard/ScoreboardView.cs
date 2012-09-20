@@ -27,6 +27,7 @@ namespace Xpf.Samples.S04BasketballScoreboard
 {
     using System;
     using System.Linq;
+	using System.Reactive.Linq;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -82,10 +83,14 @@ namespace Xpf.Samples.S04BasketballScoreboard
             this.lcd = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("Lcd"));
             this.led = new SpriteFontAdapter(this.Game.Content.Load<SpriteFont>("Led"));
 
-            Observable.FromEvent<EventArgs>(
-                handler => this.Game.Window.OrientationChanged += handler, 
-                handler => this.Game.Window.OrientationChanged -= handler).Subscribe(
-                    _ => this.rootElement.Viewport = this.Game.GraphicsDevice.Viewport.ToRect());
+			// TODO: Some changes in ReactiveEx v2.0, using alternative for now, fill fix up later
+			//Observable.FromEvent<EventArgs>(
+			//    handler => this.Game.Window.OrientationChanged += handler,
+			//    handler => this.Game.Window.OrientationChanged -= handler).Subscribe(
+			//        _ => this.rootElement.Viewport = this.Game.GraphicsDevice.Viewport.ToRect());
+
+			// Alternative mechanism to hook up to the event.  Ensure you manage unhooking the event yourself.
+			this.Game.Window.OrientationChanged += (sender, args) => this.rootElement.Viewport = this.Game.GraphicsDevice.Viewport.ToRect();
 
             var timeTextBlock = new TextBlock(this.led)
                 {

@@ -27,14 +27,17 @@ namespace RedBadger.Xpf
 {
 #if WINDOWS_PHONE
 
-    using System;
-    using System.Collections.Generic;
-    using System.Disposables;
-    using System.Linq;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
 
+	using System.Reactive;
+	using System.Reactive.Disposables;
+	using System.Reactive.Linq;
+	using System.Reactive.Subjects;
 
-    using RedBadger.Xpf.Data;
-    using RedBadger.Xpf.Internal;
+	using RedBadger.Xpf.Data;
+	using RedBadger.Xpf.Internal;
 
 #else
     using System;

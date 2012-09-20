@@ -33,6 +33,8 @@ namespace XpfSamples.S03ApplicationBar
     using RedBadger.Xpf.Controls;
     using RedBadger.Xpf.Data;
     using RedBadger.Xpf.Media;
+	using System.Reactive.Subjects;
+	using System.Reactive.Linq;
 
     public class ApplicationBar : ContentControl
     {
@@ -81,10 +83,11 @@ namespace XpfSamples.S03ApplicationBar
 
                             var button = new Button { Content = image, Margin = new Thickness(18, 0, 18, 0) };
 
-                            Observable.FromEvent<EventArgs>(
-                                handler => button.Click += handler, handler => button.Click -= handler).Select(
-                                    eventArgs => (ApplicationBarIconButton)((Button)eventArgs.Sender).DataContext).
-                                Subscribe(this.clicks);
+							//Observable.FromEvent<EventArgs>(
+							//    handler => button.Click += handler,
+							//    handler => button.Click -= handler).Select(
+							//        eventArgs => (ApplicationBarIconButton)((Button)eventArgs.Sender).DataContext).
+							//    Subscribe(this.clicks);
 
                             return button;
                         }, 

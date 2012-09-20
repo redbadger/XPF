@@ -32,6 +32,9 @@ namespace Xpf.Samples.S05DataBinding101.WithoutBindingFactory
     using RedBadger.Xpf.Media;
     using RedBadger.Xpf.Media.Imaging;
 
+	using System.Reactive.Subjects;
+	using System.Reactive.Linq;
+
     public class Card
     {
         private readonly TextureImage faceDownImage;
