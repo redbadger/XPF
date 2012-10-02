@@ -95,7 +95,6 @@
     <Compile Include="Graphics\ITexture.cs" />
     <Compile Include="Internal\Controls\ScrollData.cs" />
     <Compile Include="Internal\IEnumerableExtensions.cs" />
-    <Compile Include="License.cs" />
     <Compile Include="Internal\PropertyStore.cs" />
     <Compile Include="Controls\Canvas.cs" />
     <Compile Include="Data\BindingFactory.cs" />

@@ -67,8 +67,6 @@ namespace RedBadger.Xpf.Controls
         /// <param name = "inputManager">An implementation of <see cref = "IInputManager">IInputManager</see> that can be used to respond to user input.</param>
         public RootElement(Rect viewport, IRenderer renderer, IInputManager inputManager)
         {
-            License.Validate();
-
             if (renderer == null)
             {
                 throw new ArgumentNullException("renderer");

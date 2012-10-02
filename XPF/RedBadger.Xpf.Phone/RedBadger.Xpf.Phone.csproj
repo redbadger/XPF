@@ -279,9 +279,6 @@
     <Compile Include="..\RedBadger.Xpf\ITemplatedList.cs">
       <Link>ITemplatedList.cs</Link>
     </Compile>
-    <Compile Include="..\RedBadger.Xpf\License.cs">
-      <Link>License.cs</Link>
-    </Compile>
     <Compile Include="..\RedBadger.Xpf\Media\Brush.cs">
       <Link>Media\Brush.cs</Link>
     </Compile>
@@ -352,7 +349,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" />
+      <UserProperties ProjectLinkReference="b72c465c-f710-4e8b-a10f-2da339be3b0d" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
